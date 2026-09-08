@@ -1,0 +1,1195 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Матбаза до 13.09 — 10 класс</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:800px;margin:0 auto;padding:16px 14px 60px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+.f-formula{font-size:19px}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.step{margin:6px 0}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.fig{margin:12px 0;text-align:center}
+.fig svg{width:100%;max-width:400px;height:auto;border-radius:12px}
+.fig .cap{color:var(--muted);font-size:14px;margin-top:4px}
+.small{color:var(--muted);font-size:15px}
+.hint.last{background:var(--warn-soft)}
+.sol .step{margin:7px 0}
+.ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;background:var(--bg)}
+.ex h3{margin-top:0}
+.ex .q{font-weight:600}
+.wrap-t th,.wrap-t td{white-space:normal;text-align:left;vertical-align:top}
+.wrap-t th:first-child{white-space:nowrap}
+.fx{display:block;background:var(--acc-soft);border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin:12px 0;text-align:center;font-size:21px;line-height:1.6;font-weight:600;overflow-x:auto}
+.sol .fx,.ex .fx{font-size:19px;margin:9px 0}
+.fx .fi{display:inline-block;white-space:nowrap;margin:3px 14px}
+.wrap-t td b{font-size:18px}
+.f-formula{font-size:20px}
+.m3d{margin:14px 0}
+.m3d svg{width:100%;max-width:470px;height:auto;display:block;margin:0 auto;border-radius:12px;
+  border:1px solid var(--line);background:#fff;touch-action:pan-y;cursor:grab;-webkit-user-select:none;user-select:none}
+.m3d svg:active{cursor:grabbing}
+.m3dbar{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin:10px 0 0}
+.m3dbar button{padding:6px 11px;min-height:38px;font-size:15px;display:inline-flex;align-items:center;gap:6px}
+.m3dbar button.on{border-color:var(--acc);background:var(--acc-soft);font-weight:600}
+.sw{width:14px;height:14px;border-radius:4px;display:inline-block;border:1px solid rgba(0,0,0,.25);flex:none}
+.sw.dot{border-radius:50%}
+.sw.ln{height:5px;width:18px;border-radius:2px}
+.m3dcap{background:var(--acc-soft);border-radius:10px;padding:11px 13px;margin:11px 0 0;font-size:16px}
+.m3dhint{color:var(--muted);font-size:14px;text-align:center;margin-top:9px}
+.cap3d{color:var(--muted);font-size:14px;text-align:center;margin-top:4px}
+
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+@media print{
+  body{background:#fff}
+  .wrap>*{display:none !important}
+  .wrap>.sheet{display:block !important;border:none;margin:0;padding:0}
+  .sheet{font-size:13px}
+  .sheet h2{font-size:18px}
+  .sheet th,.sheet td{padding:4px 5px;font-size:12px}
+  @page{size:A4;margin:12mm}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card top">
+  <h1>Матбаза до 13.09</h1>
+  <div class="meta">Геометрия, 10 класс · §1 «Пространственные фигуры»: призма и пирамида · 12 задач</div>
+  <div class="meta" style="margin-top:2px"><b>Срок сдачи — 13 сентября.</b></div>
+  <label class="f" for="name">Имя и фамилия</label>
+  <input type="text" id="name" placeholder="напиши, как в журнале" autocapitalize="words" spellcheck="false">
+  <div class="note" style="margin-top:14px">
+    Как работать: прочитай теорию, разбери шесть примеров, реши задачи. Пропусков заполнять не нужно —
+    каждую задачу решаешь целиком сам, а если застрял, у каждой есть три подсказки: они открываются по одной
+    и ведут от идеи к вычислению. Открывать подсказки — не ошибка. Чертежи в теории и в примерах <b>объёмные</b>:
+    их можно крутить пальцем или мышкой и нажимать на элементы, чтобы увидеть, как что называется.
+    Решения записывай в тетрадь, потом сфотографируй их, приложи фото внизу страницы
+    и нажми «Отправить на проверку».
+  </div>
+</div>
+
+<div class="card">
+  <h2>Теория</h2>
+
+  <h3>1. Плоские и пространственные фигуры</h3>
+  <p>Все точки <b>плоской</b> фигуры лежат в одной плоскости, у <b>пространственной</b> — нет.
+  Раздел геометрии о плоских фигурах называется <b>планиметрией</b>, о пространственных —
+  <b>стереометрией</b>. С этого параграфа начинается стереометрия.</p>
+  <div class="note">Пространственную фигуру приходится изображать на плоском листе. Рисунок делают так,
+  чтобы он производил то же впечатление, что и сама фигура, а <b>невидимые линии проводят штриховыми</b>.
+  Это не украшение: по штриховым линиям видно, какая грань спереди, а какая сзади. Сплошная линия
+  на месте невидимого ребра — уже ошибка в чертеже.</div>
+
+  <h3>2. Многогранник</h3>
+  <p><b>Многогранник</b> — тело, ограниченное плоскими многоугольниками. Сами эти многоугольники
+  называются <b>гранями</b>, их стороны — <b>рёбрами</b>, а их вершины — <b>вершинами</b> многогранника.
+  <b>Диагональ многогранника</b> — отрезок, соединяющий две вершины, <i>не принадлежащие одной грани</i>.</p>
+  <div class="m3d"><svg id="mg" viewBox="0 0 460 274" aria-label="объёмный чертёж"></svg><div class="m3dbar" id="mgbar"></div><div class="m3dcap" id="mgcap"></div><div class="m3dhint">Крути фигуру пальцем или мышкой. Нажимай на элементы — появится подпись.</div><div class="cap3d">Грань, ребро, вершина и диагональ многогранника</div></div>
+  <p>Многогранник называют <b>выпуклым</b>, если он лежит по одну сторону от плоскости каждой своей грани.
+  Дальше работаем только с выпуклыми — с призмами и пирамидами.</p>
+
+  <h3>3. Призма</h3>
+  <p><b>Призма</b> — многогранник, две грани которого равные n-угольники, а остальные n граней —
+  параллелограммы. Равные грани называются <b>основаниями</b>, остальные — <b>боковыми гранями</b>,
+  а их рёбра, не лежащие в основаниях, — <b>боковыми рёбрами</b>.</p>
+  <div class="m3d"><svg id="pz" viewBox="0 0 460 274" aria-label="объёмный чертёж"></svg><div class="m3dbar" id="pzbar"></div><div class="m3dcap" id="pzcap"></div><div class="m3dhint">Крути фигуру пальцем или мышкой. Нажимай на элементы — появится подпись.</div><div class="cap3d">Основания, боковые грани и боковые рёбра призмы</div></div>
+  <p><b>Прямая</b> призма — та, у которой боковые рёбра перпендикулярны рёбрам основания;
+  её боковые грани получаются прямоугольниками. Иначе призма <b>наклонная</b>.
+  <b>Правильная</b> призма — прямая призма, в основании которой лежит правильный многоугольник.</p>
+  <p><b>Параллелепипед</b> — призма, основания которой параллелограммы. Прямой параллелепипед
+  с прямоугольником в основании называется <b>прямоугольным</b>, три его ребра, выходящие из одной вершины, —
+  <b>измерения</b>. Прямоугольный параллелепипед с равными измерениями — <b>куб</b>.</p>
+  <div class="fx">S<sub>бок</sub> прямой призмы = P<sub>осн</sub> · h</div>
+  <p class="small">Периметр основания умножить на боковое ребро. Для наклонной призмы так считать нельзя —
+  там складывают площади параллелограммов по отдельности.</p>
+
+  <h3>4. Пирамида</h3>
+  <p><b>Пирамида</b> — многогранник, одна грань которого произвольный многоугольник (<b>основание</b>),
+  а остальные грани — треугольники с общей вершиной (<b>боковые грани</b>, а их общая точка —
+  <b>вершина пирамиды</b>).</p>
+  <div class="m3d"><svg id="pir" viewBox="0 0 460 274" aria-label="объёмный чертёж"></svg><div class="m3dbar" id="pirbar"></div><div class="m3dcap" id="pircap"></div><div class="m3dhint">Крути фигуру пальцем или мышкой. Нажимай на элементы — появится подпись.</div><div class="cap3d">Вершина, основание, высота и апофема пирамиды</div></div>
+  <p><b>Правильная</b> пирамида — та, у которой в основании правильный многоугольник, а отрезок,
+  соединяющий вершину пирамиды с центром основания, перпендикулярен основанию. Высота боковой грани,
+  проведённая из вершины пирамиды, называется <b>апофемой</b>.</p>
+  <div class="note"><b>Теорема 1.</b> У правильной пирамиды боковые грани равны, а значит равны и все апофемы.
+  Именно поэтому для неё есть короткая формула площади.</div>
+  <div class="fx">S<sub>бок</sub> правильной пирамиды =
+  <span class="frac"><span>1</span><span>2</span></span> · P<sub>осн</sub> · a</div>
+
+  <h3>5. Апофема — это высота и медиана боковой грани</h3>
+  <p>Разогнём одну боковую грань правильной пирамиды и положим её на плоскость. Получится треугольник SAB,
+  у которого SA = SB (боковые рёбра правильной пирамиды равны), то есть <b>равнобедренный</b>. Апофема SH —
+  это его высота, проведённая к основанию AB.</p>
+  <div class="fig big"><svg viewBox="0 0 700 300">
+<rect x="0" y="0" width="700" height="300" rx="12" fill="#ffffff"/>
+<polygon points="220,40 70,240 370,240" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/>
+<line x1="220" y1="40" x2="220" y2="240" stroke="#b3261e" stroke-width="4"/>
+<circle cx="220" cy="240" r="5" fill="#b3261e"/>
+<polyline points="204.0,240.0 204.0,224.0 220.0,224.0" fill="none" stroke="#b3261e" stroke-width="2"/><line x1="141.5" y1="235.5" x2="141.5" y2="244.5" stroke="#15181e" stroke-width="2.2"/><line x1="148.5" y1="235.5" x2="148.5" y2="244.5" stroke="#15181e" stroke-width="2.2"/><line x1="291.5" y1="235.5" x2="291.5" y2="244.5" stroke="#15181e" stroke-width="2.2"/><line x1="298.5" y1="235.5" x2="298.5" y2="244.5" stroke="#15181e" stroke-width="2.2"/><line x1="139.4" y1="135.8" x2="150.6" y2="144.2" stroke="#15181e" stroke-width="2.2"/><line x1="300.6" y1="135.8" x2="289.4" y2="144.2" stroke="#15181e" stroke-width="2.2"/>
+<line x1="222" y1="132" x2="392" y2="112" stroke="#b3261e" stroke-width="1.4" opacity="0.8"/>
+<text x="220" y="30" font-size="19" fill="#15181e" text-anchor="middle" font-weight="600">S</text><text x="56" y="254" font-size="19" fill="#15181e" text-anchor="start" font-weight="600">A</text><text x="378" y="254" font-size="19" fill="#15181e" text-anchor="start" font-weight="600">B</text><text x="220" y="266" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">H — середина AB</text>
+<text x="398" y="118" font-size="20" fill="#b3261e" text-anchor="start" font-weight="600">апофема SH</text><text x="398" y="152" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">SH ⊥ AB — значит высота</text><text x="398" y="180" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">AH = HB — значит медиана</text><text x="398" y="222" font-size="19" fill="#15181e" text-anchor="start" font-weight="600">S грани = ½ · AB · SH</text>
+</svg></div>
+  <p>А в равнобедренном треугольнике высота, проведённая к основанию, обладает сразу тремя свойствами:</p>
+  <ul>
+    <li>она <b>высота</b> — перпендикулярна стороне основания (угол SHA = 90°);</li>
+    <li>она <b>медиана</b> — делит сторону основания пополам, AH = HB;</li>
+    <li>она <b>биссектриса</b> — делит угол при вершине пополам.</li>
+  </ul>
+  <div class="note">Отсюда рабочий приём во всех задачах: <b>апофема приходит точно в середину стороны
+  основания</b>. Поэтому отрезок от центра основания до точки H равен половине стороны (для квадрата)
+  или радиусу вписанной окружности r (в общем случае), а угол при H прямой — и получается прямоугольный
+  треугольник, в котором работает теорема Пифагора.</div>
+  <div class="fx">S<sub>боковой грани</sub> = ½ · a<sub>осн</sub> · a<sub>апофема</sub></div>
+  <p class="small">Сложив n таких площадей, как раз и получаем S<sub>бок</sub> = ½ · P · a.</p>
+
+  <h3>6. Повторение: равносторонний треугольник</h3>
+  <p>Он же правильный треугольник — тот, что чаще всего лежит в основании правильной треугольной призмы
+  и пирамиды.</p>
+  <div class="fig big"><svg viewBox="0 0 700 300">
+<rect x="0" y="0" width="700" height="300" rx="12" fill="#ffffff"/>
+<polygon points="210,32 80,257 340,257" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/>
+<line x1="210" y1="32" x2="210" y2="257" stroke="#b3261e" stroke-width="3.4"/>
+<circle cx="210" cy="257" r="4.5" fill="#b3261e"/>
+<polyline points="195.0,257.0 195.0,242.0 210.0,242.0" fill="none" stroke="#b3261e" stroke-width="2"/><line x1="141.5" y1="252.5" x2="141.5" y2="261.5" stroke="#15181e" stroke-width="2.2"/><line x1="148.5" y1="252.5" x2="148.5" y2="261.5" stroke="#15181e" stroke-width="2.2"/><line x1="271.5" y1="252.5" x2="271.5" y2="261.5" stroke="#15181e" stroke-width="2.2"/><line x1="278.5" y1="252.5" x2="278.5" y2="261.5" stroke="#15181e" stroke-width="2.2"/>
+<path d="M 101 257 A 21 21 0 0 0 90.5 238.8" fill="none" stroke="#2f6bd8" stroke-width="2"/>
+<path d="M 329.5 238.8 A 21 21 0 0 0 319 257" fill="none" stroke="#2f6bd8" stroke-width="2"/>
+<path d="M 199.5 51 A 21 21 0 0 0 220.5 51" fill="none" stroke="#2f6bd8" stroke-width="2"/>
+<line x1="212" y1="140" x2="392" y2="126" stroke="#b3261e" stroke-width="1.4" opacity="0.8"/>
+<text x="110" y="246" font-size="16" fill="#2f6bd8" text-anchor="start" font-weight="600">60°</text><text x="284" y="246" font-size="16" fill="#2f6bd8" text-anchor="start" font-weight="600">60°</text><text x="210" y="76" font-size="16" fill="#2f6bd8" text-anchor="middle" font-weight="600">60°</text><text x="66" y="272" font-size="19" fill="#15181e" text-anchor="start" font-weight="600">A</text><text x="348" y="272" font-size="19" fill="#15181e" text-anchor="start" font-weight="600">B</text><text x="210" y="24" font-size="19" fill="#15181e" text-anchor="middle" font-weight="600">C</text>
+<text x="398" y="100" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">CH — это сразу</text><text x="398" y="132" font-size="20" fill="#b3261e" text-anchor="start" font-weight="600">высота = медиана =</text><text x="398" y="160" font-size="20" fill="#b3261e" text-anchor="start" font-weight="600">= биссектриса</text><text x="398" y="208" font-size="20" fill="#15181e" text-anchor="start" font-weight="600">h = a · √3 : 2</text>
+</svg></div>
+  <ul>
+    <li>все три стороны равны, все три угла по <b>60°</b>;</li>
+    <li>в нём <b>высота, медиана, биссектриса и серединный перпендикуляр совпадают</b> — все проведённые
+    из одной вершины это один и тот же отрезок;</li>
+    <li>центр вписанной и центр описанной окружности — одна и та же точка, точка пересечения этих отрезков;</li>
+    <li>она делит каждый из них в отношении 2 : 1 считая от вершины, поэтому <b>R = 2r</b>.</li>
+  </ul>
+  <div class="fx"><span class="fi">h = a · √3 : 2</span><span class="fi">S = a² · √3 : 4</span><span class="fi">R = a · √3 : 3</span><span class="fi">r = a · √3 : 6 = R : 2</span></div>
+  <p class="small">Проверка на числах: при a = 6√3 получаем R = 6√3 · √3 : 3 = 6 и r = 3 — ровно те числа,
+  что встретятся в примере 5 и в задаче 11.</p>
+
+  <h3>7. Повторение: параллелограмм и его частные случаи</h3>
+  <p><b>Параллелограмм</b> — четырёхугольник, у которого противоположные стороны попарно параллельны.
+  Именно параллелограммы лежат в боковых гранях любой призмы.</p>
+  <div class="fig big"><svg viewBox="0 0 500 375">
+<rect x="0" y="0" width="500" height="375" rx="12" fill="#ffffff"/>
+<polygon points="70,145 180,145 205,62 95,62" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/><line x1="125.0" y1="140.5" x2="125.0" y2="149.5" stroke="#15181e" stroke-width="2.2"/><line x1="150.0" y1="57.5" x2="150.0" y2="66.5" stroke="#15181e" stroke-width="2.2"/><line x1="85.4" y1="98.4" x2="76.7" y2="100.9" stroke="#15181e" stroke-width="2.2"/><line x1="87.3" y1="105.1" x2="78.6" y2="107.6" stroke="#15181e" stroke-width="2.2"/><line x1="195.4" y1="98.4" x2="186.7" y2="100.9" stroke="#15181e" stroke-width="2.2"/><line x1="197.3" y1="105.1" x2="188.6" y2="107.6" stroke="#15181e" stroke-width="2.2"/><text x="137" y="176" font-size="17" fill="#15181e" text-anchor="middle" font-weight="600">параллелограмм</text><polygon points="305,145 425,145 425,62 305,62" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/><polyline points="320.0,145.0 320.0,130.0 305.0,130.0" fill="none" stroke="#15181e" stroke-width="2"/><polyline points="410.0,62.0 410.0,77.0 425.0,77.0" fill="none" stroke="#15181e" stroke-width="2"/><text x="365" y="176" font-size="17" fill="#15181e" text-anchor="middle" font-weight="600">прямоугольник</text><polygon points="135,212 200,271 135,330 70,271" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/><line x1="70" y1="271" x2="200" y2="271" stroke="#2f6bd8" stroke-width="2" stroke-dasharray="6 5"/><line x1="135" y1="212" x2="135" y2="330" stroke="#2f6bd8" stroke-width="2" stroke-dasharray="6 5"/><polyline points="147.0,271.0 147.0,259.0 135.0,259.0" fill="none" stroke="#2f6bd8" stroke-width="2"/><line x1="165.0" y1="238.7" x2="171.0" y2="245.3" stroke="#15181e" stroke-width="2.2"/><line x1="105.0" y1="238.7" x2="99.0" y2="245.3" stroke="#15181e" stroke-width="2.2"/><line x1="171.0" y1="296.7" x2="165.0" y2="303.3" stroke="#15181e" stroke-width="2.2"/><line x1="99.0" y1="296.7" x2="105.0" y2="303.3" stroke="#15181e" stroke-width="2.2"/><text x="135" y="356" font-size="17" fill="#15181e" text-anchor="middle" font-weight="600">ромб</text><polygon points="320,215 410,215 410,305 320,305" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/><polyline points="335.0,305.0 335.0,290.0 320.0,290.0" fill="none" stroke="#15181e" stroke-width="2"/><polyline points="395.0,215.0 395.0,230.0 410.0,230.0" fill="none" stroke="#15181e" stroke-width="2"/><line x1="365.0" y1="300.5" x2="365.0" y2="309.5" stroke="#15181e" stroke-width="2.2"/><line x1="365.0" y1="210.5" x2="365.0" y2="219.5" stroke="#15181e" stroke-width="2.2"/><line x1="324.5" y1="260.0" x2="315.5" y2="260.0" stroke="#15181e" stroke-width="2.2"/><line x1="414.5" y1="260.0" x2="405.5" y2="260.0" stroke="#15181e" stroke-width="2.2"/><text x="365" y="356" font-size="17" fill="#15181e" text-anchor="middle" font-weight="600">квадрат</text>
+</svg></div>
+  <div class="scroll"><table class="wrap-t">
+    <tr><th>фигура</th><th>что добавилось</th><th>свойства</th></tr>
+    <tr><th>параллелограмм</th><td>—</td>
+        <td>противоположные стороны и углы равны; сумма соседних углов 180°;<br>диагонали точкой пересечения делятся пополам</td></tr>
+    <tr><th>прямоугольник</th><td>все углы прямые</td>
+        <td>всё, что у параллелограмма, плюс <b>диагонали равны</b></td></tr>
+    <tr><th>ромб</th><td>все стороны равны</td>
+        <td>всё, что у параллелограмма, плюс <b>диагонали перпендикулярны</b> и делят углы пополам</td></tr>
+    <tr><th>квадрат</th><td>и то и другое</td>
+        <td>всё сразу: диагонали равны, перпендикулярны, делятся пополам и делят углы пополам</td></tr>
+  </table></div>
+  <div class="note">Главный рабочий факт про ромб: половины диагоналей — <b>катеты</b> прямоугольного
+  треугольника, а сторона ромба — его <b>гипотенуза</b>. Так из диагоналей 10 и 24 получается сторона
+  √(5² + 12²) = 13 — см. пример 6.</div>
+
+  <h3>8. Площадь: свойства и формулы</h3>
+  <p>Свойства площади, на которых всё держится:</p>
+  <ul>
+    <li>площадь квадрата со стороной 1 равна 1 — это единица измерения;</li>
+    <li><b>равные фигуры имеют равные площади</b> (поэтому у правильной пирамиды достаточно посчитать
+    одну боковую грань и умножить на их число);</li>
+    <li><b>площадь фигуры равна сумме площадей её частей</b> — на этом стоит вся идея развёртки:
+    боковая поверхность равна сумме площадей боковых граней;</li>
+    <li>площадь — величина положительная.</li>
+  </ul>
+  <div class="fx"><span class="fi">прямоугольник S = a · b</span><span class="fi">квадрат S = a²</span><span class="fi">параллелограмм S = a · h</span><span class="fi">ромб S = ½ · d₁ · d₂</span><span class="fi">треугольник S = ½ · a · h</span><span class="fi">трапеция S = ½ · (a + b) · h</span></div>
+  <div class="scroll"><table class="wrap-t">
+    <tr><th>фигура</th><th>площадь</th><th>что нужно знать</th></tr>
+    <tr><th>прямоугольник</th><td>S = a · b</td><td>две соседние стороны</td></tr>
+    <tr><th>квадрат</th><td>S = a²</td><td>сторона</td></tr>
+    <tr><th>параллелограмм</th><td>S = a · h</td><td>сторона и высота, проведённая к ней</td></tr>
+    <tr><th>ромб</th><td>S = a · h = ½ d₁ · d₂</td><td>сторона и высота либо две диагонали</td></tr>
+    <tr><th>треугольник</th><td>S = ½ a · h</td><td>сторона и высота к ней</td></tr>
+    <tr><th>равносторонний треугольник</th><td>S = a²√3 / 4</td><td>только сторона</td></tr>
+    <tr><th>трапеция</th><td>S = ½ (a + b) · h</td><td>оба основания и высота</td></tr>
+  </table></div>
+  <p class="small">В этой теме площади плоских фигур нужны для оснований: например, площадь полной
+  поверхности = S<sub>бок</sub> + площади оснований.</p>
+
+  <h3>9. Сколько у фигуры элементов и где какой радиус</h3>
+  <div class="scroll"><table>
+    <tr><th></th><th>вершин</th><th>рёбер</th><th>граней</th></tr>
+    <tr><th>n-угольная призма</th><td>2n</td><td>3n</td><td>n + 2</td></tr>
+    <tr><th>n-угольная пирамида</th><td>n + 1</td><td>2n</td><td>n + 1</td></tr>
+  </table></div>
+  <p class="small">Формулы можно не заучивать, а каждый раз выводить по чертежу: у призмы два основания
+  и по одной боковой грани на каждую сторону основания; у пирамиды одно основание и одна общая вершина.</p>
+  <div class="note"><b>Развилка в задачах на пирамиду.</b> Из вершины идут три разных отрезка, и каждый
+  опирается на свой радиус:<br>
+  - <b>высота</b> — в центр основания;<br>
+  - <b>боковое ребро</b> — в вершину основания, поэтому работает с <b>R</b> (радиусом описанной окружности);<br>
+  - <b>апофема</b> — в середину стороны, поэтому работает с <b>r</b> (радиусом вписанной).<br>
+  Для правильного треугольника R = a√3/3 и r = R/2; для квадрата r = a/2, а R = a√2/2.</div>
+
+  <h3>10. Тела вращения</h3>
+  <div class="fig big"><svg viewBox="0 0 700 230">
+<rect x="0" y="0" width="700" height="230" rx="12" fill="#ffffff"/>
+<g fill="#e8f0ff" stroke="#15181e" stroke-width="2.5">
+  <path d="M 40 50 A 55 18 0 0 1 150 50 L 150 170 A 55 18 0 0 1 40 170 Z"/>
+  <ellipse cx="95" cy="50" rx="55" ry="18"/>
+  <path d="M 300 30 L 355 170 A 55 18 0 0 1 245 170 Z"/>
+  <ellipse cx="500" cy="110" rx="80" ry="80"/>
+</g>
+<g stroke="#15181e" stroke-width="2.5" fill="none" stroke-dasharray="6 5">
+  <path d="M 245 170 A 55 18 0 0 0 355 170"/>
+  <path d="M 420 110 A 80 26 0 0 0 580 110"/>
+</g>
+<g font-size="19" text-anchor="middle" font-weight="600" fill="#15181e">
+  <text x="95" y="215">цилиндр</text>
+  <text x="300" y="215">конус</text>
+  <text x="500" y="215">шар</text>
+</g>
+</svg></div>
+  <p><b>Цилиндр</b> получается вращением прямоугольника вокруг его стороны, <b>конус</b> — вращением
+  прямоугольного треугольника вокруг катета, <b>шар</b> — вращением круга вокруг диаметра.
+  Поверхность шара называется <b>сферой</b>. У цилиндра и конуса сторона, которая описывает боковую
+  поверхность, называется <b>образующей</b>, а неподвижная сторона — <b>осью</b>.</p>
+
+  <div class="note"><b>Три ловушки, на которых теряют баллы:</b><br>
+  - апофему путают с высотой пирамиды и с боковым ребром;<br>
+  - формулу S = P · h применяют к наклонной призме, где она не работает;<br>
+  - формулу ½ · P · a применяют к неправильной пирамиде, где апофемы разные.</div>
+</div>
+
+<div class="card">
+  <h2>Разобранные примеры</h2>
+  <p class="meta">Шесть примеров закрывают все типы задач этой домашки. К каждому есть объёмный чертёж:
+  покрути его и понажимай на элементы — сначала разберись в фигуре, потом открывай решение.</p>
+
+  <div class="ex">
+  <h3>Пример 1. Считаем вершины, рёбра и грани</h3>
+  <p class="q">Сколько вершин, рёбер и граней у пятиугольной призмы ABCDE&nbsp;A₁B₁C₁D₁E₁?</p>
+  <div class="m3d"><svg id="ex1" viewBox="0 0 460 274" aria-label="объёмный чертёж"></svg><div class="m3dbar" id="ex1bar"></div><div class="m3dcap" id="ex1cap"></div><div class="m3dhint">Покрути чертёж и понажимай на элементы.</div></div>
+  <details><summary>Показать решение</summary>
+    <div class="step">1. Основания. У призмы их два, каждое — пятиугольник.</div>
+    <div class="step">2. Вершины. В каждом основании по 5 вершин, других вершин у призмы нет:
+    2 · 5 = 10 вершин.</div>
+    <div class="step">3. Рёбра. В каждом основании по 5 рёбер — это 10. Плюс боковые рёбра:
+    они соединяют вершины верхнего и нижнего оснований, их 5. Всего 10 + 5 = 15 рёбер.</div>
+    <div class="step">4. Грани. Два основания плюс по одной боковой грани на каждую сторону основания:
+    2 + 5 = 7 граней.</div>
+    <div class="fx"><span class="fi">вершин 2n = 10</span><span class="fi">рёбер 3n = 15</span><span class="fi">граней n + 2 = 7</span></div>
+    <div class="step"><b>Ответ:</b> 10 вершин, 15 рёбер, 7 граней.</div>
+  </details>
+  </div>
+
+  <div class="ex">
+  <h3>Пример 2. Боковая поверхность прямой призмы</h3>
+  <p class="q">В основании прямой призмы ABCD&nbsp;A₁B₁C₁D₁ прямоугольник со сторонами
+  AB = 5 см и BC = 4 см, боковое ребро BB₁ = 6 см. Найти площадь боковой поверхности.</p>
+  <div class="m3d"><svg id="ex2" viewBox="0 0 460 274" aria-label="объёмный чертёж"></svg><div class="m3dbar" id="ex2bar"></div><div class="m3dcap" id="ex2cap"></div><div class="m3dhint">Покрути чертёж и понажимай на элементы.</div></div>
+  <details><summary>Показать решение</summary>
+    <div class="step">1. Проверяем условие формулы. Призма прямая, значит боковые рёбра перпендикулярны
+    основанию и все боковые грани — прямоугольники. Работает S<sub>бок</sub> = P<sub>осн</sub> · h.</div>
+    <div class="step">2. Периметр основания. Основание — прямоугольник:
+    P = 2 · (4 + 5) = 2 · 9 = 18 см.</div>
+    <div class="step">3. Высота призмы равна боковому ребру: h = 6 см.</div>
+    <div class="fx">S<sub>бок</sub> = P<sub>осн</sub> · h = 18 · 6 = 108 см²</div>
+    <div class="step"><b>Ответ:</b> 108 см².</div>
+    <div class="note">Проверка «руками», без формулы: боковых граней четыре — две 4 × 6 и две 5 × 6.
+    Это 2 · 24 + 2 · 30 = 48 + 60 = 108 см². Сходится, значит формула применена верно.</div>
+  </details>
+  </div>
+
+  <div class="ex">
+  <h3>Пример 3. Обратная задача про пирамиду</h3>
+  <p class="q">Площадь боковой поверхности правильной четырёхугольной пирамиды SABCD равна 240 см²,
+  апофема SH = 12 см. Найти площадь основания.</p>
+  <div class="m3d"><svg id="ex3" viewBox="0 0 460 274" aria-label="объёмный чертёж"></svg><div class="m3dbar" id="ex3bar"></div><div class="m3dcap" id="ex3cap"></div><div class="m3dhint">Покрути чертёж и понажимай на элементы.</div></div>
+  <details><summary>Показать решение</summary>
+    <div class="step">1. Записываем формулу: S<sub>бок</sub> = ½ · P · a. Здесь известны S и a,
+    а найти надо сторону основания — значит выражаем периметр.</div>
+    <div class="step">2. Из S = ½ · P · a следует P = 2 · S : a = 2 · 240 : 12 = 480 : 12 = 40 см.</div>
+    <div class="step">3. Пирамида четырёхугольная и правильная, значит в основании квадрат:
+    сторона = P : 4 = 40 : 4 = 10 см.</div>
+    <div class="fx">P = 2 · S : a = 2 · 240 : 12 = 40 см &nbsp;→&nbsp; AB = 40 : 4 = 10 см</div>
+    <div class="fx">S<sub>осн</sub> = AB² = 10² = 100 см²</div>
+    <div class="step"><b>Ответ:</b> 100 см².</div>
+    <div class="note">Проверка через одну грань: боковая грань — треугольник с основанием 10 и высотой
+    (апофемой) 12, её площадь ½ · 10 · 12 = 60 см². Четыре грани дают 240 см². Сходится.</div>
+  </details>
+  </div>
+
+  <div class="ex">
+  <h3>Пример 4. Апофема и высота — теорема Пифагора</h3>
+  <p class="q">У правильной четырёхугольной пирамиды SABCD апофема SH = 30 см, высота SO = 24 см.
+  Найти площадь боковой поверхности.</p>
+  <div class="m3d"><svg id="ex4" viewBox="0 0 460 274" aria-label="объёмный чертёж"></svg><div class="m3dbar" id="ex4bar"></div><div class="m3dcap" id="ex4cap"></div><div class="m3dhint">Покрути чертёж и понажимай на элементы.</div></div>
+  <details><summary>Показать решение</summary>
+    <div class="step">1. Строим чертёж: SO — высота (в центр основания O), SH — апофема
+    (к середине H стороны AB). Отрезок OH лежит в плоскости основания.</div>
+    <div class="step">2. Треугольник SOH прямоугольный: угол при O прямой, потому что высота
+    перпендикулярна основанию. Гипотенуза — апофема SH = 30 см, катет SO = 24 см.</div>
+    <div class="step">3. По теореме Пифагора: OH = √(30² − 24²) = √(900 − 576) = √324 = 18 см.</div>
+    <div class="step">4. Апофема приходит в середину стороны (она же медиана боковой грани), а в основании
+    квадрат, поэтому OH равен половине стороны: AB = 2 · 18 = 36 см.</div>
+    <div class="step">5. Периметр основания: P = 4 · 36 = 144 см.</div>
+    <div class="fx">OH = √(SH² − SO²) = √(30² − 24²) = 18 см &nbsp;→&nbsp; AB = 2 · OH = 36 см</div>
+    <div class="fx">S<sub>бок</sub> = ½ · P · SH = ½ · 144 · 30 = 2160 см²</div>
+    <div class="step"><b>Ответ:</b> 2160 см².</div>
+    <div class="note">Самая частая ошибка здесь — подставить в формулу 24 см. Но 24 — это высота пирамиды,
+    а в формуле стоит апофема, то есть 30.</div>
+  </details>
+  </div>
+
+  <div class="ex">
+  <h3>Пример 5. Боковое ребро и апофема через высоту</h3>
+  <p class="q">У правильной треугольной пирамиды SABC сторона основания AB = 6√3 см, высота SO = 8 см.
+  Найти боковое ребро SA и апофему SH.</p>
+  <div class="m3d"><svg id="ex5" viewBox="0 0 460 274" aria-label="объёмный чертёж"></svg><div class="m3dbar" id="ex5bar"></div><div class="m3dcap" id="ex5cap"></div><div class="m3dhint">Покрути чертёж и понажимай на элементы.</div></div>
+  <details><summary>Показать решение</summary>
+    <div class="step">1. Вершина S проецируется в центр O правильного треугольника ABC.
+    Значит все прямоугольные треугольники строятся из высоты SO = 8 см.</div>
+    <div class="step">2. Боковое ребро SA опирается на вершину A, поэтому нужен радиус описанной
+    окружности: R = OA = a√3 : 3 = 6√3 · √3 : 3 = 6 · 3 : 3 = 6 см.</div>
+    <div class="step">3. Треугольник SOA прямоугольный с катетами 8 и 6:
+    SA = √(8² + 6²) = √(64 + 36) = √100 = 10 см.</div>
+    <div class="step">4. Апофема SH опирается на середину стороны, поэтому нужен радиус вписанной
+    окружности: r = OH = R : 2 = 3 см.</div>
+    <div class="fx">R = OA = a · √3 : 3 = 6 см &nbsp;→&nbsp; SA = √(SO² + OA²) = √(8² + 6²) = 10 см</div>
+    <div class="fx">r = OH = R : 2 = 3 см &nbsp;→&nbsp; SH = √(SO² + OH²) = √(8² + 3²) = √73 см</div>
+    <div class="step"><b>Ответ:</b> боковое ребро SA = 10 см, апофема SH = √73 см.</div>
+    <div class="note">Запомни развилку: ребро опирается на вершину основания — берём R;
+    апофема опирается на середину стороны — берём r. Отсюда и разные ответы.</div>
+  </details>
+  </div>
+
+  <div class="ex">
+  <h3>Пример 6. Когда периметр основания надо ещё найти</h3>
+  <p class="q">Основание прямого параллелепипеда ABCD&nbsp;A₁B₁C₁D₁ — ромб с диагоналями
+  AC = 24 см и BD = 10 см, боковое ребро AA₁ = 8 см. Найти площадь боковой поверхности.</p>
+  <div class="m3d"><svg id="ex6" viewBox="0 0 460 274" aria-label="объёмный чертёж"></svg><div class="m3dbar" id="ex6bar"></div><div class="m3dcap" id="ex6cap"></div><div class="m3dhint">Покрути чертёж и понажимай на элементы.</div></div>
+  <details><summary>Показать решение</summary>
+    <div class="step">1. Параллелепипед прямой, значит S<sub>бок</sub> = P<sub>осн</sub> · h.
+    Но периметра ромба в условии нет — сначала ищем его сторону.</div>
+    <div class="step">2. Диагонали ромба перпендикулярны и точкой пересечения делятся пополам,
+    поэтому половины равны 5 см и 12 см, и они — катеты прямоугольного треугольника.</div>
+    <div class="step">3. Сторона ромба — гипотенуза: √(5² + 12²) = √(25 + 144) = √169 = 13 см.</div>
+    <div class="step">4. У ромба все стороны равны: P = 4 · 13 = 52 см.</div>
+    <div class="fx">AB = √((AC:2)² + (BD:2)²) = √(12² + 5²) = 13 см &nbsp;→&nbsp; P = 4 · 13 = 52 см</div>
+    <div class="fx">S<sub>бок</sub> = P · h = 52 · 8 = 416 см²</div>
+    <div class="step"><b>Ответ:</b> 416 см².</div>
+    <div class="note">Такой же ход в задаче 12: там основание — трапеция, и её боковую сторону
+    тоже приходится искать по теореме Пифагора, прежде чем считать периметр.</div>
+  </details>
+  </div>
+</div>
+
+<div class="card sheet">
+  <h2>Шпаргалка</h2>
+  <p class="small">Этот блок печатается отдельно на один лист A4: Ctrl+P (⌘+P) → печать.</p>
+  <p class="f-formula"><b>Призма:</b> два равных основания, боковые грани — параллелограммы.
+  Прямая — боковые грани прямоугольники; правильная — прямая с правильным основанием.</p>
+  <p class="f-formula"><b>Пирамида:</b> основание-многоугольник и треугольные боковые грани с общей вершиной.
+  Правильная — правильное основание плюс высота в его центр. Апофема — высота боковой грани, она же
+  её медиана: приходит в середину стороны основания.</p>
+  <p class="f-formula"><b>Площади тел:</b> S<sub>бок</sub> прямой призмы = P · h;
+  S<sub>бок</sub> правильной пирамиды = ½ · P · a; S<sub>полн</sub> = S<sub>бок</sub> + площади оснований.</p>
+  <div class="scroll"><table>
+    <tr><th></th><th>вершин</th><th>рёбер</th><th>граней</th></tr>
+    <tr><th>n-угольная призма</th><td>2n</td><td>3n</td><td>n + 2</td></tr>
+    <tr><th>n-угольная пирамида</th><td>n + 1</td><td>2n</td><td>n + 1</td></tr>
+  </table></div>
+  <div class="scroll"><table>
+    <tr><th>прямоугольник</th><th>квадрат</th><th>параллелограмм</th><th>ромб</th><th>треугольник</th><th>трапеция</th></tr>
+    <tr><td>a · b</td><td>a²</td><td>a · h</td><td>½ d₁d₂</td><td>½ a · h</td><td>½ (a + b) h</td></tr>
+  </table></div>
+  <p style="font-size:15px"><b>Три отрезка из вершины пирамиды:</b> высота — в центр основания;
+  боковое ребро — в вершину основания (работает с R); апофема — в середину стороны (работает с r).</p>
+  <p style="font-size:15px"><b>Равносторонний треугольник со стороной a:</b> углы по 60°;
+  высота = медиана = биссектриса = a√3/2; S = a²√3/4; R = a√3/3; r = a√3/6 = R/2.
+  Для квадрата со стороной a: r = a/2, R = a√2/2.</p>
+  <p style="font-size:15px"><b>Ромб:</b> диагонали перпендикулярны и делятся пополам, поэтому
+  сторона = √((d₁/2)² + (d₂/2)²). <b>Прямоугольник:</b> диагонали равны.</p>
+  <p style="font-size:15px"><b>Порядок в задачах на пирамиду:</b> нарисовать высоту, апофему и радиус
+  → выделить прямоугольный треугольник → теорема Пифагора → периметр основания → формула площади.</p>
+</div>
+
+<div class="card">
+  <h2>Домашнее задание</h2>
+  <p class="meta">Ответы — числа, единицы измерения писать не нужно. Запятая и точка равнозначны,
+  корень можно вставить кнопкой √ над полем. Подсказки открываются по одной кнопкой «Подсказка».</p>
+  <div id="tasks"></div>
+</div>
+
+<div class="card">
+  <h2>Шаг 1. Прикрепи фото решений</h2>
+  <p class="meta">Ответы в полях — это только результат. Преподаватель проверяет ещё и ход решения,
+  поэтому без фото тетради работа не отправляется.</p>
+  <ol class="steps-list">
+    <li>Реши задачи в тетради, как обычно, с полной записью и чертежами.</li>
+    <li>Сфотографируй страницы: при дневном свете, чтобы текст читался и не было теней от руки.</li>
+    <li>Нажми кнопку ниже. С телефона выбирай «Камера» или «Фото», с компьютера — файл из папки.</li>
+    <li>Фото можно приложить несколько сразу и отметить у каждого, к какой задаче оно относится.</li>
+  </ol>
+  <input type="file" id="photos" accept="image/*" multiple style="margin-top:12px">
+  <div class="thumbs" id="thumbs"></div>
+</div>
+
+<div class="card">
+  <h2>Шаг 2. Отправь работу</h2>
+  <p class="meta">Проверь, что вверху страницы написано твоё имя, а выше приложены фото.
+  По кнопке ответы, результат и фотографии уходят преподавателю — пересылать ничего не нужно.
+  Вторая кнопка просто сохраняет копию тебе на устройство.</p>
+  <div class="row">
+    <button class="pri" id="send">Отправить на проверку</button>
+    <button id="report">Скачать копию себе</button>
+  </div>
+  <div id="repnote" class="meta" style="margin-top:8px"></div>
+</div>
+
+</div>
+
+<div class="bar">
+  <button class="pri" id="checkall">Проверить всё</button>
+  <span id="progress" class="meta">решено 0 из 12</span>
+</div>
+
+<script>var F = {"pr3": "<svg viewBox=\"0 0 500 300\"><rect x=\"0\" y=\"0\" width=\"500\" height=\"300\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"250.0,79.0 333.1,121.0 166.9,121.0\" fill=\"#e8f0ff\" stroke=\"none\"/><polygon points=\"333.1,236.0 166.9,236.0 166.9,121.0 333.1,121.0\" fill=\"#dbe6f8\" stroke=\"none\"/><line x1=\"250.0\" y1=\"194.0\" x2=\"333.1\" y2=\"236.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"166.9\" y1=\"236.0\" x2=\"250.0\" y2=\"194.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"250.0\" y1=\"79.0\" x2=\"333.1\" y2=\"121.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"166.9\" y1=\"121.0\" x2=\"250.0\" y2=\"79.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"250.0\" y1=\"194.0\" x2=\"250.0\" y2=\"79.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"333.1\" y1=\"236.0\" x2=\"333.1\" y2=\"121.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"166.9\" y1=\"236.0\" x2=\"166.9\" y2=\"121.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"333.1\" y1=\"236.0\" x2=\"166.9\" y2=\"236.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"333.1\" y1=\"121.0\" x2=\"166.9\" y2=\"121.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"250\" y=\"63\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">верхнее основание</text><text x=\"250\" y=\"278\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">нижнее основание</text><text x=\"250\" y=\"170\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">боковая грань</text><line x1=\"333.1\" y1=\"178.5\" x2=\"353.1\" y2=\"148.5\" stroke=\"#15181e\" stroke-width=\"1.3\" opacity=\"0.75\"/><circle cx=\"333.1\" cy=\"178.5\" r=\"3\" fill=\"#15181e\"/><text x=\"357\" y=\"152\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">боковое</text><text x=\"357\" y=\"174\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">ребро</text></svg>", "pir4": "<svg viewBox=\"0 0 500 330\"><rect x=\"0\" y=\"0\" width=\"500\" height=\"330\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"250.0,100.0 290.5,275.4 163.0,261.8\" fill=\"#dbe6f8\" stroke=\"none\"/><polygon points=\"250.0,100.0 337.0,238.2 290.5,275.4\" fill=\"#dbe6f8\" stroke=\"none\"/><line x1=\"163.0\" y1=\"261.8\" x2=\"209.5\" y2=\"224.6\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"209.5\" y1=\"224.6\" x2=\"337.0\" y2=\"238.2\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"250.0\" y1=\"100.0\" x2=\"290.5\" y2=\"275.4\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"250.0\" y1=\"100.0\" x2=\"163.0\" y2=\"261.8\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"250.0\" y1=\"100.0\" x2=\"209.5\" y2=\"224.6\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"250.0\" y1=\"100.0\" x2=\"337.0\" y2=\"238.2\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"290.5\" y1=\"275.4\" x2=\"163.0\" y2=\"261.8\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"337.0\" y1=\"238.2\" x2=\"290.5\" y2=\"275.4\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"250\" y=\"82\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">вершина пирамиды</text><text x=\"250\" y=\"308\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">основание</text><line x1=\"234.5\" y1=\"214.4\" x2=\"326.5\" y2=\"204.4\" stroke=\"#15181e\" stroke-width=\"1.3\" opacity=\"0.75\"/><circle cx=\"234.5\" cy=\"214.4\" r=\"3\" fill=\"#15181e\"/><text x=\"330\" y=\"209\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">боковая грань</text><line x1=\"206.5\" y1=\"180.9\" x2=\"164.5\" y2=\"154.9\" stroke=\"#2f6bd8\" stroke-width=\"1.3\" opacity=\"0.75\"/><circle cx=\"206.5\" cy=\"180.9\" r=\"3\" fill=\"#2f6bd8\"/><text x=\"160\" y=\"159\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"end\" font-weight=\"600\">боковое ребро</text></svg>", "pr7": "<svg viewBox=\"0 0 500 300\"><rect x=\"0\" y=\"0\" width=\"500\" height=\"300\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"250.0,79.0 325.1,89.5 343.6,113.2 291.7,132.2 208.3,132.2 156.4,113.2 174.9,89.5\" fill=\"#e8f0ff\" stroke=\"none\"/><polygon points=\"343.6,228.2 291.7,247.2 291.7,132.2 343.6,113.2\" fill=\"#dbe6f8\" stroke=\"none\"/><polygon points=\"291.7,247.2 208.3,247.2 208.3,132.2 291.7,132.2\" fill=\"#dbe6f8\" stroke=\"none\"/><polygon points=\"208.3,247.2 156.4,228.2 156.4,113.2 208.3,132.2\" fill=\"#dbe6f8\" stroke=\"none\"/><line x1=\"250.0\" y1=\"194.0\" x2=\"325.1\" y2=\"204.5\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"325.1\" y1=\"204.5\" x2=\"343.6\" y2=\"228.2\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"156.4\" y1=\"228.2\" x2=\"174.9\" y2=\"204.5\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"174.9\" y1=\"204.5\" x2=\"250.0\" y2=\"194.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"250.0\" y1=\"79.0\" x2=\"325.1\" y2=\"89.5\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"325.1\" y1=\"89.5\" x2=\"343.6\" y2=\"113.2\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"156.4\" y1=\"113.2\" x2=\"174.9\" y2=\"89.5\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"174.9\" y1=\"89.5\" x2=\"250.0\" y2=\"79.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"250.0\" y1=\"194.0\" x2=\"250.0\" y2=\"79.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"325.1\" y1=\"204.5\" x2=\"325.1\" y2=\"89.5\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"343.6\" y1=\"228.2\" x2=\"343.6\" y2=\"113.2\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"291.7\" y1=\"247.2\" x2=\"291.7\" y2=\"132.2\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"208.3\" y1=\"247.2\" x2=\"208.3\" y2=\"132.2\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"156.4\" y1=\"228.2\" x2=\"156.4\" y2=\"113.2\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"174.9\" y1=\"204.5\" x2=\"174.9\" y2=\"89.5\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"343.6\" y1=\"228.2\" x2=\"291.7\" y2=\"247.2\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"291.7\" y1=\"247.2\" x2=\"208.3\" y2=\"247.2\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"208.3\" y1=\"247.2\" x2=\"156.4\" y2=\"228.2\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"343.6\" y1=\"113.2\" x2=\"291.7\" y2=\"132.2\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"291.7\" y1=\"132.2\" x2=\"208.3\" y2=\"132.2\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"208.3\" y1=\"132.2\" x2=\"156.4\" y2=\"113.2\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"250\" y=\"63\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">верхнее основание</text><text x=\"250\" y=\"278\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">нижнее основание</text><line x1=\"343.6\" y1=\"170.7\" x2=\"363.6\" y2=\"140.7\" stroke=\"#15181e\" stroke-width=\"1.3\" opacity=\"0.75\"/><circle cx=\"343.6\" cy=\"170.7\" r=\"3\" fill=\"#15181e\"/><text x=\"368\" y=\"145\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">боковое</text><text x=\"368\" y=\"166\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">ребро</text></svg>", "pr3_345_10": "<svg viewBox=\"0 0 500 300\"><rect x=\"0\" y=\"0\" width=\"500\" height=\"300\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"250.0,79.0 333.1,121.0 166.9,121.0\" fill=\"#e8f0ff\" stroke=\"none\"/><polygon points=\"333.1,236.0 166.9,236.0 166.9,121.0 333.1,121.0\" fill=\"#dbe6f8\" stroke=\"none\"/><line x1=\"250.0\" y1=\"194.0\" x2=\"333.1\" y2=\"236.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"166.9\" y1=\"236.0\" x2=\"250.0\" y2=\"194.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"250.0\" y1=\"79.0\" x2=\"333.1\" y2=\"121.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"166.9\" y1=\"121.0\" x2=\"250.0\" y2=\"79.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"250.0\" y1=\"194.0\" x2=\"250.0\" y2=\"79.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"333.1\" y1=\"236.0\" x2=\"333.1\" y2=\"121.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"166.9\" y1=\"236.0\" x2=\"166.9\" y2=\"121.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"333.1\" y1=\"236.0\" x2=\"166.9\" y2=\"236.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"333.1\" y1=\"121.0\" x2=\"166.9\" y2=\"121.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"250\" y=\"278\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">стороны основания 3, 4 и 5 см</text><line x1=\"333.1\" y1=\"178.5\" x2=\"353.1\" y2=\"148.5\" stroke=\"#15181e\" stroke-width=\"1.3\" opacity=\"0.75\"/><circle cx=\"333.1\" cy=\"178.5\" r=\"3\" fill=\"#15181e\"/><text x=\"357\" y=\"152\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">боковое</text><text x=\"357\" y=\"174\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">ребро 10 см</text></svg>", "pr6_4_9": "<svg viewBox=\"0 0 500 300\"><rect x=\"0\" y=\"0\" width=\"500\" height=\"300\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"333.1,121.0 250.0,135.0 166.9,121.0 166.9,93.0 250.0,79.0 333.1,93.0\" fill=\"#e8f0ff\" stroke=\"none\"/><polygon points=\"333.1,236.0 250.0,250.0 250.0,135.0 333.1,121.0\" fill=\"#dbe6f8\" stroke=\"none\"/><polygon points=\"250.0,250.0 166.9,236.0 166.9,121.0 250.0,135.0\" fill=\"#dbe6f8\" stroke=\"none\"/><line x1=\"166.9\" y1=\"208.0\" x2=\"250.0\" y2=\"194.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"250.0\" y1=\"194.0\" x2=\"333.1\" y2=\"208.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"166.9\" y1=\"93.0\" x2=\"250.0\" y2=\"79.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"250.0\" y1=\"79.0\" x2=\"333.1\" y2=\"93.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"333.1\" y1=\"236.0\" x2=\"333.1\" y2=\"121.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"250.0\" y1=\"250.0\" x2=\"250.0\" y2=\"135.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"166.9\" y1=\"236.0\" x2=\"166.9\" y2=\"121.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"166.9\" y1=\"208.0\" x2=\"166.9\" y2=\"93.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"250.0\" y1=\"194.0\" x2=\"250.0\" y2=\"79.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"333.1\" y1=\"208.0\" x2=\"333.1\" y2=\"93.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"333.1\" y1=\"236.0\" x2=\"250.0\" y2=\"250.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"250.0\" y1=\"250.0\" x2=\"166.9\" y2=\"236.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"166.9\" y1=\"236.0\" x2=\"166.9\" y2=\"208.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"333.1\" y1=\"208.0\" x2=\"333.1\" y2=\"236.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"333.1\" y1=\"121.0\" x2=\"250.0\" y2=\"135.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"250.0\" y1=\"135.0\" x2=\"166.9\" y2=\"121.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"166.9\" y1=\"121.0\" x2=\"166.9\" y2=\"93.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"333.1\" y1=\"93.0\" x2=\"333.1\" y2=\"121.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"250\" y=\"278\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">сторона основания 4 см</text><line x1=\"333.1\" y1=\"178.5\" x2=\"353.1\" y2=\"148.5\" stroke=\"#15181e\" stroke-width=\"1.3\" opacity=\"0.75\"/><circle cx=\"333.1\" cy=\"178.5\" r=\"3\" fill=\"#15181e\"/><text x=\"357\" y=\"152\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">боковое</text><text x=\"357\" y=\"174\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">ребро 9 см</text></svg>", "pir4_8_5": "<svg viewBox=\"0 0 500 330\"><rect x=\"0\" y=\"0\" width=\"500\" height=\"330\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"250.0,100.0 290.5,275.4 163.0,261.8\" fill=\"#dbe6f8\" stroke=\"none\"/><polygon points=\"250.0,100.0 337.0,238.2 290.5,275.4\" fill=\"#dbe6f8\" stroke=\"none\"/><line x1=\"163.0\" y1=\"261.8\" x2=\"209.5\" y2=\"224.6\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"209.5\" y1=\"224.6\" x2=\"337.0\" y2=\"238.2\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"250.0\" y1=\"100.0\" x2=\"290.5\" y2=\"275.4\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"250.0\" y1=\"100.0\" x2=\"163.0\" y2=\"261.8\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"250.0\" y1=\"100.0\" x2=\"209.5\" y2=\"224.6\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"250.0\" y1=\"100.0\" x2=\"337.0\" y2=\"238.2\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"290.5\" y1=\"275.4\" x2=\"163.0\" y2=\"261.8\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"337.0\" y1=\"238.2\" x2=\"290.5\" y2=\"275.4\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"250.0\" y1=\"100.0\" x2=\"226.7\" y2=\"268.6\" stroke=\"#b3261e\" stroke-width=\"3\"/><circle cx=\"226.7\" cy=\"268.6\" r=\"4\" fill=\"#b3261e\"/><line x1=\"238.4\" y1=\"184.3\" x2=\"186.4\" y2=\"178.3\" stroke=\"#b3261e\" stroke-width=\"1.3\" opacity=\"0.75\"/><circle cx=\"238.4\" cy=\"184.3\" r=\"3\" fill=\"#b3261e\"/><text x=\"182\" y=\"183\" font-size=\"17\" fill=\"#b3261e\" text-anchor=\"end\" font-weight=\"600\">апофема 5 см</text><text x=\"250\" y=\"308\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">сторона основания 8 см</text></svg>", "pir6_a10": "<svg viewBox=\"0 0 500 330\"><rect x=\"0\" y=\"0\" width=\"500\" height=\"330\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"250.0,100.0 333.1,264.0 250.0,278.0\" fill=\"#dbe6f8\" stroke=\"none\"/><polygon points=\"250.0,100.0 250.0,278.0 166.9,264.0\" fill=\"#dbe6f8\" stroke=\"none\"/><polygon points=\"250.0,100.0 166.9,264.0 166.9,236.0\" fill=\"#dbe6f8\" stroke=\"none\"/><polygon points=\"250.0,100.0 333.1,236.0 333.1,264.0\" fill=\"#dbe6f8\" stroke=\"none\"/><line x1=\"166.9\" y1=\"236.0\" x2=\"250.0\" y2=\"222.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"250.0\" y1=\"222.0\" x2=\"333.1\" y2=\"236.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"250.0\" y1=\"100.0\" x2=\"333.1\" y2=\"264.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"250.0\" y1=\"100.0\" x2=\"250.0\" y2=\"278.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"250.0\" y1=\"100.0\" x2=\"166.9\" y2=\"264.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"250.0\" y1=\"100.0\" x2=\"166.9\" y2=\"236.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"250.0\" y1=\"100.0\" x2=\"250.0\" y2=\"222.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"250.0\" y1=\"100.0\" x2=\"333.1\" y2=\"236.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"333.1\" y1=\"264.0\" x2=\"250.0\" y2=\"278.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"250.0\" y1=\"278.0\" x2=\"166.9\" y2=\"264.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"166.9\" y1=\"264.0\" x2=\"166.9\" y2=\"236.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"333.1\" y1=\"236.0\" x2=\"333.1\" y2=\"264.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"250.0\" y1=\"100.0\" x2=\"291.6\" y2=\"271.0\" stroke=\"#b3261e\" stroke-width=\"3\"/><circle cx=\"291.6\" cy=\"271.0\" r=\"4\" fill=\"#b3261e\"/><line x1=\"270.8\" y1=\"185.5\" x2=\"322.8\" y2=\"179.5\" stroke=\"#b3261e\" stroke-width=\"1.3\" opacity=\"0.75\"/><circle cx=\"270.8\" cy=\"185.5\" r=\"3\" fill=\"#b3261e\"/><text x=\"327\" y=\"184\" font-size=\"17\" fill=\"#b3261e\" text-anchor=\"start\" font-weight=\"600\">апофема 10 см</text><text x=\"250\" y=\"308\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">сторона основания — ?</text></svg>", "box4512": "<svg viewBox=\"0 0 460 280\"><rect x=\"0\" y=\"0\" width=\"460\" height=\"280\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"140.0,120.0 310.0,120.0 380.0,78.0 210.0,78.0\" fill=\"#e8f0ff\"/><polygon points=\"140.0,225.0 310.0,225.0 310.0,120.0 140.0,120.0\" fill=\"#dbe6f8\"/><polygon points=\"310.0,225.0 380.0,183.0 380.0,78.0 310.0,120.0\" fill=\"#dbe6f8\"/><line x1=\"140.0\" y1=\"225.0\" x2=\"210.0\" y2=\"183.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"210.0\" y1=\"183.0\" x2=\"380.0\" y2=\"183.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"210.0\" y1=\"183.0\" x2=\"210.0\" y2=\"78.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"140.0\" y1=\"225.0\" x2=\"310.0\" y2=\"225.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"310.0\" y1=\"225.0\" x2=\"380.0\" y2=\"183.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"140.0\" y1=\"225.0\" x2=\"140.0\" y2=\"120.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"310.0\" y1=\"225.0\" x2=\"310.0\" y2=\"120.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"380.0\" y1=\"183.0\" x2=\"380.0\" y2=\"78.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"140.0\" y1=\"120.0\" x2=\"310.0\" y2=\"120.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"310.0\" y1=\"120.0\" x2=\"380.0\" y2=\"78.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"380.0\" y1=\"78.0\" x2=\"210.0\" y2=\"78.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"210.0\" y1=\"78.0\" x2=\"140.0\" y2=\"120.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"225\" y=\"247\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">5 см</text><text x=\"352\" y=\"212\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">4 см</text><line x1=\"140.0\" y1=\"172.0\" x2=\"132.0\" y2=\"172.0\" stroke=\"#15181e\" stroke-width=\"1.3\" opacity=\"0.75\"/><circle cx=\"140.0\" cy=\"172.0\" r=\"3\" fill=\"#15181e\"/><text x=\"128\" y=\"166\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">боковое</text><text x=\"128\" y=\"187\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">ребро 12 см</text><text x=\"250\" y=\"270\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">основание — прямоугольник 4 × 5 см</text></svg>", "kub6": "<svg viewBox=\"0 0 460 280\"><rect x=\"0\" y=\"0\" width=\"460\" height=\"280\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"110.0,90.0 245.0,90.0 303.0,52.0 168.0,52.0\" fill=\"#e8f0ff\"/><polygon points=\"110.0,225.0 245.0,225.0 245.0,90.0 110.0,90.0\" fill=\"#dbe6f8\"/><polygon points=\"245.0,225.0 303.0,187.0 303.0,52.0 245.0,90.0\" fill=\"#dbe6f8\"/><line x1=\"110.0\" y1=\"225.0\" x2=\"168.0\" y2=\"187.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"168.0\" y1=\"187.0\" x2=\"303.0\" y2=\"187.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"168.0\" y1=\"187.0\" x2=\"168.0\" y2=\"52.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"225.0\" x2=\"245.0\" y2=\"225.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"245.0\" y1=\"225.0\" x2=\"303.0\" y2=\"187.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"110.0\" y1=\"225.0\" x2=\"110.0\" y2=\"90.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"245.0\" y1=\"225.0\" x2=\"245.0\" y2=\"90.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"303.0\" y1=\"187.0\" x2=\"303.0\" y2=\"52.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"110.0\" y1=\"90.0\" x2=\"245.0\" y2=\"90.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"245.0\" y1=\"90.0\" x2=\"303.0\" y2=\"52.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"303.0\" y1=\"52.0\" x2=\"168.0\" y2=\"52.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"168.0\" y1=\"52.0\" x2=\"110.0\" y2=\"90.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"178\" y=\"247\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">6 см</text><text x=\"285\" y=\"214\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">6 см</text><text x=\"102\" y=\"158\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">6 см</text><text x=\"230\" y=\"270\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">у куба все шесть граней — равные квадраты</text></svg>", "pir4_25_20": "<svg viewBox=\"0 0 500 330\"><rect x=\"0\" y=\"0\" width=\"500\" height=\"330\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"250.0,100.0 290.5,275.4 163.0,261.8\" fill=\"#dbe6f8\" stroke=\"none\"/><polygon points=\"250.0,100.0 337.0,238.2 290.5,275.4\" fill=\"#dbe6f8\" stroke=\"none\"/><line x1=\"163.0\" y1=\"261.8\" x2=\"209.5\" y2=\"224.6\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"209.5\" y1=\"224.6\" x2=\"337.0\" y2=\"238.2\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"250.0\" y1=\"100.0\" x2=\"290.5\" y2=\"275.4\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"250.0\" y1=\"100.0\" x2=\"163.0\" y2=\"261.8\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"250.0\" y1=\"100.0\" x2=\"209.5\" y2=\"224.6\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"250.0\" y1=\"100.0\" x2=\"337.0\" y2=\"238.2\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"290.5\" y1=\"275.4\" x2=\"163.0\" y2=\"261.8\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"337.0\" y1=\"238.2\" x2=\"290.5\" y2=\"275.4\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"250.0\" y1=\"100.0\" x2=\"250.0\" y2=\"250.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><circle cx=\"250.0\" cy=\"250.0\" r=\"4\" fill=\"#15181e\"/><line x1=\"250.0\" y1=\"100.0\" x2=\"226.7\" y2=\"268.6\" stroke=\"#b3261e\" stroke-width=\"3\"/><circle cx=\"226.7\" cy=\"268.6\" r=\"4\" fill=\"#b3261e\"/><line x1=\"238.4\" y1=\"184.3\" x2=\"186.4\" y2=\"178.3\" stroke=\"#b3261e\" stroke-width=\"1.3\" opacity=\"0.75\"/><circle cx=\"238.4\" cy=\"184.3\" r=\"3\" fill=\"#b3261e\"/><text x=\"182\" y=\"183\" font-size=\"17\" fill=\"#b3261e\" text-anchor=\"end\" font-weight=\"600\">апофема</text><text x=\"182\" y=\"204\" font-size=\"17\" fill=\"#b3261e\" text-anchor=\"end\" font-weight=\"600\">25 см</text><line x1=\"250.0\" y1=\"175.0\" x2=\"304.0\" y2=\"205.0\" stroke=\"#15181e\" stroke-width=\"1.3\" opacity=\"0.75\"/><circle cx=\"250.0\" cy=\"175.0\" r=\"3\" fill=\"#15181e\"/><text x=\"308\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">высота 20 см</text><text x=\"250\" y=\"308\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">сторона основания — ?</text></svg>", "pir3_h4": "<svg viewBox=\"0 0 500 330\"><rect x=\"0\" y=\"0\" width=\"500\" height=\"330\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"250.0,100.0 333.1,264.0 166.9,264.0\" fill=\"#dbe6f8\" stroke=\"none\"/><line x1=\"250.0\" y1=\"222.0\" x2=\"333.1\" y2=\"264.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"166.9\" y1=\"264.0\" x2=\"250.0\" y2=\"222.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"250.0\" y1=\"100.0\" x2=\"250.0\" y2=\"222.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"250.0\" y1=\"100.0\" x2=\"333.1\" y2=\"264.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"250.0\" y1=\"100.0\" x2=\"166.9\" y2=\"264.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"333.1\" y1=\"264.0\" x2=\"166.9\" y2=\"264.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"250.0\" y1=\"100.0\" x2=\"250.0\" y2=\"250.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><circle cx=\"250.0\" cy=\"250.0\" r=\"4\" fill=\"#15181e\"/><line x1=\"250.0\" y1=\"100.0\" x2=\"166.9\" y2=\"264.0\" stroke=\"#2f6bd8\" stroke-width=\"3\"/><line x1=\"250.0\" y1=\"175.0\" x2=\"304.0\" y2=\"205.0\" stroke=\"#15181e\" stroke-width=\"1.3\" opacity=\"0.75\"/><circle cx=\"250.0\" cy=\"175.0\" r=\"3\" fill=\"#15181e\"/><text x=\"308\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">высота 4 см</text><line x1=\"208.4\" y1=\"182.0\" x2=\"168.4\" y2=\"148.0\" stroke=\"#2f6bd8\" stroke-width=\"1.3\" opacity=\"0.75\"/><circle cx=\"208.4\" cy=\"182.0\" r=\"3\" fill=\"#2f6bd8\"/><text x=\"164\" y=\"144\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"end\" font-weight=\"600\">боковое</text><text x=\"164\" y=\"165\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"end\" font-weight=\"600\">ребро — ?</text><text x=\"250\" y=\"308\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">сторона основания 3√3 см</text></svg>", "prizma_trap": "<svg viewBox=\"0 0 460 300\"><rect x=\"0\" y=\"0\" width=\"460\" height=\"300\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"105.0,143.0 325.0,143.0 280.0,109.0 150.0,109.0\" fill=\"#e8f0ff\" stroke=\"none\"/><polygon points=\"105.0,248.0 325.0,248.0 325.0,143.0 105.0,143.0\" fill=\"#dbe6f8\" stroke=\"none\"/><line x1=\"280.0\" y1=\"214.0\" x2=\"150.0\" y2=\"214.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"280.0\" y1=\"109.0\" x2=\"150.0\" y2=\"109.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"105.0\" y1=\"248.0\" x2=\"105.0\" y2=\"143.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"325.0\" y1=\"248.0\" x2=\"325.0\" y2=\"143.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"280.0\" y1=\"214.0\" x2=\"280.0\" y2=\"109.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"150.0\" y1=\"214.0\" x2=\"150.0\" y2=\"109.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"105.0\" y1=\"248.0\" x2=\"325.0\" y2=\"248.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"325.0\" y1=\"248.0\" x2=\"280.0\" y2=\"214.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"150.0\" y1=\"214.0\" x2=\"105.0\" y2=\"248.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"105.0\" y1=\"143.0\" x2=\"325.0\" y2=\"143.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"325.0\" y1=\"143.0\" x2=\"280.0\" y2=\"109.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"150.0\" y1=\"109.0\" x2=\"105.0\" y2=\"143.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"325.0\" y1=\"195.0\" x2=\"340.0\" y2=\"176.0\" stroke=\"#15181e\" stroke-width=\"1.3\" opacity=\"0.75\"/><circle cx=\"325.0\" cy=\"195.0\" r=\"3\" fill=\"#15181e\"/><text x=\"344\" y=\"172\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">боковое</text><text x=\"344\" y=\"193\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">ребро 20 см</text><text x=\"215\" y=\"288\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">в основании — равнобедренная трапеция</text></svg>", "trap": "<svg viewBox=\"0 0 460 246\"><rect x=\"0\" y=\"0\" width=\"460\" height=\"246\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"90.0,170.0 350.0,170.0 300.0,60.0 140.0,60.0\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"300\" y1=\"60\" x2=\"300\" y2=\"170\" stroke=\"#2f6bd8\" stroke-width=\"2.4\" stroke-dasharray=\"6 5\"/><rect x=\"284\" y=\"154\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2\"/><text x=\"220\" y=\"196\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">нижнее основание 25 см</text><text x=\"220\" y=\"46\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">верхнее основание 15 см</text><text x=\"292\" y=\"110\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"end\" font-weight=\"600\">высота</text><text x=\"292\" y=\"131\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"end\" font-weight=\"600\">12 см</text><text x=\"120\" y=\"126\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">боковая</text><text x=\"120\" y=\"145\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">сторона — ?</text><text x=\"230\" y=\"226\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">трапеция в натуральную величину</text></svg>", "z12": "<svg viewBox=\"0 0 460 300\"><rect x=\"0\" y=\"0\" width=\"460\" height=\"300\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"105.0,143.0 325.0,143.0 280.0,109.0 150.0,109.0\" fill=\"#e8f0ff\" stroke=\"none\"/><polygon points=\"105.0,248.0 325.0,248.0 325.0,143.0 105.0,143.0\" fill=\"#dbe6f8\" stroke=\"none\"/><line x1=\"280.0\" y1=\"214.0\" x2=\"150.0\" y2=\"214.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"280.0\" y1=\"109.0\" x2=\"150.0\" y2=\"109.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"105.0\" y1=\"248.0\" x2=\"105.0\" y2=\"143.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"325.0\" y1=\"248.0\" x2=\"325.0\" y2=\"143.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"280.0\" y1=\"214.0\" x2=\"280.0\" y2=\"109.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"150.0\" y1=\"214.0\" x2=\"150.0\" y2=\"109.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"105.0\" y1=\"248.0\" x2=\"325.0\" y2=\"248.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"325.0\" y1=\"248.0\" x2=\"280.0\" y2=\"214.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"150.0\" y1=\"214.0\" x2=\"105.0\" y2=\"248.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"105.0\" y1=\"143.0\" x2=\"325.0\" y2=\"143.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"325.0\" y1=\"143.0\" x2=\"280.0\" y2=\"109.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"150.0\" y1=\"109.0\" x2=\"105.0\" y2=\"143.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"325.0\" y1=\"195.0\" x2=\"340.0\" y2=\"176.0\" stroke=\"#15181e\" stroke-width=\"1.3\" opacity=\"0.75\"/><circle cx=\"325.0\" cy=\"195.0\" r=\"3\" fill=\"#15181e\"/><text x=\"344\" y=\"172\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">боковое</text><text x=\"344\" y=\"193\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">ребро 20 см</text><text x=\"215\" y=\"288\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">в основании — равнобедренная трапеция</text></svg><div class=\"cap\">А так выглядит её основание, если положить на плоскость</div><svg viewBox=\"0 0 460 246\"><rect x=\"0\" y=\"0\" width=\"460\" height=\"246\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"90.0,170.0 350.0,170.0 300.0,60.0 140.0,60.0\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"300\" y1=\"60\" x2=\"300\" y2=\"170\" stroke=\"#2f6bd8\" stroke-width=\"2.4\" stroke-dasharray=\"6 5\"/><rect x=\"284\" y=\"154\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2\"/><text x=\"220\" y=\"196\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">нижнее основание 25 см</text><text x=\"220\" y=\"46\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">верхнее основание 15 см</text><text x=\"292\" y=\"110\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"end\" font-weight=\"600\">высота</text><text x=\"292\" y=\"131\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"end\" font-weight=\"600\">12 см</text><text x=\"120\" y=\"126\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">боковая</text><text x=\"120\" y=\"145\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">сторона — ?</text><text x=\"230\" y=\"226\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">трапеция в натуральную величину</text></svg>"};
+
+"use strict";
+var started = Date.now();
+
+/* ---------- данные задач; ответы закодированы, чтобы не читались в исходнике ---------- */
+function e(s){return btoa(unescape(encodeURIComponent(s)));}
+function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return s;}}
+
+var TASKS = [
+ {id:1,lvl:"база",type:"num",text:"Сколько граней у треугольной призмы?",ans:[e("5")],img:F["pr3"],
+  hints:["У призмы два основания и боковые грани — на чертеже они подписаны.",
+         "Боковых граней столько же, сколько сторон у основания. У треугольника сторон три.",
+         "Складывай: 3 боковые грани и 2 основания."],
+  sol:"<div class='step'>1. Основания у призмы всегда два, и они равны между собой. У нас это треугольники: 2 грани.</div>"+
+      "<div class='step'>2. Боковых граней столько, сколько сторон у основания. У треугольника 3 стороны, значит 3 боковые грани.</div>"+
+      "<div class='step'>3. Всего: 3 + 2 = 5 граней.</div>"+
+      "<div class='fx'>граней = n + 2 = 3 + 2 = 5</div><div class='step'><b>Ответ: 5.</b> Общая формула: у n-угольной призмы граней n + 2.</div>"},
+
+ {id:2,lvl:"база",type:"num",text:"Сколько рёбер у четырёхугольной пирамиды?",ans:[e("8")],img:F["pir4"],
+  hints:["Рёбра бывают двух видов: рёбра основания и боковые рёбра.",
+         "В основании четырёхугольник — у него 4 стороны, это и есть рёбра основания.",
+         "Боковых рёбер столько же: каждое идёт из вершины пирамиды в вершину основания."],
+  sol:"<div class='step'>1. Рёбра основания — это стороны четырёхугольника: их 4.</div>"+
+      "<div class='step'>2. Боковые рёбра идут из вершины пирамиды в каждую вершину основания. Вершин основания 4, значит и боковых рёбер 4.</div>"+
+      "<div class='step'>3. Всего: 4 + 4 = 8 рёбер.</div>"+
+      "<div class='fx'>рёбер = 2n = 2 · 4 = 8</div><div class='step'><b>Ответ: 8.</b> Общая формула: у n-угольной пирамиды рёбер 2n.</div>"},
+
+ {id:3,lvl:"база",type:"num",text:"Сколько вершин у семиугольной призмы?",ans:[e("14")],img:F["pr7"],
+  hints:["У призмы два одинаковых основания — верхнее и нижнее.",
+         "В каждом основании семиугольник, у него 7 вершин.",
+         "Вершины призмы — это вершины двух оснований, других нет."],
+  sol:"<div class='step'>1. У призмы два основания, и каждое — семиугольник.</div>"+
+      "<div class='step'>2. У семиугольника 7 вершин, значит в двух основаниях 7 + 7 = 14.</div>"+
+      "<div class='step'>3. Больше вершин у призмы нет: боковые рёбра соединяют уже посчитанные точки.</div>"+
+      "<div class='fx'>вершин = 2n = 2 · 7 = 14</div><div class='step'><b>Ответ: 14.</b> Общая формула: у n-угольной призмы вершин 2n.</div>"},
+
+ {id:4,lvl:"база",type:"num",text:"Основание прямой призмы — треугольник со сторонами 3 см, 4 см и 5 см, боковое ребро 10 см. Найди площадь боковой поверхности (см²).",ans:[e("120")],img:F["pr3_345_10"],
+  hints:["Призма прямая, значит боковые грани — прямоугольники и работает формула S = P · h.",
+         "P — это периметр основания, то есть сумма всех его сторон.",
+         "P = 3 + 4 + 5 = 12 см, а h — боковое ребро, 10 см."],
+  sol:"<div class='step'>1. Призма прямая, поэтому все боковые грани — прямоугольники и годится формула S<sub>бок</sub> = P<sub>осн</sub> · h.</div>"+
+      "<div class='step'>2. Периметр основания: P = 3 + 4 + 5 = 12 см.</div>"+
+      "<div class='step'>3. Высота призмы равна боковому ребру: h = 10 см.</div>"+
+      "<div class='step'>4. S<sub>бок</sub> = 12 · 10 = 120 см².</div>"+
+      "<div class='fx'>S<sub>бок</sub> = P · h = 12 · 10 = 120 см²</div><div class='step'><b>Ответ: 120 см².</b> Проверка по граням: 3·10 + 4·10 + 5·10 = 30 + 40 + 50 = 120. Сходится.</div>"},
+
+ {id:5,lvl:"база",type:"num",text:"Сторона основания правильной шестиугольной призмы 4 см, боковое ребро 9 см. Найди площадь боковой поверхности (см²).",ans:[e("216")],img:F["pr6_4_9"],
+  hints:["Правильная призма — это прямая призма с правильным многоугольником в основании, значит S = P · h работает.",
+         "В правильном шестиугольнике все шесть сторон одинаковые, по 4 см.",
+         "P = 6 · 4 = 24 см, дальше умножай на боковое ребро."],
+  sol:"<div class='step'>1. Правильная призма всегда прямая, поэтому S<sub>бок</sub> = P<sub>осн</sub> · h.</div>"+
+      "<div class='step'>2. В основании правильный шестиугольник: все стороны равны 4 см, значит P = 6 · 4 = 24 см.</div>"+
+      "<div class='step'>3. S<sub>бок</sub> = 24 · 9 = 216 см².</div>"+
+      "<div class='fx'>S<sub>бок</sub> = P · h = 24 · 9 = 216 см²</div><div class='step'><b>Ответ: 216 см².</b> Здесь же видно устройство фигуры: 6 одинаковых прямоугольников 4 × 9, каждый по 36 см², 6 · 36 = 216.</div>"},
+
+ {id:6,lvl:"база",type:"num",text:"Сторона основания правильной четырёхугольной пирамиды 8 см, апофема 5 см. Найди площадь боковой поверхности (см²).",ans:[e("80")],img:F["pir4_8_5"],
+  hints:["Для правильной пирамиды S = ½ · P · a, где a — апофема.",
+         "В основании квадрат со стороной 8 см, значит P = 4 · 8.",
+         "P = 32 см, осталось взять половину произведения 32 · 5."],
+  sol:"<div class='step'>1. Пирамида правильная, значит все апофемы равны и годится формула S<sub>бок</sub> = ½ · P<sub>осн</sub> · a.</div>"+
+      "<div class='step'>2. В основании квадрат со стороной 8 см: P = 4 · 8 = 32 см.</div>"+
+      "<div class='step'>3. S<sub>бок</sub> = ½ · 32 · 5 = 16 · 5 = 80 см².</div>"+
+      "<div class='fx'>S<sub>бок</sub> = ½ · P · a = ½ · 32 · 5 = 80 см²</div><div class='step'><b>Ответ: 80 см².</b> Проверка по граням: боковая грань — треугольник с основанием 8 и высотой 5, её площадь ½·8·5 = 20 см², граней 4, вместе 80.</div>"},
+
+ {id:7,lvl:"база",type:"num",text:"Площадь боковой поверхности правильной шестиугольной пирамиды 150 см², апофема 10 см. Найди сторону основания (см).",ans:[e("5")],img:F["pir6_a10"],
+  hints:["Задача обратная: известна площадь, ищем размер. Начни с формулы S = ½ · P · a.",
+         "Вырази периметр: P = 2 · S : a.",
+         "Найденный периметр раздели на число сторон основания — у шестиугольника их 6."],
+  sol:"<div class='step'>1. Формула боковой поверхности правильной пирамиды: S<sub>бок</sub> = ½ · P · a.</div>"+
+      "<div class='step'>2. Выражаем периметр: P = 2 · S : a = 2 · 150 : 10 = 30 см.</div>"+
+      "<div class='step'>3. Основание — правильный шестиугольник, все стороны равны: сторона = 30 : 6 = 5 см.</div>"+
+      "<div class='fx'>P = 2 · S : a = 2 · 150 : 10 = 30 см&nbsp;&nbsp;→&nbsp;&nbsp; сторона = 30 : 6 = 5 см</div><div class='step'><b>Ответ: 5 см.</b> Обратная проверка: P = 6 · 5 = 30, S = ½ · 30 · 10 = 150 см². Сходится.</div>"},
+
+ {id:8,lvl:"база",type:"num",text:"Измерения прямоугольного параллелепипеда 4 см, 5 см и 12 см, причём 12 см — боковое ребро. Найди площадь боковой поверхности (см²).",ans:[e("216")],img:F["box4512"],
+  hints:["Прямоугольный параллелепипед — это прямая призма, в основании которой прямоугольник 4 см × 5 см.",
+         "Значит работает S = P · h, где h — боковое ребро 12 см.",
+         "Периметр прямоугольника: P = 2 · (4 + 5) = 18 см."],
+  sol:"<div class='step'>1. Прямоугольный параллелепипед — прямая призма с прямоугольником в основании, поэтому S<sub>бок</sub> = P<sub>осн</sub> · h.</div>"+
+      "<div class='step'>2. Основание — прямоугольник 4 см × 5 см: P = 2 · (4 + 5) = 18 см.</div>"+
+      "<div class='step'>3. Боковое ребро h = 12 см, значит S<sub>бок</sub> = 18 · 12 = 216 см².</div>"+
+      "<div class='fx'>S<sub>бок</sub> = P · h = 18 · 12 = 216 см²</div><div class='step'><b>Ответ: 216 см².</b> Проверка: две грани 4 × 12 и две грани 5 × 12, вместе 2·48 + 2·60 = 216.</div>"},
+
+ {id:9,lvl:"база",type:"num",text:"Ребро куба 6 см. Найди площадь его полной поверхности (см²).",ans:[e("216")],img:F["kub6"],
+  hints:["Полная поверхность — это сумма площадей всех граней.",
+         "У куба все грани — равные квадраты со стороной 6 см. Сколько их?",
+         "Площадь одной грани 6² = 36 см², граней шесть."],
+  sol:"<div class='step'>1. Куб — прямоугольный параллелепипед с равными измерениями, все его 6 граней равные квадраты со стороной 6 см.</div>"+
+      "<div class='step'>2. Площадь одной грани: 6² = 36 см².</div>"+
+      "<div class='step'>3. Полная поверхность: S = 6 · 36 = 216 см².</div>"+
+      "<div class='fx'>S<sub>полн</sub> = 6 · a² = 6 · 6² = 216 см²</div><div class='step'><b>Ответ: 216 см².</b> Не путай с боковой поверхностью: она у куба равна 4 · 36 = 144 см², здесь же спросили полную.</div>"},
+
+ {id:10,lvl:"база",type:"num",text:"Апофема правильной четырёхугольной пирамиды 25 см, высота 20 см. Найди площадь боковой поверхности (см²).",ans:[e("1500")],img:F["pir4_25_20"],
+  hints:["Апофема — гипотенуза прямоугольного треугольника, катеты которого высота пирамиды и отрезок от центра основания до середины стороны.",
+         "Найди этот отрезок: OH = √(25² − 20²).",
+         "OH = 15 см — это половина стороны квадрата, значит сторона 30 см."],
+  sol:"<div class='step'>1. Проведём высоту SO в центр основания и апофему SH к середине стороны. Треугольник SOH прямоугольный: SH — гипотенуза (апофема 25), SO — катет (высота 20).</div>"+
+      "<div class='step'>2. По теореме Пифагора: OH = √(25² − 20²) = √(625 − 400) = √225 = 15 см.</div>"+
+      "<div class='step'>3. В основании квадрат, O — его центр, H — середина стороны, поэтому OH = половине стороны. Сторона AB = 2 · 15 = 30 см.</div>"+
+      "<div class='step'>4. Периметр основания: P = 4 · 30 = 120 см.</div>"+
+      "<div class='step'>5. S<sub>бок</sub> = ½ · P · a = ½ · 120 · 25 = 1500 см².</div>"+
+      "<div class='fx'>OH = √(25² − 20²) = 15 см&nbsp;&nbsp;→&nbsp;&nbsp; S<sub>бок</sub> = ½ · 120 · 25 = 1500 см²</div><div class='step'><b>Ответ: 1500 см².</b> Главная ошибка в этой задаче — подставить в формулу высоту 20 вместо апофемы 25.</div>"},
+
+ {id:11,lvl:"база",type:"num",text:"Сторона основания правильной треугольной пирамиды 3√3 см, высота 4 см. Найди боковое ребро (см).",ans:[e("5")],img:F["pir3_h4"],
+  hints:["Боковое ребро — гипотенуза прямоугольного треугольника с катетами: высота пирамиды и радиус окружности, описанной около основания.",
+         "Для правильного треугольника со стороной a радиус описанной окружности R = a√3 : 3.",
+         "R = 3√3 · √3 : 3 = 3 см, дальше теорема Пифагора с катетами 4 и 3."],
+  sol:"<div class='step'>1. Основание — правильный треугольник, вершина пирамиды проецируется в его центр O. Боковое ребро SA соединяет вершину с вершиной основания, поэтому OA — радиус описанной окружности.</div>"+
+      "<div class='step'>2. Для правильного треугольника со стороной a: R = a√3 : 3 = 3√3 · √3 : 3 = 3 · 3 : 3 = 3 см.</div>"+
+      "<div class='step'>3. Треугольник SOA прямоугольный: катеты SO = 4 см (высота) и OA = 3 см.</div>"+
+      "<div class='step'>4. SA = √(4² + 3²) = √25 = 5 см.</div>"+
+      "<div class='fx'>R = a · √3 : 3 = 3 см&nbsp;&nbsp;→&nbsp;&nbsp; SA = √(4² + 3²) = 5 см</div><div class='step'><b>Ответ: 5 см.</b> Если бы спросили апофему, брали бы радиус вписанной окружности r = R : 2 = 1,5 см и получили √(16 + 2,25) = √18,25.</div>"},
+
+ {id:12,lvl:"база",type:"num",text:"Основание прямой призмы — равнобедренная трапеция с основаниями 25 см и 15 см и высотой 12 см, боковое ребро призмы 20 см. Найди площадь боковой поверхности (см²).",ans:[e("1320")],img:F["z12"],
+  hints:["Формула S = P · h нужна вся, но периметр трапеции сразу не дан — не хватает её боковой стороны.",
+         "Опусти в трапеции высоту: разница оснований 25 − 15 = 10 см делится на два одинаковых кусочка по 5 см.",
+         "Получается прямоугольный треугольник с катетами 5 и 12, его гипотенуза и есть боковая сторона трапеции."],
+  sol:"<div class='step'>1. Призма прямая, значит S<sub>бок</sub> = P<sub>осн</sub> · h. Нужен периметр трапеции.</div>"+
+      "<div class='step'>2. Опустим из вершины меньшего основания высоту. Трапеция равнобедренная, поэтому по краям отсекаются два равных отрезка: (25 − 15) : 2 = 5 см.</div>"+
+      "<div class='step'>3. Получился прямоугольный треугольник с катетами 5 см и 12 см. Боковая сторона трапеции = √(5² + 12²) = √169 = 13 см.</div>"+
+      "<div class='step'>4. Периметр трапеции: P = 25 + 15 + 13 + 13 = 66 см.</div>"+
+      "<div class='step'>5. S<sub>бок</sub> = 66 · 20 = 1320 см².</div>"+
+      "<div class='fx'>c = √(5² + 12²) = 13 см&nbsp;&nbsp;→&nbsp;&nbsp; S<sub>бок</sub> = P · h = 66 · 20 = 1320 см²</div><div class='step'><b>Ответ: 1320 см².</b> Высота трапеции 12 см нужна была только для поиска боковой стороны — в формулу S = P · h подставляется боковое ребро призмы, а не она.</div>"}
+];
+
+/* ---------- разбор ответа ---------- */
+function norm(s){
+  return String(s).toLowerCase().replace(/\s+/g,"")
+    .replace(/[\u2013\u2014\u2212]/g,"-")
+    .replace(/[\u00d7\u00b7]/g,"*")
+    .replace(/,/g,".")
+    .replace(/^(ответ:?|x=|y=|α=|a=)/,"");
+}
+function toNum(str){
+  var t = norm(str);
+  if(!t) return NaN;
+  t = t.replace(/\u221a/g,"sqrt").replace(/\u03c0/g,"pi");
+  t = t.replace(/sqrt(\d+(?:\.\d+)?)/g,"sqrt($1)");
+  t = t.replace(/(\d)sqrt/g,"$1*sqrt");
+  t = t.replace(/(\d)pi/g,"$1*pi");
+  t = t.replace(/(\d)\(/g,"$1*(").replace(/\)(\d)/g,")*$1").replace(/\)\(/g,")*(");
+  if(!/^[-+*/().0-9a-z]+$/.test(t)) return NaN;
+  if(t.replace(/sqrt|pi/g,"").match(/[a-z]/)) return NaN;
+  try{
+    var v = new Function("sqrt","pi","return ("+t+");")(Math.sqrt, Math.PI);
+    return (typeof v === "number" && isFinite(v)) ? v : NaN;
+  }catch(err){ return NaN; }
+}
+function same(given, right, tol){
+  var a = toNum(given), b = toNum(right);
+  if(!isNaN(a) && !isNaN(b)){
+    var t = tol || 0.01;
+    return Math.abs(a-b) <= Math.max(t, Math.abs(b)*t);
+  }
+  return norm(given) === norm(right);
+}
+
+/* ---------- отрисовка ---------- */
+var state = {};
+var box = document.getElementById("tasks");
+
+TASKS.forEach(function(t){
+  state[t.id] = {tries:0, hints:0, done:false, ok:false, given:"", sel:null};
+  var el = document.createElement("div");
+  el.className = "task"; el.id = "t"+t.id;
+  var body = '<div><span class="tnum">'+t.id+'.</span>'+t.text+
+             '<span class="lvl">'+t.lvl+'</span></div>';
+  if(t.img){ body += '<div class="fig">'+t.img+'</div>'; }
+  if(t.type === "choice"){
+    body += '<div class="opts">'+t.options.map(function(o,i){
+      return '<label class="opt" data-v="'+o+'"><input type="radio" name="q'+t.id+'" value="'+o+'"> '+o+'</label>';
+    }).join("")+'</div>';
+  } else {
+    body += '<div class="keys">'+
+      ["√","²","³","π","±","≤","≥","/","−"].map(function(k){
+        return '<button class="key" data-k="'+k+'" type="button">'+k+'</button>';}).join("")+
+      '</div><input type="text" id="in'+t.id+'" inputmode="text" autocapitalize="off" '+
+      'autocorrect="off" autocomplete="off" spellcheck="false" placeholder="ответ">';
+  }
+  body += '<div class="row" style="margin-top:10px">'+
+          '<button class="pri sm chk">Проверить</button>'+
+          '<button class="sm hnt">Подсказка</button></div>'+
+          '<div class="hints"></div><div class="verdict"></div><div class="sol"></div>';
+  el.innerHTML = body;
+  box.appendChild(el);
+
+  el.querySelectorAll(".key").forEach(function(b){
+    b.addEventListener("click", function(){
+      var inp = document.getElementById("in"+t.id);
+      var k = b.dataset.k === "−" ? "-" : b.dataset.k;
+      var s = inp.selectionStart || inp.value.length;
+      inp.value = inp.value.slice(0,s) + k + inp.value.slice(inp.selectionEnd || s);
+      inp.focus(); inp.setSelectionRange(s+k.length, s+k.length);
+    });
+  });
+  if(t.type === "choice"){
+    el.querySelectorAll(".opt").forEach(function(l){
+      l.addEventListener("click", function(){
+        el.querySelectorAll(".opt").forEach(function(x){x.classList.remove("sel");});
+        l.classList.add("sel"); state[t.id].sel = l.dataset.v;
+      });
+    });
+  } else {
+    el.querySelector("#in"+t.id).addEventListener("keydown", function(ev){
+      if(ev.key === "Enter"){ ev.preventDefault(); check(t.id); }
+    });
+  }
+  el.querySelector(".chk").addEventListener("click", function(){ check(t.id); });
+  el.querySelector(".hnt").addEventListener("click", function(){ hint(t.id); });
+});
+
+function hint(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var host = document.querySelector("#t"+id+" .hints");
+  if(s.hints >= t.hints.length){
+    if(!host.querySelector(".last")){
+      var w = document.createElement("div");
+      w.className = "hint last"; w.textContent = "Подсказки закончились — нажми «Проверить», решение откроется после второй попытки.";
+      host.appendChild(w);
+    }
+    return;
+  }
+  var h = document.createElement("div");
+  h.className = "hint";
+  h.textContent = "Подсказка " + (s.hints+1) + ": " + t.hints[s.hints];
+  host.appendChild(h);
+  s.hints++;
+}
+
+function check(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var el = document.getElementById("t"+id);
+  var v = document.querySelector(".verdict");
+  v = el.querySelector(".verdict");
+  var given = (t.type === "choice") ? (s.sel || "") :
+              (document.getElementById("in"+id).value || "");
+  if(!given.trim()){ v.className = "verdict bad"; v.textContent = "Введи ответ."; return; }
+  s.given = given; s.tries++;
+  var ok = t.ans.some(function(a){ return same(given, d(a), t.tol); });
+  s.ok = ok; s.done = ok || s.tries >= 2;
+  el.classList.remove("ok","bad");
+  el.classList.add(ok ? "ok" : "bad");
+  v.className = "verdict " + (ok ? "ok" : "bad");
+  if(ok){
+    v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    showSol(el, t);
+  } else if(s.tries === 1){
+    v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+  } else {
+    v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    showSol(el, t);
+  }
+  progress();
+}
+function showSol(el, t){
+  var host = el.querySelector(".sol");
+  if(host.dataset.on) return;
+  host.dataset.on = "1";
+  var det = document.createElement("details");
+  det.open = true;
+  det.innerHTML = "<summary>Решение</summary><div class='step'>"+t.sol+"</div>";
+  host.appendChild(det);
+}
+function progress(){
+  var done = TASKS.filter(function(t){return state[t.id].done;}).length;
+  var ok = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  document.getElementById("progress").textContent =
+    "решено " + done + " из " + TASKS.length + " · верно " + ok;
+}
+document.getElementById("checkall").addEventListener("click", function(){
+  TASKS.forEach(function(t){
+    var s = state[t.id];
+    var given = (t.type === "choice") ? (s.sel || "") : (document.getElementById("in"+t.id).value || "");
+    if(given.trim() && !s.done) check(t.id);
+  });
+  var first = TASKS.find(function(t){ return !state[t.id].done; });
+  var note = first ? "Осталась задача " + first.id + "." : "Все задачи закрыты.";
+  document.getElementById("progress").textContent += " · " + note;
+});
+progress();
+
+/* ---------- фото ---------- */
+var photos = [];
+document.getElementById("photos").addEventListener("change", function(ev){
+  var files = Array.prototype.slice.call(ev.target.files || []);
+  files.forEach(function(f){
+    var r = new FileReader();
+    r.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var m = 1400, w = img.width, h = img.height;
+        if(Math.max(w,h) > m){ var k = m/Math.max(w,h); w = Math.round(w*k); h = Math.round(h*k); }
+        var c = document.createElement("canvas"); c.width = w; c.height = h;
+        c.getContext("2d").drawImage(img, 0, 0, w, h);
+        photos.push({url: c.toDataURL("image/jpeg", 0.7), task: ""});
+        drawThumbs();
+      };
+      img.src = r.result;
+    };
+    r.readAsDataURL(f);
+  });
+  ev.target.value = "";
+});
+function drawThumbs(){
+  var host = document.getElementById("thumbs");
+  host.innerHTML = "";
+  var total = 0;
+  photos.forEach(function(p, i){
+    total += p.url.length * 0.75;
+    var d0 = document.createElement("div"); d0.className = "thumb";
+    var opts = '<option value="">задача…</option>' + TASKS.map(function(t){
+      return '<option value="'+t.id+'"'+(p.task==String(t.id)?" selected":"")+'>№'+t.id+'</option>';
+    }).join("");
+    d0.innerHTML = '<img src="'+p.url+'" alt="фото решения"><button type="button">×</button>'+
+                   '<select>'+opts+'</select>';
+    d0.querySelector("button").addEventListener("click", function(){ photos.splice(i,1); drawThumbs(); });
+    d0.querySelector("select").addEventListener("change", function(ev){ p.task = ev.target.value; });
+    host.appendChild(d0);
+  });
+  var note = document.getElementById("repnote");
+  if(total > 15e6){ note.textContent = "Фото уже больше 15 МБ — отчёт может отправляться долго, лишние лучше удалить."; }
+  else if(photos.length){ note.textContent = "Фото в отчёте: " + photos.length + "."; }
+  else { note.textContent = ""; }
+}
+
+/* ---------- отчёт ---------- */
+var ENDPOINT = "https://script.google.com/macros/s/AKfycbztH9c-wQuKC7pSfD8AcFfnOcGpSHxoeqovulmvLMp9W23SgFx9dDQ2JTlWcIJDMN6W/exec";
+var SECRET = "artteach2026";
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function buildReport(){
+  var name = (document.getElementById("name").value || "").trim() || "без имени";
+  var now = new Date();
+  var mins = Math.max(1, Math.round((Date.now()-started)/60000));
+  var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  var data = {tип:"дз", предмет:"математика", тема:"Матбаза до 13.09 — пространственные фигуры (10 класс)",
+    ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
+    верно:okN, всего:TASKS.length, задачи:[]};
+  var rows = TASKS.map(function(t){
+    var s = state[t.id];
+    data.задачи.push({n:t.id, условие:t.text.replace(/<[^>]+>/g,""), ответ_ученика:s.given,
+      верный_ответ:t.ans.map(d).join(" или "), верно:s.ok, попыток:s.tries, подсказок:s.hints,
+      уровень:t.lvl});
+    return "<tr><td>"+t.id+"</td><td style='text-align:left'>"+esc(t.text.replace(/<[^>]+>/g,""))+
+      "</td><td>"+esc(s.given||"—")+"</td><td>"+esc(t.ans.map(d).join(" / "))+"</td><td>"+
+      (s.ok?"верно":(s.given?"неверно":"не решал"))+"</td><td>"+s.tries+"</td><td>"+s.hints+"</td></tr>";
+  }).join("");
+  var pics = photos.map(function(p,i){
+    return "<figure><img src='"+p.url+"'><figcaption>Фото "+(i+1)+
+      (p.task?" — к задаче №"+p.task:"")+"</figcaption></figure>";
+  }).join("");
+  var html = "<!doctype html><html lang='ru'><head><meta charset='utf-8'>"+
+    "<meta name='viewport' content='width=device-width,initial-scale=1'>"+
+    "<title>Отчёт — "+esc(name)+" — Матбаза до 13.09 · 10 класс</title><style>"+
+    "body{font:16px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;padding:20px;color:#16181d;background:#fff}"+
+    "h1{font-size:22px;margin:0 0 4px}.m{color:#5b6270;font-size:15px}"+
+    "table{border-collapse:collapse;width:100%;margin-top:14px;font-size:15px}"+
+    "th,td{border:1px solid #dfe3ea;padding:6px 8px;text-align:center}th{background:#eef3fb}"+
+    "figure{margin:14px 0}img{max-width:100%;border:1px solid #dfe3ea;border-radius:8px}"+
+    "figcaption{color:#5b6270;font-size:14px;margin-top:4px}</style></head><body>"+
+    "<h1>Отчёт по домашнему заданию</h1>"+
+    "<div class='m'>Матбаза до 13.09 · пространственные фигуры, призма и пирамида · 10 класс</div>"+
+    "<div class='m'>Ученик: <b>"+esc(name)+"</b> · сдано: "+esc(now.toLocaleString("ru-RU"))+
+    " · время работы: около "+mins+" мин</div>"+
+    "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)</h2>"+
+    "<table><tr><th>№</th><th>Задача</th><th>Ответ ученика</th><th>Верный ответ</th>"+
+    "<th>Итог</th><th>Попыток</th><th>Подсказок</th></tr>"+rows+"</table>"+
+    (pics ? "<h2>Фото решений</h2>"+pics : "<p class='m'>Фото решений не прикреплены.</p>")+
+    "<script type='application/json' id='result-data'>"+
+    JSON.stringify(data).replace(/</g,"\\u003c")+"<\/script></body></html>";
+  var stamp = now.getDate()+"-"+(now.getMonth()+1);
+  return {
+    html: html,
+    name: name,
+    file: "Отчёт_Матбаза_13.09_"+name.replace(/\s+/g,"_")+"_"+stamp+".html",
+    caption: name+" · Матбаза до 13.09 · 10 класс · "+okN+" из "+TASKS.length+
+             " ("+Math.round(okN/TASKS.length*100)+"%)"
+  };
+}
+
+document.getElementById("send").addEventListener("click", function(){
+  var note = document.getElementById("repnote");
+  var who = (document.getElementById("name").value || "").trim();
+  if(!who){ note.className = "meta bad-note"; note.textContent = "Сначала впиши имя вверху страницы."; return; }
+  if(!photos.length){
+    note.className = "meta bad-note";
+    note.textContent = "Сначала прикрепи фото решений — кнопка «Выберите файлы» в блоке выше.";
+    document.getElementById("photos").scrollIntoView({behavior:"smooth", block:"center"});
+    return;
+  }
+  note.className = "meta";
+  var r = buildReport();
+  note.textContent = "Отправляю…";
+  var payload = {
+    secret: SECRET,
+    name: r.file,
+    caption: r.caption,
+    file: btoa(unescape(encodeURIComponent(r.html)))
+  };
+  fetch(ENDPOINT, {method:"POST", mode:"no-cors", body: JSON.stringify(payload)})
+    .then(function(){
+      note.textContent = "Отправлено преподавателю. Если хочешь, сохрани копию себе кнопкой ниже.";
+    })
+    .catch(function(){
+      note.textContent = "Не получилось отправить. Скачай файл кнопкой ниже и пришли его вручную.";
+    });
+});
+
+document.getElementById("report").addEventListener("click", function(){
+  var r = buildReport();
+  var blob = new Blob([r.html], {type:"text/html;charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = r.file;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  document.getElementById("repnote").textContent = "Файл скачан — он в папке загрузок.";
+});
+
+/* ============ универсальный интерактивный 3D-чертёж ============ */
+window.FIG3D = function(id, sp){
+  var svg=document.getElementById(id);
+  if(!svg || !svg.addEventListener) return;
+  var cap=document.getElementById(id+"cap"), bar=document.getElementById(id+"bar");
+  var W=460, HH=274, CX=230, CY=136, SC=55, DD=7.6;
+  var V=sp.V, F=sp.F, E=sp.E, EF=sp.EF, SG=sp.segs||[];
+  var AMB="#ffd79a", AMB2="#a8620d", RED="#b3261e", ACC="#2f6bd8", INK="#15181e";
+  var yaw=sp.yaw, pitch=sp.pitch, active=sp.start;
+  var DN={face:"грань", edge:"ребро", vert:"вершина"};
+
+  function segByKey(k){ for(var i=0;i<SG.length;i++){ if(SG[i].key===k) return SG[i]; } return null; }
+  function nameOf(k){
+    if(sp.names[k]) return sp.names[k];
+    var s=segByKey(k); if(s) return s.name||k;
+    return DN[k.split(":")[0]]||k;
+  }
+  function textOf(k){
+    if(sp.texts[k]) return sp.texts[k];
+    var s=segByKey(k); if(s&&s.text) return s.text;
+    return sp.texts[k.split(":")[0]]||"";
+  }
+  function colOf(k){
+    var t=k.split(":")[0], i=parseInt(k.split(":")[1],10);
+    if(t==="face") return AMB2;
+    if(t==="edge") return (sp.hi.edge&&sp.hi.edge[i])||RED;
+    if(t==="vert") return (sp.hi.vert&&sp.hi.vert[i])||RED;
+    var s=segByKey(k); return s?s.c:ACC;
+  }
+
+  function rotp(p){
+    var cy=Math.cos(yaw), sy=Math.sin(yaw), cx=Math.cos(pitch), sx=Math.sin(pitch);
+    var x=p[0]*cy+p[2]*sy, z=-p[0]*sy+p[2]*cy, y=p[1];
+    return [x, y*cx-z*sx, y*sx+z*cx];
+  }
+  function pr(q){ var k=DD/(DD-q[2]); return [CX+q[0]*k*SC, CY-q[1]*k*SC]; }
+  function nrm(f,R){
+    var a=R[f[0]], b=R[f[1]], c=R[f[2]];
+    var u=[b[0]-a[0],b[1]-a[1],b[2]-a[2]], v=[c[0]-a[0],c[1]-a[1],c[2]-a[2]];
+    var n=[u[1]*v[2]-u[2]*v[1], u[2]*v[0]-u[0]*v[2], u[0]*v[1]-u[1]*v[0]];
+    var s=[0,0,0], k;
+    for(k=0;k<f.length;k++){ s[0]+=R[f[k]][0]; s[1]+=R[f[k]][1]; s[2]+=R[f[k]][2]; }
+    if(n[0]*s[0]+n[1]*s[1]+n[2]*s[2]<0){ n=[-n[0],-n[1],-n[2]]; }
+    var L=Math.sqrt(n[0]*n[0]+n[1]*n[1]+n[2]*n[2])||1;
+    return [n[0]/L,n[1]/L,n[2]/L];
+  }
+  function shade(n){
+    var t=0.30*n[0]+0.55*n[1]+0.78*n[2], l=0.50+0.50*Math.max(0,t);
+    return "rgb("+Math.round(255-50*l)+","+Math.round(255-33*l)+","+Math.round(255-8*l)+")";
+  }
+  function poly(f,Q){
+    var s=[],k; for(k=0;k<f.length;k++){ s.push(Q[f[k]][0].toFixed(1)+","+Q[f[k]][1].toFixed(1)); }
+    return s.join(" ");
+  }
+  function line(a,b,c,w,d,extra){
+    return '<line x1="'+a[0].toFixed(1)+'" y1="'+a[1].toFixed(1)+'" x2="'+b[0].toFixed(1)+'" y2="'+b[1].toFixed(1)+
+      '" stroke="'+c+'" stroke-width="'+w+'" stroke-linecap="round"'+(d?' stroke-dasharray="7 6"':'')+
+      (extra||"")+'/>';
+  }
+
+  function draw(){
+    var R=[],Q=[],k,m;
+    for(k=0;k<V.length;k++){ R.push(rotp(V[k])); Q.push(pr(R[k])); }
+    var N=[],vis=[];
+    for(k=0;k<F.length;k++){ N.push(nrm(F[k],R)); vis.push(N[k][2]>0.02); }
+    var ord=[];
+    for(k=0;k<F.length;k++){
+      var z=0; for(m=0;m<F[k].length;m++){ z+=R[F[k][m]][2]; }
+      ord.push({i:k,z:z/F[k].length});
+    }
+    ord.sort(function(a,b){return a.z-b.z;});
+
+    var s='<rect x="0" y="0" width="'+W+'" height="'+HH+'" rx="12" fill="#ffffff"/>';
+    for(k=0;k<ord.length;k++){
+      var fi=ord[k].i, key="face:"+fi;
+      var fill = (key===active) ? AMB : ((sp.hi.face && sp.hi.face[fi]) || shade(N[fi]));
+      s+='<polygon points="'+poly(F[fi],Q)+'" fill="'+fill+'" stroke="none"/>';
+    }
+    for(k=0;k<E.length;k++){
+      var v=false;
+      for(m=0;m<EF[k].length;m++){ if(vis[EF[k][m]]) v=true; }
+      var hc=(sp.hi.edge&&sp.hi.edge[k])||"", ck=hc||INK, wk=hc?5:2.4;
+      if("edge:"+k===active){ ck=hc||RED; wk=hc?7:6.5; }
+      s+=line(Q[E[k][0]],Q[E[k][1]],ck,wk,!v);
+    }
+    var af=active.indexOf("face:")===0?parseInt(active.slice(5),10):-1;
+    if(af>=0 && !vis[af]){
+      s+='<polygon points="'+poly(F[af],Q)+'" fill="none" stroke="'+AMB2+'" stroke-width="3" stroke-dasharray="8 6"/>';
+    }
+    for(k=0;k<SG.length;k++){
+      var g=SG[k], a=pr(rotp(g.a)), b=pr(rotp(g.b));
+      var on=(active===g.key);
+      s+=line(a,b,g.c,(g.w||3)+(on?2.4:0),!!g.dash);
+      if(g.dot!==false){ s+='<circle cx="'+b[0].toFixed(1)+'" cy="'+b[1].toFixed(1)+'" r="'+(on?5:4)+'" fill="'+g.c+'"/>'; }
+      if(g.dot0){ s+='<circle cx="'+a[0].toFixed(1)+'" cy="'+a[1].toFixed(1)+'" r="'+(on?5:4)+'" fill="'+g.c+'"/>'; }
+    }
+    if(sp.hi.vert){
+      for(var vk in sp.hi.vert){
+        var vi=parseInt(vk,10), on2=(active==="vert:"+vi);
+        s+='<circle cx="'+Q[vi][0].toFixed(1)+'" cy="'+Q[vi][1].toFixed(1)+'" r="'+(on2?8:6.5)+'" fill="'+sp.hi.vert[vk]+'"/>';
+      }
+    }
+    if(active.indexOf("vert:")===0){
+      var av=parseInt(active.slice(5),10);
+      s+='<circle cx="'+Q[av][0].toFixed(1)+'" cy="'+Q[av][1].toFixed(1)+'" r="8" fill="'+RED+'"/>';
+    }
+
+    /* буквы вершин и длины */
+    var LB=sp.labels||[];
+    for(k=0;k<LB.length;k++){
+      var L1=LB[k], qx, qy;
+      if(L1.p2){
+        var g1=pr(rotp(L1.p)), g2=pr(rotp(L1.p2));
+        var t0=(L1.at===undefined?0.5:L1.at);
+        var mx1=g1[0]+(g2[0]-g1[0])*t0, my1=g1[1]+(g2[1]-g1[1])*t0;
+        var ddx=g2[0]-g1[0], ddy=g2[1]-g1[1], dl=Math.sqrt(ddx*ddx+ddy*ddy)||1;
+        var nx=-ddy/dl, ny=ddx/dl;
+        if((mx1-CX)*nx+(my1-CY)*ny < 0){ nx=-nx; ny=-ny; }
+        var dd=(L1.d||20);
+        qx=mx1+nx*dd; qy=my1+ny*dd+4;
+      } else {
+        var g0=pr(rotp(L1.p));
+        var wx=g0[0]-CX, wy=g0[1]-CY, wl=Math.sqrt(wx*wx+wy*wy)||1;
+        var d0=(L1.d||21);
+        qx=g0[0]+wx/wl*d0; qy=g0[1]+wy/wl*d0+5;
+      }
+      if(qx<14) qx=14; if(qx>W-14) qx=W-14;
+      if(qy<16) qy=16; if(qy>HH-6) qy=HH-6;
+      s+='<text x="'+qx.toFixed(0)+'" y="'+qy.toFixed(0)+'" font-size="'+(L1.size||16)+
+         '" font-weight="700" fill="'+(L1.c||INK)+'" text-anchor="middle" paint-order="stroke" '+
+         'stroke="#ffffff" stroke-width="4.5">'+L1.t+'</text>';
+    }
+
+    /* подпись активного элемента */
+    var px=0,py=0,t=active.split(":")[0],idx=parseInt(active.split(":")[1],10);
+    if(t==="face"){
+      for(k=0;k<F[idx].length;k++){ px+=Q[F[idx][k]][0]; py+=Q[F[idx][k]][1]; }
+      px/=F[idx].length; py/=F[idx].length;
+    } else if(t==="edge"){
+      px=(Q[E[idx][0]][0]+Q[E[idx][1]][0])/2; py=(Q[E[idx][0]][1]+Q[E[idx][1]][1])/2;
+    } else if(t==="vert"){
+      px=Q[idx][0]; py=Q[idx][1];
+    } else {
+      var g2=segByKey(active);
+      if(g2){ var a2=pr(rotp(g2.a)), b2=pr(rotp(g2.b));
+        px=a2[0]*0.35+b2[0]*0.65; py=a2[1]*0.35+b2[1]*0.65; }
+      else { px=CX; py=CY; }
+    }
+    var c2=colOf(active), lbl=nameOf(active);
+    var vx=px-CX, vy=py-CY, L=Math.sqrt(vx*vx+vy*vy);
+    if(L<8){ vx=-6; vy=5; L=Math.sqrt(61); }
+    var ux=vx/L, uy=vy/L, pad=(t==="face")?112:76;
+    var tx=CX+ux*(L+pad), ty=CY+uy*(L+pad*0.78)+6;
+    var wpx=lbl.length*10.2+10;
+    if(ux>0){ if(tx>W-8-wpx) tx=W-8-wpx; if(tx<8) tx=8; }
+    else { if(tx<8+wpx) tx=8+wpx; if(tx>W-8) tx=W-8; }
+    if(ty<28) ty=28; if(ty>HH-14) ty=HH-14;
+    s+='<line x1="'+px.toFixed(1)+'" y1="'+py.toFixed(1)+'" x2="'+(tx-(ux>0?8:-8)).toFixed(1)+
+       '" y2="'+(ty-7).toFixed(1)+'" stroke="'+c2+'" stroke-width="1.5" opacity="0.85"/>';
+    s+='<circle cx="'+px.toFixed(1)+'" cy="'+py.toFixed(1)+'" r="3.2" fill="'+c2+'"/>';
+    s+='<text x="'+tx.toFixed(0)+'" y="'+ty.toFixed(0)+'" font-size="18" font-weight="700" fill="'+c2+
+       '" text-anchor="'+(ux>0?"start":"end")+'" paint-order="stroke" stroke="#ffffff" stroke-width="4.5">'+lbl+'</text>';
+
+    /* зоны нажатия */
+    for(k=0;k<F.length;k++){
+      if(!vis[k]) continue;
+      s+='<polygon points="'+poly(F[k],Q)+'" fill="#fff" opacity="0" pointer-events="all" data-k="face:'+k+'"/>';
+    }
+    for(k=0;k<E.length;k++){
+      var v2=false;
+      for(m=0;m<EF[k].length;m++){ if(vis[EF[k][m]]) v2=true; }
+      if(!v2) continue;
+      s+=line(Q[E[k][0]],Q[E[k][1]],"#fff",15,false,' stroke-opacity="0" pointer-events="all" data-k="edge:'+k+'"');
+    }
+    for(k=0;k<SG.length;k++){
+      var g3=SG[k];
+      s+=line(pr(rotp(g3.a)),pr(rotp(g3.b)),"#fff",15,false,' stroke-opacity="0" pointer-events="all" data-k="'+g3.key+'"');
+    }
+    for(k=0;k<V.length;k++){
+      var v3=false;
+      for(m=0;m<F.length;m++){ if(vis[m] && F[m].indexOf(k)>=0) v3=true; }
+      if(!v3) continue;
+      s+='<circle cx="'+Q[k][0].toFixed(1)+'" cy="'+Q[k][1].toFixed(1)+'" r="12" fill="#fff" opacity="0" pointer-events="all" data-k="vert:'+k+'"/>';
+    }
+    svg.innerHTML=s;
+  }
+
+  var raf=0;
+  function req(){ if(raf) return; raf=requestAnimationFrame(function(){ raf=0; draw(); }); }
+  function pick(k){
+    active=k;
+    if(cap) cap.innerHTML=textOf(k);
+    var bs=bar?bar.querySelectorAll("button[data-k]"):[], i;
+    for(i=0;i<bs.length;i++){ bs[i].className = (bs[i].getAttribute("data-k")===k) ? "on" : ""; }
+    draw();
+  }
+
+  /* кнопки */
+  if(bar){
+    var html="", i2;
+    for(i2=0;i2<sp.chips.length;i2++){
+      var ch=sp.chips[i2];
+      html+='<button type="button" data-k="'+ch[0]+'"><span class="sw '+(ch[3]||"")+'" style="background:'+ch[2]+'"></span>'+ch[1]+'</button>';
+    }
+    html+='<button type="button" data-reset="1">исходный вид</button>';
+    bar.innerHTML=html;
+    bar.addEventListener("click", function(e){
+      var b=e.target; while(b && b!==bar && b.tagName!=="BUTTON"){ b=b.parentNode; }
+      if(!b || b===bar) return;
+      if(b.getAttribute("data-reset")){ yaw=sp.yaw; pitch=sp.pitch; pick(sp.start); return; }
+      var k=b.getAttribute("data-k"); if(k) pick(k);
+    });
+  }
+
+  var drag=false,lx=0,ly=0,moved=false,pend="";
+  svg.addEventListener("pointerdown", function(e){
+    drag=true; moved=false; lx=e.clientX; ly=e.clientY;
+    pend=(e.target&&e.target.getAttribute)?(e.target.getAttribute("data-k")||""):"";
+    try{ svg.setPointerCapture(e.pointerId); }catch(err){}
+    e.preventDefault();
+  });
+  svg.addEventListener("pointermove", function(e){
+    if(!drag) return;
+    var dx=e.clientX-lx, dy=e.clientY-ly;
+    if(Math.abs(dx)+Math.abs(dy)>4) moved=true;
+    lx=e.clientX; ly=e.clientY;
+    yaw+=dx*0.011; pitch+=dy*0.011;
+    if(pitch>1.15) pitch=1.15;
+    if(pitch<-1.15) pitch=-1.15;
+    req();
+  });
+  svg.addEventListener("pointerup", function(){
+    if(!drag) return; drag=false;
+    if(!moved && pend) pick(pend);
+    pend="";
+  });
+  svg.addEventListener("pointercancel", function(){ drag=false; pend=""; });
+
+  pick(sp.start);
+};
+
+var SPECS3D = {"mg": {"labels": [], "V": [[-1.2021, -0.8074, -0.8971], [1.2021, -0.8074, -0.8971], [1.2021, -0.8074, 0.8971], [-1.2021, -0.8074, 0.8971], [-1.2021, 0.8074, -0.8971], [1.2021, 0.8074, -0.8971], [1.2021, 0.8074, 0.8971], [-1.2021, 0.8074, 0.8971]], "F": [[3, 2, 1, 0], [4, 5, 6, 7], [0, 1, 5, 4], [1, 2, 6, 5], [2, 3, 7, 6], [3, 0, 4, 7]], "E": [[0, 1], [1, 2], [2, 3], [3, 0], [4, 5], [5, 6], [6, 7], [7, 4], [0, 4], [1, 5], [2, 6], [3, 7]], "EF": [[0, 2], [0, 3], [0, 4], [0, 5], [1, 2], [1, 3], [1, 4], [1, 5], [2, 5], [2, 3], [3, 4], [4, 5]], "segs": [{"key": "diag", "a": [-1.2021496699138359, -0.8074139574048151, -0.8971266193386834], "b": [1.2021496699138359, 0.8074139574048151, 0.8971266193386834], "c": "#2f6bd8", "w": 3.4, "dot0": true, "name": "диагональ", "text": "<b>Диагональ многогранника</b> — отрезок, соединяющий две вершины, которые <i>не лежат в одной грани</i>. У параллелепипеда таких диагоналей 4. Отрезок между вершинами одной грани диагональю многогранника не считается — это диагональ грани."}], "hi": {"face": {"4": "#ffd79a"}, "edge": {"6": "#b3261e"}, "vert": {"6": "#b3261e"}}, "names": {"face:4": "грань"}, "texts": {"face": "<b>Грань</b> — плоский многоугольник, из которых сложена поверхность многогранника. У параллелепипеда 6 граней, и каждая из них — параллелограмм.", "edge": "<b>Ребро</b> — сторона грани, линия, по которой сходятся две соседние грани. У параллелепипеда 12 рёбер.", "vert": "<b>Вершина</b> — точка, в которой сходятся рёбра. У параллелепипеда 8 вершин, и в каждой сходится по три ребра."}, "start": "face:4", "yaw": -0.46, "pitch": 0.32, "chips": [["face:4", "грань", "#ffd79a", ""], ["edge:6", "ребро", "#b3261e", "ln"], ["vert:6", "вершина", "#b3261e", "dot"], ["diag", "диагональ", "#2f6bd8", "ln"]]}, "pz": {"labels": [], "V": [[0.4433, -1.2391, -1.433], [1.4998, -1.2391, -0.0212], [0.4837, -1.2391, 1.4199], [-1.2009, -1.2391, 0.8988], [-1.2259, -1.2391, -0.8644], [0.4433, 1.2391, -1.433], [1.4998, 1.2391, -0.0212], [0.4837, 1.2391, 1.4199], [-1.2009, 1.2391, 0.8988], [-1.2259, 1.2391, -0.8644]], "F": [[4, 3, 2, 1, 0], [5, 6, 7, 8, 9], [0, 1, 6, 5], [1, 2, 7, 6], [2, 3, 8, 7], [3, 4, 9, 8], [4, 0, 5, 9]], "E": [[0, 1], [1, 2], [2, 3], [3, 4], [4, 0], [5, 6], [6, 7], [7, 8], [8, 9], [9, 5], [0, 5], [1, 6], [2, 7], [3, 8], [4, 9]], "EF": [[0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [2, 6], [2, 3], [3, 4], [4, 5], [5, 6]], "segs": [], "hi": {"face": {"3": "#ffd79a"}, "edge": {"12": "#b3261e"}}, "names": {"face:0": "основание", "face:1": "основание", "face:3": "боковая грань", "edge:12": "боковое ребро"}, "texts": {"face:0": "<b>Основание.</b> У призмы два основания — равные многоугольники в параллельных плоскостях. Здесь это пятиугольники.", "face:1": "<b>Основание.</b> У призмы два основания — равные многоугольники в параллельных плоскостях. Здесь это пятиугольники.", "face": "<b>Боковая грань.</b> У прямой призмы боковые грани — прямоугольники: одна сторона прямоугольника лежит в основании, вторая равна боковому ребру. Поэтому S<sub>бок</sub> = P<sub>осн</sub> · h.", "edge": "<b>Боковое ребро.</b> У прямой призмы боковые рёбра перпендикулярны основаниям, все они равны и равны высоте призмы.", "vert": "<b>Вершина</b> — точка, в которой сходятся рёбра. У n-угольной призмы вершин 2n."}, "start": "face:3", "yaw": -0.5, "pitch": 0.3, "chips": [["face:1", "основание", "#dbe6f8", ""], ["face:3", "боковая грань", "#ffd79a", ""], ["edge:12", "боковое ребро", "#b3261e", "ln"]]}, "pir": {"labels": [{"p": [0.6326571756153545, -1.08, 1.3600532703326007], "t": "A", "size": 16}, {"p": [-1.3600532703326007, -1.08, 0.6326571756153546], "t": "B", "size": 16}, {"p": [-0.632657175615354, -1.08, -1.360053270332601], "t": "C", "size": 16}, {"p": [1.360053270332601, -1.08, -0.6326571756153541], "t": "D", "size": 16}, {"p": [0.0, 1.08, 0.0], "t": "S", "size": 16}, {"p": [0.0, -1.08, 0.0], "t": "O", "size": 16}, {"p": [0.9963552229739778, -1.08, 0.3636980473586233], "t": "H", "size": 16}], "V": [[0.6327, -1.08, 1.3601], [-1.3601, -1.08, 0.6327], [-0.6327, -1.08, -1.3601], [1.3601, -1.08, -0.6327], [0.0, 1.08, 0.0]], "F": [[3, 2, 1, 0], [0, 1, 4], [1, 2, 4], [2, 3, 4], [3, 0, 4]], "E": [[0, 1], [1, 2], [2, 3], [3, 0], [0, 4], [1, 4], [2, 4], [3, 4]], "EF": [[0, 1], [0, 2], [0, 3], [0, 4], [1, 4], [1, 2], [2, 3], [3, 4]], "segs": [{"key": "h", "a": [0.0, 1.08, 0.0], "b": [0.0, -1.08, 0.0], "c": "#15181e", "w": 2.6, "dash": true, "name": "высота", "text": "<b>Высота пирамиды</b> — перпендикуляр из вершины к плоскости основания. У правильной пирамиды он попадает точно в центр основания."}, {"key": "apo", "a": [0.0, 1.08, 0.0], "b": [0.9963552229739778, -1.08, 0.3636980473586233], "c": "#b3261e", "w": 3.6, "name": "апофема", "text": "<b>Апофема</b> — высота боковой грани, проведённая из вершины пирамиды. Боковая грань правильной пирамиды — равнобедренный треугольник, поэтому апофема в нём одновременно и <b>высота</b>, и <b>медиана</b>, и <b>биссектриса</b>: она приходит точно в середину стороны основания под прямым углом."}], "hi": {"face": {"4": "#ffd79a"}, "edge": {"7": "#2f6bd8"}}, "names": {"face:0": "основание", "face:4": "боковая грань", "edge:7": "боковое ребро", "vert:4": "вершина"}, "texts": {"face:0": "<b>Основание.</b> У правильной пирамиды в основании лежит правильный многоугольник — здесь квадрат.", "face": "<b>Боковая грань.</b> Все боковые грани правильной пирамиды — равные равнобедренные треугольники (теорема 1). Значит и апофемы у них равны, отсюда S<sub>бок</sub> = ½ · P · a.", "edge": "<b>Боковое ребро</b> идёт из вершины пирамиды в вершину основания. Не путай его с апофемой: та приходит в середину стороны.", "vert": "<b>Вершина пирамиды</b> — общая точка всех боковых граней."}, "start": "apo", "yaw": -0.5, "pitch": 0.28, "chips": [["vert:4", "вершина", "#b3261e", "dot"], ["face:0", "основание", "#dbe6f8", ""], ["face:4", "боковая грань", "#ffd79a", ""], ["edge:7", "боковое ребро", "#2f6bd8", "ln"], ["h", "высота", "#15181e", "ln"], ["apo", "апофема", "#b3261e", "ln"]]}, "ex1": {"labels": [{"p": [0.44328030999200946, -1.173913043478261, -1.4330047336884089], "t": "A", "size": 15}, {"p": [0.44328030999200946, 1.173913043478261, -1.4330047336884089], "t": "A₁", "size": 15}, {"p": [1.4998496389154883, -1.173913043478261, -0.02123818836622786], "t": "B", "size": 15}, {"p": [1.4998496389154883, 1.173913043478261, -0.02123818836622786], "t": "B₁", "size": 15}, {"p": [0.48367774487201937, -1.173913043478261, 1.4198788114186074], "t": "C", "size": 15}, {"p": [0.48367774487201937, 1.173913043478261, 1.4198788114186074], "t": "C₁", "size": 15}, {"p": [-1.2009203529826797, -1.173913043478261, 0.8987715537287301], "t": "D", "size": 15}, {"p": [-1.2009203529826797, 1.173913043478261, 0.8987715537287301], "t": "D₁", "size": 15}, {"p": [-1.2258873407968371, -1.173913043478261, -0.8644074430926999], "t": "E", "size": 15}, {"p": [-1.2258873407968371, 1.173913043478261, -0.8644074430926999], "t": "E₁", "size": 15}], "V": [[0.4433, -1.1739, -1.433], [1.4998, -1.1739, -0.0212], [0.4837, -1.1739, 1.4199], [-1.2009, -1.1739, 0.8988], [-1.2259, -1.1739, -0.8644], [0.4433, 1.1739, -1.433], [1.4998, 1.1739, -0.0212], [0.4837, 1.1739, 1.4199], [-1.2009, 1.1739, 0.8988], [-1.2259, 1.1739, -0.8644]], "F": [[4, 3, 2, 1, 0], [5, 6, 7, 8, 9], [0, 1, 6, 5], [1, 2, 7, 6], [2, 3, 8, 7], [3, 4, 9, 8], [4, 0, 5, 9]], "E": [[0, 1], [1, 2], [2, 3], [3, 4], [4, 0], [5, 6], [6, 7], [7, 8], [8, 9], [9, 5], [0, 5], [1, 6], [2, 7], [3, 8], [4, 9]], "EF": [[0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [2, 6], [2, 3], [3, 4], [4, 5], [5, 6]], "segs": [], "hi": {"vert": {"7": "#b3261e"}}, "names": {"face:3": "грань"}, "texts": {"face": "<b>Грани:</b> 2 основания-пятиугольника + 5 боковых = 7. Понажимай на разные грани и пересчитай.", "edge": "<b>Рёбра:</b> 5 сверху + 5 снизу + 5 боковых = 15.", "vert": "<b>Вершины:</b> по 5 в каждом основании ABCDE и A₁B₁C₁D₁E₁ = 10."}, "start": "face:3", "yaw": -0.55, "pitch": 0.3, "chips": [["face:3", "грань", "#ffd79a", ""], ["edge:12", "ребро", "#b3261e", "ln"], ["vert:7", "вершина", "#b3261e", "dot"]]}, "ex2": {"labels": [{"p": [-1.1713032141645454, -1.4055638569974547, -0.9370425713316364], "t": "A", "size": 16}, {"p": [-1.1713032141645454, 1.4055638569974547, -0.9370425713316364], "t": "A₁", "size": 16}, {"p": [1.1713032141645454, -1.4055638569974547, -0.9370425713316364], "t": "B", "size": 16}, {"p": [1.1713032141645454, 1.4055638569974547, -0.9370425713316364], "t": "B₁", "size": 16}, {"p": [1.1713032141645454, -1.4055638569974547, 0.9370425713316364], "t": "C", "size": 16}, {"p": [1.1713032141645454, 1.4055638569974547, 0.9370425713316364], "t": "C₁", "size": 16}, {"p": [-1.1713032141645454, -1.4055638569974547, 0.9370425713316364], "t": "D", "size": 16}, {"p": [-1.1713032141645454, 1.4055638569974547, 0.9370425713316364], "t": "D₁", "size": 16}, {"p": [1.1713032141645454, -1.4055638569974547, 0.9370425713316364], "p2": [-1.1713032141645454, -1.4055638569974547, 0.9370425713316364], "t": "5 см", "c": "#15181e", "d": 27, "size": 16, "at": 0.5}, {"p": [1.1713032141645454, -1.4055638569974547, -0.9370425713316364], "p2": [1.1713032141645454, -1.4055638569974547, 0.9370425713316364], "t": "4 см", "c": "#15181e", "d": 27, "size": 16, "at": 0.5}, {"p": [1.1713032141645454, -1.4055638569974547, 0.9370425713316364], "p2": [1.1713032141645454, 1.4055638569974547, 0.9370425713316364], "t": "6 см", "c": "#15181e", "d": 27, "size": 16, "at": 0.5}], "V": [[-1.1713, -1.4056, -0.937], [1.1713, -1.4056, -0.937], [1.1713, -1.4056, 0.937], [-1.1713, -1.4056, 0.937], [-1.1713, 1.4056, -0.937], [1.1713, 1.4056, -0.937], [1.1713, 1.4056, 0.937], [-1.1713, 1.4056, 0.937]], "F": [[3, 2, 1, 0], [4, 5, 6, 7], [0, 1, 5, 4], [1, 2, 6, 5], [2, 3, 7, 6], [3, 0, 4, 7]], "E": [[0, 1], [1, 2], [2, 3], [3, 0], [4, 5], [5, 6], [6, 7], [7, 4], [0, 4], [1, 5], [2, 6], [3, 7]], "EF": [[0, 2], [0, 3], [0, 4], [0, 5], [1, 2], [1, 3], [1, 4], [1, 5], [2, 5], [2, 3], [3, 4], [4, 5]], "segs": [], "hi": {"face": {"4": "#ffd79a"}, "edge": {"10": "#b3261e"}}, "names": {"face:0": "основание", "face:1": "основание", "face:4": "боковая грань", "edge:10": "боковое ребро"}, "texts": {"face:0": "<b>Основание</b> — прямоугольник 4 см × 5 см, его периметр P = 2·(4 + 5) = 18 см.", "face:1": "<b>Основание</b> — прямоугольник 4 см × 5 см, его периметр P = 2·(4 + 5) = 18 см.", "face": "<b>Боковая грань</b> — прямоугольник: одна сторона взята из основания (4 или 5 см), вторая равна боковому ребру 6 см. Всего таких граней 4.", "edge": "<b>Боковое ребро</b> 6 см — это и есть высота призмы в формуле S = P · h.", "vert": "<b>Вершина</b> — точка, в которой сходятся рёбра."}, "start": "face:4", "yaw": -0.5, "pitch": 0.3, "chips": [["face:1", "основание 4×5", "#dbe6f8", ""], ["face:4", "боковая грань", "#ffd79a", ""], ["edge:10", "боковое ребро 6", "#b3261e", "ln"]]}, "ex3": {"labels": [{"p": [0.6326571756153544, -1.1570436465406133, 1.3600532703326007], "t": "A", "size": 16}, {"p": [-1.3600532703326007, -1.1570436465406133, 0.6326571756153545], "t": "B", "size": 16}, {"p": [-0.632657175615354, -1.1570436465406133, -1.360053270332601], "t": "C", "size": 16}, {"p": [1.360053270332601, -1.1570436465406133, -0.6326571756153541], "t": "D", "size": 16}, {"p": [0.0, 1.1570436465406133, 0.0], "t": "S", "size": 16}, {"p": [0.9963552229739777, -1.1570436465406133, 0.3636980473586233], "t": "H"}, {"p": [0.0, 1.1570436465406133, 0.0], "p2": [0.9963552229739777, -1.1570436465406133, 0.3636980473586233], "t": "12 см", "c": "#b3261e", "d": 27, "size": 16, "at": 0.5}], "V": [[0.6327, -1.157, 1.3601], [-1.3601, -1.157, 0.6327], [-0.6327, -1.157, -1.3601], [1.3601, -1.157, -0.6327], [0.0, 1.157, 0.0]], "F": [[3, 2, 1, 0], [0, 1, 4], [1, 2, 4], [2, 3, 4], [3, 0, 4]], "E": [[0, 1], [1, 2], [2, 3], [3, 0], [0, 4], [1, 4], [2, 4], [3, 4]], "EF": [[0, 1], [0, 2], [0, 3], [0, 4], [1, 4], [1, 2], [2, 3], [3, 4]], "segs": [{"key": "apo", "a": [0.0, 1.1570436465406133, 0.0], "b": [0.9963552229739777, -1.1570436465406133, 0.3636980473586233], "c": "#b3261e", "w": 3.6, "name": "апофема 12", "text": "<b>Апофема 12 см</b> — высота боковой грани. В формулу S<sub>бок</sub> = ½ · P · a подставляется именно она."}], "hi": {"face": {"4": "#ffd79a"}}, "names": {"face:0": "основание", "face:4": "боковая грань"}, "texts": {"face:0": "<b>Основание</b> — квадрат. Его сторону мы и ищем: из периметра P = 40 см получаем 40 : 4 = 10 см, а площадь 10² = 100 см².", "face": "<b>Боковая грань</b> — равнобедренный треугольник с основанием 10 см и высотой (апофемой) 12 см. Её площадь ½ · 10 · 12 = 60 см², а четыре такие грани дают 240 см².", "edge": "<b>Боковое ребро.</b> В этой задаче оно не нужно — работаем только с апофемой.", "vert": "<b>Вершина</b> — точка, в которой сходятся рёбра."}, "start": "apo", "yaw": -0.5, "pitch": 0.26, "chips": [["apo", "апофема 12", "#b3261e", "ln"], ["face:4", "боковая грань", "#ffd79a", ""], ["face:0", "основание", "#dbe6f8", ""]]}, "ex4": {"labels": [{"p": [0.6326571756153544, -0.7071067811865475, 1.3600532703326007], "t": "A", "size": 16}, {"p": [-1.3600532703326007, -0.7071067811865475, 0.6326571756153545], "t": "B", "size": 16}, {"p": [-0.6326571756153541, -0.7071067811865475, -1.360053270332601], "t": "C", "size": 16}, {"p": [1.360053270332601, -0.7071067811865475, -0.6326571756153541], "t": "D", "size": 16}, {"p": [0.0, 0.7071067811865475, 0.0], "t": "S", "size": 16}, {"p": [0.0, -0.7071067811865475, 0.0], "t": "O"}, {"p": [0.9963552229739776, -0.7071067811865475, 0.3636980473586233], "t": "H"}, {"p": [0.0, 0.7071067811865475, 0.0], "p2": [0.9963552229739776, -0.7071067811865475, 0.3636980473586233], "t": "30 см", "c": "#b3261e", "d": 29, "size": 16, "at": 0.5}, {"p": [0.0, 0.7071067811865475, 0.0], "p2": [0.0, -0.7071067811865475, 0.0], "t": "24 см", "c": "#15181e", "d": 29, "size": 16, "at": 0.5}, {"p": [0.0, -0.7071067811865475, 0.0], "p2": [0.9963552229739776, -0.7071067811865475, 0.3636980473586233], "t": "18 см", "c": "#137a45", "d": 27, "size": 16, "at": 0.5}], "V": [[0.6327, -0.7071, 1.3601], [-1.3601, -0.7071, 0.6327], [-0.6327, -0.7071, -1.3601], [1.3601, -0.7071, -0.6327], [0.0, 0.7071, 0.0]], "F": [[3, 2, 1, 0], [0, 1, 4], [1, 2, 4], [2, 3, 4], [3, 0, 4]], "E": [[0, 1], [1, 2], [2, 3], [3, 0], [0, 4], [1, 4], [2, 4], [3, 4]], "EF": [[0, 1], [0, 2], [0, 3], [0, 4], [1, 4], [1, 2], [2, 3], [3, 4]], "segs": [{"key": "h", "a": [0.0, 0.7071067811865475, 0.0], "b": [0.0, -0.7071067811865475, 0.0], "c": "#15181e", "w": 2.8, "dash": true, "name": "высота 24", "text": "<b>Высота 24 см</b> — из вершины в центр основания O. Она катет прямоугольного треугольника SOH, а <i>не</i> апофема."}, {"key": "apo", "a": [0.0, 0.7071067811865475, 0.0], "b": [0.9963552229739776, -0.7071067811865475, 0.3636980473586233], "c": "#b3261e", "w": 3.6, "name": "апофема 30", "text": "<b>Апофема 30 см</b> — гипотенуза треугольника SOH и то, что подставляют в формулу S<sub>бок</sub> = ½ · P · a."}, {"key": "oh", "a": [0.0, -0.7071067811865475, 0.0], "b": [0.9963552229739776, -0.7071067811865475, 0.3636980473586233], "c": "#137a45", "w": 3.2, "name": "OH = 18", "text": "<b>OH</b> — от центра основания к середине стороны. Из теоремы Пифагора OH = √(30² − 24²) = 18 см, а так как в основании квадрат, OH — это половина стороны, значит сторона равна 36 см."}], "hi": {"face": {"4": "#ffd79a"}}, "names": {"face:0": "основание", "face:4": "боковая грань"}, "texts": {"face:0": "<b>Основание</b> — квадрат со стороной 36 см, периметр 144 см.", "face": "<b>Боковая грань</b> — треугольник с основанием 36 см и высотой (апофемой) 30 см.", "edge": "<b>Боковое ребро.</b> Здесь не нужно: и высота, и апофема приходят к середине стороны, а не к вершине.", "vert": "<b>Вершина</b> — точка, в которой сходятся рёбра."}, "start": "apo", "yaw": -0.52, "pitch": 0.24, "chips": [["h", "высота 24", "#15181e", "ln"], ["apo", "апофема 30", "#b3261e", "ln"], ["oh", "OH = 18", "#137a45", "ln"], ["face:4", "боковая грань", "#ffd79a", ""]]}, "ex5": {"labels": [{"p": [0.7191383079063045, -0.9999999999999999, -1.3163738428355587], "t": "A", "size": 16}, {"p": [0.7804440348197861, -0.9999999999999999, 1.2809789648991945], "t": "B", "size": 16}, {"p": [-1.4995823427260904, -0.9999999999999999, 0.0353948779363648], "t": "C", "size": 16}, {"p": [0.0, 0.9999999999999999, 0.0], "t": "S", "size": 16}, {"p": [0.0, -0.9999999999999999, 0.0], "t": "O"}, {"p": [0.7497911713630453, -0.9999999999999999, -0.017697438968182096], "t": "H"}, {"p": [0.0, 0.9999999999999999, 0.0], "p2": [0.0, -0.9999999999999999, 0.0], "t": "8 см", "c": "#15181e", "d": 29, "size": 16, "at": 0.5}, {"p": [0.0, -0.9999999999999999, 0.0], "p2": [-1.4995823427260904, -0.9999999999999999, 0.0353948779363648], "t": "6 см", "c": "#2f6bd8", "d": 25, "size": 16, "at": 0.5}, {"p": [0.0, -0.9999999999999999, 0.0], "p2": [0.7497911713630453, -0.9999999999999999, -0.017697438968182096], "t": "3 см", "c": "#137a45", "d": 25, "size": 16, "at": 0.5}, {"p": [0.7191383079063045, -0.9999999999999999, -1.3163738428355587], "p2": [0.7804440348197861, -0.9999999999999999, 1.2809789648991945], "t": "6√3 см", "c": "#15181e", "d": 40, "size": 16, "at": 0.5}], "V": [[0.7191, -1.0, -1.3164], [0.7804, -1.0, 1.281], [-1.4996, -1.0, 0.0354], [0.0, 1.0, 0.0]], "F": [[2, 1, 0], [0, 1, 3], [1, 2, 3], [2, 0, 3]], "E": [[0, 1], [1, 2], [2, 0], [0, 3], [1, 3], [2, 3]], "EF": [[0, 1], [0, 2], [0, 3], [1, 3], [1, 2], [2, 3]], "segs": [{"key": "h", "a": [0.0, 0.9999999999999999, 0.0], "b": [0.0, -0.9999999999999999, 0.0], "c": "#15181e", "w": 2.8, "dash": true, "name": "высота 8", "text": "<b>Высота 8 см</b> — общий катет для обоих прямоугольных треугольников."}, {"key": "R", "a": [0.0, -0.9999999999999999, 0.0], "b": [-1.4995823427260904, -0.9999999999999999, 0.0353948779363648], "c": "#2f6bd8", "w": 3.0, "name": "R = 6", "text": "<b>R = 6 см</b> — радиус описанной около основания окружности, от центра до <i>вершины</i> основания: R = a√3 : 3 = 6√3 · √3 : 3 = 6. Вместе с высотой даёт боковое ребро."}, {"key": "r", "a": [0.0, -0.9999999999999999, 0.0], "b": [0.7497911713630453, -0.9999999999999999, -0.017697438968182096], "c": "#137a45", "w": 3.0, "name": "r = 3", "text": "<b>r = 3 см</b> — радиус вписанной окружности, от центра до <i>середины стороны</i>: r = R : 2 = 3. Вместе с высотой даёт апофему √(8² + 3²) = √73."}, {"key": "apo", "a": [0.0, 0.9999999999999999, 0.0], "b": [0.7497911713630453, -0.9999999999999999, -0.017697438968182096], "c": "#b3261e", "w": 3.4, "name": "апофема", "text": "<b>Апофема</b> = √(8² + 3²) = √73 ≈ 8,5 см. Опирается на середину стороны, поэтому в паре с ней идёт r."}], "hi": {"edge": {"5": "#2f6bd8"}, "face": {"1": "#ffd79a"}}, "names": {"face:0": "основание", "edge:5": "боковое ребро"}, "texts": {"face:0": "<b>Основание</b> — правильный треугольник со стороной 6√3 см.", "face": "<b>Боковая грань</b> — равнобедренный треугольник с боковыми сторонами 10 см и основанием 6√3 см.", "edge": "<b>Боковое ребро</b> = √(8² + 6²) = 10 см: высота 8 и радиус описанной окружности 6 — катеты, ребро — гипотенуза.", "vert": "<b>Вершина</b> — точка, в которой сходятся рёбра."}, "start": "edge:5", "yaw": -0.55, "pitch": 0.24, "chips": [["h", "высота 8", "#15181e", "ln"], ["edge:5", "боковое ребро", "#2f6bd8", "ln"], ["R", "R = 6", "#2f6bd8", "ln"], ["r", "r = 3", "#137a45", "ln"], ["apo", "апофема", "#b3261e", "ln"]]}, "ex6": {"labels": [{"p": [1.5, -0.5, 0.0], "t": "A", "size": 16}, {"p": [1.5, 0.5, 0.0], "t": "A₁", "size": 16}, {"p": [0.0, -0.5, 0.625], "t": "B", "size": 16}, {"p": [0.0, 0.5, 0.625], "t": "B₁", "size": 16}, {"p": [-1.5, -0.5, 0.0], "t": "C", "size": 16}, {"p": [-1.5, 0.5, 0.0], "t": "C₁", "size": 16}, {"p": [0.0, -0.5, -0.625], "t": "D", "size": 16}, {"p": [0.0, 0.5, -0.625], "t": "D₁", "size": 16}, {"p": [1.5, 0.5, 0.0], "p2": [-1.5, 0.5, 0.0], "t": "24 см", "c": "#2f6bd8", "d": 26, "size": 16, "at": 0.27}, {"p": [0.0, 0.5, 0.625], "p2": [0.0, 0.5, -0.625], "t": "10 см", "c": "#137a45", "d": 26, "size": 16, "at": 0.73}, {"p": [1.5, -0.5, 0.0], "p2": [1.5, 0.5, 0.0], "t": "8 см", "c": "#b3261e", "d": 27, "size": 16, "at": 0.5}], "V": [[1.5, -0.5, 0.0], [0.0, -0.5, 0.625], [-1.5, -0.5, 0.0], [0.0, -0.5, -0.625], [1.5, 0.5, 0.0], [0.0, 0.5, 0.625], [-1.5, 0.5, 0.0], [0.0, 0.5, -0.625]], "F": [[3, 2, 1, 0], [4, 5, 6, 7], [0, 1, 5, 4], [1, 2, 6, 5], [2, 3, 7, 6], [3, 0, 4, 7]], "E": [[0, 1], [1, 2], [2, 3], [3, 0], [4, 5], [5, 6], [6, 7], [7, 4], [0, 4], [1, 5], [2, 6], [3, 7]], "EF": [[0, 2], [0, 3], [0, 4], [0, 5], [1, 2], [1, 3], [1, 4], [1, 5], [2, 5], [2, 3], [3, 4], [4, 5]], "segs": [{"key": "d1", "a": [1.5, 0.5, 0.0], "b": [-1.5, 0.5, 0.0], "c": "#2f6bd8", "w": 3.2, "dot0": true, "name": "24 см", "text": "<b>Большая диагональ 24 см.</b> Диагонали ромба перпендикулярны и делятся точкой пересечения пополам, поэтому её половина равна 12 см."}, {"key": "d2", "a": [0.0, 0.5, 0.625], "b": [0.0, 0.5, -0.625], "c": "#137a45", "w": 3.2, "dot0": true, "name": "10 см", "text": "<b>Малая диагональ 10 см,</b> её половина 5 см. Половины диагоналей — катеты прямоугольного треугольника, сторона ромба — гипотенуза: √(5² + 12²) = 13 см."}], "hi": {"face": {"2": "#ffd79a"}, "edge": {"8": "#b3261e"}}, "names": {"face:0": "основание", "face:1": "основание", "face:2": "боковая грань", "edge:8": "боковое ребро"}, "texts": {"face:0": "<b>Основание</b> — ромб со стороной 13 см, его периметр P = 4 · 13 = 52 см.", "face:1": "<b>Основание</b> — ромб со стороной 13 см, его периметр P = 4 · 13 = 52 см.", "face": "<b>Боковая грань</b> — прямоугольник 13 см × 8 см, площадь 104 см². Четыре такие грани дают 416 см².", "edge": "<b>Боковое ребро 8 см</b> — высота призмы в формуле S = P · h.", "vert": "<b>Вершина</b> — точка, в которой сходятся рёбра."}, "start": "face:1", "yaw": -0.62, "pitch": 0.5, "chips": [["face:1", "основание — ромб", "#dbe6f8", ""], ["d1", "диагональ 24", "#2f6bd8", "ln"], ["d2", "диагональ 10", "#137a45", "ln"], ["edge:8", "боковое ребро 8", "#b3261e", "ln"]]}};
+for (var _k3 in SPECS3D){ FIG3D(_k3, SPECS3D[_k3]); }
+</script>
+</body>
+</html>
