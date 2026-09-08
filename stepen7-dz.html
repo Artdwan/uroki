@@ -1,0 +1,1004 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Степень с натуральным показателем — 7 класс</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:800px;margin:0 auto;padding:16px 14px 60px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+.f-formula{font-size:19px}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.step{margin:6px 0}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.fig{margin:12px 0;text-align:center}
+.fig svg{width:100%;max-width:520px;height:auto;border-radius:12px}
+.small{color:var(--muted);font-size:15px}
+.hint.last{background:var(--warn-soft)}
+.sol .step{margin:7px 0}
+.ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;background:var(--bg)}
+.ex h3{margin-top:0}
+.ex .q{font-weight:600}
+.wrap-t th,.wrap-t td{white-space:normal;text-align:left;vertical-align:top}
+.wrap-t th:first-child{white-space:nowrap}
+.fx{display:block;background:var(--acc-soft);border:1px solid var(--line);border-radius:10px;
+  padding:11px 13px;margin:12px 0;text-align:center;font-size:22px;line-height:1.7;
+  font-weight:600;overflow-x:auto}
+.sol .fx,.ex .fx{font-size:20px;margin:9px 0}
+.fx .fi{display:inline-block;white-space:nowrap;margin:3px 14px}
+.f-formula{font-size:20px}
+.tool{border:1px solid var(--line);border-radius:12px;padding:14px;margin:14px 0;background:var(--bg)}
+.tool select{font:inherit;font-size:17px;padding:7px 9px;border-radius:9px;
+  border:1.5px solid var(--line);background:var(--card);color:var(--ink)}
+.trow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:10px;justify-content:center}
+.trow label{color:var(--muted);font-size:15px}
+.tabs{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-bottom:12px}
+.tabs button{padding:7px 12px;min-height:40px;font-size:17px}
+.tabs button.on{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+.stout{text-align:center;font-size:20px;line-height:1.9;overflow-x:auto}
+.stout .ln{margin:7px 0;white-space:nowrap}
+.stout .res{font-size:20px;font-weight:700;color:var(--ok);white-space:normal}
+.stout .rule{font-size:16px;color:var(--muted);white-space:normal;margin-top:8px}
+.sgrid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:10px 0}
+.sgc{flex:1 1 200px;border:1.5px solid var(--line);border-radius:12px;padding:12px;background:var(--card);
+  text-align:center;min-width:180px}
+.sgc.pos{border-color:var(--ok)} .sgc.neg{border-color:var(--bad)}
+.sgt{font-size:24px;font-weight:700;margin-bottom:6px}
+.sgv{font-size:17px;color:var(--muted);margin-bottom:6px;overflow-x:auto;white-space:nowrap}
+.sgr{font-size:26px;font-weight:700}
+.sgc.pos .sgr{color:var(--ok)} .sgc.neg .sgr{color:var(--bad)}
+.tout{margin-top:10px;font-size:16px;text-align:center}
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+@media print{
+  body{background:#fff}
+  .wrap>*{display:none !important}
+  .wrap>.sheet{display:block !important;border:none;margin:0;padding:0}
+  .sheet{font-size:13px}
+  .sheet h2{font-size:18px}
+  .sheet th,.sheet td{padding:4px 5px;font-size:12px}
+  @page{size:A4;margin:12mm}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card top">
+  <h1>Степень с натуральным показателем</h1>
+  <div class="meta">Алгебра, 7 класс · §1 «Степень с натуральным показателем и её свойства» · 14 задач</div>
+  <label class="f" for="name">Имя и фамилия</label>
+  <input type="text" id="name" placeholder="напиши, как в журнале" autocapitalize="words" spellcheck="false">
+  <div class="note" style="margin-top:14px">
+    Как работать: прочитай теорию — там два помощника, в которых свойства степени раскладываются
+    на множители прямо у тебя на глазах. Потом разбери примеры и реши задачи. У каждой задачи есть
+    три подсказки, они открываются по одной; открывать их не стыдно. Решения записывай в тетрадь,
+    потом сфотографируй, приложи фото внизу страницы и нажми «Отправить на проверку».
+  </div>
+</div>
+
+<div class="card">
+  <h2>Теория</h2>
+
+  <h3>1. Что такое степень</h3>
+  <div class="note"><b>Определение.</b> Степенью числа a с натуральным показателем n, большим 1,
+  называется произведение n множителей, каждый из которых равен a. Если n = 1, то a¹ = a.</div>
+  <div class="fx">a<sup>n</sup> = a · a · a · … · a &nbsp;&nbsp;(n множителей)</div>
+  <p>Здесь a<sup>n</sup> — <b>степень</b>, a — <b>основание степени</b>, n — <b>показатель степени</b>.
+  Найти значение степени — значит посчитать это произведение; такое действие называют
+  <b>возведением в степень</b>.</p>
+  <div class="fx"><span class="fi">4³ = 4 · 4 · 4 = 64</span><span class="fi">5⁶ = 15 625</span></div>
+
+  <h3>2. Знак степени и роль скобок</h3>
+  <div class="note">
+  Степень отрицательного числа с <b>чётным</b> показателем — число <b>положительное</b>.<br>
+  Степень отрицательного числа с <b>нечётным</b> показателем — число <b>отрицательное</b>.<br>
+  Квадрат любого числа неотрицателен: a² ≥ 0 при любом a.</div>
+  <p>Самая частая ошибка в этой теме — потерять скобки. Подвигай числа в помощнике и посмотри,
+  чем −a<sup>n</sup> отличается от (−a)<sup>n</sup>.</p>
+  
+<div class="tool">
+  <div class="trow">
+    <label for="sga">число</label><select id="sga"></select>
+    <label for="sgn">показатель</label><select id="sgn"></select>
+  </div>
+  <div class="sgrid" id="sgrid"></div>
+  <div class="tout" id="sgout"></div>
+</div>
+
+
+  <h3>3. Пять свойств степени — попробуй сам</h3>
+  <p>Все свойства доказываются одинаково: степень расписывают по определению в произведение множителей,
+  а потом собирают обратно. Выбери свойство, поменяй числа и посмотри, как это работает.</p>
+  
+<div class="tool">
+  <div class="tabs" id="sttabs">
+    <button type="button" data-t="mul" class="on">a<sup>m</sup> · a<sup>n</sup></button>
+    <button type="button" data-t="div">a<sup>m</sup> : a<sup>n</sup></button>
+    <button type="button" data-t="pow">(a<sup>m</sup>)<sup>n</sup></button>
+    <button type="button" data-t="prod">(a · b)<sup>n</sup></button>
+    <button type="button" data-t="quot">(a : b)<sup>n</sup></button>
+  </div>
+  <div class="trow" id="stctl"></div>
+  <div class="stout" id="stout"></div>
+</div>
+
+
+  <h3>4. Все свойства в одном месте</h3>
+  <div class="fx"><span class="fi">1) a<sup>m</sup> · a<sup>n</sup> = a<sup>m+n</sup></span><span class="fi">2) a<sup>m</sup> : a<sup>n</sup> = a<sup>m−n</sup></span><span class="fi">3) (a<sup>m</sup>)<sup>n</sup> = a<sup>mn</sup></span></div>
+  <div class="fx"><span class="fi">4) (a · b)<sup>n</sup> = a<sup>n</sup> · b<sup>n</sup></span><span class="fi">5) (a : b)<sup>n</sup> = a<sup>n</sup> : b<sup>n</sup></span></div>
+  <div class="scroll"><table class="wrap-t">
+    <tr><th>свойство</th><th>как звучит</th><th>условия</th></tr>
+    <tr><th>a<sup>m</sup> · a<sup>n</sup></th>
+        <td>основание оставляют прежним, показатели <b>складывают</b></td><td>любое a</td></tr>
+    <tr><th>a<sup>m</sup> : a<sup>n</sup></th>
+        <td>основание прежнее, из показателя делимого <b>вычитают</b> показатель делителя</td>
+        <td>a ≠ 0, m &gt; n</td></tr>
+    <tr><th>(a<sup>m</sup>)<sup>n</sup></th>
+        <td>основание прежнее, показатели <b>перемножают</b></td><td>любое a</td></tr>
+    <tr><th>(a · b)<sup>n</sup></th>
+        <td>в степень возводят <b>каждый множитель</b>, результаты перемножают</td><td>любые a, b</td></tr>
+    <tr><th>(a : b)<sup>n</sup></th>
+        <td>в степень возводят делимое и делитель по отдельности</td><td>b ≠ 0</td></tr>
+  </table></div>
+
+  <h3>5. Нулевой показатель</h3>
+  <div class="note">Степень числа a ≠ 0 с нулевым показателем равна единице: <b>a⁰ = 1</b>.
+  Выражение 0⁰ смысла не имеет.</div>
+  <p class="small">Откуда это берётся: по второму свойству a⁹ : a⁹ = a<sup>9−9</sup> = a⁰. Но любое число,
+  делённое само на себя, даёт 1. Значит a⁰ = 1.</p>
+  <div class="fx"><span class="fi">3⁰ = 1</span><span class="fi">(−2,5)⁰ = 1</span><span class="fi">0⁰ — не имеет смысла</span></div>
+
+  <h3>6. Свойства работают и в обратную сторону</h3>
+  <p>Каждое свойство можно читать справа налево — это нужно, когда степень надо <b>разложить</b>,
+  а не собрать.</p>
+  <div class="scroll"><table class="wrap-t">
+    <tr><th>прямо</th><th>обратно</th><th>пример</th></tr>
+    <tr><th>a<sup>m</sup>a<sup>n</sup> = a<sup>m+n</sup></th><td>a<sup>m+n</sup> = a<sup>m</sup>a<sup>n</sup></td>
+        <td>2¹¹ = 2⁴ · 2⁷</td></tr>
+    <tr><th>a<sup>m</sup>:a<sup>n</sup> = a<sup>m−n</sup></th><td>a<sup>m−n</sup> = a<sup>m</sup>:a<sup>n</sup></td>
+        <td>2⁶ = 2¹⁰ : 2⁴</td></tr>
+    <tr><th>(a<sup>m</sup>)<sup>n</sup> = a<sup>mn</sup></th><td>a<sup>mn</sup> = (a<sup>m</sup>)<sup>n</sup></td>
+        <td>4⁶ = (4²)³; &nbsp; 9³ = (3²)³</td></tr>
+    <tr><th>(ab)<sup>n</sup> = a<sup>n</sup>b<sup>n</sup></th><td>a<sup>n</sup>b<sup>n</sup> = (ab)<sup>n</sup></td>
+        <td>0,5⁸ · 2⁸ = 1⁸ = 1</td></tr>
+    <tr><th>(a:b)<sup>n</sup> = a<sup>n</sup>:b<sup>n</sup></th><td>a<sup>n</sup>:b<sup>n</sup> = (a:b)<sup>n</sup></td>
+        <td>12⁴ : 3⁴ = 4⁴ = 256</td></tr>
+  </table></div>
+  <p class="small">Обратное чтение — это и есть «рациональный способ»: вместо того чтобы считать
+  25³ и 0,4³ по отдельности, собираем их в (25 · 0,4)³ = 10³.</p>
+
+  <h3>7. Порядок действий</h3>
+  <div class="note">В числовом выражении без скобок сначала выполняют <b>возведение в степень</b>,
+  затем <b>умножение и деление</b>, и только потом <b>сложение и вычитание</b>.</div>
+  <div class="fx">2 · 5³ + 3 · (−2)³ = 2 · 125 + 3 · (−8) = 250 − 24 = 226</div>
+
+  <h3>8. Таблица степеней — держи под рукой</h3>
+  <div class="scroll"><table>
+    <tr><th>n</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th></tr>
+    <tr><th>2<sup>n</sup></th><td>2</td><td>4</td><td>8</td><td>16</td><td>32</td><td>64</td><td>128</td><td>256</td><td>512</td><td>1024</td></tr>
+    <tr><th>3<sup>n</sup></th><td>3</td><td>9</td><td>27</td><td>81</td><td>243</td><td>729</td><td>2187</td><td>6561</td><td>19 683</td><td>59 049</td></tr>
+  </table></div>
+
+  <div class="note"><b>Три ловушки, на которых теряют баллы:</b><br>
+  - пишут −5² = 25, забыв, что без скобок в степень возводится только пятёрка;<br>
+  - в степени степени складывают показатели вместо умножения: (a⁴)² — это a⁸, а не a⁶;<br>
+  - применяют свойства к степеням с <b>разными</b> основаниями: 2³ · 3³ нельзя записать как 6⁶ —
+  правильно (2 · 3)³ = 6³.</div>
+</div>
+
+<div class="card">
+  <h2>Разобранные примеры</h2>
+  <p class="meta">Семь примеров закрывают все типы задач этой домашки. Сначала попробуй сам,
+  потом открой решение и сверься.</p>
+
+  <div class="ex">
+  <h3>Пример 1. Найти значение степени</h3>
+  <p class="q">Вычислите: а) 0,3⁴; б) (−5)⁵; в) (2/3)³.</p>
+  <details><summary>Показать решение</summary>
+    <div class="step">а) Расписываем по определению: 0,3⁴ = 0,3 · 0,3 · 0,3 · 0,3 = 0,0081.</div>
+    <div class="step">б) (−5)⁵ = (−5)·(−5)·(−5)·(−5)·(−5). Показатель нечётный, значит результат
+    отрицательный: −3125.</div>
+    <div class="step">в) У дроби в степень возводятся и числитель, и знаменатель:
+    (2/3)³ = 2³/3³ = 8/27.</div>
+    <div class="fx"><span class="fi">0,3⁴ = 0,0081</span><span class="fi">(−5)⁵ = −3125</span><span class="fi">(2/3)³ = 8/27</span></div>
+    <div class="step"><b>Ответ:</b> 0,0081; −3125; 8/27.</div>
+  </details>
+  </div>
+
+  <div class="ex">
+  <h3>Пример 2. Где стоит минус</h3>
+  <p class="q">Вычислите: 4²; −4²; (−4)²; 5³; −5³; (−5)³.</p>
+  <details><summary>Показать решение</summary>
+    <div class="step">1. 4² = 16 — обычная степень.</div>
+    <div class="step">2. −4²: скобок нет, поэтому в степень возводится только 4, а минус остаётся
+    снаружи: −(4²) = −16.</div>
+    <div class="step">3. (−4)²: минус внутри скобок, в степень идёт всё число −4. Показатель чётный,
+    результат положительный: 16.</div>
+    <div class="step">4. Точно так же: 5³ = 125; −5³ = −(5³) = −125; (−5)³ = −125.</div>
+    <div class="fx"><span class="fi">−4² = −16</span><span class="fi">(−4)² = 16</span></div>
+    <div class="step"><b>Ответ:</b> 16; −16; 16; 125; −125; −125.</div>
+    <div class="note">Для нечётного показателя −5³ и (−5)³ совпали случайно. Для чётного они всегда
+    разные — именно поэтому скобки нельзя терять.</div>
+  </details>
+  </div>
+
+  <div class="ex">
+  <h3>Пример 3. Произведение степеней</h3>
+  <p class="q">Представьте в виде степени: а) 5² · 5⁴; б) (3/7)⁵ · (3/7)⁶; в) m¹⁰ · m¹⁵.</p>
+  <details><summary>Показать решение</summary>
+    <div class="step">1. Проверяем главное условие: основания одинаковые. Тогда работает первое свойство —
+    показатели складываются.</div>
+    <div class="step">а) 5² · 5⁴ = 5<sup>2+4</sup> = 5⁶.</div>
+    <div class="step">б) Основание — дробь 3/7, но правило то же: (3/7)<sup>5+6</sup> = (3/7)¹¹.</div>
+    <div class="step">в) m¹⁰ · m¹⁵ = m<sup>10+15</sup> = m²⁵.</div>
+    <div class="fx">a<sup>m</sup> · a<sup>n</sup> = a<sup>m+n</sup></div>
+    <div class="step"><b>Ответ:</b> 5⁶; (3/7)¹¹; m²⁵.</div>
+    <div class="note">Обратное чтение того же свойства: 4⁷ = 4<sup>2+5</sup> = 4² · 4⁵.
+    Разложить степень можно многими способами.</div>
+  </details>
+  </div>
+
+  <div class="ex">
+  <h3>Пример 4. Частное степеней</h3>
+  <p class="q">Представьте в виде степени: а) 5²⁰ : 5¹⁴; б) m¹⁸ : m¹⁵; в) представьте 4⁷ в виде частного.</p>
+  <details><summary>Показать решение</summary>
+    <div class="step">а) Основания одинаковые, показатели вычитаем: 5²⁰ : 5¹⁴ = 5<sup>20−14</sup> = 5⁶.</div>
+    <div class="step">б) m¹⁸ : m¹⁵ = m<sup>18−15</sup> = m³.</div>
+    <div class="step">в) Читаем свойство наоборот: 4⁷ = 4<sup>10−3</sup> = 4¹⁰ : 4³.
+    Подойдёт любая пара показателей с разностью 7.</div>
+    <div class="fx">a<sup>m</sup> : a<sup>n</sup> = a<sup>m−n</sup>, &nbsp; a ≠ 0</div>
+    <div class="step"><b>Ответ:</b> 5⁶; m³; например, 4¹⁰ : 4³.</div>
+  </details>
+  </div>
+
+  <div class="ex">
+  <h3>Пример 5. Степень степени</h3>
+  <p class="q">а) Представьте в виде степени: (5²)³ и (m⁴)⁶. б) Представьте 9³ и 81 в виде степени
+  с основанием 3.</p>
+  <details><summary>Показать решение</summary>
+    <div class="step">а) Показатели перемножаем: (5²)³ = 5<sup>2·3</sup> = 5⁶; (m⁴)⁶ = m<sup>4·6</sup> = m²⁴.</div>
+    <div class="step">б) Сначала замечаем, что 9 = 3². Тогда 9³ = (3²)³ = 3<sup>2·3</sup> = 3⁶.</div>
+    <div class="step">Аналогично 81 = 3⁴, значит 81 = (3²)² = 3⁴.</div>
+    <div class="fx">(a<sup>m</sup>)<sup>n</sup> = a<sup>mn</sup></div>
+    <div class="step"><b>Ответ:</b> 5⁶; m²⁴; 3⁶; 3⁴.</div>
+    <div class="note">Приём «привести к одному основанию» встречается постоянно: 4 = 2², 8 = 2³,
+    9 = 3², 27 = 3³, 25 = 5², 0,01 = 0,1².</div>
+  </details>
+  </div>
+
+  <div class="ex">
+  <h3>Пример 6. Рациональный счёт</h3>
+  <p class="q">Вычислите: а) 0,5⁸ · 2⁸; б) 25³ · 0,4³; в) 10⁴ : 5⁴; г) 21⁵ : 7⁵.</p>
+  <details><summary>Показать решение</summary>
+    <div class="step">Во всех пунктах <b>показатели одинаковые</b>, а основания разные — значит читаем
+    четвёртое и пятое свойства справа налево и сначала действуем с основаниями.</div>
+    <div class="step">а) 0,5⁸ · 2⁸ = (0,5 · 2)⁸ = 1⁸ = 1.</div>
+    <div class="step">б) 25³ · 0,4³ = (25 · 0,4)³ = 10³ = 1000.</div>
+    <div class="step">в) 10⁴ : 5⁴ = (10 : 5)⁴ = 2⁴ = 16.</div>
+    <div class="step">г) 21⁵ : 7⁵ = (21 : 7)⁵ = 3⁵ = 243.</div>
+    <div class="fx"><span class="fi">a<sup>n</sup> · b<sup>n</sup> = (a · b)<sup>n</sup></span><span class="fi">a<sup>n</sup> : b<sup>n</sup> = (a : b)<sup>n</sup></span></div>
+    <div class="step"><b>Ответ:</b> 1; 1000; 16; 243.</div>
+    <div class="note">Считать 0,5⁸ и 2⁸ по отдельности никто не запрещает, но это долго и легко ошибиться.
+    Смысл свойства как раз в том, чтобы этого не делать.</div>
+  </details>
+  </div>
+
+  <div class="ex">
+  <h3>Пример 7. Несколько свойств подряд</h3>
+  <p class="q">а) Упростите (a⁴)² · (a³)³. б) Вычислите 2 · 5³ + 3 · (−2)³.</p>
+  <details><summary>Показать решение</summary>
+    <div class="step">а) Сначала раскрываем скобки по свойству степени степени — показатели перемножаем:
+    (a⁴)² = a⁸ и (a³)³ = a⁹.</div>
+    <div class="step">Теперь это произведение степеней с одинаковым основанием, показатели складываем.</div>
+    <div class="fx">(a⁴)² · (a³)³ = a⁸ · a⁹ = a¹⁷</div>
+    <div class="step">б) Порядок действий: сначала степени, потом умножение, потом сложение.</div>
+    <div class="step">5³ = 125; (−2)³ = −8; 2 · 125 = 250; 3 · (−8) = −24; 250 − 24 = 226.</div>
+    <div class="fx">2 · 5³ + 3 · (−2)³ = 226</div>
+    <div class="step"><b>Ответ:</b> a¹⁷; 226.</div>
+  </details>
+  </div>
+</div>
+
+<div class="card sheet">
+  <h2>Шпаргалка</h2>
+  <p class="small">Этот блок печатается отдельно на один лист A4: Ctrl+P (⌘+P) → печать.</p>
+  <p class="f-formula"><b>Определение:</b> a<sup>n</sup> = a · a · … · a (n множителей); a¹ = a.
+  a — основание, n — показатель.</p>
+  <p class="f-formula"><b>Свойства:</b> a<sup>m</sup>a<sup>n</sup> = a<sup>m+n</sup>;
+  a<sup>m</sup> : a<sup>n</sup> = a<sup>m−n</sup> (a ≠ 0, m &gt; n);
+  (a<sup>m</sup>)<sup>n</sup> = a<sup>mn</sup>;
+  (ab)<sup>n</sup> = a<sup>n</sup>b<sup>n</sup>;
+  (a : b)<sup>n</sup> = a<sup>n</sup> : b<sup>n</sup> (b ≠ 0).</p>
+  <p class="f-formula"><b>Нулевой показатель:</b> a⁰ = 1 при a ≠ 0; выражение 0⁰ смысла не имеет.</p>
+  <p class="f-formula"><b>Знаки:</b> отрицательное число в чётной степени — положительное,
+  в нечётной — отрицательное; a² ≥ 0 всегда. Без скобок степень относится только к числу:
+  −5² = −25, а (−5)² = 25.</p>
+  <p class="f-formula"><b>Порядок действий:</b> степень → умножение и деление → сложение и вычитание.</p>
+  <p class="f-formula"><b>Обратное чтение (рациональный счёт):</b> a<sup>n</sup>b<sup>n</sup> = (ab)<sup>n</sup>;
+  a<sup>n</sup> : b<sup>n</sup> = (a : b)<sup>n</sup>; a<sup>mn</sup> = (a<sup>m</sup>)<sup>n</sup>.
+  Например, 25³ · 0,4³ = 10³ = 1000 и 12⁴ : 3⁴ = 4⁴ = 256.</p>
+  <div class="scroll"><table>
+    <tr><th>n</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th></tr>
+    <tr><th>2<sup>n</sup></th><td>2</td><td>4</td><td>8</td><td>16</td><td>32</td><td>64</td><td>128</td><td>256</td><td>512</td><td>1024</td></tr>
+    <tr><th>3<sup>n</sup></th><td>3</td><td>9</td><td>27</td><td>81</td><td>243</td><td>729</td><td>2187</td><td>6561</td><td>19 683</td><td>59 049</td></tr>
+  </table></div>
+  <p style="font-size:15px"><b>Полезно узнавать:</b> 4 = 2², 8 = 2³, 16 = 2⁴, 32 = 2⁵, 64 = 2⁶ = 4³ = 8²;
+  9 = 3², 27 = 3³, 81 = 3⁴; 25 = 5², 125 = 5³; 100 = 10², 1000 = 10³.</p>
+</div>
+
+<div class="card">
+  <h2>Домашнее задание</h2>
+  <p class="meta">Где ответ — число, единицы писать не нужно; запятая и точка равнозначны.
+  Где спрашивают показатель степени — введи только число. Кнопки над полем вставляют знаки.
+  Подсказки открываются по одной кнопкой «Подсказка».</p>
+  <div id="tasks"></div>
+</div>
+
+<div class="card">
+  <h2>Шаг 1. Прикрепи фото решений</h2>
+  <p class="meta">Ответы в полях — это только результат. Преподаватель проверяет ещё и ход решения,
+  поэтому без фото тетради работа не отправляется.</p>
+  <ol class="steps-list">
+    <li>Реши задачи в тетради, как обычно, с полной записью.</li>
+    <li>Сфотографируй страницы: при дневном свете, чтобы текст читался и не было теней от руки.</li>
+    <li>Нажми кнопку ниже. С телефона выбирай «Камера» или «Фото», с компьютера — файл из папки.</li>
+    <li>Фото можно приложить несколько сразу и отметить у каждого, к какой задаче оно относится.</li>
+  </ol>
+  <input type="file" id="photos" accept="image/*" multiple style="margin-top:12px">
+  <div class="thumbs" id="thumbs"></div>
+</div>
+
+<div class="card">
+  <h2>Шаг 2. Отправь работу</h2>
+  <p class="meta">Проверь, что вверху страницы написано твоё имя, а выше приложены фото.
+  По кнопке ответы, результат и фотографии уходят преподавателю — пересылать ничего не нужно.
+  Вторая кнопка просто сохраняет копию тебе на устройство.</p>
+  <div class="row">
+    <button class="pri" id="send">Отправить на проверку</button>
+    <button id="report">Скачать копию себе</button>
+  </div>
+  <div id="repnote" class="meta" style="margin-top:8px"></div>
+</div>
+
+</div>
+
+<div class="bar">
+  <button class="pri" id="checkall">Проверить всё</button>
+  <span id="progress" class="meta">решено 0 из 14</span>
+</div>
+
+<script>
+"use strict";
+var started = Date.now();
+
+/* ---------- данные задач; ответы закодированы, чтобы не читались в исходнике ---------- */
+function e(s){return btoa(unescape(encodeURIComponent(s)));}
+function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return s;}}
+
+var TASKS = [
+ {id:1,lvl:"база",type:"num",text:"Найди значение степени: <b>(−3)³</b>.",ans:[e("-27")],
+  hints:["По определению степень — это произведение трёх одинаковых множителей.",
+         "(−3)³ = (−3)·(−3)·(−3).",
+         "Показатель нечётный, значит результат отрицательный. Осталось посчитать 3·3·3."],
+  sol:"<div class='step'>1. По определению: (−3)³ = (−3)·(−3)·(−3).</div>"+
+      "<div class='step'>2. Первые два множителя дают +9, умножаем на третий: 9·(−3) = −27.</div>"+
+      "<div class='fx'>(−3)³ = −27</div>"+
+      "<div class='step'><b>Ответ: −27.</b> Показатель нечётный — степень отрицательного числа отрицательна.</div>"},
+
+ {id:2,lvl:"база",type:"num",text:"Найди значение степени: <b>(−2)⁴</b>.",ans:[e("16")],
+  hints:["Запиши как произведение четырёх множителей.",
+         "(−2)⁴ = (−2)·(−2)·(−2)·(−2).",
+         "Минусов чётное число, они уничтожаются парами."],
+  sol:"<div class='step'>1. (−2)⁴ = (−2)·(−2)·(−2)·(−2).</div>"+
+      "<div class='step'>2. Минусы уничтожаются парами: (−2)·(−2) = 4 и ещё раз 4, итого 4·4 = 16.</div>"+
+      "<div class='fx'>(−2)⁴ = 16</div>"+
+      "<div class='step'><b>Ответ: 16.</b> Показатель чётный — степень отрицательного числа положительна.</div>"},
+
+ {id:3,lvl:"база",type:"num",text:"Найди значение выражения: <b>−5²</b>. Смотри внимательно на скобки!",ans:[e("-25")],
+  hints:["Скобок нет, значит в степень возводится только число 5.",
+         "Минус стоит перед всем выражением: −5² = −(5·5).",
+         "Сравни: (−5)² = 25, а −5² = −25 — это разные вещи."],
+  sol:"<div class='step'>1. Скобок нет, поэтому показатель относится только к пятёрке.</div>"+
+      "<div class='step'>2. Сначала возводим в степень: 5² = 25.</div>"+
+      "<div class='step'>3. Затем ставим минус: −25.</div>"+
+      "<div class='fx'><span class='fi'>−5² = −(5²) = −25</span><span class='fi'>(−5)² = 25</span></div>"+
+      "<div class='step'><b>Ответ: −25.</b> Минус попадает в степень только тогда, когда он внутри скобок.</div>"},
+
+ {id:4,lvl:"база",type:"num",text:"Найди значение степени: <b>0,5³</b>.",ans:[e("0,125")],
+  hints:["0,5³ = 0,5 · 0,5 · 0,5.",
+         "0,5 · 0,5 = 0,25.",
+         "Осталось 0,25 · 0,5."],
+  sol:"<div class='step'>1. 0,5³ = 0,5 · 0,5 · 0,5.</div>"+
+      "<div class='step'>2. 0,5 · 0,5 = 0,25, затем 0,25 · 0,5 = 0,125.</div>"+
+      "<div class='fx'>0,5³ = 0,125</div>"+
+      "<div class='step'><b>Ответ: 0,125.</b> Можно и через обыкновенную дробь: (1/2)³ = 1/8 = 0,125.</div>"},
+
+ {id:5,lvl:"база",type:"choice",text:"Чему равно <b>(−2,5)⁰</b>?",
+  options:["1","0","−2,5","не имеет смысла"],ans:[e("1")],
+  hints:["Есть отдельное правило про нулевой показатель.",
+         "Степень любого числа, кроме нуля, с нулевым показателем равна единице.",
+         "Основание здесь −2,5, оно не равно нулю."],
+  sol:"<div class='step'>1. Правило: a⁰ = 1 для любого a ≠ 0.</div>"+
+      "<div class='step'>2. Основание −2,5 не равно нулю, значит правило работает.</div>"+
+      "<div class='fx'>(−2,5)⁰ = 1</div>"+
+      "<div class='step'><b>Ответ: 1.</b> Единственное исключение — выражение 0⁰: оно не имеет смысла.</div>"},
+
+ {id:6,lvl:"база",type:"num",text:"Представь произведение в виде степени: <b>a² · a³ · a⁵ = aⁿ</b>. Чему равно n?",ans:[e("10")],
+  hints:["Основания одинаковые, значит работает свойство произведения степеней.",
+         "При умножении степеней с одинаковыми основаниями показатели складывают.",
+         "2 + 3 + 5."],
+  sol:"<div class='step'>1. Основания одинаковые (везде a), поэтому применяем свойство aᵐ · aⁿ = aᵐ⁺ⁿ.</div>"+
+      "<div class='step'>2. Складываем показатели: 2 + 3 + 5 = 10.</div>"+
+      "<div class='fx'>a² · a³ · a⁵ = a<sup>2+3+5</sup> = a¹⁰</div>"+
+      "<div class='step'><b>Ответ: 10.</b></div>"},
+
+ {id:7,lvl:"база",type:"num",text:"Представь частное в виде степени: <b>b¹⁰ : b = bⁿ</b>. Чему равно n?",ans:[e("9")],
+  hints:["Одинокая буква b — это тоже степень, только с показателем 1.",
+         "При делении степеней с одинаковыми основаниями показатели вычитают.",
+         "10 − 1."],
+  sol:"<div class='step'>1. Запишем делитель как степень: b = b¹.</div>"+
+      "<div class='step'>2. При делении степеней с одинаковыми основаниями показатели вычитаются.</div>"+
+      "<div class='fx'>b¹⁰ : b¹ = b<sup>10−1</sup> = b⁹</div>"+
+      "<div class='step'><b>Ответ: 9.</b></div>"},
+
+ {id:8,lvl:"средний",type:"num",text:"Выполни действия: <b>(a⁴)² · (a³)³ = aⁿ</b>. Чему равно n?",ans:[e("17")],
+  hints:["Сначала раскрой каждую скобку по свойству степени степени: показатели перемножаются.",
+         "(a⁴)² = a⁸, а (a³)³ = a⁹.",
+         "Теперь это произведение степеней с одинаковым основанием — показатели складываются."],
+  sol:"<div class='step'>1. Степень степени: показатели перемножаем. (a⁴)² = a<sup>4·2</sup> = a⁸.</div>"+
+      "<div class='step'>2. Точно так же (a³)³ = a<sup>3·3</sup> = a⁹.</div>"+
+      "<div class='step'>3. Осталось произведение степеней с одинаковым основанием — показатели складываем.</div>"+
+      "<div class='fx'>(a⁴)² · (a³)³ = a⁸ · a⁹ = a¹⁷</div>"+
+      "<div class='step'><b>Ответ: 17.</b> Частая ошибка — сложить показатели уже в скобках: 4 + 2 = 6. "+
+      "В степени степени показатели именно перемножаются.</div>"},
+
+ {id:9,lvl:"средний",type:"num",text:"Вычисли: <b>2 · 5³ + 3 · (−2)³</b>.",ans:[e("226")],
+  hints:["Порядок действий: сначала возведение в степень, потом умножение, и только потом сложение.",
+         "5³ = 125, а (−2)³ = −8.",
+         "Получится 2·125 + 3·(−8) = 250 − 24."],
+  sol:"<div class='step'>1. Возводим в степень: 5³ = 125; (−2)³ = −8.</div>"+
+      "<div class='step'>2. Умножаем: 2 · 125 = 250; 3 · (−8) = −24.</div>"+
+      "<div class='step'>3. Складываем: 250 + (−24) = 226.</div>"+
+      "<div class='fx'>2 · 5³ + 3 · (−2)³ = 250 − 24 = 226</div>"+
+      "<div class='step'><b>Ответ: 226.</b></div>"},
+
+ {id:10,lvl:"средний",type:"num",text:"Вычисли: <b>25 · 0,2² − 8 · 0,5³</b>.",ans:[e("0")],
+  hints:["Сначала возводим в степень оба десятичных числа.",
+         "0,2² = 0,04, а 0,5³ = 0,125.",
+         "25 · 0,04 = 1 и 8 · 0,125 = 1."],
+  sol:"<div class='step'>1. Возводим в степень: 0,2² = 0,04; 0,5³ = 0,125.</div>"+
+      "<div class='step'>2. Умножаем: 25 · 0,04 = 1; 8 · 0,125 = 1.</div>"+
+      "<div class='step'>3. Вычитаем: 1 − 1 = 0.</div>"+
+      "<div class='fx'>25 · 0,2² − 8 · 0,5³ = 1 − 1 = 0</div>"+
+      "<div class='step'><b>Ответ: 0.</b></div>"},
+
+ {id:11,lvl:"средний",type:"num",text:"Вычисли рациональным способом: <b>0,5⁸ · 2⁸</b>.",ans:[e("1")],
+  hints:["Показатели одинаковые — значит можно сначала перемножить основания.",
+         "aⁿ · bⁿ = (a · b)ⁿ.",
+         "0,5 · 2 = 1, а единица в любой степени равна единице."],
+  sol:"<div class='step'>1. Показатели одинаковые, поэтому используем свойство aⁿ · bⁿ = (a · b)ⁿ.</div>"+
+      "<div class='step'>2. Перемножаем основания: 0,5 · 2 = 1.</div>"+
+      "<div class='step'>3. 1⁸ = 1.</div>"+
+      "<div class='fx'>0,5⁸ · 2⁸ = (0,5 · 2)⁸ = 1⁸ = 1</div>"+
+      "<div class='step'><b>Ответ: 1.</b> Считать 0,5⁸ и 2⁸ по отдельности не нужно — в этом и смысл "+
+      "рационального способа.</div>"},
+
+ {id:12,lvl:"средний",type:"num",text:"Вычисли рациональным способом: <b>25³ · 0,4³</b>.",ans:[e("1000")],
+  hints:["Показатели снова одинаковые.",
+         "Собери основания в скобку: (25 · 0,4)³.",
+         "25 · 0,4 = 10."],
+  sol:"<div class='step'>1. Показатели одинаковые: применяем aⁿ · bⁿ = (a · b)ⁿ.</div>"+
+      "<div class='step'>2. 25 · 0,4 = 10.</div>"+
+      "<div class='step'>3. 10³ = 1000.</div>"+
+      "<div class='fx'>25³ · 0,4³ = (25 · 0,4)³ = 10³ = 1000</div>"+
+      "<div class='step'><b>Ответ: 1000.</b></div>"},
+
+ {id:13,lvl:"средний",type:"num",text:"Вычисли: <b>12⁴ : 3⁴</b>.",ans:[e("256")],
+  hints:["Показатели одинаковые, а действие — деление.",
+         "aⁿ : bⁿ = (a : b)ⁿ.",
+         "12 : 3 = 4, осталось возвести четвёрку в четвёртую степень."],
+  sol:"<div class='step'>1. Показатели одинаковые, поэтому делим основания: aⁿ : bⁿ = (a : b)ⁿ.</div>"+
+      "<div class='step'>2. 12 : 3 = 4.</div>"+
+      "<div class='step'>3. 4⁴ = 4 · 4 · 4 · 4 = 256.</div>"+
+      "<div class='fx'>12⁴ : 3⁴ = (12 : 3)⁴ = 4⁴ = 256</div>"+
+      "<div class='step'><b>Ответ: 256.</b></div>"},
+
+ {id:14,lvl:"средний",type:"num",text:"Найди значение выражения <b>100a³</b> при <b>a = −0,5</b>.",ans:[e("-12,5")],
+  hints:["Сначала подставь число вместо буквы и возведи его в степень.",
+         "(−0,5)³ = −0,125, показатель нечётный — знак минус сохраняется.",
+         "Осталось умножить: 100 · (−0,125)."],
+  sol:"<div class='step'>1. Подставляем: 100 · (−0,5)³.</div>"+
+      "<div class='step'>2. Возводим в степень: (−0,5)³ = (−0,5)·(−0,5)·(−0,5) = −0,125. "+
+      "Показатель нечётный, поэтому результат отрицательный.</div>"+
+      "<div class='step'>3. Умножаем: 100 · (−0,125) = −12,5.</div>"+
+      "<div class='fx'>100 · (−0,5)³ = 100 · (−0,125) = −12,5</div>"+
+      "<div class='step'><b>Ответ: −12,5.</b></div>"}
+];
+
+/* ---------- разбор ответа ---------- */
+function norm(s){
+  return String(s).toLowerCase().replace(/\s+/g,"")
+    .replace(/[\u2013\u2014\u2212]/g,"-")
+    .replace(/[\u00d7\u00b7]/g,"*")
+    .replace(/,/g,".")
+    .replace(/^(ответ:?|x=|y=|α=|a=)/,"");
+}
+function toNum(str){
+  var t = norm(str);
+  if(!t) return NaN;
+  t = t.replace(/\u221a/g,"sqrt").replace(/\u03c0/g,"pi");
+  t = t.replace(/sqrt(\d+(?:\.\d+)?)/g,"sqrt($1)");
+  t = t.replace(/(\d)sqrt/g,"$1*sqrt");
+  t = t.replace(/(\d)pi/g,"$1*pi");
+  t = t.replace(/(\d)\(/g,"$1*(").replace(/\)(\d)/g,")*$1").replace(/\)\(/g,")*(");
+  if(!/^[-+*/().0-9a-z]+$/.test(t)) return NaN;
+  if(t.replace(/sqrt|pi/g,"").match(/[a-z]/)) return NaN;
+  try{
+    var v = new Function("sqrt","pi","return ("+t+");")(Math.sqrt, Math.PI);
+    return (typeof v === "number" && isFinite(v)) ? v : NaN;
+  }catch(err){ return NaN; }
+}
+function same(given, right, tol){
+  var a = toNum(given), b = toNum(right);
+  if(!isNaN(a) && !isNaN(b)){
+    var t = tol || 1e-9;
+    return Math.abs(a-b) <= Math.max(t, Math.abs(b)*t);
+  }
+  return norm(given) === norm(right);
+}
+
+/* ---------- отрисовка ---------- */
+var state = {};
+var box = document.getElementById("tasks");
+
+TASKS.forEach(function(t){
+  state[t.id] = {tries:0, hints:0, done:false, ok:false, given:"", sel:null};
+  var el = document.createElement("div");
+  el.className = "task"; el.id = "t"+t.id;
+  var body = '<div><span class="tnum">'+t.id+'.</span>'+t.text+
+             '<span class="lvl">'+t.lvl+'</span></div>';
+  if(t.img){ body += '<div class="fig">'+t.img+'</div>'; }
+  if(t.type === "choice"){
+    body += '<div class="opts">'+t.options.map(function(o,i){
+      return '<label class="opt" data-v="'+o+'"><input type="radio" name="q'+t.id+'" value="'+o+'"> '+o+'</label>';
+    }).join("")+'</div>';
+  } else {
+    body += '<div class="keys">'+
+      ["²","³",",","−","/"].map(function(k){
+        return '<button class="key" data-k="'+k+'" type="button">'+k+'</button>';}).join("")+
+      '</div><input type="text" id="in'+t.id+'" inputmode="decimal" autocapitalize="off" '+
+      'autocorrect="off" autocomplete="off" spellcheck="false" placeholder="ответ">';
+  }
+  body += '<div class="row" style="margin-top:10px">'+
+          '<button class="pri sm chk">Проверить</button>'+
+          '<button class="sm hnt">Подсказка</button></div>'+
+          '<div class="hints"></div><div class="verdict"></div><div class="sol"></div>';
+  el.innerHTML = body;
+  box.appendChild(el);
+
+  el.querySelectorAll(".key").forEach(function(b){
+    b.addEventListener("click", function(){
+      var inp = document.getElementById("in"+t.id);
+      var k = b.dataset.k === "−" ? "-" : b.dataset.k;
+      var s = inp.selectionStart || inp.value.length;
+      inp.value = inp.value.slice(0,s) + k + inp.value.slice(inp.selectionEnd || s);
+      inp.focus(); inp.setSelectionRange(s+k.length, s+k.length);
+    });
+  });
+  if(t.type === "choice"){
+    el.querySelectorAll(".opt").forEach(function(l){
+      l.addEventListener("click", function(){
+        el.querySelectorAll(".opt").forEach(function(x){x.classList.remove("sel");});
+        l.classList.add("sel"); state[t.id].sel = l.dataset.v;
+      });
+    });
+  } else {
+    el.querySelector("#in"+t.id).addEventListener("keydown", function(ev){
+      if(ev.key === "Enter"){ ev.preventDefault(); check(t.id); }
+    });
+  }
+  el.querySelector(".chk").addEventListener("click", function(){ check(t.id); });
+  el.querySelector(".hnt").addEventListener("click", function(){ hint(t.id); });
+});
+
+function hint(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var host = document.querySelector("#t"+id+" .hints");
+  if(s.hints >= t.hints.length){
+    if(!host.querySelector(".last")){
+      var w = document.createElement("div");
+      w.className = "hint last"; w.textContent = "Подсказки закончились — нажми «Проверить», решение откроется после второй попытки.";
+      host.appendChild(w);
+    }
+    return;
+  }
+  var h = document.createElement("div");
+  h.className = "hint";
+  h.textContent = "Подсказка " + (s.hints+1) + ": " + t.hints[s.hints];
+  host.appendChild(h);
+  s.hints++;
+}
+
+function check(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var el = document.getElementById("t"+id);
+  var v = document.querySelector(".verdict");
+  v = el.querySelector(".verdict");
+  var given = (t.type === "choice") ? (s.sel || "") :
+              (document.getElementById("in"+id).value || "");
+  if(!given.trim()){ v.className = "verdict bad"; v.textContent = "Введи ответ."; return; }
+  s.given = given; s.tries++;
+  var ok = t.ans.some(function(a){ return same(given, d(a), t.tol); });
+  s.ok = ok; s.done = ok || s.tries >= 2;
+  el.classList.remove("ok","bad");
+  el.classList.add(ok ? "ok" : "bad");
+  v.className = "verdict " + (ok ? "ok" : "bad");
+  if(ok){
+    v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    showSol(el, t);
+  } else if(s.tries === 1){
+    v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+  } else {
+    v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    showSol(el, t);
+  }
+  progress();
+}
+function showSol(el, t){
+  var host = el.querySelector(".sol");
+  if(host.dataset.on) return;
+  host.dataset.on = "1";
+  var det = document.createElement("details");
+  det.open = true;
+  det.innerHTML = "<summary>Решение</summary><div class='step'>"+t.sol+"</div>";
+  host.appendChild(det);
+}
+function progress(){
+  var done = TASKS.filter(function(t){return state[t.id].done;}).length;
+  var ok = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  document.getElementById("progress").textContent =
+    "решено " + done + " из " + TASKS.length + " · верно " + ok;
+}
+document.getElementById("checkall").addEventListener("click", function(){
+  TASKS.forEach(function(t){
+    var s = state[t.id];
+    var given = (t.type === "choice") ? (s.sel || "") : (document.getElementById("in"+t.id).value || "");
+    if(given.trim() && !s.done) check(t.id);
+  });
+  var first = TASKS.find(function(t){ return !state[t.id].done; });
+  var note = first ? "Осталась задача " + first.id + "." : "Все задачи закрыты.";
+  document.getElementById("progress").textContent += " · " + note;
+});
+progress();
+
+/* ---------- фото ---------- */
+var photos = [];
+document.getElementById("photos").addEventListener("change", function(ev){
+  var files = Array.prototype.slice.call(ev.target.files || []);
+  files.forEach(function(f){
+    var r = new FileReader();
+    r.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var m = 1400, w = img.width, h = img.height;
+        if(Math.max(w,h) > m){ var k = m/Math.max(w,h); w = Math.round(w*k); h = Math.round(h*k); }
+        var c = document.createElement("canvas"); c.width = w; c.height = h;
+        c.getContext("2d").drawImage(img, 0, 0, w, h);
+        photos.push({url: c.toDataURL("image/jpeg", 0.7), task: ""});
+        drawThumbs();
+      };
+      img.src = r.result;
+    };
+    r.readAsDataURL(f);
+  });
+  ev.target.value = "";
+});
+function drawThumbs(){
+  var host = document.getElementById("thumbs");
+  host.innerHTML = "";
+  var total = 0;
+  photos.forEach(function(p, i){
+    total += p.url.length * 0.75;
+    var d0 = document.createElement("div"); d0.className = "thumb";
+    var opts = '<option value="">задача…</option>' + TASKS.map(function(t){
+      return '<option value="'+t.id+'"'+(p.task==String(t.id)?" selected":"")+'>№'+t.id+'</option>';
+    }).join("");
+    d0.innerHTML = '<img src="'+p.url+'" alt="фото решения"><button type="button">×</button>'+
+                   '<select>'+opts+'</select>';
+    d0.querySelector("button").addEventListener("click", function(){ photos.splice(i,1); drawThumbs(); });
+    d0.querySelector("select").addEventListener("change", function(ev){ p.task = ev.target.value; });
+    host.appendChild(d0);
+  });
+  var note = document.getElementById("repnote");
+  if(total > 15e6){ note.textContent = "Фото уже больше 15 МБ — отчёт может отправляться долго, лишние лучше удалить."; }
+  else if(photos.length){ note.textContent = "Фото в отчёте: " + photos.length + "."; }
+  else { note.textContent = ""; }
+}
+
+/* ---------- отчёт ---------- */
+var ENDPOINT = "https://script.google.com/macros/s/AKfycbztH9c-wQuKC7pSfD8AcFfnOcGpSHxoeqovulmvLMp9W23SgFx9dDQ2JTlWcIJDMN6W/exec";
+var SECRET = "artteach2026";
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function buildReport(){
+  var name = (document.getElementById("name").value || "").trim() || "без имени";
+  var now = new Date();
+  var mins = Math.max(1, Math.round((Date.now()-started)/60000));
+  var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  var data = {tип:"дз", предмет:"математика", тема:"Степень с натуральным показателем и её свойства (7 класс)",
+    ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
+    верно:okN, всего:TASKS.length, задачи:[]};
+  var rows = TASKS.map(function(t){
+    var s = state[t.id];
+    data.задачи.push({n:t.id, условие:t.text.replace(/<[^>]+>/g,""), ответ_ученика:s.given,
+      верный_ответ:t.ans.map(d).join(" или "), верно:s.ok, попыток:s.tries, подсказок:s.hints,
+      уровень:t.lvl});
+    return "<tr><td>"+t.id+"</td><td style='text-align:left'>"+esc(t.text.replace(/<[^>]+>/g,""))+
+      "</td><td>"+esc(s.given||"—")+"</td><td>"+esc(t.ans.map(d).join(" / "))+"</td><td>"+
+      (s.ok?"верно":(s.given?"неверно":"не решал"))+"</td><td>"+s.tries+"</td><td>"+s.hints+"</td></tr>";
+  }).join("");
+  var pics = photos.map(function(p,i){
+    return "<figure><img src='"+p.url+"'><figcaption>Фото "+(i+1)+
+      (p.task?" — к задаче №"+p.task:"")+"</figcaption></figure>";
+  }).join("");
+  var html = "<!doctype html><html lang='ru'><head><meta charset='utf-8'>"+
+    "<meta name='viewport' content='width=device-width,initial-scale=1'>"+
+    "<title>Отчёт — "+esc(name)+" — степень с натуральным показателем · 7 класс</title><style>"+
+    "body{font:16px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;padding:20px;color:#16181d;background:#fff}"+
+    "h1{font-size:22px;margin:0 0 4px}.m{color:#5b6270;font-size:15px}"+
+    "table{border-collapse:collapse;width:100%;margin-top:14px;font-size:15px}"+
+    "th,td{border:1px solid #dfe3ea;padding:6px 8px;text-align:center}th{background:#eef3fb}"+
+    "figure{margin:14px 0}img{max-width:100%;border:1px solid #dfe3ea;border-radius:8px}"+
+    "figcaption{color:#5b6270;font-size:14px;margin-top:4px}</style></head><body>"+
+    "<h1>Отчёт по домашнему заданию</h1>"+
+    "<div class='m'>Тема: степень с натуральным показателем и её свойства · алгебра, 7 класс</div>"+
+    "<div class='m'>Ученик: <b>"+esc(name)+"</b> · сдано: "+esc(now.toLocaleString("ru-RU"))+
+    " · время работы: около "+mins+" мин</div>"+
+    "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)</h2>"+
+    "<table><tr><th>№</th><th>Задача</th><th>Ответ ученика</th><th>Верный ответ</th>"+
+    "<th>Итог</th><th>Попыток</th><th>Подсказок</th></tr>"+rows+"</table>"+
+    (pics ? "<h2>Фото решений</h2>"+pics : "<p class='m'>Фото решений не прикреплены.</p>")+
+    "<script type='application/json' id='result-data'>"+
+    JSON.stringify(data).replace(/</g,"\\u003c")+"<\/script></body></html>";
+  var stamp = now.getDate()+"-"+(now.getMonth()+1);
+  return {
+    html: html,
+    name: name,
+    file: "Отчёт_Степень_7кл_"+name.replace(/\s+/g,"_")+"_"+stamp+".html",
+    caption: name+" · степень с натуральным показателем · 7 класс · "+okN+" из "+TASKS.length+
+             " ("+Math.round(okN/TASKS.length*100)+"%)"
+  };
+}
+
+document.getElementById("send").addEventListener("click", function(){
+  var note = document.getElementById("repnote");
+  var who = (document.getElementById("name").value || "").trim();
+  if(!who){ note.className = "meta bad-note"; note.textContent = "Сначала впиши имя вверху страницы."; return; }
+  if(!photos.length){
+    note.className = "meta bad-note";
+    note.textContent = "Сначала прикрепи фото решений — кнопка «Выберите файлы» в блоке выше.";
+    document.getElementById("photos").scrollIntoView({behavior:"smooth", block:"center"});
+    return;
+  }
+  note.className = "meta";
+  var r = buildReport();
+  note.textContent = "Отправляю…";
+  var payload = {
+    secret: SECRET,
+    name: r.file,
+    caption: r.caption,
+    file: btoa(unescape(encodeURIComponent(r.html)))
+  };
+  fetch(ENDPOINT, {method:"POST", mode:"no-cors", body: JSON.stringify(payload)})
+    .then(function(){
+      note.textContent = "Отправлено преподавателю. Если хочешь, сохрани копию себе кнопкой ниже.";
+    })
+    .catch(function(){
+      note.textContent = "Не получилось отправить. Скачай файл кнопкой ниже и пришли его вручную.";
+    });
+});
+
+document.getElementById("report").addEventListener("click", function(){
+  var r = buildReport();
+  var blob = new Blob([r.html], {type:"text/html;charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = r.file;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  document.getElementById("repnote").textContent = "Файл скачан — он в папке загрузок.";
+});
+
+/* ============ свойства степени: разложение на множители ============ */
+(function(){
+  var tabs=document.getElementById("sttabs");
+  if(!tabs) return;
+  var ctl=document.getElementById("stctl"), out=document.getElementById("stout");
+  var mode="mul", a=2, bb=3, m=4, n=3;
+
+  function opt(v,cur){ return '<option value="'+v+'"'+(v===cur?' selected':'')+'>'+v+'</option>'; }
+  function sel(id,lo,hi,cur,lab){
+    var s='<label for="'+id+'">'+lab+'</label><select id="'+id+'">';
+    for(var i=lo;i<=hi;i++) s+=opt(i,cur);
+    return s+'</select>';
+  }
+  function rep(x,k){ var r=[]; for(var i=0;i<k;i++) r.push(x); return r.join(" · "); }
+  function pw(x,k){ return x+"<sup>"+k+"</sup>"; }
+  function val(x,k){ return Math.pow(x,k); }
+  function plM(k){
+    var d=k%100; if(d>=11&&d<=14) return "множителей";
+    d=k%10; if(d===1) return "множитель"; if(d>=2&&d<=4) return "множителя"; return "множителей";
+  }
+  function sums(x,k){ var r=[]; for(var i=0;i<k;i++) r.push(x); return r.join(" + "); }
+
+  function ctrls(){
+    var s="";
+    if(mode==="mul"||mode==="div"||mode==="pow") s+=sel("sa",2,9,a,"a =");
+    else { s+=sel("sa",2,9,a,"a ="); s+=sel("sb",2,9,bb,"b ="); }
+    if(mode==="prod"||mode==="quot") s+=sel("sn",2,5,n,"n =");
+    else { s+=sel("sm",2,6,m,"m ="); s+=sel("sn",1,5,n,"n ="); }
+    ctl.innerHTML=s;
+    var e;
+    if((e=document.getElementById("sa"))) e.onchange=function(){ a=+this.value; draw(); };
+    if((e=document.getElementById("sb"))) e.onchange=function(){ bb=+this.value; draw(); };
+    if((e=document.getElementById("sm"))) e.onchange=function(){
+      m=+this.value; if(mode==="div"&&n>=m){ n=m-1; ctrls(); } draw(); };
+    if((e=document.getElementById("sn"))) e.onchange=function(){
+      n=+this.value; if(mode==="div"&&n>=m){ n=m-1; ctrls(); } draw(); };
+  }
+
+  function draw(){
+    var s="", r, rule;
+    if(mode==="mul"){
+      s+='<div class="ln">'+pw(a,m)+' · '+pw(a,n)+' = ('+rep(a,m)+') · ('+rep(a,n)+')</div>';
+      s+='<div class="ln">= '+rep(a,m+n)+' = '+pw(a,m+n)+'</div>';
+      r=val(a,m)+" · "+val(a,n)+" = "+val(a,m+n);
+      rule="Множителей стало m + n штук, поэтому показатели складываются: a<sup>m</sup> · a<sup>n</sup> = a<sup>m+n</sup>.";
+    } else if(mode==="div"){
+      if(n>=m) n=m-1;
+      s+='<div class="ln">'+pw(a,m)+' : '+pw(a,n)+' = ('+rep(a,m)+') : ('+rep(a,n)+')</div>';
+      s+='<div class="ln">вычёркиваем '+n+' '+plM(n)+' сверху и снизу, остаётся '+(m-n)+'</div>';
+      s+='<div class="ln">= '+rep(a,m-n)+' = '+pw(a,m-n)+'</div>';
+      r=val(a,m)+" : "+val(a,n)+" = "+val(a,m-n);
+      rule="Сокращается n множителей, остаётся m − n, поэтому показатели вычитаются: a<sup>m</sup> : a<sup>n</sup> = a<sup>m−n</sup>.";
+    } else if(mode==="pow"){
+      s+='<div class="ln">('+pw(a,m)+')<sup>'+n+'</sup> = '+rep(pw(a,m),n)+'</div>';
+      s+='<div class="ln">= '+a+'<sup>'+sums(m,n)+'</sup> = '+pw(a,m*n)+'</div>';
+      r=pw(val(a,m),n)+" = "+val(a,m*n);
+      rule="Показатель m складывается сам с собой n раз, а это и есть умножение: (a<sup>m</sup>)<sup>n</sup> = a<sup>mn</sup>.";
+    } else if(mode==="prod"){
+      s+='<div class="ln">('+a+' · '+bb+')<sup>'+n+'</sup> = '+rep("("+a+" · "+bb+")",n)+'</div>';
+      s+='<div class="ln">= ('+rep(a,n)+') · ('+rep(bb,n)+') = '+pw(a,n)+' · '+pw(bb,n)+'</div>';
+      r=pw(a*bb,n)+" = "+val(a*bb,n)+", и "+val(a,n)+" · "+val(bb,n)+" = "+val(a*bb,n);
+      rule="Множители можно переставить и собрать по группам: (a · b)<sup>n</sup> = a<sup>n</sup> · b<sup>n</sup>.";
+    } else {
+      s+='<div class="ln">('+a+' : '+bb+')<sup>'+n+'</sup> = '+rep("("+a+" : "+bb+")",n)+'</div>';
+      s+='<div class="ln">= ('+rep(a,n)+') : ('+rep(bb,n)+') = '+pw(a,n)+' : '+pw(bb,n)+'</div>';
+      r=pw(a,n)+" : "+pw(bb,n)+" = "+val(a,n)+" : "+val(bb,n);
+      rule="Числители и знаменатели собираются отдельно: (a : b)<sup>n</sup> = a<sup>n</sup> : b<sup>n</sup>, при b ≠ 0.";
+    }
+    s+='<div class="ln res">Проверка числами: '+r+'</div>';
+    s+='<div class="rule">'+rule+'</div>';
+    out.innerHTML=s;
+  }
+
+  tabs.addEventListener("click", function(ev){
+    var b=ev.target; while(b&&b!==tabs&&b.tagName!=="BUTTON") b=b.parentNode;
+    if(!b||b===tabs) return;
+    mode=b.getAttribute("data-t");
+    var bs=tabs.querySelectorAll("button"), i;
+    for(i=0;i<bs.length;i++) bs[i].className = (bs[i]===b) ? "on" : "";
+    if(mode==="div" && n>=m) n=m-1;
+    ctrls(); draw();
+  });
+  ctrls(); draw();
+})();
+
+/* ============ знак степени и скобки ============ */
+(function(){
+  var sa=document.getElementById("sga");
+  if(!sa) return;
+  var sn=document.getElementById("sgn"), grid=document.getElementById("sgrid"),
+      out=document.getElementById("sgout");
+  var i;
+  for(i=2;i<=9;i++) sa.add(new Option(i,i));
+  for(i=1;i<=6;i++) sn.add(new Option(i,i));
+  sa.value="3"; sn.value="4";
+  function rep(x,k){ var r=[]; for(var j=0;j<k;j++) r.push(x); return r.join(" · "); }
+  function draw(){
+    var a=+sa.value, n=+sn.value;
+    var v1=Math.pow(-a,n), v2=-Math.pow(a,n);
+    function fm(v){ return String(v).replace("-","\u2212"); }
+    var even=(n%2===0);
+    grid.innerHTML=
+      '<div class="sgc '+(v1>=0?"pos":"neg")+'">'+
+        '<div class="sgt">(−'+a+')<sup>'+n+'</sup></div>'+
+        '<div class="sgv">'+rep("(−"+a+")",n)+'</div>'+
+        '<div class="sgr">= '+fm(v1)+'</div></div>'+
+      '<div class="sgc neg">'+
+        '<div class="sgt">−'+a+'<sup>'+n+'</sup></div>'+
+        '<div class="sgv">−('+rep(a,n)+')</div>'+
+        '<div class="sgr">= '+fm(v2)+'</div></div>';
+    out.innerHTML='Слева минус <b>внутри скобок</b>, поэтому в степень возводится всё число −'+a+'. '+
+      'Показатель '+(even?'<b>чётный</b>, минусы уничтожаются парами — результат положительный.'
+                        :'<b>нечётный</b>, один минус остаётся — результат отрицательный.')+
+      '<br>Справа скобок нет: в степень возводится только '+a+', а минус остаётся снаружи, '+
+      'поэтому результат всегда отрицательный.'+
+      (v1===v2 ? '' : ' <b>Значения разные — скобки решают всё.</b>');
+  }
+  sa.addEventListener("change", draw);
+  sn.addEventListener("change", draw);
+  draw();
+})();
+</script>
+</body>
+</html>
