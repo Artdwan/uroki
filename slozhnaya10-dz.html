@@ -1,0 +1,937 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Сложная функция — 10 класс</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:800px;margin:0 auto;padding:16px 14px 60px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+.f-formula{font-size:19px}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.step{margin:6px 0}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.fig{margin:12px 0;text-align:center}
+.fig svg{width:100%;max-width:520px;height:auto;border-radius:12px}
+.small{color:var(--muted);font-size:15px}
+.hint.last{background:var(--warn-soft)}
+.sol .step{margin:7px 0}
+.ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;background:var(--bg)}
+.ex h3{margin-top:0}
+.ex .q{font-weight:600}
+.wrap-t th,.wrap-t td{white-space:normal;text-align:left;vertical-align:top}
+.wrap-t th:first-child{white-space:nowrap}
+.fx{display:block;background:var(--acc-soft);border:1px solid var(--line);border-radius:10px;
+  padding:11px 13px;margin:12px 0;text-align:center;font-size:21px;line-height:1.6;
+  font-weight:600;overflow-x:auto}
+.sol .fx,.ex .fx{font-size:19px;margin:9px 0}
+.fx .fi{display:inline-block;white-space:nowrap;margin:3px 14px}
+.f-formula{font-size:20px}
+.mach{border:1px solid var(--line);border-radius:12px;padding:14px;margin:14px 0;background:var(--bg)}
+.mach select,.mach input[type=text]{font:inherit;font-size:17px;padding:8px 10px;border-radius:9px;
+  border:1.5px solid var(--line);background:var(--card);color:var(--ink);max-width:200px}
+.mrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:10px}
+.mrow label{color:var(--muted);font-size:15px}
+.chain{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;margin:14px 0 6px}
+.cbox{border:1.5px solid var(--line);border-radius:10px;padding:9px 13px;background:var(--card);
+  font-size:18px;font-weight:600;min-width:64px;text-align:center}
+.cbox.op{background:var(--acc-soft);border-color:var(--acc)}
+.cbox small{display:block;font-size:12px;font-weight:400;color:var(--muted)}
+.arr{color:var(--muted);font-size:20px}
+.mout{margin-top:10px;font-size:17px;text-align:center}
+.mout .bad{color:var(--bad);font-weight:600}
+.mout .ok{color:var(--ok)}
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+@media print{
+  body{background:#fff}
+  .wrap>*{display:none !important}
+  .wrap>.sheet{display:block !important;border:none;margin:0;padding:0}
+  .sheet{font-size:13px}
+  .sheet h2{font-size:18px}
+  .sheet th,.sheet td{padding:4px 5px;font-size:12px}
+  @page{size:A4;margin:12mm}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card top">
+  <h1>Сложная функция</h1>
+  <div class="meta">Алгебра, 10 класс · §1 «Сложная функция» · домашнее задание · 12 задач</div>
+  <label class="f" for="name">Имя и фамилия</label>
+  <input type="text" id="name" placeholder="напиши, как в журнале" autocapitalize="words" spellcheck="false">
+  <div class="note" style="margin-top:14px">
+    Как работать: прочитай теорию, поиграй с конвейером, разбери семь примеров, реши задачи.
+    У каждой задачи есть три подсказки — они открываются по одной и ведут от идеи к вычислению;
+    открывать их не стыдно. Решения записывай в тетрадь, потом сфотографируй их, приложи фото внизу страницы
+    и нажми «Отправить на проверку».
+  </div>
+</div>
+
+<div class="card">
+  <h2>Теория</h2>
+
+  <h3>1. Что такое сложная функция</h3>
+  <p>Чтобы вычислить значение функции y = √(x² − 4) при конкретном x, приходится действовать в два шага:
+  сначала посчитать t = x² − 4, а потом из полученного числа взять корень: y = √t.
+  Функцию t = g(x) = x² − 4 называют <b>промежуточной</b>, а всю функцию y = √(x² − 4) — <b>сложной</b>.</p>
+  <div class="fig"><svg viewBox="0 0 680 180">
+<rect x="0" y="0" width="680" height="180" rx="12" fill="#ffffff"/>
+<rect x="18" y="62" width="66" height="56" rx="10" fill="#e8f0ff" stroke="#15181e" stroke-width="2.2"/>
+<text x="51" y="98" font-size="22" font-weight="700" text-anchor="middle" fill="#15181e">x</text>
+<line x1="88" y1="90" x2="122" y2="90" stroke="#15181e" stroke-width="2.2"/>
+<polygon points="122,90 112,85 112,95" fill="#15181e"/>
+<rect x="126" y="48" width="150" height="84" rx="12" fill="#dbe6f8" stroke="#2f6bd8" stroke-width="2.6"/>
+<text x="201" y="84" font-size="21" font-weight="700" text-anchor="middle" fill="#15181e">t = g(x)</text>
+<text x="201" y="110" font-size="15" text-anchor="middle" fill="#5b6270">промежуточная</text>
+<line x1="280" y1="90" x2="314" y2="90" stroke="#15181e" stroke-width="2.2"/>
+<polygon points="314,90 304,85 304,95" fill="#15181e"/>
+<rect x="318" y="62" width="66" height="56" rx="10" fill="#e8f0ff" stroke="#15181e" stroke-width="2.2"/>
+<text x="351" y="98" font-size="22" font-weight="700" text-anchor="middle" fill="#15181e">t</text>
+<line x1="388" y1="90" x2="422" y2="90" stroke="#15181e" stroke-width="2.2"/>
+<polygon points="422,90 412,85 412,95" fill="#15181e"/>
+<rect x="426" y="48" width="150" height="84" rx="12" fill="#ffd79a" stroke="#a8620d" stroke-width="2.6"/>
+<text x="501" y="84" font-size="21" font-weight="700" text-anchor="middle" fill="#15181e">y = h(t)</text>
+<text x="501" y="110" font-size="15" text-anchor="middle" fill="#5b6270">внешняя</text>
+<line x1="580" y1="90" x2="614" y2="90" stroke="#15181e" stroke-width="2.2"/>
+<polygon points="614,90 604,85 604,95" fill="#15181e"/>
+<rect x="606" y="62" width="60" height="56" rx="10" fill="#e8f0ff" stroke="#15181e" stroke-width="2.2"/>
+<text x="636" y="98" font-size="22" font-weight="700" text-anchor="middle" fill="#15181e">y</text>
+<text x="340" y="30" font-size="17" font-weight="600" text-anchor="middle" fill="#15181e">y = f(x) = h(g(x)),&nbsp;&nbsp; f = h ∘ g</text>
+<text x="340" y="164" font-size="15" text-anchor="middle" fill="#5b6270">в записи h ∘ g первой работает правая функция — g</text>
+</svg></div>
+  <p class="small">Промежуточную функцию ещё называют внутренней, а h — внешней. Запись f = h ∘ g читается
+  «h после g» — и порядок здесь важен: первой всегда работает та функция, что стоит внутри скобок.</p>
+
+  <h3>2. Определение</h3>
+  <div class="note"><b>Определение.</b> Пусть заданы функции h(x) и g(x) такие, что E(g(x)) ⊂ D(h(x)).
+  Тогда функция y = f(x) = h(g(x)) называется <b>сложной функцией</b> или <b>композицией</b>
+  функций h(x) и g(x): f = h ∘ g.</div>
+  <div class="fx">y = f(x) = h(g(x)) &nbsp;&nbsp; f = h ∘ g</div>
+  <p>Условие <b>E(g) ⊂ D(h)</b> — не формальность, а самая рабочая часть определения. Оно означает:
+  всё, что выдаёт промежуточная функция, должна уметь принять внешняя. Если g выдала −5, а внешняя
+  функция — корень, то ничего не получится: −5 не входит в область определения корня.</p>
+
+  <h3>3. Попробуй сам: конвейер композиции</h3>
+  <p>Выбери внутреннюю и внешнюю функции, подставь число вместо x и посмотри, что происходит на каждом шаге.
+  Попробуй и такие пары, где второй шаг ломается — например g(x) = x − 1 и h(t) = √t при x = 0.</p>
+  
+<div class="mach">
+  <div class="mrow">
+    <label for="mg">внутренняя g(x):</label>
+    <select id="mg"></select>
+    <label for="mh">внешняя h(t):</label>
+    <select id="mh"></select>
+  </div>
+  <div class="mrow">
+    <label for="mx">подставим x =</label>
+    <input type="text" id="mx" value="3" inputmode="decimal" autocomplete="off" style="max-width:110px">
+  </div>
+  <div class="chain" id="mchain"></div>
+  <div class="mout" id="mout"></div>
+</div>
+
+
+  <h3>4. Порядок нельзя менять</h3>
+  <p>Композиция <b>некоммутативна</b>: как правило, h(g(x)) и g(h(x)) — разные функции.
+  Возьмём f(x) = sin x и g(x) = 2x + 3:</p>
+  <div class="fx"><span class="fi">f(g(x)) = sin(2x + 3)</span><span class="fi">g(f(x)) = 2 sin x + 3</span></div>
+  <p class="small">Первая — синус от целого выражения, вторая — синус, умноженный на 2 и увеличенный на 3.
+  Проверить легко на числе: при x = 0 первая даёт sin 3 ≈ 0,14, вторая — 3.</p>
+
+  <h3>5. Как составить сложную функцию по формулам</h3>
+  <p>Правило простое: <b>в формуле внешней функции вместо x подставить формулу внутренней целиком</b>,
+  не забыв скобки.</p>
+  <div class="scroll"><table class="wrap-t">
+    <tr><th>дано</th><th>что делаем</th><th>получаем</th></tr>
+    <tr><th>h(x) = x², g(x) = x + 1</th><td>в x² вместо x пишем (x + 1)</td><td>h(g(x)) = (x + 1)²</td></tr>
+    <tr><th>h(x) = √x, g(x) = 3x − 2</th><td>под корень уходит всё выражение</td><td>h(g(x)) = √(3x − 2)</td></tr>
+    <tr><th>h(x) = 2x, g(x) = sin x</th><td>вместо x пишем sin x</td><td>h(g(x)) = 2 sin x</td></tr>
+  </table></div>
+
+  <h3>6. Как разложить сложную функцию на составляющие</h3>
+  <p>Обратная задача: дана готовая формула, надо назвать промежуточную и внешнюю функции.
+  Приём один — <b>расставить порядок действий</b>, как будто подставляешь конкретное число.</p>
+  <div class="fx"><span class="fi">y = √(2x + 7): &nbsp; x → t = 2x + 7 → y = √t</span></div>
+  <div class="fx"><span class="fi">y = (2x² − 1)⁵: &nbsp; x → t = 2x² − 1 → y = t⁵</span></div>
+  <p class="small">Что считается первым — то и есть промежуточная функция g. Обычно это выражение
+  под корнем, в скобках перед степенью, в знаменателе или под знаком синуса.</p>
+
+  <h3>7. Область определения сложной функции</h3>
+  <p>Чтобы число x годилось для h(g(x)), нужны сразу два условия:</p>
+  <ul>
+    <li>x должен входить в область определения промежуточной функции: x ∈ D(g);</li>
+    <li>полученное значение g(x) должно входить в область определения внешней: g(x) ∈ D(h).</li>
+  </ul>
+  <div class="note">Практически это почти всегда сводится к неравенствам:<br>
+  - под корнем чётной степени — <b>неотрицательное</b> выражение: t ≥ 0;<br>
+  - в знаменателе — <b>не ноль</b>: t ≠ 0;<br>
+  - под знаком логарифма — <b>строго положительное</b>: t &gt; 0.</div>
+  <div class="fx">y = √(x − 8) &nbsp;⇒&nbsp; x − 8 ≥ 0 &nbsp;⇒&nbsp; D(f) = [8; +∞)</div>
+
+  <h3>8. Монотонность композиции</h3>
+  <p>Если обе функции монотонны, то и композиция монотонна, и её характер определяется правилом знаков:</p>
+  <div class="scroll"><table>
+    <tr><th>g</th><th>h</th><th>y = h(g(x))</th></tr>
+    <tr><td>возрастает</td><td>возрастает</td><td>возрастает</td></tr>
+    <tr><td>убывает</td><td>убывает</td><td>возрастает</td></tr>
+    <tr><td>возрастает</td><td>убывает</td><td>убывает</td></tr>
+    <tr><td>убывает</td><td>возрастает</td><td>убывает</td></tr>
+  </table></div>
+  <p class="small">Запоминается как умножение знаков: «плюс на плюс» и «минус на минус» дают возрастание,
+  разные — убывание. Но на экзамене это нужно уметь доказывать, а не просто помнить — см. пример 7.</p>
+
+  <div class="note"><b>Три ловушки, на которых теряют баллы:</b><br>
+  - теряют скобки: пишут sin 2x + 3 вместо sin(2x + 3);<br>
+  - путают порядок и вместо f(g(x)) считают g(f(x));<br>
+  - ищут область определения только по внешней функции, забыв про внутреннюю.</div>
+</div>
+
+<div class="card">
+  <h2>Разобранные примеры</h2>
+  <p class="meta">Семь примеров закрывают все типы задач этой домашки. Сначала попробуй решить сам,
+  потом открой решение и сверься — важно не только число, но и порядок рассуждений.</p>
+
+  <div class="ex">
+  <h3>Пример 1. Составить композицию по формулам</h3>
+  <p class="q">Заданы функции f(x) = sin x и g(x) = 2x + 3. С помощью формул задайте функции:
+  а) y = f(g(x)); б) y = g(f(x)).</p>
+  <details><summary>Показать решение</summary>
+    <div class="step">а) Для сложной функции f(g(x)) промежуточной является g. Значит в формуле
+    f(x) = sin x заменяем x на 2x + 3.</div>
+    <div class="fx">f(g(x)) = sin(2x + 3)</div>
+    <div class="step">б) Для g(f(x)) промежуточной является f. Значит в формуле g(x) = 2x + 3
+    заменяем x на sin x.</div>
+    <div class="fx">g(f(x)) = 2 sin x + 3</div>
+    <div class="step"><b>Ответ:</b> а) sin(2x + 3); б) 2 sin x + 3.</div>
+    <div class="note">Обрати внимание на скобки в пункте а: без них получилась бы функция
+    sin 2x + 3, у которой тройка прибавляется уже к готовому синусу.</div>
+  </details>
+  </div>
+
+  <div class="ex">
+  <h3>Пример 2. Разложить композицию: корень</h3>
+  <p class="q">Укажите функции, в виде композиции которых представлена функция y = √(2x + 7).</p>
+  <details><summary>Показать решение</summary>
+    <div class="step">1. Установим порядок действий при вычислении значения: подставим вместо x любое число
+    и посмотрим, что считается первым.</div>
+    <div class="fx">x &nbsp;→&nbsp; t = 2x + 7 &nbsp;→&nbsp; y = √t</div>
+    <div class="step">2. Первое действие — промежуточная функция t = g(x) = 2x + 7.</div>
+    <div class="step">3. Второе действие — внешняя функция y = h(t) = √t.</div>
+    <div class="step"><b>Ответ:</b> y = √(2x + 7) есть композиция функций g(x) = 2x + 7 и h(t) = √t,
+    то есть f = h ∘ g.</div>
+  </details>
+  </div>
+
+  <div class="ex">
+  <h3>Пример 3. Разложить композицию: степень</h3>
+  <p class="q">Укажите функции, в виде композиции которых представлена функция y = (2x² − 1)⁵.</p>
+  <details><summary>Показать решение</summary>
+    <div class="step">1. Порядок действий: сначала считается выражение в скобках, потом пятая степень.</div>
+    <div class="fx">x &nbsp;→&nbsp; t = 2x² − 1 &nbsp;→&nbsp; y = t⁵</div>
+    <div class="step">2. Значит g(x) = 2x² − 1, h(t) = t⁵.</div>
+    <div class="step"><b>Ответ:</b> f = h ∘ g, где g(x) = 2x² − 1 и h(t) = t⁵.</div>
+    <div class="note">Строго говоря, здесь три действия: x → x² → 2x² − 1 → t⁵. Раскладывать можно
+    и на три функции, но в задачах обычно берут самое естественное деление — по скобкам.</div>
+  </details>
+  </div>
+
+  <div class="ex">
+  <h3>Пример 4. Вычислить значения композиции</h3>
+  <p class="q">Заданы функции f(x) = 4 − x³ и g(x) = √x. Найдите f(g(4)), f(g(1)) и g(f(0)).</p>
+  <details><summary>Показать решение</summary>
+    <div class="step">1. f(g(4)): сначала внутренняя. g(4) = √4 = 2, затем f(2) = 4 − 2³ = 4 − 8 = −4.</div>
+    <div class="step">2. f(g(1)): g(1) = √1 = 1, затем f(1) = 4 − 1³ = 3.</div>
+    <div class="step">3. g(f(0)): здесь внутренняя — f. f(0) = 4 − 0³ = 4, затем g(4) = √4 = 2.</div>
+    <div class="fx"><span class="fi">f(g(4)) = −4</span><span class="fi">f(g(1)) = 3</span><span class="fi">g(f(0)) = 2</span></div>
+    <div class="step"><b>Ответ:</b> −4; 3; 2.</div>
+    <div class="note">Правило чтения: раскрываем изнутри наружу, как матрёшку. В третьем пункте
+    порядок функций другой — и результат другой.</div>
+  </details>
+  </div>
+
+  <div class="ex">
+  <h3>Пример 5. Область определения композиции</h3>
+  <p class="q">Найдите область определения функций: а) y = √(1 − x²); б) y = 2x / √(1 − x).</p>
+  <details><summary>Показать решение</summary>
+    <div class="step">а) Промежуточная функция t = 1 − x², внешняя y = √t. Корень требует t ≥ 0.</div>
+    <div class="fx">1 − x² ≥ 0 &nbsp;⇒&nbsp; x² ≤ 1 &nbsp;⇒&nbsp; −1 ≤ x ≤ 1</div>
+    <div class="step">Значит D(y) = [−1; 1].</div>
+    <div class="step">б) Здесь корень стоит в знаменателе, поэтому условий сразу два: подкоренное
+    выражение неотрицательно и знаменатель не равен нулю. Вместе это даёт строгое неравенство.</div>
+    <div class="fx">1 − x &gt; 0 &nbsp;⇒&nbsp; x &lt; 1</div>
+    <div class="step">Значит D(y) = (−∞; 1).</div>
+    <div class="step"><b>Ответ:</b> а) [−1; 1]; б) (−∞; 1).</div>
+    <div class="note">Разница между «≥» и «&gt;» здесь стоит целого балла: в пункте а корень отдельно,
+    в пункте б — в знаменателе, и ноль под ним недопустим.</div>
+  </details>
+  </div>
+
+  <div class="ex">
+  <h3>Пример 6. Композиция по таблицам</h3>
+  <p class="q">Функции f и g заданы таблицей. Заполните таблицу значений функции f(g(x)).</p>
+  <div class="scroll"><table>
+    <tr><th>аргумент</th><td>1</td><td>3</td><td>−2</td><td>0</td><td>−3</td></tr>
+    <tr><th>f</th><td>4</td><td>2</td><td>−1</td><td>2</td><td>−4</td></tr>
+    <tr><th>g</th><td>0</td><td>−3</td><td>1</td><td>−2</td><td>3</td></tr>
+  </table></div>
+  <details><summary>Показать решение</summary>
+    <div class="step">1. Работаем по шагам для каждого аргумента: сначала смотрим строку g, потом
+    с полученным числом идём в строку f.</div>
+    <div class="step">2. x = 1: g(1) = 0, f(0) = 2. &nbsp; x = 3: g(3) = −3, f(−3) = −4.</div>
+    <div class="step">3. x = −2: g(−2) = 1, f(1) = 4. &nbsp; x = 0: g(0) = −2, f(−2) = −1.</div>
+    <div class="step">4. x = −3: g(−3) = 3, f(3) = 2.</div>
+    <div class="scroll"><table>
+      <tr><th>аргумент</th><td>1</td><td>3</td><td>−2</td><td>0</td><td>−3</td></tr>
+      <tr><th>f(g(x))</th><td>2</td><td>−4</td><td>4</td><td>−1</td><td>2</td></tr>
+    </table></div>
+    <div class="step"><b>Ответ:</b> 2; −4; 4; −1; 2.</div>
+    <div class="note">Если бы значение g не встретилось в первой строке таблицы, композиция в этой точке
+    была бы не определена — это опять то же условие E(g) ⊂ D(h).</div>
+  </details>
+  </div>
+
+  <div class="ex">
+  <h3>Пример 7. Доказательство про монотонность</h3>
+  <p class="q">Докажите, что композиция двух возрастающих функций — функция возрастающая.</p>
+  <details><summary>Показать решение</summary>
+    <div class="step">1. Пусть g возрастает на своей области определения, h возрастает на своей,
+    и составлена функция y = h(g(x)). Возьмём два произвольных числа x₁ &lt; x₂ из D(y).</div>
+    <div class="step">2. Так как g возрастает, из x₁ &lt; x₂ следует g(x₁) &lt; g(x₂).</div>
+    <div class="step">3. Обозначим t₁ = g(x₁) и t₂ = g(x₂); получили t₁ &lt; t₂. Так как h возрастает,
+    из t₁ &lt; t₂ следует h(t₁) &lt; h(t₂).</div>
+    <div class="fx">x₁ &lt; x₂ ⇒ g(x₁) &lt; g(x₂) ⇒ h(g(x₁)) &lt; h(g(x₂))</div>
+    <div class="step">4. То есть для любых x₁ &lt; x₂ выполняется y(x₁) &lt; y(x₂), а это и есть определение
+    возрастающей функции. <b>Что и требовалось доказать.</b></div>
+    <div class="note">Точно так же доказываются и остальные три случая — меняется только направление
+    неравенства на том шаге, где функция убывает. Попробуй провести это рассуждение для задачи 12.</div>
+  </details>
+  </div>
+</div>
+
+<div class="card sheet">
+  <h2>Шпаргалка</h2>
+  <p class="small">Этот блок печатается отдельно на один лист A4: Ctrl+P (⌘+P) → печать.</p>
+  <p class="f-formula"><b>Определение.</b> Если E(g) ⊂ D(h), то y = f(x) = h(g(x)) — сложная функция
+  (композиция) функций h и g: f = h ∘ g. Функция g — промежуточная (внутренняя), h — внешняя.</p>
+  <p class="f-formula"><b>Порядок:</b> x → t = g(x) → y = h(t). Первой работает та функция, что стоит внутри
+  скобок. Как правило h ∘ g ≠ g ∘ h.</p>
+  <p class="f-formula"><b>Составить композицию:</b> в формуле внешней функции вместо x подставить формулу
+  внутренней целиком, в скобках. <b>Разложить:</b> расставить порядок действий; что считается первым — то и g.</p>
+  <p class="f-formula"><b>Область определения:</b> x ∈ D(g) и g(x) ∈ D(h). На практике: под корнем t ≥ 0,
+  в знаменателе t ≠ 0, под логарифмом t &gt; 0.</p>
+  <div class="scroll"><table>
+    <tr><th>g</th><th>h</th><th>h(g(x))</th></tr>
+    <tr><td>↑</td><td>↑</td><td>↑ возрастает</td></tr>
+    <tr><td>↓</td><td>↓</td><td>↑ возрастает</td></tr>
+    <tr><td>↑</td><td>↓</td><td>↓ убывает</td></tr>
+    <tr><td>↓</td><td>↑</td><td>↓ убывает</td></tr>
+  </table></div>
+  <p style="font-size:15px"><b>Примеры разложения:</b> √(2x + 7) → g = 2x + 7, h = √t;
+  (2x² − 1)⁵ → g = 2x² − 1, h = t⁵; sin(3x) → g = 3x, h = sin t; 1/(x + 4) → g = x + 4, h = 1/t.</p>
+  <p style="font-size:15px"><b>Схема доказательства монотонности:</b> берём x₁ &lt; x₂ → смотрим,
+  что стало с g(x₁) и g(x₂) → применяем h → сравниваем итог.</p>
+</div>
+
+<div class="card">
+  <h2>Домашнее задание</h2>
+  <p class="meta">Где ответ — число, единицы писать не нужно; запятая и точка равнозначны.
+  Где ответ — формула, вводи её без пробелов и без «t =», кнопки над полем вставляют знаки.
+  Подсказки открываются по одной кнопкой «Подсказка».</p>
+  <div id="tasks"></div>
+</div>
+
+<div class="card">
+  <h2>Шаг 1. Прикрепи фото решений</h2>
+  <p class="meta">Ответы в полях — это только результат. Преподаватель проверяет ещё и ход решения,
+  поэтому без фото тетради работа не отправляется.</p>
+  <ol class="steps-list">
+    <li>Реши задачи в тетради, как обычно, с полной записью.</li>
+    <li>Сфотографируй страницы: при дневном свете, чтобы текст читался и не было теней от руки.</li>
+    <li>Нажми кнопку ниже. С телефона выбирай «Камера» или «Фото», с компьютера — файл из папки.</li>
+    <li>Фото можно приложить несколько сразу и отметить у каждого, к какой задаче оно относится.</li>
+  </ol>
+  <input type="file" id="photos" accept="image/*" multiple style="margin-top:12px">
+  <div class="thumbs" id="thumbs"></div>
+</div>
+
+<div class="card">
+  <h2>Шаг 2. Отправь работу</h2>
+  <p class="meta">Проверь, что вверху страницы написано твоё имя, а выше приложены фото.
+  По кнопке ответы, результат и фотографии уходят преподавателю — пересылать ничего не нужно.
+  Вторая кнопка просто сохраняет копию тебе на устройство.</p>
+  <div class="row">
+    <button class="pri" id="send">Отправить на проверку</button>
+    <button id="report">Скачать копию себе</button>
+  </div>
+  <div id="repnote" class="meta" style="margin-top:8px"></div>
+</div>
+
+</div>
+
+<div class="bar">
+  <button class="pri" id="checkall">Проверить всё</button>
+  <span id="progress" class="meta">решено 0 из 12</span>
+</div>
+
+<script>
+"use strict";
+var started = Date.now();
+
+/* ---------- данные задач; ответы закодированы, чтобы не читались в исходнике ---------- */
+function e(s){return btoa(unescape(encodeURIComponent(s)));}
+function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return s;}}
+
+var TASKS = [
+ {id:1,lvl:"база",type:"num",text:"Заданы функции f(x) = 2x + 1 и g(x) = x². Найди f(g(3)).",ans:[e("19")],
+  hints:["Внутри скобок стоит g — с неё и начинай.",
+         "Сначала посчитай t = g(3) = 3².",
+         "Получилось t = 9, теперь подставь это число в f: f(9) = 2·9 + 1."],
+  sol:"<div class='step'>1. В записи f(g(3)) сначала работает внутренняя функция g.</div>"+
+      "<div class='step'>2. t = g(3) = 3² = 9.</div>"+
+      "<div class='step'>3. Теперь найденное число подставляем во внешнюю функцию f: f(9) = 2·9 + 1 = 19.</div>"+
+      "<div class='fx'>f(g(3)) = f(3²) = f(9) = 2 · 9 + 1 = 19</div>"+
+      "<div class='step'><b>Ответ: 19.</b></div>"},
+
+ {id:2,lvl:"база",type:"num",text:"Те же функции f(x) = 2x + 1 и g(x) = x². Найди g(f(3)).",ans:[e("49")],
+  hints:["Теперь внутри скобок стоит f — значит первой работает она.",
+         "f(3) = 2·3 + 1.",
+         "Получилось 7, осталось возвести в квадрат."],
+  sol:"<div class='step'>1. Порядок поменялся: внутренняя теперь f, внешняя g.</div>"+
+      "<div class='step'>2. t = f(3) = 2·3 + 1 = 7.</div>"+
+      "<div class='step'>3. g(7) = 7² = 49.</div>"+
+      "<div class='fx'>g(f(3)) = g(7) = 7² = 49</div>"+
+      "<div class='step'><b>Ответ: 49.</b> Сравни с задачей 1: те же функции, тот же аргумент, а ответы разные — "+
+      "порядок в композиции менять нельзя.</div>"},
+
+ {id:3,lvl:"база",type:"num",text:"Заданы функции f(x) = 4 − x³ и g(x) = √x. Найди f(g(4)).",ans:[e("-4")],
+  hints:["Сначала внутренняя функция: g(4) = √4.",
+         "g(4) = 2.",
+         "Теперь f(2) = 4 − 2³, не забудь про минус."],
+  sol:"<div class='step'>1. t = g(4) = √4 = 2.</div>"+
+      "<div class='step'>2. f(2) = 4 − 2³ = 4 − 8 = −4.</div>"+
+      "<div class='fx'>f(g(4)) = f(√4) = f(2) = 4 − 2³ = −4</div>"+
+      "<div class='step'><b>Ответ: −4.</b></div>"},
+
+ {id:4,lvl:"база",type:"num",text:"Те же функции f(x) = 4 − x³ и g(x) = √x. Найди g(f(0)).",ans:[e("2")],
+  hints:["Первой работает f, потому что она внутри.",
+         "f(0) = 4 − 0³ = 4.",
+         "Осталось найти g(4) = √4."],
+  sol:"<div class='step'>1. t = f(0) = 4 − 0³ = 4.</div>"+
+      "<div class='step'>2. g(4) = √4 = 2.</div>"+
+      "<div class='fx'>g(f(0)) = g(4) = √4 = 2</div>"+
+      "<div class='step'><b>Ответ: 2.</b></div>"},
+
+ {id:5,lvl:"база",type:"num",text:"Функции f и g заданы таблицей. Найди f(g(0)).",img:"<div class='scroll' style='margin:2px 0'><table><tr><th>аргумент</th><td>1</td><td>3</td><td>−2</td><td>0</td><td>−3</td></tr><tr><th>f</th><td>4</td><td>2</td><td>−1</td><td>2</td><td>−4</td></tr><tr><th>g</th><td>0</td><td>−3</td><td>1</td><td>−2</td><td>3</td></tr></table></div>",ans:[e("-1")],
+  hints:["Читай изнутри: сначала по строке g находишь значение при аргументе 0.",
+         "g(0) = −2.",
+         "Теперь в строке f ищи значение при аргументе −2."],
+  sol:"<div class='step'>1. Внутренняя функция g. В столбце с аргументом 0 в строке g стоит −2, значит g(0) = −2.</div>"+
+      "<div class='step'>2. Это число становится аргументом для f. В столбце с аргументом −2 в строке f стоит −1.</div>"+
+      "<div class='fx'>f(g(0)) = f(−2) = −1</div>"+
+      "<div class='step'><b>Ответ: −1.</b> По таблице композиция считается так же, как по формуле: сначала "+
+      "внутренняя функция, потом внешняя.</div>"},
+
+ {id:6,lvl:"база",type:"choice",text:"Заданы функции f(x) = sin x и g(x) = 2x + 3. Какой формулой задаётся сложная функция y = f(g(x))?",
+  options:["sin(2x + 3)","2 sin x + 3","2 sin(x + 3)","sin 2x + 3"],ans:[e("sin(2x + 3)")],
+  hints:["Внутренняя здесь g, значит её результат попадает внутрь синуса.",
+         "В формуле f(x) = sin x надо заменить x на всю формулу g.",
+         "Вместо x подставляем 2x + 3 — и это выражение целиком уходит под синус."],
+  sol:"<div class='step'>1. Для f(g(x)) промежуточной является g, поэтому её результат — это аргумент синуса.</div>"+
+      "<div class='step'>2. В формуле f(x) = sin x заменяем x на 2x + 3.</div>"+
+      "<div class='fx'>f(g(x)) = sin(2x + 3)</div>"+
+      "<div class='step'><b>Ответ: sin(2x + 3).</b> Скобки обязательны: sin 2x + 3 — это уже другая функция, "+
+      "там тройка прибавляется снаружи.</div>"},
+
+ {id:7,lvl:"база",type:"choice",text:"Те же функции f(x) = sin x и g(x) = 2x + 3. Какой формулой задаётся y = g(f(x))?",
+  options:["2 sin x + 3","sin(2x + 3)","sin(2x) + 3","2 sin(x + 3)"],ans:[e("2 sin x + 3")],
+  hints:["Теперь внутренняя — это f, то есть синус.",
+         "В формуле g(x) = 2x + 3 надо заменить x на sin x.",
+         "Получается 2 · sin x + 3."],
+  sol:"<div class='step'>1. Для g(f(x)) промежуточной является f, значит sin x подставляется в формулу g.</div>"+
+      "<div class='step'>2. В g(x) = 2x + 3 заменяем x на sin x.</div>"+
+      "<div class='fx'>g(f(x)) = 2 sin x + 3</div>"+
+      "<div class='step'><b>Ответ: 2 sin x + 3.</b> Вместе с задачей 6 это показывает, что f(g(x)) и g(f(x)) — "+
+      "разные функции.</div>"},
+
+ {id:8,lvl:"база",type:"num",text:"Сложная функция y = √(2x + 7) представлена как композиция. Запиши формулу промежуточной функции t = g(x). Ответ вводи без «t =», например: 3x-5",
+  ans:[e("2x+7"),e("7+2x")],
+  hints:["Установи порядок действий: что ты посчитаешь первым, если подставишь число вместо x?",
+         "Сначала считается то, что стоит под корнем.",
+         "Промежуточная функция — это всё подкоренное выражение."],
+  sol:"<div class='step'>1. Запишем порядок действий: сначала из x получаем 2x + 7, потом из этого числа — корень.</div>"+
+      "<div class='fx'>x → t = 2x + 7 → y = √t</div>"+
+      "<div class='step'>2. Первое действие и есть промежуточная функция, второе — внешняя.</div>"+
+      "<div class='step'><b>Ответ: t = g(x) = 2x + 7</b>, а внешняя функция y = h(t) = √t. Значит f = h ∘ g.</div>"},
+
+ {id:9,lvl:"база",type:"num",text:"Сложная функция y = (2x² − 1)⁵ представлена как композиция. Запиши формулу промежуточной функции t = g(x). Ответ вводи без «t =», кнопка ² над полем.",
+  ans:[e("2x²-1"),e("2x^2-1")],
+  hints:["Снова расставь порядок действий для конкретного числа вместо x.",
+         "Сначала считается выражение в скобках, и только потом пятая степень.",
+         "Промежуточная функция — это то, что стоит в скобках."],
+  sol:"<div class='step'>1. Порядок действий: из x получаем 2x² − 1, потом возводим результат в пятую степень.</div>"+
+      "<div class='fx'>x → t = 2x² − 1 → y = t⁵</div>"+
+      "<div class='step'>2. То, что в скобках, — промежуточная функция; степень — внешняя.</div>"+
+      "<div class='step'><b>Ответ: t = g(x) = 2x² − 1</b>, внешняя y = h(t) = t⁵.</div>"},
+
+ {id:10,lvl:"средний",type:"num",text:"Найди наименьшее целое число, входящее в область определения функции y = √(x − 8).",ans:[e("8")],
+  hints:["Корень определён только тогда, когда подкоренное выражение неотрицательно.",
+         "Запиши условие: x − 8 ≥ 0.",
+         "Отсюда x ≥ 8 — и наименьшее целое совпадает с границей."],
+  sol:"<div class='step'>1. Здесь промежуточная функция t = x − 8, внешняя y = √t. Область определения корня: t ≥ 0.</div>"+
+      "<div class='step'>2. Значит нужно, чтобы значения промежуточной функции попадали в D(h): x − 8 ≥ 0.</div>"+
+      "<div class='fx'>x − 8 ≥ 0 &nbsp;⇒&nbsp; x ≥ 8 &nbsp;⇒&nbsp; D(f) = [8; +∞)</div>"+
+      "<div class='step'><b>Ответ: 8.</b> Это и есть условие E(g) ⊂ D(h) из определения, только записанное неравенством.</div>"},
+
+ {id:11,lvl:"средний",type:"num",text:"Сколько целых чисел входит в область определения функции y = √(1 − x²)?",ans:[e("3")],
+  hints:["Условие то же: подкоренное выражение неотрицательно.",
+         "1 − x² ≥ 0 равносильно x² ≤ 1.",
+         "Значит −1 ≤ x ≤ 1 — осталось пересчитать целые числа на этом отрезке."],
+  sol:"<div class='step'>1. Промежуточная функция t = 1 − x², внешняя y = √t, поэтому нужно 1 − x² ≥ 0.</div>"+
+      "<div class='step'>2. Отсюда x² ≤ 1, то есть −1 ≤ x ≤ 1.</div>"+
+      "<div class='fx'>D(f) = [−1; 1] &nbsp;⇒&nbsp; целые: −1, 0, 1</div>"+
+      "<div class='step'><b>Ответ: 3.</b></div>"},
+
+ {id:12,lvl:"средний",type:"choice",text:"Функция g убывает на всей числовой прямой, функция h возрастает. Какой будет сложная функция y = h(g(x))?",
+  options:["убывающей","возрастающей","постоянной","определить нельзя"],ans:[e("убывающей")],
+  hints:["Возьми два числа x₁ < x₂ и проследи, что происходит на каждом шаге.",
+         "Так как g убывает, из x₁ < x₂ следует g(x₁) > g(x₂).",
+         "Теперь к этим значениям применяется возрастающая h — она сохраняет порядок неравенства."],
+  sol:"<div class='step'>1. Пусть x₁ &lt; x₂. Функция g убывает, значит g(x₁) &gt; g(x₂).</div>"+
+      "<div class='step'>2. Функция h возрастает, то есть сохраняет знак неравенства: из g(x₁) &gt; g(x₂) следует "+
+      "h(g(x₁)) &gt; h(g(x₂)).</div>"+
+      "<div class='step'>3. Получилось: из x₁ &lt; x₂ следует y(x₁) &gt; y(x₂) — это определение убывающей функции.</div>"+
+      "<div class='fx'>x₁ &lt; x₂ ⇒ g(x₁) &gt; g(x₂) ⇒ h(g(x₁)) &gt; h(g(x₂))</div>"+
+      "<div class='step'><b>Ответ: убывающей.</b> Общее правило: одинаковые монотонности дают возрастающую "+
+      "композицию, разные — убывающую.</div>"}
+];
+
+/* ---------- разбор ответа ---------- */
+function norm(s){
+  return String(s).toLowerCase().replace(/\s+/g,"")
+    .replace(/[\u2013\u2014\u2212]/g,"-")
+    .replace(/[\u00d7\u00b7]/g,"*")
+    .replace(/,/g,".")
+    .replace(/^(ответ:?|x=|y=|α=|a=)/,"");
+}
+function toNum(str){
+  var t = norm(str);
+  if(!t) return NaN;
+  t = t.replace(/\u221a/g,"sqrt").replace(/\u03c0/g,"pi");
+  t = t.replace(/sqrt(\d+(?:\.\d+)?)/g,"sqrt($1)");
+  t = t.replace(/(\d)sqrt/g,"$1*sqrt");
+  t = t.replace(/(\d)pi/g,"$1*pi");
+  t = t.replace(/(\d)\(/g,"$1*(").replace(/\)(\d)/g,")*$1").replace(/\)\(/g,")*(");
+  if(!/^[-+*/().0-9a-z]+$/.test(t)) return NaN;
+  if(t.replace(/sqrt|pi/g,"").match(/[a-z]/)) return NaN;
+  try{
+    var v = new Function("sqrt","pi","return ("+t+");")(Math.sqrt, Math.PI);
+    return (typeof v === "number" && isFinite(v)) ? v : NaN;
+  }catch(err){ return NaN; }
+}
+function same(given, right, tol){
+  var a = toNum(given), b = toNum(right);
+  if(!isNaN(a) && !isNaN(b)){
+    var t = tol || 0.01;
+    return Math.abs(a-b) <= Math.max(t, Math.abs(b)*t);
+  }
+  return norm(given) === norm(right);
+}
+
+/* ---------- отрисовка ---------- */
+var state = {};
+var box = document.getElementById("tasks");
+
+TASKS.forEach(function(t){
+  state[t.id] = {tries:0, hints:0, done:false, ok:false, given:"", sel:null};
+  var el = document.createElement("div");
+  el.className = "task"; el.id = "t"+t.id;
+  var body = '<div><span class="tnum">'+t.id+'.</span>'+t.text+
+             '<span class="lvl">'+t.lvl+'</span></div>';
+  if(t.img){ body += '<div class="fig">'+t.img+'</div>'; }
+  if(t.type === "choice"){
+    body += '<div class="opts">'+t.options.map(function(o,i){
+      return '<label class="opt" data-v="'+o+'"><input type="radio" name="q'+t.id+'" value="'+o+'"> '+o+'</label>';
+    }).join("")+'</div>';
+  } else {
+    body += '<div class="keys">'+
+      ["√","²","³","x","t","(",")","/","−"].map(function(k){
+        return '<button class="key" data-k="'+k+'" type="button">'+k+'</button>';}).join("")+
+      '</div><input type="text" id="in'+t.id+'" inputmode="text" autocapitalize="off" '+
+      'autocorrect="off" autocomplete="off" spellcheck="false" placeholder="ответ">';
+  }
+  body += '<div class="row" style="margin-top:10px">'+
+          '<button class="pri sm chk">Проверить</button>'+
+          '<button class="sm hnt">Подсказка</button></div>'+
+          '<div class="hints"></div><div class="verdict"></div><div class="sol"></div>';
+  el.innerHTML = body;
+  box.appendChild(el);
+
+  el.querySelectorAll(".key").forEach(function(b){
+    b.addEventListener("click", function(){
+      var inp = document.getElementById("in"+t.id);
+      var k = b.dataset.k === "−" ? "-" : b.dataset.k;
+      var s = inp.selectionStart || inp.value.length;
+      inp.value = inp.value.slice(0,s) + k + inp.value.slice(inp.selectionEnd || s);
+      inp.focus(); inp.setSelectionRange(s+k.length, s+k.length);
+    });
+  });
+  if(t.type === "choice"){
+    el.querySelectorAll(".opt").forEach(function(l){
+      l.addEventListener("click", function(){
+        el.querySelectorAll(".opt").forEach(function(x){x.classList.remove("sel");});
+        l.classList.add("sel"); state[t.id].sel = l.dataset.v;
+      });
+    });
+  } else {
+    el.querySelector("#in"+t.id).addEventListener("keydown", function(ev){
+      if(ev.key === "Enter"){ ev.preventDefault(); check(t.id); }
+    });
+  }
+  el.querySelector(".chk").addEventListener("click", function(){ check(t.id); });
+  el.querySelector(".hnt").addEventListener("click", function(){ hint(t.id); });
+});
+
+function hint(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var host = document.querySelector("#t"+id+" .hints");
+  if(s.hints >= t.hints.length){
+    if(!host.querySelector(".last")){
+      var w = document.createElement("div");
+      w.className = "hint last"; w.textContent = "Подсказки закончились — нажми «Проверить», решение откроется после второй попытки.";
+      host.appendChild(w);
+    }
+    return;
+  }
+  var h = document.createElement("div");
+  h.className = "hint";
+  h.textContent = "Подсказка " + (s.hints+1) + ": " + t.hints[s.hints];
+  host.appendChild(h);
+  s.hints++;
+}
+
+function check(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var el = document.getElementById("t"+id);
+  var v = document.querySelector(".verdict");
+  v = el.querySelector(".verdict");
+  var given = (t.type === "choice") ? (s.sel || "") :
+              (document.getElementById("in"+id).value || "");
+  if(!given.trim()){ v.className = "verdict bad"; v.textContent = "Введи ответ."; return; }
+  s.given = given; s.tries++;
+  var ok = t.ans.some(function(a){ return same(given, d(a), t.tol); });
+  s.ok = ok; s.done = ok || s.tries >= 2;
+  el.classList.remove("ok","bad");
+  el.classList.add(ok ? "ok" : "bad");
+  v.className = "verdict " + (ok ? "ok" : "bad");
+  if(ok){
+    v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    showSol(el, t);
+  } else if(s.tries === 1){
+    v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+  } else {
+    v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    showSol(el, t);
+  }
+  progress();
+}
+function showSol(el, t){
+  var host = el.querySelector(".sol");
+  if(host.dataset.on) return;
+  host.dataset.on = "1";
+  var det = document.createElement("details");
+  det.open = true;
+  det.innerHTML = "<summary>Решение</summary><div class='step'>"+t.sol+"</div>";
+  host.appendChild(det);
+}
+function progress(){
+  var done = TASKS.filter(function(t){return state[t.id].done;}).length;
+  var ok = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  document.getElementById("progress").textContent =
+    "решено " + done + " из " + TASKS.length + " · верно " + ok;
+}
+document.getElementById("checkall").addEventListener("click", function(){
+  TASKS.forEach(function(t){
+    var s = state[t.id];
+    var given = (t.type === "choice") ? (s.sel || "") : (document.getElementById("in"+t.id).value || "");
+    if(given.trim() && !s.done) check(t.id);
+  });
+  var first = TASKS.find(function(t){ return !state[t.id].done; });
+  var note = first ? "Осталась задача " + first.id + "." : "Все задачи закрыты.";
+  document.getElementById("progress").textContent += " · " + note;
+});
+progress();
+
+/* ---------- фото ---------- */
+var photos = [];
+document.getElementById("photos").addEventListener("change", function(ev){
+  var files = Array.prototype.slice.call(ev.target.files || []);
+  files.forEach(function(f){
+    var r = new FileReader();
+    r.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var m = 1400, w = img.width, h = img.height;
+        if(Math.max(w,h) > m){ var k = m/Math.max(w,h); w = Math.round(w*k); h = Math.round(h*k); }
+        var c = document.createElement("canvas"); c.width = w; c.height = h;
+        c.getContext("2d").drawImage(img, 0, 0, w, h);
+        photos.push({url: c.toDataURL("image/jpeg", 0.7), task: ""});
+        drawThumbs();
+      };
+      img.src = r.result;
+    };
+    r.readAsDataURL(f);
+  });
+  ev.target.value = "";
+});
+function drawThumbs(){
+  var host = document.getElementById("thumbs");
+  host.innerHTML = "";
+  var total = 0;
+  photos.forEach(function(p, i){
+    total += p.url.length * 0.75;
+    var d0 = document.createElement("div"); d0.className = "thumb";
+    var opts = '<option value="">задача…</option>' + TASKS.map(function(t){
+      return '<option value="'+t.id+'"'+(p.task==String(t.id)?" selected":"")+'>№'+t.id+'</option>';
+    }).join("");
+    d0.innerHTML = '<img src="'+p.url+'" alt="фото решения"><button type="button">×</button>'+
+                   '<select>'+opts+'</select>';
+    d0.querySelector("button").addEventListener("click", function(){ photos.splice(i,1); drawThumbs(); });
+    d0.querySelector("select").addEventListener("change", function(ev){ p.task = ev.target.value; });
+    host.appendChild(d0);
+  });
+  var note = document.getElementById("repnote");
+  if(total > 15e6){ note.textContent = "Фото уже больше 15 МБ — отчёт может отправляться долго, лишние лучше удалить."; }
+  else if(photos.length){ note.textContent = "Фото в отчёте: " + photos.length + "."; }
+  else { note.textContent = ""; }
+}
+
+/* ---------- отчёт ---------- */
+var ENDPOINT = "https://script.google.com/macros/s/AKfycbztH9c-wQuKC7pSfD8AcFfnOcGpSHxoeqovulmvLMp9W23SgFx9dDQ2JTlWcIJDMN6W/exec";
+var SECRET = "artteach2026";
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function buildReport(){
+  var name = (document.getElementById("name").value || "").trim() || "без имени";
+  var now = new Date();
+  var mins = Math.max(1, Math.round((Date.now()-started)/60000));
+  var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  var data = {tип:"дз", предмет:"математика", тема:"Сложная функция, композиция (10 класс)",
+    ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
+    верно:okN, всего:TASKS.length, задачи:[]};
+  var rows = TASKS.map(function(t){
+    var s = state[t.id];
+    data.задачи.push({n:t.id, условие:t.text.replace(/<[^>]+>/g,""), ответ_ученика:s.given,
+      верный_ответ:t.ans.map(d).join(" или "), верно:s.ok, попыток:s.tries, подсказок:s.hints,
+      уровень:t.lvl});
+    return "<tr><td>"+t.id+"</td><td style='text-align:left'>"+esc(t.text.replace(/<[^>]+>/g,""))+
+      "</td><td>"+esc(s.given||"—")+"</td><td>"+esc(t.ans.map(d).join(" / "))+"</td><td>"+
+      (s.ok?"верно":(s.given?"неверно":"не решал"))+"</td><td>"+s.tries+"</td><td>"+s.hints+"</td></tr>";
+  }).join("");
+  var pics = photos.map(function(p,i){
+    return "<figure><img src='"+p.url+"'><figcaption>Фото "+(i+1)+
+      (p.task?" — к задаче №"+p.task:"")+"</figcaption></figure>";
+  }).join("");
+  var html = "<!doctype html><html lang='ru'><head><meta charset='utf-8'>"+
+    "<meta name='viewport' content='width=device-width,initial-scale=1'>"+
+    "<title>Отчёт — "+esc(name)+" — сложная функция · 10 класс</title><style>"+
+    "body{font:16px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;padding:20px;color:#16181d;background:#fff}"+
+    "h1{font-size:22px;margin:0 0 4px}.m{color:#5b6270;font-size:15px}"+
+    "table{border-collapse:collapse;width:100%;margin-top:14px;font-size:15px}"+
+    "th,td{border:1px solid #dfe3ea;padding:6px 8px;text-align:center}th{background:#eef3fb}"+
+    "figure{margin:14px 0}img{max-width:100%;border:1px solid #dfe3ea;border-radius:8px}"+
+    "figcaption{color:#5b6270;font-size:14px;margin-top:4px}</style></head><body>"+
+    "<h1>Отчёт по домашнему заданию</h1>"+
+    "<div class='m'>Тема: сложная функция и композиция · алгебра, 10 класс</div>"+
+    "<div class='m'>Ученик: <b>"+esc(name)+"</b> · сдано: "+esc(now.toLocaleString("ru-RU"))+
+    " · время работы: около "+mins+" мин</div>"+
+    "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)</h2>"+
+    "<table><tr><th>№</th><th>Задача</th><th>Ответ ученика</th><th>Верный ответ</th>"+
+    "<th>Итог</th><th>Попыток</th><th>Подсказок</th></tr>"+rows+"</table>"+
+    (pics ? "<h2>Фото решений</h2>"+pics : "<p class='m'>Фото решений не прикреплены.</p>")+
+    "<script type='application/json' id='result-data'>"+
+    JSON.stringify(data).replace(/</g,"\\u003c")+"<\/script></body></html>";
+  var stamp = now.getDate()+"-"+(now.getMonth()+1);
+  return {
+    html: html,
+    name: name,
+    file: "Отчёт_Сложная_функция_"+name.replace(/\s+/g,"_")+"_"+stamp+".html",
+    caption: name+" · сложная функция · 10 класс · "+okN+" из "+TASKS.length+
+             " ("+Math.round(okN/TASKS.length*100)+"%)"
+  };
+}
+
+document.getElementById("send").addEventListener("click", function(){
+  var note = document.getElementById("repnote");
+  var who = (document.getElementById("name").value || "").trim();
+  if(!who){ note.className = "meta bad-note"; note.textContent = "Сначала впиши имя вверху страницы."; return; }
+  if(!photos.length){
+    note.className = "meta bad-note";
+    note.textContent = "Сначала прикрепи фото решений — кнопка «Выберите файлы» в блоке выше.";
+    document.getElementById("photos").scrollIntoView({behavior:"smooth", block:"center"});
+    return;
+  }
+  note.className = "meta";
+  var r = buildReport();
+  note.textContent = "Отправляю…";
+  var payload = {
+    secret: SECRET,
+    name: r.file,
+    caption: r.caption,
+    file: btoa(unescape(encodeURIComponent(r.html)))
+  };
+  fetch(ENDPOINT, {method:"POST", mode:"no-cors", body: JSON.stringify(payload)})
+    .then(function(){
+      note.textContent = "Отправлено преподавателю. Если хочешь, сохрани копию себе кнопкой ниже.";
+    })
+    .catch(function(){
+      note.textContent = "Не получилось отправить. Скачай файл кнопкой ниже и пришли его вручную.";
+    });
+});
+
+document.getElementById("report").addEventListener("click", function(){
+  var r = buildReport();
+  var blob = new Blob([r.html], {type:"text/html;charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = r.file;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  document.getElementById("repnote").textContent = "Файл скачан — он в папке загрузок.";
+});
+
+/* ============ конвейер композиции ============ */
+(function(){
+  var selG=document.getElementById("mg"), selH=document.getElementById("mh");
+  if(!selG||!selH) return;
+  var inX=document.getElementById("mx"), chain=document.getElementById("mchain"), out=document.getElementById("mout");
+  var GS=[
+    {n:"2x + 3", f:function(x){return 2*x+3;}, s:"2x + 3", d:null},
+    {n:"x²",     f:function(x){return x*x;},   s:"x²",     d:null},
+    {n:"x − 1",  f:function(x){return x-1;},   s:"x − 1",  d:null},
+    {n:"√x",     f:function(x){return Math.sqrt(x);}, s:"√x",
+     d:function(x){return x>=0 ? "" : "√x не определён при x < 0";}}
+  ];
+  var HS=[
+    {n:"√t",     f:function(t){return Math.sqrt(t);}, t:"√(A)",
+     d:function(t){return t>=0 ? "" : "под корнем получилось отрицательное число";}},
+    {n:"t²",     f:function(t){return t*t;},   t:"(A)²",   d:null},
+    {n:"2t + 1", f:function(t){return 2*t+1;}, t:"2·(A) + 1", d:null},
+    {n:"1/t",    f:function(t){return 1/t;},   t:"1/(A)",
+     d:function(t){return t!==0 ? "" : "на ноль делить нельзя";}}
+  ];
+  var i;
+  for(i=0;i<GS.length;i++){ selG.add(new Option(GS[i].n, i)); }
+  for(i=0;i<HS.length;i++){ selH.add(new Option(HS[i].n, i)); }
+  selG.value="0"; selH.value="0";
+
+  function fmt(v){
+    if(!isFinite(v)) return "—";
+    var r=Math.round(v*10000)/10000;
+    return String(r).replace(".", ",");
+  }
+  function draw(){
+    var g=GS[+selG.value], h=HS[+selH.value];
+    var raw=(inX.value||"").replace(",", ".").trim();
+    var x=parseFloat(raw);
+    var formula=h.t.replace("A", g.s);
+    var okx=!isNaN(x);
+    var t=okx ? g.f(x) : NaN;
+    var y=(okx && isFinite(t)) ? h.f(t) : NaN;
+    var warn="";
+    if(okx && g.d) warn=g.d(x);
+    if(okx && !warn && h.d && isFinite(t)) warn=h.d(t);
+
+    chain.innerHTML =
+      '<div class="cbox">x = '+(okx?fmt(x):"?")+'</div><span class="arr">→</span>'+
+      '<div class="cbox op">g: '+g.n+'<small>промежуточная</small></div><span class="arr">→</span>'+
+      '<div class="cbox">t = '+((okx&&!warn&&isFinite(t))?fmt(t):"—")+'</div><span class="arr">→</span>'+
+      '<div class="cbox op" style="background:#ffd79a;border-color:#a8620d">h: '+h.n+'<small>внешняя</small></div>'+
+      '<span class="arr">→</span>'+
+      '<div class="cbox">y = '+((okx&&!warn&&isFinite(y))?fmt(y):"—")+'</div>';
+
+    var s='<div><b>h(g(x)) = '+formula+'</b></div>';
+    if(!okx){ s+='<div class="bad">Введи число вместо x.</div>'; }
+    else if(warn){ s+='<div class="bad">Не определено: '+warn+'. Это и есть условие E(g) ⊂ D(h) — '+
+                      'значение промежуточной функции должно попадать в область определения внешней.</div>'; }
+    else { s+='<div class="ok">g('+fmt(x)+') = '+fmt(t)+', затем h('+fmt(t)+') = '+fmt(y)+'</div>'; }
+    out.innerHTML=s;
+  }
+  selG.addEventListener("change", draw);
+  selH.addEventListener("change", draw);
+  inX.addEventListener("input", draw);
+  draw();
+})();
+</script>
+</body>
+</html>
