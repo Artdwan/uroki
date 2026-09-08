@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Синус, косинус, тангенс, котангенс — 9 класс</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:800px;margin:0 auto;padding:16px 14px 60px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+.f-formula{font-size:19px}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.step{margin:6px 0}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+@media print{
+  body{background:#fff}
+  .wrap>*{display:none !important}
+  .wrap>.sheet{display:block !important;border:none;margin:0;padding:0}
+  .sheet{font-size:13px}
+  .sheet h2{font-size:18px}
+  .sheet th,.sheet td{padding:4px 5px;font-size:12px}
+  @page{size:A4;margin:12mm}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="card top">
+  <h1>Синус, косинус, тангенс и котангенс угла от 0° до 180°</h1>
+  <div class="meta">Геометрия, 9 класс · домашнее задание · 12 задач</div>
+  <label class="f" for="name">Имя и фамилия</label>
+  <input type="text" id="name" placeholder="напиши, как в журнале" autocapitalize="words" spellcheck="false">
+  <div class="note" style="margin-top:14px">
+    Как работать: прочитай теорию, разбери примеры, реши задачи. У каждой задачи есть подсказки —
+    открывай их, если застрял, это не считается ошибкой. В конце сфотографируй решения в тетради,
+    нажми «Скачать отчёт» и пришли файл преподавателю.
+  </div>
+</div>
+
+<div class="card">
+  <h2>Теория</h2>
+
+  <h3>1. Единичная полуокружность</h3>
+  <p>Строим полуокружность радиуса 1 с центром в начале координат, верхнюю (y&nbsp;≥&nbsp;0).
+  Угол α откладываем от положительного луча Ox против часовой стрелки. Второй стороне угла
+  соответствует точка M(x; y) на полуокружности. Тогда по определению:</p>
+  <p class="f-formula" style="text-align:center">
+    sin α = y &nbsp;&nbsp;·&nbsp;&nbsp; cos α = x &nbsp;&nbsp;·&nbsp;&nbsp;
+    tg α = <span class="frac"><span>y</span><span>x</span></span> &nbsp;&nbsp;·&nbsp;&nbsp;
+    ctg α = <span class="frac"><span>x</span><span>y</span></span>
+  </p>
+  <svg viewBox="0 0 420 230" width="100%" style="max-width:420px;display:block;margin:6px auto" aria-label="единичная полуокружность">
+    <g fill="none" stroke="currentColor" stroke-width="1.2">
+      <line x1="20" y1="200" x2="400" y2="200"/>
+      <line x1="210" y1="215" x2="210" y2="20"/>
+      <path d="M 370 200 A 160 160 0 0 0 50 200" stroke-width="2"/>
+    </g>
+    <g stroke="#2f6bd8" stroke-width="2" fill="none">
+      <line x1="210" y1="200" x2="130" y2="61"/>
+      <line x1="130" y1="61" x2="130" y2="200" stroke-dasharray="5 4"/>
+      <line x1="130" y1="61" x2="210" y2="61" stroke-dasharray="5 4"/>
+      <path d="M 250 200 A 40 40 0 0 0 232 168" stroke-width="1.5"/>
+    </g>
+    <circle cx="130" cy="61" r="4.5" fill="#2f6bd8"/>
+    <g font-size="14" fill="currentColor">
+      <text x="256" y="192">α</text>
+      <text x="106" y="48">M(x; y)</text>
+      <text x="118" y="218">x</text>
+      <text x="218" y="76">y</text>
+      <text x="386" y="219">1</text>
+      <text x="40" y="219">−1</text>
+      <text x="216" y="30">1</text>
+    </g>
+  </svg>
+  <div class="note">Для острого угла это то же самое, что и в прямоугольном треугольнике:
+  синус — противолежащий катет к гипотенузе, косинус — прилежащий к гипотенузе,
+  тангенс — противолежащий к прилежащему.</div>
+
+  <h3>2. Знаки</h3>
+  <p>Точка M всегда в верхней полуплоскости, значит <b>y&nbsp;≥&nbsp;0</b> и синус никогда не отрицателен.
+  А x меняет знак при переходе через 90°.</p>
+  <div class="scroll"><table>
+    <tr><th>угол</th><th>sin</th><th>cos</th><th>tg</th><th>ctg</th></tr>
+    <tr><td>0° &lt; α &lt; 90°</td><td>+</td><td>+</td><td>+</td><td>+</td></tr>
+    <tr><td>α = 90°</td><td>1</td><td>0</td><td>не сущ.</td><td>0</td></tr>
+    <tr><td>90° &lt; α &lt; 180°</td><td>+</td><td>−</td><td>−</td><td>−</td></tr>
+  </table></div>
+  <p>Не существуют: tg 90° (в знаменателе x = 0), ctg 0° и ctg 180° (в знаменателе y = 0).</p>
+
+  <h3>3. Таблица значений</h3>
+  <div class="scroll"><table>
+    <tr><th>α</th><th>0°</th><th>30°</th><th>45°</th><th>60°</th><th>90°</th><th>120°</th><th>135°</th><th>150°</th><th>180°</th></tr>
+    <tr><th>sin</th><td>0</td><td>0,5</td><td>√2/2</td><td>√3/2</td><td>1</td><td>√3/2</td><td>√2/2</td><td>0,5</td><td>0</td></tr>
+    <tr><th>cos</th><td>1</td><td>√3/2</td><td>√2/2</td><td>0,5</td><td>0</td><td>−0,5</td><td>−√2/2</td><td>−√3/2</td><td>−1</td></tr>
+    <tr><th>tg</th><td>0</td><td>√3/3</td><td>1</td><td>√3</td><td>—</td><td>−√3</td><td>−1</td><td>−√3/3</td><td>0</td></tr>
+    <tr><th>ctg</th><td>—</td><td>√3</td><td>1</td><td>√3/3</td><td>0</td><td>−√3/3</td><td>−1</td><td>−√3</td><td>—</td></tr>
+  </table></div>
+
+  <h3>4. Формулы приведения для 180° − α</h3>
+  <p class="f-formula" style="text-align:center">
+    sin(180° − α) = sin α &nbsp;·&nbsp; cos(180° − α) = −cos α<br>
+    tg(180° − α) = −tg α &nbsp;·&nbsp; ctg(180° − α) = −ctg α
+  </p>
+  <p>Это главный рабочий инструмент: любой тупой угол сводится к острому.
+  Например, cos 150° = cos(180° − 30°) = −cos 30° = −√3/2.</p>
+
+  <h3>5. Основные тождества</h3>
+  <p class="f-formula" style="text-align:center">
+    sin²α + cos²α = 1 &nbsp;·&nbsp;
+    tg α = <span class="frac"><span>sin α</span><span>cos α</span></span> &nbsp;·&nbsp;
+    ctg α = <span class="frac"><span>cos α</span><span>sin α</span></span> &nbsp;·&nbsp;
+    tg α · ctg α = 1
+  </p>
+  <div class="note"><b>Три ловушки, на которых теряют баллы:</b><br>
+  - забывают минус у косинуса тупого угла;<br>
+  - из sin²α + cos²α = 1 берут оба знака корня, хотя четверть уже задана условием;<br>
+  - пишут ctg 0° = 0, хотя котангенс там не существует.</div>
+</div>
+
+<div class="card">
+  <h2>Разобранные примеры</h2>
+
+  <h3>Пример 1. Значение по формуле приведения</h3>
+  <p>Вычислить sin 135° и cos 135°.</p>
+  <details><summary>Показать решение</summary>
+    <div class="step">1. Угол тупой, представляем его как 180° − 45°.</div>
+    <div class="step">2. sin 135° = sin(180° − 45°) = sin 45° = √2/2.</div>
+    <div class="step">3. cos 135° = cos(180° − 45°) = −cos 45° = −√2/2.</div>
+    <div class="step"><b>Ответ:</b> √2/2 и −√2/2.</div>
+    <div class="note">Синус остался положительным, косинус сменил знак — это и есть вся разница между
+    острым и тупым углом.</div>
+  </details>
+
+  <h3>Пример 2. Числовое выражение</h3>
+  <p>Вычислить 2cos 180° + 4sin 90° − tg 45°.</p>
+  <details><summary>Показать решение</summary>
+    <div class="step">1. По таблице: cos 180° = −1, sin 90° = 1, tg 45° = 1.</div>
+    <div class="step">2. Подставляем: 2·(−1) + 4·1 − 1.</div>
+    <div class="step">3. Считаем: −2 + 4 − 1 = 1.</div>
+    <div class="step"><b>Ответ:</b> 1.</div>
+    <div class="note">Типичная ошибка — потерять минус у cos 180° и получить 5.</div>
+  </details>
+
+  <h3>Пример 3. Найти остальные функции по одной</h3>
+  <p>Известно, что sin α = 0,8 и 90° &lt; α &lt; 180°. Найти cos α, tg α, ctg α.</p>
+  <details><summary>Показать решение</summary>
+    <div class="step">1. Из sin²α + cos²α = 1: cos²α = 1 − 0,64 = 0,36, значит cos α = ±0,6.</div>
+    <div class="step">2. Угол тупой, косинус там отрицателен, поэтому cos α = −0,6.</div>
+    <div class="step">3. tg α = sin α / cos α = 0,8 / (−0,6) = −4/3.</div>
+    <div class="step">4. ctg α = cos α / sin α = −0,6 / 0,8 = −0,75.</div>
+    <div class="step"><b>Ответ:</b> cos α = −0,6; tg α = −4/3; ctg α = −0,75.</div>
+    <div class="note">Знак выбирается по условию про угол, а не «как красивее». Без этого шага задача не решена.</div>
+  </details>
+
+  <h3>Пример 4. Комбинированное выражение</h3>
+  <p>Вычислить sin 150° · cos 180° − ctg 135° · tg 45°.</p>
+  <details><summary>Показать решение</summary>
+    <div class="step">1. sin 150° = sin(180° − 30°) = sin 30° = 0,5.</div>
+    <div class="step">2. cos 180° = −1; ctg 135° = −ctg 45° = −1; tg 45° = 1.</div>
+    <div class="step">3. Подставляем: 0,5·(−1) − (−1)·1 = −0,5 + 1.</div>
+    <div class="step">4. Получаем 0,5.</div>
+    <div class="step"><b>Ответ:</b> 0,5.</div>
+    <div class="note">Минус на минус даёт плюс — здесь чаще всего и ошибаются, получая −1,5.</div>
+  </details>
+</div>
+
+<div class="card sheet">
+  <h2>Шпаргалка</h2>
+  <p style="color:var(--muted);font-size:14px">Этот блок печатается отдельно на один лист A4: Ctrl+P (⌘+P) → печать.</p>
+  <p class="f-formula"><b>Определения:</b> точка M(x; y) на верхней единичной полуокружности:
+  sin α = y, cos α = x, tg α = y/x, ctg α = x/y.</p>
+  <p><b>Знаки:</b> sin α ≥ 0 всегда. При 90° &lt; α &lt; 180°: cos, tg, ctg — отрицательные.<br>
+  Не существуют: tg 90°, ctg 0°, ctg 180°.</p>
+  <p><b>Приведение:</b> sin(180° − α) = sin α; cos(180° − α) = −cos α;
+  tg(180° − α) = −tg α; ctg(180° − α) = −ctg α.</p>
+  <p><b>Тождества:</b> sin²α + cos²α = 1; tg α = sin α/cos α; ctg α = cos α/sin α; tg α · ctg α = 1.</p>
+  <div class="scroll"><table>
+    <tr><th>α</th><th>0°</th><th>30°</th><th>45°</th><th>60°</th><th>90°</th><th>120°</th><th>135°</th><th>150°</th><th>180°</th></tr>
+    <tr><th>sin</th><td>0</td><td>0,5</td><td>√2/2</td><td>√3/2</td><td>1</td><td>√3/2</td><td>√2/2</td><td>0,5</td><td>0</td></tr>
+    <tr><th>cos</th><td>1</td><td>√3/2</td><td>√2/2</td><td>0,5</td><td>0</td><td>−0,5</td><td>−√2/2</td><td>−√3/2</td><td>−1</td></tr>
+    <tr><th>tg</th><td>0</td><td>√3/3</td><td>1</td><td>√3</td><td>—</td><td>−√3</td><td>−1</td><td>−√3/3</td><td>0</td></tr>
+    <tr><th>ctg</th><td>—</td><td>√3</td><td>1</td><td>√3/3</td><td>0</td><td>−√3/3</td><td>−1</td><td>−√3</td><td>—</td></tr>
+  </table></div>
+  <p style="font-size:15px"><b>Порядок действий с тупым углом:</b> 1) записать угол как 180° − острый;
+  2) применить формулу приведения; 3) взять значение острого угла из таблицы; 4) поставить знак.</p>
+</div>
+
+<div class="card">
+  <h2>Домашнее задание</h2>
+  <p class="meta">Ответы вводи числом или выражением: <b>0,5</b> · <b>-√3/2</b> · <b>-4/3</b>.
+  Дробь можно писать через «/», корень — кнопкой √ над полем. Запятая и точка равнозначны.</p>
+  <div id="tasks"></div>
+</div>
+
+<div class="card">
+  <h2>Фото решений</h2>
+  <p class="meta">Сфотографируй страницы тетради с решениями. Фото уменьшаются автоматически и попадают в отчёт.</p>
+  <input type="file" id="photos" accept="image/*" multiple>
+  <div class="thumbs" id="thumbs"></div>
+</div>
+
+<div class="card">
+  <h2>Отчёт для преподавателя</h2>
+  <p class="meta">Нажми кнопку — скачается один файл с твоими ответами, результатом и фото.
+  Отправь его преподавателю в Instagram или Telegram.</p>
+  <button class="pri" id="report">Скачать отчёт для преподавателя</button>
+  <div id="repnote" class="meta" style="margin-top:8px"></div>
+</div>
+
+</div>
+
+<div class="bar">
+  <button class="pri" id="checkall">Проверить всё</button>
+  <span id="progress" class="meta">решено 0 из 12</span>
+</div>
+
+<script>
+"use strict";
+var started = Date.now();
+
+/* ---------- данные задач; ответы закодированы, чтобы не читались в исходнике ---------- */
+function e(s){return btoa(unescape(encodeURIComponent(s)));}
+function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return s;}}
+
+var TASKS = [
+ {id:1,lvl:"база",type:"num",text:"Вычисли sin 120°.",ans:[e("√3/2")],
+  hints:["120° — тупой угол. Запиши его как 180° минус острый.",
+         "sin(180° − α) = sin α, значит sin 120° = sin 60°.",
+         "Осталось взять sin 60° из таблицы значений."],
+  sol:"sin 120° = sin(180° − 60°) = sin 60° = √3/2 ≈ 0,87."},
+
+ {id:2,lvl:"база",type:"num",text:"Вычисли cos 150°.",ans:[e("-√3/2")],
+  hints:["150° = 180° − 30°.",
+         "У косинуса при приведении меняется знак: cos(180° − α) = −cos α.",
+         "cos 30° = √3/2, поставь перед ним минус."],
+  sol:"cos 150° = cos(180° − 30°) = −cos 30° = −√3/2 ≈ −0,87."},
+
+ {id:3,lvl:"база",type:"num",text:"Вычисли tg 135°.",ans:[e("-1")],
+  hints:["135° = 180° − 45°.",
+         "tg(180° − α) = −tg α.",
+         "tg 45° = 1."],
+  sol:"tg 135° = tg(180° − 45°) = −tg 45° = −1."},
+
+ {id:4,lvl:"база",type:"num",text:"Вычисли ctg 120°.",ans:[e("-√3/3")],
+  hints:["120° = 180° − 60°.",
+         "ctg(180° − α) = −ctg α, значит нужен ctg 60° со знаком минус.",
+         "ctg 60° = 1/√3 = √3/3."],
+  sol:"ctg 120° = −ctg 60° = −√3/3 ≈ −0,58. Можно и через отношение: cos 120°/sin 120° = (−0,5)/(√3/2)."},
+
+ {id:5,lvl:"база",type:"num",text:"Вычисли sin 90° + cos 180°.",ans:[e("0")],
+  hints:["Оба значения есть в таблице, приводить ничего не нужно.",
+         "sin 90° — это ордината самой верхней точки полуокружности.",
+         "cos 180° — это абсцисса левого конца полуокружности, она отрицательна."],
+  sol:"sin 90° + cos 180° = 1 + (−1) = 0."},
+
+ {id:6,lvl:"база",type:"num",text:"Вычисли 2·sin 150° − 3·cos 60°.",ans:[e("-0,5")],
+  hints:["sin 150° приведи к sin 30°.",
+         "sin 150° = 0,5 и cos 60° = 0,5.",
+         "Подставь: 2·0,5 − 3·0,5."],
+  sol:"2·sin 150° − 3·cos 60° = 2·0,5 − 3·0,5 = 1 − 1,5 = −0,5."},
+
+ {id:7,lvl:"база",type:"choice",text:"Определи знак произведения sin 100° · cos 100°.",
+  options:["положительный","отрицательный","равен нулю"],ans:[e("отрицательный")],
+  hints:["100° лежит между 90° и 180°.",
+         "Синус в верхней полуплоскости всегда положителен, а косинус там отрицателен.",
+         "Плюс, умноженный на минус, даёт минус."],
+  sol:"sin 100° > 0, cos 100° < 0, произведение отрицательно (≈ −0,17)."},
+
+ {id:8,lvl:"база",type:"num",text:"Известно, что sin α = 3/5 и 90° &lt; α &lt; 180°. Найди cos α.",ans:[e("-4/5"),e("-0,8")],
+  hints:["Используй sin²α + cos²α = 1.",
+         "cos²α = 1 − 9/25 = 16/25, значит cos α = ±4/5.",
+         "Угол тупой — выбери отрицательный знак."],
+  sol:"cos²α = 1 − (3/5)² = 16/25; так как 90° < α < 180°, косинус отрицателен: cos α = −4/5 = −0,8."},
+
+ {id:9,lvl:"база",type:"num",text:"Известно, что cos α = −0,6 и 0° &lt; α &lt; 180°. Найди sin α.",ans:[e("0,8"),e("4/5")],
+  hints:["Снова основное тождество: sin²α = 1 − cos²α.",
+         "sin²α = 1 − 0,36 = 0,64.",
+         "Синус на промежутке от 0° до 180° неотрицателен, минус тут невозможен."],
+  sol:"sin²α = 1 − 0,36 = 0,64; синус на этом промежутке положителен, поэтому sin α = 0,8."},
+
+ {id:10,lvl:"повышенный",type:"num",text:"Известно, что tg α = −2 и 90° &lt; α &lt; 180°. Найди cos α.",
+  ans:[e("-1/√5"),e("-√5/5"),e("-0,447")],tol:0.005,
+  hints:["Свяжи тангенс с синусом и косинусом: sin α = tg α · cos α = −2cos α.",
+         "Подставь в sin²α + cos²α = 1: 4cos²α + cos²α = 1.",
+         "cos²α = 1/5, а знак у тупого угла отрицательный."],
+  sol:"sin α = −2cos α ⇒ 4cos²α + cos²α = 1 ⇒ cos²α = 1/5 ⇒ cos α = −1/√5 = −√5/5 ≈ −0,45."},
+
+ {id:11,lvl:"повышенный",type:"num",text:"Вычисли sin²35° + sin²55°.",ans:[e("1")],
+  hints:["35° и 55° в сумме дают 90° — это подсказка, а не совпадение.",
+         "sin 55° = sin(90° − 35°) = cos 35°.",
+         "Получилось sin²35° + cos²35°."],
+  sol:"sin 55° = cos 35°, поэтому выражение равно sin²35° + cos²35° = 1."},
+
+ {id:12,lvl:"повышенный",type:"num",text:"Вычисли (sin 170° · ctg 170°) : cos 10°.",ans:[e("-1")],
+  hints:["Распиши котангенс как отношение: ctg 170° = cos 170°/sin 170°.",
+         "Синусы сократятся, останется cos 170° : cos 10°.",
+         "cos 170° = cos(180° − 10°) = −cos 10°."],
+  sol:"sin 170°·ctg 170° = cos 170° = −cos 10°; делим на cos 10° и получаем −1."}
+];
+
+/* ---------- разбор ответа ---------- */
+function norm(s){
+  return String(s).toLowerCase().replace(/\s+/g,"")
+    .replace(/[\u2013\u2014\u2212]/g,"-")
+    .replace(/[\u00d7\u00b7]/g,"*")
+    .replace(/,/g,".")
+    .replace(/^(ответ:?|x=|y=|α=|a=)/,"");
+}
+function toNum(str){
+  var t = norm(str);
+  if(!t) return NaN;
+  t = t.replace(/\u221a/g,"sqrt").replace(/\u03c0/g,"pi");
+  t = t.replace(/sqrt(\d+(?:\.\d+)?)/g,"sqrt($1)");
+  t = t.replace(/(\d)sqrt/g,"$1*sqrt");
+  t = t.replace(/(\d)pi/g,"$1*pi");
+  t = t.replace(/(\d)\(/g,"$1*(").replace(/\)(\d)/g,")*$1").replace(/\)\(/g,")*(");
+  if(!/^[-+*/().0-9a-z]+$/.test(t)) return NaN;
+  if(t.replace(/sqrt|pi/g,"").match(/[a-z]/)) return NaN;
+  try{
+    var v = new Function("sqrt","pi","return ("+t+");")(Math.sqrt, Math.PI);
+    return (typeof v === "number" && isFinite(v)) ? v : NaN;
+  }catch(err){ return NaN; }
+}
+function same(given, right, tol){
+  var a = toNum(given), b = toNum(right);
+  if(!isNaN(a) && !isNaN(b)){
+    var t = tol || 0.01;
+    return Math.abs(a-b) <= Math.max(t, Math.abs(b)*t);
+  }
+  return norm(given) === norm(right);
+}
+
+/* ---------- отрисовка ---------- */
+var state = {};
+var box = document.getElementById("tasks");
+
+TASKS.forEach(function(t){
+  state[t.id] = {tries:0, hints:0, done:false, ok:false, given:"", sel:null};
+  var el = document.createElement("div");
+  el.className = "task"; el.id = "t"+t.id;
+  var body = '<div><span class="tnum">'+t.id+'.</span>'+t.text+
+             '<span class="lvl">'+t.lvl+'</span></div>';
+  if(t.type === "choice"){
+    body += '<div class="opts">'+t.options.map(function(o,i){
+      return '<label class="opt" data-v="'+o+'"><input type="radio" name="q'+t.id+'" value="'+o+'"> '+o+'</label>';
+    }).join("")+'</div>';
+  } else {
+    body += '<div class="keys">'+
+      ["√","²","³","π","±","≤","≥","/","−"].map(function(k){
+        return '<button class="key" data-k="'+k+'" type="button">'+k+'</button>';}).join("")+
+      '</div><input type="text" id="in'+t.id+'" inputmode="text" autocapitalize="off" '+
+      'autocorrect="off" autocomplete="off" spellcheck="false" placeholder="ответ">';
+  }
+  body += '<div class="row" style="margin-top:10px">'+
+          '<button class="pri sm chk">Проверить</button>'+
+          '<button class="sm hnt">Подсказка</button></div>'+
+          '<div class="hints"></div><div class="verdict"></div><div class="sol"></div>';
+  el.innerHTML = body;
+  box.appendChild(el);
+
+  el.querySelectorAll(".key").forEach(function(b){
+    b.addEventListener("click", function(){
+      var inp = document.getElementById("in"+t.id);
+      var k = b.dataset.k === "−" ? "-" : b.dataset.k;
+      var s = inp.selectionStart || inp.value.length;
+      inp.value = inp.value.slice(0,s) + k + inp.value.slice(inp.selectionEnd || s);
+      inp.focus(); inp.setSelectionRange(s+k.length, s+k.length);
+    });
+  });
+  if(t.type === "choice"){
+    el.querySelectorAll(".opt").forEach(function(l){
+      l.addEventListener("click", function(){
+        el.querySelectorAll(".opt").forEach(function(x){x.classList.remove("sel");});
+        l.classList.add("sel"); state[t.id].sel = l.dataset.v;
+      });
+    });
+  } else {
+    el.querySelector("#in"+t.id).addEventListener("keydown", function(ev){
+      if(ev.key === "Enter"){ ev.preventDefault(); check(t.id); }
+    });
+  }
+  el.querySelector(".chk").addEventListener("click", function(){ check(t.id); });
+  el.querySelector(".hnt").addEventListener("click", function(){ hint(t.id); });
+});
+
+function hint(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var host = document.querySelector("#t"+id+" .hints");
+  if(s.hints >= t.hints.length){
+    if(!host.querySelector(".last")){
+      var w = document.createElement("div");
+      w.className = "hint last"; w.textContent = "Подсказки закончились — нажми «Проверить», решение откроется после второй попытки.";
+      host.appendChild(w);
+    }
+    return;
+  }
+  var h = document.createElement("div");
+  h.className = "hint";
+  h.textContent = "Подсказка " + (s.hints+1) + ": " + t.hints[s.hints];
+  host.appendChild(h);
+  s.hints++;
+}
+
+function check(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var el = document.getElementById("t"+id);
+  var v = document.querySelector(".verdict");
+  v = el.querySelector(".verdict");
+  var given = (t.type === "choice") ? (s.sel || "") :
+              (document.getElementById("in"+id).value || "");
+  if(!given.trim()){ v.className = "verdict bad"; v.textContent = "Введи ответ."; return; }
+  s.given = given; s.tries++;
+  var ok = t.ans.some(function(a){ return same(given, d(a), t.tol); });
+  s.ok = ok; s.done = ok || s.tries >= 2;
+  el.classList.remove("ok","bad");
+  el.classList.add(ok ? "ok" : "bad");
+  v.className = "verdict " + (ok ? "ok" : "bad");
+  if(ok){
+    v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    showSol(el, t);
+  } else if(s.tries === 1){
+    v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+  } else {
+    v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    showSol(el, t);
+  }
+  progress();
+}
+function showSol(el, t){
+  var host = el.querySelector(".sol");
+  if(host.dataset.on) return;
+  host.dataset.on = "1";
+  var det = document.createElement("details");
+  det.open = true;
+  det.innerHTML = "<summary>Решение</summary><div class='step'>"+t.sol+"</div>";
+  host.appendChild(det);
+}
+function progress(){
+  var done = TASKS.filter(function(t){return state[t.id].done;}).length;
+  var ok = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  document.getElementById("progress").textContent =
+    "решено " + done + " из " + TASKS.length + " · верно " + ok;
+}
+document.getElementById("checkall").addEventListener("click", function(){
+  TASKS.forEach(function(t){
+    var s = state[t.id];
+    var given = (t.type === "choice") ? (s.sel || "") : (document.getElementById("in"+t.id).value || "");
+    if(given.trim() && !s.done) check(t.id);
+  });
+  var first = TASKS.find(function(t){ return !state[t.id].done; });
+  var note = first ? "Осталась задача " + first.id + "." : "Все задачи закрыты.";
+  document.getElementById("progress").textContent += " · " + note;
+});
+progress();
+
+/* ---------- фото ---------- */
+var photos = [];
+document.getElementById("photos").addEventListener("change", function(ev){
+  var files = Array.prototype.slice.call(ev.target.files || []);
+  files.forEach(function(f){
+    var r = new FileReader();
+    r.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var m = 1400, w = img.width, h = img.height;
+        if(Math.max(w,h) > m){ var k = m/Math.max(w,h); w = Math.round(w*k); h = Math.round(h*k); }
+        var c = document.createElement("canvas"); c.width = w; c.height = h;
+        c.getContext("2d").drawImage(img, 0, 0, w, h);
+        photos.push({url: c.toDataURL("image/jpeg", 0.7), task: ""});
+        drawThumbs();
+      };
+      img.src = r.result;
+    };
+    r.readAsDataURL(f);
+  });
+  ev.target.value = "";
+});
+function drawThumbs(){
+  var host = document.getElementById("thumbs");
+  host.innerHTML = "";
+  var total = 0;
+  photos.forEach(function(p, i){
+    total += p.url.length * 0.75;
+    var d0 = document.createElement("div"); d0.className = "thumb";
+    var opts = '<option value="">задача…</option>' + TASKS.map(function(t){
+      return '<option value="'+t.id+'"'+(p.task==String(t.id)?" selected":"")+'>№'+t.id+'</option>';
+    }).join("");
+    d0.innerHTML = '<img src="'+p.url+'" alt="фото решения"><button type="button">×</button>'+
+                   '<select>'+opts+'</select>';
+    d0.querySelector("button").addEventListener("click", function(){ photos.splice(i,1); drawThumbs(); });
+    d0.querySelector("select").addEventListener("change", function(ev){ p.task = ev.target.value; });
+    host.appendChild(d0);
+  });
+  var note = document.getElementById("repnote");
+  if(total > 15e6){ note.textContent = "Фото уже больше 15 МБ — отчёт может отправляться долго, лишние лучше удалить."; }
+  else if(photos.length){ note.textContent = "Фото в отчёте: " + photos.length + "."; }
+  else { note.textContent = ""; }
+}
+
+/* ---------- отчёт ---------- */
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+document.getElementById("report").addEventListener("click", function(){
+  var name = (document.getElementById("name").value || "").trim() || "без имени";
+  var now = new Date();
+  var mins = Math.max(1, Math.round((Date.now()-started)/60000));
+  var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  var data = {tип:"дз", предмет:"математика", тема:"Синус, косинус, тангенс, котангенс (9 класс)",
+    ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
+    верно:okN, всего:TASKS.length, задачи:[]};
+  var rows = TASKS.map(function(t){
+    var s = state[t.id];
+    data.задачи.push({n:t.id, условие:t.text.replace(/<[^>]+>/g,""), ответ_ученика:s.given,
+      верный_ответ:t.ans.map(d).join(" или "), верно:s.ok, попыток:s.tries, подсказок:s.hints,
+      уровень:t.lvl});
+    return "<tr><td>"+t.id+"</td><td style='text-align:left'>"+esc(t.text.replace(/<[^>]+>/g,""))+
+      "</td><td>"+esc(s.given||"—")+"</td><td>"+esc(t.ans.map(d).join(" / "))+"</td><td>"+
+      (s.ok?"верно":(s.given?"неверно":"не решал"))+"</td><td>"+s.tries+"</td><td>"+s.hints+"</td></tr>";
+  }).join("");
+  var pics = photos.map(function(p,i){
+    return "<figure><img src='"+p.url+"'><figcaption>Фото "+(i+1)+
+      (p.task?" — к задаче №"+p.task:"")+"</figcaption></figure>";
+  }).join("");
+  var html = "<!doctype html><html lang='ru'><head><meta charset='utf-8'>"+
+    "<meta name='viewport' content='width=device-width,initial-scale=1'>"+
+    "<title>Отчёт — "+esc(name)+" — тригонометрия 9 класс</title><style>"+
+    "body{font:16px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;padding:20px;color:#16181d;background:#fff}"+
+    "h1{font-size:22px;margin:0 0 4px}.m{color:#5b6270;font-size:15px}"+
+    "table{border-collapse:collapse;width:100%;margin-top:14px;font-size:15px}"+
+    "th,td{border:1px solid #dfe3ea;padding:6px 8px;text-align:center}th{background:#eef3fb}"+
+    "figure{margin:14px 0}img{max-width:100%;border:1px solid #dfe3ea;border-radius:8px}"+
+    "figcaption{color:#5b6270;font-size:14px;margin-top:4px}</style></head><body>"+
+    "<h1>Отчёт по домашнему заданию</h1>"+
+    "<div class='m'>Тема: синус, косинус, тангенс, котангенс угла от 0° до 180° · 9 класс</div>"+
+    "<div class='m'>Ученик: <b>"+esc(name)+"</b> · сдано: "+esc(now.toLocaleString("ru-RU"))+
+    " · время работы: около "+mins+" мин</div>"+
+    "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)</h2>"+
+    "<table><tr><th>№</th><th>Задача</th><th>Ответ ученика</th><th>Верный ответ</th>"+
+    "<th>Итог</th><th>Попыток</th><th>Подсказок</th></tr>"+rows+"</table>"+
+    (pics ? "<h2>Фото решений</h2>"+pics : "<p class='m'>Фото решений не прикреплены.</p>")+
+    "<script type='application/json' id='result-data'>"+
+    JSON.stringify(data).replace(/</g,"\\u003c")+"<\/script></body></html>";
+  var blob = new Blob([html], {type:"text/html;charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  var stamp = now.getDate()+"-"+(now.getMonth()+1);
+  a.download = "Отчёт_тригонометрия9_"+name.replace(/\s+/g,"_")+"_"+stamp+".html";
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  document.getElementById("repnote").textContent =
+    "Отчёт скачан. Найди файл в загрузках и отправь преподавателю.";
+});
+</script>
+</body>
+</html>

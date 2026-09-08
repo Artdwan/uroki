@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Урок: синус, косинус, тангенс, котангенс — 9 класс</title>
+<style>
+:root{
+  --ink:#15181e; --muted:#5c6472; --line:#d8dde6; --acc:#2f6bd8; --acc2:#e8f0ff;
+  --ok:#137a45; --ok-bg:#e2f6ec; --bad:#b3261e; --bad-bg:#fdeceb; --warn:#fff4d8;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#eef0f4;color:var(--ink);
+  font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+#fit{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.stage{width:1600px;height:900px;background:#fff;position:relative;transform-origin:center center;
+  box-shadow:0 6px 30px rgba(20,25,40,.14)}
+.slide{position:absolute;inset:0;padding:60px 70px 86px;display:none;flex-direction:column}
+.slide.on{display:flex}
+.kicker{color:var(--muted);font-size:24px;letter-spacing:.02em}
+h1{font-size:62px;line-height:1.1;margin:14px 0 10px}
+h2{font-size:46px;line-height:1.15;margin:0 0 22px}
+p,li{font-size:30px;margin:10px 0}
+.big{font-size:36px}
+.f{font-size:38px}
+.center{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;text-align:center}
+.cols{display:flex;gap:40px;flex:1;align-items:center}
+.col{flex:1;min-width:0}
+.box{border:2px solid var(--line);border-radius:18px;padding:22px 26px;margin:14px 0}
+.box.acc{background:var(--acc2);border-color:#bcd2f7}
+.box.warn{background:var(--warn);border-color:#f0dca6}
+.box.ok{background:var(--ok-bg);border-color:#a9dcc2}
+table{border-collapse:collapse;width:100%;font-size:28px}
+th,td{border:2px solid var(--line);padding:10px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc2)}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.12;margin:0 8px}
+.frac>span{display:block;padding:0 6px}
+.frac>span:first-child{border-bottom:3px solid currentColor}
+.step{font-size:32px;margin:14px 0;opacity:0;transform:translateY(8px);transition:.18s}
+.step.show{opacity:1;transform:none}
+.nav{position:absolute;left:0;right:0;bottom:0;height:66px;display:flex;align-items:center;
+  gap:14px;padding:0 70px;border-top:2px solid var(--line);background:#fff}
+button{font:inherit;font-size:22px;cursor:pointer;border:2px solid var(--line);background:#fff;
+  color:var(--ink);border-radius:12px;padding:9px 18px;min-height:52px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button:active{transform:translateY(1px)}
+.spacer{flex:1}
+.pageno{color:var(--muted);font-size:22px}
+.tag{display:inline-block;font-size:22px;color:var(--muted);border:2px solid var(--line);
+  border-radius:30px;padding:4px 16px;margin-left:12px;vertical-align:middle}
+.switch{position:absolute;top:22px;right:70px;display:flex;gap:0;border:2px solid var(--line);
+  border-radius:12px;overflow:hidden}
+.switch button{border:none;border-radius:0;font-size:20px;min-height:46px;padding:6px 16px;background:#fff}
+.switch button.act{background:var(--acc);color:#fff;font-weight:600}
+input[type=text]{font:inherit;font-size:30px;padding:10px 14px;border:3px solid var(--line);
+  border-radius:12px;width:260px;background:#fff;color:var(--ink)}
+input[type=text].ok{border-color:var(--ok);background:var(--ok-bg)}
+input[type=text].bad{border-color:var(--bad);background:var(--bad-bg)}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+.blank{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:32px;margin:16px 0}
+.blank input{width:220px;font-size:28px}
+.msg{font-size:26px;margin-top:14px;min-height:32px}
+.msg.ok{color:var(--ok);font-weight:600}
+.msg.bad{color:var(--bad);font-weight:600}
+.keys{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.keys button{font-size:22px;min-height:46px;padding:6px 14px}
+.hintbox{background:var(--acc2);border-radius:14px;padding:14px 18px;font-size:26px;margin-top:14px;display:none}
+.hintbox.on{display:block}
+.small{font-size:24px;color:var(--muted)}
+ul{margin:8px 0 0 28px;padding:0}
+li{margin:8px 0}
+</style>
+</head>
+<body>
+<div id="fit"><div class="stage" id="stage">
+
+<!-- 1 -->
+<section class="slide">
+  <div class="center">
+    <div class="kicker">Геометрия · 9 класс</div>
+    <h1>Синус, косинус, тангенс и котангенс<br>угла от 0° до 180°</h1>
+    <p class="big" style="max-width:1100px">Цель урока: научиться находить эти значения для любого угла
+    от 0° до 180°, а не только для острого.</p>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="slide">
+  <h2>Что уже знаем: острый угол в прямоугольном треугольнике</h2>
+  <div class="cols">
+    <div class="col">
+      <svg viewBox="0 0 460 320" width="100%" style="max-height:420px">
+        <polygon points="60,270 400,270 400,70" fill="#e8f0ff" stroke="#2f6bd8" stroke-width="4"/>
+        <rect x="370" y="240" width="30" height="30" fill="none" stroke="#2f6bd8" stroke-width="3"/>
+        <path d="M 130 270 A 70 70 0 0 0 118 236" fill="none" stroke="#15181e" stroke-width="3"/>
+        <text x="140" y="258" font-size="30">α</text>
+        <text x="205" y="300" font-size="26">прилежащий b</text>
+        <text x="410" y="180" font-size="26">a</text>
+        <text x="170" y="150" font-size="26">гипотенуза c</text>
+      </svg>
+    </div>
+    <div class="col">
+      <p class="f">sin α = <span class="frac"><span>a</span><span>c</span></span>&nbsp;&nbsp;
+      cos α = <span class="frac"><span>b</span><span>c</span></span></p>
+      <p class="f">tg α = <span class="frac"><span>a</span><span>b</span></span>&nbsp;&nbsp;
+      ctg α = <span class="frac"><span>b</span><span>a</span></span></p>
+      <div class="box warn"><p>Проблема: в треугольнике не бывает угла 90° и больше.
+      А в задачах тупые углы встречаются постоянно. Нужно определение пошире.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="slide">
+  <h2>Новое определение: единичная полуокружность</h2>
+  <div class="cols">
+    <div class="col">
+      <svg viewBox="0 0 460 280" width="100%" style="max-height:430px">
+        <g fill="none" stroke="#15181e" stroke-width="2.5">
+          <line x1="20" y1="240" x2="440" y2="240"/>
+          <line x1="230" y1="255" x2="230" y2="20"/>
+          <path d="M 410 240 A 180 180 0 0 0 50 240" stroke-width="4"/>
+        </g>
+        <g stroke="#2f6bd8" stroke-width="4" fill="none">
+          <line x1="230" y1="240" x2="140" y2="84"/>
+          <line x1="140" y1="84" x2="140" y2="240" stroke-dasharray="7 6"/>
+          <line x1="140" y1="84" x2="230" y2="84" stroke-dasharray="7 6"/>
+          <path d="M 285 240 A 55 55 0 0 0 262 199" stroke-width="3"/>
+        </g>
+        <circle cx="140" cy="84" r="7" fill="#2f6bd8"/>
+        <g font-size="24">
+          <text x="292" y="232">α</text>
+          <text x="62" y="62">M(x; y)</text>
+          <text x="126" y="266">x</text>
+          <text x="240" y="80">y</text>
+          <text x="416" y="266">1</text>
+          <text x="34" y="266">−1</text>
+          <text x="240" y="32">1</text>
+        </g>
+      </svg>
+    </div>
+    <div class="col">
+      <p>Радиус 1, верхняя половина. Угол α откладываем от луча Ox против часовой стрелки,
+      вторая сторона пересекает полуокружность в точке M(x; y).</p>
+      <div class="box acc">
+        <p class="f">sin α = y &nbsp;&nbsp; cos α = x</p>
+        <p class="f">tg α = <span class="frac"><span>y</span><span>x</span></span> &nbsp;&nbsp;
+        ctg α = <span class="frac"><span>x</span><span>y</span></span></p>
+      </div>
+      <p class="small">Координаты точки — вот и все четыре величины.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="slide">
+  <h2>Старое определение не отменяется</h2>
+  <div class="cols">
+    <div class="col">
+      <svg viewBox="0 0 460 280" width="100%" style="max-height:400px">
+        <g fill="none" stroke="#15181e" stroke-width="2.5">
+          <line x1="20" y1="240" x2="440" y2="240"/>
+          <line x1="230" y1="255" x2="230" y2="20"/>
+          <path d="M 410 240 A 180 180 0 0 0 50 240" stroke-width="4"/>
+        </g>
+        <polygon points="230,240 340,240 340,98" fill="#e8f0ff" stroke="#2f6bd8" stroke-width="4"/>
+        <rect x="322" y="222" width="18" height="18" fill="none" stroke="#2f6bd8" stroke-width="3"/>
+        <circle cx="340" cy="98" r="7" fill="#2f6bd8"/>
+        <g font-size="24">
+          <text x="262" y="232">α</text>
+          <text x="350" y="88">M(x; y)</text>
+          <text x="276" y="268">x</text>
+          <text x="352" y="180">y</text>
+          <text x="248" y="150">1</text>
+        </g>
+      </svg>
+    </div>
+    <div class="col">
+      <p>Для острого угла получается прямоугольный треугольник с гипотенузой 1:</p>
+      <p class="f">sin α = <span class="frac"><span>y</span><span>1</span></span> = y &nbsp;·&nbsp;
+      cos α = <span class="frac"><span>x</span><span>1</span></span> = x</p>
+      <div class="box ok"><p>То же самое, что и раньше. Новое определение просто работает ещё и для
+      прямого и тупого угла.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="slide">
+  <h2>Знаки: главное следствие</h2>
+  <p>Точка M всегда в верхней полуплоскости, поэтому <b>y ≥ 0</b> — синус неотрицателен на всём промежутке.
+  А абсцисса x при переходе через 90° меняет знак с плюса на минус.</p>
+  <table style="margin-top:20px">
+    <tr><th>угол</th><th>sin α</th><th>cos α</th><th>tg α</th><th>ctg α</th></tr>
+    <tr><td>0° &lt; α &lt; 90°</td><td>+</td><td>+</td><td>+</td><td>+</td></tr>
+    <tr><td>90° &lt; α &lt; 180°</td><td>+</td><td>−</td><td>−</td><td>−</td></tr>
+  </table>
+  <div class="box warn"><p>Если в ответе для тупого угла косинус получился положительным — ошибка уже сделана,
+  дальше можно не считать.</p></div>
+</section>
+
+<!-- 6 -->
+<section class="slide">
+  <h2>Особые углы: 0°, 90°, 180°</h2>
+  <div class="cols">
+    <div class="col">
+      <table>
+        <tr><th>α</th><th>x</th><th>y</th></tr>
+        <tr><td>0°</td><td>1</td><td>0</td></tr>
+        <tr><td>90°</td><td>0</td><td>1</td></tr>
+        <tr><td>180°</td><td>−1</td><td>0</td></tr>
+      </table>
+      <p class="small" style="margin-top:14px">Это просто координаты трёх точек полуокружности:
+      правый конец, верх, левый конец.</p>
+    </div>
+    <div class="col">
+      <div class="box"><p class="f">tg α = y/x не существует при x = 0 → <b>tg 90°</b></p></div>
+      <div class="box"><p class="f">ctg α = x/y не существует при y = 0 → <b>ctg 0°</b> и <b>ctg 180°</b></p></div>
+      <div class="box warn"><p>Ноль в знаменателе — это «не существует», а не «равно нулю».
+      Частая ошибка в контрольных.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="slide">
+  <h2>Таблица значений</h2>
+  <table>
+    <tr><th>α</th><th>0°</th><th>30°</th><th>45°</th><th>60°</th><th>90°</th><th>120°</th><th>135°</th><th>150°</th><th>180°</th></tr>
+    <tr><th>sin</th><td>0</td><td>0,5</td><td>√2/2</td><td>√3/2</td><td>1</td><td>√3/2</td><td>√2/2</td><td>0,5</td><td>0</td></tr>
+    <tr><th>cos</th><td>1</td><td>√3/2</td><td>√2/2</td><td>0,5</td><td>0</td><td>−0,5</td><td>−√2/2</td><td>−√3/2</td><td>−1</td></tr>
+    <tr><th>tg</th><td>0</td><td>√3/3</td><td>1</td><td>√3</td><td>—</td><td>−√3</td><td>−1</td><td>−√3/3</td><td>0</td></tr>
+    <tr><th>ctg</th><td>—</td><td>√3</td><td>1</td><td>√3/3</td><td>0</td><td>−√3/3</td><td>−1</td><td>−√3</td><td>—</td></tr>
+  </table>
+  <p class="small" style="margin-top:18px">Правая половина таблицы получается из левой по формулам приведения —
+  запоминать её отдельно не нужно.</p>
+</section>
+
+<!-- 8 -->
+<section class="slide">
+  <h2>Формулы приведения: 180° − α</h2>
+  <div class="cols">
+    <div class="col">
+      <svg viewBox="0 0 460 270" width="100%" style="max-height:380px">
+        <g fill="none" stroke="#15181e" stroke-width="2.5">
+          <line x1="20" y1="230" x2="440" y2="230"/>
+          <line x1="230" y1="245" x2="230" y2="20"/>
+          <path d="M 400 230 A 170 170 0 0 0 60 230" stroke-width="4"/>
+        </g>
+        <g stroke="#2f6bd8" stroke-width="4"><line x1="230" y1="230" x2="350" y2="110"/></g>
+        <g stroke="#b3261e" stroke-width="4"><line x1="230" y1="230" x2="110" y2="110"/></g>
+        <circle cx="350" cy="110" r="7" fill="#2f6bd8"/>
+        <circle cx="110" cy="110" r="7" fill="#b3261e"/>
+        <line x1="110" y1="110" x2="350" y2="110" stroke="#5c6472" stroke-width="2.5" stroke-dasharray="8 6"/>
+        <g font-size="24">
+          <text x="356" y="100" fill="#2f6bd8">(x; y)</text>
+          <text x="60" y="100" fill="#b3261e">(−x; y)</text>
+          <text x="266" y="222">α</text>
+          <text x="150" y="222">180°−α</text>
+        </g>
+      </svg>
+      <p class="small">Точки симметричны относительно оси Oy: ордината та же, абсцисса меняет знак.</p>
+    </div>
+    <div class="col">
+      <div class="box acc">
+        <p class="f">sin(180° − α) = sin α</p>
+        <p class="f">cos(180° − α) = −cos α</p>
+        <p class="f">tg(180° − α) = −tg α</p>
+        <p class="f">ctg(180° − α) = −ctg α</p>
+      </div>
+      <p>Синус не меняется, остальные три меняют знак — потому что все они содержат x.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="slide">
+  <h2>Основные тождества</h2>
+  <div class="box acc"><p class="f" style="text-align:center">sin²α + cos²α = 1</p></div>
+  <div class="cols">
+    <div class="col"><div class="box"><p class="f">tg α = <span class="frac"><span>sin α</span><span>cos α</span></span></p></div></div>
+    <div class="col"><div class="box"><p class="f">ctg α = <span class="frac"><span>cos α</span><span>sin α</span></span></p></div></div>
+    <div class="col"><div class="box"><p class="f">tg α · ctg α = 1</p></div></div>
+  </div>
+  <div class="box warn"><p>Из тождества всегда получаются два знака корня. Нужный выбирается по условию про угол —
+  это отдельный шаг решения, а не мелочь.</p></div>
+</section>
+
+<!-- 10 -->
+<section class="slide" data-steps="1">
+  <h2>Пример 1. Вычислить cos 135° и sin 135°</h2>
+  <div class="step">1. Угол тупой — записываем его как 180° − 45°.</div>
+  <div class="step">2. sin 135° = sin(180° − 45°) = sin 45° = √2/2.</div>
+  <div class="step">3. cos 135° = cos(180° − 45°) = −cos 45° = −√2/2.</div>
+  <div class="step"><b>Ответ:</b> sin 135° = √2/2, cos 135° = −√2/2.</div>
+  <div class="step"><div class="box warn"><p>Синус остался положительным, косинус сменил знак —
+  вот и вся разница между острым и тупым углом.</p></div></div>
+</section>
+
+<!-- 11 -->
+<section class="slide" data-steps="1">
+  <h2>Пример 2. sin α = 0,8 и 90° &lt; α &lt; 180°. Найти cos α, tg α, ctg α</h2>
+  <div class="step">1. sin²α + cos²α = 1, значит cos²α = 1 − 0,64 = 0,36.</div>
+  <div class="step">2. Отсюда cos α = ±0,6 — два варианта, выбираем по условию.</div>
+  <div class="step">3. Угол тупой ⇒ косинус отрицателен ⇒ cos α = −0,6.</div>
+  <div class="step">4. tg α = sin α : cos α = 0,8 : (−0,6) = −4/3.</div>
+  <div class="step">5. ctg α = cos α : sin α = −0,6 : 0,8 = −0,75.</div>
+  <div class="step"><div class="box ok"><p>Проверка: tg α · ctg α = (−4/3)·(−0,75) = 1. Сходится.</p></div></div>
+</section>
+
+<!-- 12..15: задания -->
+<section class="slide task" data-task="0"><h2>Задание 1<span class="tag">база</span></h2></section>
+<section class="slide task" data-task="1"><h2>Задание 2<span class="tag">база</span></h2></section>
+<section class="slide task" data-task="2"><h2>Задание 3<span class="tag">база</span></h2></section>
+<section class="slide task" data-task="3"><h2>Задание 4<span class="tag">повышенный</span></h2></section>
+
+<!-- 16 -->
+<section class="slide">
+  <h2>Итог урока</h2>
+  <div class="cols">
+    <div class="col">
+      <div class="box acc"><p class="f">sin α = y, cos α = x</p>
+      <p class="f">tg α = y/x, ctg α = x/y</p></div>
+      <div class="box"><p>sin α ≥ 0 всегда.<br>При 90° &lt; α &lt; 180° cos, tg, ctg — отрицательные.</p></div>
+    </div>
+    <div class="col">
+      <div class="box"><p>sin(180°−α) = sin α<br>cos(180°−α) = −cos α<br>
+      tg(180°−α) = −tg α<br>ctg(180°−α) = −ctg α</p></div>
+      <div class="box"><p>Не существуют: tg 90°, ctg 0°, ctg 180°.</p></div>
+    </div>
+  </div>
+  <div class="box warn"><p><b>Порядок работы с тупым углом:</b> записать как 180° − острый →
+  применить формулу приведения → взять значение по таблице → поставить знак.</p></div>
+</section>
+
+<!-- 17 -->
+<section class="slide">
+  <div class="center">
+    <h2>Домашнее задание</h2>
+    <p class="big" style="max-width:1150px">Файл «Синус, косинус, тангенс, котангенс — 9 класс»:
+    теория, 4 разобранных примера, шпаргалка на печать и 12 задач с проверкой ответа.</p>
+    <p class="big">Решаешь → вводишь ответы → фотографируешь тетрадь → скачиваешь отчёт → присылаешь мне.</p>
+    <p class="small">Подсказки в файле открываются по кнопке и ошибкой не считаются.</p>
+  </div>
+</section>
+
+<div class="nav">
+  <button id="prev">← Назад</button>
+  <button class="pri" id="next">Вперёд →</button>
+  <button id="step" style="display:none">Следующий шаг</button>
+  <div class="spacer"></div>
+  <div class="pageno"><span id="cur">1</span> / <span id="tot">17</span></div>
+</div>
+
+<div class="switch" id="switch" style="display:none">
+  <button data-m="blank">С пропусками</button>
+  <button data-m="solo" class="act">Самостоятельно</button>
+</div>
+
+</div></div>
+
+<script>
+"use strict";
+function e(s){return btoa(unescape(encodeURIComponent(s)));}
+function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return s;}}
+
+/* ---------- задания урока: одни данные для обоих вариантов ---------- */
+var TASKS = [
+ { q:"Вычисли cos 150°.",
+   ans:[e("-√3/2")],
+   hint:"150° = 180° − 30°, а косинус при приведении меняет знак.",
+   steps:[
+     {t:"cos 150° = cos(180° − ___°)", a:[e("30")]},
+     {t:"cos(180° − 30°) = ___", a:[e("-cos30")], h:"Синус не менялся бы, а косинус меняет знак."},
+     {t:"cos 30° = ___", a:[e("√3/2")]},
+     {t:"Ответ: cos 150° = ___", a:[e("-√3/2")]}
+   ]},
+ { q:"sin α = 12/13, причём 90° &lt; α &lt; 180°. Найди cos α.",
+   ans:[e("-5/13"),e("-0,385")],
+   hint:"Основное тождество даёт два знака, нужный выбирается по условию про угол.",
+   steps:[
+     {t:"cos²α = 1 − ___", a:[e("144/169")], h:"Это (12/13)²."},
+     {t:"cos²α = ___", a:[e("25/169")]},
+     {t:"Угол тупой, значит знак косинуса ___", a:[e("минус"),e("-"),e("отрицательный")]},
+     {t:"Ответ: cos α = ___", a:[e("-5/13"),e("-0,385")]}
+   ]},
+ { q:"Вычисли 4·sin 150° + 2·cos 120°.",
+   ans:[e("1")],
+   hint:"Приведи оба угла к острым и подставь табличные значения.",
+   steps:[
+     {t:"sin 150° = ___", a:[e("0,5")]},
+     {t:"cos 120° = ___", a:[e("-0,5")], h:"Косинус тупого угла отрицателен."},
+     {t:"4·0,5 + 2·(−0,5) = ___", a:[e("1")]}
+   ]},
+ { q:"Вычисли tg 120°.",
+   ans:[e("-√3")],
+   hint:"tg(180° − α) = −tg α.",
+   steps:[
+     {t:"120° = 180° − ___°", a:[e("60")]},
+     {t:"tg(180° − 60°) = ___", a:[e("-tg60")], h:"Тангенс меняет знак."},
+     {t:"tg 60° = ___", a:[e("√3")]},
+     {t:"Ответ: tg 120° = ___", a:[e("-√3")]}
+   ]}
+];
+
+/* ---------- разбор ответа ---------- */
+function norm(s){
+  return String(s).toLowerCase().replace(/\s+/g,"")
+    .replace(/[–—−]/g,"-")
+    .replace(/[×·]/g,"*")
+    .replace(/[,]/g,".").replace(/°/g,"")
+    .replace(/^(ответ:?|x=|y=|α=|a=)/,"");
+}
+function toNum(str){
+  var t = norm(str);
+  if(!t) return NaN;
+  t = t.replace(/√/g,"sqrt").replace(/π/g,"pi");
+  t = t.replace(/sqrt(\d+(?:\.\d+)?)/g,"sqrt($1)");
+  t = t.replace(/(\d)sqrt/g,"$1*sqrt");
+  t = t.replace(/(\d)pi/g,"$1*pi");
+  t = t.replace(/(\d)\(/g,"$1*(").replace(/\)(\d)/g,")*$1").replace(/\)\(/g,")*(");
+  if(!/^[-+*/().0-9a-z]+$/.test(t)) return NaN;
+  if(t.replace(/sqrt|pi/g,"").match(/[a-z]/)) return NaN;
+  try{
+    var v = new Function("sqrt","pi","return ("+t+");")(Math.sqrt, Math.PI);
+    return (typeof v === "number" && isFinite(v)) ? v : NaN;
+  }catch(err){ return NaN; }
+}
+function same(given, right){
+  var a = toNum(given), b = toNum(right);
+  if(!isNaN(a) && !isNaN(b)) return Math.abs(a-b) <= Math.max(0.01, Math.abs(b)*0.01);
+  return norm(given) === norm(right);
+}
+function match(given, list){ return list.some(function(x){ return same(given, d(x)); }); }
+
+/* ---------- сборка слайдов с заданиями ---------- */
+var mode = "solo";
+var KEYS = ["√","²","³","/","−","("," )"];
+function buildTask(sec){
+  var t = TASKS[+sec.dataset.task];
+  var host = sec.querySelector(".body");
+  if(!host){ host = document.createElement("div"); host.className = "body"; sec.appendChild(host); }
+  host.innerHTML = "";
+  var q = document.createElement("p"); q.className = "big"; q.innerHTML = t.q;
+  host.appendChild(q);
+
+  if(mode === "solo"){
+    var wrap = document.createElement("div");
+    wrap.innerHTML =
+      '<div class="keys">' + KEYS.map(function(k){return '<button type="button" data-k="'+k.trim()+'">'+k.trim()+'</button>';}).join("") + '</div>' +
+      '<div class="blank"><span>Ответ:</span><input type="text" autocapitalize="off" autocorrect="off" ' +
+      'autocomplete="off" spellcheck="false"><button class="pri chk">Проверить</button>' +
+      '<button class="hnt">Подсказка</button></div>' +
+      '<div class="hintbox">' + t.hint + '</div><div class="msg"></div>';
+    host.appendChild(wrap);
+    bindKeys(wrap);
+    wrap.querySelector(".hnt").onclick = function(){ wrap.querySelector(".hintbox").classList.add("on"); };
+    var inp = wrap.querySelector("input"), msg = wrap.querySelector(".msg");
+    function go(){
+      var v = inp.value.trim();
+      if(!v){ msg.className = "msg bad"; msg.textContent = "Введи ответ."; return; }
+      var ok = match(v, t.ans);
+      inp.className = ok ? "ok" : "bad";
+      msg.className = "msg " + (ok ? "ok" : "bad");
+      msg.textContent = ok ? "Верно." : "Пока нет. Открой подсказку и проверь знак.";
+    }
+    wrap.querySelector(".chk").onclick = go;
+    inp.addEventListener("keydown", function(ev){ if(ev.key === "Enter"){ ev.preventDefault(); go(); } });
+  } else {
+    var box = document.createElement("div");
+    box.innerHTML = '<div class="keys">' + KEYS.map(function(k){return '<button type="button" data-k="'+k.trim()+'">'+k.trim()+'</button>';}).join("") + '</div>';
+    t.steps.forEach(function(s, i){
+      var row = document.createElement("div");
+      row.className = "blank";
+      var parts = s.t.split("___");
+      row.innerHTML = '<span>' + parts[0] + '</span>' +
+        '<input type="text" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false">' +
+        '<span>' + (parts[1] || "") + '</span>' +
+        '<button class="chk">Проверить шаг</button>' +
+        (s.h ? '<button class="hnt">?</button>' : '') +
+        '<span class="msg" style="margin:0"></span>';
+      box.appendChild(row);
+      var inp = row.querySelector("input"), msg = row.querySelector(".msg");
+      function go(){
+        var v = inp.value.trim();
+        if(!v){ msg.className = "msg bad"; msg.textContent = "пусто"; return; }
+        var ok = match(v, s.a);
+        inp.className = ok ? "ok" : "bad";
+        msg.className = "msg " + (ok ? "ok" : "bad");
+        msg.textContent = ok ? "верно" : "не то";
+      }
+      row.querySelector(".chk").onclick = go;
+      if(s.h) row.querySelector(".hnt").onclick = function(){
+        msg.className = "msg"; msg.textContent = s.h;
+      };
+      inp.addEventListener("keydown", function(ev){ if(ev.key === "Enter"){ ev.preventDefault(); go(); } });
+    });
+    var all = document.createElement("div");
+    all.innerHTML = '<button class="pri" id="allbtn">Проверить все шаги</button><span class="msg" style="margin-left:16px"></span>';
+    box.appendChild(all);
+    all.querySelector("button").onclick = function(){
+      var rows = box.querySelectorAll(".blank"), left = 0;
+      rows.forEach(function(r){ r.querySelector(".chk").click();
+        if(!r.querySelector("input").classList.contains("ok")) left++; });
+      var m = all.querySelector(".msg");
+      m.className = "msg " + (left ? "bad" : "ok");
+      m.textContent = left ? ("осталось шагов: " + left) : "все шаги верны";
+    };
+    host.appendChild(box);
+    bindKeys(box);
+  }
+}
+function bindKeys(scope){
+  var last = null;
+  scope.querySelectorAll("input").forEach(function(x){
+    x.addEventListener("focus", function(){ last = x; });
+  });
+  scope.querySelectorAll(".keys button").forEach(function(b){
+    b.onclick = function(){
+      var inp = last || scope.querySelector("input");
+      if(!inp) return;
+      var k = b.dataset.k === "−" ? "-" : b.dataset.k;
+      var s = inp.selectionStart != null ? inp.selectionStart : inp.value.length;
+      inp.value = inp.value.slice(0,s) + k + inp.value.slice(inp.selectionEnd != null ? inp.selectionEnd : s);
+      inp.focus(); inp.setSelectionRange(s+k.length, s+k.length);
+    };
+  });
+}
+
+/* ---------- навигация ---------- */
+var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
+var i = 0;
+document.getElementById("tot").textContent = slides.length;
+function show(n){
+  i = Math.max(0, Math.min(slides.length-1, n));
+  slides.forEach(function(s,k){ s.classList.toggle("on", k === i); });
+  document.getElementById("cur").textContent = i+1;
+  var sec = slides[i];
+  var isTask = sec.classList.contains("task");
+  document.getElementById("switch").style.display = isTask ? "flex" : "none";
+  if(isTask && !sec.querySelector(".body")) buildTask(sec);
+  var hasSteps = sec.dataset.steps === "1";
+  document.getElementById("step").style.display = hasSteps ? "inline-block" : "none";
+  if(hasSteps && !sec.dataset.init){
+    sec.dataset.init = "1"; sec.dataset.shown = "0";
+  }
+}
+document.getElementById("next").onclick = function(){ show(i+1); };
+document.getElementById("prev").onclick = function(){ show(i-1); };
+document.getElementById("step").onclick = function(){
+  var sec = slides[i], steps = sec.querySelectorAll(".step");
+  var n = +(sec.dataset.shown || 0);
+  if(n < steps.length){ steps[n].classList.add("show"); sec.dataset.shown = n+1; }
+};
+document.addEventListener("keydown", function(ev){
+  if(ev.key === "ArrowRight" || ev.key === "PageDown"){ show(i+1); }
+  else if(ev.key === "ArrowLeft" || ev.key === "PageUp"){ show(i-1); }
+  else if(ev.key === " " && document.activeElement.tagName !== "INPUT"){
+    ev.preventDefault();
+    var b = document.getElementById("step");
+    if(b.style.display !== "none") b.click(); else show(i+1);
+  }
+});
+document.querySelectorAll("#switch button").forEach(function(b){
+  b.onclick = function(){
+    mode = b.dataset.m;
+    document.querySelectorAll("#switch button").forEach(function(x){ x.classList.toggle("act", x === b); });
+    document.querySelectorAll(".slide.task").forEach(function(s){
+      var body = s.querySelector(".body"); if(body) body.remove();
+    });
+    buildTask(slides[i]);
+  };
+});
+
+/* свайп на телефоне */
+var x0 = null;
+document.addEventListener("touchstart", function(ev){ x0 = ev.touches[0].clientX; }, {passive:true});
+document.addEventListener("touchend", function(ev){
+  if(x0 === null) return;
+  var dx = ev.changedTouches[0].clientX - x0;
+  if(Math.abs(dx) > 70){ show(dx < 0 ? i+1 : i-1); }
+  x0 = null;
+}, {passive:true});
+
+/* масштабирование под экран или под окно вставки на доске */
+function fit(){
+  var s = Math.min(window.innerWidth/1600, window.innerHeight/900);
+  document.getElementById("stage").style.transform = "scale(" + s + ")";
+}
+window.addEventListener("resize", fit);
+fit();
+show(0);
+
+/* для экспорта в PNG/PDF */
+window.__goto = function(n, m){
+  if(m && m !== mode){
+    var b = document.querySelector('#switch button[data-m="'+m+'"]');
+    mode = m;
+    document.querySelectorAll("#switch button").forEach(function(x){ x.classList.toggle("act", x === b); });
+    document.querySelectorAll(".slide.task").forEach(function(s){
+      var body = s.querySelector(".body"); if(body) body.remove();
+    });
+  }
+  show(n);
+  var sec = slides[n];
+  if(sec.dataset.steps === "1"){
+    sec.querySelectorAll(".step").forEach(function(s){ s.classList.add("show"); });
+    sec.dataset.shown = sec.querySelectorAll(".step").length;
+  }
+  return slides.length;
+};
+</script>
+</body>
+</html>
