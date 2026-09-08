@@ -1,0 +1,1020 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Десятичные дроби — 5 класс</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:800px;margin:0 auto;padding:16px 14px 60px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+.f-formula{font-size:19px}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.step{margin:6px 0}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.fig{margin:12px 0;text-align:center}
+.fig svg{width:100%;max-width:520px;height:auto;border-radius:12px}
+.small{color:var(--muted);font-size:15px}
+.hint.last{background:var(--warn-soft)}
+.sol .step{margin:7px 0}
+.ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;background:var(--bg)}
+.ex h3{margin-top:0}
+.ex .q{font-weight:600}
+.wrap-t th,.wrap-t td{white-space:normal;text-align:left;vertical-align:top}
+.wrap-t th:first-child{white-space:nowrap}
+.fx{display:block;background:var(--acc-soft);border:1px solid var(--line);border-radius:10px;
+  padding:11px 13px;margin:12px 0;text-align:center;font-size:22px;line-height:1.6;
+  font-weight:600;overflow-x:auto}
+.sol .fx,.ex .fx{font-size:20px;margin:9px 0}
+.fx .fi{display:inline-block;white-space:nowrap;margin:3px 14px}
+.f-formula{font-size:20px}
+.tool{border:1px solid var(--line);border-radius:12px;padding:14px;margin:14px 0;background:var(--bg)}
+.tool input[type=text],.tool select{font:inherit;font-size:18px;padding:8px 10px;border-radius:9px;
+  border:1.5px solid var(--line);background:var(--card);color:var(--ink);max-width:190px}
+.trow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:10px}
+.trow label{color:var(--muted);font-size:15px}
+.rzt{border-collapse:collapse;margin:6px auto;font-size:16px}
+.rzt th,.rzt td{border:1px solid var(--line);padding:5px 7px;text-align:center;white-space:nowrap}
+.rzt th{background:var(--acc-soft);font-size:13px;font-weight:600;line-height:1.2}
+.rzt td{font-size:22px;font-weight:700;height:44px;min-width:34px}
+.rzt .cma{background:var(--warn-soft);font-size:22px;font-weight:700}
+.rzt .ip{background:var(--card)}
+.rzt .fp{background:#eef6ff}
+@media (prefers-color-scheme:dark){.rzt .fp{background:#1b2431}}
+.tout{margin-top:10px;font-size:17px;text-align:center}
+.tout b{font-size:19px}
+.tout .bad{color:var(--bad);font-weight:600}
+.num{font-size:26px;font-weight:700;letter-spacing:1px;text-align:center;margin:8px 0}
+.num .keep{color:var(--ink)}
+.num .dec{background:var(--warn-soft);border-radius:5px;padding:0 3px;color:var(--bad)}
+.num .drop{color:var(--muted)}
+.res{font-size:24px;font-weight:700;text-align:center;color:var(--ok);margin-top:6px}
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+@media print{
+  body{background:#fff}
+  .wrap>*{display:none !important}
+  .wrap>.sheet{display:block !important;border:none;margin:0;padding:0}
+  .sheet{font-size:13px}
+  .sheet h2{font-size:18px}
+  .sheet th,.sheet td{padding:4px 5px;font-size:12px}
+  @page{size:A4;margin:12mm}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card top">
+  <h1>Десятичные дроби</h1>
+  <div class="meta">Математика, 5 класс · §1 «Десятичная запись дробей. Разряды» и §2 «Сравнение и округление» · 14 задач</div>
+  <label class="f" for="name">Имя и фамилия</label>
+  <input type="text" id="name" placeholder="напиши, как в журнале" autocapitalize="words" spellcheck="false">
+  <div class="note" style="margin-top:14px">
+    Как работать: прочитай теорию — там два помощника, в которых можно вписать своё число и посмотреть,
+    что получится. Потом разбери примеры и реши задачи. У каждой задачи есть три подсказки,
+    они открываются по одной; открывать их не стыдно. Решения записывай в тетрадь, потом сфотографируй,
+    приложи фото внизу страницы и нажми «Отправить на проверку».
+  </div>
+</div>
+
+<div class="card">
+  <h2>Теория. §1. Десятичная запись и разряды</h2>
+
+  <h3>1. Откуда берутся десятичные дроби</h3>
+  <p>Когда одни единицы измерения выражают через другие, всё время получаются дроби со знаменателем
+  10, 100, 1000. Например, ширина ленты 3 см, а нужны метры:</p>
+  <div class="fx">3 см = <span class="frac"><span>3</span><span>100</span></span> м</div>
+  <p><b>Десятичные дроби</b> — это дроби, у которых знаменатель равен 10, 100, 1000 и так далее.
+  Для них придумали короткую запись без знаменателя — <b>десятичную</b>.</p>
+
+  <h3>2. Как записать число десятичной дробью</h3>
+  <div class="note"><b>Алгоритм.</b><br>
+  1. Записать целую часть и поставить после неё запятую.<br>
+  2. После запятой записать числитель дробной части <b>столькими цифрами, сколько нулей в знаменателе</b>.</div>
+  <p>Второй пункт — самый важный. Возьмём число 5 и 7/100. В числителе одна цифра (7), а в знаменателе
+  два нуля. Значит после запятой должно быть <b>две</b> цифры, и не хватающую позицию заполняем нулём:</p>
+  <div class="fx"><span class="fi">2 <span class="frac"><span>3</span><span>10</span></span> = 2,3</span><span class="fi">5 <span class="frac"><span>7</span><span>100</span></span> = 5,07</span></div>
+  <div class="note">Если целая часть равна нулю, её всё равно записывают: сначала нуль, потом запятая,
+  потом дробная часть. Например, 37/100 = <b>0,37</b>.</div>
+
+  <h3>3. Разряды — попробуй сам</h3>
+  <p>У десятичной дроби, как и у натурального числа, есть разряды. После запятой первый разряд —
+  <b>десятые</b>, затем <b>сотые</b>, <b>тысячные</b>, <b>десятитысячные</b>, <b>стотысячные</b>.
+  Единица каждого следующего разряда в 10 раз меньше предыдущей. Цифры после запятой называют
+  ещё <b>десятичными знаками</b>.</p>
+  <p>Впиши в окошко любую дробь и посмотри, какая цифра в каком разряде стоит и как число читается.</p>
+  
+<div class="tool">
+  <div class="trow">
+    <label for="rzin">Впиши десятичную дробь:</label>
+    <input type="text" id="rzin" value="3,257" inputmode="decimal" autocomplete="off">
+  </div>
+  <div class="scroll"><div id="rztab"></div></div>
+  <div class="tout" id="rzout"></div>
+</div>
+
+
+  <h3>4. Как прочитать десятичную дробь</h3>
+  <div class="note"><b>Алгоритм.</b><br>
+  1. Прочитать целую часть, как читают натуральные числа.<br>
+  2. Назвать разряды от десятых до последнего записанного разряда.<br>
+  3. Прочитать дробную часть как натуральное число и назвать последний разряд.</div>
+  <p>Например, 3,257: целая часть — три; разряды — десятые, сотые, тысячные; дробная часть —
+  двести пятьдесят семь. Читаем: <b>три целых двести пятьдесят семь тысячных</b>.</p>
+
+  <h3>5. Единицы измерения</h3>
+  <p>Почти все задачи на перевод единиц решаются одинаково: смотрим, сколько мелких единиц в крупной,
+  и это число становится знаменателем.</p>
+  <div class="scroll"><table class="wrap-t">
+    <tr><th>перевод</th><th>сколько в одной</th><th>знаков после запятой</th><th>пример</th></tr>
+    <tr><th>см → м</th><td>100</td><td>2</td><td>4 м 8 см = 4,08 м</td></tr>
+    <tr><th>дм → м</th><td>10</td><td>1</td><td>19 дм = 1,9 м</td></tr>
+    <tr><th>г → кг</th><td>1000</td><td>3</td><td>2 кг 657 г = 2,657 кг</td></tr>
+    <tr><th>кг → ц</th><td>100</td><td>2</td><td>12 ц 5 кг = 12,05 ц</td></tr>
+    <tr><th>см² → дм²</th><td>100</td><td>2</td><td>8 дм² 25 см² = 8,25 дм²</td></tr>
+  </table></div>
+</div>
+
+<div class="card">
+  <h2>Теория. §2. Сравнение и округление</h2>
+
+  <h3>6. Нули в конце ничего не меняют</h3>
+  <div class="note">Если в конце записи десятичной дроби <b>приписать или отбросить</b> один или несколько
+  нулей, получится <b>равная</b> ей дробь.</div>
+  <p>Проверим: 0,3 = 3/10, а 0,30 = 30/100. Но 3/10 = 30/100, значит и 0,3 = 0,30.</p>
+  <div class="fx">0,3 = 0,30 = 0,300, &nbsp;&nbsp; но 0,3 ≠ 0,03</div>
+  <p class="small">Нули можно трогать только <b>в конце</b>. Нуль сразу после запятой отбрасывать нельзя —
+  он стоит в разряде десятых и сдвигает все остальные цифры.</p>
+
+  <h3>7. Правило сравнения</h3>
+  <div class="note">
+  1. Из двух дробей с <b>разными целыми частями</b> больше та, у которой целая часть больше.<br>
+  2. Если целые части равны — <b>уравниваем число знаков после запятой</b>, приписывая нули справа,
+  и сравниваем дробные части как натуральные числа.</div>
+  <div class="fx">3,6 &gt; 3,5679, потому что 3,6000 &gt; 3,5679</div>
+  <p class="small">Главное не путать: длинная запись не значит большое число. У 3,5679 цифр больше,
+  а само число меньше.</p>
+
+  <h3>8. Округление — попробуй сам</h3>
+  <div class="note">Чтобы округлить дробь до какого-то разряда, надо посмотреть на <b>первую отброшенную
+  цифру</b>. Если она <b>меньше 5</b> — разряд не меняем. Если <b>5 или больше</b> — увеличиваем разряд
+  на единицу. Всё, что правее, отбрасываем.</div>
+  <p>Впиши число, выбери разряд — и посмотри, какая цифра всё решает.</p>
+  
+<div class="tool">
+  <div class="trow">
+    <label for="okin">Число:</label>
+    <input type="text" id="okin" value="8,647" inputmode="decimal" autocomplete="off" style="max-width:150px">
+    <label for="okr">округлить до:</label>
+    <select id="okr">
+      <option value="4">десятитысячных</option>
+      <option value="3">тысячных</option>
+      <option value="2" selected>сотых</option>
+      <option value="1">десятых</option>
+      <option value="0">единиц</option>
+      <option value="-1">десятков</option>
+      <option value="-2">сотен</option>
+      <option value="-3">тысяч</option>
+      <option value="-4">десятков тысяч</option>
+    </select>
+  </div>
+  <div class="num" id="oknum"></div>
+  <div class="tout" id="okout"></div>
+  <div class="res" id="okres"></div>
+</div>
+
+  <p>Три случая, которые стоит запомнить отдельно:</p>
+  <div class="scroll"><table class="wrap-t">
+    <tr><th>случай</th><th>что делаем</th><th>пример</th></tr>
+    <tr><th>обычный</th><td>отбрасываем всё после нужного разряда</td>
+        <td>23,54608 ≈ 23,55 (до сотых)</td></tr>
+    <tr><th>получился нуль</th><td>нуль <b>не отбрасываем</b> — он показывает, до какого разряда округляли</td>
+        <td>4,503 ≈ 4,50 (до сотых)</td></tr>
+    <tr><th>разряд выше единиц</th><td>дробную часть отбрасываем целиком, а в целой части на месте
+        отброшенных разрядов <b>ставим нули</b></td>
+        <td>2423,54608 ≈ 2400 (до сотен)</td></tr>
+  </table></div>
+</div>
+
+<div class="card">
+  <h2>Разобранные примеры</h2>
+  <p class="meta">Шесть примеров закрывают все типы задач этой домашки. Сначала попробуй сам,
+  потом открой решение и сверься.</p>
+
+  <div class="ex">
+  <h3>Пример 1. Записать десятичной дробью</h3>
+  <p class="q">Запишите десятичной дробью: 2 3/10 и 5 7/100.</p>
+  <details><summary>Показать решение</summary>
+    <div class="step">1. Для 2 3/10: пишем целую часть 2, ставим запятую. В знаменателе один нуль —
+    значит после запятой одна цифра. Числитель 3 — как раз одна цифра.</div>
+    <div class="fx">2 3/10 = 2,3</div>
+    <div class="step">2. Для 5 7/100: пишем 5 и запятую. В знаменателе два нуля — после запятой нужны
+    две цифры, а в числителе всего одна (7).</div>
+    <div class="step">3. Дописываем нуль впереди числителя: 7 → 07.</div>
+    <div class="fx">5 7/100 = 5 07/100 = 5,07</div>
+    <div class="step"><b>Ответ:</b> 2,3 и 5,07.</div>
+    <div class="note">Если бы записали 5,7 — получилось бы 5 целых 7 <i>десятых</i>, а это в десять раз
+    больше нужного.</div>
+  </details>
+  </div>
+
+  <div class="ex">
+  <h3>Пример 2. Прочитать десятичную дробь</h3>
+  <p class="q">Прочитайте дробь 3,257 и назовите все разряды.</p>
+  <details><summary>Показать решение</summary>
+    <div class="step">1. Целая часть — <b>три</b>.</div>
+    <div class="step">2. Называем разряды дробной части по порядку: 2 — десятые, 5 — сотые, 7 — тысячные.
+    Последний записанный разряд — тысячные.</div>
+    <div class="step">3. Читаем дробную часть как натуральное число: 257 — двести пятьдесят семь.</div>
+    <div class="fx">3,257 = три целых двести пятьдесят семь тысячных</div>
+    <div class="step"><b>Ответ:</b> три целых двести пятьдесят семь тысячных.</div>
+    <div class="note">Название разряда берётся по <b>последней</b> цифре записи, а не по первой.
+    Проверь себя в помощнике из пункта 3.</div>
+  </details>
+  </div>
+
+  <div class="ex">
+  <h3>Пример 3. Обратно в обыкновенную дробь</h3>
+  <p class="q">Запишите 0,25 и 12,016 в виде обыкновенной дроби и, если можно, сократите.</p>
+  <details><summary>Показать решение</summary>
+    <div class="step">1. В числе 0,25 после запятой две цифры, значит знаменатель 100,
+    а числитель — само число 25.</div>
+    <div class="fx">0,25 = 25/100 = 1/4</div>
+    <div class="step">2. В числе 12,016 после запятой три цифры, значит знаменатель 1000,
+    а числитель 016, то есть 16. Целая часть 12 остаётся целой.</div>
+    <div class="fx">12,016 = 12 16/1000 = 12 2/125</div>
+    <div class="step"><b>Ответ:</b> 1/4 и 12 целых 2/125.</div>
+    <div class="note">Правило простое: сколько цифр после запятой — столько нулей в знаменателе.</div>
+  </details>
+  </div>
+
+  <div class="ex">
+  <h3>Пример 4. Единицы измерения</h3>
+  <p class="q">Выразите в метрах и запишите десятичной дробью: 23 см; 4 м 8 см; 19 дм.</p>
+  <details><summary>Показать решение</summary>
+    <div class="step">1. В метре 100 см, поэтому 23 см = 23/100 м = 0,23 м. Целой части нет — пишем нуль.</div>
+    <div class="step">2. 4 м 8 см: сантиметры дают сотые, но в числителе одна цифра, дописываем нуль: 08.</div>
+    <div class="fx">4 м 8 см = 4 8/100 м = 4,08 м</div>
+    <div class="step">3. В метре 10 дм, поэтому 19 дм = 19/10 м. Выделим целую часть: 19 : 10 = 1 (остаток 9).</div>
+    <div class="fx">19 дм = 1 9/10 м = 1,9 м</div>
+    <div class="step"><b>Ответ:</b> 0,23 м; 4,08 м; 1,9 м.</div>
+  </details>
+  </div>
+
+  <div class="ex">
+  <h3>Пример 5. Сравнение</h3>
+  <p class="q">Рост Саши 1,67 м, Пети — 1,7 м, Коли — 1,677 м. Кто из них выше?</p>
+  <details><summary>Показать решение</summary>
+    <div class="step">1. Целые части у всех одинаковые (по 1 метру), значит сравниваем дробные части.</div>
+    <div class="step">2. Уравняем число знаков после запятой, приписывая нули справа —
+    от этого числа не меняются.</div>
+    <div class="fx">1,67 = 1,670 &nbsp;·&nbsp; 1,7 = 1,700 &nbsp;·&nbsp; 1,677</div>
+    <div class="step">3. Теперь сравниваем дробные части как натуральные числа: 700, 677 и 670.</div>
+    <div class="fx">1,700 &gt; 1,677 &gt; 1,670</div>
+    <div class="step"><b>Ответ:</b> Петя выше Коли, а Коля выше Саши.</div>
+    <div class="note">Обрати внимание: у Коли запись самая длинная, а рост не самый большой.</div>
+  </details>
+  </div>
+
+  <div class="ex">
+  <h3>Пример 6. Округление</h3>
+  <p class="q">а) Таня насчитала за разговоры 8,647 р. Сколько ей платить, если самая мелкая монета —
+  1 копейка? б) Округлите 2423,54608 до сотен.</p>
+  <details><summary>Показать решение</summary>
+    <div class="step">а) 1 копейка — это 1/100 рубля, значит округляем до сотых.</div>
+    <div class="step">Разряд сотых — цифра 4: 8,6<u>4</u>7. Первая отброшенная цифра 7, она не меньше 5,
+    поэтому цифру сотых увеличиваем на единицу.</div>
+    <div class="fx">8,647 ≈ 8,65 р.</div>
+    <div class="step">б) Округляем до разряда выше единиц, поэтому дробная часть отбрасывается целиком.
+    В целой части 2423 разряд сотен — цифра 4, следующая за ней цифра 2 меньше 5.</div>
+    <div class="step">Цифру сотен не меняем, а отброшенные разряды заменяем нулями.</div>
+    <div class="fx">2423,54608 ≈ 2400</div>
+    <div class="step"><b>Ответ:</b> а) 8,65 р.; б) 2400.</div>
+    <div class="note">Нули в конце целой части убирать нельзя — 24 вместо 2400 было бы в сто раз меньше.</div>
+  </details>
+  </div>
+</div>
+
+<div class="card sheet">
+  <h2>Шпаргалка</h2>
+  <p class="small">Этот блок печатается отдельно на один лист A4: Ctrl+P (⌘+P) → печать.</p>
+  <p class="f-formula"><b>Записать десятичной дробью:</b> целая часть, запятая, затем числитель —
+  столькими цифрами, сколько нулей в знаменателе (не хватает — дописываем нули впереди).
+  Целая часть нуль — пишем 0.</p>
+  <p class="f-formula"><b>Разряды после запятой:</b> десятые, сотые, тысячные, десятитысячные,
+  стотысячные, миллионные. Каждый следующий в 10 раз меньше.</p>
+  <p class="f-formula"><b>Прочитать:</b> целая часть → «целых» → дробная часть как натуральное число →
+  название последнего разряда. 3,257 — три целых двести пятьдесят семь тысячных.</p>
+  <p class="f-formula"><b>Нули в конце</b> приписываются и отбрасываются свободно: 0,3 = 0,30 = 0,300.
+  Нуль сразу после запятой трогать нельзя.</p>
+  <p class="f-formula"><b>Сравнение:</b> сначала целые части; если равны — уравнять знаки после запятой
+  нулями и сравнить дробные части как натуральные числа.</p>
+  <p class="f-formula"><b>Округление:</b> смотрим на первую отброшенную цифру. Меньше 5 — разряд не меняем;
+  5 и больше — увеличиваем на единицу. Нуль в нужном разряде не отбрасываем (4,503 ≈ 4,50).
+  Округляем до разряда выше единиц — дробную часть убираем, а в целой ставим нули (2423,5 ≈ 2400).</p>
+  <div class="scroll"><table>
+    <tr><th>см → м</th><th>дм → м</th><th>г → кг</th><th>кг → ц</th></tr>
+    <tr><td>: 100</td><td>: 10</td><td>: 1000</td><td>: 100</td></tr>
+    <tr><td>2 знака</td><td>1 знак</td><td>3 знака</td><td>2 знака</td></tr>
+  </table></div>
+</div>
+
+<div class="card">
+  <h2>Домашнее задание</h2>
+  <p class="meta">Ответы — числа. Запятую можно ставить кнопкой над полем, точка тоже подойдёт.
+  Единицы измерения писать не нужно. Подсказки открываются по одной кнопкой «Подсказка».</p>
+  <div id="tasks"></div>
+</div>
+
+<div class="card">
+  <h2>Шаг 1. Прикрепи фото решений</h2>
+  <p class="meta">Ответы в полях — это только результат. Преподаватель проверяет ещё и ход решения,
+  поэтому без фото тетради работа не отправляется.</p>
+  <ol class="steps-list">
+    <li>Реши задачи в тетради, как обычно, с полной записью.</li>
+    <li>Сфотографируй страницы: при дневном свете, чтобы текст читался и не было теней от руки.</li>
+    <li>Нажми кнопку ниже. С телефона выбирай «Камера» или «Фото», с компьютера — файл из папки.</li>
+    <li>Фото можно приложить несколько сразу и отметить у каждого, к какой задаче оно относится.</li>
+  </ol>
+  <input type="file" id="photos" accept="image/*" multiple style="margin-top:12px">
+  <div class="thumbs" id="thumbs"></div>
+</div>
+
+<div class="card">
+  <h2>Шаг 2. Отправь работу</h2>
+  <p class="meta">Проверь, что вверху страницы написано твоё имя, а выше приложены фото.
+  По кнопке ответы, результат и фотографии уходят преподавателю — пересылать ничего не нужно.
+  Вторая кнопка просто сохраняет копию тебе на устройство.</p>
+  <div class="row">
+    <button class="pri" id="send">Отправить на проверку</button>
+    <button id="report">Скачать копию себе</button>
+  </div>
+  <div id="repnote" class="meta" style="margin-top:8px"></div>
+</div>
+
+</div>
+
+<div class="bar">
+  <button class="pri" id="checkall">Проверить всё</button>
+  <span id="progress" class="meta">решено 0 из 14</span>
+</div>
+
+<script>
+"use strict";
+var started = Date.now();
+
+/* ---------- данные задач; ответы закодированы, чтобы не читались в исходнике ---------- */
+function e(s){return btoa(unescape(encodeURIComponent(s)));}
+function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return s;}}
+
+var TASKS = [
+ {id:1,lvl:"§1",type:"num",text:"Запиши десятичной дробью число <b>7/10</b> (семь десятых).",ans:[e("0,7")],
+  hints:["Целой части нет, значит перед запятой пишем нуль.",
+         "В знаменателе один нуль — значит после запятой должна быть одна цифра.",
+         "Числитель 7 записываем одной цифрой после запятой."],
+  sol:"<div class='step'>1. Целая часть равна нулю, поэтому пишем 0 и ставим запятую.</div>"+
+      "<div class='step'>2. В знаменателе 10 — один нуль, значит после запятой одна цифра.</div>"+
+      "<div class='step'>3. Числитель 7 записываем после запятой.</div>"+
+      "<div class='fx'>7/10 = 0,7</div>"+
+      "<div class='step'><b>Ответ: 0,7.</b> Читается «нуль целых семь десятых».</div>"},
+
+ {id:2,lvl:"§1",type:"num",text:"Запиши десятичной дробью число <b>6 целых 12 сотых</b> (6 и 12/100).",ans:[e("6,12")],
+  hints:["Сначала пишем целую часть и запятую.",
+         "В знаменателе 100 — два нуля, значит после запятой две цифры.",
+         "Числитель 12 уже состоит из двух цифр, дописывать нули не нужно."],
+  sol:"<div class='step'>1. Записываем целую часть 6 и ставим запятую.</div>"+
+      "<div class='step'>2. В знаменателе два нуля, значит после запятой две цифры.</div>"+
+      "<div class='step'>3. Числитель 12 — это как раз две цифры.</div>"+
+      "<div class='fx'>6 12/100 = 6,12</div>"+
+      "<div class='step'><b>Ответ: 6,12.</b></div>"},
+
+ {id:3,lvl:"§1",type:"num",text:"Запиши десятичной дробью: <b>3 целых 17 тысячных</b>. Осторожно с нулями!",ans:[e("3,017")],
+  hints:["Тысячные — значит в знаменателе 1000, а в нём три нуля.",
+         "После запятой должно быть три цифры, а в числителе 17 — только две.",
+         "Не хватает одной цифры — впереди числителя дописываем нуль: 017."],
+  sol:"<div class='step'>1. 3 целых 17 тысячных — это 3 и 17/1000.</div>"+
+      "<div class='step'>2. В знаменателе три нуля, значит после запятой нужно три цифры.</div>"+
+      "<div class='step'>3. В числителе только две цифры (17), поэтому впереди дописываем нуль: 017.</div>"+
+      "<div class='fx'>3 17/1000 = 3,017</div>"+
+      "<div class='step'><b>Ответ: 3,017.</b> Частая ошибка — написать 3,17: это уже 3 целых 17 <i>сотых</i>, "+
+      "совсем другое число.</div>"},
+
+ {id:4,lvl:"§1",type:"choice",text:"В каком разряде стоит цифра <b>6</b> в числе 4,03106?",
+  options:["стотысячных","тысячных","десятитысячных","сотых"],ans:[e("стотысячных")],
+  hints:["Считай разряды после запятой по порядку: десятые, сотые, тысячные, десятитысячные, стотысячные.",
+         "Цифры после запятой: 0, 3, 1, 0, 6 — шестёрка стоит пятой.",
+         "Пятый разряд после запятой называется стотысячным."],
+  sol:"<div class='step'>1. Выпишем цифры после запятой по порядку: 0 — десятые, 3 — сотые, 1 — тысячные, "+
+      "0 — десятитысячные, 6 — стотысячные.</div>"+
+      "<div class='fx'>4,0&nbsp;3&nbsp;1&nbsp;0&nbsp;<b>6</b> → пятый разряд после запятой</div>"+
+      "<div class='step'><b>Ответ: стотысячных.</b> Разряды после запятой всегда идут в одном порядке: "+
+      "десятые, сотые, тысячные, десятитысячные, стотысячные, миллионные.</div>"},
+
+ {id:5,lvl:"§1",type:"num",text:"Выдели из неправильной дроби <b>217/100</b> целую часть и запиши число десятичной дробью.",ans:[e("2,17")],
+  hints:["Раздели 217 на 100 с остатком.",
+         "217 : 100 = 2 (остаток 17), значит получилось 2 целых 17 сотых.",
+         "В знаменателе два нуля — после запятой две цифры."],
+  sol:"<div class='step'>1. Делим числитель на знаменатель с остатком: 217 : 100 = 2, остаток 17.</div>"+
+      "<div class='step'>2. Значит 217/100 = 2 и 17/100.</div>"+
+      "<div class='step'>3. Записываем десятичной дробью: целая часть 2, после запятой две цифры — 17.</div>"+
+      "<div class='fx'>217/100 = 2 17/100 = 2,17</div>"+
+      "<div class='step'><b>Ответ: 2,17.</b></div>"},
+
+ {id:6,lvl:"§1",type:"num",text:"Вырази в метрах и запиши десятичной дробью: <b>4 м 8 см</b>.",ans:[e("4,08")],
+  hints:["В одном метре 100 сантиметров, значит 1 см = 1/100 м.",
+         "8 см = 8/100 м — это сотые доли метра.",
+         "Сотые — две цифры после запятой, а в числителе 8 только одна. Допиши нуль впереди."],
+  sol:"<div class='step'>1. В метре 100 см, поэтому 8 см = 8/100 м.</div>"+
+      "<div class='step'>2. Получилось 4 и 8/100 м.</div>"+
+      "<div class='step'>3. В знаменателе два нуля, значит после запятой две цифры: числитель 8 записываем как 08.</div>"+
+      "<div class='fx'>4 м 8 см = 4 8/100 м = 4,08 м</div>"+
+      "<div class='step'><b>Ответ: 4,08.</b> Ошибка 4,8 означала бы 4 м 80 см — в десять раз больше.</div>"},
+
+ {id:7,lvl:"§1",type:"num",text:"Вырази в килограммах и запиши десятичной дробью: <b>2 кг 657 г</b>.",ans:[e("2,657")],
+  hints:["В одном килограмме 1000 граммов, значит 1 г = 1/1000 кг.",
+         "657 г = 657/1000 кг — это тысячные доли килограмма.",
+         "В знаменателе три нуля, и в числителе как раз три цифры."],
+  sol:"<div class='step'>1. В килограмме 1000 г, поэтому 657 г = 657/1000 кг.</div>"+
+      "<div class='step'>2. Получилось 2 и 657/1000 кг.</div>"+
+      "<div class='step'>3. Три нуля в знаменателе — три цифры после запятой, и они у нас есть.</div>"+
+      "<div class='fx'>2 кг 657 г = 2 657/1000 кг = 2,657 кг</div>"+
+      "<div class='step'><b>Ответ: 2,657.</b></div>"},
+
+ {id:8,lvl:"§2",type:"choice",text:"Какая из дробей равна числу 2,17?",
+  options:["2,170","2,017","2,0017","20,17"],ans:[e("2,170")],
+  hints:["Вспомни правило: нули в конце записи дробь не меняют.",
+         "2,170 — это 2,17 с приписанным справа нулём.",
+         "А 2,017 — уже другое число: там между запятой и семёркой появился нуль."],
+  sol:"<div class='step'>1. По правилу, если в конце записи десятичной дроби приписать или отбросить нули, "+
+      "получится равная дробь.</div>"+
+      "<div class='step'>2. 2,170 = 2,17 — нуль приписан <i>справа</i>, в конце.</div>"+
+      "<div class='step'>3. А в 2,017 нуль стоит сразу после запятой, он сдвигает все цифры в другие разряды — "+
+      "это уже не то же число.</div>"+
+      "<div class='fx'>2,17 = 2,170 = 2,1700, но 2,17 ≠ 2,017</div>"+
+      "<div class='step'><b>Ответ: 2,170.</b></div>"},
+
+ {id:9,lvl:"§2",type:"num",text:"Какое число больше: <b>0,69</b> или <b>0,689</b>? Запиши его в ответ.",ans:[e("0,69")],
+  hints:["Целые части одинаковые (обе нули), значит сравниваем дробные части.",
+         "Уравняй число цифр после запятой: припиши нуль справа к 0,69.",
+         "Сравни 0,690 и 0,689 — как обычные числа 690 и 689."],
+  sol:"<div class='step'>1. Целые части равны (0 = 0), поэтому сравниваем дробные части.</div>"+
+      "<div class='step'>2. Уравняем число знаков после запятой, приписав нуль справа: 0,69 = 0,690.</div>"+
+      "<div class='step'>3. Теперь сравниваем 690 тысячных и 689 тысячных.</div>"+
+      "<div class='fx'>0,690 &gt; 0,689, значит 0,69 &gt; 0,689</div>"+
+      "<div class='step'><b>Ответ: 0,69.</b> Длиннее запись — не значит больше: важен каждый разряд, "+
+      "а не количество цифр.</div>"},
+
+ {id:10,lvl:"§2",type:"num",text:"Запиши в ответ <b>наименьшее</b> из чисел: 0,1; 0,08; 0,452; 1,8.",ans:[e("0,08")],
+  hints:["Сначала посмотри на целые части — у одного числа она не нуль.",
+         "1,8 сразу отпадает: у него целая часть 1, значит оно самое большое.",
+         "У остальных уравняй знаки после запятой: 0,100; 0,080; 0,452."],
+  sol:"<div class='step'>1. У числа 1,8 целая часть 1, у остальных — 0. Значит 1,8 самое большое.</div>"+
+      "<div class='step'>2. Оставшиеся уравняем по числу знаков: 0,1 = 0,100; 0,08 = 0,080; 0,452.</div>"+
+      "<div class='step'>3. Сравниваем 100, 80 и 452 тысячных — меньше всех 80.</div>"+
+      "<div class='fx'>0,080 &lt; 0,100 &lt; 0,452 &lt; 1,800</div>"+
+      "<div class='step'><b>Ответ: 0,08.</b></div>"},
+
+ {id:11,lvl:"§2",type:"num",text:"Какую <b>наименьшую</b> цифру можно поставить вместо звёздочки, чтобы получилось верное неравенство: <b>0,07* &gt; 0,077</b>?",ans:[e("8")],
+  hints:["Слева и справа одинаковые цифры до тысячных: 0,07… и 0,07…",
+         "Значит всё решает последняя цифра: звёздочка против семёрки.",
+         "Нужна цифра, которая строго больше 7."],
+  sol:"<div class='step'>1. Целые части равны, десятые (0 и 0) и сотые (7 и 7) тоже равны.</div>"+
+      "<div class='step'>2. Значит сравнение решается в разряде тысячных: звёздочка против цифры 7.</div>"+
+      "<div class='step'>3. Чтобы левое число было больше, нужна цифра строго больше 7 — подходят 8 и 9.</div>"+
+      "<div class='fx'>0,078 &gt; 0,077 &nbsp;и&nbsp; 0,079 &gt; 0,077 &nbsp;→&nbsp; наименьшая цифра 8</div>"+
+      "<div class='step'><b>Ответ: 8.</b></div>"},
+
+ {id:12,lvl:"§2",type:"num",text:"Округли число <b>43,6572</b> до сотых.",ans:[e("43,66")],
+  hints:["Найди разряд сотых — это вторая цифра после запятой.",
+         "43,65|72 — оставляем 43,65 и смотрим на следующую цифру.",
+         "Следующая цифра 7, она не меньше 5, значит цифру сотых увеличиваем на единицу."],
+  sol:"<div class='step'>1. Разряд сотых — вторая цифра после запятой, это 5: 43,6<u>5</u>72.</div>"+
+      "<div class='step'>2. Все цифры после неё отбрасываем, но сначала смотрим на первую отброшенную — это 7.</div>"+
+      "<div class='step'>3. 7 ≥ 5, значит цифру сотых увеличиваем: 5 + 1 = 6.</div>"+
+      "<div class='fx'>43,6572 ≈ 43,66</div>"+
+      "<div class='step'><b>Ответ: 43,66.</b></div>"},
+
+ {id:13,lvl:"§2",type:"num",text:"Округли число <b>57,3608</b> до тысячных.",ans:[e("57,361")],
+  hints:["Тысячные — третья цифра после запятой.",
+         "57,360|8 — оставляем три цифры после запятой.",
+         "Первая отброшенная цифра 8, она больше 5 — округляем вверх."],
+  sol:"<div class='step'>1. Разряд тысячных — третья цифра после запятой, это 0: 57,36<u>0</u>8.</div>"+
+      "<div class='step'>2. Первая отброшенная цифра — 8.</div>"+
+      "<div class='step'>3. 8 ≥ 5, значит цифру тысячных увеличиваем: 0 + 1 = 1.</div>"+
+      "<div class='fx'>57,3608 ≈ 57,361</div>"+
+      "<div class='step'><b>Ответ: 57,361.</b></div>"},
+
+ {id:14,lvl:"§2",type:"num",text:"Округли число <b>2423,54608</b> до сотен.",ans:[e("2400")],
+  hints:["Сотни — это разряд в целой части, значит вся дробная часть отбрасывается.",
+         "В числе 2423 разряд сотен — цифра 4: 24|23.",
+         "Следующая цифра (десятков) — 2, она меньше 5, значит цифру сотен не меняем, а на её место справа ставим нули."],
+  sol:"<div class='step'>1. Округляем до разряда выше единиц, поэтому дробная часть просто отбрасывается.</div>"+
+      "<div class='step'>2. В целой части 2423 разряд сотен — цифра 4.</div>"+
+      "<div class='step'>3. Смотрим на следующую цифру — это 2. Так как 2 &lt; 5, цифру сотен оставляем.</div>"+
+      "<div class='step'>4. Отброшенные разряды целой части заменяем нулями — их нельзя просто убрать.</div>"+
+      "<div class='fx'>2423,54608 ≈ 2400</div>"+
+      "<div class='step'><b>Ответ: 2400.</b> Ответ 24 был бы ошибкой: нули в целой части не отбрасываются, "+
+      "иначе число уменьшится в сто раз.</div>"}
+];
+
+/* ---------- разбор ответа ---------- */
+function norm(s){
+  return String(s).toLowerCase().replace(/\s+/g,"")
+    .replace(/[\u2013\u2014\u2212]/g,"-")
+    .replace(/[\u00d7\u00b7]/g,"*")
+    .replace(/,/g,".")
+    .replace(/^(ответ:?|x=|y=|α=|a=)/,"");
+}
+function toNum(str){
+  var t = norm(str);
+  if(!t) return NaN;
+  t = t.replace(/\u221a/g,"sqrt").replace(/\u03c0/g,"pi");
+  t = t.replace(/sqrt(\d+(?:\.\d+)?)/g,"sqrt($1)");
+  t = t.replace(/(\d)sqrt/g,"$1*sqrt");
+  t = t.replace(/(\d)pi/g,"$1*pi");
+  t = t.replace(/(\d)\(/g,"$1*(").replace(/\)(\d)/g,")*$1").replace(/\)\(/g,")*(");
+  if(!/^[-+*/().0-9a-z]+$/.test(t)) return NaN;
+  if(t.replace(/sqrt|pi/g,"").match(/[a-z]/)) return NaN;
+  try{
+    var v = new Function("sqrt","pi","return ("+t+");")(Math.sqrt, Math.PI);
+    return (typeof v === "number" && isFinite(v)) ? v : NaN;
+  }catch(err){ return NaN; }
+}
+function same(given, right, tol){
+  var a = toNum(given), b = toNum(right);
+  if(!isNaN(a) && !isNaN(b)){
+    var t = tol || 1e-9;
+    return Math.abs(a-b) <= Math.max(t, Math.abs(b)*t);
+  }
+  return norm(given) === norm(right);
+}
+
+/* ---------- отрисовка ---------- */
+var state = {};
+var box = document.getElementById("tasks");
+
+TASKS.forEach(function(t){
+  state[t.id] = {tries:0, hints:0, done:false, ok:false, given:"", sel:null};
+  var el = document.createElement("div");
+  el.className = "task"; el.id = "t"+t.id;
+  var body = '<div><span class="tnum">'+t.id+'.</span>'+t.text+
+             '<span class="lvl">'+t.lvl+'</span></div>';
+  if(t.img){ body += '<div class="fig">'+t.img+'</div>'; }
+  if(t.type === "choice"){
+    body += '<div class="opts">'+t.options.map(function(o,i){
+      return '<label class="opt" data-v="'+o+'"><input type="radio" name="q'+t.id+'" value="'+o+'"> '+o+'</label>';
+    }).join("")+'</div>';
+  } else {
+    body += '<div class="keys">'+
+      [",","−"].map(function(k){
+        return '<button class="key" data-k="'+k+'" type="button">'+k+'</button>';}).join("")+
+      '</div><input type="text" id="in'+t.id+'" inputmode="decimal" autocapitalize="off" '+
+      'autocorrect="off" autocomplete="off" spellcheck="false" placeholder="ответ">';
+  }
+  body += '<div class="row" style="margin-top:10px">'+
+          '<button class="pri sm chk">Проверить</button>'+
+          '<button class="sm hnt">Подсказка</button></div>'+
+          '<div class="hints"></div><div class="verdict"></div><div class="sol"></div>';
+  el.innerHTML = body;
+  box.appendChild(el);
+
+  el.querySelectorAll(".key").forEach(function(b){
+    b.addEventListener("click", function(){
+      var inp = document.getElementById("in"+t.id);
+      var k = b.dataset.k === "−" ? "-" : b.dataset.k;
+      var s = inp.selectionStart || inp.value.length;
+      inp.value = inp.value.slice(0,s) + k + inp.value.slice(inp.selectionEnd || s);
+      inp.focus(); inp.setSelectionRange(s+k.length, s+k.length);
+    });
+  });
+  if(t.type === "choice"){
+    el.querySelectorAll(".opt").forEach(function(l){
+      l.addEventListener("click", function(){
+        el.querySelectorAll(".opt").forEach(function(x){x.classList.remove("sel");});
+        l.classList.add("sel"); state[t.id].sel = l.dataset.v;
+      });
+    });
+  } else {
+    el.querySelector("#in"+t.id).addEventListener("keydown", function(ev){
+      if(ev.key === "Enter"){ ev.preventDefault(); check(t.id); }
+    });
+  }
+  el.querySelector(".chk").addEventListener("click", function(){ check(t.id); });
+  el.querySelector(".hnt").addEventListener("click", function(){ hint(t.id); });
+});
+
+function hint(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var host = document.querySelector("#t"+id+" .hints");
+  if(s.hints >= t.hints.length){
+    if(!host.querySelector(".last")){
+      var w = document.createElement("div");
+      w.className = "hint last"; w.textContent = "Подсказки закончились — нажми «Проверить», решение откроется после второй попытки.";
+      host.appendChild(w);
+    }
+    return;
+  }
+  var h = document.createElement("div");
+  h.className = "hint";
+  h.textContent = "Подсказка " + (s.hints+1) + ": " + t.hints[s.hints];
+  host.appendChild(h);
+  s.hints++;
+}
+
+function check(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var el = document.getElementById("t"+id);
+  var v = document.querySelector(".verdict");
+  v = el.querySelector(".verdict");
+  var given = (t.type === "choice") ? (s.sel || "") :
+              (document.getElementById("in"+id).value || "");
+  if(!given.trim()){ v.className = "verdict bad"; v.textContent = "Введи ответ."; return; }
+  s.given = given; s.tries++;
+  var ok = t.ans.some(function(a){ return same(given, d(a), t.tol); });
+  s.ok = ok; s.done = ok || s.tries >= 2;
+  el.classList.remove("ok","bad");
+  el.classList.add(ok ? "ok" : "bad");
+  v.className = "verdict " + (ok ? "ok" : "bad");
+  if(ok){
+    v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    showSol(el, t);
+  } else if(s.tries === 1){
+    v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+  } else {
+    v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    showSol(el, t);
+  }
+  progress();
+}
+function showSol(el, t){
+  var host = el.querySelector(".sol");
+  if(host.dataset.on) return;
+  host.dataset.on = "1";
+  var det = document.createElement("details");
+  det.open = true;
+  det.innerHTML = "<summary>Решение</summary><div class='step'>"+t.sol+"</div>";
+  host.appendChild(det);
+}
+function progress(){
+  var done = TASKS.filter(function(t){return state[t.id].done;}).length;
+  var ok = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  document.getElementById("progress").textContent =
+    "решено " + done + " из " + TASKS.length + " · верно " + ok;
+}
+document.getElementById("checkall").addEventListener("click", function(){
+  TASKS.forEach(function(t){
+    var s = state[t.id];
+    var given = (t.type === "choice") ? (s.sel || "") : (document.getElementById("in"+t.id).value || "");
+    if(given.trim() && !s.done) check(t.id);
+  });
+  var first = TASKS.find(function(t){ return !state[t.id].done; });
+  var note = first ? "Осталась задача " + first.id + "." : "Все задачи закрыты.";
+  document.getElementById("progress").textContent += " · " + note;
+});
+progress();
+
+/* ---------- фото ---------- */
+var photos = [];
+document.getElementById("photos").addEventListener("change", function(ev){
+  var files = Array.prototype.slice.call(ev.target.files || []);
+  files.forEach(function(f){
+    var r = new FileReader();
+    r.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var m = 1400, w = img.width, h = img.height;
+        if(Math.max(w,h) > m){ var k = m/Math.max(w,h); w = Math.round(w*k); h = Math.round(h*k); }
+        var c = document.createElement("canvas"); c.width = w; c.height = h;
+        c.getContext("2d").drawImage(img, 0, 0, w, h);
+        photos.push({url: c.toDataURL("image/jpeg", 0.7), task: ""});
+        drawThumbs();
+      };
+      img.src = r.result;
+    };
+    r.readAsDataURL(f);
+  });
+  ev.target.value = "";
+});
+function drawThumbs(){
+  var host = document.getElementById("thumbs");
+  host.innerHTML = "";
+  var total = 0;
+  photos.forEach(function(p, i){
+    total += p.url.length * 0.75;
+    var d0 = document.createElement("div"); d0.className = "thumb";
+    var opts = '<option value="">задача…</option>' + TASKS.map(function(t){
+      return '<option value="'+t.id+'"'+(p.task==String(t.id)?" selected":"")+'>№'+t.id+'</option>';
+    }).join("");
+    d0.innerHTML = '<img src="'+p.url+'" alt="фото решения"><button type="button">×</button>'+
+                   '<select>'+opts+'</select>';
+    d0.querySelector("button").addEventListener("click", function(){ photos.splice(i,1); drawThumbs(); });
+    d0.querySelector("select").addEventListener("change", function(ev){ p.task = ev.target.value; });
+    host.appendChild(d0);
+  });
+  var note = document.getElementById("repnote");
+  if(total > 15e6){ note.textContent = "Фото уже больше 15 МБ — отчёт может отправляться долго, лишние лучше удалить."; }
+  else if(photos.length){ note.textContent = "Фото в отчёте: " + photos.length + "."; }
+  else { note.textContent = ""; }
+}
+
+/* ---------- отчёт ---------- */
+var ENDPOINT = "https://script.google.com/macros/s/AKfycbztH9c-wQuKC7pSfD8AcFfnOcGpSHxoeqovulmvLMp9W23SgFx9dDQ2JTlWcIJDMN6W/exec";
+var SECRET = "artteach2026";
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function buildReport(){
+  var name = (document.getElementById("name").value || "").trim() || "без имени";
+  var now = new Date();
+  var mins = Math.max(1, Math.round((Date.now()-started)/60000));
+  var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  var data = {tип:"дз", предмет:"математика", тема:"Десятичные дроби: запись, разряды, сравнение, округление (5 класс)",
+    ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
+    верно:okN, всего:TASKS.length, задачи:[]};
+  var rows = TASKS.map(function(t){
+    var s = state[t.id];
+    data.задачи.push({n:t.id, условие:t.text.replace(/<[^>]+>/g,""), ответ_ученика:s.given,
+      верный_ответ:t.ans.map(d).join(" или "), верно:s.ok, попыток:s.tries, подсказок:s.hints,
+      уровень:t.lvl});
+    return "<tr><td>"+t.id+"</td><td style='text-align:left'>"+esc(t.text.replace(/<[^>]+>/g,""))+
+      "</td><td>"+esc(s.given||"—")+"</td><td>"+esc(t.ans.map(d).join(" / "))+"</td><td>"+
+      (s.ok?"верно":(s.given?"неверно":"не решал"))+"</td><td>"+s.tries+"</td><td>"+s.hints+"</td></tr>";
+  }).join("");
+  var pics = photos.map(function(p,i){
+    return "<figure><img src='"+p.url+"'><figcaption>Фото "+(i+1)+
+      (p.task?" — к задаче №"+p.task:"")+"</figcaption></figure>";
+  }).join("");
+  var html = "<!doctype html><html lang='ru'><head><meta charset='utf-8'>"+
+    "<meta name='viewport' content='width=device-width,initial-scale=1'>"+
+    "<title>Отчёт — "+esc(name)+" — десятичные дроби · 5 класс</title><style>"+
+    "body{font:16px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;padding:20px;color:#16181d;background:#fff}"+
+    "h1{font-size:22px;margin:0 0 4px}.m{color:#5b6270;font-size:15px}"+
+    "table{border-collapse:collapse;width:100%;margin-top:14px;font-size:15px}"+
+    "th,td{border:1px solid #dfe3ea;padding:6px 8px;text-align:center}th{background:#eef3fb}"+
+    "figure{margin:14px 0}img{max-width:100%;border:1px solid #dfe3ea;border-radius:8px}"+
+    "figcaption{color:#5b6270;font-size:14px;margin-top:4px}</style></head><body>"+
+    "<h1>Отчёт по домашнему заданию</h1>"+
+    "<div class='m'>Тема: десятичные дроби — запись, разряды, сравнение, округление · 5 класс</div>"+
+    "<div class='m'>Ученик: <b>"+esc(name)+"</b> · сдано: "+esc(now.toLocaleString("ru-RU"))+
+    " · время работы: около "+mins+" мин</div>"+
+    "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)</h2>"+
+    "<table><tr><th>№</th><th>Задача</th><th>Ответ ученика</th><th>Верный ответ</th>"+
+    "<th>Итог</th><th>Попыток</th><th>Подсказок</th></tr>"+rows+"</table>"+
+    (pics ? "<h2>Фото решений</h2>"+pics : "<p class='m'>Фото решений не прикреплены.</p>")+
+    "<script type='application/json' id='result-data'>"+
+    JSON.stringify(data).replace(/</g,"\\u003c")+"<\/script></body></html>";
+  var stamp = now.getDate()+"-"+(now.getMonth()+1);
+  return {
+    html: html,
+    name: name,
+    file: "Отчёт_Десятичные_дроби_"+name.replace(/\s+/g,"_")+"_"+stamp+".html",
+    caption: name+" · десятичные дроби · 5 класс · "+okN+" из "+TASKS.length+
+             " ("+Math.round(okN/TASKS.length*100)+"%)"
+  };
+}
+
+document.getElementById("send").addEventListener("click", function(){
+  var note = document.getElementById("repnote");
+  var who = (document.getElementById("name").value || "").trim();
+  if(!who){ note.className = "meta bad-note"; note.textContent = "Сначала впиши имя вверху страницы."; return; }
+  if(!photos.length){
+    note.className = "meta bad-note";
+    note.textContent = "Сначала прикрепи фото решений — кнопка «Выберите файлы» в блоке выше.";
+    document.getElementById("photos").scrollIntoView({behavior:"smooth", block:"center"});
+    return;
+  }
+  note.className = "meta";
+  var r = buildReport();
+  note.textContent = "Отправляю…";
+  var payload = {
+    secret: SECRET,
+    name: r.file,
+    caption: r.caption,
+    file: btoa(unescape(encodeURIComponent(r.html)))
+  };
+  fetch(ENDPOINT, {method:"POST", mode:"no-cors", body: JSON.stringify(payload)})
+    .then(function(){
+      note.textContent = "Отправлено преподавателю. Если хочешь, сохрани копию себе кнопкой ниже.";
+    })
+    .catch(function(){
+      note.textContent = "Не получилось отправить. Скачай файл кнопкой ниже и пришли его вручную.";
+    });
+});
+
+document.getElementById("report").addEventListener("click", function(){
+  var r = buildReport();
+  var blob = new Blob([r.html], {type:"text/html;charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = r.file;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  document.getElementById("repnote").textContent = "Файл скачан — он в папке загрузок.";
+});
+
+/* ============ разряды и чтение ============ */
+(function(){
+  var inp=document.getElementById("rzin");
+  if(!inp) return;
+  var tab=document.getElementById("rztab"), out=document.getElementById("rzout");
+  var IH=["тысячи","сотни","десятки","единицы"];
+  var FH=["десятые","сотые","тысячные","десяти-<br>тысячные","сто-<br>тысячные"];
+  var RN=[["десятая","десятых"],["сотая","сотых"],["тысячная","тысячных"],
+          ["десятитысячная","десятитысячных"],["стотысячная","стотысячных"]];
+  var U=["","одна","две","три","четыре","пять","шесть","семь","восемь","девять"];
+  var T1=["десять","одиннадцать","двенадцать","тринадцать","четырнадцать","пятнадцать",
+          "шестнадцать","семнадцать","восемнадцать","девятнадцать"];
+  var TT=["","","двадцать","тридцать","сорок","пятьдесят","шестьдесят","семьдесят","восемьдесят","девяносто"];
+  var HH=["","сто","двести","триста","четыреста","пятьсот","шестьсот","семьсот","восемьсот","девятьсот"];
+  function u1000(n){
+    var s=[], h=Math.floor(n/100), r=n%100;
+    if(h) s.push(HH[h]);
+    if(r>=10 && r<20) s.push(T1[r-10]);
+    else { if(Math.floor(r/10)) s.push(TT[Math.floor(r/10)]); if(r%10) s.push(U[r%10]); }
+    return s.join(" ");
+  }
+  function plural(n,a,b,c){
+    var d=n%100; if(d>=11&&d<=14) return c;
+    d=n%10; if(d===1) return a; if(d>=2&&d<=4) return b; return c;
+  }
+  function spell(n){
+    if(n===0) return "нуль";
+    var th=Math.floor(n/1000), r=n%1000, o=[];
+    if(th){ if(th!==1) o.push(u1000(th)); o.push(plural(th,"тысяча","тысячи","тысяч")); }
+    if(r) o.push(u1000(r));
+    return o.join(" ");
+  }
+  function one(n){ var d=n%100; if(d>=11&&d<=14) return false; return n%10===1; }
+
+  function draw(){
+    var raw=(inp.value||"").trim().replace(".", ",");
+    var m=raw.match(/^(\d{1,4})(?:,(\d{1,5}))?$/);
+    if(!m){
+      tab.innerHTML="";
+      out.innerHTML='<span class="bad">Впиши дробь вида 3,257 — до 4 цифр в целой части и до 5 после запятой.</span>';
+      return;
+    }
+    var ip=m[1], fp=m[2]||"";
+    var ni=ip.length, nf=fp.length;
+    var ipd=ip.split(""), fpd=fp.split("");
+    var h='<table class="rzt"><tr>', i;
+    for(i=0;i<ni;i++) h+='<th>'+IH[4-ni+i]+'</th>';
+    h+='<th></th>';
+    for(i=0;i<nf;i++) h+='<th>'+FH[i]+'</th>';
+    h+='</tr><tr>';
+    for(i=0;i<ni;i++) h+='<td class="ip">'+ipd[i]+'</td>';
+    h+='<td class="cma">,</td>';
+    for(i=0;i<nf;i++) h+='<td class="fp">'+fpd[i]+'</td>';
+    h+='</tr></table>';
+    tab.innerHTML=h;
+
+    var iv=parseInt(ip,10), txt, last;
+    if(fp){
+      var fv=parseInt(fp,10), nm=RN[fp.length-1];
+      txt='<b>'+spell(iv)+' '+(one(iv)?"целая":"целых")+' '+spell(fv)+' '+(one(fv)?nm[0]:nm[1])+'</b>';
+      last="последний записанный разряд — "+nm[1];
+    } else {
+      txt='<b>'+spell(iv)+'</b>';
+      last="дробной части нет — это натуральное число";
+    }
+    out.innerHTML='Читается: '+txt+'<br><span class="small">'+last+'</span>';
+  }
+  inp.addEventListener("input", draw);
+  draw();
+})();
+
+/* ============ округлялка ============ */
+(function(){
+  var inp=document.getElementById("okin");
+  if(!inp) return;
+  var sel=document.getElementById("okr"), numB=document.getElementById("oknum"),
+      outB=document.getElementById("okout"), resB=document.getElementById("okres");
+  var NAME={"4":"десятитысячных","3":"тысячных","2":"сотых","1":"десятых","0":"единиц",
+            "-1":"десятков","-2":"сотен","-3":"тысяч","-4":"десятков тысяч"};
+
+  function carry(arr){
+    var i=arr.length-1;
+    while(i>=0){ var d=+arr[i]+1; if(d<10){ arr[i]=String(d); return false; } arr[i]="0"; i--; }
+    arr.unshift("1"); return true;
+  }
+  function draw(){
+    var raw=(inp.value||"").trim().replace(".", ",");
+    var m=raw.match(/^(\d{1,7})(?:,(\d{1,7}))?$/);
+    if(!m){
+      numB.innerHTML=""; resB.textContent="";
+      outB.innerHTML='<span class="bad">Впиши положительное число, например 8,647.</span>';
+      return;
+    }
+    var ip=m[1], fp=m[2]||"", pos=parseInt(sel.value,10);
+    var res, keepHtml, dec, note;
+
+    if(pos>=0){
+      var fpp=(fp+"00000000").slice(0,pos+1);
+      dec=fpp.charAt(pos);
+      var kept=(ip+fpp.slice(0,pos)).split("");
+      var ilen=ip.length;
+      if(+dec>=5){ if(carry(kept)) ilen++; }
+      var ni=kept.slice(0,ilen).join(""), nf=kept.slice(ilen).join("");
+      res = pos>0 ? ni+","+nf : ni;
+      keepHtml='<span class="keep">'+ip+(pos>0?",":"")+fp.slice(0,pos)+'</span>'+
+               (pos===0?'<span class="keep">,</span>':'')+
+               '<span class="dec">'+dec+'</span><span class="drop">'+fp.slice(pos+1)+'</span>';
+      if(pos===0) keepHtml='<span class="keep">'+ip+'</span><span class="keep">,</span>'+
+               '<span class="dec">'+(fp.charAt(0)||"0")+'</span><span class="drop">'+fp.slice(1)+'</span>';
+    } else {
+      var k=-pos, keepLen=ip.length-k;
+      if(keepLen<0) keepLen=0;
+      dec = keepLen<ip.length ? ip.charAt(keepLen) : "0";
+      var kept2=ip.slice(0,keepLen).split("");
+      if(+dec>=5){ carry(kept2); }
+      var zeros=new Array(k+1).join("0");
+      res=(kept2.join("")||"")+zeros;
+      if(res.charAt(0)==="0" && res.length>k) res=res.replace(/^0+/, "") || "0";
+      if(res==="") res=zeros;
+      keepHtml='<span class="keep">'+ip.slice(0,keepLen)+'</span><span class="dec">'+
+               (keepLen<ip.length?ip.charAt(keepLen):"")+'</span><span class="drop">'+
+               ip.slice(keepLen+1)+(fp?","+fp:"")+'</span>';
+    }
+    numB.innerHTML=keepHtml;
+    var up=+dec>=5;
+    note='Разряд '+NAME[String(pos)]+' оставляем, первая отброшенная цифра — <b>'+dec+'</b>. '+
+         (up ? 'Она <b>не меньше 5</b>, значит увеличиваем разряд на единицу.'
+             : 'Она <b>меньше 5</b>, значит разряд не меняем.');
+    if(pos<0) note+=' Отброшенные разряды целой части заменяем нулями.';
+    outB.innerHTML=note;
+    resB.textContent="≈ "+res;
+  }
+  inp.addEventListener("input", draw);
+  sel.addEventListener("change", draw);
+  draw();
+})();
+</script>
+</body>
+</html>
