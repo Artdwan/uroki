@@ -1,0 +1,930 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Основные классы неорганических веществ — домашнее задание, 9 класс</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:800px;margin:0 auto;padding:16px 14px 60px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+.f-formula{font-size:19px}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.step{margin:6px 0}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.fig{margin:12px 0;text-align:center}
+
+.f{font-weight:600}
+.f.nb{white-space:nowrap}
+.overt{font-style:normal;font-size:.62em;font-weight:700;vertical-align:.6em;margin-left:-2px}
+.ox{display:inline-block;text-align:center;line-height:1.02;vertical-align:-0.12em;white-space:nowrap}
+.ox i{display:block;font-style:normal;font-size:.6em;font-weight:700;color:#b3261e;letter-spacing:.5px}
+.eq{background:var(--acc-soft);border:1px solid var(--line);border-radius:10px;
+  padding:10px 13px;margin:10px 0;font-size:20px;font-weight:600;text-align:center;
+  overflow-x:auto;white-space:nowrap}
+.eq .eqn{display:block;font-size:14px;font-weight:400;color:var(--muted);margin-top:5px;
+  white-space:normal}
+.chf{display:inline-block;background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:11px 18px;font-size:25px;font-weight:600;color:var(--ink);max-width:100%;
+  overflow-x:auto;white-space:nowrap}
+.chf .ox i{color:#b3261e}
+.wrap-t th,.wrap-t td{white-space:normal;text-align:left;vertical-align:top}
+.def{border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:var(--card)}
+.def .n{font-size:14px;color:var(--muted);font-weight:700;letter-spacing:.4px}
+.rule{border:1px solid var(--line);border-left:4px solid #c0397a;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdf0f6}
+.rule .n{font-size:14px;color:#a02a62;font-weight:700;letter-spacing:.4px}
+@media (prefers-color-scheme:dark){.rule{background:#2a1b23}}
+.ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;background:var(--bg)}
+.ex h3{margin-top:0}
+.small,.mini{color:var(--muted);font-size:15px}
+.ryad{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;
+  font-size:17px;font-weight:600;overflow-x:auto;white-space:nowrap;letter-spacing:1px}
+.ryad b{color:#b3261e}
+
+.tr{border:1px solid var(--line);border-radius:12px;padding:14px;margin:16px 0;background:var(--bg)}
+.trhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;
+  margin-bottom:8px}
+.trhead b{font-size:17px}
+.trscore{color:var(--muted);font-size:15px;white-space:nowrap}
+.trq{font-size:17px;margin:8px 0}
+.trfig{text-align:center;margin:8px 0}
+.trfig svg{width:100%;max-width:330px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.tropts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
+.tropt{border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;
+  background:var(--card);font-size:16px;text-align:left;min-height:46px}
+.tropt:hover{border-color:var(--acc)}
+.tropt.right{border-color:var(--ok);background:var(--ok-soft);font-weight:600}
+.tropt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.tropts.done .tropt{cursor:default}
+.trnum{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.trnum input{font:inherit;font-size:18px;padding:9px 11px;border-radius:9px;
+  border:1.5px solid var(--line);background:var(--card);color:var(--ink);max-width:130px}
+.trmsg{font-size:16px;margin-top:8px}
+.trmsg .v{font-weight:700}
+.trmsg .v.ok{color:var(--ok)} .trmsg .v.bad{color:var(--bad)}
+.trmsg .why{color:var(--muted);font-size:15px;margin-top:4px}
+.trbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.trbar button{font-size:15px;padding:8px 13px;min-height:42px}
+.trdone{background:var(--acc-soft);border-radius:10px;padding:12px;font-size:17px;
+  text-align:center;font-weight:600}
+
+.trfig .chf{margin:0 auto}
+.tropt .f{font-weight:600}
+.tropt sub{font-size:.72em}
+
+.fig svg{width:100%;max-width:420px;height:auto}
+.fx{display:block;background:var(--acc-soft);border:1px solid var(--line);border-radius:10px;
+  padding:11px 13px;margin:12px 0;text-align:center;font-size:20px;line-height:1.7;
+  font-weight:600;overflow-x:auto}
+.sol .fx,.ex .fx{font-size:18px;margin:9px 0}
+.task .chf{font-size:22px;padding:9px 14px}
+.sheet .f-formula{margin:5px 0;font-size:14.5px;line-height:1.38}
+.sheet table{font-size:12.5px}
+.sheet td,.sheet th{padding:3px 8px}
+.sheet .ryad{font-size:13.5px;padding:6px 9px;letter-spacing:.5px;margin:4px 0}
+.sheet h2{margin:0 0 6px}
+@media print{.sheet>.meta{display:none}.sheet .scroll{margin:6px 0}}
+
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+@media print{
+  body{background:#fff}
+  .bar{display:none !important}
+  .wrap>*{display:none !important}
+  .wrap>.sheet{display:block !important;border:none;margin:0;padding:0}
+  .sheet{font-size:13px}
+  .sheet h2{font-size:18px}
+  .sheet th,.sheet td{padding:4px 5px;font-size:12px}
+  @page{size:A4;margin:12mm}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card top">
+  <h1>Основные классы неорганических веществ</h1>
+  <div class="meta">Химия, 9 класс · §1 · повторение курса 8 класса · домашнее задание · 14 задач</div>
+  <label class="f" for="name">Имя и фамилия</label>
+  <input type="text" id="name" placeholder="напиши, как в журнале" autocapitalize="words" spellcheck="false">
+  <div class="note" style="margin-top:14px">
+    <b>Как работать.</b> Вся теория параграфа здесь — учебник открывать не нужно.
+    Сначала прочитай её, потом разбери семь примеров: в них показаны все типы заданий.
+    <div style="margin-top:8px">Дальше семь тренажёров: названия кислот, классы соединений,
+    валентность, составление формул, степени окисления, коэффициенты и уравнения реакций.
+    Они не идут в отчёт — проходи сколько угодно раз, пока не станет легко.</div>
+    <div style="margin-top:8px">И только потом — 14 задач домашки. Решай их в тетради,
+    уравнения записывай полностью, а в поле вводи только число. У каждой задачи три
+    подсказки, полное решение открывается после верного ответа или после второй попытки.
+    Запятая и точка равнозначны.</div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Теория</h2>
+<h2>1.1. Классификация неорганических веществ</h2>
+<p>Все неорганические вещества делят на <b>простые</b> и <b>сложные</b>. Простые состоят из атомов одного элемента, это металлы и неметаллы. Сложные состоят из атомов разных элементов, и важнейшие их классы — <b>оксиды, кислоты, основания и соли</b>.</p>
+<div class="scroll"><table class="wrap-t"><tr><th>класс</th><th>из чего состоит</th><th>примеры</th></tr><tr><td><b>Оксиды</b></td><td>два элемента, один из них кислород</td><td><span class="f nb">CaO</span>, <span class="f nb">SO<sub>3</sub></span>, <span class="f nb">Al<sub>2</sub>O<sub>3</sub></span></td></tr><tr><td><b>Кислоты</b></td><td>водород + кислотный остаток</td><td><span class="f nb">HCl</span>, <span class="f nb">H<sub>2</sub>SO<sub>4</sub></span>, <span class="f nb">H<sub>3</sub>PO<sub>4</sub></span></td></tr><tr><td><b>Основания</b></td><td>металл + гидроксогруппы OH</td><td><span class="f nb">NaOH</span>, <span class="f nb">Ca(OH)<sub>2</sub></span>, <span class="f nb">Fe(OH)<sub>3</sub></span></td></tr><tr><td><b>Соли</b></td><td>металл + кислотный остаток</td><td><span class="f nb">NaCl</span>, <span class="f nb">K<sub>2</sub>SO<sub>4</sub></span>, <span class="f nb">Li<sub>3</sub>PO<sub>4</sub></span></td></tr></table></div>
+<p class="small">Как отличать на глаз: слева металл и справа <b>OH</b> — основание; начинается с <b>H</b> — кислота; ровно два элемента и второй кислород — оксид; слева металл, а справа не OH и не один кислород — соль.</p>
+<h2>1.2. Валентность</h2>
+<p><b>Валентность</b> — число химических связей, которые образует атом. Её обозначают римскими цифрами над символом элемента.</p>
+<div class="rule"><div class="n">ПРАВИЛО ВАЛЕНТНОСТИ</div>В формуле из двух элементов произведение валентности на число атомов <b>одинаково для обоих элементов</b>.</div>
+<p>Например в <span class="f nb">Al<sub>2</sub>O<sub>3</sub></span>: у кислорода валентность II, атомов кислорода 3, произведение 2 · 3 = 6. Значит и у алюминия произведение такое же: 6 : 2 атома = <b>III</b>.</p>
+<div class="scroll"><table class="wrap-t"><tr><th>валентность постоянная</th><th>элементы</th></tr><tr><td>I</td><td><span class="f nb">H</span>, <span class="f nb">Li</span>, <span class="f nb">Na</span>, <span class="f nb">K</span>, <span class="f nb">Ag</span></td></tr><tr><td>II</td><td><span class="f nb">O</span>, <span class="f nb">Mg</span>, <span class="f nb">Ca</span>, <span class="f nb">Ba</span>, <span class="f nb">Zn</span></td></tr><tr><td>III</td><td><span class="f nb">Al</span></td></tr><tr><td>переменная</td><td><span class="f nb">Fe</span> (II, III), <span class="f nb">Cu</span> (I, II), <span class="f nb">S</span> (II, IV, VI), <span class="f nb">C</span> (II, IV), <span class="f nb">N</span> (III, V)</td></tr></table></div>
+<div class="rule"><div class="n">КАК СОСТАВИТЬ ФОРМУЛУ</div>Записать символы, надписать валентности, найти наименьшее общее кратное, разделить его на валентность каждого элемента — получатся индексы.</div>
+<p>Алюминий (III) и кислород (II): НОК(3, 2) = 6; индексы 6 : 3 = 2 и 6 : 2 = 3, формула <span class="f nb">Al<sub>2</sub>O<sub>3</sub></span>. Кальций (II) и хлор (I): НОК = 2, индексы 1 и 2, формула <span class="f nb">CaCl<sub>2</sub></span>.</p>
+<h2>1.3. Степень окисления</h2>
+<p><b>Степень окисления</b> — условный заряд атома, если считать все связи полностью ионными. В отличие от валентности у неё есть <b>знак</b>, и пишут её арабскими цифрами над символом: сначала знак, потом число.</p>
+<div class="eq"><span class="ox"><i>+2</i>C</span><span class="ox"><i>−2</i>O</span> &nbsp;—&nbsp; оксид углерода(II), &nbsp;&nbsp; <span class="ox"><i>+4</i>C</span><span class="ox"><i>−2</i>O<sub>2</sub></span> &nbsp;—&nbsp; оксид углерода(IV)</div>
+<div class="rule"><div class="n">ПРАВИЛА</div><ol style='margin:6px 0 0 18px;padding:0'><li>В простом веществе степень окисления равна <b>0</b>: <span class="f nb">O<sub>2</sub></span>, <span class="f nb">Fe</span>, <span class="f nb">H<sub>2</sub></span>.</li><li>У водорода <b>+1</b> (кроме гидридов металлов, там −1).</li><li>У кислорода <b>−2</b> (кроме пероксидов вроде <span class="f nb">H<sub>2</sub>O<sub>2</sub></span>, там −1).</li><li>У фтора всегда <b>−1</b>; у металлов IA <b>+1</b>, IIA <b>+2</b>, у алюминия <b>+3</b>.</li><li>Сумма степеней окисления всех атомов в молекуле равна <b>нулю</b>.</li></ol></div>
+<p>Как считают. В <span class="f nb">H<sub>2</sub>SO<sub>4</sub></span>: водород даёт 2 · (+1) = +2, кислород 4 · (−2) = −8. Чтобы сумма была нулём, сере остаётся +6.</p>
+<div class="eq"><span class="ox"><i>+1</i>H<sub>2</sub></span><span class="ox"><i>+6</i>S</span><span class="ox"><i>−2</i>O<sub>4</sub></span></div>
+<h2>1.4. Оксиды</h2>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div><b>Оксиды</b> — сложные вещества, в состав которых входят атомы двух химических элементов, один из которых кислород. Общая формула <span class="f nb">Э<sub>x</sub>O<sub>y</sub></span>.</div>
+<p>Степень окисления кислорода в оксидах равна −2. Название оксида состоит из слова «оксид» и названия второго элемента в родительном падеже. Если валентность переменная, её пишут римской цифрой в скобках: <span class="f nb">K<sub>2</sub>O</span> — оксид калия, <span class="f nb">CuO</span> — оксид меди(II).</p>
+<div class="scroll"><table class="wrap-t"><tr><th>группа</th><th>какие бывают</th><th>примеры</th></tr><tr><td><b>Несолеобразующие</b></td><td>солей не образуют, с водой, кислотами и щелочами не реагируют</td><td><span class="f nb">CO</span>, <span class="f nb">NO</span>, <span class="f nb">SiO</span></td></tr><tr><td><b>Осно́вные</b></td><td>оксиды металлов с низкой степенью окисления</td><td><span class="f nb">Na<sub>2</sub>O</span>, <span class="f nb">CaO</span>, <span class="f nb">FeO</span></td></tr><tr><td><b>Кислотные</b></td><td>оксиды неметаллов и металлов с высокой степенью окисления</td><td><span class="f nb">SO<sub>3</sub></span>, <span class="f nb">CO<sub>2</sub></span>, <span class="f nb">P<sub>2</sub>O<sub>5</sub></span></td></tr><tr><td><b>Амфотерные</b></td><td>ведут себя и как основные, и как кислотные</td><td><span class="f nb">ZnO</span>, <span class="f nb">Al<sub>2</sub>O<sub>3</sub></span>, <span class="f nb">BeO</span></td></tr></table></div>
+<p>Каждому оксиду соответствует свой <b>гидроксид</b>: основному — основание, кислотному — кислота.</p>
+<div class="scroll"><table class="wrap-t"><tr><th>оксид</th><th>гидроксид</th><th>оксид</th><th>гидроксид</th></tr><tr><td><span class="f nb">Na<sub>2</sub>O</span></td><td><span class="f nb">NaOH</span></td><td><span class="f nb">CO<sub>2</sub></span></td><td><span class="f nb">H<sub>2</sub>CO<sub>3</sub></span></td></tr><tr><td><span class="f nb">CaO</span></td><td><span class="f nb">Ca(OH)<sub>2</sub></span></td><td><span class="f nb">SO<sub>2</sub></span></td><td><span class="f nb">H<sub>2</sub>SO<sub>3</sub></span></td></tr><tr><td><span class="f nb">CuO</span></td><td><span class="f nb">Cu(OH)<sub>2</sub></span></td><td><span class="f nb">SO<sub>3</sub></span></td><td><span class="f nb">H<sub>2</sub>SO<sub>4</sub></span></td></tr><tr><td><span class="f nb">Fe<sub>2</sub>O<sub>3</sub></span></td><td><span class="f nb">Fe(OH)<sub>3</sub></span></td><td><span class="f nb">N<sub>2</sub>O<sub>5</sub></span></td><td><span class="f nb">HNO<sub>3</sub></span></td></tr></table></div>
+<p class="small">Подсказка: степень окисления элемента в оксиде и в его гидроксиде одинакова. Поэтому <span class="f nb">SO<sub>2</sub></span> даёт <span class="f nb">H<sub>2</sub>SO<sub>3</sub></span>, а <span class="f nb">SO<sub>3</sub></span> даёт <span class="f nb">H<sub>2</sub>SO<sub>4</sub></span>.</p>
+<h3>Химические свойства оксидов</h3>
+<p><b>Осно́вные оксиды</b> реагируют с:</p>
+<div class="scroll"><table class="wrap-t"><tr><th>реагент</th><th>продукты</th><th>пример</th></tr><tr><td>Кислоты</td><td>соль и вода</td><td>CaO + 2HCl = CaCl<sub>2</sub> + H<sub>2</sub>O</td></tr><tr><td>Кислотные оксиды</td><td>соль</td><td>Na<sub>2</sub>O + CO<sub>2</sub> = Na<sub>2</sub>CO<sub>3</sub></td></tr><tr><td>Вода — только оксиды щелочных и щёлочноземельных металлов</td><td>основание (щёлочь)</td><td>CaO + H<sub>2</sub>O = Ca(OH)<sub>2</sub></td></tr></table></div>
+<p><b>Кислотные оксиды</b> реагируют с:</p>
+<div class="scroll"><table class="wrap-t"><tr><th>реагент</th><th>продукты</th><th>пример</th></tr><tr><td>Щёлочи</td><td>соль и вода</td><td>CO<sub>2</sub> + 2NaOH = Na<sub>2</sub>CO<sub>3</sub> + H<sub>2</sub>O</td></tr><tr><td>Осно́вные оксиды</td><td>соль</td><td>SO<sub>2</sub> + Na<sub>2</sub>O = Na<sub>2</sub>SO<sub>3</sub></td></tr><tr><td>Вода — все, кроме SiO2</td><td>кислородсодержащая кислота</td><td>P<sub>2</sub>O<sub>5</sub> + 3H<sub>2</sub>O = 2H<sub>3</sub>PO<sub>4</sub></td></tr></table></div>
+<p><b>Амфотерные оксиды</b> реагируют и с кислотами, и со щелочами:</p>
+<div class="scroll"><table class="wrap-t"><tr><th>реагент</th><th>продукты</th><th>пример</th></tr><tr><td>Кислоты</td><td>соль и вода</td><td>ZnO + 2HCl = ZnCl<sub>2</sub> + H<sub>2</sub>O</td></tr><tr><td>Кислотные оксиды</td><td>соль</td><td>ZnO + SO<sub>3</sub> = ZnSO<sub>4</sub></td></tr><tr><td>Расплавленные щёлочи</td><td>соль и вода</td><td>ZnO + 2NaOH = Na<sub>2</sub>ZnO<sub>2</sub> + H<sub>2</sub>O</td></tr><tr><td>Осно́вные оксиды</td><td>соль</td><td>ZnO + K<sub>2</sub>O = K<sub>2</sub>ZnO<sub>2</sub></td></tr></table></div>
+<h2>1.5. Кислоты</h2>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div><b>Кислоты</b> — сложные вещества, в молекулах которых атомы водорода, способные замещаться атомами металлов, соединены с кислотными остатками.</div>
+<p>По составу кислоты делят на <b>кислородсодержащие</b> (<span class="f nb">H<sub>2</sub>SO<sub>4</sub></span>, <span class="f nb">HNO<sub>3</sub></span>, <span class="f nb">H<sub>3</sub>PO<sub>4</sub></span>) и <b>бескислородные</b> (<span class="f nb">HCl</span>, <span class="f nb">H<sub>2</sub>S</span>). По числу атомов водорода — на одно-, двух- и трёхосновные. Почти все кислоты хорошо растворимы; нерастворима, например, кремниевая <span class="f nb">H<sub>2</sub>SiO<sub>3</sub></span>.</p>
+<div class="scroll"><table class="wrap-t"><tr><th>кислота</th><th>название</th><th>состав</th><th>осно́вность</th><th>остаток</th><th>соли называются</th></tr><tr><td><span class="f nb">HCl</span></td><td>хлороводородная (соляная)</td><td>бескислородная</td><td>1</td><td><span class="f nb">Cl</span></td><td>хлорид</td></tr><tr><td><span class="f nb">HBr</span></td><td>бромоводородная</td><td>бескислородная</td><td>1</td><td><span class="f nb">Br</span></td><td>бромид</td></tr><tr><td><span class="f nb">HF</span></td><td>фтороводородная (плавиковая)</td><td>бескислородная</td><td>1</td><td><span class="f nb">F</span></td><td>фторид</td></tr><tr><td><span class="f nb">H<sub>2</sub>S</span></td><td>сероводородная</td><td>бескислородная</td><td>2</td><td><span class="f nb">S</span></td><td>сульфид</td></tr><tr><td><span class="f nb">HNO<sub>3</sub></span></td><td>азотная</td><td>кислородсодержащая</td><td>1</td><td><span class="f nb">NO<sub>3</sub></span></td><td>нитрат</td></tr><tr><td><span class="f nb">HNO<sub>2</sub></span></td><td>азотистая</td><td>кислородсодержащая</td><td>1</td><td><span class="f nb">NO<sub>2</sub></span></td><td>нитрит</td></tr><tr><td><span class="f nb">H<sub>2</sub>SO<sub>4</sub></span></td><td>серная</td><td>кислородсодержащая</td><td>2</td><td><span class="f nb">SO<sub>4</sub></span></td><td>сульфат</td></tr><tr><td><span class="f nb">H<sub>2</sub>SO<sub>3</sub></span></td><td>сернистая</td><td>кислородсодержащая</td><td>2</td><td><span class="f nb">SO<sub>3</sub></span></td><td>сульфит</td></tr><tr><td><span class="f nb">H<sub>2</sub>CO<sub>3</sub></span></td><td>угольная</td><td>кислородсодержащая</td><td>2</td><td><span class="f nb">CO<sub>3</sub></span></td><td>карбонат</td></tr><tr><td><span class="f nb">H<sub>2</sub>SiO<sub>3</sub></span></td><td>кремниевая</td><td>кислородсодержащая</td><td>2</td><td><span class="f nb">SiO<sub>3</sub></span></td><td>силикат</td></tr><tr><td><span class="f nb">H<sub>3</sub>PO<sub>4</sub></span></td><td>фосфорная</td><td>кислородсодержащая</td><td>3</td><td><span class="f nb">PO<sub>4</sub></span></td><td>фосфат</td></tr></table></div>
+<h3>Химические свойства кислот</h3>
+<div class="scroll"><table class="wrap-t"><tr><th>реагент</th><th>продукты</th><th>пример</th></tr><tr><td>Металлы, стоящие в ряду активности до водорода</td><td>соль и водород</td><td>H<sub>2</sub>SO<sub>4</sub> + Fe = FeSO<sub>4</sub> + H<sub>2</sub>↑</td></tr><tr><td>Осно́вные оксиды</td><td>соль и вода</td><td>2HBr + FeO = FeBr<sub>2</sub> + H<sub>2</sub>O</td></tr><tr><td>Основания</td><td>соль и вода</td><td>H<sub>2</sub>S + 2KOH = K<sub>2</sub>S + 2H<sub>2</sub>O</td></tr><tr><td>Соли — если выпадает осадок или выделяется газ</td><td>новая соль и новая кислота</td><td>H<sub>2</sub>SO<sub>4</sub> + BaCl<sub>2</sub> = BaSO<sub>4</sub>↓ + 2HCl</td></tr></table></div>
+<p>В кислой среде индикаторы меняют цвет: лакмус становится <b>красным</b>, метилоранж — <b>розово-красным</b>, фенолфталеин остаётся бесцветным.</p>
+<h2>1.6. Основания</h2>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div><b>Основания</b> — сложные вещества, состоящие из атомов металла и гидроксогрупп <b>OH</b>. Общая формула <span class="f nb">Me(OH)<sub>x</sub></span>, где x — степень окисления металла.</div>
+<p>Название состоит из слова «гидроксид» и названия металла в родительном падеже: <span class="f nb">NaOH</span> — гидроксид натрия, <span class="f nb">Zn(OH)<sub>2</sub></span> — гидроксид цинка. Если металл образует несколько оснований, в скобках римской цифрой указывают степень окисления: <span class="f nb">Fe(OH)<sub>2</sub></span> — гидроксид железа(II), <span class="f nb">Fe(OH)<sub>3</sub></span> — гидроксид железа(III).</p>
+<div class="scroll"><table class="wrap-t"><tr><th>по растворимости</th><th>какие</th><th>примеры</th></tr><tr><td><b>Растворимые — щёлочи</b></td><td>гидроксиды щелочных и щёлочноземельных металлов</td><td><span class="f nb">LiOH</span>, <span class="f nb">NaOH</span>, <span class="f nb">KOH</span>, <span class="f nb">Ba(OH)<sub>2</sub></span>, <span class="f nb">Ca(OH)<sub>2</sub></span></td></tr><tr><td><b>Нерастворимые</b></td><td>гидроксиды остальных металлов</td><td><span class="f nb">Cu(OH)<sub>2</sub></span>, <span class="f nb">Fe(OH)<sub>2</sub></span>, <span class="f nb">Fe(OH)<sub>3</sub></span>, <span class="f nb">Mg(OH)<sub>2</sub></span></td></tr></table></div>
+<h3>Химические свойства оснований</h3>
+<div class="scroll"><table class="wrap-t"><tr><th>реагент</th><th>продукты</th><th>пример</th></tr><tr><td>Кислоты — реагируют все основания</td><td>соль и вода</td><td>2NaOH + H<sub>2</sub>SO<sub>4</sub> = Na<sub>2</sub>SO<sub>4</sub> + 2H<sub>2</sub>O</td></tr><tr><td>Кислотные оксиды — только щёлочи</td><td>соль и вода</td><td>2KOH + CO<sub>2</sub> = K<sub>2</sub>CO<sub>3</sub> + H<sub>2</sub>O</td></tr><tr><td>Растворы солей — только щёлочи, если выпадает осадок</td><td>новая соль и новое основание</td><td>3NaOH + FeCl<sub>3</sub> = 3NaCl + Fe(OH)<sub>3</sub>↓</td></tr></table></div>
+<p>При нагревании нерастворимые и малорастворимые основания разлагаются на оксид металла и воду:</p>
+<div class="eq">Ca(OH)<sub>2</sub> →<i class="overt">t</i> CaO + H<sub>2</sub>O↑</div>
+<div class="eq">2Fe(OH)<sub>3</sub> →<i class="overt">t</i> Fe<sub>2</sub>O<sub>3</sub> + 3H<sub>2</sub>O↑</div>
+<p>В растворах щелочей лакмус становится <b>синим</b>, фенолфталеин — <b>малиновым</b>, метилоранж — <b>жёлтым</b>. Нерастворимые основания окраску индикаторов <b>не меняют</b>.</p>
+<h2>1.7. Соли</h2>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div><b>Соли</b> — сложные вещества, в состав которых входят атомы металлов и кислотные остатки.</div>
+<p>Название соли состоит из двух слов: название кислотного остатка в именительном падеже и название металла в родительном. <span class="f nb">AlCl<sub>3</sub></span> — хлорид алюминия, <span class="f nb">K<sub>3</sub>PO<sub>4</sub></span> — фосфат калия, <span class="f nb">MgSO<sub>4</sub></span> — сульфат магния, <span class="f nb">Zn(NO<sub>3</sub>)<sub>2</sub></span> — нитрат цинка. Для металла с переменной степенью окисления её указывают в скобках: <span class="f nb">FeSO<sub>4</sub></span> — сульфат железа(II), <span class="f nb">Fe<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub></span> — сульфат железа(III).</p>
+<h3>Химические свойства солей</h3>
+<div class="scroll"><table class="wrap-t"><tr><th>реагент</th><th>продукты</th><th>пример</th></tr><tr><td>Металлы — более активный, чем металл соли</td><td>новая соль и новый металл</td><td>CuSO<sub>4</sub> + Fe = Cu↓ + FeSO<sub>4</sub></td></tr><tr><td>Кислоты — если выпадает осадок или выделяется газ</td><td>новая соль и новая кислота</td><td>BaCl<sub>2</sub> + H<sub>2</sub>SO<sub>4</sub> = BaSO<sub>4</sub>↓ + 2HCl</td></tr><tr><td>Щёлочи — если выпадает осадок</td><td>новая соль и новое основание</td><td>Fe(NO<sub>3</sub>)<sub>2</sub> + 2KOH = Fe(OH)<sub>2</sub>↓ + 2KNO<sub>3</sub></td></tr><tr><td>Соли — если выпадает осадок</td><td>новые соли</td><td>ZnSO<sub>4</sub> + CaCl<sub>2</sub> = CaSO<sub>4</sub>↓ + ZnCl<sub>2</sub></td></tr></table></div>
+<div class="rule"><div class="n">РЯД АКТИВНОСТИ МЕТАЛЛОВ</div><div class="ryad">K Ca Na Mg Al Zn Fe Ni Sn Pb <b>(H)</b> Cu Hg Ag Pt Au</div><div style='margin-top:8px'>Более активный металл, стоящий в ряду левее, вытесняет из раствора соли менее активный, стоящий правее. Металлы <b>до водорода</b> вытесняют водород из растворов кислот, металлы <b>после водорода</b> — нет.</div></div>
+<div class="eq">Cu + FeSO<sub>4</sub> → реакция не протекает<span class="eqn">медь стоит в ряду правее железа, вытеснить его она не может</span></div>
+<div class="eq">Cu + HCl → реакция не протекает<span class="eqn">медь стоит после водорода, поэтому водород из кислоты не вытесняет</span></div>
+<h2>1.8. Расстановка коэффициентов</h2>
+<p>Коэффициент — число <b>перед</b> формулой, оно показывает, сколько молекул вещества участвует в реакции. Индекс — маленькое число <b>внутри</b> формулы, оно часть самой формулы.</p>
+<div class="rule"><div class="n">ПОРЯДОК ДЕЙСТВИЙ</div><ol style='margin:6px 0 0 18px;padding:0'><li><b>Индексы не трогаем</b> — меняем только коэффициенты перед формулами.</li><li>Начинаем с элемента, которого больше всего и который встречается реже всего: обычно это металл.</li><li>Дальше идут остальные неметаллы, затем водород, и в самом конце — кислород.</li><li>Если с одной стороны атомов чётное число, а с другой нечётное — удваиваем.</li><li>В конце пересчитываем каждый элемент слева и справа; если у всех коэффициентов есть общий делитель, сокращаем.</li></ol></div>
+<p>Пример. <span class="f">Al + O<sub>2</sub> → Al<sub>2</sub>O<sub>3</sub></span>. Кислорода слева 2, справа 3 — берём НОК 6: значит перед <span class="f nb">O<sub>2</sub></span> ставим 3, перед <span class="f nb">Al<sub>2</sub>O<sub>3</sub></span> ставим 2. Тогда алюминия справа 4, ставим 4 перед <span class="f nb">Al</span>. Проверка: Al 4 = 4, O 6 = 6.</p>
+<div class="eq">4Al + 3O<sub>2</sub> = 2Al<sub>2</sub>O<sub>3</sub></div>
+<p>Знаки в уравнениях: <b>↓</b> — вещество выпадает в осадок, <b>↑</b> — выделяется газ, <b>t</b> над стрелкой — реакция идёт при нагревании.</p>
+</div>
+
+<div class="card">
+<h2>Разбор задач</h2>
+<div class="meta">Семь примеров — по одному на каждый тип заданий из домашки и тренажёров. Сначала попробуй сам, потом сверься.</div>
+<div class="ex"><h3>Пример 1. Распределить вещества по классам</h3><p>Даны вещества: <span class="f nb">HCl</span>, <span class="f nb">Ca(OH)<sub>2</sub></span>, <span class="f nb">SO<sub>3</sub></span>, <span class="f nb">Al(OH)<sub>3</sub></span>, <span class="f nb">Li<sub>3</sub>PO<sub>4</sub></span>, <span class="f nb">K<sub>2</sub>S</span>, <span class="f nb">N<sub>2</sub>O<sub>5</sub></span>, <span class="f nb">H<sub>2</sub>SiO<sub>3</sub></span>. Разнеси их по классам.</p><div class="step"><b>Решение.</b> Смотрим на состав каждой формулы.</div><div class="step">Два элемента, второй кислород → оксиды: <span class="f nb">SO<sub>3</sub></span> и <span class="f nb">N<sub>2</sub>O<sub>5</sub></span>.</div><div class="step">Начинается с H, дальше кислотный остаток → кислоты: <span class="f nb">HCl</span> и <span class="f nb">H<sub>2</sub>SiO<sub>3</sub></span>.</div><div class="step">Металл и группы OH → основания: <span class="f nb">Ca(OH)<sub>2</sub></span> и <span class="f nb">Al(OH)<sub>3</sub></span>.</div><div class="step">Металл и кислотный остаток → соли: <span class="f nb">Li<sub>3</sub>PO<sub>4</sub></span> и <span class="f nb">K<sub>2</sub>S</span>.</div><div class="step mini">Ловушка: <span class="f nb">H<sub>2</sub>SiO<sub>3</sub></span> — это не основание, хотя тут есть и металл, и кислород с водородом. Гидроксогруппа OH должна стоять именно как группа.</div></div>
+<div class="ex"><h3>Пример 2. Составить формулу по валентности</h3><p>Составь формулу соединения фосфора (V) с кислородом.</p><div class="step"><b>Решение.</b> Записываем символы и валентности: P — V, O — II.</div><div class="step">Наименьшее общее кратное 5 и 2 равно 10.</div><div class="step">Индекс у фосфора 10 : 5 = 2, индекс у кислорода 10 : 2 = 5.</div><div class="eq">P<sub>2</sub>O<sub>5</sub></div><div class="step">Проверка: 5 · 2 = 10 и 2 · 5 = 10 — совпало.</div><div class="step"><b>Ответ: <span class="f nb">P<sub>2</sub>O<sub>5</sub></span></b> — оксид фосфора(V).</div></div>
+<div class="ex"><h3>Пример 3. Определить степень окисления</h3><p>Найди степень окисления хлора в <span class="f nb">KClO<sub>3</sub></span>.</p><div class="step"><b>Решение.</b> Калий — металл IA, значит +1. Кислород −2, атомов кислорода три: 3 · (−2) = −6.</div><div class="step">Обозначим степень окисления хлора за x. Сумма всех степеней окисления в молекуле равна нулю:</div><div class="fx">(+1) + x + (−6) = 0</div><div class="fx">x = +5</div><div class="eq"><span class="ox"><i>+1</i>K</span><span class="ox"><i>+5</i>Cl</span><span class="ox"><i>−2</i>O<sub>3</sub></span></div><div class="step"><b>Ответ: +5.</b></div><div class="step mini">Проверь себя: если получилось число больше +7 или меньше −4, где-то потеряли знак.</div></div>
+<div class="ex"><h3>Пример 4. Гидроксид, соответствующий оксиду</h3><p>Напиши формулы гидроксидов для <span class="f nb">CuO</span> и <span class="f nb">SO<sub>3</sub></span>.</p><div class="step"><b>Решение.</b> <span class="f nb">CuO</span> — оксид металла, значит гидроксид будет основанием. Степень окисления меди тут +2, поэтому к ней приписываем две гидроксогруппы: <span class="f nb">Cu(OH)<sub>2</sub></span>.</div><div class="step"><span class="f nb">SO<sub>3</sub></span> — оксид неметалла, значит гидроксид будет кислотой. Мысленно прибавляем воду: <span class="f">SO<sub>3</sub> + H<sub>2</sub>O</span>, то есть <span class="f nb">H<sub>2</sub>SO<sub>4</sub></span>. Степень окисления серы и слева, и справа +6.</div><div class="step"><b>Ответ: <span class="f nb">Cu(OH)<sub>2</sub></span> и <span class="f nb">H<sub>2</sub>SO<sub>4</sub></span>.</b></div><div class="step mini">Так же получаются и остальные: <span class="f nb">Na<sub>2</sub>O</span> → <span class="f nb">NaOH</span>, <span class="f nb">CO<sub>2</sub></span> → <span class="f nb">H<sub>2</sub>CO<sub>3</sub></span>, <span class="f nb">N<sub>2</sub>O<sub>5</sub></span> → <span class="f nb">HNO<sub>3</sub></span>.</div></div>
+<div class="ex"><h3>Пример 5. Расставить коэффициенты</h3><p><span class="f">Fe(OH)<sub>3</sub> + H<sub>2</sub>SO<sub>4</sub> → Fe<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub> + H<sub>2</sub>O</span></p><div class="step"><b>Решение.</b> Начинаем не с водорода и не с кислорода. Железа слева 1, справа 2 — ставим 2 перед <span class="f nb">Fe(OH)<sub>3</sub></span>.</div><div class="step">Теперь групп <span class="f nb">SO<sub>4</sub></span> справа 3, а слева в одной молекуле кислоты один остаток <span class="f nb">SO<sub>4</sub></span> — ставим 3 перед <span class="f nb">H<sub>2</sub>SO<sub>4</sub></span>.</div><div class="step">Считаем водород: слева 2 · 3 + 3 · 2 = 12, значит справа перед водой ставим 6.</div><div class="eq">2Fe(OH)<sub>3</sub> + 3H<sub>2</sub>SO<sub>4</sub> = Fe<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub> + 6H<sub>2</sub>O</div><div class="step">Проверка по кислороду: слева 6 + 12 = 18, справа 12 + 6 = 18 ✓</div><div class="step"><b>Сумма коэффициентов: 2 + 3 + 1 + 6 = 12.</b></div></div>
+<div class="ex"><h3>Пример 6. Цепочка превращений</h3><p><span class="f">C → CO<sub>2</sub> → H<sub>2</sub>CO<sub>3</sub> → BaCO<sub>3</sub> → CO<sub>2</sub> → Na<sub>2</sub>CO<sub>3</sub></span></p><div class="step">1. Углерод горит в кислороде:</div><div class="eq">C + O<sub>2</sub> = CO<sub>2</sub></div><div class="step">2. Кислотный оксид + вода = кислота:</div><div class="eq">CO<sub>2</sub> + H<sub>2</sub>O = H<sub>2</sub>CO<sub>3</sub></div><div class="step">3. Кислота + щёлочь = соль + вода, карбонат бария нерастворим и выпадает в осадок:</div><div class="eq">H<sub>2</sub>CO<sub>3</sub> + Ba(OH)<sub>2</sub> = BaCO<sub>3</sub>↓ + 2H<sub>2</sub>O</div><div class="step">4. Соль + более сильная кислота, углекислый газ улетает:</div><div class="eq">BaCO<sub>3</sub> + 2HCl = BaCl<sub>2</sub> + H<sub>2</sub>O + CO<sub>2</sub>↑</div><div class="step">5. Кислотный оксид + щёлочь = соль + вода:</div><div class="eq">CO<sub>2</sub> + 2NaOH = Na<sub>2</sub>CO<sub>3</sub> + H<sub>2</sub>O</div><div class="step mini">Логика цепочки всегда одна: смотри, к какому классу относится то, что нужно получить, и подбирай реагент из таблицы свойств этого класса.</div></div>
+<div class="ex"><h3>Пример 7. Расчёт по уравнению</h3><p>Смесь порошков магния и меди общей массой 10 г внесли в соляную кислоту (избыток). Выделилось 4,48 дм³ газа (н. у.). Рассчитай массовую долю меди в исходной смеси.</p><div class="step"><b>Решение.</b> Медь стоит в ряду активности после водорода, поэтому с кислотой она не реагирует. Газ выделяет только магний.</div><div class="eq">Mg + 2HCl = MgCl<sub>2</sub> + H<sub>2</sub>↑</div><div class="step">Находим количество водорода: n = V : V<sub>m</sub> = 4,48 : 22,4 = 0,2 моль.</div><div class="step">По уравнению магния столько же — 0,2 моль. Значит m(Mg) = 0,2 · 24 = 4,8 г.</div><div class="step">Тогда m(Cu) = 10 − 4,8 = 5,2 г.</div><div class="fx">w(Cu) = 5,2 : 10 = 0,52 = 52 %</div><div class="step"><b>Ответ: 52 %.</b></div><div class="step mini">Проверка здравым смыслом: доля должна быть между 0 и 100 %, а масса непрореагировавшего металла — меньше массы всей смеси.</div></div>
+</div>
+
+<div class="card">
+  <h2>Тренажёры</h2>
+  <div class="meta">Семь тренажёров на разные умения параграфа. Вопросы каждый раз идут
+  в новом порядке, варианты ответов тоже перемешиваются — «запомнить кнопку» не получится.
+  После каждого ответа появляется разбор: читай его, даже когда ответил верно.</div>
+<div class="tr" id="tc1"><div class="trhead"><b>Тренажёр 1. Кислоты: формулы и названия</b><span class="trscore" id="tc1s"></span></div><div class="meta">Двенадцать вопросов: как называется кислота, какие у неё соли, какая формула и сколько в ней водорода. Это база — без неё не собрать ни одного уравнения.</div><div class="trq" id="tc1q"></div><div class="trfig" id="tc1f"></div><div id="tc1a"></div><div class="trmsg" id="tc1m"></div><div class="trbar" id="tc1b"></div></div><div class="tr" id="tc2"><div class="trhead"><b>Тренажёр 2. Определи класс соединения</b><span class="trscore" id="tc2s"></span></div><div class="meta">Двенадцать формул: оксид, кислота, основание или соль — и какой именно оксид: осно́вный, кислотный, амфотерный или несолеобразующий.</div><div class="trq" id="tc2q"></div><div class="trfig" id="tc2f"></div><div id="tc2a"></div><div class="trmsg" id="tc2m"></div><div class="trbar" id="tc2b"></div></div><div class="tr" id="tc3"><div class="trhead"><b>Тренажёр 3. Валентность</b><span class="trscore" id="tc3s"></span></div><div class="meta">Восемь заданий: найти валентность элемента по формуле. Считай через произведение валентности на число атомов — оно одинаково у обоих элементов.</div><div class="trq" id="tc3q"></div><div class="trfig" id="tc3f"></div><div id="tc3a"></div><div class="trmsg" id="tc3m"></div><div class="trbar" id="tc3b"></div></div><div class="tr" id="tc4"><div class="trhead"><b>Тренажёр 4. Составь формулу</b><span class="trscore" id="tc4s"></span></div><div class="meta">Восемь заданий на обратное действие: по валентностям и названиям собрать формулу. Ответ пишется в строку, без индексов: Al2O3, Ca3(PO4)2.</div><div class="trq" id="tc4q"></div><div class="trfig" id="tc4f"></div><div id="tc4a"></div><div class="trmsg" id="tc4m"></div><div class="trbar" id="tc4b"></div></div><div class="tr" id="tc5"><div class="trhead"><b>Тренажёр 5. Степень окисления</b><span class="trscore" id="tc5s"></span></div><div class="meta">Восемь заданий. В ответе обязательно ставь знак: +6, −2, 0. Здесь проверяются и исключения — простые вещества и пероксид.</div><div class="trq" id="tc5q"></div><div class="trfig" id="tc5f"></div><div id="tc5a"></div><div class="trmsg" id="tc5m"></div><div class="trbar" id="tc5b"></div></div><div class="tr" id="tc6"><div class="trhead"><b>Тренажёр 6. Расстановка коэффициентов</b><span class="trscore" id="tc6s"></span></div><div class="meta">Восемь уравнений. Ответ — сумма всех коэффициентов. В разборе каждый раз показано, с какого элемента начинать и почему кислород считают последним.</div><div class="trq" id="tc6q"></div><div class="trfig" id="tc6f"></div><div id="tc6a"></div><div class="trmsg" id="tc6m"></div><div class="trbar" id="tc6b"></div></div><div class="tr" id="tc7"><div class="trhead"><b>Тренажёр 7. Пойдёт ли реакция</b><span class="trscore" id="tc7s"></span></div><div class="meta">Двенадцать схем: выбрать продукты или понять, что реакция не идёт. Опирайся на ряд активности и на таблицы свойств классов.</div><div class="trq" id="tc7q"></div><div class="trfig" id="tc7f"></div><div id="tc7a"></div><div class="trmsg" id="tc7m"></div><div class="trbar" id="tc7b"></div></div>
+</div>
+
+<div class="card">
+  <h2>Домашнее задание</h2>
+  <div class="meta">Шесть задач базы, пять среднего уровня и три посложнее.
+  Решай по порядку — они выстроены от простого к сложному.</div>
+</div>
+<div id="tasks"></div>
+
+<div class="card sheet">
+  <h2>Шпаргалка</h2>
+  <div class="meta">Этот блок печатается отдельно на один лист A4: Ctrl+P (⌘+P) → печать.</div>
+  <p class="f-formula"><b>Классы.</b> Оксид — два элемента, второй кислород.
+  Кислота — водород плюс кислотный остаток. Основание — металл плюс группы OH.
+  Соль — металл плюс кислотный остаток.</p>
+  <p class="f-formula"><b>Валентность.</b> Произведение валентности на число атомов
+  одинаково для обоих элементов. Формулу составляют через НОК: индекс = НОК : валентность.
+  Постоянные: H, Li, Na, K, Ag — I; O, Mg, Ca, Ba, Zn — II; Al — III.</p>
+  <p class="f-formula"><b>Степень окисления.</b> В простом веществе 0; у H +1
+  (в гидридах −1); у O −2 (в пероксидах −1); у F всегда −1; сумма в молекуле равна нулю.</p>
+  <p class="f-formula"><b>Коэффициенты.</b> Индексы не менять. Порядок: металл → остальные
+  неметаллы → водород → кислород. Чётное против нечётного — удвоить. В конце проверить
+  каждый элемент и сократить общий делитель.</p>
+<div class="scroll"><table class="wrap-t"><tr><th>кислота</th><th>название</th><th>остаток</th><th>соль</th></tr><tr><td>HCl</td><td>хлороводородная</td><td>Cl</td><td>хлорид</td></tr><tr><td>H<sub>2</sub>S</td><td>сероводородная</td><td>S</td><td>сульфид</td></tr><tr><td>HNO<sub>3</sub></td><td>азотная</td><td>NO<sub>3</sub></td><td>нитрат</td></tr><tr><td>HNO<sub>2</sub></td><td>азотистая</td><td>NO<sub>2</sub></td><td>нитрит</td></tr><tr><td>H<sub>2</sub>SO<sub>4</sub></td><td>серная</td><td>SO<sub>4</sub></td><td>сульфат</td></tr><tr><td>H<sub>2</sub>SO<sub>3</sub></td><td>сернистая</td><td>SO<sub>3</sub></td><td>сульфит</td></tr><tr><td>H<sub>2</sub>CO<sub>3</sub></td><td>угольная</td><td>CO<sub>3</sub></td><td>карбонат</td></tr><tr><td>H<sub>2</sub>SiO<sub>3</sub></td><td>кремниевая</td><td>SiO<sub>3</sub></td><td>силикат</td></tr><tr><td>H<sub>3</sub>PO<sub>4</sub></td><td>фосфорная</td><td>PO<sub>4</sub></td><td>фосфат</td></tr></table></div>
+  <p class="f-formula"><b>Оксиды.</b> Осно́вный + кислота = соль + вода; + кислотный оксид = соль;
+  + вода = щёлочь (только щелочные и щёлочноземельные металлы).
+  Кислотный + щёлочь = соль + вода; + осно́вный оксид = соль; + вода = кислота (кроме SiO<sub>2</sub>).
+  Амфотерный (ZnO, Al<sub>2</sub>O<sub>3</sub>, BeO) реагирует и с кислотами, и со щелочами.
+  Несолеобразующие: CO, NO, SiO.</p>
+  <p class="f-formula"><b>Кислоты:</b> металл до H → соль + H<sub>2</sub>↑; осно́вный оксид,
+  основание → соль + вода; соль → если осадок или газ.
+  <b>Основания:</b> кислота → соль + вода; щёлочь + кислотный оксид → соль + вода;
+  щёлочь + соль → если осадок. Нерастворимые при нагревании разлагаются на оксид и воду.
+  <b>Соли:</b> более активный металл вытесняет менее активный; с кислотой, щёлочью
+  или другой солью — только если выпадает осадок или выделяется газ.</p>
+<p class="f-formula"><b>Ряд активности:</b></p><div class="ryad">K Ca Na Mg Al Zn Fe Ni Sn Pb <b>(H)</b> Cu Hg Ag Pt Au</div><p class="f-formula">Левее — активнее. Металлы до H вытесняют водород из растворов кислот, после H — нет.</p>
+  <p class="f-formula"><b>Индикаторы.</b> Кислота: лакмус красный, метилоранж
+  розово-красный, фенолфталеин бесцветный. Щёлочь: лакмус синий, метилоранж жёлтый,
+  фенолфталеин малиновый. Нерастворимые основания окраску не меняют.
+  &nbsp;<b>Расчёты:</b> n = m : M, n = V : 22,4 (газ, н. у.), w = m(части) : m(целого).</p>
+</div>
+
+<div class="card">
+  <h2>Шаг 1. Фото решений — по желанию</h2>
+  <div class="meta">В поле уходит только число, а преподаватель смотрит ещё и уравнения
+  с расчётом. Фото прикладывать не обязательно, но с ними разбор будет точнее.</div>
+  <ol class="steps-list">
+    <li>Записывай уравнения полностью, с коэффициентами и знаками ↓ и ↑.</li>
+    <li>В расчётных задачах показывай, что нашёл: количество вещества, массу, долю.</li>
+    <li>Сфотографируй страницы при дневном свете, чтобы формулы читались.</li>
+    <li>Фото можно приложить несколько сразу.</li>
+  </ol>
+  <input type="file" id="photos" accept="image/*" multiple style="margin-top:12px">
+  <div class="thumbs" id="thumbs"></div>
+</div>
+
+<div class="card">
+  <h2>Шаг 2. Отправь работу</h2>
+  <div class="meta">Проверь, что вверху страницы написано твоё имя. Фото — по желанию.
+  По кнопке ответы, результат и фотографии уходят преподавателю. Вторая кнопка
+  просто сохраняет копию тебе на устройство.</div>
+  <div class="row" style="margin-top:12px">
+    <button class="pri" id="send">Отправить на проверку</button>
+    <button id="report">Скачать копию себе</button>
+  </div>
+  <div id="repnote" class="meta" style="margin-top:8px"></div>
+</div>
+
+</div>
+
+<div class="bar">
+  <button class="pri" id="checkall">Проверить всё</button>
+  <span id="progress" class="meta">решено 0 из 14</span>
+</div>
+
+<script>
+var CF = {"c1": "<div class=\"chf\">HCl,&nbsp; Ca(OH)<sub>2</sub>,&nbsp; SO<sub>3</sub>,&nbsp; Al(OH)<sub>3</sub>,&nbsp; Li<sub>3</sub>PO<sub>4</sub>,&nbsp; K<sub>2</sub>S,&nbsp; N<sub>2</sub>O<sub>5</sub>,&nbsp; H<sub>2</sub>SiO<sub>3</sub></div>", "c2": "<div class=\"chf\">NaOH,&nbsp; P<sub>2</sub>O<sub>5</sub>,&nbsp; H<sub>3</sub>PO<sub>4</sub>,&nbsp; Na<sub>2</sub>SiO<sub>3</sub>,&nbsp; CaO,&nbsp; HNO<sub>3</sub>,&nbsp; Fe(OH)<sub>2</sub>,&nbsp; BaCO<sub>3</sub></div>", "c3": "<div class=\"chf\">SO<sub>3</sub></div>", "c4": "<div class=\"chf\">N<sub>2</sub>O<sub>5</sub></div>", "c5": "<div class=\"chf\">H<sub>2</sub>S</div>", "c6": "<div class=\"chf\">KClO<sub>3</sub></div>", "c7": "<div class=\"chf\">Al + O<sub>2</sub> → Al<sub>2</sub>O<sub>3</sub></div>", "c8": "<div class=\"chf\">Al(OH)<sub>3</sub> + HCl → AlCl<sub>3</sub> + H<sub>2</sub>O</div>", "c9": "<div class=\"chf\">Fe(OH)<sub>3</sub> + H<sub>2</sub>SO<sub>4</sub> → Fe<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub> + H<sub>2</sub>O</div>", "c10": "<div class=\"chf\">P<sub>2</sub>O<sub>5</sub> + NaOH → Na<sub>3</sub>PO<sub>4</sub> + H<sub>2</sub>O</div>", "c11": "<div class=\"chf\">Fe,&nbsp; Cu,&nbsp; Zn,&nbsp; Ag,&nbsp; Mg</div>", "c12": "<div class=\"chf\">CO<sub>2</sub>,&nbsp; CaO,&nbsp; SO<sub>2</sub>,&nbsp; Na<sub>2</sub>O,&nbsp; SiO<sub>2</sub></div>", "c13": "<div class=\"chf\">BaCl<sub>2</sub> + H<sub>2</sub>SO<sub>4</sub> → BaSO<sub>4</sub>↓ + HCl</div>", "c14": "<div class=\"chf\">Mg + 2HCl = MgCl<sub>2</sub> + H<sub>2</sub>↑</div>"};
+
+"use strict";
+var started = Date.now();
+
+/* ---------- данные задач; ответы закодированы, чтобы не читались в исходнике ---------- */
+function e(s){return btoa(unescape(encodeURIComponent(s)));}
+function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return s;}}
+
+var TASKS = [
+ {id:1,lvl:"база",type:"num",text:"Сколько среди этих веществ <b>оксидов</b>? В ответе напиши число.",ans:[e("2")],img:CF["c1"],
+  hints:["Оксид — сложное вещество из двух элементов, второй из которых кислород.",
+         "Формулы с группой OH — это основания, а не оксиды.",
+         "Проверь SO<sub>3</sub> и N<sub>2</sub>O<sub>5</sub>: в обеих ровно два элемента."],
+  sol:"<div class='step'>1. Разбираем список по классам.</div>"+
+      "<div class='step'>Оксиды (два элемента, второй кислород): SO<sub>3</sub>, N<sub>2</sub>O<sub>5</sub>.</div>"+
+      "<div class='step'>Кислоты (начинаются с H): HCl, H<sub>2</sub>SiO<sub>3</sub>.</div>"+
+      "<div class='step'>Основания (металл и OH): Ca(OH)<sub>2</sub>, Al(OH)<sub>3</sub>.</div>"+
+      "<div class='step'>Соли (металл и кислотный остаток): Li<sub>3</sub>PO<sub>4</sub>, K<sub>2</sub>S.</div>"+
+      "<div class='step'><b>Ответ: 2.</b></div>"+
+      "<div class='step mini'>Ловушка: H<sub>2</sub>SiO<sub>3</sub> — кислота, хотя кислород в ней есть. Оксид состоит ровно из двух элементов.</div>"},
+
+ {id:2,lvl:"база",type:"num",text:"Сколько среди этих веществ <b>солей</b>? В ответе напиши число.",ans:[e("2")],img:CF["c2"],
+  hints:["Соль — металл плюс кислотный остаток, водорода в начале формулы нет.",
+         "NaOH и Fe(OH)<sub>2</sub> — основания, у них группа OH.",
+         "Смотри на Na<sub>2</sub>SiO<sub>3</sub> и BaCO<sub>3</sub>."],
+  sol:"<div class='step'>1. Оксиды: P<sub>2</sub>O<sub>5</sub>, CaO.</div>"+
+      "<div class='step'>2. Кислоты: H<sub>3</sub>PO<sub>4</sub>, HNO<sub>3</sub>.</div>"+
+      "<div class='step'>3. Основания: NaOH, Fe(OH)<sub>2</sub>.</div>"+
+      "<div class='step'>4. Соли: Na<sub>2</sub>SiO<sub>3</sub> — силикат натрия, BaCO<sub>3</sub> — карбонат бария.</div>"+
+      "<div class='step'><b>Ответ: 2.</b></div>"},
+
+ {id:3,lvl:"база",type:"num",text:"Чему равна валентность серы в этом оксиде? В ответе напиши число.",ans:[e("6")],img:CF["c3"],
+  hints:["У кислорода валентность всегда II.",
+         "Атомов кислорода три: произведение 2 · 3 = 6.",
+         "У серы атом один, значит её валентность равна 6 : 1."],
+  sol:"<div class='step'>1. Кислород: валентность II, атомов 3, произведение 2 · 3 = 6.</div>"+
+      "<div class='step'>2. По правилу валентности у серы произведение такое же — 6.</div>"+
+      "<div class='step'>3. Атом серы один, значит валентность серы 6 : 1 = VI.</div>"+
+      "<div class='step'><b>Ответ: 6.</b></div>"+
+      "<div class='step mini'>Проверь себя на SO<sub>2</sub>: там 2 · 2 = 4, валентность серы IV. Валентность серы переменная.</div>"},
+
+ {id:4,lvl:"база",type:"num",text:"Чему равна валентность азота в этом оксиде? В ответе напиши число.",ans:[e("5")],img:CF["c4"],
+  hints:["Кислород II, атомов кислорода пять.",
+         "Произведение по кислороду: 2 · 5 = 10.",
+         "Атомов азота два, значит 10 : 2."],
+  sol:"<div class='step'>1. Кислород: 2 · 5 = 10.</div>"+
+      "<div class='step'>2. Такое же произведение у азота: 10.</div>"+
+      "<div class='step'>3. Атомов азота два, валентность 10 : 2 = V.</div>"+
+      "<div class='step'><b>Ответ: 5.</b></div>"+
+      "<div class='step mini'>Этому оксиду соответствует азотная кислота HNO<sub>3</sub> — степень окисления азота в ней тоже +5.</div>"},
+
+ {id:5,lvl:"база",type:"num",text:"Чему равна степень окисления серы в сероводороде? В ответе обязательно поставь знак, например +3 или −2.",ans:[e("-2")],img:CF["c5"],
+  hints:["У водорода в соединениях с неметаллами степень окисления +1.",
+         "Атомов водорода два: 2 · (+1) = +2.",
+         "Сумма всех степеней окисления в молекуле равна нулю."],
+  sol:"<div class='step'>1. Водород: 2 · (+1) = +2.</div>"+
+      "<div class='step'>2. Пусть у серы x. Сумма равна нулю:</div>"+
+      "<div class='fx'>(+2) + x = 0,&nbsp; x = −2</div>"+
+      "<div class='step'><b>Ответ: −2.</b></div>"+
+      "<div class='step mini'>Обрати внимание: валентность серы здесь II, а степень окисления −2. Числа совпали, но знак есть только у степени окисления.</div>"},
+
+ {id:6,lvl:"база",type:"num",text:"Чему равна степень окисления хлора в этой соли? В ответе обязательно поставь знак.",ans:[e("+5")],img:CF["c6"],
+  hints:["Калий — металл главной подгруппы I, у него всегда +1.",
+         "Кислород −2, атомов три: 3 · (−2) = −6.",
+         "Составь уравнение: (+1) + x + (−6) = 0."],
+  sol:"<div class='step'>1. Калий +1, кислород 3 · (−2) = −6.</div>"+
+      "<div class='step'>2. Пусть у хлора x:</div>"+
+      "<div class='fx'>(+1) + x + (−6) = 0,&nbsp; x = +5</div>"+
+      "<div class='step'><b>Ответ: +5.</b></div>"+
+      "<div class='step mini'>KClO<sub>3</sub> — бертолетова соль, хлорат калия. В HCl у хлора −1, здесь +5: степень окисления хлора меняется очень широко.</div>"},
+
+ {id:7,lvl:"средний",type:"num",text:"Расставь коэффициенты и найди их сумму. Единичные коэффициенты тоже считаются.",ans:[e("9")],img:CF["c7"],
+  hints:["Начинай не с алюминия, а с кислорода: слева его 2, справа 3.",
+         "НОК(2, 3) = 6: ставим 3 перед O<sub>2</sub> и 2 перед Al<sub>2</sub>O<sub>3</sub>.",
+         "Теперь алюминия справа 4 — уравняй его слева."],
+  sol:"<div class='step'>1. Кислород: слева 2, справа 3, НОК = 6. Значит 3O<sub>2</sub> и 2Al<sub>2</sub>O<sub>3</sub>.</div>"+
+      "<div class='step'>2. Алюминия справа стало 2 · 2 = 4, ставим 4 слева.</div>"+
+      "<div class='fx'>4Al + 3O<sub>2</sub> = 2Al<sub>2</sub>O<sub>3</sub></div>"+
+      "<div class='step'>3. Проверка: Al 4 = 4, O 6 = 6 ✓</div>"+
+      "<div class='step'><b>Сумма: 4 + 3 + 2 = 9.</b></div>"},
+
+ {id:8,lvl:"средний",type:"num",text:"Расставь коэффициенты. Какой коэффициент стоит перед HCl?",ans:[e("3")],img:CF["c8"],
+  hints:["Алюминий уже уравнен: слева один, справа один.",
+         "Хлора справа 3 — столько же должно быть и слева.",
+         "Потом проверь водород: слева 3 + 3 = 6, справа 2 · 3 = 6."],
+  sol:"<div class='step'>1. Алюминия по одному с каждой стороны — его не трогаем.</div>"+
+      "<div class='step'>2. Хлора справа три (AlCl<sub>3</sub>), значит перед HCl нужен коэффициент 3.</div>"+
+      "<div class='step'>3. Водорода слева 3 (из OH) + 3 (из HCl) = 6, значит справа 3H<sub>2</sub>O.</div>"+
+      "<div class='fx'>Al(OH)<sub>3</sub> + 3HCl = AlCl<sub>3</sub> + 3H<sub>2</sub>O</div>"+
+      "<div class='step'><b>Ответ: 3.</b></div>"+
+      "<div class='step mini'>Это типичная реакция нейтрализации: основание + кислота = соль + вода.</div>"},
+
+ {id:9,lvl:"средний",type:"num",text:"Расставь коэффициенты и найди их сумму.",ans:[e("12")],img:CF["c9"],
+  hints:["Железа справа 2 — ставь 2 перед Fe(OH)<sub>3</sub>.",
+         "Групп SO<sub>4</sub> справа 3 — значит 3 перед H<sub>2</sub>SO<sub>4</sub>.",
+         "Водорода слева 2 · 3 + 3 · 2 = 12, отсюда коэффициент перед водой."],
+  sol:"<div class='step'>1. Железо: справа 2, ставим 2 перед Fe(OH)<sub>3</sub>.</div>"+
+      "<div class='step'>2. Остатки SO<sub>4</sub>: справа 3, ставим 3 перед кислотой.</div>"+
+      "<div class='step'>3. Водород: слева 6 + 6 = 12, значит справа 6H<sub>2</sub>O.</div>"+
+      "<div class='fx'>2Fe(OH)<sub>3</sub> + 3H<sub>2</sub>SO<sub>4</sub> = Fe<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub> + 6H<sub>2</sub>O</div>"+
+      "<div class='step'>4. Проверка по кислороду: слева 6 + 12 = 18, справа 12 + 6 = 18 ✓</div>"+
+      "<div class='step'><b>Сумма: 2 + 3 + 1 + 6 = 12.</b></div>"},
+
+ {id:10,lvl:"средний",type:"num",text:"Расставь коэффициенты. Какой коэффициент стоит перед NaOH?",ans:[e("6")],img:CF["c10"],
+  hints:["Фосфора слева 2 — значит справа 2Na<sub>3</sub>PO<sub>4</sub>.",
+         "Тогда натрия справа 2 · 3 = 6.",
+         "Столько же натрия должно быть и слева."],
+  sol:"<div class='step'>1. Фосфор: слева 2, ставим 2 перед Na<sub>3</sub>PO<sub>4</sub>.</div>"+
+      "<div class='step'>2. Натрий: справа 2 · 3 = 6, значит перед NaOH коэффициент 6.</div>"+
+      "<div class='step'>3. Водород: слева 6, справа 3H<sub>2</sub>O.</div>"+
+      "<div class='fx'>P<sub>2</sub>O<sub>5</sub> + 6NaOH = 2Na<sub>3</sub>PO<sub>4</sub> + 3H<sub>2</sub>O</div>"+
+      "<div class='step'>4. Проверка по кислороду: слева 5 + 6 = 11, справа 8 + 3 = 11 ✓</div>"+
+      "<div class='step'><b>Ответ: 6.</b></div>"},
+
+ {id:11,lvl:"средний",type:"num",text:"Сколько из этих металлов реагируют с раствором соляной кислоты? В ответе напиши число.",ans:[e("3")],img:CF["c11"],
+  hints:["Работает ряд активности металлов: K Ca Na Mg Al Zn Fe Ni Sn Pb (H) Cu Hg Ag Pt Au.",
+         "Водород из кислоты вытесняют только металлы, стоящие в ряду до водорода.",
+         "Найди в списке те, что стоят правее водорода, — они не реагируют."],
+  sol:"<div class='step'>1. Смотрим ряд активности: до водорода стоят Mg, Zn, Fe; после — Cu и Ag.</div>"+
+      "<div class='step'>2. Значит реагируют железо, цинк и магний:</div>"+
+      "<div class='fx'>Zn + 2HCl = ZnCl<sub>2</sub> + H<sub>2</sub>↑</div>"+
+      "<div class='step'>3. Медь и серебро с соляной кислотой не реагируют.</div>"+
+      "<div class='step'><b>Ответ: 3.</b></div>"},
+
+ {id:12,lvl:"сложный",type:"num",text:"Сколько из этих оксидов реагируют с водой? В ответе напиши число.",ans:[e("4")],img:CF["c12"],
+  hints:["Кислотные оксиды реагируют с водой все, кроме одного.",
+         "Осно́вные оксиды реагируют с водой только у щелочных и щёлочноземельных металлов.",
+         "Вспомни, какой оксид кремния с водой не взаимодействует."],
+  sol:"<div class='step'>1. CO<sub>2</sub> и SO<sub>2</sub> — кислотные оксиды, с водой дают H<sub>2</sub>CO<sub>3</sub> и H<sub>2</sub>SO<sub>3</sub>.</div>"+
+      "<div class='step'>2. CaO и Na<sub>2</sub>O — оксиды щёлочноземельного и щелочного металлов, дают щёлочи:</div>"+
+      "<div class='fx'>CaO + H<sub>2</sub>O = Ca(OH)<sub>2</sub>,&nbsp;&nbsp; Na<sub>2</sub>O + H<sub>2</sub>O = 2NaOH</div>"+
+      "<div class='step'>3. SiO<sub>2</sub> — единственное исключение: с водой не реагирует.</div>"+
+      "<div class='step'><b>Ответ: 4.</b></div>"+
+      "<div class='step mini'>Если бы в списке был CuO, он тоже не считался бы: медь не щелочной и не щёлочноземельный металл.</div>"},
+
+ {id:13,lvl:"сложный",type:"num",text:"К раствору, содержащему 0,2 моль хлорида бария, добавили избыток серной кислоты. Какая масса осадка выпадет (в граммах)? Ar: Ba 137, S 32, O 16.",ans:[e("46,6")],img:CF["c13"],
+  hints:["Осадок здесь — сульфат бария BaSO<sub>4</sub>, он нерастворим.",
+         "По уравнению из 1 моль BaCl<sub>2</sub> получается 1 моль BaSO<sub>4</sub>.",
+         "M(BaSO<sub>4</sub>) = 137 + 32 + 4 · 16."],
+  sol:"<div class='step'>1. Записываем уравнение:</div>"+
+      "<div class='fx'>BaCl<sub>2</sub> + H<sub>2</sub>SO<sub>4</sub> = BaSO<sub>4</sub>↓ + 2HCl</div>"+
+      "<div class='step'>2. Кислота в избытке, значит считаем по хлориду бария. Коэффициенты 1 : 1, поэтому n(BaSO<sub>4</sub>) = 0,2 моль.</div>"+
+      "<div class='step'>3. M(BaSO<sub>4</sub>) = 137 + 32 + 64 = 233 г/моль.</div>"+
+      "<div class='fx'>m = n · M = 0,2 · 233 = 46,6 (г)</div>"+
+      "<div class='step'><b>Ответ: 46,6.</b></div>"},
+
+ {id:14,lvl:"сложный",type:"num",text:"Смесь порошков магния и меди общей массой 10 г внесли в соляную кислоту (избыток). Выделилось 4,48 дм³ газа (н. у.). Рассчитай массовую долю меди в исходной смеси (в процентах). Ar: Mg 24. Vm = 22,4 дм³/моль.",ans:[e("52")],img:CF["c14"],
+  hints:["Медь стоит в ряду активности после водорода — с кислотой она не реагирует вовсе.",
+         "n(H<sub>2</sub>) = V : V<sub>m</sub> = 4,48 : 22,4.",
+         "По уравнению магния столько же моль, сколько водорода."],
+  sol:"<div class='step'>1. С кислотой реагирует только магний:</div>"+
+      "<div class='fx'>Mg + 2HCl = MgCl<sub>2</sub> + H<sub>2</sub>↑</div>"+
+      "<div class='step'>2. n(H<sub>2</sub>) = 4,48 : 22,4 = 0,2 моль. Коэффициенты 1 : 1, значит n(Mg) = 0,2 моль.</div>"+
+      "<div class='step'>3. m(Mg) = 0,2 · 24 = 4,8 г, тогда m(Cu) = 10 − 4,8 = 5,2 г.</div>"+
+      "<div class='fx'>w(Cu) = 5,2 : 10 = 0,52 = 52 %</div>"+
+      "<div class='step'><b>Ответ: 52.</b></div>"+
+      "<div class='step mini'>Проверка: доля обязана быть между 0 и 100, а масса меди — меньше массы всей смеси ✓</div>"}
+];
+
+/* ---------- разбор ответа ---------- */
+function norm(s){
+  return String(s).toLowerCase().replace(/\s+/g,"")
+    .replace(/[\u2013\u2014\u2212]/g,"-")
+    .replace(/[\u00d7\u00b7]/g,"*")
+    .replace(/,/g,".")
+    .replace(/^(ответ:?|x=|y=|α=|a=)/,"");
+}
+function toNum(str){
+  var t = norm(str);
+  if(!t) return NaN;
+  t = t.replace(/\u221a/g,"sqrt").replace(/\u03c0/g,"pi");
+  t = t.replace(/sqrt(\d+(?:\.\d+)?)/g,"sqrt($1)");
+  t = t.replace(/(\d)sqrt/g,"$1*sqrt");
+  t = t.replace(/(\d)pi/g,"$1*pi");
+  t = t.replace(/(\d)\(/g,"$1*(").replace(/\)(\d)/g,")*$1").replace(/\)\(/g,")*(");
+  if(!/^[-+*/().0-9a-z]+$/.test(t)) return NaN;
+  if(t.replace(/sqrt|pi/g,"").match(/[a-z]/)) return NaN;
+  try{
+    var v = new Function("sqrt","pi","return ("+t+");")(Math.sqrt, Math.PI);
+    return (typeof v === "number" && isFinite(v)) ? v : NaN;
+  }catch(err){ return NaN; }
+}
+function same(given, right, tol){
+  var a = toNum(given), b = toNum(right);
+  if(!isNaN(a) && !isNaN(b)){
+    var t = tol || 1e-9;
+    return Math.abs(a-b) <= Math.max(t, Math.abs(b)*t);
+  }
+  return norm(given) === norm(right);
+}
+
+/* ---------- отрисовка ---------- */
+var state = {};
+var box = document.getElementById("tasks");
+
+TASKS.forEach(function(t){
+  state[t.id] = {tries:0, hints:0, done:false, ok:false, given:"", sel:null};
+  var el = document.createElement("div");
+  el.className = "task"; el.id = "t"+t.id;
+  var body = '<div><span class="tnum">'+t.id+'.</span>'+t.text+
+             '<span class="lvl">'+t.lvl+'</span></div>';
+  if(t.img){ body += '<div class="fig">'+t.img+'</div>'; }
+  if(t.type === "choice"){
+    body += '<div class="opts">'+t.options.map(function(o,i){
+      return '<label class="opt" data-v="'+o+'"><input type="radio" name="q'+t.id+'" value="'+o+'"> '+o+'</label>';
+    }).join("")+'</div>';
+  } else {
+    body += '<div class="keys">'+
+      ["−",",","+"].map(function(k){
+        return '<button class="key" data-k="'+k+'" type="button">'+k+'</button>';}).join("")+
+      '</div><input type="text" id="in'+t.id+'" inputmode="text" autocapitalize="off" '+
+      'autocorrect="off" autocomplete="off" spellcheck="false" placeholder="ответ">';
+  }
+  body += '<div class="row" style="margin-top:10px">'+
+          '<button class="pri sm chk">Проверить</button>'+
+          '<button class="sm hnt">Подсказка</button></div>'+
+          '<div class="hints"></div><div class="verdict"></div><div class="sol"></div>';
+  el.innerHTML = body;
+  box.appendChild(el);
+
+  el.querySelectorAll(".key").forEach(function(b){
+    b.addEventListener("click", function(){
+      var inp = document.getElementById("in"+t.id);
+      var k = b.dataset.k === "−" ? "-" : b.dataset.k;
+      var s = inp.selectionStart || inp.value.length;
+      inp.value = inp.value.slice(0,s) + k + inp.value.slice(inp.selectionEnd || s);
+      inp.focus(); inp.setSelectionRange(s+k.length, s+k.length);
+    });
+  });
+  if(t.type === "choice"){
+    el.querySelectorAll(".opt").forEach(function(l){
+      l.addEventListener("click", function(){
+        el.querySelectorAll(".opt").forEach(function(x){x.classList.remove("sel");});
+        l.classList.add("sel"); state[t.id].sel = l.dataset.v;
+      });
+    });
+  } else {
+    el.querySelector("#in"+t.id).addEventListener("keydown", function(ev){
+      if(ev.key === "Enter"){ ev.preventDefault(); check(t.id); }
+    });
+  }
+  el.querySelector(".chk").addEventListener("click", function(){ check(t.id); });
+  el.querySelector(".hnt").addEventListener("click", function(){ hint(t.id); });
+});
+
+function hint(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var host = document.querySelector("#t"+id+" .hints");
+  if(s.hints >= t.hints.length){
+    if(!host.querySelector(".last")){
+      var w = document.createElement("div");
+      w.className = "hint last"; w.textContent = "Подсказки закончились — нажми «Проверить», решение откроется после второй попытки.";
+      host.appendChild(w);
+    }
+    return;
+  }
+  var h = document.createElement("div");
+  h.className = "hint";
+  h.textContent = "Подсказка " + (s.hints+1) + ": " + t.hints[s.hints];
+  host.appendChild(h);
+  s.hints++;
+}
+
+function check(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var el = document.getElementById("t"+id);
+  var v = document.querySelector(".verdict");
+  v = el.querySelector(".verdict");
+  var given = (t.type === "choice") ? (s.sel || "") :
+              (document.getElementById("in"+id).value || "");
+  if(!given.trim()){ v.className = "verdict bad"; v.textContent = "Введи ответ."; return; }
+  s.given = given; s.tries++;
+  var ok = t.ans.some(function(a){ return same(given, d(a), t.tol); });
+  s.ok = ok; s.done = ok || s.tries >= 2;
+  el.classList.remove("ok","bad");
+  el.classList.add(ok ? "ok" : "bad");
+  v.className = "verdict " + (ok ? "ok" : "bad");
+  if(ok){
+    v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    showSol(el, t);
+  } else if(s.tries === 1){
+    v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+  } else {
+    v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    showSol(el, t);
+  }
+  progress();
+}
+function showSol(el, t){
+  var host = el.querySelector(".sol");
+  if(host.dataset.on) return;
+  host.dataset.on = "1";
+  var det = document.createElement("details");
+  det.open = true;
+  det.innerHTML = "<summary>Решение</summary><div class='step'>"+t.sol+"</div>";
+  host.appendChild(det);
+}
+function progress(){
+  var done = TASKS.filter(function(t){return state[t.id].done;}).length;
+  var ok = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  document.getElementById("progress").textContent =
+    "решено " + done + " из " + TASKS.length + " · верно " + ok;
+}
+document.getElementById("checkall").addEventListener("click", function(){
+  TASKS.forEach(function(t){
+    var s = state[t.id];
+    var given = (t.type === "choice") ? (s.sel || "") : (document.getElementById("in"+t.id).value || "");
+    if(given.trim() && !s.done) check(t.id);
+  });
+  var first = TASKS.find(function(t){ return !state[t.id].done; });
+  var note = first ? "Осталась задача " + first.id + "." : "Все задачи закрыты.";
+  document.getElementById("progress").textContent += " · " + note;
+});
+progress();
+
+/* ---------- фото ---------- */
+var photos = [];
+document.getElementById("photos").addEventListener("change", function(ev){
+  var files = Array.prototype.slice.call(ev.target.files || []);
+  files.forEach(function(f){
+    var r = new FileReader();
+    r.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var m = 1400, w = img.width, h = img.height;
+        if(Math.max(w,h) > m){ var k = m/Math.max(w,h); w = Math.round(w*k); h = Math.round(h*k); }
+        var c = document.createElement("canvas"); c.width = w; c.height = h;
+        c.getContext("2d").drawImage(img, 0, 0, w, h);
+        photos.push({url: c.toDataURL("image/jpeg", 0.7), task: ""});
+        drawThumbs();
+      };
+      img.src = r.result;
+    };
+    r.readAsDataURL(f);
+  });
+  ev.target.value = "";
+});
+function drawThumbs(){
+  var host = document.getElementById("thumbs");
+  host.innerHTML = "";
+  var total = 0;
+  photos.forEach(function(p, i){
+    total += p.url.length * 0.75;
+    var d0 = document.createElement("div"); d0.className = "thumb";
+    var opts = '<option value="">задача…</option>' + TASKS.map(function(t){
+      return '<option value="'+t.id+'"'+(p.task==String(t.id)?" selected":"")+'>№'+t.id+'</option>';
+    }).join("");
+    d0.innerHTML = '<img src="'+p.url+'" alt="фото решения"><button type="button">×</button>'+
+                   '<select>'+opts+'</select>';
+    d0.querySelector("button").addEventListener("click", function(){ photos.splice(i,1); drawThumbs(); });
+    d0.querySelector("select").addEventListener("change", function(ev){ p.task = ev.target.value; });
+    host.appendChild(d0);
+  });
+  var note = document.getElementById("repnote");
+  if(total > 15e6){ note.textContent = "Фото уже больше 15 МБ — отчёт может отправляться долго, лишние лучше удалить."; }
+  else if(photos.length){ note.textContent = "Фото в отчёте: " + photos.length + "."; }
+  else { note.textContent = ""; }
+}
+
+/* ---------- отчёт ---------- */
+var ENDPOINT = "https://script.google.com/macros/s/AKfycbztH9c-wQuKC7pSfD8AcFfnOcGpSHxoeqovulmvLMp9W23SgFx9dDQ2JTlWcIJDMN6W/exec";
+var SECRET = "artteach2026";
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function buildReport(){
+  var name = (document.getElementById("name").value || "").trim() || "без имени";
+  var now = new Date();
+  var mins = Math.max(1, Math.round((Date.now()-started)/60000));
+  var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  var data = {tип:"дз", предмет:"математика", тема:"Основные классы неорганических веществ (химия, 9 класс)",
+    ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
+    верно:okN, всего:TASKS.length, задачи:[]};
+  var rows = TASKS.map(function(t){
+    var s = state[t.id];
+    data.задачи.push({n:t.id, условие:t.text.replace(/<[^>]+>/g,""), ответ_ученика:s.given,
+      верный_ответ:t.ans.map(d).join(" или "), верно:s.ok, попыток:s.tries, подсказок:s.hints,
+      уровень:t.lvl});
+    return "<tr><td>"+t.id+"</td><td style='text-align:left'>"+esc(t.text.replace(/<[^>]+>/g,""))+
+      "</td><td>"+esc(s.given||"—")+"</td><td>"+esc(t.ans.map(d).join(" / "))+"</td><td>"+
+      (s.ok?"верно":(s.given?"неверно":"не решал"))+"</td><td>"+s.tries+"</td><td>"+s.hints+"</td></tr>";
+  }).join("");
+  var pics = photos.map(function(p,i){
+    return "<figure><img src='"+p.url+"'><figcaption>Фото "+(i+1)+
+      (p.task?" — к задаче №"+p.task:"")+"</figcaption></figure>";
+  }).join("");
+  var html = "<!doctype html><html lang='ru'><head><meta charset='utf-8'>"+
+    "<meta name='viewport' content='width=device-width,initial-scale=1'>"+
+    "<title>Отчёт — "+esc(name)+" — основные классы неорганических веществ · 9 класс</title><style>"+
+    "body{font:16px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;padding:20px;color:#16181d;background:#fff}"+
+    "h1{font-size:22px;margin:0 0 4px}.m{color:#5b6270;font-size:15px}"+
+    "table{border-collapse:collapse;width:100%;margin-top:14px;font-size:15px}"+
+    "th,td{border:1px solid #dfe3ea;padding:6px 8px;text-align:center}th{background:#eef3fb}"+
+    "figure{margin:14px 0}img{max-width:100%;border:1px solid #dfe3ea;border-radius:8px}"+
+    "figcaption{color:#5b6270;font-size:14px;margin-top:4px}</style></head><body>"+
+    "<h1>Отчёт по домашнему заданию</h1>"+
+    "<div class='m'>Тема: основные классы неорганических веществ · химия, 9 класс</div>"+
+    "<div class='m'>Ученик: <b>"+esc(name)+"</b> · сдано: "+esc(now.toLocaleString("ru-RU"))+
+    " · время работы: около "+mins+" мин</div>"+
+    "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)</h2>"+
+    "<table><tr><th>№</th><th>Задача</th><th>Ответ ученика</th><th>Верный ответ</th>"+
+    "<th>Итог</th><th>Попыток</th><th>Подсказок</th></tr>"+rows+"</table>"+
+    (pics ? "<h2>Фото решений</h2>"+pics : "<p class='m'>Фото решений не прикреплены.</p>")+
+    "<script type='application/json' id='result-data'>"+
+    JSON.stringify(data).replace(/</g,"\\u003c")+"<\/script></body></html>";
+  var stamp = now.getDate()+"-"+(now.getMonth()+1);
+  return {
+    html: html,
+    name: name,
+    file: "Отчёт_Химия9_классы_веществ_"+name.replace(/\s+/g,"_")+"_"+stamp+".html",
+    caption: name+" · основные классы неорганических веществ · 9 класс · "+okN+" из "+TASKS.length+
+             " ("+Math.round(okN/TASKS.length*100)+"%)"
+  };
+}
+
+document.getElementById("send").addEventListener("click", function(){
+  var note = document.getElementById("repnote");
+  var who = (document.getElementById("name").value || "").trim();
+  if(!who){ note.className = "meta bad-note"; note.textContent = "Сначала впиши имя вверху страницы."; return; }
+  note.className = "meta";
+  var r = buildReport();
+  note.textContent = "Отправляю…";
+  var payload = {
+    secret: SECRET,
+    name: r.file,
+    caption: r.caption,
+    file: btoa(unescape(encodeURIComponent(r.html)))
+  };
+  fetch(ENDPOINT, {method:"POST", mode:"no-cors", body: JSON.stringify(payload)})
+    .then(function(){
+      note.textContent = "Отправлено преподавателю." +
+        (photos.length ? "" : " Фото решений не приложены — если решал в тетради, приложи их и отправь ещё раз.") +
+        " Если хочешь, сохрани копию себе кнопкой ниже.";
+    })
+    .catch(function(){
+      note.textContent = "Не получилось отправить. Скачай файл кнопкой ниже и пришли его вручную.";
+    });
+});
+
+document.getElementById("report").addEventListener("click", function(){
+  var r = buildReport();
+  var blob = new Blob([r.html], {type:"text/html;charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = r.file;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  document.getElementById("repnote").textContent = "Файл скачан — он в папке загрузок.";
+});
+
+
+/* ---------- движок тренажёров ---------- */
+function makeTrainer(id, items){
+  var q=document.getElementById(id+"q"), f=document.getElementById(id+"f"),
+      a=document.getElementById(id+"a"), m=document.getElementById(id+"m"),
+      b=document.getElementById(id+"b"), sc=document.getElementById(id+"s");
+  var order=[], perm=[], i=0, ok=0, answered=false;
+
+  function shuffle(n){
+    var arr=[], k, j, t;
+    for(k=0;k<n;k++) arr.push(k);
+    for(k=arr.length-1;k>0;k--){ j=Math.floor(Math.random()*(k+1)); t=arr[k]; arr[k]=arr[j]; arr[j]=t; }
+    return arr;
+  }
+  function norm(s){
+    return String(s).trim().toLowerCase().replace(/\s+/g,"").replace(/−/g,"-").replace(/,/g,".");
+  }
+  function same(x, y){
+    var p=parseFloat(norm(x)), r=parseFloat(norm(y));
+    if(isFinite(p) && isFinite(r)) return Math.abs(p-r) < 1e-9;
+    return norm(x) === norm(y);
+  }
+  function score(){
+    sc.textContent = "вопрос " + Math.min(i + 1, items.length) + " из " + items.length +
+                     " · верно " + ok;
+  }
+
+  function finish(){
+    q.innerHTML=""; f.innerHTML=""; a.innerHTML=""; m.innerHTML="";
+    var pct=Math.round(ok/items.length*100);
+    var word = pct===100 ? "Всё верно — тема закрыта." :
+               pct>=70 ? "Хорошо, но пару мест стоит перечитать." :
+               "Стоит вернуться к теории и пройти ещё раз.";
+    b.innerHTML='<div class="trdone" style="flex:1 1 100%">'+ok+" из "+items.length+
+      " ("+pct+" %) · "+word+'</div><button type="button" class="pri" data-go="1">Пройти заново</button>';
+    sc.textContent="готово";
+  }
+
+  function show(){
+    answered=false;
+    m.innerHTML=""; b.innerHTML="";
+    var t=items[order[i]];
+    q.innerHTML="<b>"+(i+1)+".</b> "+t.q;
+    f.innerHTML=t.fig || "";
+    f.style.display = t.fig ? "" : "none";
+    if(t.opts){
+      perm = shuffle(t.opts.length);          /* perm[позиция] = номер варианта в банке */
+      var html='<div class="tropts" id="'+id+'o">';
+      for(var k=0;k<perm.length;k++)
+        html+='<button type="button" class="tropt" data-k="'+perm[k]+'">'+t.opts[perm[k]]+'</button>';
+      a.innerHTML = html+"</div>";
+      var box=document.getElementById(id+"o");
+      box.addEventListener("click", function(ev){
+        var el=ev.target; while(el && el!==box && el.className.indexOf("tropt")<0) el=el.parentNode;
+        if(!el || el===box || answered) return;
+        pick(parseInt(el.getAttribute("data-k"),10), box);
+      });
+    } else {
+      a.innerHTML='<div class="trnum"><span>Ответ:</span>'+
+        '<input type="text" id="'+id+'i" inputmode="text" autocomplete="off" '+
+        'autocorrect="off" spellcheck="false" placeholder="число">'+
+        '<button type="button" class="pri" data-check="1">Проверить</button></div>';
+      var inp=document.getElementById(id+"i");
+      inp.addEventListener("keydown", function(ev){ if(ev.key==="Enter") check(); });
+    }
+    score();
+  }
+
+  function verdict(good, t){
+    answered=true;
+    if(good) ok++;
+    i++;
+    m.innerHTML='<div class="v '+(good?"ok":"bad")+'">'+(good?"Верно.":"Неверно.")+"</div>"+
+                '<div class="why">'+t.why+"</div>";
+    b.innerHTML = (i<items.length)
+      ? '<button type="button" class="pri" data-next="1">Дальше</button>'
+      : '<button type="button" class="pri" data-next="1">Показать итог</button>';
+    score();
+  }
+  function pick(k, box){
+    var t=items[order[i]], good = (k === t.ans);
+    var bs=box.querySelectorAll(".tropt");
+    for(var j=0;j<bs.length;j++){
+      var n=parseInt(bs[j].getAttribute("data-k"),10);
+      if(n===t.ans) bs[j].className="tropt right";
+      else if(n===k) bs[j].className="tropt wrong";
+    }
+    box.className="tropts done";
+    verdict(good, t);
+  }
+  function check(){
+    if(answered) return;
+    var t=items[order[i]], inp=document.getElementById(id+"i");
+    var v=(inp.value||"").trim();
+    if(!v){ m.innerHTML='<div class="why">Впиши ответ.</div>'; return; }
+    var good = t.ans.some(function(x){ return same(v, x); });
+    inp.disabled=true;
+    if(!good) m.innerHTML="";
+    verdict(good, t);
+    if(!good) m.innerHTML='<div class="v bad">Неверно. Правильный ответ: '+t.ans[0]+".</div>"+
+                          '<div class="why">'+t.why+"</div>";
+  }
+
+  b.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-next")){ if(i<items.length) show(); else finish(); }
+    if(el.getAttribute && el.getAttribute("data-go")){ start(); }
+  });
+  a.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-check")) check();
+  });
+
+  function start(){ order=shuffle(items.length); i=0; ok=0; show(); }
+  start();
+}
+
+makeTrainer("tc1", [{"q": "Как называется эта кислота?", "fig": "<div class=\"chf\">HNO<sub>3</sub></div>", "opts": ["азотная", "азотистая", "азотноватая", "аммиачная"], "ans": 0, "why": "В азотной кислоте три атома кислорода. Кислота с меньшим числом атомов кислорода — HNO<sub>2</sub> — называется азот<b>ист</b>ой. Суффикс «-ист-» всегда означает меньшую степень окисления."}, {"q": "Как называется эта кислота?", "fig": "<div class=\"chf\">H<sub>2</sub>SO<sub>3</sub></div>", "opts": ["сернистая", "серная", "сероводородная", "сульфатная"], "ans": 0, "why": "Серная — H<sub>2</sub>SO<sub>4</sub> (сера +6), сернистая — H<sub>2</sub>SO<sub>3</sub> (сера +4). Кислорода меньше — значит «-ист-»."}, {"q": "Как называется эта кислота?", "fig": "<div class=\"chf\">H<sub>2</sub>S</div>", "opts": ["сероводородная", "сернистая", "серная", "сульфидная"], "ans": 0, "why": "Кислорода в формуле нет — кислота бескислородная. Названия бескислородных кислот строятся как «…водородная»: H<sub>2</sub>S — сероводородная, HCl — хлороводородная."}, {"q": "Как называется эта кислота?", "fig": "<div class=\"chf\">H<sub>2</sub>SiO<sub>3</sub></div>", "opts": ["кремниевая", "силикатная", "кремнистая", "угольная"], "ans": 0, "why": "Si — кремний, значит кислота кремниевая. Её соли — силикаты. Это единственная нерастворимая кислота из школьного списка."}, {"q": "Как называется эта кислота?", "fig": "<div class=\"chf\">H<sub>3</sub>PO<sub>4</sub></div>", "opts": ["фосфорная", "фосфористая", "ортофосфатная", "фосфидная"], "ans": 0, "why": "H<sub>3</sub>PO<sub>4</sub> — фосфорная кислота, трёхосно́вная: три атома водорода способны замещаться металлом. Её соли — фосфаты."}, {"q": "Какая кислота даёт соли-<b>карбонаты</b>?", "fig": "", "opts": ["H<sub>2</sub>CO<sub>3</sub>", "H<sub>2</sub>SiO<sub>3</sub>", "HCl", "HNO<sub>3</sub>"], "ans": 0, "why": "Карбонаты — соли угольной кислоты H<sub>2</sub>CO<sub>3</sub>, остаток CO<sub>3</sub>. Например мел CaCO<sub>3</sub>."}, {"q": "Какая кислота даёт соли-<b>сульфаты</b>?", "fig": "", "opts": ["H<sub>2</sub>SO<sub>4</sub>", "H<sub>2</sub>SO<sub>3</sub>", "H<sub>2</sub>S", "HNO<sub>3</sub>"], "ans": 0, "why": "Сульфаты — соли серной кислоты (остаток SO<sub>4</sub>). От H<sub>2</sub>SO<sub>3</sub> идут сульфиты, от H<sub>2</sub>S — сульфиды."}, {"q": "Как называется соль с остатком NO<sub>3</sub>?", "fig": "<div class=\"chf\">Ca(NO<sub>3</sub>)<sub>2</sub></div>", "opts": ["нитрат кальция", "нитрит кальция", "азотид кальция", "кальций нитратный"], "ans": 0, "why": "Остаток NO<sub>3</sub> — от азотной кислоты, соли называются нитратами. Название соли: остаток в именительном падеже, металл в родительном."}, {"q": "Напиши формулу <b>серной</b> кислоты. Пиши в строку, без индексов: H2SO4", "fig": "", "ans": ["H2SO4"], "why": "Серная кислота H<sub>2</sub>SO<sub>4</sub>: два водорода, остаток SO<sub>4</sub> с зарядом 2−. Степень окисления серы в ней +6."}, {"q": "Напиши формулу <b>фосфорной</b> кислоты (в строку, без индексов).", "fig": "", "ans": ["H3PO4"], "why": "Остаток PO<sub>4</sub> трёхзарядный, поэтому водородов три: H<sub>3</sub>PO<sub>4</sub>."}, {"q": "Сколько атомов водорода способны замещаться металлом в этой кислоте (то есть какова её осно́вность)?", "fig": "<div class=\"chf\">H<sub>3</sub>PO<sub>4</sub></div>", "ans": ["3"], "why": "Осно́вность — число атомов водорода в кислоте. У H<sub>3</sub>PO<sub>4</sub> их три, значит кислота трёхосно́вная."}, {"q": "Эта кислота кислородсодержащая или бескислородная?", "fig": "<div class=\"chf\">HCl</div>", "opts": ["бескислородная", "кислородсодержащая", "амфотерная", "двухосно́вная"], "ans": 0, "why": "В формуле нет кислорода — кислота бескислородная и одноосно́вная. Её второе название — соляная."}]);
+makeTrainer("tc2", [{"q": "К какому классу относится это вещество?", "fig": "<div class=\"chf\">CaO</div>", "opts": ["оксид", "кислота", "основание", "соль"], "ans": 0, "why": "Два элемента, второй — кислород. Это оксид кальция, оксид осно́вный: кальций — металл."}, {"q": "К какому классу относится это вещество?", "fig": "<div class=\"chf\">H<sub>2</sub>SiO<sub>3</sub></div>", "opts": ["оксид", "кислота", "основание", "соль"], "ans": 1, "why": "Формула начинается с водорода, дальше идёт кислотный остаток SiO<sub>3</sub>. Это кремниевая кислота."}, {"q": "К какому классу относится это вещество?", "fig": "<div class=\"chf\">Al(OH)<sub>3</sub></div>", "opts": ["оксид", "кислота", "основание", "соль"], "ans": 2, "why": "Металл алюминий и три гидроксогруппы OH — это основание, гидроксид алюминия. Он амфотерный: реагирует и с кислотами, и со щелочами."}, {"q": "К какому классу относится это вещество?", "fig": "<div class=\"chf\">Li<sub>3</sub>PO<sub>4</sub></div>", "opts": ["оксид", "кислота", "основание", "соль"], "ans": 3, "why": "Металл литий и кислотный остаток PO<sub>4</sub> — это соль, фосфат лития. Водорода в формуле нет, значит не кислота."}, {"q": "К какому классу относится это вещество?", "fig": "<div class=\"chf\">N<sub>2</sub>O<sub>5</sub></div>", "opts": ["оксид", "кислота", "основание", "соль"], "ans": 0, "why": "Два элемента, второй кислород — оксид азота(V). Азот неметалл, поэтому оксид кислотный, ему соответствует кислота HNO<sub>3</sub>."}, {"q": "К какому классу относится это вещество?", "fig": "<div class=\"chf\">K<sub>2</sub>S</div>", "opts": ["оксид", "кислота", "основание", "соль"], "ans": 3, "why": "Металл калий и остаток S от сероводородной кислоты — это соль, сульфид калия."}, {"q": "К какому классу относится это вещество?", "fig": "<div class=\"chf\">Ba(OH)<sub>2</sub></div>", "opts": ["оксид", "кислота", "основание", "соль"], "ans": 2, "why": "Барий и две группы OH — гидроксид бария. Барий щёлочноземельный металл, поэтому это растворимое основание, то есть щёлочь."}, {"q": "К какому классу относится это вещество?", "fig": "<div class=\"chf\">HNO<sub>2</sub></div>", "opts": ["оксид", "кислота", "основание", "соль"], "ans": 1, "why": "Водород плюс остаток NO<sub>2</sub> — азотистая кислота. Не путай с солью-нитритом NaNO<sub>2</sub>."}, {"q": "Какой это оксид?", "fig": "<div class=\"chf\">ZnO</div>", "opts": ["осно́вный", "кислотный", "амфотерный", "несолеобразующий"], "ans": 2, "why": "Оксид цинка амфотерный: с кислотами он даёт соль и воду (ZnO + 2HCl = ZnCl<sub>2</sub> + H<sub>2</sub>O), а с расплавленной щёлочью — тоже соль (ZnO + 2NaOH = Na<sub>2</sub>ZnO<sub>2</sub> + H<sub>2</sub>O). Так же ведут себя Al<sub>2</sub>O<sub>3</sub> и BeO."}, {"q": "Какой это оксид?", "fig": "<div class=\"chf\">CO</div>", "opts": ["осно́вный", "кислотный", "амфотерный", "несолеобразующий"], "ans": 3, "why": "Оксид углерода(II) — несолеобразующий: он не реагирует ни с водой, ни с кислотами, ни со щелочами и солей не даёт. Такие же CO, NO и SiO. А вот CO<sub>2</sub> — уже кислотный оксид."}, {"q": "Какой это оксид?", "fig": "<div class=\"chf\">SO<sub>3</sub></div>", "opts": ["осно́вный", "кислотный", "амфотерный", "несолеобразующий"], "ans": 1, "why": "Сера — неметалл, поэтому оксид кислотный. С водой он даёт кислоту: SO<sub>3</sub> + H<sub>2</sub>O = H<sub>2</sub>SO<sub>4</sub>."}, {"q": "Какой это оксид?", "fig": "<div class=\"chf\">Na<sub>2</sub>O</div>", "opts": ["осно́вный", "кислотный", "амфотерный", "несолеобразующий"], "ans": 0, "why": "Натрий — щелочной металл, оксид осно́вный. С водой даёт щёлочь: Na<sub>2</sub>O + H<sub>2</sub>O = 2NaOH."}]);
+makeTrainer("tc3", [{"q": "Чему равна валентность элемента <b>S</b> в этом веществе? В ответе напиши число.", "fig": "<div class=\"chf\">SO<sub>2</sub></div>", "ans": ["4"], "why": "У кислорода валентность II, атомов два: 2 · 2 = 4. Значит у серы произведение тоже 4, а атом серы один — валентность IV."}, {"q": "Чему равна валентность элемента <b>P</b> в этом веществе? В ответе напиши число.", "fig": "<div class=\"chf\">P<sub>2</sub>O<sub>5</sub></div>", "ans": ["5"], "why": "Кислород: 2 · 5 = 10. У фосфора атомов два, значит 10 : 2 = 5 — валентность V."}, {"q": "Чему равна валентность элемента <b>N</b> в этом веществе? В ответе напиши число.", "fig": "<div class=\"chf\">NH<sub>3</sub></div>", "ans": ["3"], "why": "У водорода валентность I, атомов три: 1 · 3 = 3. Атом азота один, его валентность III."}, {"q": "Чему равна валентность элемента <b>C</b> в этом веществе? В ответе напиши число.", "fig": "<div class=\"chf\">CO<sub>2</sub></div>", "ans": ["4"], "why": "Кислород: 2 · 2 = 4. Атом углерода один — валентность IV. Отсюда и название: оксид углерода(IV)."}, {"q": "Чему равна валентность элемента <b>Fe</b> в этом веществе? В ответе напиши число.", "fig": "<div class=\"chf\">Fe<sub>2</sub>O<sub>3</sub></div>", "ans": ["3"], "why": "Кислород: 2 · 3 = 6. Атомов железа два, 6 : 2 = 3 — валентность III."}, {"q": "Чему равна валентность элемента <b>Mn</b> в этом веществе? В ответе напиши число.", "fig": "<div class=\"chf\">Mn<sub>2</sub>O<sub>7</sub></div>", "ans": ["7"], "why": "Кислород: 2 · 7 = 14. Атомов марганца два, 14 : 2 = 7 — валентность VII. Это максимальная валентность марганца."}, {"q": "Чему равна валентность элемента <b>S</b> в этом веществе? В ответе напиши число.", "fig": "<div class=\"chf\">H<sub>2</sub>S</div>", "ans": ["2"], "why": "Водород: 1 · 2 = 2. Атом серы один, валентность II. Сравни с SO<sub>3</sub>, где у серы уже VI — валентность серы переменная."}, {"q": "Чему равна валентность элемента <b>Al</b> в этом веществе? В ответе напиши число.", "fig": "<div class=\"chf\">Al<sub>2</sub>O<sub>3</sub></div>", "ans": ["3"], "why": "Кислород: 2 · 3 = 6. Атомов алюминия два, 6 : 2 = 3. У алюминия валентность всегда III."}]);
+makeTrainer("tc4", [{"q": "Составь формулу соединения алюминия (III) с кислородом. Пиши в строку, без индексов: например Al2O3.", "fig": "", "ans": ["Al2O3"], "why": "НОК(3, 2) = 6. Индекс у алюминия 6 : 3 = 2, у кислорода 6 : 2 = 3. Получается Al<sub>2</sub>O<sub>3</sub>."}, {"q": "Составь формулу соединения кальция (II) с хлором (I).", "fig": "", "ans": ["CaCl2"], "why": "НОК(2, 1) = 2. Индексы 2 : 2 = 1 и 2 : 1 = 2 — CaCl<sub>2</sub>, хлорид кальция."}, {"q": "Составь формулу оксида железа(III).", "fig": "", "ans": ["Fe2O3"], "why": "Железо III, кислород II, НОК = 6. Индексы 2 и 3 — Fe<sub>2</sub>O<sub>3</sub>."}, {"q": "Составь формулу сульфата натрия (остаток SO<sub>4</sub> двухзарядный).", "fig": "", "ans": ["Na2SO4"], "why": "Натрий одновалентен, остаток SO<sub>4</sub> двухвалентен: нужно два атома натрия на один остаток — Na<sub>2</sub>SO<sub>4</sub>."}, {"q": "Составь формулу сульфата алюминия (остаток SO<sub>4</sub> двухзарядный). Скобки писать так: Al2(SO4)3.", "fig": "", "ans": ["Al2(SO4)3"], "why": "Алюминий III, остаток SO<sub>4</sub> II, НОК = 6. Алюминия 6 : 3 = 2, остатков 6 : 2 = 3. Остаток берём в скобки: Al<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>."}, {"q": "Составь формулу фосфата кальция (остаток PO<sub>4</sub> трёхзарядный).", "fig": "", "ans": ["Ca3(PO4)2"], "why": "Кальций II, остаток PO<sub>4</sub> III, НОК = 6. Кальция 6 : 2 = 3, остатков 6 : 3 = 2 — Ca<sub>3</sub>(PO<sub>4</sub>)<sub>2</sub>."}, {"q": "Напиши формулу гидроксида меди(II).", "fig": "", "ans": ["Cu(OH)2"], "why": "Степень окисления меди +2, значит гидроксогрупп две: Cu(OH)<sub>2</sub>. Это нерастворимое основание, при нагревании разлагается на CuO и H<sub>2</sub>O."}, {"q": "Напиши формулу гидроксида, который соответствует оксиду <span class='f nb'>N<sub>2</sub>O<sub>5</sub></span>.", "fig": "<div class=\"chf\">N<sub>2</sub>O<sub>5</sub></div>", "ans": ["HNO3"], "why": "Азот — неметалл, значит гидроксид будет кислотой. Степень окисления азота в оксиде +5, такая же и в кислоте: HNO<sub>3</sub>, азотная."}]);
+makeTrainer("tc5", [{"q": "Чему равна степень окисления элемента <b>S</b> в этом веществе? В ответе обязательно поставь знак: например +3 или −2.", "fig": "<div class=\"chf\">H<sub>2</sub>SO<sub>4</sub></div>", "ans": ["+6"], "why": "Водород даёт 2 · (+1) = +2, кислород 4 · (−2) = −8. Сумма должна быть нулём, значит сере остаётся +6."}, {"q": "Чему равна степень окисления элемента <b>N</b> в этом веществе? В ответе обязательно поставь знак: например +3 или −2.", "fig": "<div class=\"chf\">HNO<sub>3</sub></div>", "ans": ["+5"], "why": "Водород +1, кислород 3 · (−2) = −6. Получается +1 + x − 6 = 0, откуда x = +5."}, {"q": "Чему равна степень окисления элемента <b>Cl</b> в этом веществе? В ответе обязательно поставь знак: например +3 или −2.", "fig": "<div class=\"chf\">HCl</div>", "ans": ["-1"], "why": "У водорода +1, а сумма равна нулю, значит у хлора −1. В бескислородных кислотах остаток всегда заряжен отрицательно."}, {"q": "Чему равна степень окисления элемента <b>S</b> в этом веществе? В ответе обязательно поставь знак: например +3 или −2.", "fig": "<div class=\"chf\">SO<sub>2</sub></div>", "ans": ["+4"], "why": "Кислород 2 · (−2) = −4, значит у серы +4. Сравни с SO<sub>3</sub>, где у серы уже +6 — поэтому одна кислота сернистая, а другая серная."}, {"q": "Чему равна степень окисления элемента <b>N</b> в этом веществе? В ответе обязательно поставь знак: например +3 или −2.", "fig": "<div class=\"chf\">NH<sub>3</sub></div>", "ans": ["-3"], "why": "Водород в соединениях с неметаллами +1: 3 · (+1) = +3. Чтобы сумма была нулём, у азота −3. Это тот случай, когда степень окисления отрицательная, хотя валентность III."}, {"q": "Чему равна степень окисления элемента <b>Fe</b> в этом веществе? В ответе обязательно поставь знак: например +3 или −2.", "fig": "<div class=\"chf\">Fe<sub>2</sub>O<sub>3</sub></div>", "ans": ["+3"], "why": "Кислород 3 · (−2) = −6. Атомов железа два: 2x − 6 = 0, откуда x = +3."}, {"q": "Чему равна степень окисления элемента <b>O</b> в этом веществе? В ответе обязательно поставь знак: например +3 или −2.", "fig": "<div class=\"chf\">O<sub>2</sub></div>", "ans": ["0"], "why": "Это простое вещество — оно состоит из атомов одного элемента, поэтому степень окисления равна нулю. Правило работает для любого простого вещества: Fe, H<sub>2</sub>, S, Cl<sub>2</sub>."}, {"q": "Чему равна степень окисления элемента <b>O</b> в этом веществе? В ответе обязательно поставь знак: например +3 или −2.", "fig": "<div class=\"chf\">H<sub>2</sub>O<sub>2</sub></div>", "ans": ["-1"], "why": "Пероксид водорода — исключение. Водород даёт +2, атомов кислорода два, значит на каждый приходится −1, а не привычные −2."}]);
+makeTrainer("tc6", [{"q": "Расставь коэффициенты и найди их сумму. Ответ — сумма всех коэффициентов уравнения (единицы тоже считаем).", "fig": "<div class=\"chf\">Na + Cl<sub>2</sub> → NaCl</div>", "ans": ["5"], "why": "Хлора слева 2, справа 1 — ставим 2 перед NaCl. Тогда натрия справа 2, ставим 2 и слева: 2Na + Cl<sub>2</sub> = 2NaCl. Сумма 2 + 1 + 2 = 5."}, {"q": "Расставь коэффициенты и найди их сумму. Ответ — сумма всех коэффициентов уравнения (единицы тоже считаем).", "fig": "<div class=\"chf\">Al + O<sub>2</sub> → Al<sub>2</sub>O<sub>3</sub></div>", "ans": ["9"], "why": "Начинаем с кислорода: слева 2, справа 3, НОК = 6. Значит 3O<sub>2</sub> и 2Al<sub>2</sub>O<sub>3</sub>. Алюминия справа стало 4 — ставим 4 слева: 4Al + 3O<sub>2</sub> = 2Al<sub>2</sub>O<sub>3</sub>. Сумма 4 + 3 + 2 = 9."}, {"q": "Расставь коэффициенты и найди их сумму. Ответ — сумма всех коэффициентов уравнения (единицы тоже считаем).", "fig": "<div class=\"chf\">Fe + Cl<sub>2</sub> → FeCl<sub>3</sub></div>", "ans": ["7"], "why": "Хлора справа 3, слева 2 — нечётное против чётного, берём НОК 6: 3Cl<sub>2</sub> и 2FeCl<sub>3</sub>. Железа справа 2, ставим 2 слева: 2Fe + 3Cl<sub>2</sub> = 2FeCl<sub>3</sub>. Сумма 2 + 3 + 2 = 7."}, {"q": "Расставь коэффициенты и найди их сумму. Ответ — сумма всех коэффициентов уравнения (единицы тоже считаем).", "fig": "<div class=\"chf\">N<sub>2</sub> + H<sub>2</sub> → NH<sub>3</sub></div>", "ans": ["6"], "why": "Азота слева 2 — ставим 2 перед NH<sub>3</sub>. Тогда водорода справа 6, значит слева 3H<sub>2</sub>: N<sub>2</sub> + 3H<sub>2</sub> = 2NH<sub>3</sub>. Сумма 1 + 3 + 2 = 6."}, {"q": "Расставь коэффициенты и найди их сумму. Ответ — сумма всех коэффициентов уравнения (единицы тоже считаем).", "fig": "<div class=\"chf\">CH<sub>4</sub> + O<sub>2</sub> → CO<sub>2</sub> + H<sub>2</sub>O</div>", "ans": ["6"], "why": "Углерод уже уравнен. Водорода слева 4 — ставим 2 перед водой. Теперь кислорода справа 2 + 2 = 4, значит слева 2O<sub>2</sub>: CH<sub>4</sub> + 2O<sub>2</sub> = CO<sub>2</sub> + 2H<sub>2</sub>O. Сумма 1 + 2 + 1 + 2 = 6. Кислород считаем последним — это общее правило."}, {"q": "Расставь коэффициенты и найди их сумму. Ответ — сумма всех коэффициентов уравнения (единицы тоже считаем).", "fig": "<div class=\"chf\">Fe(OH)<sub>3</sub> → Fe<sub>2</sub>O<sub>3</sub> + H<sub>2</sub>O</div>", "ans": ["6"], "why": "Железа справа 2 — ставим 2 перед Fe(OH)<sub>3</sub>. Тогда слева водорода 6, ставим 3 перед водой: 2Fe(OH)<sub>3</sub> = Fe<sub>2</sub>O<sub>3</sub> + 3H<sub>2</sub>O. Проверка по кислороду: 6 = 3 + 3 ✓. Сумма 2 + 1 + 3 = 6."}, {"q": "Расставь коэффициенты и найди их сумму. Ответ — сумма всех коэффициентов уравнения (единицы тоже считаем).", "fig": "<div class=\"chf\">KOH + H<sub>2</sub>SO<sub>4</sub> → K<sub>2</sub>SO<sub>4</sub> + H<sub>2</sub>O</div>", "ans": ["6"], "why": "Калия справа 2 — ставим 2 перед KOH. Водорода слева 2 + 2 = 4, значит справа 2H<sub>2</sub>O: 2KOH + H<sub>2</sub>SO<sub>4</sub> = K<sub>2</sub>SO<sub>4</sub> + 2H<sub>2</sub>O. Сумма 2 + 1 + 1 + 2 = 6."}, {"q": "Расставь коэффициенты и найди их сумму. Ответ — сумма всех коэффициентов уравнения (единицы тоже считаем).", "fig": "<div class=\"chf\">Ca(OH)<sub>2</sub> + H<sub>3</sub>PO<sub>4</sub> → Ca<sub>3</sub>(PO<sub>4</sub>)<sub>2</sub> + H<sub>2</sub>O</div>", "ans": ["12"], "why": "Кальция справа 3 — ставим 3 перед Ca(OH)<sub>2</sub>. Остатков PO<sub>4</sub> справа 2 — ставим 2 перед кислотой. Водорода слева 6 + 6 = 12, значит справа 6H<sub>2</sub>O: 3Ca(OH)<sub>2</sub> + 2H<sub>3</sub>PO<sub>4</sub> = Ca<sub>3</sub>(PO<sub>4</sub>)<sub>2</sub> + 6H<sub>2</sub>O. Сумма 3 + 2 + 1 + 6 = 12."}]);
+makeTrainer("tc7", [{"q": "Что получится в этой реакции?", "fig": "<div class=\"chf\">CaO + H<sub>2</sub>O → ?</div>", "opts": ["Ca(OH)<sub>2</sub>", "CaH<sub>2</sub> + O<sub>2</sub>", "CaCO<sub>3</sub>", "реакция не идёт"], "ans": 0, "why": "Осно́вный оксид активного металла реагирует с водой и даёт щёлочь: CaO + H<sub>2</sub>O = Ca(OH)<sub>2</sub>. Так же ведут себя Na<sub>2</sub>O, K<sub>2</sub>O, BaO."}, {"q": "Что получится в этой реакции?", "fig": "<div class=\"chf\">SO<sub>3</sub> + H<sub>2</sub>O → ?</div>", "opts": ["H<sub>2</sub>SO<sub>4</sub>", "H<sub>2</sub>SO<sub>3</sub>", "H<sub>2</sub>S + O<sub>2</sub>", "реакция не идёт"], "ans": 0, "why": "Кислотный оксид плюс вода даёт кислородсодержащую кислоту. Степень окисления серы в SO<sub>3</sub> равна +6, такая же и в H<sub>2</sub>SO<sub>4</sub>. Была бы SO<sub>2</sub> — получилась бы H<sub>2</sub>SO<sub>3</sub>."}, {"q": "Что получится в этой реакции?", "fig": "<div class=\"chf\">SiO<sub>2</sub> + H<sub>2</sub>O → ?</div>", "opts": ["H<sub>2</sub>SiO<sub>3</sub>", "Si(OH)<sub>4</sub>", "H<sub>2</sub>SiO<sub>4</sub>", "реакция не идёт"], "ans": 3, "why": "SiO<sub>2</sub> — единственный кислотный оксид из школьного списка, который с водой не реагирует. Кремниевую кислоту получают иначе — из её солей-силикатов."}, {"q": "Что получится в этой реакции?", "fig": "<div class=\"chf\">CuO + H<sub>2</sub>O → ?</div>", "opts": ["Cu(OH)<sub>2</sub>", "CuH<sub>2</sub> + O<sub>2</sub>", "Cu + H<sub>2</sub>O<sub>2</sub>", "реакция не идёт"], "ans": 3, "why": "С водой реагируют только оксиды щелочных и щёлочноземельных металлов. Медь к ним не относится, поэтому Cu(OH)<sub>2</sub> так не получить — его делают из соли и щёлочи."}, {"q": "Что получится в этой реакции?", "fig": "<div class=\"chf\">Zn + HCl → ?</div>", "opts": ["ZnCl<sub>2</sub> + H<sub>2</sub>↑", "ZnCl<sub>2</sub> + H<sub>2</sub>O", "ZnO + HCl", "реакция не идёт"], "ans": 0, "why": "Цинк стоит в ряду активности до водорода, значит вытесняет его из кислоты: Zn + 2HCl = ZnCl<sub>2</sub> + H<sub>2</sub>↑."}, {"q": "Что получится в этой реакции?", "fig": "<div class=\"chf\">Cu + HCl → ?</div>", "opts": ["CuCl<sub>2</sub> + H<sub>2</sub>↑", "CuCl<sub>2</sub> + H<sub>2</sub>O", "CuO + HCl", "реакция не идёт"], "ans": 3, "why": "Медь стоит в ряду активности <b>после</b> водорода, поэтому водород из растворов кислот она не вытесняет. Реакция не идёт."}, {"q": "Что получится в этой реакции?", "fig": "<div class=\"chf\">Fe + CuSO<sub>4</sub> → ?</div>", "opts": ["FeSO<sub>4</sub> + Cu↓", "Fe<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub> + Cu", "FeSO<sub>4</sub> + CuO", "реакция не идёт"], "ans": 0, "why": "Железо активнее меди, значит вытесняет её из раствора соли: Fe + CuSO<sub>4</sub> = FeSO<sub>4</sub> + Cu↓. Железо переходит в степень окисления +2."}, {"q": "Что получится в этой реакции?", "fig": "<div class=\"chf\">Cu + FeSO<sub>4</sub> → ?</div>", "opts": ["CuSO<sub>4</sub> + Fe", "CuO + FeSO<sub>4</sub>", "Cu(OH)<sub>2</sub> + FeS", "реакция не идёт"], "ans": 3, "why": "Медь в ряду активности правее железа, поэтому вытеснить его она не может. Менее активный металл более активный не вытесняет."}, {"q": "Что получится в этой реакции?", "fig": "<div class=\"chf\">NaOH + CO<sub>2</sub> → ?</div>", "opts": ["Na<sub>2</sub>CO<sub>3</sub> + H<sub>2</sub>O", "NaHCO<sub>3</sub> + O<sub>2</sub>", "Na<sub>2</sub>O + H<sub>2</sub>CO<sub>3</sub>", "реакция не идёт"], "ans": 0, "why": "Щёлочь и кислотный оксид дают соль и воду: 2NaOH + CO<sub>2</sub> = Na<sub>2</sub>CO<sub>3</sub> + H<sub>2</sub>O. Соль здесь карбонат — по остатку угольной кислоты."}, {"q": "Что получится в этой реакции?", "fig": "<div class=\"chf\">BaCl<sub>2</sub> + H<sub>2</sub>SO<sub>4</sub> → ?</div>", "opts": ["BaSO<sub>4</sub>↓ + HCl", "BaO + HCl", "BaSO<sub>3</sub> + HCl", "реакция не идёт"], "ans": 0, "why": "Соль реагирует с кислотой, если выпадает осадок. BaSO<sub>4</sub> нерастворим — реакция идёт: BaCl<sub>2</sub> + H<sub>2</sub>SO<sub>4</sub> = BaSO<sub>4</sub>↓ + 2HCl."}, {"q": "Что получится в этой реакции?", "fig": "<div class=\"chf\">NaCl + KNO<sub>3</sub> → ?</div>", "opts": ["NaNO<sub>3</sub> + KCl", "Na<sub>2</sub>O + KCl", "NaK + ClNO<sub>3</sub>", "реакция не идёт"], "ans": 3, "why": "Обе исходные соли растворимы, и обе возможные новые тоже растворимы: ни осадка, ни газа. Значит обмен не происходит и реакция не идёт."}, {"q": "Что получится в этой реакции?", "fig": "<div class=\"chf\">Fe(OH)<sub>3</sub> →<i class=\"overt\">t</i> ?</div>", "opts": ["Fe<sub>2</sub>O<sub>3</sub> + H<sub>2</sub>O↑", "FeO + H<sub>2</sub>O↑", "Fe + O<sub>2</sub> + H<sub>2</sub>", "реакция не идёт"], "ans": 0, "why": "Нерастворимые основания при нагревании разлагаются на оксид металла и воду. Степень окисления железа не меняется: была +3, осталась +3, поэтому оксид именно Fe<sub>2</sub>O<sub>3</sub>: 2Fe(OH)<sub>3</sub> = Fe<sub>2</sub>O<sub>3</sub> + 3H<sub>2</sub>O↑."}]);
+
+</script>
+</body>
+</html>
