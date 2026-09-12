@@ -54,6 +54,8 @@ details[open] summary{margin-bottom:8px}
 .step{margin:6px 0}
 .note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
 .task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.fig{margin:12px 0;text-align:center}
+.fig svg{width:100%;max-width:250px;height:auto}
 .task.ok{border-color:var(--ok);background:var(--ok-soft)}
 .task.bad{border-color:var(--bad);background:var(--bad-soft)}
 .tnum{font-weight:700;margin-right:6px}
@@ -63,6 +65,12 @@ details[open] summary{margin-bottom:8px}
 .verdict{margin-top:10px;font-weight:600}
 .verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
 .hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
 .opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
 .opt.sel{border-color:var(--acc);background:var(--acc-soft)}
 .bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);
@@ -257,17 +265,28 @@ details[open] summary{margin-bottom:8px}
 </div>
 
 <div class="card">
-  <h2>Фото решений</h2>
-  <p class="meta">Сфотографируй страницы тетради с решениями. Фото уменьшаются автоматически и попадают в отчёт.</p>
-  <input type="file" id="photos" accept="image/*" multiple>
+  <h2>Шаг 1. Фото решений — по желанию</h2>
+  <p class="meta">Ответы в полях — это только результат, а преподаватель смотрит ещё и ход решения.
+  Фото тетради прикладывать не обязательно, но с ними разбор будет точнее.</p>
+  <ol class="steps-list">
+    <li>Реши задачи в тетради, как обычно, с полной записью.</li>
+    <li>Сфотографируй страницы: при дневном свете, чтобы текст читался и не было теней от руки.</li>
+    <li>Нажми кнопку ниже. С телефона выбирай «Камера» или «Фото», с компьютера — файл из папки.</li>
+    <li>Фото можно приложить несколько сразу и отметить у каждого, к какой задаче оно относится.</li>
+  </ol>
+  <input type="file" id="photos" accept="image/*" multiple style="margin-top:12px">
   <div class="thumbs" id="thumbs"></div>
 </div>
 
 <div class="card">
-  <h2>Отчёт для преподавателя</h2>
-  <p class="meta">Нажми кнопку — скачается один файл с твоими ответами, результатом и фото.
-  Отправь его преподавателю в Instagram или Telegram.</p>
-  <button class="pri" id="report">Скачать отчёт для преподавателя</button>
+  <h2>Шаг 2. Отправь работу</h2>
+  <p class="meta">Проверь, что вверху страницы написано твоё имя. Фото — по желанию.
+  По кнопке ответы, результат и фотографии уходят преподавателю — пересылать ничего не нужно.
+  Вторая кнопка просто сохраняет копию тебе на устройство.</p>
+  <div class="row">
+    <button class="pri" id="send">Отправить на проверку</button>
+    <button id="report">Скачать копию себе</button>
+  </div>
   <div id="repnote" class="meta" style="margin-top:8px"></div>
 </div>
 
@@ -404,6 +423,7 @@ TASKS.forEach(function(t){
   el.className = "task"; el.id = "t"+t.id;
   var body = '<div><span class="tnum">'+t.id+'.</span>'+t.text+
              '<span class="lvl">'+t.lvl+'</span></div>';
+  if(t.img){ body += '<div class="fig">'+t.img+'</div>'; }
   if(t.type === "choice"){
     body += '<div class="opts">'+t.options.map(function(o,i){
       return '<label class="opt" data-v="'+o+'"><input type="radio" name="q'+t.id+'" value="'+o+'"> '+o+'</label>';
@@ -562,8 +582,10 @@ function drawThumbs(){
 }
 
 /* ---------- отчёт ---------- */
+var ENDPOINT = "https://script.google.com/macros/s/AKfycbztH9c-wQuKC7pSfD8AcFfnOcGpSHxoeqovulmvLMp9W23SgFx9dDQ2JTlWcIJDMN6W/exec";
+var SECRET = "artteach2026";
 function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
-document.getElementById("report").addEventListener("click", function(){
+function buildReport(){
   var name = (document.getElementById("name").value || "").trim() || "без имени";
   var now = new Date();
   var mins = Math.max(1, Math.round((Date.now()-started)/60000));
@@ -603,15 +625,49 @@ document.getElementById("report").addEventListener("click", function(){
     (pics ? "<h2>Фото решений</h2>"+pics : "<p class='m'>Фото решений не прикреплены.</p>")+
     "<script type='application/json' id='result-data'>"+
     JSON.stringify(data).replace(/</g,"\\u003c")+"<\/script></body></html>";
-  var blob = new Blob([html], {type:"text/html;charset=utf-8"});
+  var stamp = now.getDate()+"-"+(now.getMonth()+1);
+  return {
+    html: html,
+    name: name,
+    file: "Отчёт_тригонометрия9_"+name.replace(/\s+/g,"_")+"_"+stamp+".html",
+    caption: name+" · тригонометрия 9 класс · "+okN+" из "+TASKS.length+
+             " ("+Math.round(okN/TASKS.length*100)+"%)"
+  };
+}
+
+document.getElementById("send").addEventListener("click", function(){
+  var note = document.getElementById("repnote");
+  var who = (document.getElementById("name").value || "").trim();
+  if(!who){ note.className = "meta bad-note"; note.textContent = "Сначала впиши имя вверху страницы."; return; }
+  note.className = "meta";
+  var r = buildReport();
+  note.textContent = "Отправляю…";
+  var payload = {
+    secret: SECRET,
+    name: r.file,
+    caption: r.caption,
+    file: btoa(unescape(encodeURIComponent(r.html)))
+  };
+  fetch(ENDPOINT, {method:"POST", mode:"no-cors", body: JSON.stringify(payload)})
+    .then(function(){
+      note.textContent = "Отправлено преподавателю." +
+        (photos.length ? "" : " Фото решений не приложены — если решал в тетради, приложи их и отправь ещё раз.") +
+        " Если хочешь, сохрани копию себе кнопкой ниже.";
+    })
+    .catch(function(){
+      note.textContent = "Не получилось отправить. Скачай файл кнопкой ниже и пришли его вручную.";
+    });
+});
+
+document.getElementById("report").addEventListener("click", function(){
+  var r = buildReport();
+  var blob = new Blob([r.html], {type:"text/html;charset=utf-8"});
   var a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  var stamp = now.getDate()+"-"+(now.getMonth()+1);
-  a.download = "Отчёт_тригонометрия9_"+name.replace(/\s+/g,"_")+"_"+stamp+".html";
+  a.download = r.file;
   document.body.appendChild(a); a.click();
   setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
-  document.getElementById("repnote").textContent =
-    "Отчёт скачан. Найди файл в загрузках и отправь преподавателю.";
+  document.getElementById("repnote").textContent = "Файл скачан — он в папке загрузок.";
 });
 </script>
 </body>

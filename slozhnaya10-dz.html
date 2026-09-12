@@ -413,9 +413,9 @@ details[open] summary{margin-bottom:8px}
 </div>
 
 <div class="card">
-  <h2>Шаг 1. Прикрепи фото решений</h2>
-  <p class="meta">Ответы в полях — это только результат. Преподаватель проверяет ещё и ход решения,
-  поэтому без фото тетради работа не отправляется.</p>
+  <h2>Шаг 1. Фото решений — по желанию</h2>
+  <p class="meta">Ответы в полях — это только результат, а преподаватель смотрит ещё и ход
+  решения. Фото тетради прикладывать не обязательно, но с ними разбор будет точнее.</p>
   <ol class="steps-list">
     <li>Реши задачи в тетради, как обычно, с полной записью.</li>
     <li>Сфотографируй страницы: при дневном свете, чтобы текст читался и не было теней от руки.</li>
@@ -428,7 +428,7 @@ details[open] summary{margin-bottom:8px}
 
 <div class="card">
   <h2>Шаг 2. Отправь работу</h2>
-  <p class="meta">Проверь, что вверху страницы написано твоё имя, а выше приложены фото.
+  <p class="meta">Проверь, что вверху страницы написано твоё имя. Фото — по желанию.
   По кнопке ответы, результат и фотографии уходят преподавателю — пересылать ничего не нужно.
   Вторая кнопка просто сохраняет копию тебе на устройство.</p>
   <div class="row">
@@ -835,12 +835,6 @@ document.getElementById("send").addEventListener("click", function(){
   var note = document.getElementById("repnote");
   var who = (document.getElementById("name").value || "").trim();
   if(!who){ note.className = "meta bad-note"; note.textContent = "Сначала впиши имя вверху страницы."; return; }
-  if(!photos.length){
-    note.className = "meta bad-note";
-    note.textContent = "Сначала прикрепи фото решений — кнопка «Выберите файлы» в блоке выше.";
-    document.getElementById("photos").scrollIntoView({behavior:"smooth", block:"center"});
-    return;
-  }
   note.className = "meta";
   var r = buildReport();
   note.textContent = "Отправляю…";
@@ -852,7 +846,9 @@ document.getElementById("send").addEventListener("click", function(){
   };
   fetch(ENDPOINT, {method:"POST", mode:"no-cors", body: JSON.stringify(payload)})
     .then(function(){
-      note.textContent = "Отправлено преподавателю. Если хочешь, сохрани копию себе кнопкой ниже.";
+      note.textContent = "Отправлено преподавателю." +
+        (photos.length ? "" : " Фото решений не приложены — если решал в тетради, приложи их и отправь ещё раз.") +
+        " Если хочешь, сохрани копию себе кнопкой ниже.";
     })
     .catch(function(){
       note.textContent = "Не получилось отправить. Скачай файл кнопкой ниже и пришли его вручную.";
