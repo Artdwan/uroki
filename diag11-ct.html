@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Диагностика по математике · 11 класс · ЦТ</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:800px;margin:0 auto;padding:16px 14px 60px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+.f-formula{font-size:19px}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.step{margin:6px 0}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.fig{margin:12px 0;text-align:center}
+.fig svg{width:100%;max-width:250px;height:auto}
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+.clock{font-variant-numeric:tabular-nums;font-weight:700;font-size:19px;letter-spacing:.5px}
+.clock.warn{color:var(--bad)}
+.locked{opacity:.5;pointer-events:none;user-select:none}
+.tag{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;
+  padding:2px 9px;margin-left:6px;display:inline-block;white-space:nowrap}
+.tag.b{background:var(--acc-soft);border-color:var(--acc-soft)}
+.qtext{font-size:18px;margin:2px 0 4px}
+.ansline{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.ansline input[type=text]{max-width:190px}
+.opt .ltr{display:inline-block;width:24px;font-weight:700;color:var(--muted)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.res-big{font-size:38px;font-weight:700;line-height:1.1;margin:2px 0}
+.blk{margin:14px 0}
+.blk .h{display:flex;justify-content:space-between;gap:10px;align-items:baseline;font-size:16px}
+.blk .h b{font-weight:600}
+.blkbar{height:11px;border-radius:6px;background:var(--line);overflow:hidden;margin:5px 0 3px}
+.blk.mid .blkbar{background:var(--warn-soft)}
+.blk.low .blkbar{background:var(--bad-soft)}
+.blkbar>i{display:block;height:100%;background:var(--ok);border-radius:6px}
+.blk.mid .blkbar>i{background:#e0952a}
+.blk.low .blkbar>i{background:var(--bad)}
+.blk .what{color:var(--muted);font-size:15px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
+.kpi{border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center;background:var(--bg)}
+.kpi b{display:block;font-size:26px;line-height:1.2}
+.kpi span{color:var(--muted);font-size:14px}
+.mini{font-size:15px;color:var(--muted)}
+@media print{
+  body{background:#fff}
+  .bar,.noprint{display:none !important}
+  .card,.task{break-inside:avoid;border-color:#c9ced8}
+  .opt{border-color:#c9ced8}
+  h1{font-size:22px}
+  @page{size:A4;margin:14mm}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card top">
+  <h1>Диагностический тест по математике</h1>
+  <div class="meta">11 класс · подготовка к ЦТ · 20 заданий · 60 минут</div>
+  <label class="f" for="name">Имя и фамилия</label>
+  <input type="text" id="name" placeholder="напиши, как в журнале" autocapitalize="words" spellcheck="false">
+  <div class="note" style="margin-top:14px">
+    <b>Как проходит тест.</b> Работа по формату ЦТ: часть А — 12 заданий с выбором одного ответа из пяти,
+    часть В — 8 заданий, где в поле пишется только число. На всё 60 минут.
+    <div style="margin-top:8px">Подсказок и проверки по ходу здесь нет — это диагностика, а не тренировка.
+    Ответы проверятся все сразу, когда нажмёшь «Завершить тест». После этого откроются полные решения
+    и карта пробелов по темам.</div>
+    <div style="margin-top:8px">Решай на черновике, как на настоящем ЦТ. Калькулятором не пользуйся:
+    все числа подобраны так, чтобы считать в столбик.</div>
+  </div>
+  <div class="meta" style="margin-top:12px">Нажми «Начать тест» — до этого поля заблокированы, а таймер стоит.</div>
+</div>
+
+<div class="card noprint" id="startcard">
+  <div class="row">
+    <button class="pri" id="start">Начать тест</button>
+    <span class="meta" id="startnote">Таймер запустится по нажатию.</span>
+  </div>
+</div>
+
+<div class="card" id="ahead">
+  <h2>Часть А</h2>
+  <div class="meta">12 заданий. В каждом ровно один верный ответ из пяти — нажми на нужный вариант.</div>
+</div>
+<div id="partA" class="locked"></div>
+
+<div class="card" id="bhead">
+  <h2>Часть В</h2>
+  <div class="meta">8 заданий. Ответ — число: целое или десятичная дробь.
+  Запятая и точка равнозначны, единицы измерения писать не нужно.</div>
+</div>
+<div id="partB" class="locked"></div>
+
+<div class="card noprint" id="finishcard">
+  <div class="row">
+    <button class="pri" id="finish">Завершить тест</button>
+    <span class="meta" id="finishnote">Кнопка станет активной после старта.</span>
+  </div>
+</div>
+
+<div class="card noprint" id="result" style="display:none"></div>
+
+<div class="card noprint" id="photocard" style="display:none">
+  <h2>Прикрепи черновик</h2>
+  <div class="meta">Сфотографируй листы с вычислениями: по ним видно, где сбилось решение,
+  а не только какой ответ получился. Это не обязательно, но с фото разбор будет точнее.</div>
+  <input type="file" id="photos" accept="image/*" multiple style="margin-top:12px">
+  <div class="thumbs" id="thumbs"></div>
+</div>
+
+<div class="card noprint" id="sendcard" style="display:none">
+  <h2>Отправь работу</h2>
+  <div class="meta">Отчёт с результатом, картой пробелов и всеми ответами уйдёт преподавателю.
+  Вторая кнопка просто сохранит копию тебе.</div>
+  <div class="row" style="margin-top:12px">
+    <button class="pri" id="send">Отправить на проверку</button>
+    <button id="report">Скачать копию себе</button>
+  </div>
+  <div id="repnote" class="meta" style="margin-top:8px"></div>
+</div>
+
+</div>
+
+<div class="bar noprint">
+  <span class="clock" id="clock">60:00</span>
+  <span id="progress" class="meta">отвечено 0 из 20</span>
+</div>
+
+<script>
+
+"use strict";
+var TASKS = [{"id": "A1", "part": "A", "blk": 1, "cls": "5–6 класс", "tema": "Действия с десятичными дробями", "q": "Вычислите: (2,4 · 1,25 − 0,5) : 0,25", "opts": ["2,5", "8", "10", "12", "40"], "ans": "MTA=", "sol": "<div class='step'>1. Сначала умножение: 2,4 · 1,25 = 3.</div><div class='step'>2. Вычитание: 3 − 0,5 = 2,5.</div><div class='step'>3. Деление: 2,5 : 0,25 = 250 : 25 = 10.</div><div class='step'><b>Ответ: 10.</b></div><div class='step mini'>Частая ошибка — начать с вычитания в скобках или «поделить на 0,25» как «умножить на 0,25».</div>"}, {"id": "A2", "part": "A", "blk": 1, "cls": "5–6 класс", "tema": "Проценты", "q": "Цена товара 240 рублей сначала выросла на 25 %, а затем новая цена снизилась на 20 %. Какой стала цена?", "opts": ["228 р.", "234 р.", "240 р.", "246 р.", "252 р."], "ans": "MjQwINGALg==", "sol": "<div class='step'>1. Рост на 25 %: 240 · 1,25 = 300.</div><div class='step'>2. Снижение на 20 % считается уже от 300: 300 · 0,8 = 240.</div><div class='step'><b>Ответ: 240 рублей.</b></div><div class='step mini'>Ключ: второй процент берётся от новой цены, а не от исходной. Здесь цена вернулась к прежней — совпадение, а не правило.</div>"}, {"id": "A3", "part": "A", "blk": 1, "cls": "6 класс", "tema": "Отношения и пропорции", "q": "Числа a и b относятся как 3 : 5, а их сумма равна 96. Найдите большее из них.", "opts": ["36", "48", "54", "60", "72"], "ans": "NjA=", "sol": "<div class='step'>1. Пусть a = 3k, b = 5k. Тогда 3k + 5k = 96.</div><div class='step'>2. 8k = 96, значит k = 12.</div><div class='step'>3. Большее число: b = 5 · 12 = 60.</div><div class='step'><b>Ответ: 60.</b></div>"}, {"id": "A4", "part": "A", "blk": 2, "cls": "7 класс", "tema": "Формулы сокращённого умножения", "q": "Упростите выражение (x − 3)² − (x − 1)(x + 1).", "opts": ["−6x + 8", "−6x + 10", "6x − 10", "−6x − 8", "2x² − 6x + 10"], "ans": "4oiSNnggKyAxMA==", "sol": "<div class='step'>1. (x − 3)² = x² − 6x + 9.</div><div class='step'>2. (x − 1)(x + 1) = x² − 1.</div><div class='step'>3. Вычитаем скобку целиком: x² − 6x + 9 − x² + 1 = −6x + 10.</div><div class='step'><b>Ответ: −6x + 10.</b></div><div class='step mini'>Главная ловушка — потерять знак у −1 при раскрытии второй скобки.</div>"}, {"id": "A5", "part": "A", "blk": 2, "cls": "7 класс", "tema": "Степень с целым показателем", "q": "Вычислите: (2⁻³ · 4²) : 8⁻¹", "opts": ["2", "4", "8", "16", "32"], "ans": "MTY=", "sol": "<div class='step'>1. Приводим всё к основанию 2: 4² = 2⁴, 8⁻¹ = 2⁻³.</div><div class='step'>2. В скобке: 2⁻³ · 2⁴ = 2¹ = 2.</div><div class='step'>3. Делим: 2¹ : 2⁻³ = 2¹⁻⁽⁻³⁾ = 2⁴ = 16.</div><div class='step'><b>Ответ: 16.</b></div>"}, {"id": "A6", "part": "A", "blk": 3, "cls": "8 класс", "tema": "Квадратные уравнения", "q": "Найдите больший корень уравнения x² − 3x − 10 = 0.", "opts": ["−5", "−2", "2", "5", "10"], "ans": "NQ==", "sol": "<div class='step'>1. D = (−3)² − 4 · 1 · (−10) = 9 + 40 = 49, √D = 7.</div><div class='step'>2. x = (3 ± 7) : 2, то есть x₁ = 5 и x₂ = −2.</div><div class='step'>3. Проверка по Виета: 5 + (−2) = 3 ✓, 5 · (−2) = −10 ✓.</div><div class='step'><b>Ответ: 5.</b></div>"}, {"id": "A7", "part": "A", "blk": 4, "cls": "8–9 класс", "tema": "Квадратичная функция, парабола", "q": "Найдите ординату вершины параболы y = x² − 6x + 5.", "opts": ["−4", "−3", "3", "4", "5"], "ans": "4oiSNA==", "sol": "<div class='step'>1. Абсцисса вершины: x₀ = −b : (2a) = 6 : 2 = 3.</div><div class='step'>2. Ордината — это значение функции в этой точке: y₀ = 3² − 6 · 3 + 5.</div><div class='step'>3. y₀ = 9 − 18 + 5 = −4.</div><div class='step'><b>Ответ: −4.</b></div><div class='step mini'>Ордината — вторая координата. Если в ответе получилось 3, найдена абсцисса.</div>"}, {"id": "A8", "part": "A", "blk": 6, "cls": "8–9 класс", "tema": "Прямоугольный треугольник", "q": "В прямоугольном треугольнике катеты равны 6 и 8. Найдите высоту, проведённую к гипотенузе.", "opts": ["3,6", "4", "4,8", "5", "6"], "ans": "NCw4", "sol": "<div class='step'>1. Гипотенуза: c = √(6² + 8²) = √100 = 10.</div><div class='step'>2. Площадь через катеты: S = ½ · 6 · 8 = 24.</div><div class='step'>3. Та же площадь через гипотенузу и высоту: S = ½ · c · h, значит h = 2S : c = 48 : 10 = 4,8.</div><div class='step'><b>Ответ: 4,8.</b></div>"}, {"id": "A9", "part": "A", "blk": 4, "cls": "9 класс", "tema": "Арифметическая прогрессия", "q": "В арифметической прогрессии a₁ = 5, разность d = 3. Найдите a₁₀.", "opts": ["29", "30", "32", "35", "38"], "ans": "MzI=", "sol": "<div class='step'>1. Формула: aₙ = a₁ + (n − 1) · d.</div><div class='step'>2. a₁₀ = 5 + (10 − 1) · 3 = 5 + 27.</div><div class='step'>3. a₁₀ = 32.</div><div class='step'><b>Ответ: 32.</b></div><div class='step mini'>Ошибка на 35 — умножили на 10 вместо 9: шагов между первым и десятым членом девять.</div>"}, {"id": "A10", "part": "A", "blk": 5, "cls": "10 класс", "tema": "Формулы двойного угла", "q": "Известно, что sin α = 0,6 и α — острый угол. Найдите cos 2α.", "opts": ["0,28", "0,36", "0,48", "0,64", "0,72"], "ans": "MCwyOA==", "sol": "<div class='step'>1. Удобная форма формулы двойного угла: cos 2α = 1 − 2 sin²α.</div><div class='step'>2. sin²α = 0,6² = 0,36.</div><div class='step'>3. cos 2α = 1 − 2 · 0,36 = 1 − 0,72 = 0,28.</div><div class='step'><b>Ответ: 0,28.</b></div><div class='step mini'>Можно и через cos α = 0,8: cos 2α = 0,8² − 0,6² = 0,64 − 0,36 = 0,28. Ответ 0,64 — это просто cos²α.</div>"}, {"id": "A11", "part": "A", "blk": 2, "cls": "11 класс", "tema": "Свойства логарифмов", "q": "Вычислите: log₂ 48 − log₂ 3", "opts": ["2", "3", "4", "5", "16"], "ans": "NA==", "sol": "<div class='step'>1. Разность логарифмов с одинаковым основанием — логарифм частного: log₂ 48 − log₂ 3 = log₂ (48 : 3).</div><div class='step'>2. 48 : 3 = 16.</div><div class='step'>3. log₂ 16 = 4, потому что 2⁴ = 16.</div><div class='step'><b>Ответ: 4.</b></div><div class='step mini'>Ответ 16 — остановились на аргументе и забыли взять сам логарифм.</div>"}, {"id": "A12", "part": "A", "blk": 4, "cls": "11 класс", "tema": "Производная", "q": "Найдите значение производной функции f(x) = x³ − 3x² + 2 в точке x₀ = 2.", "opts": ["−3", "−1", "0", "2", "6"], "ans": "MA==", "sol": "<div class='step'>1. Производная по слагаемым: (x³)′ = 3x², (−3x²)′ = −6x, (2)′ = 0.</div><div class='step'>2. f′(x) = 3x² − 6x.</div><div class='step'>3. f′(2) = 3 · 4 − 6 · 2 = 12 − 12 = 0.</div><div class='step'><b>Ответ: 0.</b></div><div class='step mini'>Ответ −2 или похожий получается, если посчитали f(2) вместо f′(2).</div>"}, {"id": "B1", "part": "B", "blk": 3, "cls": "8–9 класс", "tema": "Квадратные неравенства", "q": "Сколько целых чисел удовлетворяет неравенству x² − 5x − 6 &lt; 0 ?", "opts": null, "ans": "Ng==", "sol": "<div class='step'>1. Корни трёхчлена: x² − 5x − 6 = 0 → D = 25 + 24 = 49, x = (5 ± 7) : 2, то есть −1 и 6.</div><div class='step'>2. Ветви параболы вверх, знак «меньше нуля» — значит решение между корнями: −1 &lt; x &lt; 6.</div><div class='step'>3. Целые внутри промежутка: 0, 1, 2, 3, 4, 5 — шесть штук.</div><div class='step'><b>Ответ: 6.</b></div><div class='step mini'>Ответ 8 получается, если ошибочно включить сами корни −1 и 6: неравенство строгое.</div>"}, {"id": "B2", "part": "B", "blk": 3, "cls": "9 класс", "tema": "Текстовая задача на движение", "q": "Собственная скорость катера 12 км/ч, скорость течения 3 км/ч. Катер прошёл 45 км по течению и столько же обратно. Сколько часов он был в пути?", "opts": null, "ans": "OA==", "sol": "<div class='step'>1. По течению скорость 12 + 3 = 15 км/ч, время 45 : 15 = 3 ч.</div><div class='step'>2. Против течения скорость 12 − 3 = 9 км/ч, время 45 : 9 = 5 ч.</div><div class='step'>3. Всего 3 + 5 = 8 ч.</div><div class='step'><b>Ответ: 8.</b></div><div class='step mini'>Нельзя считать по средней скорости 12 км/ч: 90 : 12 = 7,5 — неверно, потому что время на участках разное.</div>"}, {"id": "B3", "part": "B", "blk": 3, "cls": "9 класс", "tema": "Теорема Виета, системы", "q": "Числа x и y таковы, что x + y = 11 и x · y = 30, причём x &gt; y. Найдите x − y.", "opts": null, "ans": "MQ==", "sol": "<div class='step'>1. По теореме Виета x и y — корни уравнения t² − 11t + 30 = 0.</div><div class='step'>2. D = 121 − 120 = 1, t = (11 ± 1) : 2, то есть 6 и 5.</div><div class='step'>3. Так как x &gt; y, то x = 6, y = 5 и x − y = 1.</div><div class='step'><b>Ответ: 1.</b></div><div class='step mini'>Быстрый путь: (x − y)² = (x + y)² − 4xy = 121 − 120 = 1.</div>"}, {"id": "B4", "part": "B", "blk": 6, "cls": "9 класс", "tema": "Трапеция, площадь", "q": "В равнобедренной трапеции основания равны 10 и 22, а боковая сторона равна 10. Найдите площадь трапеции.", "opts": null, "ans": "MTI4", "sol": "<div class='step'>1. Опускаем две высоты. Проекция боковой стороны на большее основание: (22 − 10) : 2 = 6.</div><div class='step'>2. Высота из прямоугольного треугольника: h = √(10² − 6²) = √64 = 8.</div><div class='step'>3. S = (10 + 22) : 2 · 8 = 16 · 8 = 128.</div><div class='step'><b>Ответ: 128.</b></div>"}, {"id": "B5", "part": "B", "blk": 5, "cls": "10 класс", "tema": "Простейшие тригонометрические уравнения", "q": "Найдите наименьший положительный корень уравнения cos (x − 30°) = 0. Ответ дайте в градусах.", "opts": null, "ans": "MTIw", "sol": "<div class='step'>1. Косинус равен нулю в точках 90° + 180°k, где k — целое.</div><div class='step'>2. Значит x − 30° = 90° + 180°k, откуда x = 120° + 180°k.</div><div class='step'>3. При k = 0 получаем 120°, при k = −1 получаем −60° — отрицательное. Наименьший положительный корень 120°.</div><div class='step'><b>Ответ: 120.</b></div><div class='step mini'>Ответ 60 получается, если перепутать нули косинуса с нулями синуса.</div>"}, {"id": "B6", "part": "B", "blk": 3, "cls": "11 класс", "tema": "Показательные уравнения", "q": "Решите уравнение 2ˣ⁺³ + 2ˣ = 72.", "opts": null, "ans": "Mw==", "sol": "<div class='step'>1. Выносим общий множитель: 2ˣ⁺³ = 2ˣ · 2³ = 8 · 2ˣ.</div><div class='step'>2. Тогда 8 · 2ˣ + 2ˣ = 9 · 2ˣ = 72, значит 2ˣ = 8.</div><div class='step'>3. 2ˣ = 2³, отсюда x = 3.</div><div class='step'><b>Ответ: 3.</b></div><div class='step mini'>Проверка: 2⁶ + 2³ = 64 + 8 = 72 ✓.</div>"}, {"id": "B7", "part": "B", "blk": 3, "cls": "11 класс", "tema": "Логарифмические уравнения, замена", "q": "Найдите произведение корней уравнения lg² x − 3 · lg x + 2 = 0.", "opts": null, "ans": "MTAwMA==", "sol": "<div class='step'>1. Замена t = lg x: t² − 3t + 2 = 0.</div><div class='step'>2. Корни: t = 1 и t = 2.</div><div class='step'>3. Возвращаемся: lg x = 1 → x = 10; lg x = 2 → x = 100. Оба подходят по области определения.</div><div class='step'>4. Произведение корней: 10 · 100 = 1000.</div><div class='step'><b>Ответ: 1000.</b></div><div class='step mini'>Ответ 2 — это произведение корней по Виета для t, то есть произведение логарифмов, а не самих x.</div>"}, {"id": "B8", "part": "B", "blk": 6, "cls": "11 класс", "tema": "Стереометрия, пирамида", "q": "В правильной четырёхугольной пирамиде сторона основания равна 6, а высота равна 4. Найдите площадь боковой поверхности.", "opts": null, "ans": "NjA=", "sol": "<div class='step'>1. Апофема — высота боковой грани. Она гипотенуза прямоугольного треугольника с катетами: высота пирамиды 4 и половина стороны основания 3.</div><div class='step'>2. l = √(4² + 3²) = √25 = 5.</div><div class='step'>3. Периметр основания P = 4 · 6 = 24, тогда S<sub>бок</sub> = ½ · P · l = ½ · 24 · 5 = 60.</div><div class='step'><b>Ответ: 60.</b></div><div class='step mini'>Ошибка — взять вместо половины стороны (3) всю сторону (6) или само ребро пирамиды.</div>"}];
+var BLOCKS = {"1": {"name": "Числа, проценты, пропорции", "cls": "5–6 класс", "what": "Порядок действий, десятичные дроби, проценты от разных величин, отношения. Здесь теряются баллы «на ровном месте» — считается быстро и без записи."}, "2": {"name": "Преобразования, степени, логарифмы", "cls": "7 и 11 класс", "what": "Формулы сокращённого умножения, свойства степеней и логарифмов. Это техника: нарабатывается списком однотипных примеров."}, "3": {"name": "Уравнения, неравенства, текстовые задачи", "cls": "8–11 класс", "what": "Квадратные, показательные и логарифмические уравнения, метод интервалов, замена переменной, составление уравнения по условию. Самый весомый блок ЦТ."}, "4": {"name": "Функции, прогрессии, производная", "cls": "8–11 класс", "what": "Парабола и её вершина, формулы прогрессий, правила дифференцирования и смысл производной."}, "5": {"name": "Тригонометрия", "cls": "9–10 класс", "what": "Основные тождества, формулы двойного угла, простейшие уравнения и отбор корней."}, "6": {"name": "Геометрия", "cls": "7–11 класс", "what": "Планиметрия (треугольник, трапеция, площади) и стереометрия (пирамида, апофема). Обычно проседает сильнее алгебры, потому что нужен чертёж."}};
+var LIMIT = 60 * 60;                     /* секунд */
+var started = 0, timer = null, running = false, finished = false;
+var state = {};
+TASKS.forEach(function(t){ state[t.id] = {sel:"", given:"", ok:false}; });
+
+function d(s){ return decodeURIComponent(escape(atob(s))); }
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function norm(s){
+  return String(s).trim().toLowerCase().replace(/\s+/g,"")
+    .replace(/−/g,"-").replace(/,/g,".");
+}
+function toNum(s){ var x = parseFloat(norm(s)); return isFinite(x) ? x : NaN; }
+function same(a, b){
+  var x = toNum(a), y = toNum(b);
+  if(isFinite(x) && isFinite(y)) return Math.abs(x - y) < 1e-9;
+  return norm(a) === norm(b);
+}
+/* В части А варианты могут быть буквенными («−6x + 8» и «−6x + 10» оба дают parseFloat = −6),
+   поэтому выбор ответа сверяется строкой, а числовое сравнение остаётся только для части В. */
+function eq(t, given){
+  var right = d(t.ans);
+  return t.part === "A" ? norm(given) === norm(right) : same(given, right);
+}
+
+/* ---------- отрисовка заданий ---------- */
+var LTR = ["1)","2)","3)","4)","5)"];
+function render(){
+  var hostA = document.getElementById("partA"), hostB = document.getElementById("partB");
+  TASKS.forEach(function(t){
+    var box = document.createElement("div");
+    box.className = "task"; box.id = "t" + t.id;
+    var head = '<div><span class="tnum">' + t.id + '.</span>' +
+               '<span class="tag">' + t.cls + '</span>' +
+               '<span class="tag b">' + t.tema + '</span></div>' +
+               '<div class="qtext">' + t.q + '</div>';
+    var body = "";
+    if(t.part === "A"){
+      body = '<div class="opts">' + t.opts.map(function(o, i){
+        return '<div class="opt" data-v="' + esc(o) + '"><span class="ltr">' + LTR[i] + '</span>' + o + '</div>';
+      }).join("") + '</div>';
+    } else {
+      body = '<div class="keys">' +
+             ["−","/",","].map(function(k){ return '<button type="button" class="sm k">' + k + '</button>'; }).join("") +
+             '</div><div class="ansline"><span>Ответ:</span>' +
+             '<input type="text" id="in' + t.id + '" inputmode="text" autocomplete="off" ' +
+             'autocorrect="off" spellcheck="false" placeholder="число"></div>';
+    }
+    box.innerHTML = head + body + '<div class="sol"></div>';
+    if(t.part === "A"){
+      Array.prototype.forEach.call(box.querySelectorAll(".opt"), function(o){
+        o.addEventListener("click", function(){
+          if(finished || !running) return;
+          Array.prototype.forEach.call(box.querySelectorAll(".opt"), function(x){ x.classList.remove("sel"); });
+          o.classList.add("sel");
+          state[t.id].sel = o.getAttribute("data-v");
+          progress();
+        });
+      });
+    } else {
+      var inp = box.querySelector("input");
+      inp.addEventListener("input", function(){ state[t.id].given = inp.value; progress(); });
+      Array.prototype.forEach.call(box.querySelectorAll("button.k"), function(b){
+        b.addEventListener("click", function(){
+          if(finished || !running) return;
+          var p = inp.selectionStart == null ? inp.value.length : inp.selectionStart;
+          inp.value = inp.value.slice(0, p) + b.textContent + inp.value.slice(inp.selectionEnd);
+          inp.focus(); inp.selectionStart = inp.selectionEnd = p + 1;
+          state[t.id].given = inp.value; progress();
+        });
+      });
+    }
+    (t.part === "A" ? hostA : hostB).appendChild(box);
+  });
+}
+render();
+
+function answered(){
+  return TASKS.filter(function(t){
+    return (t.part === "A" ? state[t.id].sel : String(state[t.id].given || "").trim()) !== "";
+  }).length;
+}
+function progress(){
+  if(finished) return;
+  document.getElementById("progress").textContent = "отвечено " + answered() + " из " + TASKS.length;
+}
+
+/* ---------- таймер ---------- */
+function fmt(sec){
+  if(sec < 0) sec = 0;
+  var m = Math.floor(sec / 60), s = sec % 60;
+  return m + ":" + (s < 10 ? "0" : "") + s;
+}
+function tick(){
+  var left = LIMIT - Math.floor((Date.now() - started) / 1000);
+  var c = document.getElementById("clock");
+  c.textContent = fmt(left);
+  c.className = "clock" + (left <= 300 ? " warn" : "");
+  if(left <= 0){
+    clearInterval(timer); timer = null;
+    finish(true);
+  }
+}
+document.getElementById("start").addEventListener("click", function(){
+  if(running || finished) return;
+  running = true; started = Date.now();
+  document.getElementById("partA").classList.remove("locked");
+  document.getElementById("partB").classList.remove("locked");
+  document.getElementById("startcard").style.display = "none";
+  document.getElementById("finishnote").textContent = "Нажимай, когда закончишь — раньше времени можно.";
+  timer = setInterval(tick, 250); tick();
+});
+
+/* ---------- проверка и диагностика ---------- */
+function finish(auto){
+  if(finished) return;
+  if(!running){ document.getElementById("finishnote").textContent = "Сначала нажми «Начать тест»."; return; }
+  if(!auto){
+    var left = TASKS.length - answered();
+    var msg = left ? ("Без ответа осталось заданий: " + left + ". Всё равно завершить?")
+                   : "Завершить тест и посмотреть результат?";
+    if(!window.confirm(msg)) return;
+  }
+  finished = true; running = false;
+  if(timer){ clearInterval(timer); timer = null; }
+  var usedSec = Math.round((Date.now() - started) / 1000);
+  var used = Math.min(usedSec, LIMIT);
+
+  TASKS.forEach(function(t){
+    var s = state[t.id];
+    var given = t.part === "A" ? s.sel : String(s.given || "").trim();
+    s.given = given;
+    s.ok = given !== "" && eq(t, given);
+    var box = document.getElementById("t" + t.id);
+    box.classList.add(s.ok ? "ok" : "bad");
+    if(t.part === "A"){
+      Array.prototype.forEach.call(box.querySelectorAll(".opt"), function(o){
+        var v = o.getAttribute("data-v");
+        if(norm(v) === norm(d(t.ans))) o.classList.add("right");
+        else if(v === given) o.classList.add("wrong");
+      });
+    } else {
+      var inp = box.querySelector("input");
+      if(inp) inp.disabled = true;
+      var keys = box.querySelector(".keys");
+      if(keys) keys.style.display = "none";
+    }
+    var verd = document.createElement("div");
+    verd.className = "verdict " + (s.ok ? "ok" : "bad");
+    verd.textContent = s.ok ? "Верно."
+      : (given === "" ? "Без ответа. Верный ответ: " + d(t.ans) + "."
+                      : "Неверно. Верный ответ: " + d(t.ans) + ".");
+    var det = document.createElement("details");
+    det.innerHTML = "<summary>Полное решение</summary>" + t.sol;
+    var sol = box.querySelector(".sol");
+    sol.appendChild(verd); sol.appendChild(det);
+  });
+
+  document.getElementById("partA").classList.add("done");
+  document.getElementById("partB").classList.add("done");
+  document.getElementById("finishcard").style.display = "none";
+  document.getElementById("photocard").style.display = "";
+  document.getElementById("sendcard").style.display = "";
+  document.getElementById("clock").textContent = fmt(0);
+  var okN = TASKS.filter(function(t){ return state[t.id].ok; }).length;
+  document.getElementById("progress").textContent =
+    "результат: " + okN + " из " + TASKS.length + " · время " + fmt(used);
+  showResult(okN, used, auto);
+  document.getElementById("result").scrollIntoView({behavior:"smooth", block:"start"});
+}
+document.getElementById("finish").addEventListener("click", function(){ finish(false); });
+window.addEventListener("beforeunload", function(ev){
+  if(running && !finished){ ev.preventDefault(); ev.returnValue = ""; return ""; }
+});
+
+function blockStats(){
+  var st = {};
+  TASKS.forEach(function(t){
+    if(!st[t.blk]) st[t.blk] = {ok:0, all:0, bad:[]};
+    st[t.blk].all++;
+    if(state[t.id].ok) st[t.blk].ok++; else st[t.blk].bad.push(t.id);
+  });
+  return st;
+}
+function verdictOf(p){
+  if(p >= 85) return {t:"сильная база", s:"Ошибок почти нет. Дальше — задачи повышенной сложности части В и работа на скорость."};
+  if(p >= 65) return {t:"база есть, нужны добивки", s:"Основное держится, но провалы в отдельных темах будут стоить баллов. Разбираем точечно то, что подсветилось красным."};
+  if(p >= 40) return {t:"заметные пробелы", s:"Половина заданий не закрыта. Нужен системный повтор по темам ниже, начиная с самых красных."};
+  return {t:"начинаем с базы", s:"Пока проседает и школьная база, и программа старших классов. Идём по темам снизу вверх: сначала числа и преобразования, потом уравнения."};
+}
+function showResult(okN, used, auto){
+  var pct = Math.round(okN / TASKS.length * 100);
+  var v = verdictOf(pct);
+  var st = blockStats();
+  var partA = TASKS.filter(function(t){ return t.part === "A" && state[t.id].ok; }).length;
+  var partB = TASKS.filter(function(t){ return t.part === "B" && state[t.id].ok; }).length;
+  var h = "<h2>Результат</h2>";
+  if(auto) h += "<div class='note'>Время вышло — тест закрылся автоматически. Задания без ответа засчитаны как нерешённые.</div>";
+  h += "<div class='res-big'>" + okN + " из " + TASKS.length + " · " + pct + " %</div>" +
+       "<div class='meta'>" + v.t + "</div>" +
+       "<div class='grid2'>" +
+       "<div class='kpi'><b>" + partA + " / 12</b><span>часть А</span></div>" +
+       "<div class='kpi'><b>" + partB + " / 8</b><span>часть В</span></div>" +
+       "<div class='kpi'><b>" + fmt(used) + "</b><span>время работы</span></div>" +
+       "</div>" +
+       "<p>" + v.s + "</p>" +
+       "<h3>Карта пробелов по темам</h3>";
+  Object.keys(BLOCKS).forEach(function(k){
+    var b = BLOCKS[k], s = st[k] || {ok:0, all:0, bad:[]};
+    var p = s.all ? Math.round(s.ok / s.all * 100) : 0;
+    var cls = p >= 100 ? "" : (p >= 50 ? " mid" : " low");
+    var mark = p >= 100 ? "держится" : (p >= 50 ? "есть пробелы" : "разбирать заново");
+    h += "<div class='blk" + cls + "'>" +
+         "<div class='h'><b>" + b.name + "</b><span class='meta'>" + s.ok + " из " + s.all + " · " + mark + "</span></div>" +
+         "<div class='blkbar'><i style='width:" + p + "%'></i></div>" +
+         "<div class='what'>" + b.cls + ". " + b.what +
+         (s.bad.length ? " <b>Не решены: " + s.bad.join(", ") + ".</b>" : "") + "</div></div>";
+  });
+  h += "<h3>Что дальше</h3><p class='meta'>Разбор каждого задания открывается прямо под ним — " +
+       "кнопка «Полное решение». Начни с тех блоков, где полоса красная: там ошибка не в невнимательности, " +
+       "а в теме. Прикрепи фото черновика и отправь работу — по фото видно, на каком шаге сбилось решение.</p>";
+  var r = document.getElementById("result");
+  r.style.display = ""; r.innerHTML = h;
+}
+progress();
+
+/* ---------- фото ---------- */
+var photos = [];
+document.getElementById("photos").addEventListener("change", function(ev){
+  var files = Array.prototype.slice.call(ev.target.files || []);
+  files.forEach(function(f){
+    var r = new FileReader();
+    r.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var m = 1400, w = img.width, h = img.height;
+        if(Math.max(w,h) > m){ var k = m / Math.max(w,h); w = Math.round(w*k); h = Math.round(h*k); }
+        var c = document.createElement("canvas"); c.width = w; c.height = h;
+        c.getContext("2d").drawImage(img, 0, 0, w, h);
+        photos.push({url: c.toDataURL("image/jpeg", 0.7), task: ""});
+        drawThumbs();
+      };
+      img.src = r.result;
+    };
+    r.readAsDataURL(f);
+  });
+  ev.target.value = "";
+});
+function drawThumbs(){
+  var host = document.getElementById("thumbs");
+  host.innerHTML = "";
+  var total = 0;
+  photos.forEach(function(p, i){
+    total += p.url.length * 0.75;
+    var d0 = document.createElement("div"); d0.className = "thumb";
+    var opts = '<option value="">задание…</option>' + TASKS.map(function(t){
+      return '<option value="' + t.id + '"' + (p.task === t.id ? " selected" : "") + '>' + t.id + '</option>';
+    }).join("");
+    d0.innerHTML = '<img src="' + p.url + '" alt="фото черновика"><button type="button">×</button>' +
+                   '<select>' + opts + '</select>';
+    d0.querySelector("button").addEventListener("click", function(){ photos.splice(i,1); drawThumbs(); });
+    d0.querySelector("select").addEventListener("change", function(ev){ p.task = ev.target.value; });
+    host.appendChild(d0);
+  });
+  var note = document.getElementById("repnote");
+  if(total > 15e6) note.textContent = "Фото уже больше 15 МБ — отчёт может отправляться долго, лишние лучше удалить.";
+  else if(photos.length) note.textContent = "Фото в отчёте: " + photos.length + ".";
+  else note.textContent = "";
+}
+
+/* ---------- отчёт ---------- */
+var ENDPOINT = "https://script.google.com/macros/s/AKfycbztH9c-wQuKC7pSfD8AcFfnOcGpSHxoeqovulmvLMp9W23SgFx9dDQ2JTlWcIJDMN6W/exec";
+var SECRET = "artteach2026";
+function buildReport(){
+  var name = (document.getElementById("name").value || "").trim() || "без имени";
+  var now = new Date();
+  var used = Math.min(Math.round((Date.now() - started) / 1000), LIMIT);
+  var okN = TASKS.filter(function(t){ return state[t.id].ok; }).length;
+  var pct = Math.round(okN / TASKS.length * 100);
+  var v = verdictOf(pct);
+  var st = blockStats();
+  var data = {тип:"диагностический тест", предмет:"математика", класс:"11",
+    подготовка:"ЦТ", ученик:name, дата:now.toLocaleString("ru-RU"),
+    минут:Math.round(used/60), верно:okN, всего:TASKS.length, процент:pct,
+    вывод:v.t, блоки:[], задания:[]};
+  var brows = Object.keys(BLOCKS).map(function(k){
+    var b = BLOCKS[k], s = st[k] || {ok:0, all:0, bad:[]};
+    var p = s.all ? Math.round(s.ok / s.all * 100) : 0;
+    data.блоки.push({блок:b.name, верно:s.ok, всего:s.all, процент:p, не_решены:s.bad});
+    return "<tr><td style='text-align:left'>" + esc(b.name) + "</td><td>" + s.ok + " / " + s.all +
+           "</td><td>" + p + " %</td><td>" + (s.bad.join(", ") || "—") + "</td></tr>";
+  }).join("");
+  var rows = TASKS.map(function(t){
+    var s = state[t.id];
+    data.задания.push({n:t.id, часть:t.part, тема:t.tema, класс:t.cls,
+      условие:t.q.replace(/<[^>]+>/g,""), ответ_ученика:s.given,
+      верный_ответ:d(t.ans), верно:s.ok});
+    return "<tr><td>" + t.id + "</td><td style='text-align:left'>" + esc(t.tema) + "</td><td>" + esc(t.cls) +
+      "</td><td>" + esc(s.given || "—") + "</td><td>" + esc(d(t.ans)) + "</td><td>" +
+      (s.ok ? "верно" : (s.given ? "неверно" : "не решал")) + "</td></tr>";
+  }).join("");
+  var pics = photos.map(function(p, i){
+    return "<figure><img src='" + p.url + "'><figcaption>Черновик " + (i+1) +
+      (p.task ? " — к заданию " + p.task : "") + "</figcaption></figure>";
+  }).join("");
+  var html = "<!doctype html><html lang='ru'><head><meta charset='utf-8'>" +
+    "<meta name='viewport' content='width=device-width,initial-scale=1'>" +
+    "<title>Диагностика по математике — " + esc(name) + "</title><style>" +
+    "body{font:16px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;padding:20px;color:#16181d;background:#fff}" +
+    "h1{font-size:22px;margin:0 0 4px}h2{font-size:19px;margin:22px 0 6px}.m{color:#5b6270;font-size:15px}" +
+    "table{border-collapse:collapse;width:100%;margin-top:10px;font-size:15px}" +
+    "th,td{border:1px solid #dfe3ea;padding:6px 8px;text-align:center}th{background:#eef3fb}" +
+    "figure{margin:14px 0}img{max-width:100%;border:1px solid #dfe3ea;border-radius:8px}" +
+    "figcaption{color:#5b6270;font-size:14px;margin-top:4px}</style></head><body>" +
+    "<h1>Диагностический тест по математике</h1>" +
+    "<div class='m'>11 класс · подготовка к ЦТ · часть А — 12 заданий, часть В — 8 заданий</div>" +
+    "<div class='m'>Ученик: <b>" + esc(name) + "</b> · сдано: " + esc(now.toLocaleString("ru-RU")) +
+    " · время работы: " + fmt(used) + " из 60:00</div>" +
+    "<h2>Итог: " + okN + " из " + TASKS.length + " (" + pct + " %) — " + esc(v.t) + "</h2>" +
+    "<p class='m'>" + esc(v.s) + "</p>" +
+    "<h2>Карта пробелов</h2><table><tr><th>Блок</th><th>Верно</th><th>%</th><th>Не решены</th></tr>" +
+    brows + "</table>" +
+    "<h2>По заданиям</h2><table><tr><th>№</th><th>Тема</th><th>Класс</th><th>Ответ ученика</th>" +
+    "<th>Верный ответ</th><th>Итог</th></tr>" + rows + "</table>" +
+    (pics ? "<h2>Черновики</h2>" + pics : "<p class='m'>Черновики не прикреплены.</p>") +
+    "<script type='application/json' id='result-data'>" +
+    JSON.stringify(data).replace(/</g,"\\u003c") + "<\/script></body></html>";
+  var stamp = now.getDate() + "-" + (now.getMonth()+1);
+  return {html:html, name:name,
+    file: "Диагностика_математика11_" + name.replace(/\s+/g,"_") + "_" + stamp + ".html",
+    caption: name + " · диагностика по математике (ЦТ) · " + okN + " из " + TASKS.length + " (" + pct + " %)"};
+}
+document.getElementById("send").addEventListener("click", function(){
+  var note = document.getElementById("repnote");
+  var who = (document.getElementById("name").value || "").trim();
+  if(!who){ note.className = "meta bad-note"; note.textContent = "Сначала впиши имя вверху страницы."; return; }
+  note.className = "meta";
+  var r = buildReport();
+  note.textContent = "Отправляю…";
+  fetch(ENDPOINT, {method:"POST", mode:"no-cors", body: JSON.stringify({
+    secret: SECRET, name: r.file, caption: r.caption,
+    file: btoa(unescape(encodeURIComponent(r.html)))
+  })}).then(function(){
+    note.textContent = "Отправлено преподавателю. Если хочешь, сохрани копию себе кнопкой рядом.";
+  }).catch(function(){
+    note.textContent = "Не получилось отправить. Скачай файл кнопкой рядом и пришли его вручную.";
+  });
+});
+document.getElementById("report").addEventListener("click", function(){
+  var r = buildReport();
+  var blob = new Blob([r.html], {type:"text/html;charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = r.file;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  document.getElementById("repnote").textContent = "Файл скачан — он в папке загрузок.";
+});
+
+</script>
+</body>
+</html>

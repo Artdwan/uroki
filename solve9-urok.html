@@ -1,0 +1,789 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Урок: решение прямоугольных треугольников — 9 класс</title>
+<style>
+:root{
+  --bg:#f4f6f9; --card:#fff; --ink:#15181e; --muted:#5c6472; --line:#d8dde6;
+  --acc:#2f6bd8; --acc2:#e8f0ff; --acc3:#bcd2f7;
+  --ok:#137a45; --ok-bg:#e2f6ec; --bad:#b3261e; --bad-bg:#fdeceb; --warn:#fff4d8; --warn-line:#f0dca6;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:20px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.bar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.95);
+  border-bottom:2px solid var(--line);backdrop-filter:blur(6px)}
+.bar .in{max-width:1100px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;
+  align-items:center;flex-wrap:wrap}
+.bar b{font-size:19px}
+.bar .m{color:var(--muted);font-size:17px}
+.bar a{color:var(--acc);text-decoration:none;font-size:17px;border:2px solid var(--line);
+  border-radius:20px;padding:4px 12px}
+.bar a:hover{border-color:var(--acc)}
+.spacer{flex:1}
+main{max-width:1100px;margin:0 auto;padding:0 20px 100px}
+section{background:var(--card);border:2px solid var(--line);border-radius:20px;
+  padding:34px 36px;margin:26px 0;scroll-margin-top:70px}
+section.hero{border:none;background:none;padding:40px 0 6px}
+h1{font-size:46px;line-height:1.12;margin:6px 0 12px}
+h2{font-size:32px;line-height:1.2;margin:0 0 18px}
+h3{font-size:24px;margin:26px 0 8px}
+p,li{font-size:21px;margin:12px 0}
+.kicker{color:var(--muted);font-size:20px;letter-spacing:.02em}
+.lead{font-size:24px}
+.f{font-size:26px}
+.cols{display:flex;gap:34px;flex-wrap:wrap;align-items:center}
+.col{flex:1 1 340px;min-width:0}
+.box{border:2px solid var(--line);border-radius:16px;padding:18px 22px;margin:16px 0}
+.box.acc{background:var(--acc2);border-color:var(--acc3)}
+.box.warn{background:var(--warn);border-color:var(--warn-line)}
+.box.ok{background:var(--ok-bg);border-color:#a9dcc2}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:14px 0}
+table{border-collapse:collapse;width:100%;font-size:20px}
+th,td{border:2px solid var(--line);padding:9px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc2)}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.12;margin:0 8px}
+.frac>span{display:block;padding:0 6px}
+.frac>span:first-child{border-bottom:3px solid currentColor}
+svg{width:100%;height:auto;display:block}
+button{font:inherit;font-size:19px;cursor:pointer;border:2px solid var(--line);background:#fff;
+  color:var(--ink);border-radius:12px;padding:9px 16px;min-height:48px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{font-size:17px;min-height:42px;padding:6px 12px}
+button:active{transform:translateY(1px)}
+.step{font-size:22px;margin:14px 0;padding-left:16px;border-left:4px solid var(--acc3);
+  display:none}
+.step.show{display:block}
+.switch{display:inline-flex;border:2px solid var(--line);border-radius:12px;overflow:hidden;
+  margin-left:auto}
+.switch button{border:none;border-radius:0;font-size:18px;min-height:44px;padding:6px 16px}
+.switch button.act{background:var(--acc);color:#fff;font-weight:600}
+.taskhead{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+.tnum{font-weight:700;font-size:24px}
+.lvl{font-size:16px;color:var(--muted);border:2px solid var(--line);border-radius:20px;padding:2px 12px}
+.fig{margin:14px 0}
+.fig svg{width:100%;max-width:250px;height:auto}
+.task{border-top:2px solid var(--line);padding-top:24px;margin-top:24px}
+.task:first-of-type{border-top:none;padding-top:0;margin-top:0}
+input[type=text]{font:inherit;font-size:21px;padding:10px 14px;border:3px solid var(--line);
+  border-radius:12px;width:220px;background:#fff;color:var(--ink)}
+input[type=text].ok{border-color:var(--ok);background:var(--ok-bg)}
+input[type=text].bad{border-color:var(--bad);background:var(--bad-bg)}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+.line{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:22px;margin:14px 0}
+.keys{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+.keys button{font-size:19px;min-height:44px;min-width:48px;padding:6px 12px}
+.msg{font-size:19px;min-height:26px}
+.msg.ok{color:var(--ok);font-weight:600}
+.msg.bad{color:var(--bad);font-weight:600}
+.hint{background:var(--acc2);border-radius:12px;padding:12px 16px;font-size:19px;margin-top:12px;display:none}
+.hint.on{display:block}
+.small{font-size:18px;color:var(--muted)}
+@media (max-width:700px){
+  body{font-size:17px}
+  h1{font-size:32px} h2{font-size:25px} h3{font-size:20px}
+  p,li{font-size:18px} .lead{font-size:19px} .f{font-size:21px}
+  section{padding:22px 18px;border-radius:16px}
+  .line{font-size:19px} input[type=text]{width:170px;font-size:19px}
+}
+
+.tool{border:1px solid var(--line);border-radius:14px;padding:16px;margin:16px 0;background:#fff}
+.tool select,.tool input[type=text]{font:inherit;font-size:19px;padding:9px 11px;border-radius:10px;
+  border:1.5px solid var(--line);background:#fff;color:var(--ink);max-width:230px}
+.trow{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:12px;justify-content:center}
+.trow label{color:var(--muted);font-size:17px}
+.tool svg{width:100%;max-width:420px;height:auto;display:block;margin:0 auto}
+.stout{font-size:19px;line-height:1.8;text-align:center;overflow-x:auto;margin-top:8px}
+.stout .ln{margin:6px 0}
+.stout .res{font-size:21px;font-weight:700;color:var(--ok);margin-top:10px}
+.stout .rule{font-size:16px;color:var(--muted);margin-top:8px}
+.tgt{border-collapse:collapse;margin:4px auto;font-size:19px}
+.tgrid{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+.tgt th,.tgt td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+.tgt th{background:var(--acc2);font-size:16px}
+.tgt td{font-weight:700;font-size:19px}
+.fig{margin:12px 0;text-align:center}
+.fig svg{width:100%;max-width:420px;height:auto;border-radius:12px}
+.sw2{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:12px 0;max-width:100%}
+.scroll table{width:100%}
+.scroll table th,.scroll table td{white-space:normal;text-align:left;vertical-align:top}
+</style>
+</head>
+<body>
+
+<div class="bar"><div class="in">
+  <b>Решение прямоугольных треугольников</b>
+  <span class="m">геометрия · 9 класс · §2</span>
+  <span class="spacer"></span>
+  <a href="#zadaniya">К самостоятельной</a>
+  <span class="m" id="progress">решено 0 из 12</span>
+</div></div>
+
+<main>
+
+<section class="hero">
+  <div class="kicker">Тригонометрия · второй урок</div>
+  <h1>Решение прямоугольных треугольников</h1>
+  <p class="lead">В прошлый раз мы научились находить синус, косинус и тангенс угла.
+  Сегодня используем их по прямому назначению: по двум известным элементам треугольника
+  находим все остальные.</p>
+</section>
+
+<section>
+  <h2>Что значит «решить треугольник»</h2>
+  <div class="cols">
+    <div class="col">
+      <p><b>Решить прямоугольный треугольник</b> — значит найти все его неизвестные стороны и углы
+      по нескольким известным элементам.</p>
+      <p>Договоримся об обозначениях: ∠C = 90°, катет <b>a</b> лежит против угла α,
+      катет <b>b</b> прилежит к углу α, <b>c</b> — гипотенуза.</p>
+      <div class="box"><p>Один элемент всегда известен бесплатно: <b>α + β = 90°</b>,
+      потому что сумма острых углов прямоугольного треугольника равна 90°.
+      Значит, узнав один острый угол, второй получаем вычитанием.</p></div>
+    </div>
+    <div class="col"><div class="fig"><svg viewBox="0 0 380 250"><rect x="0" y="0" width="380" height="250" rx="12" fill="#ffffff"/><polygon points="78.0,190.9 332.0,190.9 78.0,27.1" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/><polyline points="93.0,190.9 93.0,175.9 78.0,175.9" fill="none" stroke="#15181e" stroke-width="2"/><path d="M 305.0 190.9 A 27.0 27.0 0 0 1 309.3 176.3" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="273.9" y="173.8" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">α</text><path d="M 78.0 54.1 A 27.0 27.0 0 0 0 100.7 41.7" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="97.4" y="62.7" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">β</text><text x="205" y="217" font-size="18" fill="#15181e" text-anchor="middle" font-weight="600">b</text><text x="66" y="115" font-size="18" fill="#15181e" text-anchor="end" font-weight="600">a</text><text x="221" y="101" font-size="18" fill="#15181e" text-anchor="start" font-weight="600">c</text><text x="66" y="211" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">C</text><text x="346" y="211" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">A</text><text x="64" y="23" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">B</text><text x="190" y="242" font-size="15" fill="#5b6270" text-anchor="middle">a — против угла α,  b — прилежит к углу α</text></svg></div></div>
+  </div>
+</section>
+
+<section>
+  <h2>Четыре рабочие формулы</h2>
+  <p>Все они получаются из определений синуса, косинуса и тангенса — надо только выразить
+  из них нужную сторону.</p>
+  <div class="box acc"><p class="f">a = c · sin α &nbsp;·&nbsp; b = c · cos α &nbsp;·&nbsp;
+  a = b · tg α &nbsp;·&nbsp; c = a : sin α &nbsp;·&nbsp; c = b : cos α</p></div>
+  <div class="scroll"><table>
+    <tr><th>правило словами</th><th>формула</th></tr>
+    <tr><td>катет = гипотенуза × синус <b>противолежащего</b> угла</td><td>a = c · sin α</td></tr>
+    <tr><td>катет = гипотенуза × косинус <b>прилежащего</b> угла</td><td>b = c · cos α</td></tr>
+    <tr><td>катет = другой катет × тангенс <b>противолежащего первому</b> угла</td><td>a = b · tg α</td></tr>
+    <tr><td>гипотенуза = катет : синус <b>противолежащего</b> угла</td><td>c = a : sin α</td></tr>
+    <tr><td>гипотенуза = катет : косинус <b>прилежащего</b> угла</td><td>c = b : cos α</td></tr>
+  </table></div>
+  <div class="box warn"><p>Главный вопрос при выборе формулы всегда один: <b>как известный катет
+  расположен относительно данного угла</b> — противолежит ему или прилежит. Ответ на этот вопрос
+  и решает, что писать: синус, косинус или тангенс.</p></div>
+</section>
+
+<section>
+  <h2>Попробуй сам: решатель треугольника</h2>
+  <p>Выбери, что известно, впиши числа — и посмотри, в каком порядке находятся остальные элементы.
+  Найденные значения на чертеже показаны зелёным.</p>
+  
+<div class="tool">
+  <div class="trow">
+    <label for="rtcase">Что известно:</label>
+    <select id="rtcase">
+      <option value="ca">гипотенуза c и угол α</option>
+      <option value="aa">катет a и противолежащий угол α</option>
+      <option value="ba">катет a и прилежащий угол β</option>
+      <option value="ab">два катета a и b</option>
+      <option value="ac">катет a и гипотенуза c</option>
+    </select>
+  </div>
+  <div class="trow">
+    <label id="rtl1" for="rtv1">гипотенуза c</label><input type="text" id="rtv1" inputmode="decimal">
+    <label id="rtl2" for="rtv2">угол α, °</label><input type="text" id="rtv2" inputmode="decimal">
+  </div>
+  <div id="rtfig"></div>
+  <div class="stout" id="rtout"></div>
+</div>
+
+  <p class="small">Это не замена решению в тетради: смотри не на ответ, а на <b>порядок шагов</b>
+  и на то, какая формула включается в каждом случае.</p>
+</section>
+
+<section>
+  <h2>Пять случаев — вся тема в одной таблице</h2>
+  <div class="scroll"><table>
+    <tr><th>дано</th><th>что делаем</th></tr>
+    <tr><th>a и b<br>(два катета)</th>
+        <td>c = √(a² + b²); &nbsp; tg α = a : b → α по таблице; &nbsp; β = 90° − α</td></tr>
+    <tr><th>a и c<br>(катет и гипотенуза)</th>
+        <td>b = √(c² − a²); &nbsp; sin α = a : c → α по таблице; &nbsp; β = 90° − α</td></tr>
+    <tr><th>c и α</th>
+        <td>β = 90° − α; &nbsp; a = c · sin α; &nbsp; b = c · cos α</td></tr>
+    <tr><th>a и α<br>(катет и противолежащий угол)</th>
+        <td>β = 90° − α; &nbsp; c = a : sin α; &nbsp; b = a · ctg α</td></tr>
+    <tr><th>a и β<br>(катет и прилежащий угол)</th>
+        <td>α = 90° − β; &nbsp; c = a : cos β; &nbsp; b = a · tg β</td></tr>
+  </table></div>
+  <p class="small">Заметь: если даны две стороны — сначала третья сторона по Пифагору, потом углы.
+  Если дана сторона и угол — сначала второй угол, потом стороны.</p>
+</section>
+
+<section>
+  <h2>Два треугольника, которые надо знать наизусть</h2>
+  <div class="cols">
+    <div class="col">
+      <div class="fig"><svg viewBox="0 0 380 250"><rect x="0" y="0" width="380" height="250" rx="12" fill="#ffffff"/><polygon points="78.0,182.3 332.0,182.3 78.0,35.7" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/><polyline points="93.0,182.3 93.0,167.3 78.0,167.3" fill="none" stroke="#15181e" stroke-width="2"/><path d="M 305.0 182.3 A 27.0 27.0 0 0 1 308.6 168.8" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="246.4" y="159.4" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">30°</text><path d="M 78.0 62.7 A 27.0 27.0 0 0 0 101.4 49.2" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="101.3" y="76.0" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">60°</text><text x="205" y="208" font-size="18" fill="#15181e" text-anchor="middle" font-weight="600">a√3</text><text x="66" y="115" font-size="18" fill="#15181e" text-anchor="end" font-weight="600">a</text><text x="221" y="101" font-size="18" fill="#15181e" text-anchor="start" font-weight="600">2a</text><text x="66" y="202" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">C</text><text x="346" y="202" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">A</text><text x="64" y="32" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">B</text><text x="190" y="242" font-size="15" fill="#5b6270" text-anchor="middle">против угла 30° лежит половина гипотенузы</text></svg></div>
+      <p><b>Углы 30° и 60°.</b> Против угла 30° лежит меньший катет, и он равен половине гипотенузы.
+      Больший катет получается из меньшего умножением на √3.</p>
+    </div>
+    <div class="col">
+      <div class="fig"><svg viewBox="0 0 380 250"><rect x="0" y="0" width="380" height="250" rx="12" fill="#ffffff"/><polygon points="120.0,194.0 290.0,194.0 120.0,24.0" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/><polyline points="135.0,194.0 135.0,179.0 120.0,179.0" fill="none" stroke="#15181e" stroke-width="2"/><path d="M 263.0 194.0 A 27.0 27.0 0 0 1 270.9 174.9" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="230.3" y="169.3" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">45°</text><path d="M 120.0 51.0 A 27.0 27.0 0 0 0 139.1 43.1" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="144.7" y="83.7" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">45°</text><text x="205" y="220" font-size="18" fill="#15181e" text-anchor="middle" font-weight="600">a</text><text x="108" y="115" font-size="18" fill="#15181e" text-anchor="end" font-weight="600">a</text><text x="221" y="101" font-size="18" fill="#15181e" text-anchor="start" font-weight="600">a√2</text><text x="108" y="214" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">C</text><text x="304" y="214" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">A</text><text x="106" y="20" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">B</text><text x="190" y="242" font-size="15" fill="#5b6270" text-anchor="middle">катеты равны, гипотенуза больше в √2 раза</text></svg></div>
+      <p><b>Угол 45°.</b> Треугольник равнобедренный: катеты равны, а гипотенуза больше катета
+      в √2 раза. Обратно: катет равен гипотенузе, делённой на √2.</p>
+    </div>
+  </div>
+  <div class="box ok"><p>В этих двух случаях таблица не нужна вообще — ответ получается точным,
+  с корнями, а не приближённым.</p></div>
+</section>
+
+<section data-steps="1">
+  <h2>Разбор 1. Дана гипотенуза и угол</h2>
+  <p>Гипотенуза прямоугольного треугольника равна 6, острый угол равен 32°.
+  Найти катет, прилежащий к данному углу. Ответ округлить до 0,1.</p>
+  <div class="fig"><svg viewBox="0 0 340 220"><rect x="0" y="0" width="340" height="220" rx="12" fill="#ffffff"/><polygon points="78.0,170.3 292.0,170.3 78.0,37.7" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/><polyline points="93.0,170.3 93.0,155.3 78.0,155.3" fill="none" stroke="#15181e" stroke-width="2"/><path d="M 265.0 170.3 A 27.0 27.0 0 0 1 269.1 156.1" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="210.6" y="147.2" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">32°</text><text x="185" y="196" font-size="18" fill="#15181e" text-anchor="middle" font-weight="600">x</text><text x="201" y="96" font-size="18" fill="#15181e" text-anchor="start" font-weight="600">6</text><text x="66" y="190" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">C</text><text x="306" y="190" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">A</text><text x="64" y="34" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">B</text></svg></div>
+  <button class="pri stepbtn">Показать первый шаг</button>
+  <div class="step">1. Искомый катет прилежит к данному углу, а известна гипотенуза.
+  Значит работает косинус: b = c · cos α.</div>
+  <div class="step">2. Подставляем: x = 6 · cos 32°.</div>
+  <div class="step">3. По таблице cos 32° ≈ 0,8480, поэтому x ≈ 6 · 0,8480 ≈ 5,088.</div>
+  <div class="step"><b>Ответ:</b> 5,1.</div>
+</section>
+
+<section data-steps="1">
+  <h2>Разбор 2. Дан катет и прилежащий угол</h2>
+  <p>Катет прямоугольного треугольника равен 2,5, а прилежащий к нему острый угол равен 68°.
+  Найти другой катет. Ответ округлить до 0,1.</p>
+  <div class="fig"><svg viewBox="0 0 340 205"><rect x="0" y="0" width="340" height="205" rx="12" fill="#ffffff"/><polygon points="78.0,139.7 292.0,139.7 78.0,53.3" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/><polyline points="93.0,139.7 93.0,124.7 78.0,124.7" fill="none" stroke="#15181e" stroke-width="2"/><path d="M 78.0 80.3 A 27.0 27.0 0 0 0 103.0 63.4" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="100.7" y="86.9" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">68°</text><text x="185" y="166" font-size="18" fill="#15181e" text-anchor="middle" font-weight="600">x</text><text x="66" y="102" font-size="18" fill="#15181e" text-anchor="end" font-weight="600">2,5</text><text x="66" y="160" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">C</text><text x="306" y="160" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">A</text><text x="64" y="49" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">B</text></svg></div>
+  <button class="pri stepbtn">Показать первый шаг</button>
+  <div class="step">1. Известен катет и угол, к нему прилежащий; ищем второй катет.
+  Связь двух катетов с углом — это тангенс.</div>
+  <div class="step">2. Искомый катет противолежит данному углу, значит x = 2,5 · tg 68°.</div>
+  <div class="step">3. По таблице tg 68° ≈ 2,4751, поэтому x ≈ 2,5 · 2,4751 ≈ 6,188.</div>
+  <div class="step"><b>Ответ:</b> 6,2.</div>
+</section>
+
+<section data-steps="1">
+  <h2>Разбор 3. Дан катет и противолежащий угол</h2>
+  <p>Катет прямоугольного треугольника равен 4,2, противолежащий ему угол равен 29°.
+  Найти гипотенузу. Ответ округлить до 0,1.</p>
+  <div class="fig"><svg viewBox="0 0 340 220"><rect x="0" y="0" width="340" height="220" rx="12" fill="#ffffff"/><polygon points="78.0,163.3 292.0,163.3 78.0,44.7" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/><polyline points="93.0,163.3 93.0,148.3 78.0,148.3" fill="none" stroke="#15181e" stroke-width="2"/><path d="M 265.0 163.3 A 27.0 27.0 0 0 1 268.4 150.2" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="204.3" y="140.6" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">29°</text><text x="66" y="110" font-size="18" fill="#15181e" text-anchor="end" font-weight="600">4,2</text><text x="201" y="96" font-size="18" fill="#15181e" text-anchor="start" font-weight="600">x</text><text x="66" y="183" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">C</text><text x="306" y="183" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">A</text><text x="64" y="41" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">B</text></svg></div>
+  <button class="pri stepbtn">Показать первый шаг</button>
+  <div class="step">1. Катет противолежит углу, а ищем гипотенузу — это синус: sin α = a : c.</div>
+  <div class="step">2. Выражаем гипотенузу: c = a : sin α, то есть x = 4,2 : sin 29°.</div>
+  <div class="step">3. По таблице sin 29° ≈ 0,4848, поэтому x ≈ 4,2 : 0,4848 ≈ 8,663.</div>
+  <div class="step"><b>Ответ:</b> 8,7.</div>
+  <div class="box warn"><p>Обрати внимание на действие: гипотенуза больше катета, поэтому здесь
+  <b>деление</b>, а не умножение. Если в ответе гипотенуза получилась меньше катета —
+  где-то перепутано умножение с делением.</p></div>
+</section>
+
+<section id="proverka">
+  <div class="taskhead">
+    <h2 style="margin:0">Проверь себя</h2>
+    <div class="switch" id="switch">
+      <button data-m="blank">С пропусками</button>
+      <button data-m="solo" class="act">Самостоятельно</button>
+    </div>
+  </div>
+  <p class="small">Четыре быстрые задачи на разобранные формулы. Переключатель действует и здесь,
+  и в самостоятельной работе ниже. Ответы — числа, кнопки под задачей вставляют знаки.</p>
+  <div class="keys" id="keys"></div>
+  <div id="tasks" data-tasks="main"></div>
+</section>
+
+<section data-steps="1">
+  <h2>Разбор 4. Даны два катета — решаем треугольник целиком</h2>
+  <p>Катеты прямоугольного треугольника равны 8 и 5. Найти гипотенузу и оба острых угла.
+  Стороны округлить до 0,1, углы — до 1°.</p>
+  <div class="fig"><svg viewBox="0 0 340 250"><rect x="0" y="0" width="340" height="250" rx="12" fill="#ffffff"/><polygon points="125.6,214.0 244.4,214.0 125.6,24.0" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/><polyline points="140.6,214.0 140.6,199.0 125.6,199.0" fill="none" stroke="#15181e" stroke-width="2"/><path d="M 217.4 214.0 A 27.0 27.0 0 0 1 230.1 191.1" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="208.9" y="194.3" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">α</text><path d="M 125.6 51.0 A 27.0 27.0 0 0 0 139.9 46.9" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="141.8" y="80.3" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">β</text><text x="185" y="240" font-size="18" fill="#15181e" text-anchor="middle" font-weight="600">5</text><text x="114" y="125" font-size="18" fill="#15181e" text-anchor="end" font-weight="600">8</text><text x="201" y="111" font-size="18" fill="#15181e" text-anchor="start" font-weight="600">c = ?</text><text x="114" y="234" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">C</text><text x="258" y="234" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">A</text><text x="112" y="20" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">B</text></svg></div>
+  <button class="pri stepbtn">Показать первый шаг</button>
+  <div class="step">1. Углы пока неизвестны, зато известны обе стороны — начинаем с теоремы Пифагора:
+  c = √(8² + 5²) = √(64 + 25) = √89.</div>
+  <div class="step">2. √89 ≈ 9,4 — это гипотенуза.</div>
+  <div class="step">3. Теперь угол. Оба катета известны, поэтому удобен тангенс:
+  tg α = a : b = 8 : 5 = 1,6.</div>
+  <div class="step">4. По таблице значению 1,6 отвечает угол α ≈ 58°.</div>
+  <div class="step">5. Второй угол: β = 90° − 58° = 32°.</div>
+  <div class="step"><b>Ответ:</b> c ≈ 9,4; α ≈ 58°; β ≈ 32°.</div>
+</section>
+
+<section>
+  <h2>Таблица значений под рукой</h2>
+  <p>Для углов вроде 32° или 68° значения берут из таблиц или с калькулятора.
+  Впиши угол — и получишь все четыре значения сразу.</p>
+  
+<div class="tool">
+  <div class="trow">
+    <label for="tgang">Угол α =</label>
+    <input type="text" id="tgang" value="32" inputmode="decimal" style="max-width:90px"> °
+    <span class="small">от 1° до 89°</span>
+  </div>
+  <div class="tgrid" id="tgout"></div>
+</div>
+
+  <p class="small">В работе округляй так, как просят в условии: обычно стороны до десятых,
+  а углы до целого градуса.</p>
+</section>
+
+<section data-steps="1">
+  <h2>Разбор 5. Тригонометрия внутри другой фигуры</h2>
+  <p>В равнобедренной трапеции ABCD меньшее основание BC = 7, боковая сторона AB = 10, sin A = 0,8.
+  Найти площадь трапеции.</p>
+  <div class="fig"><svg viewBox="0 0 400 230">
+<rect x="0" y="0" width="400" height="230" rx="12" fill="#ffffff"/>
+<polygon points="60,175 340,175 265,65 135,65" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/>
+<line x1="135" y1="65" x2="135" y2="175" stroke="#2f6bd8" stroke-width="2.2" stroke-dasharray="6 5"/>
+<line x1="265" y1="65" x2="265" y2="175" stroke="#2f6bd8" stroke-width="2.2" stroke-dasharray="6 5"/>
+<polyline points="150,175 150,160 135,160" fill="none" stroke="#2f6bd8" stroke-width="2"/>
+<path d="M 87.0 175.0 A 27.0 27.0 0 0 0 75.2 152.7" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="95.9" y="156.0" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">α</text>
+<text x="200" y="196" font-size="18" font-weight="600" fill="#15181e" text-anchor="middle">AD = ?</text>
+<text x="200" y="55" font-size="18" font-weight="600" fill="#15181e" text-anchor="middle">BC = 7</text>
+<text x="82" y="112" font-size="18" font-weight="600" fill="#15181e" text-anchor="end">AB = 10</text>
+<text x="150" y="128" font-size="17" font-weight="600" fill="#2f6bd8">BH</text>
+<text x="50" y="192" font-size="16" fill="#5b6270">A</text>
+<text x="346" y="192" font-size="16" fill="#5b6270">D</text>
+<text x="128" y="56" font-size="16" fill="#5b6270">B</text>
+<text x="272" y="56" font-size="16" fill="#5b6270">C</text>
+<text x="128" y="192" font-size="16" fill="#5b6270">H</text>
+<text x="200" y="220" font-size="15" fill="#5b6270" text-anchor="middle">sin A = 0,8</text>
+</svg></div>
+  <button class="pri stepbtn">Показать первый шаг</button>
+  <div class="step">1. Площадь трапеции считается по формуле S = (a + b) : 2 · h, значит нужны
+  большее основание и высота. Проведём высоты BH и CK.</div>
+  <div class="step">2. Появился прямоугольный треугольник ABH. Высота BH противолежит углу A,
+  поэтому BH = AB · sin A = 10 · 0,8 = 8.</div>
+  <div class="step">3. Второй катет по Пифагору: AH = √(10² − 8²) = √36 = 6.</div>
+  <div class="step">4. HBCK — прямоугольник, значит HK = BC = 7. Треугольники ABH и DCK равны,
+  поэтому KD = AH = 6.</div>
+  <div class="step">5. Большее основание: AD = 6 + 7 + 6 = 19.</div>
+  <div class="step">6. S = (7 + 19) : 2 · 8 = 13 · 8 = 104.</div>
+  <div class="step"><b>Ответ:</b> 104.</div>
+  <div class="box acc"><p>Приём общий для всей темы: <b>увидеть прямоугольный треугольник</b>
+  внутри фигуры и решить его. Высоты, диагонали и апофемы почти всегда создают такие треугольники.</p></div>
+</section>
+
+<section id="zadaniya">
+  <h2>Самостоятельная работа</h2>
+  <p class="small">Восемь задач. Решай в тетради с чертежом и записью формул, а сюда вводи ответ —
+  он проверится сразу. Если совсем не идёт, включи режим «С пропусками» переключателем выше.</p>
+  <div id="tasks2" data-tasks="extra"></div>
+</section>
+
+<section>
+  <h2>Итог урока</h2>
+  <div class="cols">
+    <div class="col">
+      <div class="box acc"><p class="f">a = c · sin α &nbsp; b = c · cos α &nbsp; a = b · tg α</p>
+      <p class="f">c = a : sin α &nbsp; c = b : cos α &nbsp; α + β = 90°</p></div>
+      <div class="box"><p>Даны две стороны — начинай с Пифагора, потом угол через тангенс или синус.
+      Дана сторона и угол — начинай со второго угла, потом стороны.</p></div>
+    </div>
+    <div class="col">
+      <div class="box warn"><p>Три вещи, на которых теряют баллы: путают противолежащий катет
+      с прилежащим; умножают там, где надо делить (гипотенуза всегда больше катета);
+      забывают округлить так, как просили в условии.</p></div>
+      <p>Дома — файл с теорией, семью разобранными примерами, шпаргалкой на печать
+      и четырнадцатью задачами с проверкой ответа.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+"use strict";
+function e(s){return btoa(unescape(encodeURIComponent(s)));}
+function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return s;}}
+var F = {"osn": "<svg viewBox=\"0 0 380 250\"><rect x=\"0\" y=\"0\" width=\"380\" height=\"250\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,190.9 332.0,190.9 78.0,27.1\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,190.9 93.0,175.9 78.0,175.9\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 305.0 190.9 A 27.0 27.0 0 0 1 309.3 176.3\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"273.9\" y=\"173.8\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">α</text><path d=\"M 78.0 54.1 A 27.0 27.0 0 0 0 100.7 41.7\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"97.4\" y=\"62.7\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">β</text><text x=\"205\" y=\"217\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">b</text><text x=\"66\" y=\"115\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">a</text><text x=\"221\" y=\"101\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">c</text><text x=\"66\" y=\"211\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"346\" y=\"211\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"23\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text><text x=\"190\" y=\"242\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">a — против угла α,  b — прилежит к углу α</text></svg>", "t30": "<svg viewBox=\"0 0 380 250\"><rect x=\"0\" y=\"0\" width=\"380\" height=\"250\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,182.3 332.0,182.3 78.0,35.7\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,182.3 93.0,167.3 78.0,167.3\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 305.0 182.3 A 27.0 27.0 0 0 1 308.6 168.8\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"246.4\" y=\"159.4\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">30°</text><path d=\"M 78.0 62.7 A 27.0 27.0 0 0 0 101.4 49.2\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"101.3\" y=\"76.0\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">60°</text><text x=\"205\" y=\"208\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">a√3</text><text x=\"66\" y=\"115\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">a</text><text x=\"221\" y=\"101\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">2a</text><text x=\"66\" y=\"202\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"346\" y=\"202\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"32\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text><text x=\"190\" y=\"242\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">против угла 30° лежит половина гипотенузы</text></svg>", "t45": "<svg viewBox=\"0 0 380 250\"><rect x=\"0\" y=\"0\" width=\"380\" height=\"250\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"120.0,194.0 290.0,194.0 120.0,24.0\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"135.0,194.0 135.0,179.0 120.0,179.0\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 263.0 194.0 A 27.0 27.0 0 0 1 270.9 174.9\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"230.3\" y=\"169.3\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">45°</text><path d=\"M 120.0 51.0 A 27.0 27.0 0 0 0 139.1 43.1\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"144.7\" y=\"83.7\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">45°</text><text x=\"205\" y=\"220\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">a</text><text x=\"108\" y=\"115\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">a</text><text x=\"221\" y=\"101\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">a√2</text><text x=\"108\" y=\"214\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"304\" y=\"214\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"106\" y=\"20\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text><text x=\"190\" y=\"242\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">катеты равны, гипотенуза больше в √2 раза</text></svg>", "r1": "<svg viewBox=\"0 0 340 220\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"220\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,170.3 292.0,170.3 78.0,37.7\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,170.3 93.0,155.3 78.0,155.3\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 265.0 170.3 A 27.0 27.0 0 0 1 269.1 156.1\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"210.6\" y=\"147.2\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">32°</text><text x=\"185\" y=\"196\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">x</text><text x=\"201\" y=\"96\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">6</text><text x=\"66\" y=\"190\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"306\" y=\"190\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"34\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "r2": "<svg viewBox=\"0 0 340 205\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"205\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,139.7 292.0,139.7 78.0,53.3\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,139.7 93.0,124.7 78.0,124.7\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 78.0 80.3 A 27.0 27.0 0 0 0 103.0 63.4\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"100.7\" y=\"86.9\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">68°</text><text x=\"185\" y=\"166\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">x</text><text x=\"66\" y=\"102\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">2,5</text><text x=\"66\" y=\"160\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"306\" y=\"160\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"49\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "r3": "<svg viewBox=\"0 0 340 220\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"220\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,163.3 292.0,163.3 78.0,44.7\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,163.3 93.0,148.3 78.0,148.3\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 265.0 163.3 A 27.0 27.0 0 0 1 268.4 150.2\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"204.3\" y=\"140.6\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">29°</text><text x=\"66\" y=\"110\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">4,2</text><text x=\"201\" y=\"96\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">x</text><text x=\"66\" y=\"183\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"306\" y=\"183\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"41\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "r4": "<svg viewBox=\"0 0 340 250\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"250\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"125.6,214.0 244.4,214.0 125.6,24.0\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"140.6,214.0 140.6,199.0 125.6,199.0\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 217.4 214.0 A 27.0 27.0 0 0 1 230.1 191.1\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"208.9\" y=\"194.3\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">α</text><path d=\"M 125.6 51.0 A 27.0 27.0 0 0 0 139.9 46.9\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"141.8\" y=\"80.3\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">β</text><text x=\"185\" y=\"240\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">5</text><text x=\"114\" y=\"125\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">8</text><text x=\"201\" y=\"111\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">c = ?</text><text x=\"114\" y=\"234\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"258\" y=\"234\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"112\" y=\"20\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "z1": "<svg viewBox=\"0 0 340 215\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"215\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,163.2 292.0,163.2 78.0,39.8\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,163.2 93.0,148.2 78.0,148.2\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 265.0 163.2 A 27.0 27.0 0 0 1 268.6 149.7\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"206.4\" y=\"140.3\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">30°</text><text x=\"66\" y=\"108\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">a = ?</text><text x=\"201\" y=\"94\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">10</text><text x=\"66\" y=\"183\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"306\" y=\"183\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"36\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "z2": "<svg viewBox=\"0 0 340 245\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"245\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"131.5,209.0 238.5,209.0 131.5,24.0\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"146.5,209.0 146.5,194.0 131.5,194.0\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 211.5 209.0 A 27.0 27.0 0 0 1 225.0 185.6\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"192.9\" y=\"182.7\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">60°</text><text x=\"185\" y=\"235\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">b = ?</text><text x=\"201\" y=\"108\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">8</text><text x=\"120\" y=\"229\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"252\" y=\"229\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"118\" y=\"20\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "z3": "<svg viewBox=\"0 0 340 235\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"235\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,191.8 292.0,191.8 78.0,31.2\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,191.8 93.0,176.8 78.0,176.8\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><text x=\"185\" y=\"218\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">8</text><text x=\"66\" y=\"118\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">6</text><text x=\"201\" y=\"104\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">c = ?</text><text x=\"66\" y=\"212\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"306\" y=\"212\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"27\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "z4": "<svg viewBox=\"0 0 340 225\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"225\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"102.5,189.0 267.5,189.0 102.5,24.0\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"117.5,189.0 117.5,174.0 102.5,174.0\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 240.5 189.0 A 27.0 27.0 0 0 1 248.4 169.9\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"207.8\" y=\"164.3\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">45°</text><text x=\"185\" y=\"215\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">5</text><text x=\"90\" y=\"112\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">a = ?</text><text x=\"90\" y=\"209\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"282\" y=\"209\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"88\" y=\"20\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "z5": "<svg viewBox=\"0 0 340 215\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"215\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,163.2 292.0,163.2 78.0,39.8\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,163.2 93.0,148.2 78.0,148.2\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 265.0 163.2 A 27.0 27.0 0 0 1 268.6 149.7\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"206.4\" y=\"140.3\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">30°</text><text x=\"66\" y=\"108\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">a = ?</text><text x=\"201\" y=\"94\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">12</text><text x=\"66\" y=\"183\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"306\" y=\"183\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"36\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "z6": "<svg viewBox=\"0 0 340 215\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"215\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,163.2 292.0,163.2 78.0,39.8\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,163.2 93.0,148.2 78.0,148.2\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 265.0 163.2 A 27.0 27.0 0 0 1 268.6 149.7\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"206.4\" y=\"140.3\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">30°</text><text x=\"66\" y=\"108\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">4</text><text x=\"201\" y=\"94\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">c = ?</text><text x=\"66\" y=\"183\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"306\" y=\"183\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"36\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "z7": "<svg viewBox=\"0 0 340 215\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"215\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,163.2 292.0,163.2 78.0,39.8\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,163.2 93.0,148.2 78.0,148.2\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 265.0 163.2 A 27.0 27.0 0 0 1 268.6 149.7\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"206.4\" y=\"140.3\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">30°</text><text x=\"185\" y=\"189\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">b = ?</text><text x=\"66\" y=\"108\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">5</text><text x=\"66\" y=\"183\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"306\" y=\"183\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"36\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "z8": "<svg viewBox=\"0 0 340 225\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"225\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"102.5,189.0 267.5,189.0 102.5,24.0\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"117.5,189.0 117.5,174.0 102.5,174.0\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 102.5 51.0 A 27.0 27.0 0 0 0 121.6 43.1\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"127.2\" y=\"83.7\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">45°</text><text x=\"90\" y=\"112\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">4</text><text x=\"201\" y=\"98\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">c = ?</text><text x=\"90\" y=\"209\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"282\" y=\"209\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"88\" y=\"20\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "z9": "<svg viewBox=\"0 0 340 250\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"250\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"125.6,214.0 244.4,214.0 125.6,24.0\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"140.6,214.0 140.6,199.0 125.6,199.0\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><text x=\"185\" y=\"240\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">5</text><text x=\"114\" y=\"125\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">8</text><text x=\"201\" y=\"111\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">c = ?</text><text x=\"114\" y=\"234\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"258\" y=\"234\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"112\" y=\"20\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "z10": "<svg viewBox=\"0 0 340 225\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"225\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"88.3,169.0 281.7,169.0 88.3,24.0\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"103.3,169.0 103.3,154.0 88.3,154.0\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 254.7 169.0 A 27.0 27.0 0 0 1 260.1 152.8\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"229.9\" y=\"151.7\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">α</text><text x=\"76\" y=\"102\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">a = ?</text><text x=\"201\" y=\"88\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">15</text><text x=\"76\" y=\"189\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"296\" y=\"189\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"74\" y=\"20\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text><text x=\"170\" y=\"217\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">sin α = 0,6</text></svg>", "z11": "<svg viewBox=\"0 0 340 215\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"215\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,150.9 292.0,150.9 78.0,32.1\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,150.9 93.0,135.9 78.0,135.9\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 78.0 59.1 A 27.0 27.0 0 0 0 101.6 45.2\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"98.6\" y=\"67.0\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">β</text><text x=\"185\" y=\"177\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">b = ?</text><text x=\"66\" y=\"98\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">5</text><text x=\"66\" y=\"171\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"306\" y=\"171\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"28\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text><text x=\"170\" y=\"207\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">tg β = 1,8</text></svg>", "trap": "<svg viewBox=\"0 0 400 230\">\n<rect x=\"0\" y=\"0\" width=\"400\" height=\"230\" rx=\"12\" fill=\"#ffffff\"/>\n<polygon points=\"60,175 340,175 265,65 135,65\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/>\n<line x1=\"135\" y1=\"65\" x2=\"135\" y2=\"175\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-dasharray=\"6 5\"/>\n<line x1=\"265\" y1=\"65\" x2=\"265\" y2=\"175\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-dasharray=\"6 5\"/>\n<polyline points=\"150,175 150,160 135,160\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2\"/>\n<path d=\"M 87.0 175.0 A 27.0 27.0 0 0 0 75.2 152.7\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"95.9\" y=\"156.0\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">α</text>\n<text x=\"200\" y=\"196\" font-size=\"18\" font-weight=\"600\" fill=\"#15181e\" text-anchor=\"middle\">AD = ?</text>\n<text x=\"200\" y=\"55\" font-size=\"18\" font-weight=\"600\" fill=\"#15181e\" text-anchor=\"middle\">BC = 7</text>\n<text x=\"82\" y=\"112\" font-size=\"18\" font-weight=\"600\" fill=\"#15181e\" text-anchor=\"end\">AB = 10</text>\n<text x=\"150\" y=\"128\" font-size=\"17\" font-weight=\"600\" fill=\"#2f6bd8\">BH</text>\n<text x=\"50\" y=\"192\" font-size=\"16\" fill=\"#5b6270\">A</text>\n<text x=\"346\" y=\"192\" font-size=\"16\" fill=\"#5b6270\">D</text>\n<text x=\"128\" y=\"56\" font-size=\"16\" fill=\"#5b6270\">B</text>\n<text x=\"272\" y=\"56\" font-size=\"16\" fill=\"#5b6270\">C</text>\n<text x=\"128\" y=\"192\" font-size=\"16\" fill=\"#5b6270\">H</text>\n<text x=\"200\" y=\"220\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">sin A = 0,8</text>\n</svg>"};
+
+var TASKS = [
+ { grp:"main", lvl:"проверь себя", q:"Гипотенуза прямоугольного треугольника равна 10, острый угол равен 30°. Найди катет, противолежащий этому углу.",
+   ans:[e("5")], img:F["z1"],
+   hint:"Катет равен гипотенузе, умноженной на синус противолежащего угла.",
+   steps:[{t:"a = c · sin 30° = 10 · ___", a:[e("0,5")]},
+          {t:"Значит a = ___", a:[e("5")]}] },
+
+ { grp:"main", lvl:"проверь себя", q:"Гипотенуза равна 8, острый угол 60°. Найди катет, прилежащий к этому углу.",
+   ans:[e("4")], img:F["z2"],
+   hint:"Катет равен гипотенузе, умноженной на косинус прилежащего угла.",
+   steps:[{t:"b = c · cos 60° = 8 · ___", a:[e("0,5")]},
+          {t:"Значит b = ___", a:[e("4")]}] },
+
+ { grp:"main", lvl:"проверь себя", q:"Катеты прямоугольного треугольника равны 6 и 8. Найди гипотенузу.",
+   ans:[e("10")], img:F["z3"],
+   hint:"Здесь углы не нужны — работает теорема Пифагора.",
+   steps:[{t:"c² = 6² + 8² = ___", a:[e("100")]},
+          {t:"c = ___", a:[e("10")]}] },
+
+ { grp:"main", lvl:"проверь себя", q:"Катет прямоугольного треугольника равен 5, прилежащий к нему острый угол равен 45°. Найди второй катет.",
+   ans:[e("5")], img:F["z4"],
+   hint:"Катет равен другому катету, умноженному на тангенс угла, противолежащего первому катету.",
+   steps:[{t:"tg 45° = ___", a:[e("1")]},
+          {t:"a = 5 · tg 45° = ___", a:[e("5")]}] },
+
+ { grp:"extra", lvl:"база", q:"Гипотенуза равна 12, острый угол 30°. Найди меньший катет.",
+   ans:[e("6")], img:F["z5"],
+   hint:"Меньший катет лежит против меньшего угла, то есть против 30°.",
+   steps:[{t:"a = 12 · sin 30° = 12 · 0,5 = ___", a:[e("6")]},
+          {t:"Это ровно половина гипотенузы, проверь: 12 : 2 = ___", a:[e("6")]}] },
+
+ { grp:"extra", lvl:"база", q:"Меньший катет равен 4, острый угол при нём — 60° (значит против катета лежит 30°). Найди гипотенузу.",
+   ans:[e("8")],img:F["z6"],
+   hint:"Против угла 30° лежит половина гипотенузы.",
+   steps:[{t:"c = a : sin 30° = 4 : 0,5 = ___", a:[e("8")]},
+          {t:"Проверка: половина гипотенузы равна ___", a:[e("4")]}] },
+
+ { grp:"extra", lvl:"база", q:"Меньший катет равен 5, он лежит против угла 30°. Найди больший катет. Ответ округли до десятых.",
+   ans:[e("8,7"),e("5√3")], img:F["z7"],
+   hint:"Больший катет равен меньшему, умноженному на √3.",
+   steps:[{t:"b = a · √3 = 5 · √3, то есть 5 · 1,73 ≈ ___", a:[e("8,7")]},
+          {t:"Округли до десятых: ___", a:[e("8,7")]}] },
+
+ { grp:"extra", lvl:"база", q:"Катет равен 4, прилежащий к нему острый угол равен 45°. Найди гипотенузу. Ответ округли до десятых.",
+   ans:[e("5,7"),e("4√2")], img:F["z8"],
+   hint:"В треугольнике с углом 45° гипотенуза равна катету, умноженному на √2.",
+   steps:[{t:"c = a : cos 45° = 4 · √2 ≈ 4 · 1,41 ≈ ___", a:[e("5,7")]},
+          {t:"Округли до десятых: ___", a:[e("5,7")]}] },
+
+ { grp:"extra", lvl:"средний", q:"Катеты равны 5 и 8. Найди гипотенузу. Ответ округли до десятых.",
+   ans:[e("9,4"),e("√89")], img:F["z9"],
+   hint:"Сначала теорема Пифагора, потом извлеки корень и округли.",
+   steps:[{t:"c² = 5² + 8² = ___", a:[e("89")]},
+          {t:"c = √89 ≈ ___", a:[e("9,4")]}] },
+
+ { grp:"extra", lvl:"средний", q:"Гипотенуза равна 15, синус острого угла α равен 0,6. Найди катет, противолежащий углу α.",
+   ans:[e("9")], img:F["z10"],
+   hint:"Значение синуса уже дано — угол искать не нужно.",
+   steps:[{t:"a = c · sin α = 15 · 0,6 = ___", a:[e("9")]},
+          {t:"Второй катет тогда равен √(15² − 9²) = ___", a:[e("12")]}] },
+
+ { grp:"extra", lvl:"средний", q:"Тангенс острого угла β равен 1,8, а прилежащий к нему катет равен 5. Найди второй катет.",
+   ans:[e("9")], img:F["z11"],
+   hint:"К углу β прилежит катет a = 5, а против него лежит искомый катет b.",
+   steps:[{t:"tg β = b : a, значит b = 5 · 1,8 = ___", a:[e("9")]},
+          {t:"Гипотенуза тогда равна √(25 + 81) = √___", a:[e("106")]}] },
+
+ { grp:"extra", lvl:"посложнее", q:"В равнобедренной трапеции ABCD меньшее основание BC = 7, боковая сторона AB = 10, sin A = 0,8. Найди площадь трапеции.",
+   ans:[e("104")], img:F["trap"],
+   hint:"Проведи высоты BH и CK. Высота BH = AB · sin A, а AH найди по теореме Пифагора.",
+   steps:[{t:"BH = 10 · 0,8 = ___", a:[e("8")]},
+          {t:"AH = √(10² − 8²) = ___", a:[e("6")]},
+          {t:"AD = 2 · 6 + 7 = ___", a:[e("19")]},
+          {t:"S = (7 + 19) : 2 · 8 = ___", a:[e("104")]}] }
+];
+
+function norm(s){
+  return String(s).toLowerCase().replace(/\s+/g,"")
+    .replace(/[–—−]/g,"-").replace(/[×·]/g,"*")
+    .replace(/,/g,".").replace(/°/g,"")
+    .replace(/^(ответ:?|x=|y=|α=|a=)/,"");
+}
+function toNum(str){
+  var t = norm(str);
+  if(!t) return NaN;
+  t = t.replace(/√/g,"sqrt").replace(/π/g,"pi");
+  t = t.replace(/sqrt(\d+(?:\.\d+)?)/g,"sqrt($1)");
+  t = t.replace(/(\d)sqrt/g,"$1*sqrt").replace(/(\d)pi/g,"$1*pi");
+  t = t.replace(/(\d)\(/g,"$1*(").replace(/\)(\d)/g,")*$1").replace(/\)\(/g,")*(");
+  if(!/^[-+*/().0-9a-z]+$/.test(t)) return NaN;
+  if(t.replace(/sqrt|pi/g,"").match(/[a-z]/)) return NaN;
+  try{
+    var v = new Function("sqrt","pi","return ("+t+");")(Math.sqrt, Math.PI);
+    return (typeof v === "number" && isFinite(v)) ? v : NaN;
+  }catch(err){ return NaN; }
+}
+function same(a,b){
+  var x = toNum(a), y = toNum(b);
+  if(!isNaN(x) && !isNaN(y)) return Math.abs(x-y) <= Math.max(0.01, Math.abs(y)*0.01);
+  return norm(a) === norm(b);
+}
+function match(v,list){ return list.some(function(x){ return same(v, d(x)); }); }
+
+var KEYS = ["√","²","°",",","/","−","(",")"];
+var mode = "solo";
+var solved = {};
+var HOSTS = {};
+Array.prototype.forEach.call(document.querySelectorAll("[data-tasks]"), function(h){
+  HOSTS[h.getAttribute("data-tasks")] = h;
+});
+var host = HOSTS["main"] || document.getElementById("tasks");
+
+var lastInput = null;
+document.getElementById("keys").innerHTML = KEYS.map(function(k){
+  return '<button type="button" data-k="'+k+'">'+k+'</button>';}).join("");
+function keysRow(){ return ""; }
+function bindKeys(scope){
+  scope.querySelectorAll("input").forEach(function(x){
+    x.addEventListener("focus", function(){ lastInput = x; });
+  });
+  document.querySelectorAll("#keys button").forEach(function(b){
+    b.onclick = function(){
+      var inp = lastInput || document.querySelector("#tasks input");
+      if(!inp) return;
+      var k = b.dataset.k === "−" ? "-" : b.dataset.k;
+      var s = inp.selectionStart != null ? inp.selectionStart : inp.value.length;
+      inp.value = inp.value.slice(0,s) + k + inp.value.slice(inp.selectionEnd != null ? inp.selectionEnd : s);
+      inp.focus(); inp.setSelectionRange(s+k.length, s+k.length);
+    };
+  });
+}
+function progress(){
+  var n = Object.keys(solved).filter(function(k){ return solved[k]; }).length;
+  document.getElementById("progress").textContent = "решено " + n + " из " + TASKS.length;
+}
+function render(){
+  for(var _k in HOSTS){ HOSTS[_k].innerHTML = ""; }
+  TASKS.forEach(function(t, i){
+    var box = document.createElement("div");
+    box.className = "task";
+    box.innerHTML = '<div class="taskhead"><span class="tnum">'+(i+1)+'.</span>'+
+      '<span style="font-size:22px">'+t.q+'</span><span class="lvl">'+t.lvl+'</span></div>' +
+      (t.img ? '<div class="fig">'+t.img+'</div>' : '');
+    var body = document.createElement("div");
+
+    if(mode === "solo"){
+      body.innerHTML = keysRow() +
+        '<div class="line"><span>Ответ:</span>'+
+        '<input type="text" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false">'+
+        '<button class="pri chk">Проверить</button><button class="sm hnt">Подсказка</button></div>'+
+        '<div class="hint">'+t.hint+'</div><div class="msg"></div>';
+      box.appendChild(body);
+      var inp = body.querySelector("input"), msg = body.querySelector(".msg");
+      function go(){
+        var v = inp.value.trim();
+        if(!v){ msg.className="msg bad"; msg.textContent="Введи ответ."; return; }
+        var ok = match(v, t.ans);
+        inp.className = ok ? "ok" : "bad";
+        msg.className = "msg " + (ok ? "ok" : "bad");
+        msg.textContent = ok ? "Верно." : "Пока нет — открой подсказку и проверь знак.";
+        solved[i] = ok; progress();
+      }
+      body.querySelector(".chk").onclick = go;
+      body.querySelector(".hnt").onclick = function(){ body.querySelector(".hint").classList.add("on"); };
+      inp.addEventListener("keydown", function(ev){ if(ev.key==="Enter"){ ev.preventDefault(); go(); } });
+    } else {
+      body.innerHTML = keysRow();
+      box.appendChild(body);
+      t.steps.forEach(function(s){
+        var row = document.createElement("div");
+        row.className = "line";
+        var parts = s.t.split("___");
+        row.innerHTML = '<span>'+parts[0]+'</span>'+
+          '<input type="text" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false">'+
+          '<span>'+(parts[1]||"")+'</span>'+
+          '<button class="sm chk">Проверить</button>'+
+          (s.h ? '<button class="sm hnt">?</button>' : '')+
+          '<span class="msg"></span>';
+        body.appendChild(row);
+        var inp = row.querySelector("input"), msg = row.querySelector(".msg");
+        function go(){
+          var v = inp.value.trim();
+          if(!v){ msg.className="msg bad"; msg.textContent="пусто"; return; }
+          var ok = match(v, s.a);
+          inp.className = ok ? "ok" : "bad";
+          msg.className = "msg " + (ok ? "ok" : "bad");
+          msg.textContent = ok ? "верно" : "не то";
+          var all = Array.prototype.slice.call(body.querySelectorAll("input"));
+          solved[i] = all.every(function(x){ return x.classList.contains("ok"); });
+          progress();
+        }
+        row.querySelector(".chk").onclick = go;
+        if(s.h) row.querySelector(".hnt").onclick = function(){ msg.className="msg"; msg.textContent = s.h; };
+        inp.addEventListener("keydown", function(ev){ if(ev.key==="Enter"){ ev.preventDefault(); go(); } });
+      });
+      var all = document.createElement("div");
+      all.className = "line";
+      all.innerHTML = '<button class="pri allbtn">Проверить все шаги</button><span class="msg"></span>';
+      body.appendChild(all);
+      all.querySelector("button").onclick = function(){
+        var left = 0;
+        body.querySelectorAll(".line .chk").forEach(function(b){ b.click(); });
+        body.querySelectorAll("input").forEach(function(x){ if(!x.classList.contains("ok")) left++; });
+        var m = all.querySelector(".msg");
+        m.className = "msg " + (left ? "bad" : "ok");
+        m.textContent = left ? ("осталось шагов: " + left) : "все шаги верны";
+      };
+    }
+    bindKeys(body);
+    (HOSTS[t.grp || "main"] || host).appendChild(box);
+  });
+  progress();
+}
+document.querySelectorAll("#switch button").forEach(function(b){
+  b.onclick = function(){
+    mode = b.dataset.m;
+    document.querySelectorAll("#switch button").forEach(function(x){ x.classList.toggle("act", x===b); });
+    solved = {};
+    render();
+  };
+});
+render();
+
+/* пошаговые разборы */
+document.querySelectorAll("section[data-steps] .stepbtn").forEach(function(btn){
+  var sec = btn.closest("section");
+  var steps = sec.querySelectorAll(".step");
+  var n = 0;
+  btn.onclick = function(){
+    if(n < steps.length){
+      steps[n].classList.add("show"); n++;
+      btn.textContent = n < steps.length ? "Следующий шаг" : "Скрыть решение";
+    } else {
+      steps.forEach(function(s){ s.classList.remove("show"); });
+      n = 0; btn.textContent = "Показать первый шаг";
+    }
+  };
+});
+
+/* ============ решатель прямоугольного треугольника ============ */
+(function(){
+  var sel=document.getElementById("rtcase");
+  if(!sel) return;
+  var v1=document.getElementById("rtv1"), v2=document.getElementById("rtv2"),
+      l1=document.getElementById("rtl1"), l2=document.getElementById("rtl2"),
+      fig=document.getElementById("rtfig"), out=document.getElementById("rtout");
+  var C={
+    ca:{l:["гипотенуза c","угол α, °"], v:["6","32"]},
+    aa:{l:["катет a","угол α, °"], v:["4,2","29"]},
+    ba:{l:["катет a","угол β, °"], v:["2,5","68"]},
+    ab:{l:["катет a","катет b"], v:["8","5"]},
+    ac:{l:["катет a","гипотенуза c"], v:["6","10"]}
+  };
+  function num(s){ var x=parseFloat(String(s).replace(",",".")); return isFinite(x)?x:NaN; }
+  function r1(x){ return Math.round(x*10)/10; }
+  function fm(x){ return String(r1(x)).replace(".", ","); }
+  function f4(x){ return x.toFixed(4).replace(".", ","); }
+  function dg(r){ return Math.round(r*180/Math.PI); }
+  function rd(d){ return d*Math.PI/180; }
+
+  /* дуга угла: упирается в обе стороны, подпись уходит по биссектрисе и не ложится на сторону */
+  function angMark(V,P1,P2,label,col,r,size){
+    var v1=[P1[0]-V[0],P1[1]-V[1]], v2=[P2[0]-V[0],P2[1]-V[1]];
+    var l1=Math.sqrt(v1[0]*v1[0]+v1[1]*v1[1])||1, l2=Math.sqrt(v2[0]*v2[0]+v2[1]*v2[1])||1;
+    var u1=[v1[0]/l1,v1[1]/l1], u2=[v2[0]/l2,v2[1]/l2];
+    var rr=Math.min(r,0.34*l1,0.34*l2);
+    var a1=[V[0]+rr*u1[0],V[1]+rr*u1[1]], a2=[V[0]+rr*u2[0],V[1]+rr*u2[1]];
+    var cr=u1[0]*u2[1]-u1[1]*u2[0], sw=cr>0?1:0, s1=cr>0?1:-1;
+    var o='<path d="M '+a1[0].toFixed(1)+' '+a1[1].toFixed(1)+' A '+rr.toFixed(1)+' '+rr.toFixed(1)+
+          ' 0 0 '+sw+' '+a2[0].toFixed(1)+' '+a2[1].toFixed(1)+
+          '" fill="none" stroke="'+col+'" stroke-width="2.2" stroke-linecap="round"/>';
+    var bx=u1[0]+u2[0], by=u1[1]+u2[1], bl=Math.sqrt(bx*bx+by*by)||1; bx/=bl; by/=bl;
+    var hw=String(label).length*size*0.34+2, hv=size*0.55+2;
+    var lim=0.82*Math.min(l1,l2), d=rr+size*0.8;
+    function fits(dd){
+      var cx=V[0]+dd*bx, cy=V[1]+dd*by, i, j, dx, dy;
+      for(i=-1;i<=1;i+=2){ for(j=-1;j<=1;j+=2){
+        dx=cx+i*hw-V[0]; dy=cy+j*hv-V[1];
+        if(s1*(u1[0]*dy-u1[1]*dx)<3) return false;
+        if(-s1*(u2[0]*dy-u2[1]*dx)<3) return false;
+      } }
+      return true;
+    }
+    while(d<lim && !fits(d)) d+=2;
+    return o+'<text x="'+(V[0]+d*bx).toFixed(1)+'" y="'+(V[1]+d*by).toFixed(1)+'" font-size="'+size+
+      '" fill="'+col+'" text-anchor="middle" dy=".35em" font-weight="700">'+label+'</text>';
+  }
+
+  function draw(a,b,c,al,be,giv){
+    var W=380,H=250,L=78,R=48,T=24,Bm=40;
+    var mw=W-L-R, mh=H-T-Bm;
+    var k=Math.min(mw/Math.max(b,0.01), mh/Math.max(a,0.01));
+    var bw=b*k, ah=a*k, x0=L+(mw-bw)/2, y0=T+(mh+ah)/2;
+    function T2(x,y,s,col,an,sz){ return '<text x="'+x.toFixed(0)+'" y="'+y.toFixed(0)+'" font-size="'+sz+
+      '" font-weight="700" fill="'+col+'" text-anchor="'+an+'">'+s+'</text>'; }
+    var G="#15181e", N="#137a45";
+    var s='<svg viewBox="0 0 '+W+' '+H+'"><rect x="0" y="0" width="'+W+'" height="'+H+'" rx="12" fill="#fff"/>';
+    s+='<polygon points="'+x0.toFixed(1)+','+y0.toFixed(1)+' '+(x0+bw).toFixed(1)+','+y0.toFixed(1)+' '+
+       x0.toFixed(1)+','+(y0-ah).toFixed(1)+'" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/>';
+    s+='<polyline points="'+(x0+15)+','+y0+' '+(x0+15)+','+(y0-15)+' '+x0+','+(y0-15)+
+       '" fill="none" stroke="#15181e" stroke-width="2"/>';
+    var Cp=[x0,y0], Ap=[x0+bw,y0], Bp=[x0,y0-ah];
+    s+=angMark(Ap, Cp, Bp, dg(al)+"\u00B0", giv.al?"#2f6bd8":N, 27, 17);
+    s+=angMark(Bp, Cp, Ap, dg(be)+"\u00B0", giv.be?"#2f6bd8":N, 27, 17);
+    s+=T2(x0+bw/2, y0+26, "b = "+fm(b), giv.b?G:N, "middle", 18);
+    s+=T2(x0-12, y0-ah/2+6, "a = "+fm(a), giv.a?G:N, "end", 18);
+    s+=T2(x0+bw/2+18, y0-ah/2-8, "c = "+fm(c), giv.c?G:N, "start", 18);
+    s+=T2(x0-12, y0+20, "C", "#5b6270", "middle", 15);
+    s+=T2(x0+bw+14, y0+20, "A", "#5b6270", "middle", 15);
+    s+=T2(x0-14, y0-ah-4, "B", "#5b6270", "middle", 15);
+    return s+'</svg>';
+  }
+
+  function build(){
+    var m=sel.value, x=num(v1.value), y=num(v2.value), st=[], a,b,c,al,be, giv={};
+    if(isNaN(x)||isNaN(y)||x<=0||y<=0){
+      fig.innerHTML=""; out.innerHTML='<div class="rule" style="color:#b3261e">Впиши два положительных числа.</div>';
+      return;
+    }
+    if(m==="ca"||m==="aa"||m==="ba"){
+      if(y<1||y>89){ fig.innerHTML=""; out.innerHTML='<div class="rule" style="color:#b3261e">Угол должен быть от 1° до 89°.</div>'; return; }
+    }
+    if(m==="ac" && y<=x){ fig.innerHTML=""; out.innerHTML='<div class="rule" style="color:#b3261e">Гипотенуза должна быть больше катета.</div>'; return; }
+
+    if(m==="ca"){
+      c=x; al=rd(y); be=rd(90-y); a=c*Math.sin(al); b=c*Math.cos(al); giv={c:1,al:1};
+      st.push("β = 90° − "+y+"° = "+(90-y)+"°");
+      st.push("a = c · sin α = "+fm(c)+" · sin "+y+"° = "+fm(c)+" · "+f4(Math.sin(al))+" ≈ "+fm(a));
+      st.push("b = c · cos α = "+fm(c)+" · cos "+y+"° = "+fm(c)+" · "+f4(Math.cos(al))+" ≈ "+fm(b));
+    } else if(m==="aa"){
+      a=x; al=rd(y); be=rd(90-y); c=a/Math.sin(al); b=a/Math.tan(al); giv={a:1,al:1};
+      st.push("β = 90° − "+y+"° = "+(90-y)+"°");
+      st.push("c = a : sin α = "+fm(a)+" : "+f4(Math.sin(al))+" ≈ "+fm(c));
+      st.push("b = a · ctg α = "+fm(a)+" : tg "+y+"° = "+fm(a)+" : "+f4(Math.tan(al))+" ≈ "+fm(b));
+    } else if(m==="ba"){
+      a=x; be=rd(y); al=rd(90-y); c=a/Math.cos(be); b=a*Math.tan(be); giv={a:1,be:1};
+      st.push("α = 90° − "+y+"° = "+(90-y)+"°");
+      st.push("c = a : cos β = "+fm(a)+" : "+f4(Math.cos(be))+" ≈ "+fm(c));
+      st.push("b = a · tg β = "+fm(a)+" · "+f4(Math.tan(be))+" ≈ "+fm(b));
+    } else if(m==="ab"){
+      a=x; b=y; c=Math.sqrt(a*a+b*b); al=Math.atan2(a,b); be=Math.PI/2-al; giv={a:1,b:1};
+      st.push("c = √(a² + b²) = √("+fm(a*a)+" + "+fm(b*b)+") = √"+fm(a*a+b*b)+" ≈ "+fm(c));
+      st.push("tg α = a : b = "+fm(a)+" : "+fm(b)+" = "+f4(a/b)+" → α ≈ "+dg(al)+"°");
+      st.push("β = 90° − "+dg(al)+"° = "+dg(be)+"°");
+    } else {
+      a=x; c=y; b=Math.sqrt(c*c-a*a); al=Math.asin(a/c); be=Math.PI/2-al; giv={a:1,c:1};
+      st.push("b = √(c² − a²) = √("+fm(c*c)+" − "+fm(a*a)+") = √"+fm(c*c-a*a)+" ≈ "+fm(b));
+      st.push("sin α = a : c = "+fm(a)+" : "+fm(c)+" = "+f4(a/c)+" → α ≈ "+dg(al)+"°");
+      st.push("β = 90° − "+dg(al)+"° = "+dg(be)+"°");
+    }
+    fig.innerHTML=draw(a,b,c,al,be,giv);
+    var h="";
+    for(var i=0;i<st.length;i++) h+='<div class="ln">'+(i+1)+') '+st[i]+'</div>';
+    h+='<div class="ln res">Ответ: a ≈ '+fm(a)+', b ≈ '+fm(b)+', c ≈ '+fm(c)+
+       ', α ≈ '+dg(al)+'°, β ≈ '+dg(be)+'°</div>';
+    h+='<div class="rule">Зелёным показано то, что нашли; синим и чёрным — то, что было дано.</div>';
+    out.innerHTML=h;
+  }
+  function setc(){
+    var c=C[sel.value];
+    l1.textContent=c.l[0]; l2.textContent=c.l[1];
+    v1.value=c.v[0]; v2.value=c.v[1];
+    build();
+  }
+  sel.addEventListener("change", setc);
+  v1.addEventListener("input", build);
+  v2.addEventListener("input", build);
+  setc();
+})();
+
+/* ============ таблица значений ============ */
+(function(){
+  var inp=document.getElementById("tgang");
+  if(!inp) return;
+  var out=document.getElementById("tgout");
+  function draw(){
+    var d=parseFloat(String(inp.value).replace(",","."));
+    if(!isFinite(d)||d<1||d>89){ out.innerHTML='<div class="rule" style="color:#b3261e">Впиши угол от 1 до 89.</div>'; return; }
+    var r=d*Math.PI/180;
+    var rows=[["sin "+d+"°", Math.sin(r)],["cos "+d+"°", Math.cos(r)],
+              ["tg "+d+"°", Math.tan(r)],["ctg "+d+"°", 1/Math.tan(r)]];
+    var h='<table class="tgt"><tr>';
+    for(var i=0;i<4;i++) h+='<th>'+rows[i][0]+'</th>';
+    h+='</tr><tr>';
+    for(i=0;i<4;i++) h+='<td>'+rows[i][1].toFixed(4).replace('.', ',')+'</td>';
+    out.innerHTML=h+'</tr></table>';
+  }
+  inp.addEventListener("input", draw);
+  draw();
+})();
+</script>
+</body>
+</html>
