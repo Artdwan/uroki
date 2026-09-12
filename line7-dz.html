@@ -1,0 +1,1043 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Прямая. Луч. Отрезок. Ломаная — домашнее задание, 7 класс</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:800px;margin:0 auto;padding:16px 14px 60px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+.f-formula{font-size:19px}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.step{margin:6px 0}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.fig{margin:12px 0;text-align:center}
+
+.pick4{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-top:10px}
+.pk{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px}
+.pk svg{width:100%;height:auto;display:block}
+.fig svg{width:100%;max-width:420px;height:auto}
+.def{border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:var(--card)}
+.def .n{font-size:14px;color:var(--muted);font-weight:700;letter-spacing:.4px}
+.ax{border:1px solid var(--line);border-left:4px solid #c0397a;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdf0f6}
+.ax .n{font-size:14px;color:#a02a62;font-weight:700;letter-spacing:.4px}
+.wrap-t th,.wrap-t td{white-space:normal;text-align:left;vertical-align:top}
+.fx{display:block;background:var(--acc-soft);border:1px solid var(--line);border-radius:10px;
+  padding:11px 13px;margin:12px 0;text-align:center;font-size:21px;line-height:1.7;
+  font-weight:600;overflow-x:auto}
+.sol .fx,.ex .fx{font-size:19px;margin:9px 0}
+.ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;background:var(--bg)}
+.ex h3{margin-top:0}
+.small,.mini{color:var(--muted);font-size:15px}
+
+.tr{border:1px solid var(--line);border-radius:12px;padding:14px;margin:16px 0;background:var(--bg)}
+.trhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;
+  margin-bottom:8px}
+.trhead b{font-size:17px}
+.trscore{color:var(--muted);font-size:15px;white-space:nowrap}
+.trq{font-size:17px;margin:8px 0}
+.trfig{text-align:center;margin:8px 0}
+.trfig svg{width:100%;max-width:330px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.tropts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
+.tropt{border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;
+  background:var(--card);font-size:16px;text-align:left;min-height:46px}
+.tropt:hover{border-color:var(--acc)}
+.tropt.right{border-color:var(--ok);background:var(--ok-soft);font-weight:600}
+.tropt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.tropts.done .tropt{cursor:default}
+.trnum{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.trnum input{font:inherit;font-size:18px;padding:9px 11px;border-radius:9px;
+  border:1.5px solid var(--line);background:var(--card);color:var(--ink);max-width:130px}
+.trmsg{font-size:16px;margin-top:8px}
+.trmsg .v{font-weight:700}
+.trmsg .v.ok{color:var(--ok)} .trmsg .v.bad{color:var(--bad)}
+.trmsg .why{color:var(--muted);font-size:15px;margin-top:4px}
+.trbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.trbar button{font-size:15px;padding:8px 13px;min-height:42px}
+.trdone{background:var(--acc-soft);border-radius:10px;padding:12px;font-size:17px;
+  text-align:center;font-weight:600}
+
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+@media print{
+  body{background:#fff}
+  .bar{display:none !important}
+  .wrap>*{display:none !important}
+  .wrap>.sheet{display:block !important;border:none;margin:0;padding:0}
+  .sheet{font-size:13px}
+  .sheet h2{font-size:18px}
+  .sheet th,.sheet td{padding:4px 5px;font-size:12px}
+  @page{size:A4;margin:12mm}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card top">
+  <h1>Прямая. Луч. Отрезок. Ломаная</h1>
+  <div class="meta">Геометрия, 7 класс · §3 · домашнее задание · 14 задач</div>
+  <label class="f" for="name">Имя и фамилия</label>
+  <input type="text" id="name" placeholder="напиши, как в журнале" autocapitalize="words" spellcheck="false">
+  <div class="note" style="margin-top:14px">
+    <b>Как работать.</b> Сначала прочитай теорию — она вся здесь, учебник открывать
+    не нужно. Потом разбери шесть примеров: в них показаны все типы задач отсюда.
+    <div style="margin-top:8px">Каждую задачу решай в тетради <b>с чертежом</b>: нарисуй
+    отрезок, отметь и подпиши точки. В поле вводи только число — проверка сразу.</div>
+    <div style="margin-top:8px">У каждой задачи три подсказки, они открываются по одной.
+    Полное решение появляется после верного ответа или после второй попытки.
+    Единицы измерения писать не нужно, запятая и точка равнозначны.</div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Теория</h2>
+
+<h2>3.1. Прямая</h2>
+<p>Прямая <b>бесконечна в обе стороны</b> и разбивает плоскость на две <b>полуплоскости</b>,
+для которых сама прямая является <b>границей</b>. Граница принадлежит обеим полуплоскостям.</p>
+<div class="fig"><svg viewBox="0 0 370 187"><rect x="0" y="0" width="370" height="187" rx="12" fill="#ffffff"/><polygon points="40,28 360,28 320,150 0,150" fill="#fdf3dd" stroke="none"/><line x1="12.0" y1="112.0" x2="350.0" y2="62.0" stroke="#2f6bd8" stroke-width="3.0" stroke-linecap="round"/><text x="200.0" y="62.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600" font-style="italic">полуплоскость</text><text x="165.0" y="132.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600" font-style="italic">полуплоскость</text><text x="60.0" y="104.0" font-size="16" fill="#2f6bd8" text-anchor="middle" font-weight="600" font-style="italic">a</text><text x="185" y="181" font-size="14" fill="#5b6270" text-anchor="middle">прямая a — граница обеих полуплоскостей</text></svg></div>
+<p>Если на прямой отметить три точки, то <b>одна и только одна</b> из них лежит между двумя
+другими. На рисунке точка C лежит между A и B: значит A и B лежат по разные стороны от C.
+А вот C и B лежат по одну сторону от точки A.</p>
+<div class="fig"><svg viewBox="0 0 380 124"><rect x="0" y="0" width="380" height="124" rx="12" fill="#ffffff"/><line x1="32.0" y1="38.0" x2="348.0" y2="38.0" stroke="#15181e" stroke-width="2.4" stroke-linecap="round"/><circle cx="92.7" cy="38.0" r="4.2" fill="#15181e"/><text x="92.7" y="26.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><circle cx="190.0" cy="38.0" r="4.2" fill="#15181e"/><text x="190.0" y="26.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><circle cx="287.3" cy="38.0" r="4.2" fill="#15181e"/><text x="287.3" y="26.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><text x="190" y="100" font-size="14" fill="#5b6270" text-anchor="middle">из трёх точек прямой ровно одна лежит между</text><text x="190" y="118" font-size="14" fill="#5b6270" text-anchor="middle">двумя другими</text></svg></div>
+<p>Через две точки всегда можно провести прямую — и притом только одну. Сравни четыре
+случая:</p>
+<div class="pick4"><div class="pk"><svg viewBox="0 0 290 152"><rect x="0" y="0" width="290" height="152" rx="12" fill="#ffffff"/><rect x="46" y="96" width="200" height="13" rx="3" fill="#f0d3a8" stroke="#b98a4a"/><line x1="40.0" y1="92.0" x2="252.0" y2="92.0" stroke="#2f6bd8" stroke-width="3.0" stroke-linecap="round"/><circle cx="60.0" cy="92.0" r="4.2" fill="#15181e"/><circle cx="232.0" cy="92.0" r="4.2" fill="#15181e"/><text x="60.0" y="78.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><text x="232.0" y="78.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><text x="145" y="146" font-size="14" fill="#5b6270" text-anchor="middle">а) через две точки — одна прямая</text></svg></div><div class="pk"><svg viewBox="0 0 290 170"><rect x="0" y="0" width="290" height="170" rx="12" fill="#ffffff"/><line x1="50.5" y1="42.4" x2="239.5" y2="87.6" stroke="#2f6bd8" stroke-width="2.4" stroke-linecap="round"/><line x1="95.4" y1="19.2" x2="194.6" y2="110.8" stroke="#b3261e" stroke-width="2.4" stroke-linecap="round"/><line x1="159.2" y1="13.5" x2="130.8" y2="116.5" stroke="#137a45" stroke-width="2.4" stroke-linecap="round"/><line x1="217.7" y1="27.5" x2="72.3" y2="102.5" stroke="#7a3fbf" stroke-width="2.4" stroke-linecap="round"/><line x1="248.3" y1="55.8" x2="41.7" y2="74.2" stroke="#e0952a" stroke-width="2.4" stroke-linecap="round"/><circle cx="145.0" cy="65.0" r="4.6" fill="#15181e"/><text x="145" y="146" font-size="14" fill="#5b6270" text-anchor="middle">б) через одну точку — сколько</text><text x="145" y="164" font-size="14" fill="#5b6270" text-anchor="middle">угодно прямых</text></svg></div><div class="pk"><svg viewBox="0 0 290 170"><rect x="0" y="0" width="290" height="170" rx="12" fill="#ffffff"/><line x1="70.0" y1="30.0" x2="150.0" y2="72.0" stroke="#b3261e" stroke-width="2.6" stroke-linecap="round"/><line x1="150.0" y1="72.0" x2="215.0" y2="108.0" stroke="#b3261e" stroke-width="2.6" stroke-linecap="round"/><circle cx="70.0" cy="30.0" r="4.2" fill="#b3261e"/><circle cx="150.0" cy="72.0" r="4.2" fill="#b3261e"/><circle cx="215.0" cy="108.0" r="4.2" fill="#b3261e"/><text x="145" y="146" font-size="14" fill="#5b6270" text-anchor="middle">в) через три точки прямая есть не</text><text x="145" y="164" font-size="14" fill="#5b6270" text-anchor="middle">всегда</text></svg></div><div class="pk"><svg viewBox="0 0 290 170"><rect x="0" y="0" width="290" height="170" rx="12" fill="#ffffff"/><circle cx="129" cy="65" r="46" fill="none" stroke="#2f6bd8" stroke-width="2.2"/><circle cx="145" cy="65" r="46" fill="none" stroke="#137a45" stroke-width="2.2"/><circle cx="161" cy="65" r="46" fill="none" stroke="#7a3fbf" stroke-width="2.2"/><circle cx="145.0" cy="19.0" r="4.2" fill="#15181e"/><circle cx="145.0" cy="111.0" r="4.2" fill="#15181e"/><text x="145" y="146" font-size="14" fill="#5b6270" text-anchor="middle">г) через две точки — сколько</text><text x="145" y="164" font-size="14" fill="#5b6270" text-anchor="middle">угодно окружностей</text></svg></div></div>
+<div class="ax"><div class="n">АКСИОМА ПРЯМОЙ</div>
+Через любые две точки плоскости можно провести прямую, и притом только одну.</div>
+<p><b>Следствие.</b> Две различные прямые не могут иметь двух общих точек. Пусть у них
+есть общая точка M. Если бы нашлась ещё одна общая точка K, то через M и K проходили бы
+две прямые — а по аксиоме такая прямая только одна. Значит это не две прямые, а одна
+и та же, просто названная двумя буквами.</p>
+<p class="small">Ниже три кадра: как бывает, что получается при двух общих точках и почему
+двумя <b>разными</b> прямыми это нарисовать невозможно.</p>
+<div class="fig"><div class="pick4"><div class="pk"><svg viewBox="0 0 250 190"><rect x="0" y="0" width="250" height="190" rx="12" fill="#ffffff"/><line x1="26.0" y1="36.0" x2="224.0" y2="118.0" stroke="#b3261e" stroke-width="3.0" stroke-linecap="round"/><line x1="26.0" y1="116.0" x2="224.0" y2="38.0" stroke="#2f6bd8" stroke-width="3.0" stroke-linecap="round"/><circle cx="125.0" cy="77.0" r="5.2" fill="#15181e"/><text x="125.0" y="102.0" font-size="17" fill="#15181e" text-anchor="middle" font-weight="600">M</text><text x="18.0" y="30.0" font-size="16" fill="#b3261e" text-anchor="end" font-weight="600" font-style="italic">a</text><text x="18.0" y="122.0" font-size="16" fill="#2f6bd8" text-anchor="end" font-weight="600" font-style="italic">b</text><text x="125" y="166" font-size="14" fill="#5b6270" text-anchor="middle">одна общая точка — прямые</text><text x="125" y="184" font-size="14" fill="#5b6270" text-anchor="middle">просто пересекаются</text></svg></div><div class="pk"><svg viewBox="0 0 250 190"><rect x="0" y="0" width="250" height="190" rx="12" fill="#ffffff"/><line x1="24.0" y1="118.0" x2="226.0" y2="36.0" stroke="#7a3fbf" stroke-width="5.0" stroke-linecap="round"/><circle cx="76.0" cy="97.0" r="5.2" fill="#15181e"/><circle cx="176.0" cy="56.0" r="5.2" fill="#15181e"/><text x="70.0" y="122.0" font-size="17" fill="#15181e" text-anchor="middle" font-weight="600">M</text><text x="184.0" y="40.0" font-size="17" fill="#15181e" text-anchor="middle" font-weight="600">K</text><text x="126.0" y="104.0" font-size="16" fill="#7a3fbf" text-anchor="middle" font-weight="600" font-style="italic">a = b</text><text x="125" y="166" font-size="14" fill="#5b6270" text-anchor="middle">две общие точки — это уже</text><text x="125" y="184" font-size="14" fill="#5b6270" text-anchor="middle">одна и та же прямая</text></svg></div><div class="pk"><svg viewBox="0 0 250 190"><rect x="0" y="0" width="250" height="190" rx="12" fill="#ffffff"/><path d="M 48 110 Q 125 34 202 62" fill="none" stroke="#b3261e" stroke-width="3" stroke-linecap="round"/><path d="M 48 110 Q 125 128 202 62" fill="none" stroke="#2f6bd8" stroke-width="3" stroke-linecap="round"/><circle cx="48.0" cy="110.0" r="5.2" fill="#15181e"/><circle cx="202.0" cy="62.0" r="5.2" fill="#15181e"/><text x="42.0" y="134.0" font-size="17" fill="#15181e" text-anchor="middle" font-weight="600">M</text><text x="210.0" y="46.0" font-size="17" fill="#15181e" text-anchor="middle" font-weight="600">K</text><text x="125.0" y="88.0" font-size="26" fill="#5b6270" text-anchor="middle" font-weight="600">✕</text><text x="125" y="166" font-size="14" fill="#5b6270" text-anchor="middle">разными их сделал бы только</text><text x="125" y="184" font-size="14" fill="#5b6270" text-anchor="middle">изгиб, а прямые не изгибаются</text></svg></div></div></div>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>
+Две прямые называются <b>пересекающимися</b>, если они имеют общую точку.</div>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>
+Две прямые называются <b>параллельными</b>, если они лежат в одной плоскости
+и не пересекаются.</div>
+<p>Если прямые a и b параллельны, то отрезки, изображающие эти прямые, не пересекутся,
+сколько бы их ни продолжали.</p>
+<div class="fig"><svg viewBox="0 0 330 180"><rect x="0" y="0" width="330" height="180" rx="12" fill="#ffffff"/><ellipse cx="165" cy="70" rx="150" ry="56" fill="#fdf3dd" stroke="none"/><line x1="45.0" y1="56.0" x2="215.0" y2="42.0" stroke="#2f6bd8" stroke-width="3.0" stroke-linecap="round"/><line x1="60.0" y1="92.0" x2="230.0" y2="78.0" stroke="#137a45" stroke-width="3.0" stroke-linecap="round"/><line x1="215.0" y1="42.0" x2="288.0" y2="36.0" stroke="#2f6bd8" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="6 5"/><line x1="230.0" y1="78.0" x2="300.0" y2="72.0" stroke="#137a45" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="6 5"/><text x="292.0" y="58.0" font-size="18" fill="#5b6270" text-anchor="middle" font-weight="600">✕</text><text x="78.0" y="44.0" font-size="16" fill="#2f6bd8" text-anchor="middle" font-weight="600" font-style="italic">a</text><text x="92.0" y="110.0" font-size="16" fill="#137a45" text-anchor="middle" font-weight="600" font-style="italic">b</text><text x="165" y="156" font-size="14" fill="#5b6270" text-anchor="middle">параллельные прямые не пересекутся</text><text x="165" y="174" font-size="14" fill="#5b6270" text-anchor="middle">никогда</text></svg></div>
+
+<h2>3.2. Луч</h2>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>
+<b>Лучом</b> называется часть прямой, ограниченная одной точкой.</div>
+<p>Точка, ограничивающая луч, принадлежит лучу и называется <b>началом луча</b>.
+Луч бесконечен в одну сторону. Обозначают его одной малой буквой или двумя большими,
+причём <b>на первом месте всегда пишется начало луча</b>. Вторая точка может быть
+и не отмечена — она только указывает направление.</p>
+<div class="fig"><svg viewBox="0 0 330 168"><rect x="0" y="0" width="330" height="168" rx="12" fill="#ffffff"/><line x1="52.0" y1="96.0" x2="300.0" y2="34.0" stroke="#2f6bd8" stroke-width="3.0" stroke-linecap="round"/><path d="M 300.0 34.0 L 292.4 38.8 L 291.0 33.3 z" fill="#2f6bd8"/><circle cx="52.0" cy="96.0" r="4.2" fill="#15181e"/><circle cx="242.0" cy="48.0" r="4.2" fill="#15181e"/><text x="46.0" y="116.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><text x="248.0" y="34.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><text x="150.0" y="50.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600" font-style="italic">луч</text><text x="160.0" y="84.0" font-size="16" fill="#2f6bd8" text-anchor="middle" font-weight="600" font-style="italic">a</text><text x="165" y="144" font-size="14" fill="#5b6270" text-anchor="middle">луч AB: начало A, точка B задаёт</text><text x="165" y="162" font-size="14" fill="#5b6270" text-anchor="middle">направление</text></svg></div>
+<p>Если на прямой отметить точку, она разобьёт прямую на два <b>противоположных луча</b>
+с общим началом.</p>
+<div class="fig"><svg viewBox="0 0 360 122"><rect x="0" y="0" width="360" height="122" rx="12" fill="#ffffff"/><line x1="180.0" y1="50.0" x2="34.0" y2="50.0" stroke="#2f6bd8" stroke-width="2.6" stroke-linecap="round"/><path d="M 34.0 50.0 L 42.5 47.2 L 42.5 52.8 z" fill="#2f6bd8"/><line x1="180.0" y1="50.0" x2="326.0" y2="50.0" stroke="#137a45" stroke-width="2.6" stroke-linecap="round"/><path d="M 326.0 50.0 L 317.5 52.8 L 317.5 47.2 z" fill="#137a45"/><circle cx="180.0" cy="50.0" r="4.2" fill="#15181e"/><circle cx="96.0" cy="50.0" r="4.2" fill="#15181e"/><circle cx="266.0" cy="50.0" r="4.2" fill="#15181e"/><text x="180.0" y="32.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><text x="96.0" y="32.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><text x="266.0" y="32.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><text x="108.0" y="80.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">луч AB</text><text x="258.0" y="80.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">луч AC</text><text x="180" y="116" font-size="14" fill="#5b6270" text-anchor="middle">AB и AC — противоположные лучи</text></svg></div>
+
+<h2>3.3. Отрезок</h2>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>
+<b>Отрезком</b> называется часть прямой, ограниченная двумя точками.</div>
+<p>Точки, ограничивающие отрезок, принадлежат ему и называются <b>концами</b> отрезка.
+Остальные точки отрезка — его <b>внутренние</b> точки.</p>
+<div class="fig"><svg viewBox="0 0 380 132"><rect x="0" y="0" width="380" height="132" rx="12" fill="#ffffff"/><line x1="40.0" y1="60.0" x2="340.0" y2="60.0" stroke="#2f6bd8" stroke-width="2.4" stroke-linecap="round"/><line x1="88.0" y1="60.0" x2="292.0" y2="60.0" stroke="#b3261e" stroke-width="4.0" stroke-linecap="round"/><circle cx="88.0" cy="60.0" r="4.2" fill="#b3261e"/><circle cx="190.0" cy="60.0" r="4.2" fill="#b3261e"/><circle cx="292.0" cy="60.0" r="4.2" fill="#b3261e"/><text x="88.0" y="44.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><text x="190.0" y="44.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">M</text><text x="292.0" y="44.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><text x="190" y="108" font-size="14" fill="#5b6270" text-anchor="middle">AB — отрезок, A и B — концы, M — внутренняя</text><text x="190" y="126" font-size="14" fill="#5b6270" text-anchor="middle">точка</text></svg></div>
+<p>Если концы отрезка лежат в разных полуплоскостях относительно прямой, то отрезок
+пересекает эту прямую. Если в одной полуплоскости — не пересекает.</p>
+<div class="fig"><svg viewBox="0 0 380 272"><rect x="0" y="0" width="380" height="272" rx="12" fill="#ffffff"/><line x1="20.0" y1="128.0" x2="360.0" y2="96.0" stroke="#2f6bd8" stroke-width="2.4" stroke-linecap="round"/><text x="30.0" y="150.0" font-size="16" fill="#2f6bd8" text-anchor="middle" font-weight="600" font-style="italic">a</text><line x1="150.0" y1="70.0" x2="128.0" y2="168.0" stroke="#b3261e" stroke-width="3.0" stroke-linecap="round"/><circle cx="150.0" cy="70.0" r="4.2" fill="#b3261e"/><circle cx="128.0" cy="168.0" r="4.2" fill="#b3261e"/><text x="158.0" y="60.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><text x="120.0" y="186.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><line x1="268.0" y1="62.0" x2="310.0" y2="44.0" stroke="#137a45" stroke-width="3.0" stroke-linecap="round"/><circle cx="268.0" cy="62.0" r="4.2" fill="#137a45"/><circle cx="310.0" cy="44.0" r="4.2" fill="#137a45"/><text x="258.0" y="54.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><text x="318.0" y="34.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><text x="190" y="212" font-size="14" fill="#5b6270" text-anchor="middle">AB пересекает прямую a: концы в разных</text><text x="190" y="230" font-size="14" fill="#5b6270" text-anchor="middle">полуплоскостях.</text><text x="190" y="248" font-size="14" fill="#5b6270" text-anchor="middle">CD не пересекает: оба конца в одной</text><text x="190" y="266" font-size="14" fill="#5b6270" text-anchor="middle">полуплоскости.</text></svg></div>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>
+Два отрезка называются <b>равными</b>, если их можно совместить наложением.</div>
+<p><b>Свойства длины отрезка.</b> Каждый отрезок имеет длину, выраженную положительным
+числом. Равным отрезкам соответствуют равные длины, большему отрезку — бо́льшая длина.
+И наоборот.</p>
+<div class="ax"><div class="n">АКСИОМА ИЗМЕРЕНИЯ ОТРЕЗКОВ</div>
+Если на отрезке взять точку, то она разобьёт данный отрезок на два отрезка, сумма длин
+которых равна длине данного отрезка.</div>
+<div class="fig"><svg viewBox="0 0 400 138"><rect x="0" y="0" width="400" height="138" rx="12" fill="#ffffff"/><line x1="52.0" y1="54.0" x2="348.0" y2="54.0" stroke="#15181e" stroke-width="2.8" stroke-linecap="round"/><circle cx="52.0" cy="54.0" r="4.2" fill="#15181e"/><text x="52.0" y="42.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><circle cx="185.2" cy="54.0" r="4.2" fill="#15181e"/><text x="185.2" y="42.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><circle cx="348.0" cy="54.0" r="4.2" fill="#15181e"/><text x="348.0" y="42.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><line x1="52.0" y1="70.0" x2="185.2" y2="70.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="52.0" y1="65.0" x2="52.0" y2="75.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="185.2" y1="65.0" x2="185.2" y2="75.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><text x="118.6" y="91.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">AC</text><line x1="185.2" y1="110.0" x2="348.0" y2="110.0" stroke="#137a45" stroke-width="2.0" stroke-linecap="round"/><line x1="185.2" y1="105.0" x2="185.2" y2="115.0" stroke="#137a45" stroke-width="2.0" stroke-linecap="round"/><line x1="348.0" y1="105.0" x2="348.0" y2="115.0" stroke="#137a45" stroke-width="2.0" stroke-linecap="round"/><text x="266.6" y="131.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">CB</text><text x="200" y="132" font-size="14" fill="#5b6270" text-anchor="middle">AC + CB = AB</text></svg></div>
+<div class="ax"><div class="n">АКСИОМА ОТКЛАДЫВАНИЯ ОТРЕЗКОВ</div>
+На любом луче от его начала можно отложить отрезок данной длины, и притом только один.</div>
+<p><b>Серединой</b> отрезка называется точка, которая делит отрезок на два равных отрезка.</p>
+<div class="fig"><svg viewBox="0 0 380 114"><rect x="0" y="0" width="380" height="114" rx="12" fill="#ffffff"/><line x1="60.0" y1="56.0" x2="340.0" y2="56.0" stroke="#b3261e" stroke-width="3.4" stroke-linecap="round"/><circle cx="60.0" cy="56.0" r="4.2" fill="#b3261e"/><circle cx="200.0" cy="56.0" r="4.2" fill="#b3261e"/><circle cx="340.0" cy="56.0" r="4.2" fill="#b3261e"/><text x="60.0" y="40.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">E</text><text x="200.0" y="40.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">M</text><text x="340.0" y="40.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">F</text><line x1="128.0" y1="48.0" x2="128.0" y2="64.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><line x1="132.0" y1="48.0" x2="132.0" y2="64.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><line x1="268.0" y1="48.0" x2="268.0" y2="64.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><line x1="272.0" y1="48.0" x2="272.0" y2="64.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><text x="190" y="108" font-size="14" fill="#5b6270" text-anchor="middle">M — середина EF: EM = MF</text></svg></div>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>
+<b>Расстоянием между двумя точками</b> называется длина отрезка, соединяющего эти точки.</div>
+
+<h2>3.4. Ломаная</h2>
+<p>Если несколько отрезков последовательно соединить концами, получится ломаная.
+Сами отрезки называют <b>звеньями</b>, а их концы — <b>вершинами</b> ломаной.</p>
+<div class="fig"><svg viewBox="0 0 380 262"><rect x="0" y="0" width="380" height="262" rx="12" fill="#ffffff"/><polyline points="48.0,190.0 98.0,58.0 196.0,48.0 238.0,196.0 330.0,150.0 296.0,66.0" fill="none" stroke="#15181e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/><circle cx="48.0" cy="190.0" r="4.0" fill="#15181e"/><circle cx="98.0" cy="58.0" r="4.0" fill="#15181e"/><circle cx="196.0" cy="48.0" r="4.0" fill="#15181e"/><circle cx="238.0" cy="196.0" r="4.0" fill="#15181e"/><circle cx="330.0" cy="150.0" r="4.0" fill="#15181e"/><circle cx="296.0" cy="66.0" r="4.0" fill="#15181e"/><text x="32.6" y="202.2" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><text x="83.3" y="54.4" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><text x="194.8" y="36.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><text x="245.3" y="216.4" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><text x="346.5" y="159.1" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">E</text><text x="310.9" y="62.8" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">F</text><text x="190" y="256" font-size="14" fill="#5b6270" text-anchor="middle">ломаная ABCDEF: шесть вершин, пять звеньев</text></svg></div>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>
+<b>Ломаной</b> называется фигура, образованная отрезками, последовательно соединёнными
+своими концами, у которой никакие два соседних звена не лежат на одной прямой.
+<b>Длиной ломаной</b> называется сумма длин её звеньев.</div>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>
+Ломаная называется <b>замкнутой</b>, если начало её первого звена совпадает с концом
+последнего, и <b>незамкнутой</b> в противном случае. Ломаная называется <b>простой</b>,
+если она не имеет самопересечений и никакие два её звена, кроме соседних, не имеют общих
+точек. Иначе она <b>непростая</b>.</div>
+<div class="pick4"><div class="pk"><svg viewBox="0 0 230 172"><rect x="0" y="0" width="230" height="172" rx="12" fill="#ffffff"/><polyline points="36.0,124.0 76.0,40.0 140.0,96.0 196.0,38.0" fill="none" stroke="#15181e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/><circle cx="36.0" cy="124.0" r="4.0" fill="#15181e"/><circle cx="76.0" cy="40.0" r="4.0" fill="#15181e"/><circle cx="140.0" cy="96.0" r="4.0" fill="#15181e"/><circle cx="196.0" cy="38.0" r="4.0" fill="#15181e"/><text x="115" y="166" font-size="14" fill="#5b6270" text-anchor="middle">простая незамкнутая</text></svg></div><div class="pk"><svg viewBox="0 0 230 172"><rect x="0" y="0" width="230" height="172" rx="12" fill="#ffffff"/><polyline points="36.0,40.0 104.0,124.0 196.0,36.0 60.0,116.0" fill="none" stroke="#15181e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/><circle cx="36.0" cy="40.0" r="4.0" fill="#15181e"/><circle cx="104.0" cy="124.0" r="4.0" fill="#15181e"/><circle cx="196.0" cy="36.0" r="4.0" fill="#15181e"/><circle cx="60.0" cy="116.0" r="4.0" fill="#15181e"/><text x="115" y="166" font-size="14" fill="#5b6270" text-anchor="middle">непростая незамкнутая</text></svg></div><div class="pk"><svg viewBox="0 0 230 172"><rect x="0" y="0" width="230" height="172" rx="12" fill="#ffffff"/><polygon points="46.0,120.0 84.0,36.0 176.0,44.0 196.0,120.0" fill="none" stroke="#15181e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/><circle cx="46.0" cy="120.0" r="4.0" fill="#15181e"/><circle cx="84.0" cy="36.0" r="4.0" fill="#15181e"/><circle cx="176.0" cy="44.0" r="4.0" fill="#15181e"/><circle cx="196.0" cy="120.0" r="4.0" fill="#15181e"/><text x="115" y="166" font-size="14" fill="#5b6270" text-anchor="middle">простая замкнутая</text></svg></div><div class="pk"><svg viewBox="0 0 230 190"><rect x="0" y="0" width="230" height="190" rx="12" fill="#ffffff"/><line x1="40.0" y1="40.0" x2="120.0" y2="96.0" stroke="#b3261e" stroke-width="2.6" stroke-linecap="round"/><line x1="120.0" y1="96.0" x2="196.0" y2="36.0" stroke="#b3261e" stroke-width="2.6" stroke-linecap="round"/><line x1="46.0" y1="116.0" x2="190.0" y2="120.0" stroke="#5b6270" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="7 6"/><circle cx="40.0" cy="40.0" r="4.2" fill="#b3261e"/><circle cx="120.0" cy="96.0" r="4.2" fill="#b3261e"/><circle cx="196.0" cy="36.0" r="4.2" fill="#b3261e"/><circle cx="46.0" cy="116.0" r="4.2" fill="#5b6270"/><circle cx="190.0" cy="120.0" r="4.2" fill="#5b6270"/><text x="115" y="166" font-size="14" fill="#5b6270" text-anchor="middle">не ломаная: звенья не</text><text x="115" y="184" font-size="14" fill="#5b6270" text-anchor="middle">соединены</text></svg></div></div>
+<p class="small">Считать звенья и вершины проще всего так: у <b>незамкнутой</b> ломаной
+вершин на одну больше, чем звеньев; у <b>замкнутой</b> их поровну.</p>
+<p>Простая замкнутая ломаная на плоскости называется <b>многоугольником</b>. Её звенья —
+стороны многоугольника, вершины — его вершины. <b>Периметр</b> — сумма длин всех сторон.
+Отрезок, соединяющий вершины, не принадлежащие одной стороне, называется
+<b>диагональю</b>.</p>
+<div class="fig"><svg viewBox="0 0 330 258"><rect x="0" y="0" width="330" height="258" rx="12" fill="#ffffff"/><polygon points="52.0,196.0 108.0,54.0 236.0,84.0 268.0,196.0" fill="#fdeee0" stroke="#15181e" stroke-width="2.6" stroke-linejoin="round"/><circle cx="52.0" cy="196.0" r="4.0" fill="#15181e"/><circle cx="108.0" cy="54.0" r="4.0" fill="#15181e"/><circle cx="236.0" cy="84.0" r="4.0" fill="#15181e"/><circle cx="268.0" cy="196.0" r="4.0" fill="#15181e"/><text x="36.0" y="208.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><text x="102.0" y="42.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><text x="250.0" y="74.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><text x="284.0" y="210.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><line x1="52.0" y1="196.0" x2="236.0" y2="84.0" stroke="#2f6bd8" stroke-width="2.6" stroke-linecap="round"/><text x="165" y="252" font-size="14" fill="#5b6270" text-anchor="middle">четырёхугольник ABCD, AC — диагональ</text></svg></div>
+<div class="fx">P<sub>ABCD</sub> = AB + BC + CD + AD</div>
+<p>При записи многоугольника вершины перечисляют <b>последовательно</b>, начиная с любой
+вершины и в любом направлении: CBAD — это тот же четырёхугольник ABCD.</p>
+<p>Самые известные четырёхугольники — прямоугольник и квадрат. У прямоугольника все углы
+прямые, а противоположные стороны равны. Квадрат — это прямоугольник, у которого все
+стороны равны.</p>
+<div class="pick4"><div class="pk"><svg viewBox="0 0 240 212"><rect x="0" y="0" width="240" height="212" rx="12" fill="#ffffff"/><polygon points="52,140 52,44 188,44 188,140" fill="#fdeee0" stroke="#15181e" stroke-width="2.6"/><polyline points="65,140 65,127 52,127" fill="none" stroke="#15181e" stroke-width="1.8"/><polyline points="65,44 65,57 52,57" fill="none" stroke="#15181e" stroke-width="1.8"/><polyline points="175,44 175,57 188,57" fill="none" stroke="#15181e" stroke-width="1.8"/><polyline points="175,140 175,127 188,127" fill="none" stroke="#15181e" stroke-width="1.8"/><line x1="120.0" y1="38.0" x2="120.0" y2="50.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><line x1="120.0" y1="134.0" x2="120.0" y2="146.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><line x1="46.0" y1="88.5" x2="58.0" y2="88.5" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><line x1="182.0" y1="88.5" x2="194.0" y2="88.5" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><line x1="46.0" y1="95.5" x2="58.0" y2="95.5" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><line x1="182.0" y1="95.5" x2="194.0" y2="95.5" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><text x="37.0" y="160.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><text x="37.0" y="36.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><text x="203.0" y="36.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><text x="203.0" y="160.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><text x="120" y="206" font-size="14" fill="#5b6270" text-anchor="middle">прямоугольник ABCD</text></svg></div><div class="pk"><svg viewBox="0 0 240 212"><rect x="0" y="0" width="240" height="212" rx="12" fill="#ffffff"/><polygon points="66,146 66,40 172,40 172,146" fill="#fdeee0" stroke="#15181e" stroke-width="2.6"/><polyline points="79,146 79,133 66,133" fill="none" stroke="#15181e" stroke-width="1.8"/><polyline points="79,40 79,53 66,53" fill="none" stroke="#15181e" stroke-width="1.8"/><polyline points="159,40 159,53 172,53" fill="none" stroke="#15181e" stroke-width="1.8"/><polyline points="159,146 159,133 172,133" fill="none" stroke="#15181e" stroke-width="1.8"/><line x1="119.0" y1="34.0" x2="119.0" y2="46.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><line x1="119.0" y1="140.0" x2="119.0" y2="152.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><line x1="60.0" y1="93.0" x2="72.0" y2="93.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><line x1="166.0" y1="93.0" x2="178.0" y2="93.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><text x="51.0" y="166.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">M</text><text x="51.0" y="32.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">N</text><text x="187.0" y="32.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">P</text><text x="187.0" y="166.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">K</text><text x="120" y="206" font-size="14" fill="#5b6270" text-anchor="middle">квадрат MNPK</text></svg></div></div>
+
+</div>
+
+<div class="card">
+
+<h2>Разобранные примеры</h2>
+
+<div class="ex">
+  <h3>Пример 1. Отрезок больше другого на столько-то</h3>
+  <div class="q">На отрезке AB, равном 24 см, взята точка C. Отрезок AC на 6 см больше
+  отрезка CB. Найти длину отрезка AC.</div>
+  <div class="fig"><svg viewBox="0 0 400 178"><rect x="0" y="0" width="400" height="178" rx="12" fill="#ffffff"/><line x1="52.0" y1="74.0" x2="348.0" y2="74.0" stroke="#15181e" stroke-width="2.8" stroke-linecap="round"/><circle cx="52.0" cy="74.0" r="4.2" fill="#15181e"/><text x="52.0" y="62.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><circle cx="235.5" cy="74.0" r="4.2" fill="#15181e"/><text x="235.5" y="62.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><circle cx="348.0" cy="74.0" r="4.2" fill="#15181e"/><text x="348.0" y="62.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><line x1="52.0" y1="90.0" x2="235.5" y2="90.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="52.0" y1="85.0" x2="52.0" y2="95.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="235.5" y1="85.0" x2="235.5" y2="95.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><text x="143.8" y="111.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">на 6 см больше</text><line x1="235.5" y1="130.0" x2="348.0" y2="130.0" stroke="#137a45" stroke-width="2.0" stroke-linecap="round"/><line x1="235.5" y1="125.0" x2="235.5" y2="135.0" stroke="#137a45" stroke-width="2.0" stroke-linecap="round"/><line x1="348.0" y1="125.0" x2="348.0" y2="135.0" stroke="#137a45" stroke-width="2.0" stroke-linecap="round"/><text x="291.8" y="151.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">CB</text><text x="200" y="172" font-size="14" fill="#5b6270" text-anchor="middle">AB = 24 см</text></svg></div>
+  <details><summary>Показать решение</summary>
+  <div class="step">1. Обозначаем буквой то, что <b>меньше</b>: пусть CB = x см,
+  тогда AC = (x + 6) см.</div>
+  <div class="step">2. По аксиоме измерения отрезков AC + CB = AB:</div>
+  <div class="fx">(x + 6) + x = 24</div>
+  <div class="step">3. Решаем: 2x + 6 = 24, 2x = 18, x = 9.</div>
+  <div class="step">4. Значит CB = 9 см, а AC = 9 + 6 = 15 см.</div>
+  <div class="step"><b>Ответ: 15 см.</b></div>
+  <div class="step mini">Проверка: 15 + 9 = 24 ✓, и 15 действительно на 6 больше 9 ✓.</div>
+  </details>
+</div>
+
+<div class="ex">
+  <h3>Пример 2. Две точки внутри отрезка</h3>
+  <div class="q">На отрезке AB отмечены точки C и D. Найти длину отрезка CD, если
+  AB = 36 см, AD = 23 см, BC = 19 см.</div>
+  <div class="fig"><svg viewBox="0 0 400 178"><rect x="0" y="0" width="400" height="178" rx="12" fill="#ffffff"/><line x1="52.0" y1="74.0" x2="348.0" y2="74.0" stroke="#15181e" stroke-width="2.8" stroke-linecap="round"/><circle cx="52.0" cy="74.0" r="4.2" fill="#15181e"/><text x="52.0" y="62.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><circle cx="176.3" cy="74.0" r="4.2" fill="#15181e"/><text x="176.3" y="62.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><circle cx="235.5" cy="74.0" r="4.2" fill="#15181e"/><text x="235.5" y="62.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><circle cx="348.0" cy="74.0" r="4.2" fill="#15181e"/><text x="348.0" y="62.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><line x1="52.0" y1="90.0" x2="235.5" y2="90.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="52.0" y1="85.0" x2="52.0" y2="95.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="235.5" y1="85.0" x2="235.5" y2="95.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><text x="143.8" y="111.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">AD = 23</text><line x1="176.3" y1="130.0" x2="348.0" y2="130.0" stroke="#137a45" stroke-width="2.0" stroke-linecap="round"/><line x1="176.3" y1="125.0" x2="176.3" y2="135.0" stroke="#137a45" stroke-width="2.0" stroke-linecap="round"/><line x1="348.0" y1="125.0" x2="348.0" y2="135.0" stroke="#137a45" stroke-width="2.0" stroke-linecap="round"/><text x="262.2" y="151.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">BC = 19</text><text x="200" y="172" font-size="14" fill="#5b6270" text-anchor="middle">AB = 36 см</text></svg></div>
+  <details><summary>Показать решение</summary>
+  <div class="step">1. Сначала находим DB: это остаток отрезка AB после AD.</div>
+  <div class="fx">DB = AB − AD = 36 − 23 = 13 (см)</div>
+  <div class="step">2. Теперь CD — это остаток отрезка BC после DB:</div>
+  <div class="fx">CD = BC − DB = 19 − 13 = 6 (см)</div>
+  <div class="step"><b>Ответ: 6 см.</b></div>
+  <div class="step mini">Есть и короткий путь. Если сложить AD и BC, то отрезок CD
+  окажется посчитан дважды: AD + BC = AB + CD. Отсюда сразу
+  CD = AD + BC − AB = 23 + 19 − 36 = 6 (см).</div>
+  </details>
+</div>
+
+<div class="ex">
+  <h3>Пример 3. Расстояние между серединами</h3>
+  <div class="q">На отрезке AB, равном 42 см, взята точка M. Найти расстояние между
+  серединами отрезков AM и MB.</div>
+  <div class="fig"><svg viewBox="0 0 400 138"><rect x="0" y="0" width="400" height="138" rx="12" fill="#ffffff"/><line x1="52.0" y1="54.0" x2="348.0" y2="54.0" stroke="#15181e" stroke-width="2.8" stroke-linecap="round"/><circle cx="52.0" cy="54.0" r="4.2" fill="#15181e"/><text x="52.0" y="42.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><circle cx="117.1" cy="54.0" r="4.2" fill="#15181e"/><text x="117.1" y="42.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><circle cx="182.2" cy="54.0" r="4.2" fill="#15181e"/><text x="182.2" y="42.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">M</text><circle cx="265.1" cy="54.0" r="4.2" fill="#15181e"/><text x="265.1" y="42.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><circle cx="348.0" cy="54.0" r="4.2" fill="#15181e"/><text x="348.0" y="42.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><line x1="117.1" y1="70.0" x2="265.1" y2="70.0" stroke="#b3261e" stroke-width="2.0" stroke-linecap="round"/><line x1="117.1" y1="65.0" x2="117.1" y2="75.0" stroke="#b3261e" stroke-width="2.0" stroke-linecap="round"/><line x1="265.1" y1="65.0" x2="265.1" y2="75.0" stroke="#b3261e" stroke-width="2.0" stroke-linecap="round"/><text x="191.1" y="91.0" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">CD — искомое</text><text x="200" y="132" font-size="14" fill="#5b6270" text-anchor="middle">C и D — середины отрезков AM и MB</text></svg></div>
+  <details><summary>Показать решение</summary>
+  <div class="step">1. Пусть C — середина AM, D — середина MB. Обозначим
+  AC = CM = a, MD = DB = b.</div>
+  <div class="step">2. Тогда весь отрезок складывается из четырёх кусков:</div>
+  <div class="fx">AB = a + a + b + b = 2(a + b)</div>
+  <div class="step">3. А искомый отрезок — из двух средних кусков: CD = a + b.</div>
+  <div class="fx">CD = ½ · AB = ½ · 42 = 21 (см)</div>
+  <div class="step"><b>Ответ: 21 см.</b></div>
+  <div class="step mini">Заметь: положение точки M вообще не понадобилось. Мы доказали
+  свойство: <b>если на отрезке отмечена точка, то расстояние между серединами полученных
+  отрезков равно половине данного отрезка.</b> Дальше им можно пользоваться как известным.</div>
+  </details>
+</div>
+
+<div class="ex">
+  <h3>Пример 4. Какая точка лежит между двумя другими</h3>
+  <div class="q">На прямой отмечены точки A, B и C так, что AB = 14 см, BC = 32 см,
+  AC = 18 см. Определить, какая из точек лежит между двумя другими.</div>
+  <div class="fig"><svg viewBox="0 0 380 178"><rect x="0" y="0" width="380" height="178" rx="12" fill="#ffffff"/><line x1="32.0" y1="74.0" x2="348.0" y2="74.0" stroke="#15181e" stroke-width="2.4" stroke-linecap="round"/><circle cx="108.1" cy="74.0" r="4.2" fill="#15181e"/><text x="108.1" y="62.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><circle cx="177.2" cy="74.0" r="4.2" fill="#15181e"/><text x="177.2" y="62.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><circle cx="318.0" cy="74.0" r="4.2" fill="#15181e"/><text x="318.0" y="62.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><line x1="108.1" y1="90.0" x2="177.2" y2="90.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="108.1" y1="85.0" x2="108.1" y2="95.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="177.2" y1="85.0" x2="177.2" y2="95.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><text x="142.6" y="111.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">14</text><line x1="177.2" y1="130.0" x2="318.0" y2="130.0" stroke="#137a45" stroke-width="2.0" stroke-linecap="round"/><line x1="177.2" y1="125.0" x2="177.2" y2="135.0" stroke="#137a45" stroke-width="2.0" stroke-linecap="round"/><line x1="318.0" y1="125.0" x2="318.0" y2="135.0" stroke="#137a45" stroke-width="2.0" stroke-linecap="round"/><text x="247.6" y="151.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">18</text><text x="190" y="172" font-size="14" fill="#5b6270" text-anchor="middle">AB = 14, AC = 18, BC = 32</text></svg></div>
+  <details><summary>Показать решение</summary>
+  <div class="step">1. Если точка лежит между двумя другими, то два меньших отрезка
+  в сумме дают больший. Значит ищем, какая сумма даёт третье число.</div>
+  <div class="fx">14 + 18 = 32, то есть AB + AC = BC</div>
+  <div class="step">2. Слева стоят отрезки, у которых общий конец — точка A. Значит именно
+  она делит BC на две части.</div>
+  <div class="step"><b>Ответ: между точками B и C лежит точка A.</b></div>
+  <div class="step mini">Если бы ни одна сумма не совпала с третьим числом, точки
+  на одной прямой лежать не могли бы вовсе.</div>
+  </details>
+</div>
+
+<div class="ex">
+  <h3>Пример 5. Сколько отрезков</h3>
+  <div class="q">На рисунке отмечены четыре точки. Сколько отрезков с концами в этих точках
+  можно изобразить?</div>
+  <div class="fig"><svg viewBox="0 0 380 256"><rect x="0" y="0" width="380" height="256" rx="12" fill="#ffffff"/><polygon points="60.0,190.0 196.0,46.0 330.0,190.0" fill="#eef4ff" stroke="#15181e" stroke-width="2.6" stroke-linejoin="round"/><circle cx="60.0" cy="190.0" r="4.0" fill="#15181e"/><circle cx="196.0" cy="46.0" r="4.0" fill="#15181e"/><circle cx="330.0" cy="190.0" r="4.0" fill="#15181e"/><text x="44.0" y="204.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><text x="196.0" y="32.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><text x="346.0" y="204.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><line x1="196.0" y1="46.0" x2="196.0" y2="190.0" stroke="#15181e" stroke-width="2.4" stroke-linecap="round"/><circle cx="196.0" cy="190.0" r="4.0" fill="#15181e"/><text x="196.0" y="212.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">K</text><text x="190" y="250" font-size="14" fill="#5b6270" text-anchor="middle">четыре точки: A, B, C и K</text></svg></div>
+  <details><summary>Показать решение</summary>
+  <div class="step">1. Отрезок задаётся <b>парой</b> точек, а порядок в паре роли не играет:
+  отрезок AB и отрезок BA — это один и тот же отрезок.</div>
+  <div class="step">2. Считаем по кругу. От точки A выходят отрезки к трём остальным,
+  от B — к двум новым (с A уже посчитали), от C — к одной.</div>
+  <div class="fx">3 + 2 + 1 = 6</div>
+  <div class="step">3. Это AB, AC, AK, BC, BK, CK.</div>
+  <div class="step"><b>Ответ: 6 отрезков.</b></div>
+  <div class="step mini">Общее правило: для n точек отрезков получается
+  (n − 1) + (n − 2) + … + 1. Для 5 точек это 10, для 10 точек — 45.</div>
+  </details>
+</div>
+
+<div class="ex">
+  <h3>Пример 6. Читаем ломаную</h3>
+  <div class="q">Дана пятизвенная незамкнутая ломаная. Каждое следующее звено, начиная
+  со второго, в 2 раза больше предыдущего. Длина ломаной равна 93 см. Найти самое
+  большое звено.</div>
+  <details><summary>Показать решение</summary>
+  <div class="step">1. Обозначим первое звено через x. Тогда звенья равны
+  x, 2x, 4x, 8x и 16x.</div>
+  <div class="step">2. Длина ломаной — сумма длин звеньев:</div>
+  <div class="fx">x + 2x + 4x + 8x + 16x = 31x = 93</div>
+  <div class="step">3. Отсюда x = 3 см, а самое большое звено 16x = 48 см.</div>
+  <div class="step"><b>Ответ: 48 см.</b></div>
+  <div class="step mini">Числа 1, 2, 4, 8, 16 в сумме дают 31 — это стоит запомнить,
+  такая сумма встречается в задачах на удвоение постоянно.</div>
+  </details>
+</div>
+
+</div>
+
+<div class="card">
+  <h2>Тренажёры</h2>
+  <div class="meta">Пять коротких тренажёров на разные умения темы. Задания каждый раз
+  идут в новом порядке, варианты ответов тоже перемешиваются, так что «запомнить кнопку»
+  не получится. После каждого ответа появляется объяснение — читай его, даже когда ответил
+  верно. Тренажёры не входят в отчёт: проходи их столько раз, сколько нужно.</div>
+<div class="tr" id="tr1"><div class="trhead"><b>Тренажёр 1. Узнай фигуру</b><span class="trscore" id="tr1s"></span></div><div class="meta">Десять картинок: прямая, луч, отрезок или ломаная — и какая именно ломаная. Смотри на концы: отмечена точка, стоит стрелка или линия просто уходит за край.</div><div class="trq" id="tr1q"></div><div class="trfig" id="tr1f"></div><div id="tr1a"></div><div class="trmsg" id="tr1m"></div><div class="trbar" id="tr1b"></div></div><div class="tr" id="tr2"><div class="trhead"><b>Тренажёр 2. Назови правильно</b><span class="trscore" id="tr2s"></span></div><div class="meta">Восемь вопросов на обозначения: порядок букв у луча, равноправие концов отрезка, обход вершин многоугольника.</div><div class="trq" id="tr2q"></div><div class="trfig" id="tr2f"></div><div id="tr2a"></div><div class="trmsg" id="tr2m"></div><div class="trbar" id="tr2b"></div></div><div class="tr" id="tr3"><div class="trhead"><b>Тренажёр 3. Обозначь через x</b><span class="trscore" id="tr3s"></span></div><div class="meta">Восемь условий: нужно выбрать, что взять за x, и составить уравнение. Это половина решения любой задачи на отрезки.</div><div class="trq" id="tr3q"></div><div class="trfig" id="tr3f"></div><div id="tr3a"></div><div class="trmsg" id="tr3m"></div><div class="trbar" id="tr3b"></div></div><div class="tr" id="tr4"><div class="trhead"><b>Тренажёр 4. Отношения и доли</b><span class="trscore" id="tr4s"></span></div><div class="meta">Шесть задач на отношения. Ответ — число; считай через доли, а не через уравнение.</div><div class="trq" id="tr4q"></div><div class="trfig" id="tr4f"></div><div id="tr4a"></div><div class="trmsg" id="tr4m"></div><div class="trbar" id="tr4b"></div></div><div class="tr" id="tr5"><div class="trhead"><b>Тренажёр 5. Читаем чертёж</b><span class="trscore" id="tr5s"></span></div><div class="meta">Шесть задач на подсчёт по рисунку: отрезки, звенья, вершины, диагонали, лучи.</div><div class="trq" id="tr5q"></div><div class="trfig" id="tr5f"></div><div id="tr5a"></div><div class="trmsg" id="tr5m"></div><div class="trbar" id="tr5b"></div></div>
+</div>
+
+<div class="card">
+  <h2>Домашнее задание</h2>
+  <div class="meta">Шесть задач базы, пять среднего уровня и три посложнее.
+  Решай по порядку — они выстроены от простого к сложному.</div>
+</div>
+<div id="tasks"></div>
+
+<div class="card sheet">
+  <h2>Шпаргалка</h2>
+  <div class="meta">Этот блок печатается отдельно на один лист A4: Ctrl+P (⌘+P) → печать.</div>
+  <p class="f-formula"><b>Прямая</b> бесконечна в обе стороны и делит плоскость на две
+  полуплоскости; граница принадлежит обеим. Из трёх точек прямой ровно одна лежит между
+  двумя другими.</p>
+  <p class="f-formula"><b>Аксиома прямой:</b> через любые две точки проходит прямая,
+  и притом только одна. Следствие: две различные прямые имеют не более одной общей точки.</p>
+  <p class="f-formula"><b>Луч</b> — часть прямой, ограниченная одной точкой; начало
+  принадлежит лучу и пишется в обозначении первым. <b>Отрезок</b> — часть прямой,
+  ограниченная двумя точками; концы принадлежат отрезку.</p>
+  <p class="f-formula"><b>Аксиома измерения отрезков:</b> если C лежит на AB, то
+  AC + CB = AB. <b>Середина</b> делит отрезок пополам. <b>Расстояние между точками</b> —
+  длина соединяющего их отрезка.</p>
+  <p class="f-formula"><b>Ломаная:</b> звенья и вершины. У незамкнутой вершин на одну больше,
+  чем звеньев; у замкнутой поровну. Простая — без самопересечений.
+  Длина ломаной — сумма длин звеньев.</p>
+  <p class="f-formula"><b>Многоугольник</b> — простая замкнутая ломаная. Периметр — сумма
+  сторон, диагональ соединяет вершины, не лежащие на одной стороне.</p>
+  <div class="scroll"><table>
+    <tr><th>приём</th><th>формула</th></tr>
+    <tr><td>один отрезок больше другого на d</td><td>меньший x, больший x + d, сумма = AB</td></tr>
+    <tr><td>отношение частей m : n</td><td>долей m + n, одна доля = AB : (m + n)</td></tr>
+    <tr><td>середины AM и MB</td><td>расстояние = AB : 2</td></tr>
+    <tr><td>середины AM и KB</td><td>расстояние = (AB + MK) : 2</td></tr>
+    <tr><td>отрезков по n точкам</td><td>(n − 1) + (n − 2) + … + 1</td></tr>
+  </table></div>
+  <p style="font-size:15px"><b>Ловушка:</b> если порядок точек на прямой не задан,
+  случаев обычно два — точка либо лежит между двумя другими, либо нет. Проверяй оба.</p>
+</div>
+
+<div class="card">
+  <h2>Шаг 1. Фото решений — по желанию</h2>
+  <div class="meta">Ответы в полях — это только результат, а преподаватель смотрит ещё и чертёж
+  с ходом решения. Фото прикладывать не обязательно, но с ними разбор будет точнее.</div>
+  <ol class="steps-list">
+    <li>Для каждой задачи нарисуй отрезок и подпиши все точки.</li>
+    <li>Рядом запиши, что обозначил через x, и само уравнение.</li>
+    <li>Сфотографируй страницы при дневном свете, чтобы текст читался.</li>
+    <li>Фото можно приложить несколько сразу и отметить у каждого, к какой задаче оно относится.</li>
+  </ol>
+  <input type="file" id="photos" accept="image/*" multiple style="margin-top:12px">
+  <div class="thumbs" id="thumbs"></div>
+</div>
+
+<div class="card">
+  <h2>Шаг 2. Отправь работу</h2>
+  <div class="meta">Проверь, что вверху страницы написано твоё имя. Фото — по желанию.
+  По кнопке ответы, результат и фотографии уходят преподавателю — пересылать ничего
+  не нужно. Вторая кнопка просто сохраняет копию тебе на устройство.</div>
+  <div class="row" style="margin-top:12px">
+    <button class="pri" id="send">Отправить на проверку</button>
+    <button id="report">Скачать копию себе</button>
+  </div>
+  <div id="repnote" class="meta" style="margin-top:8px"></div>
+</div>
+
+</div>
+
+<div class="bar">
+  <button class="pri" id="checkall">Проверить всё</button>
+  <span id="progress" class="meta">решено 0 из 14</span>
+</div>
+
+<script>
+var F = {"z1": "<svg viewBox=\"0 0 400 112\"><rect x=\"0\" y=\"0\" width=\"400\" height=\"112\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"52.0\" y1=\"41.0\" x2=\"348.0\" y2=\"41.0\" stroke=\"#15181e\" stroke-width=\"2.8\" stroke-linecap=\"round\"/><circle cx=\"52.0\" cy=\"41.0\" r=\"4.2\" fill=\"#15181e\"/><text x=\"52.0\" y=\"29.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">A</text><circle cx=\"220.7\" cy=\"41.0\" r=\"4.2\" fill=\"#15181e\"/><text x=\"220.7\" y=\"29.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">C</text><circle cx=\"348.0\" cy=\"41.0\" r=\"4.2\" fill=\"#15181e\"/><text x=\"348.0\" y=\"29.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">B</text><text x=\"200\" y=\"106\" font-size=\"14\" fill=\"#5b6270\" text-anchor=\"middle\">AB = 30 см</text></svg>", "z2": "<svg viewBox=\"0 0 400 112\"><rect x=\"0\" y=\"0\" width=\"400\" height=\"112\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"52.0\" y1=\"41.0\" x2=\"348.0\" y2=\"41.0\" stroke=\"#15181e\" stroke-width=\"2.8\" stroke-linecap=\"round\"/><circle cx=\"52.0\" cy=\"41.0\" r=\"4.2\" fill=\"#15181e\"/><text x=\"52.0\" y=\"29.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">A</text><circle cx=\"188.2\" cy=\"41.0\" r=\"4.2\" fill=\"#15181e\"/><text x=\"188.2\" y=\"29.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">M</text><circle cx=\"348.0\" cy=\"41.0\" r=\"4.2\" fill=\"#15181e\"/><text x=\"348.0\" y=\"29.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">B</text><text x=\"200\" y=\"106\" font-size=\"14\" fill=\"#5b6270\" text-anchor=\"middle\">AB = 56 см</text></svg>", "z3": "<svg viewBox=\"0 0 400 112\"><rect x=\"0\" y=\"0\" width=\"400\" height=\"112\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"52.0\" y1=\"41.0\" x2=\"348.0\" y2=\"41.0\" stroke=\"#15181e\" stroke-width=\"2.8\" stroke-linecap=\"round\"/><circle cx=\"52.0\" cy=\"41.0\" r=\"4.2\" fill=\"#15181e\"/><text x=\"52.0\" y=\"29.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">E</text><circle cx=\"274.0\" cy=\"41.0\" r=\"4.2\" fill=\"#15181e\"/><text x=\"274.0\" y=\"29.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">P</text><circle cx=\"348.0\" cy=\"41.0\" r=\"4.2\" fill=\"#15181e\"/><text x=\"348.0\" y=\"29.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">F</text><text x=\"200\" y=\"106\" font-size=\"14\" fill=\"#5b6270\" text-anchor=\"middle\">EF = 24 дм</text></svg>", "z12": "<svg viewBox=\"0 0 400 112\"><rect x=\"0\" y=\"0\" width=\"400\" height=\"112\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"52.0\" y1=\"41.0\" x2=\"348.0\" y2=\"41.0\" stroke=\"#15181e\" stroke-width=\"2.8\" stroke-linecap=\"round\"/><circle cx=\"52.0\" cy=\"41.0\" r=\"4.2\" fill=\"#15181e\"/><text x=\"52.0\" y=\"29.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">A</text><circle cx=\"140.8\" cy=\"41.0\" r=\"4.2\" fill=\"#15181e\"/><text x=\"140.8\" y=\"29.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">M</text><circle cx=\"253.3\" cy=\"41.0\" r=\"4.2\" fill=\"#15181e\"/><text x=\"253.3\" y=\"29.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">K</text><circle cx=\"348.0\" cy=\"41.0\" r=\"4.2\" fill=\"#15181e\"/><text x=\"348.0\" y=\"29.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">B</text><text x=\"200\" y=\"106\" font-size=\"14\" fill=\"#5b6270\" text-anchor=\"middle\">AB = 32 см, MK = 12 см</text></svg>", "z13": "<svg viewBox=\"0 0 400 178\"><rect x=\"0\" y=\"0\" width=\"400\" height=\"178\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"52.0\" y1=\"74.0\" x2=\"348.0\" y2=\"74.0\" stroke=\"#15181e\" stroke-width=\"2.8\" stroke-linecap=\"round\"/><circle cx=\"52.0\" cy=\"74.0\" r=\"4.2\" fill=\"#15181e\"/><text x=\"52.0\" y=\"62.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">A</text><circle cx=\"90.5\" cy=\"74.0\" r=\"4.2\" fill=\"#15181e\"/><text x=\"90.5\" y=\"62.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">O</text><circle cx=\"129.0\" cy=\"74.0\" r=\"4.2\" fill=\"#15181e\"/><text x=\"129.0\" y=\"62.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">C</text><circle cx=\"259.2\" cy=\"74.0\" r=\"4.2\" fill=\"#15181e\"/><text x=\"259.2\" y=\"62.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">D</text><circle cx=\"303.6\" cy=\"74.0\" r=\"4.2\" fill=\"#15181e\"/><text x=\"303.6\" y=\"62.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">K</text><circle cx=\"348.0\" cy=\"74.0\" r=\"4.2\" fill=\"#15181e\"/><text x=\"348.0\" y=\"62.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">B</text><line x1=\"129.0\" y1=\"90.0\" x2=\"259.2\" y2=\"90.0\" stroke=\"#137a45\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"129.0\" y1=\"85.0\" x2=\"129.0\" y2=\"95.0\" stroke=\"#137a45\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"259.2\" y1=\"85.0\" x2=\"259.2\" y2=\"95.0\" stroke=\"#137a45\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"194.1\" y=\"111.0\" font-size=\"15\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">CD = 26 см</text><line x1=\"90.5\" y1=\"130.0\" x2=\"303.6\" y2=\"130.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"90.5\" y1=\"125.0\" x2=\"90.5\" y2=\"135.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"303.6\" y1=\"125.0\" x2=\"303.6\" y2=\"135.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"197.0\" y=\"151.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">OK = 39 см</text><text x=\"200\" y=\"172\" font-size=\"14\" fill=\"#5b6270\" text-anchor=\"middle\">O и K — середины отрезков AC и DB</text></svg>", "z14": "<svg viewBox=\"0 0 400 112\"><rect x=\"0\" y=\"0\" width=\"400\" height=\"112\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"52.0\" y1=\"41.0\" x2=\"348.0\" y2=\"41.0\" stroke=\"#15181e\" stroke-width=\"2.8\" stroke-linecap=\"round\"/><circle cx=\"52.0\" cy=\"41.0\" r=\"4.2\" fill=\"#15181e\"/><text x=\"52.0\" y=\"29.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">A</text><circle cx=\"131.9\" cy=\"41.0\" r=\"4.2\" fill=\"#15181e\"/><text x=\"131.9\" y=\"29.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">K</text><circle cx=\"170.4\" cy=\"41.0\" r=\"4.2\" fill=\"#15181e\"/><text x=\"170.4\" y=\"29.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">M</text><circle cx=\"348.0\" cy=\"41.0\" r=\"4.2\" fill=\"#15181e\"/><text x=\"348.0\" y=\"29.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">B</text><text x=\"200\" y=\"106\" font-size=\"14\" fill=\"#5b6270\" text-anchor=\"middle\">K лежит между A и M</text></svg>"};
+
+"use strict";
+var started = Date.now();
+
+/* ---------- данные задач; ответы закодированы, чтобы не читались в исходнике ---------- */
+function e(s){return btoa(unescape(encodeURIComponent(s)));}
+function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return s;}}
+
+var TASKS = [
+ {id:1,lvl:"база",type:"num",text:"На отрезке AB, равном 30 см, взята точка C. Отрезок AC на 4 см больше отрезка CB. Найди длину отрезка AC (в сантиметрах).",ans:[e("17")],img:F["z1"],
+  hints:["Обозначь буквой то, что меньше: пусть CB = x см, тогда AC = (x + 4) см.",
+         "По аксиоме измерения отрезков AC + CB = AB, то есть (x + 4) + x = 30.",
+         "2x = 26, найди x и прибавь 4."],
+  sol:"<div class='step'>1. Пусть CB = x см, тогда AC = (x + 4) см.</div>"+
+      "<div class='fx'>(x + 4) + x = 30</div>"+
+      "<div class='step'>2. 2x + 4 = 30, 2x = 26, x = 13.</div>"+
+      "<div class='step'>3. Значит CB = 13 см, а AC = 13 + 4 = 17 см.</div>"+
+      "<div class='step'><b>Ответ: 17.</b></div>"+
+      "<div class='step mini'>Проверка: 17 + 13 = 30 ✓, и 17 на 4 больше 13 ✓.</div>"},
+
+ {id:2,lvl:"база",type:"num",text:"На отрезке AB, равном 56 см, взята точка M. Отрезок AM на 4 см меньше отрезка MB. Найди длину отрезка BM.",ans:[e("30")],img:F["z2"],
+  hints:["Здесь меньше отрезок AM — его и обозначь через x.",
+         "Тогда MB = (x + 4), и x + (x + 4) = 56.",
+         "2x = 52."],
+  sol:"<div class='step'>1. Пусть AM = x см, тогда MB = (x + 4) см.</div>"+
+      "<div class='fx'>x + (x + 4) = 56 → 2x = 52 → x = 26</div>"+
+      "<div class='step'>2. Значит AM = 26 см, а BM = 26 + 4 = 30 см.</div>"+
+      "<div class='step'><b>Ответ: 30.</b></div>"},
+
+ {id:3,lvl:"база",type:"num",text:"Точка P лежит на отрезке EF, равном 24 дм. Отрезок EP в 3 раза больше отрезка PF. Найди расстояние от середины отрезка PF до точки E (в дециметрах).",ans:[e("21")],img:F["z3"],
+  hints:["Пусть PF = x, тогда EP = 3x, а всего x + 3x = 24.",
+         "Найди x — это длина PF, и EP.",
+         "Искомое расстояние = EP + половина PF."],
+  sol:"<div class='step'>1. Пусть PF = x дм, тогда EP = 3x дм.</div>"+
+      "<div class='fx'>x + 3x = 24 → 4x = 24 → x = 6</div>"+
+      "<div class='step'>2. Значит PF = 6 дм, EP = 18 дм.</div>"+
+      "<div class='step'>3. Середина PF отстоит от точки P на 3 дм, а от точки E — "+
+      "на 18 + 3 = 21 дм.</div>"+
+      "<div class='step'><b>Ответ: 21.</b></div>"+
+      "<div class='step mini'>Частая ошибка — ответить 3 или 6: это расстояние от середины "+
+      "до точки P или F, а спрашивают про E.</div>"},
+
+ {id:4,lvl:"база",type:"num",text:"Незамкнутая ломаная имеет 28 вершин. Сколько у неё звеньев?",ans:[e("27")],
+  hints:["У незамкнутой ломаной вершин всегда на одну больше, чем звеньев.",
+         "Нарисуй ломаную из двух звеньев и посчитай вершины — их три.",
+         "28 − 1."],
+  sol:"<div class='step'>1. У незамкнутой ломаной каждое звено добавляет одну новую вершину, "+
+      "а самая первая вершина появляется «бесплатно».</div>"+
+      "<div class='step'>2. Значит вершин на одну больше, чем звеньев.</div>"+
+      "<div class='fx'>28 − 1 = 27</div>"+
+      "<div class='step'><b>Ответ: 27.</b></div>"+
+      "<div class='step mini'>У замкнутой ломаной было бы поровну: 28 вершин и 28 звеньев.</div>"},
+
+ {id:5,lvl:"база",type:"num",text:"Найди длину ломаной ABCD (в сантиметрах), если AB = 3 см, BC = 2 см, CD = 4 см.",ans:[e("9")],
+  hints:["Длина ломаной — это сумма длин её звеньев.",
+         "У ломаной ABCD три звена: AB, BC и CD.",
+         "3 + 2 + 4."],
+  sol:"<div class='step'>1. Ломаная ABCD состоит из трёх звеньев: AB, BC и CD.</div>"+
+      "<div class='fx'>3 + 2 + 4 = 9 (см)</div>"+
+      "<div class='step'><b>Ответ: 9.</b></div>"+
+      "<div class='step mini'>Длина ломаной не зависит от того, как именно она изогнута — "+
+      "важны только длины звеньев.</div>"},
+
+ {id:6,lvl:"база",type:"num",text:"Точка делит отрезок длиной 10 см на две части, одна из которых в 3 раза больше второй. Найди длину большей части (в сантиметрах).",ans:[e("7,5")],
+  hints:["Пусть меньшая часть равна x, тогда большая 3x.",
+         "Вместе они дают 10: x + 3x = 10.",
+         "Отрезок состоит из 4 равных долей, найди одну и умножь на 3."],
+  sol:"<div class='step'>1. Пусть меньшая часть x см, тогда большая 3x см.</div>"+
+      "<div class='fx'>x + 3x = 10 → 4x = 10 → x = 2,5</div>"+
+      "<div class='step'>2. Большая часть равна 3 · 2,5 = 7,5 см.</div>"+
+      "<div class='step'><b>Ответ: 7,5.</b></div>"+
+      "<div class='step mini'>Короткий путь: весь отрезок — это 4 одинаковые доли, "+
+      "одна доля 10 : 4 = 2,5, а большая часть — три доли.</div>"},
+
+ {id:7,lvl:"средний",type:"num",text:"Две точки делят отрезок, равный 27 см, на три части, две из которых равны, а третья на 6 см больше первой. Найди длину третьей части (в сантиметрах).",ans:[e("13")],
+  hints:["Пусть каждая из двух равных частей равна x, тогда третья (x + 6).",
+         "Все три части вместе дают 27: x + x + (x + 6) = 27.",
+         "3x = 21."],
+  sol:"<div class='step'>1. Пусть равные части по x см, третья — (x + 6) см.</div>"+
+      "<div class='fx'>x + x + (x + 6) = 27 → 3x + 6 = 27 → 3x = 21 → x = 7</div>"+
+      "<div class='step'>2. Третья часть равна 7 + 6 = 13 см.</div>"+
+      "<div class='step'><b>Ответ: 13.</b></div>"+
+      "<div class='step mini'>Проверка: 7 + 7 + 13 = 27 ✓.</div>"},
+
+ {id:8,lvl:"средний",type:"num",text:"Точка O — внутренняя точка отрезка HT, причём HO : OT = 3 : 4. Найди длину отрезка OT (в сантиметрах), если HT = 14 см.",ans:[e("8")],
+  hints:["Отношение 3 : 4 значит, что отрезок состоит из 3 + 4 = 7 одинаковых долей.",
+         "Найди длину одной доли: 14 : 7.",
+         "OT — это четыре доли."],
+  sol:"<div class='step'>1. Отношение 3 : 4 означает, что HT состоит из 3 + 4 = 7 равных долей.</div>"+
+      "<div class='fx'>одна доля: 14 : 7 = 2 (см)</div>"+
+      "<div class='step'>2. На OT приходится 4 доли: OT = 4 · 2 = 8 см.</div>"+
+      "<div class='step'><b>Ответ: 8.</b></div>"+
+      "<div class='step mini'>Заодно HO = 3 · 2 = 6 см, и 6 + 8 = 14 ✓.</div>"},
+
+ {id:9,lvl:"средний",type:"num",text:"На плоскости отметили пять точек, никакие три из которых не лежат на одной прямой. Затем соединили эти точки отрезками. Сколько получилось отрезков?",ans:[e("10")],
+  hints:["Каждый отрезок задаётся парой точек, порядок в паре не важен.",
+         "От первой точки выходят 4 отрезка, от второй — 3 новых, от третьей — 2, от четвёртой — 1.",
+         "4 + 3 + 2 + 1."],
+  sol:"<div class='step'>1. Отрезок задаётся парой точек, причём AB и BA — один и тот же отрезок.</div>"+
+      "<div class='step'>2. Считаем по кругу, чтобы не повторяться: от первой точки 4 отрезка, "+
+      "от второй 3 новых, от третьей 2, от четвёртой 1.</div>"+
+      "<div class='fx'>4 + 3 + 2 + 1 = 10</div>"+
+      "<div class='step'><b>Ответ: 10.</b></div>"+
+      "<div class='step mini'>Для 10 точек получилось бы 9 + 8 + … + 1 = 45.</div>"},
+
+ {id:10,lvl:"средний",type:"num",text:"Дана пятизвенная незамкнутая ломаная. Каждое следующее звено, начиная со второго, в 2 раза больше предыдущего. Длина ломаной равна 186 см. Найди длину самого большого звена (в сантиметрах).",ans:[e("96")],
+  hints:["Обозначь первое звено через x — тогда звенья равны x, 2x, 4x, 8x, 16x.",
+         "Их сумма и есть длина ломаной: x + 2x + 4x + 8x + 16x = 31x.",
+         "31x = 186, найди x и умножь на 16."],
+  sol:"<div class='step'>1. Пусть первое звено x см. Тогда звенья: x, 2x, 4x, 8x, 16x.</div>"+
+      "<div class='fx'>x + 2x + 4x + 8x + 16x = 31x = 186</div>"+
+      "<div class='step'>2. Отсюда x = 186 : 31 = 6 см.</div>"+
+      "<div class='step'>3. Самое большое звено — пятое: 16 · 6 = 96 см.</div>"+
+      "<div class='step'><b>Ответ: 96.</b></div>"},
+
+ {id:11,lvl:"средний",type:"num",text:"Точки A, B и C лежат на одной прямой, AB = 4 см, BC = 5 см. Найди наибольшее возможное значение AC (в сантиметрах).",ans:[e("9")],
+  hints:["Здесь два случая: точка B может лежать между A и C, а может и не лежать.",
+         "Если B между A и C, то AC = AB + BC. Если нет — AC = BC − AB.",
+         "Сравни 4 + 5 и 5 − 4."],
+  sol:"<div class='step'>1. Первый случай: точка B лежит между A и C. Тогда</div>"+
+      "<div class='fx'>AC = AB + BC = 4 + 5 = 9 (см)</div>"+
+      "<div class='step'>2. Второй случай: точка A лежит между B и C. Тогда</div>"+
+      "<div class='fx'>AC = BC − AB = 5 − 4 = 1 (см)</div>"+
+      "<div class='step'>3. Из двух значений наибольшее — 9 см.</div>"+
+      "<div class='step'><b>Ответ: 9.</b></div>"+
+      "<div class='step mini'>Когда точки на прямой, а порядок не задан, случаев почти всегда "+
+      "два — проверяй оба.</div>"},
+
+ {id:12,lvl:"посложнее",type:"num",text:"На отрезке AB отмечены точки M и K так, что M лежит между A и K. Найди расстояние между серединами отрезков AM и KB (в сантиметрах), если AB = 32 см, MK = 12 см.",ans:[e("22")],img:F["z12"],
+  hints:["Обозначь AM = a, MK = k, KB = b. Тогда AB = a + k + b.",
+         "Середина AM отстоит от A на a/2, а середина KB — на a + k + b/2.",
+         "Их разность равна a/2 + k + b/2 = (a + b) : 2 + k."],
+  sol:"<div class='step'>1. Обозначим AM = a, MK = k, KB = b. Тогда AB = a + k + b.</div>"+
+      "<div class='step'>2. Пусть P — середина AM, Q — середина KB. Считаем расстояния от точки A: "+
+      "AP = a : 2, а AQ = a + k + b : 2.</div>"+
+      "<div class='fx'>PQ = AQ − AP = a : 2 + k + b : 2</div>"+
+      "<div class='step'>3. Заметим, что a : 2 + b : 2 = (a + b) : 2, а a + b = AB − MK.</div>"+
+      "<div class='fx'>PQ = (AB − MK) : 2 + MK = (AB + MK) : 2</div>"+
+      "<div class='fx'>PQ = (32 + 12) : 2 = 22 (см)</div>"+
+      "<div class='step'><b>Ответ: 22.</b></div>"+
+      "<div class='step mini'>Это обобщение примера 3: при MK = 0 точки M и K сливаются "+
+      "и получается ровно половина отрезка.</div>"},
+
+ {id:13,lvl:"посложнее",type:"num",text:"Отрезок AB разбили точками C и D на три части. Точки O и K — середины отрезков AC и DB. Найди длину отрезка AB (в сантиметрах), если OK = 39 см, CD = 26 см.",ans:[e("52")],img:F["z13"],
+  hints:["Это та же схема, что и в задаче 12, только известен результат, а найти нужно AB.",
+         "Работает формула OK = (AB + CD) : 2.",
+         "Значит AB = 2 · OK − CD."],
+  sol:"<div class='step'>1. Обозначим AC = p, CD = q, DB = r, тогда AB = p + q + r.</div>"+
+      "<div class='step'>2. Точка O отстоит от A на p : 2, точка K — на p + q + r : 2.</div>"+
+      "<div class='fx'>OK = p : 2 + q + r : 2 = (p + r) : 2 + q</div>"+
+      "<div class='step'>3. Так как p + r = AB − q, получаем OK = (AB − q) : 2 + q = (AB + q) : 2, "+
+      "то есть OK = (AB + CD) : 2.</div>"+
+      "<div class='fx'>39 = (AB + 26) : 2 → AB + 26 = 78 → AB = 52 (см)</div>"+
+      "<div class='step'><b>Ответ: 52.</b></div>"},
+
+ {id:14,lvl:"посложнее",type:"num",text:"На отрезке AB отмечены точки K и M так, что точка K лежит между A и M. Известно, что 3AM = 2MB, AK = 2KM, а отрезок AK на 12 см больше отрезка KM. Найди расстояние между точками A и B (в сантиметрах).",ans:[e("90")],img:F["z14"],
+  hints:["Начни с двух последних условий: AK = 2KM и AK − KM = 12.",
+         "Подставь: 2KM − KM = KM = 12. Теперь найди AK и AM.",
+         "Из 3AM = 2MB найди MB, а потом сложи AM и MB."],
+  sol:"<div class='step'>1. Пусть KM = x. Из AK = 2x и AK − KM = 12 получаем 2x − x = 12, "+
+      "то есть x = 12.</div>"+
+      "<div class='step'>2. Значит KM = 12 см, AK = 24 см, а AM = AK + KM = 36 см.</div>"+
+      "<div class='step'>3. Из условия 3AM = 2MB находим MB:</div>"+
+      "<div class='fx'>3 · 36 = 2 · MB → 108 = 2 · MB → MB = 54 (см)</div>"+
+      "<div class='step'>4. Точка M лежит между A и B, поэтому</div>"+
+      "<div class='fx'>AB = AM + MB = 36 + 54 = 90 (см)</div>"+
+      "<div class='step'><b>Ответ: 90.</b></div>"+
+      "<div class='step mini'>Порядок точек на отрезке: A, K, M, B. Проверь по нему каждый "+
+      "шаг — так видно, что ничего не перепутано.</div>"}
+];
+
+/* ---------- разбор ответа ---------- */
+function norm(s){
+  return String(s).toLowerCase().replace(/\s+/g,"")
+    .replace(/[\u2013\u2014\u2212]/g,"-")
+    .replace(/[\u00d7\u00b7]/g,"*")
+    .replace(/,/g,".")
+    .replace(/^(ответ:?|x=|y=|α=|a=)/,"");
+}
+function toNum(str){
+  var t = norm(str);
+  if(!t) return NaN;
+  t = t.replace(/\u221a/g,"sqrt").replace(/\u03c0/g,"pi");
+  t = t.replace(/sqrt(\d+(?:\.\d+)?)/g,"sqrt($1)");
+  t = t.replace(/(\d)sqrt/g,"$1*sqrt");
+  t = t.replace(/(\d)pi/g,"$1*pi");
+  t = t.replace(/(\d)\(/g,"$1*(").replace(/\)(\d)/g,")*$1").replace(/\)\(/g,")*(");
+  if(!/^[-+*/().0-9a-z]+$/.test(t)) return NaN;
+  if(t.replace(/sqrt|pi/g,"").match(/[a-z]/)) return NaN;
+  try{
+    var v = new Function("sqrt","pi","return ("+t+");")(Math.sqrt, Math.PI);
+    return (typeof v === "number" && isFinite(v)) ? v : NaN;
+  }catch(err){ return NaN; }
+}
+function same(given, right, tol){
+  var a = toNum(given), b = toNum(right);
+  if(!isNaN(a) && !isNaN(b)){
+    var t = tol || 1e-9;
+    return Math.abs(a-b) <= Math.max(t, Math.abs(b)*t);
+  }
+  return norm(given) === norm(right);
+}
+
+/* ---------- отрисовка ---------- */
+var state = {};
+var box = document.getElementById("tasks");
+
+TASKS.forEach(function(t){
+  state[t.id] = {tries:0, hints:0, done:false, ok:false, given:"", sel:null};
+  var el = document.createElement("div");
+  el.className = "task"; el.id = "t"+t.id;
+  var body = '<div><span class="tnum">'+t.id+'.</span>'+t.text+
+             '<span class="lvl">'+t.lvl+'</span></div>';
+  if(t.img){ body += '<div class="fig">'+t.img+'</div>'; }
+  if(t.type === "choice"){
+    body += '<div class="opts">'+t.options.map(function(o,i){
+      return '<label class="opt" data-v="'+o+'"><input type="radio" name="q'+t.id+'" value="'+o+'"> '+o+'</label>';
+    }).join("")+'</div>';
+  } else {
+    body += '<div class="keys">'+
+      [",","−"].map(function(k){
+        return '<button class="key" data-k="'+k+'" type="button">'+k+'</button>';}).join("")+
+      '</div><input type="text" id="in'+t.id+'" inputmode="text" autocapitalize="off" '+
+      'autocorrect="off" autocomplete="off" spellcheck="false" placeholder="ответ">';
+  }
+  body += '<div class="row" style="margin-top:10px">'+
+          '<button class="pri sm chk">Проверить</button>'+
+          '<button class="sm hnt">Подсказка</button></div>'+
+          '<div class="hints"></div><div class="verdict"></div><div class="sol"></div>';
+  el.innerHTML = body;
+  box.appendChild(el);
+
+  el.querySelectorAll(".key").forEach(function(b){
+    b.addEventListener("click", function(){
+      var inp = document.getElementById("in"+t.id);
+      var k = b.dataset.k === "−" ? "-" : b.dataset.k;
+      var s = inp.selectionStart || inp.value.length;
+      inp.value = inp.value.slice(0,s) + k + inp.value.slice(inp.selectionEnd || s);
+      inp.focus(); inp.setSelectionRange(s+k.length, s+k.length);
+    });
+  });
+  if(t.type === "choice"){
+    el.querySelectorAll(".opt").forEach(function(l){
+      l.addEventListener("click", function(){
+        el.querySelectorAll(".opt").forEach(function(x){x.classList.remove("sel");});
+        l.classList.add("sel"); state[t.id].sel = l.dataset.v;
+      });
+    });
+  } else {
+    el.querySelector("#in"+t.id).addEventListener("keydown", function(ev){
+      if(ev.key === "Enter"){ ev.preventDefault(); check(t.id); }
+    });
+  }
+  el.querySelector(".chk").addEventListener("click", function(){ check(t.id); });
+  el.querySelector(".hnt").addEventListener("click", function(){ hint(t.id); });
+});
+
+function hint(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var host = document.querySelector("#t"+id+" .hints");
+  if(s.hints >= t.hints.length){
+    if(!host.querySelector(".last")){
+      var w = document.createElement("div");
+      w.className = "hint last"; w.textContent = "Подсказки закончились — нажми «Проверить», решение откроется после второй попытки.";
+      host.appendChild(w);
+    }
+    return;
+  }
+  var h = document.createElement("div");
+  h.className = "hint";
+  h.textContent = "Подсказка " + (s.hints+1) + ": " + t.hints[s.hints];
+  host.appendChild(h);
+  s.hints++;
+}
+
+function check(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var el = document.getElementById("t"+id);
+  var v = document.querySelector(".verdict");
+  v = el.querySelector(".verdict");
+  var given = (t.type === "choice") ? (s.sel || "") :
+              (document.getElementById("in"+id).value || "");
+  if(!given.trim()){ v.className = "verdict bad"; v.textContent = "Введи ответ."; return; }
+  s.given = given; s.tries++;
+  var ok = t.ans.some(function(a){ return same(given, d(a), t.tol); });
+  s.ok = ok; s.done = ok || s.tries >= 2;
+  el.classList.remove("ok","bad");
+  el.classList.add(ok ? "ok" : "bad");
+  v.className = "verdict " + (ok ? "ok" : "bad");
+  if(ok){
+    v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    showSol(el, t);
+  } else if(s.tries === 1){
+    v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+  } else {
+    v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    showSol(el, t);
+  }
+  progress();
+}
+function showSol(el, t){
+  var host = el.querySelector(".sol");
+  if(host.dataset.on) return;
+  host.dataset.on = "1";
+  var det = document.createElement("details");
+  det.open = true;
+  det.innerHTML = "<summary>Решение</summary><div class='step'>"+t.sol+"</div>";
+  host.appendChild(det);
+}
+function progress(){
+  var done = TASKS.filter(function(t){return state[t.id].done;}).length;
+  var ok = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  document.getElementById("progress").textContent =
+    "решено " + done + " из " + TASKS.length + " · верно " + ok;
+}
+document.getElementById("checkall").addEventListener("click", function(){
+  TASKS.forEach(function(t){
+    var s = state[t.id];
+    var given = (t.type === "choice") ? (s.sel || "") : (document.getElementById("in"+t.id).value || "");
+    if(given.trim() && !s.done) check(t.id);
+  });
+  var first = TASKS.find(function(t){ return !state[t.id].done; });
+  var note = first ? "Осталась задача " + first.id + "." : "Все задачи закрыты.";
+  document.getElementById("progress").textContent += " · " + note;
+});
+progress();
+
+/* ---------- фото ---------- */
+var photos = [];
+document.getElementById("photos").addEventListener("change", function(ev){
+  var files = Array.prototype.slice.call(ev.target.files || []);
+  files.forEach(function(f){
+    var r = new FileReader();
+    r.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var m = 1400, w = img.width, h = img.height;
+        if(Math.max(w,h) > m){ var k = m/Math.max(w,h); w = Math.round(w*k); h = Math.round(h*k); }
+        var c = document.createElement("canvas"); c.width = w; c.height = h;
+        c.getContext("2d").drawImage(img, 0, 0, w, h);
+        photos.push({url: c.toDataURL("image/jpeg", 0.7), task: ""});
+        drawThumbs();
+      };
+      img.src = r.result;
+    };
+    r.readAsDataURL(f);
+  });
+  ev.target.value = "";
+});
+function drawThumbs(){
+  var host = document.getElementById("thumbs");
+  host.innerHTML = "";
+  var total = 0;
+  photos.forEach(function(p, i){
+    total += p.url.length * 0.75;
+    var d0 = document.createElement("div"); d0.className = "thumb";
+    var opts = '<option value="">задача…</option>' + TASKS.map(function(t){
+      return '<option value="'+t.id+'"'+(p.task==String(t.id)?" selected":"")+'>№'+t.id+'</option>';
+    }).join("");
+    d0.innerHTML = '<img src="'+p.url+'" alt="фото решения"><button type="button">×</button>'+
+                   '<select>'+opts+'</select>';
+    d0.querySelector("button").addEventListener("click", function(){ photos.splice(i,1); drawThumbs(); });
+    d0.querySelector("select").addEventListener("change", function(ev){ p.task = ev.target.value; });
+    host.appendChild(d0);
+  });
+  var note = document.getElementById("repnote");
+  if(total > 15e6){ note.textContent = "Фото уже больше 15 МБ — отчёт может отправляться долго, лишние лучше удалить."; }
+  else if(photos.length){ note.textContent = "Фото в отчёте: " + photos.length + "."; }
+  else { note.textContent = ""; }
+}
+
+/* ---------- отчёт ---------- */
+var ENDPOINT = "https://script.google.com/macros/s/AKfycbztH9c-wQuKC7pSfD8AcFfnOcGpSHxoeqovulmvLMp9W23SgFx9dDQ2JTlWcIJDMN6W/exec";
+var SECRET = "artteach2026";
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function buildReport(){
+  var name = (document.getElementById("name").value || "").trim() || "без имени";
+  var now = new Date();
+  var mins = Math.max(1, Math.round((Date.now()-started)/60000));
+  var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  var data = {tип:"дз", предмет:"математика", тема:"Прямая. Луч. Отрезок. Ломаная (геометрия, 7 класс)",
+    ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
+    верно:okN, всего:TASKS.length, задачи:[]};
+  var rows = TASKS.map(function(t){
+    var s = state[t.id];
+    data.задачи.push({n:t.id, условие:t.text.replace(/<[^>]+>/g,""), ответ_ученика:s.given,
+      верный_ответ:t.ans.map(d).join(" или "), верно:s.ok, попыток:s.tries, подсказок:s.hints,
+      уровень:t.lvl});
+    return "<tr><td>"+t.id+"</td><td style='text-align:left'>"+esc(t.text.replace(/<[^>]+>/g,""))+
+      "</td><td>"+esc(s.given||"—")+"</td><td>"+esc(t.ans.map(d).join(" / "))+"</td><td>"+
+      (s.ok?"верно":(s.given?"неверно":"не решал"))+"</td><td>"+s.tries+"</td><td>"+s.hints+"</td></tr>";
+  }).join("");
+  var pics = photos.map(function(p,i){
+    return "<figure><img src='"+p.url+"'><figcaption>Фото "+(i+1)+
+      (p.task?" — к задаче №"+p.task:"")+"</figcaption></figure>";
+  }).join("");
+  var html = "<!doctype html><html lang='ru'><head><meta charset='utf-8'>"+
+    "<meta name='viewport' content='width=device-width,initial-scale=1'>"+
+    "<title>Отчёт — "+esc(name)+" — прямая, луч, отрезок, ломаная · 7 класс</title><style>"+
+    "body{font:16px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;padding:20px;color:#16181d;background:#fff}"+
+    "h1{font-size:22px;margin:0 0 4px}.m{color:#5b6270;font-size:15px}"+
+    "table{border-collapse:collapse;width:100%;margin-top:14px;font-size:15px}"+
+    "th,td{border:1px solid #dfe3ea;padding:6px 8px;text-align:center}th{background:#eef3fb}"+
+    "figure{margin:14px 0}img{max-width:100%;border:1px solid #dfe3ea;border-radius:8px}"+
+    "figcaption{color:#5b6270;font-size:14px;margin-top:4px}</style></head><body>"+
+    "<h1>Отчёт по домашнему заданию</h1>"+
+    "<div class='m'>Тема: прямая, луч, отрезок, ломаная · геометрия, 7 класс</div>"+
+    "<div class='m'>Ученик: <b>"+esc(name)+"</b> · сдано: "+esc(now.toLocaleString("ru-RU"))+
+    " · время работы: около "+mins+" мин</div>"+
+    "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)</h2>"+
+    "<table><tr><th>№</th><th>Задача</th><th>Ответ ученика</th><th>Верный ответ</th>"+
+    "<th>Итог</th><th>Попыток</th><th>Подсказок</th></tr>"+rows+"</table>"+
+    (pics ? "<h2>Фото решений</h2>"+pics : "<p class='m'>Фото решений не прикреплены.</p>")+
+    "<script type='application/json' id='result-data'>"+
+    JSON.stringify(data).replace(/</g,"\\u003c")+"<\/script></body></html>";
+  var stamp = now.getDate()+"-"+(now.getMonth()+1);
+  return {
+    html: html,
+    name: name,
+    file: "Отчёт_Прямая_луч_отрезок_"+name.replace(/\s+/g,"_")+"_"+stamp+".html",
+    caption: name+" · прямая, луч, отрезок, ломаная · 7 класс · "+okN+" из "+TASKS.length+
+             " ("+Math.round(okN/TASKS.length*100)+"%)"
+  };
+}
+
+document.getElementById("send").addEventListener("click", function(){
+  var note = document.getElementById("repnote");
+  var who = (document.getElementById("name").value || "").trim();
+  if(!who){ note.className = "meta bad-note"; note.textContent = "Сначала впиши имя вверху страницы."; return; }
+  note.className = "meta";
+  var r = buildReport();
+  note.textContent = "Отправляю…";
+  var payload = {
+    secret: SECRET,
+    name: r.file,
+    caption: r.caption,
+    file: btoa(unescape(encodeURIComponent(r.html)))
+  };
+  fetch(ENDPOINT, {method:"POST", mode:"no-cors", body: JSON.stringify(payload)})
+    .then(function(){
+      note.textContent = "Отправлено преподавателю." +
+        (photos.length ? "" : " Фото решений не приложены — если решал в тетради, приложи их и отправь ещё раз.") +
+        " Если хочешь, сохрани копию себе кнопкой ниже.";
+    })
+    .catch(function(){
+      note.textContent = "Не получилось отправить. Скачай файл кнопкой ниже и пришли его вручную.";
+    });
+});
+
+document.getElementById("report").addEventListener("click", function(){
+  var r = buildReport();
+  var blob = new Blob([r.html], {type:"text/html;charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = r.file;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  document.getElementById("repnote").textContent = "Файл скачан — он в папке загрузок.";
+});
+
+
+/* ---------- движок тренажёров ---------- */
+function makeTrainer(id, items){
+  var q=document.getElementById(id+"q"), f=document.getElementById(id+"f"),
+      a=document.getElementById(id+"a"), m=document.getElementById(id+"m"),
+      b=document.getElementById(id+"b"), sc=document.getElementById(id+"s");
+  var order=[], perm=[], i=0, ok=0, answered=false;
+
+  function shuffle(n){
+    var arr=[], k, j, t;
+    for(k=0;k<n;k++) arr.push(k);
+    for(k=arr.length-1;k>0;k--){ j=Math.floor(Math.random()*(k+1)); t=arr[k]; arr[k]=arr[j]; arr[j]=t; }
+    return arr;
+  }
+  function norm(s){
+    return String(s).trim().toLowerCase().replace(/\s+/g,"").replace(/−/g,"-").replace(/,/g,".");
+  }
+  function same(x, y){
+    var p=parseFloat(norm(x)), r=parseFloat(norm(y));
+    if(isFinite(p) && isFinite(r)) return Math.abs(p-r) < 1e-9;
+    return norm(x) === norm(y);
+  }
+  function score(){
+    sc.textContent = "вопрос " + Math.min(i + 1, items.length) + " из " + items.length +
+                     " · верно " + ok;
+  }
+
+  function finish(){
+    q.innerHTML=""; f.innerHTML=""; a.innerHTML=""; m.innerHTML="";
+    var pct=Math.round(ok/items.length*100);
+    var word = pct===100 ? "Всё верно — тема закрыта." :
+               pct>=70 ? "Хорошо, но пару мест стоит перечитать." :
+               "Стоит вернуться к теории и пройти ещё раз.";
+    b.innerHTML='<div class="trdone" style="flex:1 1 100%">'+ok+" из "+items.length+
+      " ("+pct+" %) · "+word+'</div><button type="button" class="pri" data-go="1">Пройти заново</button>';
+    sc.textContent="готово";
+  }
+
+  function show(){
+    answered=false;
+    m.innerHTML=""; b.innerHTML="";
+    var t=items[order[i]];
+    q.innerHTML="<b>"+(i+1)+".</b> "+t.q;
+    f.innerHTML=t.fig || "";
+    f.style.display = t.fig ? "" : "none";
+    if(t.opts){
+      perm = shuffle(t.opts.length);          /* perm[позиция] = номер варианта в банке */
+      var html='<div class="tropts" id="'+id+'o">';
+      for(var k=0;k<perm.length;k++)
+        html+='<button type="button" class="tropt" data-k="'+perm[k]+'">'+t.opts[perm[k]]+'</button>';
+      a.innerHTML = html+"</div>";
+      var box=document.getElementById(id+"o");
+      box.addEventListener("click", function(ev){
+        var el=ev.target; while(el && el!==box && el.className.indexOf("tropt")<0) el=el.parentNode;
+        if(!el || el===box || answered) return;
+        pick(parseInt(el.getAttribute("data-k"),10), box);
+      });
+    } else {
+      a.innerHTML='<div class="trnum"><span>Ответ:</span>'+
+        '<input type="text" id="'+id+'i" inputmode="text" autocomplete="off" '+
+        'autocorrect="off" spellcheck="false" placeholder="число">'+
+        '<button type="button" class="pri" data-check="1">Проверить</button></div>';
+      var inp=document.getElementById(id+"i");
+      inp.addEventListener("keydown", function(ev){ if(ev.key==="Enter") check(); });
+    }
+    score();
+  }
+
+  function verdict(good, t){
+    answered=true;
+    if(good) ok++;
+    i++;
+    m.innerHTML='<div class="v '+(good?"ok":"bad")+'">'+(good?"Верно.":"Неверно.")+"</div>"+
+                '<div class="why">'+t.why+"</div>";
+    b.innerHTML = (i<items.length)
+      ? '<button type="button" class="pri" data-next="1">Дальше</button>'
+      : '<button type="button" class="pri" data-next="1">Показать итог</button>';
+    score();
+  }
+  function pick(k, box){
+    var t=items[order[i]], good = (k === t.ans);
+    var bs=box.querySelectorAll(".tropt");
+    for(var j=0;j<bs.length;j++){
+      var n=parseInt(bs[j].getAttribute("data-k"),10);
+      if(n===t.ans) bs[j].className="tropt right";
+      else if(n===k) bs[j].className="tropt wrong";
+    }
+    box.className="tropts done";
+    verdict(good, t);
+  }
+  function check(){
+    if(answered) return;
+    var t=items[order[i]], inp=document.getElementById(id+"i");
+    var v=(inp.value||"").trim();
+    if(!v){ m.innerHTML='<div class="why">Впиши ответ.</div>'; return; }
+    var good = t.ans.some(function(x){ return same(v, x); });
+    inp.disabled=true;
+    if(!good) m.innerHTML="";
+    verdict(good, t);
+    if(!good) m.innerHTML='<div class="v bad">Неверно. Правильный ответ: '+t.ans[0]+".</div>"+
+                          '<div class="why">'+t.why+"</div>";
+  }
+
+  b.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-next")){ if(i<items.length) show(); else finish(); }
+    if(el.getAttribute && el.getAttribute("data-go")){ start(); }
+  });
+  a.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-check")) check();
+  });
+
+  function start(){ order=shuffle(items.length); i=0; ok=0; show(); }
+  start();
+}
+
+makeTrainer("tr1", [{"q": "Что изображено на рисунке?", "fig": "<svg viewBox=\"0 0 300 150\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"150\" rx=\"12\" fill=\"#ffffff\"/><polyline points=\"58,116 214,44\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"3.0\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"58.0\" cy=\"116.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"214.0\" cy=\"44.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"41.7\" y=\"128.5\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"230.3\" y=\"41.5\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "opts": ["прямая", "луч", "отрезок", "ломаная"], "ans": 2, "why": "Фигура ограничена с двух сторон, обе граничные точки отмечены — это отрезок AB."}, {"q": "Что изображено на рисунке?", "fig": "<svg viewBox=\"0 0 300 150\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"150\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"58.0\" y1=\"48.0\" x2=\"228.9\" y2=\"126.1\" stroke=\"#2f6bd8\" stroke-width=\"3.0\" stroke-linecap=\"round\"/><path d=\"M 228.9 126.1 L 220.0 125.2 L 222.3 120.0 z\" fill=\"#2f6bd8\"/><circle cx=\"58.0\" cy=\"48.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"198.0\" cy=\"112.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"41.6\" y=\"45.5\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"214.4\" y=\"124.5\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">D</text></svg>", "opts": ["прямая", "луч", "отрезок", "ломаная"], "ans": 1, "why": "Фигура ограничена только с одной стороны — точкой C, а в другую сторону бесконечна. Это луч CD."}, {"q": "Что изображено на рисунке?", "fig": "<svg viewBox=\"0 0 300 150\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"150\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"38.0\" y1=\"116.8\" x2=\"234.0\" y2=\"41.2\" stroke=\"#2f6bd8\" stroke-width=\"3.0\" stroke-linecap=\"round\"/><circle cx=\"66.0\" cy=\"106.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"206.0\" cy=\"52.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"49.2\" y=\"117.5\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">M</text><text x=\"222.8\" y=\"50.5\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">N</text></svg>", "opts": ["прямая", "луч", "отрезок", "ломаная"], "ans": 0, "why": "Фигура бесконечна в обе стороны и ничем не ограничена — это прямая. Точки M и N просто отмечены на ней."}, {"q": "Что изображено на рисунке?", "fig": "<svg viewBox=\"0 0 300 150\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"150\" rx=\"12\" fill=\"#ffffff\"/><polyline points=\"44,118 88,40 148,100 206,42\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"3.0\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"44.0\" cy=\"118.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"88.0\" cy=\"40.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"148.0\" cy=\"100.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"206.0\" cy=\"42.0\" r=\"4.4\" fill=\"#15181e\"/></svg>", "opts": ["прямая", "луч", "отрезок", "ломаная"], "ans": 3, "why": "Несколько отрезков последовательно соединены концами — это ломаная."}, {"q": "Что изображено на рисунке?", "fig": "<svg viewBox=\"0 0 300 150\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"150\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"212.0\" y1=\"50.0\" x2=\"30.6\" y2=\"125.0\" stroke=\"#2f6bd8\" stroke-width=\"3.0\" stroke-linecap=\"round\"/><path d=\"M 30.6 125.0 L 37.4 119.1 L 39.6 124.3 z\" fill=\"#2f6bd8\"/><circle cx=\"212.0\" cy=\"50.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"62.0\" cy=\"112.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"228.6\" y=\"48.1\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">K</text><text x=\"45.4\" y=\"123.9\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">P</text></svg>", "opts": ["прямая", "луч", "отрезок", "ломаная"], "ans": 1, "why": "Начало в точке K, в другую сторону фигура бесконечна. Направление луча роли не играет — это всё равно луч."}, {"q": "Какая это ломаная?", "fig": "<svg viewBox=\"0 0 300 150\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"150\" rx=\"12\" fill=\"#ffffff\"/><polyline points=\"44,118 88,40 148,100 206,42\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"3.0\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"44.0\" cy=\"118.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"88.0\" cy=\"40.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"148.0\" cy=\"100.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"206.0\" cy=\"42.0\" r=\"4.4\" fill=\"#15181e\"/></svg>", "opts": ["простая замкнутая", "простая незамкнутая", "непростая замкнутая", "непростая незамкнутая"], "ans": 1, "why": "Конец последнего звена не совпал с началом первого — значит незамкнутая. Самопересечений нет — значит простая."}, {"q": "Какая это ломаная?", "fig": "<svg viewBox=\"0 0 300 150\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"150\" rx=\"12\" fill=\"#ffffff\"/><polyline points=\"40,40 112,124 206,38 66,116\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"3.0\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"40.0\" cy=\"40.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"112.0\" cy=\"124.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"206.0\" cy=\"38.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"66.0\" cy=\"116.0\" r=\"4.4\" fill=\"#15181e\"/></svg>", "opts": ["простая замкнутая", "простая незамкнутая", "непростая замкнутая", "непростая незамкнутая"], "ans": 3, "why": "Звенья пересекаются между собой — ломаная непростая. А начало и конец не совпали — значит незамкнутая."}, {"q": "Какая это ломаная?", "fig": "<svg viewBox=\"0 0 300 150\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"150\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"48,120 88,36 180,46 202,120\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"3.0\" stroke-linejoin=\"round\"/><circle cx=\"48.0\" cy=\"120.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"88.0\" cy=\"36.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"180.0\" cy=\"46.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"202.0\" cy=\"120.0\" r=\"4.4\" fill=\"#15181e\"/></svg>", "opts": ["простая замкнутая", "простая незамкнутая", "непростая замкнутая", "непростая незамкнутая"], "ans": 0, "why": "Начало первого звена совпало с концом последнего — замкнутая. Самопересечений нет — простая. Такая ломаная и называется многоугольником."}, {"q": "Какая это ломаная?", "fig": "<svg viewBox=\"0 0 300 150\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"150\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"52,40 206,120 52,120 206,40\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"3.0\" stroke-linejoin=\"round\"/><circle cx=\"52.0\" cy=\"40.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"206.0\" cy=\"120.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"52.0\" cy=\"120.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"206.0\" cy=\"40.0\" r=\"4.4\" fill=\"#15181e\"/></svg>", "opts": ["простая замкнутая", "простая незамкнутая", "непростая замкнутая", "непростая незамкнутая"], "ans": 2, "why": "Ломаная замкнута, но два несоседних звена пересекаются — значит непростая."}, {"q": "Является ли эта фигура многоугольником?", "fig": "<svg viewBox=\"0 0 300 150\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"150\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"52,40 206,120 52,120 206,40\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"3.0\" stroke-linejoin=\"round\"/><circle cx=\"52.0\" cy=\"40.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"206.0\" cy=\"120.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"52.0\" cy=\"120.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"206.0\" cy=\"40.0\" r=\"4.4\" fill=\"#15181e\"/></svg>", "opts": ["да, это многоугольник", "нет, ломаная незамкнутая", "нет, ломаная непростая", "нет, это вообще не ломаная"], "ans": 2, "why": "Многоугольник — это <b>простая</b> замкнутая ломаная. Здесь ломаная замкнутая, но звенья пересекаются, поэтому многоугольником она не является."}]);
+makeTrainer("tr2", [{"q": "Как правильно записать изображённый луч?", "fig": "<svg viewBox=\"0 0 300 150\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"150\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"62.0\" y1=\"108.0\" x2=\"227.2\" y2=\"36.5\" stroke=\"#2f6bd8\" stroke-width=\"3.0\" stroke-linecap=\"round\"/><path d=\"M 227.2 36.5 L 220.5 42.5 L 218.2 37.3 z\" fill=\"#2f6bd8\"/><circle cx=\"62.0\" cy=\"108.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"196.0\" cy=\"50.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"45.5\" y=\"120.2\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"212.5\" y=\"47.8\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "opts": ["AB", "BA", "и AB, и BA", "прямая AB"], "ans": 0, "why": "В названии луча <b>на первом месте всегда стоит его начало</b>. Начало здесь — точка A, поэтому луч AB."}, {"q": "Начало луча на рисунке — точка P. Какая запись верна?", "fig": "<svg viewBox=\"0 0 300 150\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"150\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"206.0\" y1=\"106.0\" x2=\"40.5\" y2=\"39.3\" stroke=\"#2f6bd8\" stroke-width=\"3.0\" stroke-linecap=\"round\"/><path d=\"M 40.5 39.3 L 49.4 39.9 L 47.3 45.1 z\" fill=\"#2f6bd8\"/><circle cx=\"206.0\" cy=\"106.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"72.0\" cy=\"52.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"222.7\" y=\"117.7\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">P</text><text x=\"55.3\" y=\"50.3\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">Q</text></svg>", "opts": ["PQ", "QP", "и PQ, и QP", "ни одна"], "ans": 0, "why": "Снова первым пишем начало: PQ. Запись QP означала бы луч с началом в Q, а он идёт в другую сторону."}, {"q": "Луч, противоположный лучу OA, — это…", "fig": "<svg viewBox=\"0 0 300 150\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"150\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"150.0\" y1=\"78.0\" x2=\"34.0\" y2=\"78.0\" stroke=\"#2f6bd8\" stroke-width=\"2.8\" stroke-linecap=\"round\"/><path d=\"M 34.0 78.0 L 42.5 75.2 L 42.5 80.8 z\" fill=\"#2f6bd8\"/><line x1=\"150.0\" y1=\"78.0\" x2=\"266.0\" y2=\"78.0\" stroke=\"#137a45\" stroke-width=\"2.8\" stroke-linecap=\"round\"/><path d=\"M 266.0 78.0 L 257.5 80.8 L 257.5 75.2 z\" fill=\"#137a45\"/><circle cx=\"150.0\" cy=\"78.0\" r=\"4.2\" fill=\"#15181e\"/><circle cx=\"84.0\" cy=\"78.0\" r=\"4.2\" fill=\"#15181e\"/><circle cx=\"216.0\" cy=\"78.0\" r=\"4.2\" fill=\"#15181e\"/><text x=\"150.0\" y=\"60.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">O</text><text x=\"84.0\" y=\"60.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"216.0\" y=\"60.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "opts": ["OB", "AO", "BO", "AB"], "ans": 0, "why": "У противоположных лучей общее начало — точка O. Значит и второй луч начинается с O, а идёт в другую сторону: это луч OB."}, {"q": "Как можно записать изображённый отрезок?", "fig": "<svg viewBox=\"0 0 300 150\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"150\" rx=\"12\" fill=\"#ffffff\"/><polyline points=\"66,100 210,56\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"3.0\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"66.0\" cy=\"100.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"210.0\" cy=\"56.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"48.8\" y=\"110.3\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">M</text><text x=\"227.2\" y=\"55.7\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">N</text></svg>", "opts": ["только MN", "только NM", "и MN, и NM", "ни одна запись не годится"], "ans": 2, "why": "У отрезка оба конца равноправны, поэтому MN и NM — это один и тот же отрезок. Порядок важен только для луча."}, {"q": "Как ещё можно назвать этот четырёхугольник?", "fig": "<svg viewBox=\"0 0 300 150\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"150\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"52,124 92,40 206,52 226,124\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"3.0\" stroke-linejoin=\"round\"/><circle cx=\"52.0\" cy=\"124.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"92.0\" cy=\"40.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"206.0\" cy=\"52.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"226.0\" cy=\"124.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"36.0\" y=\"136.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"86.0\" y=\"28.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">B</text><text x=\"220.0\" y=\"42.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"242.0\" y=\"138.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">D</text></svg>", "opts": ["CBAD", "ACBD", "ABDC", "BDCA"], "ans": 0, "why": "Вершины перечисляют <b>последовательно</b> по контуру, начиная с любой и в любую сторону. CBAD — это обход C → B → A → D, то есть тот же четырёхугольник. В остальных записях порядок нарушен."}, {"q": "Как ещё можно записать эту ломаную?", "fig": "<svg viewBox=\"0 0 300 150\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"150\" rx=\"12\" fill=\"#ffffff\"/><polyline points=\"40,116 74,44 132,96 186,40 232,110\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"3.0\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"40.0\" cy=\"116.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"74.0\" cy=\"44.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"132.0\" cy=\"96.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"186.0\" cy=\"40.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"232.0\" cy=\"110.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"23.1\" y=\"127.3\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"58.8\" y=\"39.4\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">B</text><text x=\"131.0\" y=\"119.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"200.2\" y=\"34.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">D</text><text x=\"249.3\" y=\"120.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">E</text></svg>", "opts": ["EDCBA", "ACBDE", "ABCED", "BCDEA"], "ans": 0, "why": "Незамкнутую ломаную читают с любого конца, но обязательно подряд. EDCBA — это та же ломаная, прочитанная с другого края."}, {"q": "Как называется красный отрезок?", "fig": "<svg viewBox=\"0 0 300 150\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"150\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"52,124 92,40 206,52 226,124\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"3.0\" stroke-linejoin=\"round\"/><circle cx=\"52.0\" cy=\"124.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"92.0\" cy=\"40.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"206.0\" cy=\"52.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"226.0\" cy=\"124.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"36.0\" y=\"136.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"86.0\" y=\"28.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">B</text><text x=\"220.0\" y=\"42.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"242.0\" y=\"138.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">D</text><line x1=\"52.0\" y1=\"124.0\" x2=\"206.0\" y2=\"52.0\" stroke=\"#b3261e\" stroke-width=\"2.6\" stroke-linecap=\"round\"/></svg>", "opts": ["диагональ", "сторона", "звено", "луч"], "ans": 0, "why": "Он соединяет вершины A и C, которые не принадлежат одной стороне. Такой отрезок называется диагональю."}, {"q": "Как называются отрезки, из которых состоит эта ломаная?", "fig": "<svg viewBox=\"0 0 300 150\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"150\" rx=\"12\" fill=\"#ffffff\"/><polyline points=\"40,116 74,44 132,96 186,40 232,110\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"3.0\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"40.0\" cy=\"116.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"74.0\" cy=\"44.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"132.0\" cy=\"96.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"186.0\" cy=\"40.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"232.0\" cy=\"110.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"23.1\" y=\"127.3\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"58.8\" y=\"39.4\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">B</text><text x=\"131.0\" y=\"119.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"200.2\" y=\"34.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">D</text><text x=\"249.3\" y=\"120.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">E</text></svg>", "opts": ["звенья", "стороны", "вершины", "диагонали"], "ans": 0, "why": "У ломаной это <b>звенья</b>, а точки их соединения — вершины. Сторонами звенья называют только у многоугольника."}]);
+makeTrainer("tr3", [{"q": "На отрезке AB взята точка C, причём AC на 6 см больше CB. Что удобнее обозначить через x?", "fig": "<svg viewBox=\"0 0 320 100\"><rect x=\"0\" y=\"0\" width=\"320\" height=\"100\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"46.0\" y1=\"58.0\" x2=\"274.0\" y2=\"58.0\" stroke=\"#15181e\" stroke-width=\"3.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"46.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">A</text><circle cx=\"187.4\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"187.4\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">C</text><circle cx=\"274.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"274.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "opts": ["CB = x, тогда AC = x + 6", "AC = x, тогда CB = x + 6", "AC = x, тогда CB = 6x", "AB = x, тогда AC = x + 6"], "ans": 0, "why": "Через x берут <b>меньшую</b> величину — тогда вторая записывается со знаком плюс, без вычитания. Меньший здесь CB, поэтому CB = x и AC = x + 6."}, {"q": "AC на 6 см больше CB, AB = 24 см. Какое уравнение получится?", "fig": "<svg viewBox=\"0 0 320 136\"><rect x=\"0\" y=\"0\" width=\"320\" height=\"136\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"46.0\" y1=\"58.0\" x2=\"274.0\" y2=\"58.0\" stroke=\"#15181e\" stroke-width=\"3.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"46.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">A</text><circle cx=\"187.4\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"187.4\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">C</text><circle cx=\"274.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"274.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">B</text><line x1=\"46.0\" y1=\"74.0\" x2=\"274.0\" y2=\"74.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"46.0\" y1=\"69.0\" x2=\"46.0\" y2=\"79.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"274.0\" y1=\"69.0\" x2=\"274.0\" y2=\"79.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"160.0\" y=\"94.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">AB = 24 см</text></svg>", "opts": ["(x + 6) + x = 24", "x + 6 = 24", "x + (x − 6) = 24", "2x + 6x = 24"], "ans": 0, "why": "По аксиоме измерения отрезков AC + CB = AB. Подставляем AC = x + 6 и CB = x: (x + 6) + x = 24."}, {"q": "Отрезок AM в 3 раза меньше отрезка MB. Как это записать?", "fig": "<svg viewBox=\"0 0 320 100\"><rect x=\"0\" y=\"0\" width=\"320\" height=\"100\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"46.0\" y1=\"58.0\" x2=\"274.0\" y2=\"58.0\" stroke=\"#15181e\" stroke-width=\"3.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"46.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">A</text><circle cx=\"103.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"103.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">M</text><circle cx=\"274.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"274.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "opts": ["AM = x, MB = 3x", "AM = 3x, MB = x", "AM = x, MB = x + 3", "AM = x − 3, MB = x"], "ans": 0, "why": "«В 3 раза меньше» — это умножение, а не вычитание. Меньший отрезок AM обозначаем через x, тогда больший MB втрое длиннее: 3x."}, {"q": "Точка P лежит на отрезке EF, EP в 3 раза больше PF, EF = 24 дм. Какое уравнение верно?", "fig": "<svg viewBox=\"0 0 320 136\"><rect x=\"0\" y=\"0\" width=\"320\" height=\"136\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"46.0\" y1=\"58.0\" x2=\"274.0\" y2=\"58.0\" stroke=\"#15181e\" stroke-width=\"3.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"46.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">E</text><circle cx=\"217.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"217.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">P</text><circle cx=\"274.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"274.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">F</text><line x1=\"46.0\" y1=\"74.0\" x2=\"274.0\" y2=\"74.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"46.0\" y1=\"69.0\" x2=\"46.0\" y2=\"79.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"274.0\" y1=\"69.0\" x2=\"274.0\" y2=\"79.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"160.0\" y=\"94.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">EF = 24 дм</text></svg>", "opts": ["x + 3x = 24", "3x = 24", "x + (x + 3) = 24", "3x − x = 24"], "ans": 0, "why": "Пусть PF = x, тогда EP = 3x. Вместе они составляют весь отрезок: x + 3x = 24."}, {"q": "Отрезок 27 см разбит на три части: две равны, а третья на 6 см больше первой. Какое уравнение верно?", "fig": "<svg viewBox=\"0 0 320 136\"><rect x=\"0\" y=\"0\" width=\"320\" height=\"136\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"46.0\" y1=\"58.0\" x2=\"274.0\" y2=\"58.0\" stroke=\"#15181e\" stroke-width=\"3.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"46.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">A</text><circle cx=\"109.8\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"109.8\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">C</text><circle cx=\"173.7\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"173.7\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">D</text><circle cx=\"274.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"274.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">B</text><line x1=\"46.0\" y1=\"74.0\" x2=\"274.0\" y2=\"74.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"46.0\" y1=\"69.0\" x2=\"46.0\" y2=\"79.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"274.0\" y1=\"69.0\" x2=\"274.0\" y2=\"79.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"160.0\" y=\"94.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">27 см</text></svg>", "opts": ["x + x + (x + 6) = 27", "x + x + 6 = 27", "3x + 6x = 27", "x + (x + 6) + (x + 6) = 27"], "ans": 0, "why": "Две равные части по x, третья на 6 больше — то есть x + 6. Сумма всех трёх даёт 27."}, {"q": "Известно, что AK = 2KM и отрезок AK на 12 см больше KM. Какое уравнение получится, если KM = x?", "fig": "<svg viewBox=\"0 0 320 100\"><rect x=\"0\" y=\"0\" width=\"320\" height=\"100\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"46.0\" y1=\"58.0\" x2=\"274.0\" y2=\"58.0\" stroke=\"#15181e\" stroke-width=\"3.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"46.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">A</text><circle cx=\"196.5\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"196.5\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">K</text><circle cx=\"274.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"274.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">M</text></svg>", "opts": ["2x − x = 12", "2x + x = 12", "x − 2x = 12", "2x = 12"], "ans": 0, "why": "AK = 2x, KM = x. «AK больше KM на 12» — это разность: 2x − x = 12, откуда сразу x = 12."}, {"q": "Точка делит отрезок 10 см так, что одна часть втрое больше другой. Какое уравнение верно?", "fig": "<svg viewBox=\"0 0 320 136\"><rect x=\"0\" y=\"0\" width=\"320\" height=\"136\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"46.0\" y1=\"58.0\" x2=\"274.0\" y2=\"58.0\" stroke=\"#15181e\" stroke-width=\"3.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"46.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">A</text><circle cx=\"103.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"103.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">C</text><circle cx=\"274.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"274.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">B</text><line x1=\"46.0\" y1=\"74.0\" x2=\"274.0\" y2=\"74.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"46.0\" y1=\"69.0\" x2=\"46.0\" y2=\"79.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"274.0\" y1=\"69.0\" x2=\"274.0\" y2=\"79.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"160.0\" y=\"94.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">10 см</text></svg>", "opts": ["x + 3x = 10", "3x = 10", "x + (x + 3) = 10", "x − 3x = 10"], "ans": 0, "why": "Меньшая часть x, большая 3x, вместе они дают весь отрезок: x + 3x = 10, то есть 4x = 10."}, {"q": "Отрезок AB равен a, точка C делит его так, что AC на d больше CB. Чему равен CB?", "fig": "<svg viewBox=\"0 0 320 136\"><rect x=\"0\" y=\"0\" width=\"320\" height=\"136\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"46.0\" y1=\"58.0\" x2=\"274.0\" y2=\"58.0\" stroke=\"#15181e\" stroke-width=\"3.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"46.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">A</text><circle cx=\"187.4\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"187.4\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">C</text><circle cx=\"274.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"274.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">B</text><line x1=\"46.0\" y1=\"74.0\" x2=\"274.0\" y2=\"74.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"46.0\" y1=\"69.0\" x2=\"46.0\" y2=\"79.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"274.0\" y1=\"69.0\" x2=\"274.0\" y2=\"79.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"160.0\" y=\"94.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">AB = a</text></svg>", "opts": ["(a − d) : 2", "(a + d) : 2", "a − d", "a : 2 − d"], "ans": 0, "why": "Пусть CB = x, тогда AC = x + d и x + (x + d) = a. Отсюда 2x = a − d и x = (a − d) : 2. Проверь на числах: при a = 24 и d = 6 получится 9."}]);
+makeTrainer("tr4", [{"q": "Точка O делит отрезок HT в отношении HO : OT = 3 : 4. На сколько равных долей разбит весь отрезок HT?", "fig": "<svg viewBox=\"0 0 320 136\"><rect x=\"0\" y=\"0\" width=\"320\" height=\"136\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"46.0\" y1=\"58.0\" x2=\"274.0\" y2=\"58.0\" stroke=\"#15181e\" stroke-width=\"3.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"46.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">H</text><circle cx=\"143.7\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"143.7\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">O</text><circle cx=\"274.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"274.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">T</text><line x1=\"46.0\" y1=\"74.0\" x2=\"274.0\" y2=\"74.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"46.0\" y1=\"69.0\" x2=\"46.0\" y2=\"79.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"274.0\" y1=\"69.0\" x2=\"274.0\" y2=\"79.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"160.0\" y=\"94.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">HT = 14 см,  HO : OT = 3 : 4</text></svg>", "ans": ["7"], "why": "Отношение 3 : 4 означает, что в первой части 3 доли, а во второй 4. Всего 3 + 4 = 7 долей."}, {"q": "HT = 14 см, HO : OT = 3 : 4. Чему равна одна доля (в сантиметрах)?", "fig": "<svg viewBox=\"0 0 320 136\"><rect x=\"0\" y=\"0\" width=\"320\" height=\"136\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"46.0\" y1=\"58.0\" x2=\"274.0\" y2=\"58.0\" stroke=\"#15181e\" stroke-width=\"3.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"46.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">H</text><circle cx=\"143.7\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"143.7\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">O</text><circle cx=\"274.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"274.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">T</text><line x1=\"46.0\" y1=\"74.0\" x2=\"274.0\" y2=\"74.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"46.0\" y1=\"69.0\" x2=\"46.0\" y2=\"79.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"274.0\" y1=\"69.0\" x2=\"274.0\" y2=\"79.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"160.0\" y=\"94.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">HT = 14 см,  HO : OT = 3 : 4</text></svg>", "ans": ["2"], "why": "Весь отрезок — это 7 долей, значит одна доля равна 14 : 7 = 2 см."}, {"q": "HT = 14 см, HO : OT = 3 : 4. Найди длину отрезка OT (в сантиметрах).", "fig": "<svg viewBox=\"0 0 320 136\"><rect x=\"0\" y=\"0\" width=\"320\" height=\"136\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"46.0\" y1=\"58.0\" x2=\"274.0\" y2=\"58.0\" stroke=\"#15181e\" stroke-width=\"3.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"46.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">H</text><circle cx=\"143.7\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"143.7\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">O</text><circle cx=\"274.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"274.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">T</text><line x1=\"46.0\" y1=\"74.0\" x2=\"274.0\" y2=\"74.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"46.0\" y1=\"69.0\" x2=\"46.0\" y2=\"79.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"274.0\" y1=\"69.0\" x2=\"274.0\" y2=\"79.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"160.0\" y=\"94.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">HT = 14 см,  HO : OT = 3 : 4</text></svg>", "ans": ["8"], "why": "Одна доля равна 2 см, а на OT приходится 4 доли: 4 · 2 = 8 см. Проверка: HO = 3 · 2 = 6 и 6 + 8 = 14 ✓."}, {"q": "AC = 21 см, AB : BC = 2 : 5. Найди длину отрезка BC (в сантиметрах).", "fig": "<svg viewBox=\"0 0 320 136\"><rect x=\"0\" y=\"0\" width=\"320\" height=\"136\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"46.0\" y1=\"58.0\" x2=\"274.0\" y2=\"58.0\" stroke=\"#15181e\" stroke-width=\"3.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"46.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">A</text><circle cx=\"111.1\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"111.1\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">B</text><circle cx=\"274.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"274.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">C</text><line x1=\"46.0\" y1=\"74.0\" x2=\"274.0\" y2=\"74.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"46.0\" y1=\"69.0\" x2=\"46.0\" y2=\"79.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"274.0\" y1=\"69.0\" x2=\"274.0\" y2=\"79.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"160.0\" y=\"94.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">AC = 21 см,  AB : BC = 2 : 5</text></svg>", "ans": ["15"], "why": "Долей всего 2 + 5 = 7, одна доля 21 : 7 = 3 см. На BC приходится 5 долей: 5 · 3 = 15 см."}, {"q": "Две точки делят отрезок 11,5 см на части, пропорциональные числам 6, 8 и 9. Найди длину средней части (в сантиметрах).", "fig": "<svg viewBox=\"0 0 330 136\"><rect x=\"0\" y=\"0\" width=\"330\" height=\"136\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"46.0\" y1=\"58.0\" x2=\"284.0\" y2=\"58.0\" stroke=\"#15181e\" stroke-width=\"3.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"46.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">A</text><circle cx=\"108.1\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"108.1\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">M</text><circle cx=\"190.9\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"190.9\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">N</text><circle cx=\"284.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"284.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">B</text><line x1=\"46.0\" y1=\"74.0\" x2=\"284.0\" y2=\"74.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"46.0\" y1=\"69.0\" x2=\"46.0\" y2=\"79.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"284.0\" y1=\"69.0\" x2=\"284.0\" y2=\"79.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"165.0\" y=\"94.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">AB = 11,5 см,  части как 6 : 8 : 9</text></svg>", "ans": ["4"], "why": "Долей 6 + 8 + 9 = 23, одна доля 11,5 : 23 = 0,5 см. Средняя часть — 8 долей: 8 · 0,5 = 4 см."}, {"q": "Точка K делит отрезок AB в отношении 1 : 3, считая от точки A. Найди AK, если AB = 20 см.", "fig": "<svg viewBox=\"0 0 320 136\"><rect x=\"0\" y=\"0\" width=\"320\" height=\"136\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"46.0\" y1=\"58.0\" x2=\"274.0\" y2=\"58.0\" stroke=\"#15181e\" stroke-width=\"3.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"46.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">A</text><circle cx=\"103.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"103.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">K</text><circle cx=\"274.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"274.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">B</text><line x1=\"46.0\" y1=\"74.0\" x2=\"274.0\" y2=\"74.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"46.0\" y1=\"69.0\" x2=\"46.0\" y2=\"79.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"274.0\" y1=\"69.0\" x2=\"274.0\" y2=\"79.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"160.0\" y=\"94.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">AB = 20 см,  AK : KB = 1 : 3</text></svg>", "ans": ["5"], "why": "Долей 1 + 3 = 4, одна доля 20 : 4 = 5 см. На AK приходится одна доля, значит AK = 5 см."}]);
+makeTrainer("tr5", [{"q": "Сколько отрезков с концами в отмеченных точках изображено на рисунке?", "fig": "<svg viewBox=\"0 0 330 110\"><rect x=\"0\" y=\"0\" width=\"330\" height=\"110\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"20.0\" y1=\"58.0\" x2=\"310.0\" y2=\"58.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"46.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">A</text><circle cx=\"125.3\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"125.3\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">C</text><circle cx=\"204.7\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"204.7\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">D</text><circle cx=\"284.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"284.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "ans": ["6"], "why": "Считаем по кругу, чтобы не повторяться: от первой точки 3 отрезка, от второй 2 новых, от третьей 1. Всего 3 + 2 + 1 = 6."}, {"q": "Сколько отрезков с концами в отмеченных точках можно изобразить?", "fig": "<svg viewBox=\"0 0 330 110\"><rect x=\"0\" y=\"0\" width=\"330\" height=\"110\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"20.0\" y1=\"58.0\" x2=\"310.0\" y2=\"58.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"46.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">A</text><circle cx=\"105.5\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"105.5\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">B</text><circle cx=\"165.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"165.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">C</text><circle cx=\"224.5\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"224.5\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">D</text><circle cx=\"284.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"284.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">E</text></svg>", "ans": ["10"], "why": "4 + 3 + 2 + 1 = 10. Каждый отрезок задаётся парой точек, а порядок в паре не важен."}, {"q": "Сколько звеньев у этой ломаной?", "fig": "<svg viewBox=\"0 0 300 150\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"150\" rx=\"12\" fill=\"#ffffff\"/><polyline points=\"40,116 74,44 132,96 186,40 232,110 270,52\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"3.0\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"40.0\" cy=\"116.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"74.0\" cy=\"44.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"132.0\" cy=\"96.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"186.0\" cy=\"40.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"232.0\" cy=\"110.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"270.0\" cy=\"52.0\" r=\"4.4\" fill=\"#15181e\"/></svg>", "ans": ["5"], "why": "Звено — это отрезок между соседними вершинами. Вершин шесть, значит звеньев на одно меньше — пять."}, {"q": "Сколько вершин у этой ломаной?", "fig": "<svg viewBox=\"0 0 300 150\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"150\" rx=\"12\" fill=\"#ffffff\"/><polyline points=\"40,116 74,44 132,96 186,40 232,110 270,52\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"3.0\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"40.0\" cy=\"116.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"74.0\" cy=\"44.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"132.0\" cy=\"96.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"186.0\" cy=\"40.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"232.0\" cy=\"110.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"270.0\" cy=\"52.0\" r=\"4.4\" fill=\"#15181e\"/></svg>", "ans": ["6"], "why": "У незамкнутой ломаной вершин на одну больше, чем звеньев. Звеньев пять, значит вершин шесть."}, {"q": "Сколько диагоналей у этого четырёхугольника?", "fig": "<svg viewBox=\"0 0 300 150\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"150\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"52,124 92,40 206,52 226,124\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"3.0\" stroke-linejoin=\"round\"/><circle cx=\"52.0\" cy=\"124.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"92.0\" cy=\"40.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"206.0\" cy=\"52.0\" r=\"4.4\" fill=\"#15181e\"/><circle cx=\"226.0\" cy=\"124.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"36.0\" y=\"136.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"86.0\" y=\"28.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">B</text><text x=\"220.0\" y=\"42.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"242.0\" y=\"138.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">D</text></svg>", "ans": ["2"], "why": "Диагонали соединяют вершины, не лежащие на одной стороне: это AC и BD. Всего две."}, {"q": "На прямой отмечены три точки. Сколько всего получилось лучей с началом в этих точках?", "fig": "<svg viewBox=\"0 0 330 110\"><rect x=\"0\" y=\"0\" width=\"330\" height=\"110\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"20.0\" y1=\"58.0\" x2=\"310.0\" y2=\"58.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"46.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">M</text><circle cx=\"165.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"165.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">N</text><circle cx=\"284.0\" cy=\"58.0\" r=\"4.4\" fill=\"#15181e\"/><text x=\"284.0\" y=\"45.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">K</text></svg>", "ans": ["6"], "why": "Каждая точка прямой задаёт два противоположных луча. Точек три, значит лучей 3 · 2 = 6."}]);
+
+</script>
+</body>
+</html>
