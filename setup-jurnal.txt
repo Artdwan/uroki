@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<style>
+:root{--bg:#f5f6f8;--card:#fff;--ink:#16181d;--muted:#5b6270;--line:#dfe3ea;
+  --acc:#2f6bd8;--acc-soft:#e8f0ff;--ok:#137a45;--ok-soft:#e4f6ec;--bad:#b3261e;--bad-soft:#fdeceb}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#14161a;--card:#1c1f25;--ink:#eceef2;--muted:#a3abb8;--line:#2c313a;
+    --acc:#7aa5f5;--acc-soft:#1e2838;--ok:#5fd39a;--ok-soft:#162a20;--bad:#ff8a80;--bad-soft:#2c1b1a}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+.wrap{max-width:800px;margin:0 auto;padding:20px 14px 60px}
+h1{font-size:25px;margin:0 0 4px}
+h2{font-size:20px;margin:0 0 10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:16px 18px;margin-bottom:14px}
+.meta{color:var(--muted);font-size:15px}
+label{display:block;font-size:15px;color:var(--muted);margin:12px 0 5px}
+input,select{width:100%;font:inherit;font-size:17px;padding:11px 13px;border-radius:10px;
+  border:1.5px solid var(--line);background:var(--bg);color:var(--ink)}
+button{font:inherit;font-size:16px;padding:11px 16px;border-radius:10px;min-height:46px;
+  border:1.5px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button:hover{border-color:var(--acc)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.err{color:var(--bad);font-size:15px;margin-top:10px;min-height:20px}
+.ok{color:var(--ok)}
+.hide{display:none!important}
+.jrow{border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:10px;
+  background:var(--bg)}
+.jrow .nm{font-weight:600;margin-bottom:8px}
+.cells{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.cells .lb{font-size:14px;color:var(--muted)}
+.pill{display:inline-block;border:1.5px solid var(--line);border-radius:20px;padding:6px 14px;
+  font-size:15px;cursor:pointer;background:var(--card);user-select:none;min-width:52px;
+  text-align:center}
+.pill.on{border-color:var(--ok);background:var(--ok-soft);color:var(--ok);font-weight:700}
+.pill.off{border-color:var(--bad);background:var(--bad-soft);color:var(--bad);font-weight:700}
+.sc{font-size:14px;color:var(--muted);margin-left:auto}
+footer{color:var(--muted);font-size:14px;margin-top:22px;border-top:1px solid var(--line);
+  padding-top:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div id="loginBox">
+  <div class="card">
+    <h1>Журнал занятий</h1>
+    <div class="meta">Только для преподавателя</div>
+    <label for="pass">Пароль</label>
+    <input type="password" id="pass" placeholder="пароль преподавателя">
+    <div class="row" style="margin-top:14px"><button class="pri" id="enter">Войти</button></div>
+    <div class="err" id="lerr"></div>
+  </div>
+</div>
+
+<div id="app" class="hide">
+  <div class="card">
+    <h1>Журнал занятий</h1>
+    <div class="row" style="margin-top:10px">
+      <div style="flex:1;min-width:150px">
+        <label for="grp">Группа</label><select id="grp"></select>
+      </div>
+      <div style="flex:1;min-width:150px">
+        <label for="date">Дата</label><input type="date" id="date">
+      </div>
+    </div>
+    <label for="lesson">Тема занятия</label>
+    <input type="text" id="lesson" placeholder="например: строение атома, §1–§2">
+    <div class="row" style="margin-top:14px">
+      <button class="pri" id="load">Показать</button>
+      <button id="out">Выйти</button>
+    </div>
+    <div class="err" id="serr"></div>
+  </div>
+
+  <div class="card">
+    <h2 id="dayTitle">Отметки</h2>
+    <div class="meta">Нажимай на кружки: серый — не отмечено, зелёный — да, красный — нет.
+    Каждое нажатие сохраняется сразу.</div>
+    <div id="rows" style="margin-top:12px"></div>
+    <div class="meta" id="empty"></div>
+  </div>
+
+  <footer>Данные лежат в вашей Google Таблице — там же их можно править руками.</footer>
+</div>
+
+</div>
+
+<script>
+var tok = "";
+
+function esc(s){
+  return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]; });
+}
+function save(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+function load(k){ try{ return localStorage.getItem(k) || ""; }catch(e){ return ""; } }
+function drop(k){ try{ localStorage.removeItem(k); }catch(e){} }
+
+function pill(code, field, val){
+  var cls = val === "да" ? "pill on" : (val === "нет" ? "pill off" : "pill");
+  var txt = val === "да" ? "да" : (val === "нет" ? "нет" : "—");
+  return '<span class="' + cls + '" data-code="' + esc(code) + '" data-f="' + field +
+         '" data-v="' + esc(val) + '">' + txt + "</span>";
+}
+
+function draw(rows){
+  var html = "";
+  for(var i=0;i<rows.length;i++){
+    var r = rows[i];
+    var sc = (r.score !== "" && r.max !== "") ? (r.score + " из " + r.max) : "";
+    html += '<div class="jrow"><div class="nm">' + esc(r.name) +
+            ' <span class="meta">· ' + esc(r.code) + "</span></div>" +
+            '<div class="cells"><span class="lb">был</span>' + pill(r.code,"present",r.present) +
+            '<span class="lb">камера</span>' + pill(r.code,"camera",r.camera) +
+            '<span class="lb">дз</span>' + pill(r.code,"hw",r.hw) +
+            (sc ? '<span class="sc">' + esc(sc) + "</span>" : "") +
+            "</div></div>";
+  }
+  document.getElementById("rows").innerHTML = html;
+  document.getElementById("empty").textContent =
+    rows.length ? "" : "В этой группе нет активных учеников.";
+}
+
+function loadDay(){
+  var g = document.getElementById("grp").value;
+  var d = document.getElementById("date").value;
+  var e = document.getElementById("serr");
+  if(!g || !d){ e.textContent = "Выбери группу и дату."; return; }
+  e.className = "err"; e.textContent = "Загружаю…";
+  google.script.run
+    .withSuccessHandler(function(res){
+      if(res && res.ok){
+        e.textContent = ""; draw(res.rows);
+        document.getElementById("dayTitle").textContent = g + " · " + d;
+      } else e.textContent = (res && res.error) || "Не получилось загрузить.";
+    })
+    .withFailureHandler(function(){ e.textContent = "Сервер не ответил."; })
+    .apiDay(tok, g, d);
+}
+
+document.getElementById("rows").addEventListener("click", function(ev){
+  var el = ev.target;
+  if(!el.getAttribute || !el.getAttribute("data-f")) return;
+  var v = el.getAttribute("data-v");
+  var next = v === "да" ? "нет" : (v === "нет" ? "" : "да");
+  el.setAttribute("data-v", next);
+  el.className = next === "да" ? "pill on" : (next === "нет" ? "pill off" : "pill");
+  el.textContent = next === "да" ? "да" : (next === "нет" ? "нет" : "—");
+  var e = document.getElementById("serr");
+  google.script.run
+    .withSuccessHandler(function(res){
+      if(res && res.ok){ e.className = "err ok"; e.textContent = "Сохранено."; }
+      else e.textContent = (res && res.error) || "Отметка не сохранилась, нажми ещё раз.";
+    })
+    .withFailureHandler(function(){ e.textContent = "Отметка не сохранилась, нажми ещё раз."; })
+    .apiMark(tok, document.getElementById("date").value, el.getAttribute("data-code"),
+             document.getElementById("grp").value, el.getAttribute("data-f"), next,
+             document.getElementById("lesson").value);
+});
+
+function opened(res){
+  tok = res.token; save("art_tt", tok);
+  document.getElementById("loginBox").className = "hide";
+  document.getElementById("app").className = "";
+  var sel = document.getElementById("grp"), gs = res.groups || [];
+  sel.innerHTML = gs.map(function(g){
+    return '<option value="' + esc(g) + '">' + esc(g) + "</option>"; }).join("");
+  var d = new Date(), p = function(n){ return (n<10?"0":"") + n; };
+  document.getElementById("date").value =
+    d.getFullYear() + "-" + p(d.getMonth()+1) + "-" + p(d.getDate());
+  if(gs.length) loadDay();
+}
+
+document.getElementById("enter").addEventListener("click", function(){
+  var p = document.getElementById("pass").value.trim();
+  var e = document.getElementById("lerr");
+  if(!p){ e.textContent = "Впиши пароль."; return; }
+  e.textContent = "Проверяю…";
+  google.script.run
+    .withSuccessHandler(function(res){
+      if(res && res.ok){ e.textContent = ""; opened(res); }
+      else e.textContent = (res && res.error) || "Не получилось войти.";
+    })
+    .withFailureHandler(function(){ e.textContent = "Сервер не ответил."; })
+    .apiTeacherLogin(p);
+});
+document.getElementById("pass").addEventListener("keydown", function(ev){
+  if(ev.key === "Enter") document.getElementById("enter").click();
+});
+document.getElementById("load").addEventListener("click", loadDay);
+document.getElementById("out").addEventListener("click", function(){
+  drop("art_tt"); tok = "";
+  document.getElementById("app").className = "hide";
+  document.getElementById("loginBox").className = "";
+  document.getElementById("pass").value = "";
+});
+</script>
+</body>
+</html>

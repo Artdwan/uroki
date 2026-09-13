@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<style>
+:root{--bg:#f5f6f8;--card:#fff;--ink:#16181d;--muted:#5b6270;--line:#dfe3ea;
+  --acc:#2f6bd8;--acc-soft:#e8f0ff;--ok:#137a45;--bad:#b3261e}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#14161a;--card:#1c1f25;--ink:#eceef2;--muted:#a3abb8;--line:#2c313a;
+    --acc:#7aa5f5;--acc-soft:#1e2838;--ok:#5fd39a;--bad:#ff8a80}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+.wrap{max-width:800px;margin:0 auto;padding:20px 14px 60px}
+h1{font-size:25px;margin:0 0 4px}
+h2{font-size:20px;margin:0 0 10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:16px 18px;margin-bottom:14px}
+.meta{color:var(--muted);font-size:15px}
+label{display:block;font-size:15px;color:var(--muted);margin:12px 0 5px}
+input{width:100%;font:inherit;font-size:17px;padding:11px 13px;border-radius:10px;
+  border:1.5px solid var(--line);background:var(--bg);color:var(--ink)}
+button{font:inherit;font-size:16px;padding:11px 16px;border-radius:10px;min-height:46px;
+  border:1.5px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button:hover{border-color:var(--acc)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.err{color:var(--bad);font-size:15px;margin-top:10px;min-height:20px}
+.hide{display:none!important}
+.sum{font-size:16px;line-height:1.9}
+.sum b{font-size:19px}
+.mat{display:flex;gap:12px;align-items:center;flex-wrap:wrap;background:var(--bg);
+  border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.mat .t{flex:1;min-width:190px}
+.mat .t b{font-size:17px}
+.mat .t div{color:var(--muted);font-size:14px;margin-top:2px}
+a.btn{display:inline-block;text-decoration:none;font-size:16px;padding:10px 15px;
+  border-radius:10px;background:var(--acc);color:#fff;font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:470px}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+th{background:var(--acc-soft);font-weight:600;white-space:nowrap}
+.y{color:var(--ok);font-weight:700}.n{color:var(--bad);font-weight:700}.d{color:var(--muted)}
+.note{background:var(--acc-soft);border:1px solid var(--line);border-radius:12px;
+  padding:12px 14px;font-size:15px;margin-top:12px}
+footer{color:var(--muted);font-size:14px;margin-top:22px;border-top:1px solid var(--line);
+  padding-top:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div id="loginBox">
+  <div class="card">
+    <h1>Кабинет ученика</h1>
+    <div class="meta">Образовательный центр «АртТич»</div>
+    <label for="code">Код ученика</label>
+    <input type="text" id="code" placeholder="например art-105" autocapitalize="off"
+           autocorrect="off" spellcheck="false">
+    <label for="pass">Пароль</label>
+    <input type="password" id="pass" placeholder="выдал преподаватель">
+    <div class="row" style="margin-top:14px"><button class="pri" id="enter">Войти</button></div>
+    <div class="err" id="lerr"></div>
+    <div class="note">Код и пароль выдаёт преподаватель. Если ссылка пришла личная,
+    вход произойдёт сам — вводить ничего не нужно.</div>
+  </div>
+</div>
+
+<div id="app" class="hide">
+  <div class="card">
+    <h1 id="who">—</h1>
+    <div class="meta" id="grp"></div>
+    <div class="sum" id="sum" style="margin-top:10px"></div>
+    <div class="row" style="margin-top:14px">
+      <button id="refresh">Обновить</button>
+      <button id="out">Выйти</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Мои материалы</h2>
+    <div class="meta" id="mnone"></div>
+    <div id="mats"></div>
+  </div>
+
+  <div class="card">
+    <h2>Успеваемость</h2>
+    <div class="meta">Отметки ставит преподаватель. Результат домашки записывается сам,
+    когда ты нажимаешь на странице «Отправить на проверку».</div>
+    <div class="scroll" style="margin-top:12px"><table id="rep"></table></div>
+    <div class="meta" id="rnone"></div>
+  </div>
+
+  <footer>Если в отчёте что-то не сходится — напиши преподавателю, поправим.</footer>
+</div>
+
+</div>
+
+<script>
+var TOKEN = "<?= token ?>";
+var tok = "";
+
+function esc(s){
+  return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]; });
+}
+function mark(v){
+  if(v === "да") return '<span class="y">да</span>';
+  if(v === "нет") return '<span class="n">нет</span>';
+  return '<span class="d">—</span>';
+}
+function save(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+function load(k){ try{ return localStorage.getItem(k) || ""; }catch(e){ return ""; } }
+function drop(k){ try{ localStorage.removeItem(k); }catch(e){} }
+
+function show(res){
+  document.getElementById("loginBox").className = "hide";
+  document.getElementById("app").className = "";
+  document.getElementById("who").textContent = res.name || "Ученик";
+  document.getElementById("grp").textContent =
+    (res.group ? "Группа " + res.group + " · " : "") + "код " + res.code;
+
+  var s = res.stats || {}, parts = ["занятий <b>" + (s.lessons || 0) + "</b>"];
+  if(s.lessons){
+    parts.push("был <b>" + s.present + "</b>");
+    parts.push("с камерой <b>" + s.camera + "</b>");
+    parts.push("домашек сдано <b>" + s.hw + "</b>");
+    if(s.pct != null) parts.push("средний результат <b>" + s.pct + " %</b>");
+  }
+  document.getElementById("sum").innerHTML = parts.join(" · ");
+
+  var mats = res.materials || [], html = "";
+  for(var i=0;i<mats.length;i++){
+    var m = mats[i], sub = [];
+    if(m.subject) sub.push(esc(m.subject));
+    if(m.given) sub.push("выдано " + esc(m.given));
+    if(m.due) sub.push("срок " + esc(m.due));
+    html += '<div class="mat"><div class="t"><b>' + esc(m.title) + "</b>" +
+            (sub.length ? "<div>" + sub.join(" · ") + "</div>" : "") + "</div>" +
+            '<a class="btn" target="_blank" rel="noopener" href="' + esc(m.href) +
+            '">Открыть</a></div>';
+  }
+  document.getElementById("mats").innerHTML = html;
+  document.getElementById("mnone").textContent = mats.length ? "" : "Пока ничего не выдано.";
+
+  var rep = res.report || [], t = "";
+  if(rep.length){
+    t = "<tr><th>дата</th><th>занятие</th><th>был</th><th>камера</th><th>дз</th>" +
+        "<th>результат</th><th>комментарий</th></tr>";
+    for(var j=0;j<rep.length;j++){
+      var r = rep[j];
+      var sc = (r.score != null && r.max) ? (r.score + " из " + r.max) : "—";
+      t += "<tr><td>" + esc(r.date) + "</td><td>" + esc(r.lesson) + "</td><td>" +
+           mark(r.present) + "</td><td>" + mark(r.camera) + "</td><td>" + mark(r.hw) +
+           "</td><td>" + sc + "</td><td>" + esc(r.note) + "</td></tr>";
+    }
+  }
+  document.getElementById("rep").innerHTML = t;
+  document.getElementById("rnone").textContent = rep.length ? "" : "Занятий пока не отмечено.";
+}
+
+function me(token, quiet){
+  google.script.run
+    .withSuccessHandler(function(res){
+      if(res && res.ok){ tok = token; save("art_t", token); show(res); }
+      else { drop("art_t");
+        if(!quiet) document.getElementById("lerr").textContent =
+          (res && res.error) || "Не получилось загрузить кабинет."; }
+    })
+    .withFailureHandler(function(err){
+      document.getElementById("lerr").textContent = "Сервер не ответил. Обнови страницу.";
+    })
+    .apiMe(token);
+}
+
+document.getElementById("enter").addEventListener("click", function(){
+  var c = document.getElementById("code").value.trim();
+  var p = document.getElementById("pass").value.trim();
+  var e = document.getElementById("lerr");
+  if(!c || !p){ e.textContent = "Впиши код и пароль."; return; }
+  e.textContent = "Проверяю…";
+  google.script.run
+    .withSuccessHandler(function(res){
+      if(res && res.ok){ e.textContent = ""; me(res.token); }
+      else e.textContent = (res && res.error) || "Не получилось войти.";
+    })
+    .withFailureHandler(function(){ e.textContent = "Сервер не ответил, попробуй ещё раз."; })
+    .apiLogin(c, p);
+});
+document.getElementById("pass").addEventListener("keydown", function(ev){
+  if(ev.key === "Enter") document.getElementById("enter").click();
+});
+document.getElementById("refresh").addEventListener("click", function(){ if(tok) me(tok); });
+document.getElementById("out").addEventListener("click", function(){
+  drop("art_t"); tok = "";
+  document.getElementById("app").className = "hide";
+  document.getElementById("loginBox").className = "";
+  document.getElementById("pass").value = "";
+});
+
+(function(){
+  var t = TOKEN || load("art_t");
+  if(t) me(t, true);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,355 @@
+/**
+ * «АртТич» — кабинет ученика, журнал преподавателя и приёмник домашних работ.
+ * Всё в одном веб-приложении Apps Script. База — Google Таблица.
+ *
+ * ПЕРВЫЙ ЗАПУСК
+ *  1. Выполнить setup() — создаст таблицу с листами и запомнит её id.
+ *  2. «Настройки проекта → Свойства скрипта» вписать:
+ *       BOT_TOKEN   токен Telegram-бота
+ *       CHAT_ID     id вашего чата
+ *       TEACHER_PW  пароль для страницы журнала
+ *     В коде этих значений нет и не должно быть.
+ *  3. «Развернуть → Новое развёртывание → Веб-приложение»,
+ *     выполнять от своего имени, доступ «Все». Скопировать адрес /exec.
+ *
+ * АДРЕСА
+ *   .../exec              кабинет ученика (вход по коду и паролю)
+ *   .../exec?t=ТОКЕН      кабинет сразу, без ввода пароля
+ *   .../exec?p=jurnal     журнал преподавателя
+ */
+
+var SITE = 'https://artdwan.github.io/uroki/';
+var TZ = 'Europe/Minsk';
+var P = PropertiesService.getScriptProperties();
+
+var TITLES = { students: 'Ученики', materials: 'Материалы', journal: 'Журнал', log: 'Сдачи' };
+var FIELDS = {
+  students: ['code', 'name', 'group', 'pass', 'active', 'note'],
+  materials: ['code', 'title', 'file', 'subject', 'assigned', 'given', 'due'],
+  journal: ['date', 'code', 'group', 'lesson', 'present', 'camera', 'hw', 'score', 'max', 'note'],
+  log: ['ts', 'code', 'student', 'topic', 'score', 'max', 'caption']
+};
+var HEAD = {
+  students: ['код', 'имя', 'группа', 'пароль', 'активен', 'заметка'],
+  materials: ['код', 'название', 'файл', 'предмет и класс', 'кому', 'выдано', 'срок'],
+  journal: ['дата', 'код ученика', 'группа', 'занятие', 'был', 'камера',
+            'дз сдано', 'баллы', 'из', 'комментарий'],
+  log: ['время', 'код ученика', 'имя из формы', 'тема', 'баллы', 'из', 'подпись']
+};
+
+
+/* ===================================================== установка */
+function setup() {
+  var id = P.getProperty('SHEET_ID');
+  var ss = id ? SpreadsheetApp.openById(id) : SpreadsheetApp.create('АртТич — кабинет');
+  P.setProperty('SHEET_ID', ss.getId());
+  Object.keys(TITLES).forEach(function (k) {
+    var sh = ss.getSheetByName(TITLES[k]) || ss.insertSheet(TITLES[k]);
+    if (sh.getLastRow() === 0) {
+      sh.appendRow(HEAD[k]);
+      sh.getRange(1, 1, 1, HEAD[k].length).setFontWeight('bold');
+      sh.setFrozenRows(1);
+    }
+  });
+  ['Лист1', 'Sheet1'].forEach(function (n) {
+    var s = ss.getSheetByName(n);
+    if (s && s.getLastRow() === 0 && ss.getSheets().length > 1) ss.deleteSheet(s);
+  });
+  var st = ss.getSheetByName(TITLES.students);
+  if (st.getLastRow() === 1) {
+    st.appendRow(['demo', 'Демо Ученик', 'Хим10', '1234', 'да', 'строку можно удалить']);
+    ss.getSheetByName(TITLES.materials).appendRow(
+      ['chem10', 'Строение атома. Электронные оболочки', 'chem10-dz.html',
+       'химия 10', 'Хим10', new Date(), '']);
+  }
+  Logger.log('Таблица готова: ' + ss.getUrl());
+  return ss.getUrl();
+}
+
+function openSheet() {
+  var url = setup();
+  return url;
+}
+
+function ss_() {
+  var id = P.getProperty('SHEET_ID');
+  if (!id) throw new Error('Сначала выполните setup().');
+  return SpreadsheetApp.openById(id);
+}
+
+function sheet_(key) {
+  var sh = ss_().getSheetByName(TITLES[key]);
+  if (!sh) throw new Error('Нет листа «' + TITLES[key] + '». Выполните setup().');
+  return sh;
+}
+
+function rows_(key) {
+  var sh = sheet_(key), last = sh.getLastRow();
+  if (last < 2) return [];
+  return sh.getRange(2, 1, last - 1, HEAD[key].length).getValues().map(function (r) {
+    var o = {};
+    FIELDS[key].forEach(function (f, i) { o[f] = r[i]; });
+    return o;
+  }).filter(function (o) { return String(o[FIELDS[key][0]]).trim() !== ''; });
+}
+
+function norm_(v) { return String(v == null ? '' : v).trim().toLowerCase(); }
+function ymd_(d) {
+  if (!d) return '';
+  if (!(d instanceof Date)) {
+    var s = String(d).trim();
+    if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+    d = new Date(s);
+  }
+  if (isNaN(d.getTime())) return '';
+  return Utilities.formatDate(d, TZ, 'yyyy-MM-dd');
+}
+
+
+/* ===================================================== токены */
+function issue_(payload) {
+  var t = Utilities.getUuid().replace(/-/g, '').slice(0, 22);
+  P.setProperty('tk_' + t, JSON.stringify(payload));
+  return t;
+}
+function read_(t) {
+  if (!t) return null;
+  var raw = P.getProperty('tk_' + String(t).trim());
+  try { return raw ? JSON.parse(raw) : null; } catch (e) { return null; }
+}
+
+/** Постоянная ссылка для ученика — её можно отправить в Instagram или Telegram. */
+function studentLink(code) {
+  var st = student_(code);
+  if (!st) throw new Error('Нет ученика с кодом ' + code);
+  var t = issue_({ role: 'student', code: String(st.code).trim() });
+  var url = ScriptApp.getService().getUrl() + '?t=' + t;
+  Logger.log(st.name + ': ' + url);
+  return url;
+}
+
+/** Выдать ссылки сразу всем активным ученикам и записать их в колонку «заметка». */
+function allLinks() {
+  var sh = sheet_('students'), list = rows_('students'), out = [];
+  list.forEach(function (s, i) {
+    if (norm_(s.active) === 'нет') return;
+    var t = issue_({ role: 'student', code: String(s.code).trim() });
+    var url = ScriptApp.getService().getUrl() + '?t=' + t;
+    sh.getRange(i + 2, FIELDS.students.indexOf('note') + 1).setValue(url);
+    out.push(s.name + ': ' + url);
+  });
+  Logger.log(out.join('\n'));
+  return out;
+}
+
+
+/* ===================================================== данные */
+function student_(code) {
+  var c = norm_(code), list = rows_('students');
+  for (var i = 0; i < list.length; i++) if (norm_(list[i].code) === c) return list[i];
+  return null;
+}
+
+function byName_(name) {
+  var n = norm_(name);
+  if (!n || n === 'без имени') return null;
+  var list = rows_('students');
+  for (var i = 0; i < list.length; i++) if (norm_(list[i].name) === n) return list[i];
+  return null;
+}
+
+function materials_(st) {
+  var g = norm_(st.group), c = norm_(st.code);
+  return rows_('materials').filter(function (m) {
+    var to = norm_(m.assigned);
+    if (!to || to === 'все' || to === 'all') return true;
+    return to.split(/[,;]/).some(function (x) {
+      x = x.trim(); return x && (x === g || x === c);
+    });
+  }).map(function (m) {
+    var f = String(m.file).trim();
+    var href = /^https?:/i.test(f) ? f : SITE + f;
+    return { title: String(m.title), href: href + '#code=' + encodeURIComponent(String(st.code).trim()),
+             subject: String(m.subject || ''), given: ymd_(m.given), due: ymd_(m.due) };
+  });
+}
+
+function report_(code) {
+  var c = norm_(code);
+  var rows = rows_('journal').filter(function (r) { return norm_(r.code) === c; });
+  rows.sort(function (a, b) { return ymd_(a.date) < ymd_(b.date) ? 1 : -1; });
+  return rows.map(function (r) {
+    return { date: ymd_(r.date), lesson: String(r.lesson || ''), present: norm_(r.present),
+             camera: norm_(r.camera), hw: norm_(r.hw),
+             score: r.score === '' || r.score == null ? null : Number(r.score),
+             max: r.max === '' || r.max == null ? null : Number(r.max),
+             note: String(r.note || '') };
+  });
+}
+
+function stats_(rows) {
+  var was = 0, cam = 0, hw = 0, sc = 0, mx = 0;
+  rows.forEach(function (r) {
+    if (r.present === 'да') was++;
+    if (r.camera === 'да') cam++;
+    if (r.hw === 'да') hw++;
+    if (r.score != null && r.max) { sc += r.score; mx += r.max; }
+  });
+  return { lessons: rows.length, present: was, camera: cam, hw: hw,
+           pct: mx ? Math.round(sc / mx * 100) : null };
+}
+
+function groups_() {
+  var seen = {};
+  rows_('students').forEach(function (s) {
+    if (norm_(s.active) !== 'нет' && String(s.group).trim()) seen[String(s.group).trim()] = 1;
+  });
+  return Object.keys(seen).sort();
+}
+
+function mark_(date, code, group, field, value, lesson) {
+  var sh = sheet_('journal'), d = ymd_(date), c = norm_(code), found = 0;
+  var last = sh.getLastRow();
+  if (last > 1) {
+    var vals = sh.getRange(2, 1, last - 1, HEAD.journal.length).getValues();
+    for (var i = 0; i < vals.length; i++)
+      if (ymd_(vals[i][0]) === d && norm_(vals[i][1]) === c) { found = i + 2; break; }
+  }
+  if (!found) {
+    sh.appendRow([d, String(code).trim(), group || '', lesson || '', '', '', '', '', '', '']);
+    found = sh.getLastRow();
+  }
+  var col = FIELDS.journal.indexOf(field) + 1;
+  if (col < 1) throw new Error('Неизвестное поле: ' + field);
+  sh.getRange(found, col).setValue(value);
+  if (lesson) sh.getRange(found, FIELDS.journal.indexOf('lesson') + 1).setValue(lesson);
+  return true;
+}
+
+
+/* ===================================================== вызовы из страниц */
+function apiLogin(code, pass) {
+  var st = student_(code);
+  if (!st) return { ok: false, error: 'Такого кода нет. Проверь, что скопировал его целиком.' };
+  if (norm_(st.active) === 'нет') return { ok: false, error: 'Доступ закрыт. Напиши преподавателю.' };
+  if (String(st.pass).trim() !== String(pass).trim())
+    return { ok: false, error: 'Пароль не подходит.' };
+  return { ok: true, token: issue_({ role: 'student', code: String(st.code).trim() }) };
+}
+
+function apiMe(token) {
+  var t = read_(token);
+  if (!t || t.role !== 'student') return { ok: false, error: 'Ссылка устарела, войди по коду и паролю.' };
+  var st = student_(t.code);
+  if (!st) return { ok: false, error: 'Ученик не найден.' };
+  var rep = report_(st.code);
+  return { ok: true, name: String(st.name), group: String(st.group || ''),
+           code: String(st.code).trim(), materials: materials_(st),
+           report: rep, stats: stats_(rep) };
+}
+
+function apiTeacherLogin(pass) {
+  var pw = P.getProperty('TEACHER_PW') || '';
+  if (!pw) return { ok: false, error: 'Пароль преподавателя не задан в свойствах скрипта.' };
+  if (String(pass).trim() !== pw) return { ok: false, error: 'Пароль не подходит.' };
+  return { ok: true, token: issue_({ role: 'teacher' }), groups: groups_() };
+}
+
+function apiDay(token, group, date) {
+  var t = read_(token);
+  if (!t || t.role !== 'teacher') return { ok: false, error: 'Сессия истекла, войди заново.' };
+  var g = norm_(group), d = ymd_(date), marks = {};
+  rows_('journal').forEach(function (r) {
+    if (ymd_(r.date) === d && norm_(r.group) === g) marks[norm_(r.code)] = r;
+  });
+  var rows = rows_('students')
+    .filter(function (s) { return norm_(s.group) === g && norm_(s.active) !== 'нет'; })
+    .map(function (s) {
+      var m = marks[norm_(s.code)] || {};
+      return { code: String(s.code).trim(), name: String(s.name),
+               present: norm_(m.present) || '', camera: norm_(m.camera) || '',
+               hw: norm_(m.hw) || '',
+               score: m.score === '' || m.score == null ? '' : String(m.score),
+               max: m.max === '' || m.max == null ? '' : String(m.max),
+               lesson: String(m.lesson || '') };
+    });
+  return { ok: true, rows: rows };
+}
+
+function apiMark(token, date, code, group, field, value, lesson) {
+  var t = read_(token);
+  if (!t || t.role !== 'teacher') return { ok: false, error: 'Сессия истекла, войди заново.' };
+  mark_(date, code, group, field, value, lesson);
+  return { ok: true };
+}
+
+
+/* ===================================================== приём домашки */
+function doPost(e) {
+  var q = {};
+  try { q = JSON.parse(e.postData.contents); }
+  catch (err) { q = (e && e.parameter) || {}; }
+  try { accept_(q); } catch (err) { logError_(err); }
+  return ContentService.createTextOutput('ok');
+}
+
+function accept_(q) {
+  if (String(q.secret || '') !== 'artteach2026') return;
+  var st = q.code ? student_(q.code) : null;
+  if (!st) st = byName_(q.student || '');
+  var ok = q.ok == null || q.ok === '' ? null : Number(q.ok);
+  var total = q.total == null || q.total === '' ? null : Number(q.total);
+
+  sheet_('log').appendRow([new Date(), st ? String(st.code).trim() : '',
+                           String(q.student || ''), String(q.topic || ''),
+                           ok == null ? '' : ok, total == null ? '' : total,
+                           String(q.caption || '')]);
+
+  if (st) {
+    var d = ymd_(new Date());
+    mark_(d, st.code, st.group, 'hw', 'да', q.topic || '');
+    if (ok != null && total) {
+      mark_(d, st.code, st.group, 'score', ok, q.topic || '');
+      mark_(d, st.code, st.group, 'max', total, q.topic || '');
+    }
+  }
+  telegram_(q, st);
+}
+
+function telegram_(q, st) {
+  var token = P.getProperty('BOT_TOKEN'), chat = P.getProperty('CHAT_ID');
+  if (!token || !chat) return;
+  var cap = String(q.caption || 'домашняя работа');
+  if (st) cap = st.name + ' · ' + (st.group || '') + '\n' + cap;
+  try {
+    if (q.file) {
+      var blob = Utilities.newBlob(Utilities.base64Decode(q.file), 'text/html',
+                                   String(q.name || 'otchet.html'));
+      UrlFetchApp.fetch('https://api.telegram.org/bot' + token + '/sendDocument',
+        { method: 'post', payload: { chat_id: chat, caption: cap.slice(0, 1000), document: blob },
+          muteHttpExceptions: true });
+    } else {
+      UrlFetchApp.fetch('https://api.telegram.org/bot' + token + '/sendMessage',
+        { method: 'post', payload: { chat_id: chat, text: cap }, muteHttpExceptions: true });
+    }
+  } catch (err) { logError_(err); }
+}
+
+function logError_(err) {
+  try {
+    console.error(String(err && err.stack || err));
+  } catch (e) { /* ничего */ }
+}
+
+
+/* ===================================================== страницы */
+function doGet(e) {
+  var q = (e && e.parameter) || {};
+  var jurnal = String(q.p || '') === 'jurnal';
+  var t = HtmlService.createTemplateFromFile(jurnal ? 'Jurnal' : 'Kabinet');
+  t.token = String(q.t || '');
+  return t.evaluate()
+    .setTitle(jurnal ? 'Журнал занятий — АртТич' : 'Кабинет ученика — АртТич')
+    .addMetaTag('viewport', 'width=device-width, initial-scale=1')
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+}
