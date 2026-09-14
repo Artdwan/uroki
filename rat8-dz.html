@@ -1,0 +1,926 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Рациональная дробь — §1, алгебра 8 класс</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:800px;margin:0 auto;padding:16px 14px 60px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+.f-formula{font-size:19px}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.step{margin:6px 0}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.fig{margin:12px 0;text-align:center}
+
+.tr{border:1px solid var(--line);border-radius:12px;padding:14px;margin:16px 0;background:var(--bg)}
+.trhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;
+  margin-bottom:8px}
+.trhead b{font-size:17px}
+.trscore{color:var(--muted);font-size:15px;white-space:nowrap}
+.trq{font-size:17px;margin:8px 0}
+.trfig{text-align:center;margin:8px 0}
+.trfig svg{width:100%;max-width:330px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.tropts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
+.tropt{border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;
+  background:var(--card);font-size:16px;text-align:left;min-height:46px}
+.tropt:hover{border-color:var(--acc)}
+.tropt.right{border-color:var(--ok);background:var(--ok-soft);font-weight:600}
+.tropt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.tropts.done .tropt{cursor:default}
+.trnum{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.trnum input{font:inherit;font-size:18px;padding:9px 11px;border-radius:9px;
+  border:1.5px solid var(--line);background:var(--card);color:var(--ink);max-width:130px}
+.trmsg{font-size:16px;margin-top:8px}
+.trmsg .v{font-weight:700}
+.trmsg .v.ok{color:var(--ok)} .trmsg .v.bad{color:var(--bad)}
+.trmsg .why{color:var(--muted);font-size:15px;margin-top:4px}
+.trbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.trbar button{font-size:15px;padding:8px 13px;min-height:42px}
+.trdone{background:var(--acc-soft);border-radius:10px;padding:12px;font-size:17px;
+  text-align:center;font-weight:600}
+
+.fig svg{width:100%;max-width:560px;height:auto}
+.fig{text-align:center;margin:14px 0}
+.fx{display:block;background:var(--acc-soft);border:1px solid var(--line);border-radius:10px;
+  padding:11px 13px;margin:12px 0;text-align:center;font-size:21px;line-height:2;
+  font-weight:600;overflow-x:auto}
+.sol .fx,.ex .fx{font-size:19px;margin:9px 0}
+.def{border:1px solid var(--line);border-left:4px solid #2f6bd8;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#eef3fb}
+.def .n{font-size:14px;color:#2f6bd8;font-weight:700;letter-spacing:.4px}
+.rule{border:1px solid var(--line);border-left:4px solid #c0397a;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdf0f6}
+.rule .n{font-size:14px;color:#a02a62;font-weight:700;letter-spacing:.4px}
+@media (prefers-color-scheme:dark){.rule{background:#2a1b23}.def{background:#18212f}}
+.ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;background:var(--bg)}
+.ex h3{margin-top:0}
+.tohw{font-weight:700;margin:18px 0 0;font-size:18px}
+.tohw span{color:var(--muted);font-weight:400;font-size:15px;display:block;margin-top:3px}
+.wrap-t th,.wrap-t td{white-space:normal;text-align:left;vertical-align:top}
+.small,.mini{color:var(--muted);font-size:15px}
+.fr{display:inline-block;vertical-align:-0.58em;text-align:center;margin:0 3px}
+.fr b{display:block;border-bottom:1.7px solid currentColor;padding:0 5px;font-weight:400}
+.fr i{display:block;font-style:normal;padding:0 5px}
+.bad{color:#b3261e;font-weight:700}
+.good{color:#137a45;font-weight:700}
+.lst{margin:10px 0;padding-left:0;list-style:none}
+.lst li{margin:7px 0;padding-left:26px;position:relative}
+.lst li::before{content:"•";position:absolute;left:8px;color:var(--acc);font-weight:700}
+.sheet .f-formula{margin:5px 0;font-size:14.5px;line-height:1.4}
+@media print{
+  .sheet>.meta{display:none}
+  .sheet h2{font-size:18px;margin:0 0 6px}
+  .sheet .f-formula{font-size:13px;line-height:1.35;margin:4px 0}
+}
+
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+@media print{
+  body{background:#fff}
+  .bar{display:none !important}
+  .wrap>*{display:none !important}
+  .wrap>.sheet{display:block !important;border:none;margin:0;padding:0}
+  .sheet{font-size:13px}
+  .sheet h2{font-size:18px}
+  .sheet th,.sheet td{padding:4px 5px;font-size:12px}
+  @page{size:A4;margin:12mm}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card top">
+  <h1>Рациональная дробь</h1>
+  <div class="meta">Алгебра · 8 класс · §1 · теория порциями, 3 тренажёра, 14 задач</div>
+  <label class="f" for="name">Имя и фамилия</label>
+  <input type="text" id="name" placeholder="напиши, как в журнале" autocapitalize="words" spellcheck="false">
+  <div class="note" style="margin-top:14px">
+    <b>Как работать.</b> Страница идёт по кругу: короткая порция теории — разобранный
+    пример — задачи ровно на эту порцию. Не перепрыгивай вперёд: каждая следующая
+    порция опирается на предыдущую.
+    <div style="margin-top:8px">В задачах решай в тетради, а в поле вводи только ответ.
+    У каждой три подсказки; полное решение открывается после верного ответа или после
+    второй попытки. Минус пишется обычным знаком, запятая и точка равнозначны.</div>
+    <div style="margin-top:8px">Тренажёры в отчёт не идут — проходи их сколько нужно.
+    Внизу страницы шпаргалка на один лист и кнопка отправки работы.</div>
+  </div>
+</div>
+
+<div class="card">
+<h2>1. Что такое рациональное выражение</h2>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>Выражение, собранное из чисел и переменных только с помощью <b>сложения, вычитания, умножения, деления</b> и <b>возведения в натуральную степень</b>, называют <b>рациональным</b>.</div>
+<p class="small">Запрещено ровно одно: извлекать корень <u>из выражения с переменной</u>. Сам по себе корень из числа — это просто число, он ничего не портит.</p>
+<div class="ex"><h3>Пример 1</h3><div class="scroll"><table class="wrap-t"><tr><th>выражение</th><th>рациональное?</th><th>почему</th></tr><tr><td>6,7z + <span class="fr"><b>2</b><i>3</i></span>xy</td><td class='good'>да</td><td>только умножение и сложение</td></tr><tr><td>2√<span style='border-top:1.4px solid currentColor;padding:0 2px'>xy</span></td><td class='bad'>нет</td><td>корень из выражения с переменными</td></tr><tr><td><span class="fr"><b>x + y</b><i>x − 6</i></span></td><td class='good'>да</td><td>деление разрешено</td></tr><tr><td>√<span style='border-top:1.4px solid currentColor;padding:0 2px'>2</span> · x</td><td class='good'>да</td><td>под корнем число, а не переменная</td></tr></table></div><div class="step mini">Проверяй по одному действию: увидел корень — смотри, что под ним. Буква под корнем — выражение уже не рациональное.</div></div>
+<div class="tohw">Задание 1<span>Две задачи. Считай выражения по одному и ставь галочку.</span></div>
+</div>
+<div id="tasks1"></div>
+
+<div class="card">
+<h2>2. Целое или дробное</h2>
+<div class="rule"><div class="n">ЕДИНСТВЕННЫЙ ВОПРОС</div>Есть ли в выражении деление <b>на выражение с переменной</b>? Нет — выражение <b>целое рациональное</b>. Да — <b>дробное рациональное</b>.</div>
+<p class="small">Деление на число ничего не меняет: <span class="fr"><b>5a</b><i>3</i></span> − 1 остаётся целым, сколько бы дробных чёрточек там ни стояло. Важна только буква в знаменателе.</p>
+<div class="ex"><h3>Пример 2</h3><div class="scroll"><table class="wrap-t"><tr><th>выражение</th><th>что в знаменателе</th><th>вывод</th></tr><tr><td>2x<sup>2</sup>y</td><td>деления нет</td><td class='good'>целое</td></tr><tr><td><span class="fr"><b>5a</b><i>3</i></span> − 1</td><td>число 3</td><td class='good'>целое</td></tr><tr><td><span class="fr"><b>6</b><i>x − 9</i></span></td><td>x − 9, есть буква</td><td class='bad'>дробное</td></tr><tr><td><span class="fr"><b>m</b><i>n</i></span></td><td>n, есть буква</td><td class='bad'>дробное</td></tr><tr><td>5 + <span class="fr"><b>x<sup>2</sup> − 1</b><i>2x + 3</i></span></td><td>2x + 3</td><td class='bad'>дробное</td></tr></table></div><div class="step mini">Ловушка: <span class="fr"><b>1</b><i>a</i></span> − 2,5 выглядит почти как число, но деление на a есть — значит дробное.</div></div>
+<div class="tohw">Задание 2<span>Две задачи на пересчёт. Сначала отметь в каждом выражении знаменатель, потом считай.</span></div>
+</div>
+<div id="tasks2"></div>
+
+<div class="card">
+  <h2>Проверь себя</h2>
+  <div class="meta">Вопросы каждый раз идут в новом порядке, варианты перемешиваются.
+  Разбор показывается и когда ответ верный.</div>
+<div class="tr" id="tr1"><div class="trhead"><b>Тренажёр 1. Целое, дробное или не рациональное</b><span class="trscore" id="tr1s"></span></div><div class="meta">Десять выражений. Смотри только на знаменатель и на то, что стоит под корнем.</div><div class="trq" id="tr1q"></div><div class="trfig" id="tr1f"></div><div id="tr1a"></div><div class="trmsg" id="tr1m"></div><div class="trbar" id="tr1b"></div></div>
+</div>
+
+<div class="card">
+<h2>3. Рациональная дробь</h2>
+<p class="small">Напомню: <b>многочлен</b> — это сумма одночленов. Многочлены: x<sup>2</sup> − 5x + 6, &nbsp;7, &nbsp;m, &nbsp;2x + 3. Не многочлены: √<span style='border-top:1.4px solid currentColor;padding:0 2px'>x</span>, &nbsp;<span class="fr"><b>1</b><i>x</i></span>.</p>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>Дробь, у которой <b>и числитель, и знаменатель — многочлены</b>, называется <b>рациональной дробью</b>.</div>
+<div class="rule"><div class="n">ТО, ЧТО ОБЫЧНО ПУТАЮТ</div>«Рациональная дробь» и «дробное выражение» — <u>разные</u> вещи. <span class="fr"><b>14c</b><i>15</i></span> — рациональная дробь (оба этажа многочлены), но деления на переменную в ней нет, значит она ещё и <b>целое</b> выражение. Поэтому на схеме круг дробей лежит на границе.</div>
+<div class="fig"><svg viewBox="0 0 520 290"><rect x="0" y="0" width="520" height="290" rx="12" fill="#ffffff"/><path d="M 260.0 42.0 A 236.0 96.0 0 0 0 260.0 234.0 Z" fill="#fbe3ee" stroke="#b9c0cc" stroke-width="1.6"/><path d="M 260.0 42.0 A 236.0 96.0 0 0 1 260.0 234.0 Z" fill="#dcebff" stroke="#b9c0cc" stroke-width="1.6"/><ellipse cx="260.0" cy="138.0" rx="96" ry="52" fill="#e4e2ee" stroke="#b9c0cc" stroke-width="1.6"/><text x="260.0" y="28.0" font-size="17" fill="#5b6270" text-anchor="middle" font-weight="600" font-style="italic">Рациональные выражения</text><text x="108.0" y="132.0" font-size="17" fill="#15181e" text-anchor="middle" font-weight="600">Целые</text><text x="108.0" y="154.0" font-size="17" fill="#15181e" text-anchor="middle" font-weight="600">выражения</text><text x="412.0" y="132.0" font-size="17" fill="#15181e" text-anchor="middle" font-weight="600">Дробные</text><text x="412.0" y="154.0" font-size="17" fill="#15181e" text-anchor="middle" font-weight="600">выражения</text><text x="260.0" y="132.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600" font-style="italic">Рациональные</text><text x="260.0" y="154.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600" font-style="italic">дроби</text><text x="260" y="266" font-size="14" fill="#5b6270" text-anchor="middle">Рациональная дробь может оказаться и слева, и справа: всё решает</text><text x="260" y="284" font-size="14" fill="#5b6270" text-anchor="middle">деление на переменную</text></svg></div>
+<div class="ex"><h3>Пример 3</h3><p>Все пять — рациональные дроби, потому что на обоих этажах многочлены:</p><div class="fx"><span class="fr"><b>14c</b><i>15</i></span>&nbsp;&nbsp;<span class="fr"><b>2x</b><i>x<sup>4</sup> + 2</i></span>&nbsp;&nbsp;<span class="fr"><b>6</b><i>p − 5</i></span>&nbsp;&nbsp;<span class="fr"><b>m</b><i>6m<sup>2</sup> + 3</i></span>&nbsp;&nbsp;<span class="fr"><b>8</b><i>9c</i></span></div><p>А эти — нет:</p><div class="fx"><span class="fr"><b>5</b><i>√<span style='border-top:1.4px solid currentColor;padding:0 2px'>x</span> + 1</i></span>&nbsp;&nbsp;<span class="fr"><b>1</b><i>x<sup>2</sup></i></span> + x&nbsp;&nbsp;(x − y)<sup>2</sup> + 2x</div><div class="step mini">У первой знаменатель не многочлен. Вторая и третья вообще не записаны одной дробью — это суммы.</div></div>
+<div class="tohw">Задание 3<span>Две задачи: посчитать дроби и определить, чем является выражение.</span></div>
+</div>
+<div id="tasks3"></div>
+
+<div class="card">
+<h2>4. Значение дроби</h2>
+<div class="rule"><div class="n">ПОРЯДОК</div>Подставить числа вместо букв. Посчитать <b>отдельно числитель</b>, <b>отдельно знаменатель</b>, и только потом поделить.</div>
+<p class="small">Главная потеря — знаки. Отрицательное число всегда подставляй в скобках: при n = −5 выражение 2n даёт 2 · (−5) = −10, а −n даёт +5.</p>
+<div class="ex"><h3>Пример 4</h3><p>а) Найти значение <span class="fr"><b>x + 3</b><i>x − 3</i></span> при x = 0.</p><div class="fx"><span class="fr"><b>0 + 3</b><i>0 − 3</i></span> = <span class="fr"><b>3</b><i>−3</i></span> = −1</div><p>б) Найти значение a + <span class="fr"><b>8</b><i>a − 1</i></span> при a = 0,5.</p><div class="step">Знаменатель: 0,5 − 1 = −0,5. Дробь: 8 : (−0,5) = −16.</div><div class="fx">0,5 + (−16) = −15,5</div><p>в) Найти значение <span class="fr"><b>2m − n</b><i>3m + 2n</i></span> при m = 4, n = −5.</p><div class="step">Числитель: 2 · 4 − (−5) = 8 + 5 = 13. Знаменатель: 3 · 4 + 2 · (−5) = 12 − 10 = 2.</div><div class="fx"><span class="fr"><b>13</b><i>2</i></span> = 6,5</div><div class="step mini">Если знаменатель вышел нулём — значения у выражения нет. Это не «ноль» и не «бесконечность», а именно «не существует».</div></div>
+<div class="tohw">Задание 4<span>Три задачи. Считай числитель и знаменатель в две отдельные строки — так ошибку видно сразу.</span></div>
+</div>
+<div id="tasks4"></div>
+
+<div class="card">
+<h2>5. Область определения</h2>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div><b>Область определения</b> рациональной дроби — все значения переменной, <b>кроме</b> тех, при которых знаменатель обращается в нуль.</div>
+<div class="fig"><svg viewBox="0 0 560 172"><rect x="0" y="0" width="560" height="172" rx="12" fill="#ffffff"/><rect x="14.0" y="52" width="164" height="64" rx="12" fill="#eef3fb" stroke="#b9c0cc" stroke-width="1.6"/><rect x="198.0" y="52" width="164" height="64" rx="12" fill="#eef3fb" stroke="#b9c0cc" stroke-width="1.6"/><rect x="382.0" y="52" width="164" height="64" rx="12" fill="#eef3fb" stroke="#b9c0cc" stroke-width="1.6"/><text x="96.0" y="80.0" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">приравниваем</text><text x="96.0" y="101.0" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">знаменатель к нулю</text><text x="280.0" y="80.0" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">решаем</text><text x="280.0" y="101.0" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">это уравнение</text><text x="464.0" y="80.0" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">найденные числа</text><text x="464.0" y="101.0" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">выбрасываем</text><line x1="182.0" y1="84.0" x2="194.0" y2="84.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><path d="M 194.0 84.0 L 185.5 86.8 L 185.5 81.2 z" fill="#5b6270"/><line x1="366.0" y1="84.0" x2="378.0" y2="84.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><path d="M 378.0 84.0 L 369.5 86.8 L 369.5 81.2 z" fill="#5b6270"/><text x="280.0" y="32.0" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600" font-style="italic">Область определения — за три шага</text><text x="280.0" y="146.0" font-size="14" fill="#5b6270" text-anchor="middle">Если знаменатель нулём не бывает — выбрасывать нечего</text></svg></div>
+<div class="ex"><h3>Пример 5</h3><p>а) <span class="fr"><b>5x</b><i>x − 4</i></span></p><div class="step">x − 4 = 0 → x = 4. Четвёрку выбрасываем.</div><div class="fx">x ∈ (−∞; 4) ∪ (4; +∞)</div><p>б) <span class="fr"><b>6y − 1</b><i>y(y + 8)</i></span></p><div class="step">Произведение равно нулю, когда нулю равен хотя бы один множитель: y = 0 или y + 8 = 0, то есть y = −8.</div><div class="fx">y ∈ (−∞; −8) ∪ (−8; 0) ∪ (0; +∞)</div><p>в) <span class="fr"><b>7a − 4</b><i>a<sup>2</sup> + 9</i></span></p><div class="step">a<sup>2</sup> ≥ 0 всегда, значит a<sup>2</sup> + 9 ≥ 9 и нулём не бывает. Выбрасывать нечего.</div><div class="fx">a ∈ R</div><div class="step mini">Два запоминания. Первое: выбрасывают корни знаменателя, а <u>не</u> сам знаменатель. Второе: сумма квадрата и положительного числа нулём не бывает никогда.</div></div>
+<div class="tohw">Задание 5<span>Две задачи. Пиши уравнение «знаменатель = 0» отдельной строкой.</span></div>
+</div>
+<div id="tasks5"></div>
+
+<div class="card">
+  <h2>Проверь себя</h2>
+  <div class="meta">Здесь ответ вписывается числом. Десятичную дробь пиши через запятую.</div>
+<div class="tr" id="tr2"><div class="trhead"><b>Тренажёр 2. Где знаменатель обнуляется</b><span class="trscore" id="tr2s"></span></div><div class="meta">Десять знаменателей. Ответ вписывай числом, десятичную дробь — через запятую.</div><div class="trq" id="tr2q"></div><div class="trfig" id="tr2f"></div><div id="tr2a"></div><div class="trmsg" id="tr2m"></div><div class="trbar" id="tr2b"></div></div>
+</div>
+
+<div class="card">
+<h2>6. Когда дробей несколько</h2>
+<div class="rule"><div class="n">ПРАВИЛО</div>Каждая дробь добавляет свои запреты. Приравниваем к нулю <b>каждый</b> знаменатель по очереди и выбрасываем все найденные числа сразу. Целая часть выражения запретов не даёт.</div>
+<div class="ex"><h3>Пример 6</h3><p>а) x<sup>3</sup> − 4x<sup>2</sup> + 2 — выражение целое, деления на переменную нет.</p><div class="fx">x ∈ R</div><p>б) <span class="fr"><b>5</b><i>x − 1</i></span> + <span class="fr"><b>x + 6</b><i>x + 3</i></span></p><div class="step">Первый знаменатель: x − 1 = 0 → x = 1. Второй: x + 3 = 0 → x = −3.</div><div class="fx">x ∈ (−∞; −3) ∪ (−3; 1) ∪ (1; +∞)</div><p>в) <span class="fr"><b>x − 6</b><i>x</i></span> + <span class="fr"><b>5</b><i>x − 2</i></span></p><div class="step">x = 0 и x − 2 = 0 → x = 2.</div><div class="fx">x ∈ (−∞; 0) ∪ (0; 2) ∪ (2; +∞)</div><div class="step mini">Числа выписывают по возрастанию — так ни одно не потеряется и промежутки встанут сами собой.</div></div>
+<div class="tohw">Задание 6<span>Две задачи. Разложи знаменатели на множители — иначе корень легко проглядеть.</span></div>
+</div>
+<div id="tasks6"></div>
+
+<div class="card">
+  <h2>Проверь себя</h2>
+  <div class="meta">Последний тренажёр — целиком про область определения.</div>
+<div class="tr" id="tr3"><div class="trhead"><b>Тренажёр 3. Область определения</b><span class="trscore" id="tr3s"></span></div><div class="meta">Восемь выражений. Здесь уже несколько дробей и разложение на множители.</div><div class="trq" id="tr3q"></div><div class="trfig" id="tr3f"></div><div id="tr3a"></div><div class="trmsg" id="tr3m"></div><div class="trbar" id="tr3b"></div></div>
+</div>
+
+<div class="card">
+<h2>7. Дробь внутри дроби</h2>
+<div class="rule"><div class="n">ДВА УСЛОВИЯ</div>Сначала не должен обнулиться знаменатель <b>маленькой</b> дроби. Потом — знаменатель <b>большой</b>. Оба запрета идут в ответ.</div>
+<div class="ex"><h3>Пример 7</h3><p>Найти область определения выражения <span class="fr"><b>x</b><i>1 − <span class="fr"><b>5</b><i>x</i></span></i></span></p><div class="step">1. Маленькая дробь <span class="fr"><b>5</b><i>x</i></span>: знаменатель x, значит x ≠ 0.</div><div class="step">2. Большой знаменатель: 1 − <span class="fr"><b>5</b><i>x</i></span> ≠ 0. Решаем как уравнение: 1 = <span class="fr"><b>5</b><i>x</i></span>, отсюда x = 5. Значит x ≠ 5.</div><div class="fx">x ∈ (−∞; 0) ∪ (0; 5) ∪ (5; +∞)</div><div class="step mini">Забыть первое условие — самая частая потеря: нуль в большой знаменатель не подставляется вообще, там уже нет смысла.</div></div>
+<div class="tohw">Задание 7<span>Одна задача со звёздочкой. Выпиши оба условия, прежде чем считать.</span></div>
+</div>
+<div id="tasks7"></div>
+<div id="tasks"></div>
+
+<div class="card sheet">
+  <h2>Шпаргалка</h2>
+  <div class="meta">Печатается на один лист A4: Ctrl+P (⌘+P) → печать.</div>
+  <p class="f-formula"><b>Рациональное выражение</b> — только + − · : и натуральная степень.
+  Корень из выражения с переменной делает выражение нерациональным;
+  корень из числа (√2) не мешает.</p>
+  <p class="f-formula"><b>Целое или дробное.</b> Один вопрос: делим ли на выражение
+  с переменной? Нет — целое (5a/3 − 1, x + (x³ − 1)/12). Да — дробное
+  (6/(x − 9), 1/a − 2,5). Деление на число ничего не меняет.</p>
+  <p class="f-formula"><b>Рациональная дробь</b> — записана одной дробью, и числитель,
+  и знаменатель многочлены. 14c/15 — дробь и при этом целое выражение.
+  Сумма 1/x² + x дробью не является.</p>
+  <p class="f-formula"><b>Значение дроби.</b> Числитель и знаменатель считают отдельно,
+  отрицательные числа подставляют в скобках: (−1)² = 1, а −1² = −1.
+  Знаменатель вышел нулём — значения нет.</p>
+  <p class="f-formula"><b>Область определения</b> — все числа, кроме корней знаменателя.
+  Три шага: знаменатель = 0 → решить → выбросить. x² = 16 даёт <u>два</u> числа,
+  4 и −4. Из x + 6 = 0 выходит −6, а не 6.</p>
+  <p class="f-formula"><b>Несколько дробей</b> — запреты складываются: приравнивают
+  к нулю каждый знаменатель. Квадратный знаменатель раскладывают на множители:
+  x² + 3x = x(x + 3) → 0 и −3; x² − 6x + 9 = (x − 3)² → только 3.</p>
+  <p class="f-formula"><b>Знаменатель без нулей.</b> a² + 9, 2m² + 5, x² + 7 — всегда
+  положительны, выбрасывать нечего, область определения — все числа.</p>
+  <p class="f-formula"><b>Дробь внутри дроби</b> — два условия: знаменатель маленькой
+  дроби ≠ 0 и знаменатель большой ≠ 0. В x/(x − 16/x) выброшены 0, 4 и −4.</p>
+</div>
+
+<div class="card">
+  <h2>Шаг 1. Фото решений — по желанию</h2>
+  <div class="meta">В поле уходит только ответ, а я смотрю ещё и ход решения.
+  Фото прикладывать не обязательно, но с ними разбор будет точнее.</div>
+  <ol class="steps-list">
+    <li>В задачах на область определения пиши уравнение «знаменатель = 0» отдельной строкой.</li>
+    <li>В задачах на значение дроби считай числитель и знаменатель в две разные строки.</li>
+    <li>Квадратные знаменатели сразу раскладывай на множители.</li>
+  </ol>
+  <input type="file" id="photos" accept="image/*" multiple style="margin-top:12px">
+  <div class="thumbs" id="thumbs"></div>
+</div>
+
+<div class="card">
+  <h2>Шаг 2. Отправь работу</h2>
+  <div class="meta">Проверь, что вверху написано твоё имя. По кнопке ответы и результат
+  уходят преподавателю. Вторая кнопка сохраняет копию тебе.</div>
+  <div class="row" style="margin-top:12px">
+    <button class="pri" id="send">Отправить на проверку</button>
+    <button id="report">Скачать копию себе</button>
+  </div>
+  <div id="repnote" class="meta" style="margin-top:8px"></div>
+</div>
+
+</div>
+
+<div class="bar">
+  <button class="pri" id="checkall">Проверить всё</button>
+  <span id="progress" class="meta">решено 0 из 14</span>
+</div>
+
+<script>
+var CF = {};
+var STUDENT_CODE = (function(){
+  try{ var m = /[#&?]code=([^&]+)/.exec(location.hash + location.search);
+       return m ? decodeURIComponent(m[1]) : ""; }catch(e){ return ""; }
+})();
+var TOPIC = "Рациональная дробь (§1, алгебра 8 класс)";
+
+"use strict";
+var started = Date.now();
+
+/* ---------- данные задач; ответы закодированы, чтобы не читались в исходнике ---------- */
+function e(s){return btoa(unescape(encodeURIComponent(s)));}
+function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return s;}}
+
+var TASKS = [
+ {id:1,blk:"1",lvl:"база",type:"num",text:"Сколько из этих выражений являются рациональными?<br><span style='font-size:20px'>2<sup>3</sup>; &nbsp; a<sup>2</sup> − 1; &nbsp; (a + 1)/(a − 1); &nbsp; x<sup>4</sup> + 1/x; &nbsp; (x − y)/x; &nbsp; √(xy); &nbsp; (x<sup>2</sup> − 2√x)/x; &nbsp; 5/(√x + 1)</span>",ans:[e("5")],img:"",
+  hints:["Рациональное — это когда есть только + − · : и натуральная степень.",
+         "Ищи корни. Если под корнем стоит переменная, выражение сразу вылетает.",
+         "Вылетают три последних: √(xy), (x² − 2√x)/x и 5/(√x + 1)."],
+  sol:"<div class='step'>Смотрим только на корни с переменными под ними.</div>"+
+      "<div class='step'>2³ — число. a² − 1 — степень и вычитание. (a+1)/(a−1) — деление. x⁴ + 1/x — степень и деление. (x − y)/x — деление. Все пять рациональные.</div>"+
+      "<div class='step'>√(xy) — корень из переменных. (x² − 2√x)/x — внутри стоит √x. 5/(√x + 1) — корень в знаменателе. Эти три не рациональные.</div>"+
+      "<div class='step'><b>Ответ: 5.</b></div>"+
+      "<div class='step mini'>Заметь: 2³ — это просто 8, а корень в 5/(√x + 1) стоит не на виду, а внутри знаменателя. Оба места легко проскочить глазами.</div>"},
+
+ {id:2,blk:"1",lvl:"база",type:"num",text:"Найди значение многочлена 3x<sup>3</sup> − 2x<sup>2</sup> + x − 3 при x = −1.",ans:[e("-9")],img:"",
+  hints:["Подставь −1 вместо каждого икса и обязательно в скобках.",
+         "(−1)³ = −1, а (−1)² = +1. Нечётная степень минус сохраняет, чётная убирает.",
+         "Получится −3 − 2 − 1 − 3."],
+  sol:"<div class='step'>1. Подставляем в скобках:</div>"+
+      "<div class='fx'>3 · (−1)³ − 2 · (−1)² + (−1) − 3</div>"+
+      "<div class='step'>2. (−1)³ = −1, (−1)² = 1:</div>"+
+      "<div class='fx'>3 · (−1) − 2 · 1 − 1 − 3 = −3 − 2 − 1 − 3</div>"+
+      "<div class='fx'>= −9</div>"+
+      "<div class='step'><b>Ответ: −9.</b></div>"+
+      "<div class='step mini'>Если бы у (−1)² забыли скобки и написали −1² = −1, второе слагаемое дало бы +2 и ответ вышел бы −5.</div>"},
+
+ {id:3,blk:"2",lvl:"база",type:"num",text:"Сколько из этих выражений являются <b>дробными</b> рациональными?<br><span style='font-size:20px'>0,2x − x/3; &nbsp; (2x<sup>2</sup> − y<sup>4</sup>)/x; &nbsp; (x − 5y)/(2x + y); &nbsp; (4 − y)/3; &nbsp; (y + 5)/(4x − 6)</span>",ans:[e("3")],img:"",
+  hints:["Дробное — значит делим на выражение, в котором есть буква.",
+         "У первого знаменатель 3, у четвёртого тоже 3 — это числа.",
+         "Остаются второе, третье и пятое."],
+  sol:"<div class='step'>Выписываем знаменатели по очереди:</div>"+
+      "<div class='step'>0,2x − x/3 → знаменатель 3, число. <b>Целое.</b></div>"+
+      "<div class='step'>(2x² − y⁴)/x → знаменатель x. <b>Дробное.</b></div>"+
+      "<div class='step'>(x − 5y)/(2x + y) → знаменатель 2x + y. <b>Дробное.</b></div>"+
+      "<div class='step'>(4 − y)/3 → знаменатель 3. <b>Целое.</b></div>"+
+      "<div class='step'>(y + 5)/(4x − 6) → знаменатель 4x − 6. <b>Дробное.</b></div>"+
+      "<div class='step'><b>Ответ: 3.</b></div>"+
+      "<div class='step mini'>Первое выражение сбивает с толку: там есть и дробь, и переменная. Но переменная в числителе, а делим на тройку.</div>"},
+
+ {id:4,blk:"2",lvl:"средний",type:"num",text:"Сколько из этих выражений являются <b>целыми</b> рациональными?<br><span style='font-size:20px'>12x<sup>2</sup> − xy; &nbsp; (a + 2)/(a − 2); &nbsp; 48n − m/n; &nbsp; (8x + 2)/(3x − 4); &nbsp; (y<sup>2</sup> − 18)/6; &nbsp; 7√(mn); &nbsp; 8m<sup>2</sup>n; &nbsp; (b<sup>3</sup> − 5b + 4)/(3b); &nbsp; 1/9</span>",ans:[e("4")],img:"",
+  hints:["Сначала выброси то, что вообще не рациональное.",
+         "7√(mn) — корень из переменных, оно не считается ни целым, ни дробным.",
+         "Из оставшихся ищи те, где в знаменателе нет буквы."],
+  sol:"<div class='step'>1. 7√(mn) вылетает сразу — это не рациональное выражение.</div>"+
+      "<div class='step'>2. Дробные (в знаменателе буква): (a+2)/(a−2), 48n − m/n, (8x+2)/(3x−4), (b³ − 5b + 4)/(3b).</div>"+
+      "<div class='step'>3. Целые (знаменателя с буквой нет): 12x² − xy, (y² − 18)/6, 8m²n, 1/9.</div>"+
+      "<div class='fx'>4 выражения</div>"+
+      "<div class='step'><b>Ответ: 4.</b></div>"+
+      "<div class='step mini'>48n − m/n обманывает: первое слагаемое целое, но второе делится на n, и всё выражение становится дробным. Достаточно одного такого слагаемого.</div>"},
+
+ {id:5,blk:"3",lvl:"база",type:"num",text:"Сколько из этих выражений являются рациональными <b>дробями</b>?<br><span style='font-size:20px'>(x<sup>2</sup> − y<sup>2</sup>)/4; &nbsp; x<sup>2</sup>/2; &nbsp; (x − y)<sup>2</sup> + 2x; &nbsp; √(x<sup>2</sup> + y<sup>2</sup>); &nbsp; 5/x; &nbsp; 54; &nbsp; (x<sup>2</sup> − 2x + 1)/(x + 1); &nbsp; 1/x<sup>2</sup> + x; &nbsp; x/6</span>",ans:[e("5")],img:"",
+  hints:["Рациональная дробь — это когда выражение записано <u>одной дробью</u>, и на обоих этажах многочлены.",
+         "Суммы вроде 1/x² + x дробью не являются: это не одна дробь, а две сложенные.",
+         "54 и (x − y)² + 2x тоже не записаны в виде дроби."],
+  sol:"<div class='step'>Подходят: (x² − y²)/4, x²/2, 5/x, (x² − 2x + 1)/(x + 1), x/6 — у каждого числитель и знаменатель многочлены.</div>"+
+      "<div class='step'>Не подходят: (x − y)² + 2x и 54 — не записаны дробью; √(x² + y²) — корень; 1/x² + x — сумма, а не одна дробь.</div>"+
+      "<div class='fx'>5 дробей</div>"+
+      "<div class='step'><b>Ответ: 5.</b></div>"+
+      "<div class='step mini'>Числа 4, 2, 6 в знаменателях — тоже многочлены (нулевой степени), поэтому такие дроби считаются рациональными. И при этом они целые выражения.</div>"},
+
+ {id:6,blk:"3",lvl:"средний",type:"choice",text:"Чем является выражение (y<sup>2</sup> − 18)/6 ?",
+  options:["целым выражением и рациональной дробью сразу","только дробным выражением","только рациональной дробью, целым оно быть не может","не рациональным выражением"],
+  ans:[e("целым выражением и рациональной дробью сразу")],img:"",
+  hints:["Проверь два вопроса по отдельности: есть ли деление на переменную и многочлены ли на этажах.",
+         "В знаменателе стоит 6 — числа переменных не содержат.",
+         "Значит выражение целое. А дробью оно записано, и оба этажа — многочлены."],
+  sol:"<div class='step'>1. Деление на переменную? Знаменатель 6 — это число. Значит выражение <b>целое</b>.</div>"+
+      "<div class='step'>2. Числитель y² − 18 — многочлен, знаменатель 6 — тоже многочлен. Значит это <b>рациональная дробь</b>.</div>"+
+      "<div class='step'><b>Ответ: и целое выражение, и рациональная дробь.</b></div>"+
+      "<div class='step mini'>Это ровно тот случай, ради которого на схеме круг дробей заходит и в левую, и в правую часть.</div>"},
+
+ {id:7,blk:"4",lvl:"база",type:"num",text:"Найди значение рациональной дроби (m<sup>2</sup> + 5m)/(2m − 1) при m = −2.",ans:[e("1,2")],img:"",
+  hints:["Посчитай отдельно числитель и отдельно знаменатель.",
+         "Числитель: (−2)² + 5 · (−2) = 4 − 10.",
+         "Знаменатель: 2 · (−2) − 1 = −5. Минус на минус даст плюс."],
+  sol:"<div class='step'>1. Числитель:</div>"+
+      "<div class='fx'>(−2)² + 5 · (−2) = 4 − 10 = −6</div>"+
+      "<div class='step'>2. Знаменатель:</div>"+
+      "<div class='fx'>2 · (−2) − 1 = −4 − 1 = −5</div>"+
+      "<div class='step'>3. Делим:</div>"+
+      "<div class='fx'><span class='fr'><b>−6</b><i>−5</i></span> = 1,2</div>"+
+      "<div class='step'><b>Ответ: 1,2.</b></div>"+
+      "<div class='step mini'>Оба этажа отрицательные, значит дробь положительная. Если получился минус — где-то потерялась скобка.</div>"},
+
+ {id:8,blk:"4",lvl:"средний",type:"num",text:"Чему равно значение дроби (4a − b)/(2a + 5b), если a = −3, b = 1?",ans:[e("13")],img:"",
+  hints:["Подставляй отрицательное число в скобках.",
+         "Числитель: 4 · (−3) − 1 = −13.",
+         "Знаменатель: 2 · (−3) + 5 · 1 = −1."],
+  sol:"<div class='step'>1. Числитель:</div>"+
+      "<div class='fx'>4 · (−3) − 1 = −12 − 1 = −13</div>"+
+      "<div class='step'>2. Знаменатель:</div>"+
+      "<div class='fx'>2 · (−3) + 5 · 1 = −6 + 5 = −1</div>"+
+      "<div class='step'>3. Делим:</div>"+
+      "<div class='fx'><span class='fr'><b>−13</b><i>−1</i></span> = 13</div>"+
+      "<div class='step'><b>Ответ: 13.</b></div>"+
+      "<div class='step mini'>Деление на −1 просто меняет знак. Знаменатель, равный −1, — хороший знак того, что всё посчитано верно: числа подобраны именно так.</div>"},
+
+ {id:9,blk:"4",lvl:"средний",type:"num",text:"Известно, что a + b = 2,5 и a − b = −0,5. Найди значение выражения (a + b)/(a − b).",ans:[e("-5")],img:"",
+  hints:["Сами a и b искать не нужно.",
+         "В числителе стоит целиком a + b, а в знаменателе целиком a − b.",
+         "Подставь готовые значения: 2,5 и −0,5."],
+  sol:"<div class='step'>1. Подставляем блоки целиком:</div>"+
+      "<div class='fx'><span class='fr'><b>2,5</b><i>−0,5</i></span></div>"+
+      "<div class='step'>2. Делим: 2,5 : 0,5 = 5, знаки разные — значит минус.</div>"+
+      "<div class='fx'>−5</div>"+
+      "<div class='step'><b>Ответ: −5.</b></div>"+
+      "<div class='step mini'>Полезный приём: подставлять можно не только числа вместо букв, но и готовые значения целых кусков. Искать a и b по отдельности здесь лишняя работа.</div>"},
+
+ {id:10,blk:"5",lvl:"база",type:"num",text:"При каком значении переменной дробь (x + 5)/(6 − 2x) не имеет смысла?",ans:[e("3")],img:"",
+  hints:["Дробь теряет смысл, когда знаменатель равен нулю.",
+         "Реши уравнение 6 − 2x = 0.",
+         "2x = 6."],
+  sol:"<div class='step'>1. Приравниваем знаменатель к нулю:</div>"+
+      "<div class='fx'>6 − 2x = 0</div>"+
+      "<div class='step'>2. Решаем:</div>"+
+      "<div class='fx'>2x = 6 &nbsp;→&nbsp; x = 3</div>"+
+      "<div class='step'><b>Ответ: 3.</b></div>"+
+      "<div class='step mini'>Область определения этой дроби: x ∈ (−∞; 3) ∪ (3; +∞). Числитель на область определения не влияет вообще — смотрят только вниз.</div>"},
+
+ {id:11,blk:"5",lvl:"средний",type:"num",text:"Найди наибольшее из чисел, которые <b>не входят</b> в область определения дроби (x + 15)/(x<sup>2</sup> − 16).",ans:[e("4")],img:"",
+  hints:["Приравняй знаменатель к нулю: x² − 16 = 0.",
+         "x² = 16 даёт два корня, а не один.",
+         "Корни 4 и −4. Нужен наибольший."],
+  sol:"<div class='step'>1. Знаменатель равен нулю:</div>"+
+      "<div class='fx'>x² − 16 = 0 &nbsp;→&nbsp; x² = 16</div>"+
+      "<div class='step'>2. Два корня: x = 4 и x = −4. Оба выбрасываем.</div>"+
+      "<div class='fx'>x ∈ (−∞; −4) ∪ (−4; 4) ∪ (4; +∞)</div>"+
+      "<div class='step'>3. Наибольшее из выброшенных — это 4.</div>"+
+      "<div class='step'><b>Ответ: 4.</b></div>"+
+      "<div class='step mini'>Типичная потеря — записать только x = 4. Из x² = 16 всегда выходят два числа, положительное и отрицательное.</div>"},
+
+ {id:12,blk:"6",lvl:"сложный",type:"num",text:"Сколько чисел <b>не входит</b> в область определения выражения 5/(x<sup>2</sup> + 3x) + 8/(x − 1)?",ans:[e("3")],img:"",
+  hints:["Знаменателей два, значит и уравнений два.",
+         "x² + 3x разложи на множители: вынеси x за скобку.",
+         "x(x + 3) = 0 даёт сразу два числа, и ещё одно даёт x − 1 = 0."],
+  sol:"<div class='step'>1. Первый знаменатель:</div>"+
+      "<div class='fx'>x² + 3x = 0 &nbsp;→&nbsp; x(x + 3) = 0 &nbsp;→&nbsp; x = 0 или x = −3</div>"+
+      "<div class='step'>2. Второй знаменатель:</div>"+
+      "<div class='fx'>x − 1 = 0 &nbsp;→&nbsp; x = 1</div>"+
+      "<div class='step'>3. Выброшены три числа: −3, 0 и 1.</div>"+
+      "<div class='fx'>x ∈ (−∞; −3) ∪ (−3; 0) ∪ (0; 1) ∪ (1; +∞)</div>"+
+      "<div class='step'><b>Ответ: 3.</b></div>"+
+      "<div class='step mini'>Если не раскладывать x² + 3x на множители, легко решить «x² = −3x» неправильно и потерять нуль.</div>"},
+
+ {id:13,blk:"6",lvl:"сложный",type:"num",text:"Найди наименьшее из чисел, которые <b>не входят</b> в область определения выражения 12/(x<sup>2</sup> − 8x) + 5/(x + 6).",ans:[e("-6")],img:"",
+  hints:["Разложи x² − 8x на множители.",
+         "x(x − 8) = 0 даёт 0 и 8. Второй знаменатель даёт ещё одно число.",
+         "x + 6 = 0 → x = −6. Сравни все три и выбери наименьшее."],
+  sol:"<div class='step'>1. Первый знаменатель:</div>"+
+      "<div class='fx'>x² − 8x = 0 &nbsp;→&nbsp; x(x − 8) = 0 &nbsp;→&nbsp; x = 0 или x = 8</div>"+
+      "<div class='step'>2. Второй знаменатель:</div>"+
+      "<div class='fx'>x + 6 = 0 &nbsp;→&nbsp; x = −6</div>"+
+      "<div class='step'>3. Выброшены −6, 0 и 8. Наименьшее из них −6.</div>"+
+      "<div class='step'><b>Ответ: −6.</b></div>"+
+      "<div class='step mini'>Знак: из x + 6 = 0 выходит −6, а не +6. Это место теряют чаще всего остального в теме.</div>"},
+
+ {id:14,blk:"7",lvl:"сложный",type:"num",text:"Найди наибольшее из чисел, которые <b>не входят</b> в область определения выражения x / (x − 16/x).",ans:[e("4")],img:"",
+  hints:["Условий два: маленький знаменатель и большой.",
+         "Маленькая дробь 16/x сразу даёт x ≠ 0.",
+         "Большой знаменатель: x − 16/x = 0. Домножь на x и получишь x² = 16."],
+  sol:"<div class='step'>1. Маленькая дробь <span class='fr'><b>16</b><i>x</i></span>: знаменатель x, значит x ≠ 0.</div>"+
+      "<div class='step'>2. Большой знаменатель приравниваем к нулю:</div>"+
+      "<div class='fx'>x − <span class='fr'><b>16</b><i>x</i></span> = 0 &nbsp;→&nbsp; x = <span class='fr'><b>16</b><i>x</i></span> &nbsp;→&nbsp; x² = 16</div>"+
+      "<div class='step'>3. Отсюда x = 4 и x = −4. Вместе с нулём выброшены три числа: −4, 0 и 4.</div>"+
+      "<div class='fx'>x ∈ (−∞; −4) ∪ (−4; 0) ∪ (0; 4) ∪ (4; +∞)</div>"+
+      "<div class='step'>4. Наибольшее из них — 4.</div>"+
+      "<div class='step'><b>Ответ: 4.</b></div>"+
+      "<div class='step mini'>Нуль в такой задаче забывают почти всегда: его видно только в маленькой дроби, а в большом знаменателе он уже не появляется.</div>"}
+];
+
+/* ---------- разбор ответа ---------- */
+function norm(s){
+  return String(s).toLowerCase().replace(/\s+/g,"")
+    .replace(/[\u2013\u2014\u2212]/g,"-")
+    .replace(/[\u00d7\u00b7]/g,"*")
+    .replace(/,/g,".")
+    .replace(/^(ответ:?|x=|y=|α=|a=)/,"");
+}
+function toNum(str){
+  var t = norm(str);
+  if(!t) return NaN;
+  t = t.replace(/\u221a/g,"sqrt").replace(/\u03c0/g,"pi");
+  t = t.replace(/sqrt(\d+(?:\.\d+)?)/g,"sqrt($1)");
+  t = t.replace(/(\d)sqrt/g,"$1*sqrt");
+  t = t.replace(/(\d)pi/g,"$1*pi");
+  t = t.replace(/(\d)\(/g,"$1*(").replace(/\)(\d)/g,")*$1").replace(/\)\(/g,")*(");
+  if(!/^[-+*/().0-9a-z]+$/.test(t)) return NaN;
+  if(t.replace(/sqrt|pi/g,"").match(/[a-z]/)) return NaN;
+  try{
+    var v = new Function("sqrt","pi","return ("+t+");")(Math.sqrt, Math.PI);
+    return (typeof v === "number" && isFinite(v)) ? v : NaN;
+  }catch(err){ return NaN; }
+}
+function same(given, right, tol){
+  var a = toNum(given), b = toNum(right);
+  if(!isNaN(a) && !isNaN(b)){
+    var t = tol || 1e-9;
+    return Math.abs(a-b) <= Math.max(t, Math.abs(b)*t);
+  }
+  return norm(given) === norm(right);
+}
+
+/* ---------- отрисовка ---------- */
+var state = {};
+function boxOf(t){
+  return document.getElementById("tasks" + (t.blk || "")) ||
+         document.getElementById("tasks");
+}
+
+TASKS.forEach(function(t){
+  state[t.id] = {tries:0, hints:0, done:false, ok:false, given:"", sel:null};
+  var el = document.createElement("div");
+  el.className = "task"; el.id = "t"+t.id;
+  var body = '<div><span class="tnum">'+t.id+'.</span>'+t.text+
+             '<span class="lvl">'+t.lvl+'</span></div>';
+  if(t.img){ body += '<div class="fig">'+t.img+'</div>'; }
+  if(t.type === "choice"){
+    body += '<div class="opts">'+t.options.map(function(o,i){
+      return '<label class="opt" data-v="'+o+'"><input type="radio" name="q'+t.id+'" value="'+o+'"> '+o+'</label>';
+    }).join("")+'</div>';
+  } else {
+    body += '<div class="keys">'+
+      ["−",","].map(function(k){
+        return '<button class="key" data-k="'+k+'" type="button">'+k+'</button>';}).join("")+
+      '</div><input type="text" id="in'+t.id+'" inputmode="text" autocapitalize="off" '+
+      'autocorrect="off" autocomplete="off" spellcheck="false" placeholder="ответ">';
+  }
+  body += '<div class="row" style="margin-top:10px">'+
+          '<button class="pri sm chk">Проверить</button>'+
+          '<button class="sm hnt">Подсказка</button></div>'+
+          '<div class="hints"></div><div class="verdict"></div><div class="sol"></div>';
+  el.innerHTML = body;
+  boxOf(t).appendChild(el);
+
+  el.querySelectorAll(".key").forEach(function(b){
+    b.addEventListener("click", function(){
+      var inp = document.getElementById("in"+t.id);
+      var k = b.dataset.k === "−" ? "-" : b.dataset.k;
+      var s = inp.selectionStart || inp.value.length;
+      inp.value = inp.value.slice(0,s) + k + inp.value.slice(inp.selectionEnd || s);
+      inp.focus(); inp.setSelectionRange(s+k.length, s+k.length);
+    });
+  });
+  if(t.type === "choice"){
+    el.querySelectorAll(".opt").forEach(function(l){
+      l.addEventListener("click", function(){
+        el.querySelectorAll(".opt").forEach(function(x){x.classList.remove("sel");});
+        l.classList.add("sel"); state[t.id].sel = l.dataset.v;
+      });
+    });
+  } else {
+    el.querySelector("#in"+t.id).addEventListener("keydown", function(ev){
+      if(ev.key === "Enter"){ ev.preventDefault(); check(t.id); }
+    });
+  }
+  el.querySelector(".chk").addEventListener("click", function(){ check(t.id); });
+  el.querySelector(".hnt").addEventListener("click", function(){ hint(t.id); });
+});
+
+function hint(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var host = document.querySelector("#t"+id+" .hints");
+  if(s.hints >= t.hints.length){
+    if(!host.querySelector(".last")){
+      var w = document.createElement("div");
+      w.className = "hint last"; w.textContent = "Подсказки закончились — нажми «Проверить», решение откроется после второй попытки.";
+      host.appendChild(w);
+    }
+    return;
+  }
+  var h = document.createElement("div");
+  h.className = "hint";
+  h.textContent = "Подсказка " + (s.hints+1) + ": " + t.hints[s.hints];
+  host.appendChild(h);
+  s.hints++;
+}
+
+function check(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var el = document.getElementById("t"+id);
+  var v = document.querySelector(".verdict");
+  v = el.querySelector(".verdict");
+  var given = (t.type === "choice") ? (s.sel || "") :
+              (document.getElementById("in"+id).value || "");
+  if(!given.trim()){ v.className = "verdict bad"; v.textContent = "Введи ответ."; return; }
+  s.given = given; s.tries++;
+  var ok = t.ans.some(function(a){ return same(given, d(a), t.tol); });
+  s.ok = ok; s.done = ok || s.tries >= 2;
+  el.classList.remove("ok","bad");
+  el.classList.add(ok ? "ok" : "bad");
+  v.className = "verdict " + (ok ? "ok" : "bad");
+  if(ok){
+    v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    showSol(el, t);
+  } else if(s.tries === 1){
+    v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+  } else {
+    v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    showSol(el, t);
+  }
+  progress();
+}
+function showSol(el, t){
+  var host = el.querySelector(".sol");
+  if(host.dataset.on) return;
+  host.dataset.on = "1";
+  var det = document.createElement("details");
+  det.open = true;
+  det.innerHTML = "<summary>Решение</summary><div class='step'>"+t.sol+"</div>";
+  host.appendChild(det);
+}
+function progress(){
+  var done = TASKS.filter(function(t){return state[t.id].done;}).length;
+  var ok = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  document.getElementById("progress").textContent =
+    "решено " + done + " из " + TASKS.length + " · верно " + ok;
+}
+document.getElementById("checkall").addEventListener("click", function(){
+  TASKS.forEach(function(t){
+    var s = state[t.id];
+    var given = (t.type === "choice") ? (s.sel || "") : (document.getElementById("in"+t.id).value || "");
+    if(given.trim() && !s.done) check(t.id);
+  });
+  var first = TASKS.find(function(t){ return !state[t.id].done; });
+  var note = first ? "Осталась задача " + first.id + "." : "Все задачи закрыты.";
+  document.getElementById("progress").textContent += " · " + note;
+});
+progress();
+
+/* ---------- фото ---------- */
+var photos = [];
+document.getElementById("photos").addEventListener("change", function(ev){
+  var files = Array.prototype.slice.call(ev.target.files || []);
+  files.forEach(function(f){
+    var r = new FileReader();
+    r.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var m = 1400, w = img.width, h = img.height;
+        if(Math.max(w,h) > m){ var k = m/Math.max(w,h); w = Math.round(w*k); h = Math.round(h*k); }
+        var c = document.createElement("canvas"); c.width = w; c.height = h;
+        c.getContext("2d").drawImage(img, 0, 0, w, h);
+        photos.push({url: c.toDataURL("image/jpeg", 0.7), task: ""});
+        drawThumbs();
+      };
+      img.src = r.result;
+    };
+    r.readAsDataURL(f);
+  });
+  ev.target.value = "";
+});
+function drawThumbs(){
+  var host = document.getElementById("thumbs");
+  host.innerHTML = "";
+  var total = 0;
+  photos.forEach(function(p, i){
+    total += p.url.length * 0.75;
+    var d0 = document.createElement("div"); d0.className = "thumb";
+    var opts = '<option value="">задача…</option>' + TASKS.map(function(t){
+      return '<option value="'+t.id+'"'+(p.task==String(t.id)?" selected":"")+'>№'+t.id+'</option>';
+    }).join("");
+    d0.innerHTML = '<img src="'+p.url+'" alt="фото решения"><button type="button">×</button>'+
+                   '<select>'+opts+'</select>';
+    d0.querySelector("button").addEventListener("click", function(){ photos.splice(i,1); drawThumbs(); });
+    d0.querySelector("select").addEventListener("change", function(ev){ p.task = ev.target.value; });
+    host.appendChild(d0);
+  });
+  var note = document.getElementById("repnote");
+  if(total > 15e6){ note.textContent = "Фото уже больше 15 МБ — отчёт может отправляться долго, лишние лучше удалить."; }
+  else if(photos.length){ note.textContent = "Фото в отчёте: " + photos.length + "."; }
+  else { note.textContent = ""; }
+}
+
+/* ---------- отчёт ---------- */
+var ENDPOINT = "https://script.google.com/macros/s/AKfycbwqIhgBtFnoUik3N1Lh_YRhNeEFAjmXWSxBNoX1a_Yxu-2dEKHFwo4Dd5Ch9UTOHH-X/exec";
+var SECRET = "artteach2026";
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function buildReport(){
+  var name = (document.getElementById("name").value || "").trim() || "без имени";
+  var now = new Date();
+  var mins = Math.max(1, Math.round((Date.now()-started)/60000));
+  var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  var data = {tип:"дз", предмет:"математика", тема:"Рациональная дробь (§1, алгебра 8 класс)",
+    ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
+    верно:okN, всего:TASKS.length, задачи:[]};
+  var rows = TASKS.map(function(t){
+    var s = state[t.id];
+    data.задачи.push({n:t.id, условие:t.text.replace(/<[^>]+>/g,""), ответ_ученика:s.given,
+      верный_ответ:t.ans.map(d).join(" или "), верно:s.ok, попыток:s.tries, подсказок:s.hints,
+      уровень:t.lvl});
+    return "<tr><td>"+t.id+"</td><td style='text-align:left'>"+esc(t.text.replace(/<[^>]+>/g,""))+
+      "</td><td>"+esc(s.given||"—")+"</td><td>"+esc(t.ans.map(d).join(" / "))+"</td><td>"+
+      (s.ok?"верно":(s.given?"неверно":"не решал"))+"</td><td>"+s.tries+"</td><td>"+s.hints+"</td></tr>";
+  }).join("");
+  var pics = photos.map(function(p,i){
+    return "<figure><img src='"+p.url+"'><figcaption>Фото "+(i+1)+
+      (p.task?" — к задаче №"+p.task:"")+"</figcaption></figure>";
+  }).join("");
+  var html = "<!doctype html><html lang='ru'><head><meta charset='utf-8'>"+
+    "<meta name='viewport' content='width=device-width,initial-scale=1'>"+
+    "<title>Отчёт — "+esc(name)+" — рациональная дробь 8 класс</title><style>"+
+    "body{font:16px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;padding:20px;color:#16181d;background:#fff}"+
+    "h1{font-size:22px;margin:0 0 4px}.m{color:#5b6270;font-size:15px}"+
+    "table{border-collapse:collapse;width:100%;margin-top:14px;font-size:15px}"+
+    "th,td{border:1px solid #dfe3ea;padding:6px 8px;text-align:center}th{background:#eef3fb}"+
+    "figure{margin:14px 0}img{max-width:100%;border:1px solid #dfe3ea;border-radius:8px}"+
+    "figcaption{color:#5b6270;font-size:14px;margin-top:4px}</style></head><body>"+
+    "<h1>Отчёт по домашнему заданию</h1>"+
+    "<div class='m'>Тема: рациональная дробь, целые и дробные выражения, область определения · §1, алгебра 8 класс</div>"+
+    "<div class='m'>Ученик: <b>"+esc(name)+"</b> · сдано: "+esc(now.toLocaleString("ru-RU"))+
+    " · время работы: около "+mins+" мин</div>"+
+    "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)</h2>"+
+    "<table><tr><th>№</th><th>Задача</th><th>Ответ ученика</th><th>Верный ответ</th>"+
+    "<th>Итог</th><th>Попыток</th><th>Подсказок</th></tr>"+rows+"</table>"+
+    (pics ? "<h2>Фото решений</h2>"+pics : "<p class='m'>Фото решений не прикреплены.</p>")+
+    "<script type='application/json' id='result-data'>"+
+    JSON.stringify(data).replace(/</g,"\\u003c")+"<\/script></body></html>";
+  var stamp = now.getDate()+"-"+(now.getMonth()+1);
+  return {
+    html: html,
+    name: name,
+    ok: okN,
+    total: TASKS.length,
+    file: "Отчёт_Рациональная_дробь_8_"+name.replace(/\s+/g,"_")+"_"+stamp+".html",
+    caption: name+" · рациональная дробь 8 класс · "+okN+" из "+TASKS.length+
+             " ("+Math.round(okN/TASKS.length*100)+"%)"
+  };
+}
+
+document.getElementById("send").addEventListener("click", function(){
+  var note = document.getElementById("repnote");
+  var who = (document.getElementById("name").value || "").trim();
+  if(!who){ note.className = "meta bad-note"; note.textContent = "Сначала впиши имя вверху страницы."; return; }
+  note.className = "meta";
+  var r = buildReport();
+  note.textContent = "Отправляю…";
+  var payload = {
+    secret: SECRET,
+    code: STUDENT_CODE,
+    student: r.name,
+    topic: TOPIC,
+    ok: r.ok,
+    total: r.total,
+    name: r.file,
+    caption: r.caption,
+    file: btoa(unescape(encodeURIComponent(r.html)))
+  };
+  fetch(ENDPOINT, {method:"POST", mode:"no-cors", body: JSON.stringify(payload)})
+    .then(function(){
+      note.textContent = "Отправлено преподавателю." +
+        (photos.length ? "" : " Фото решений не приложены — если решал в тетради, приложи их и отправь ещё раз.") +
+        " Если хочешь, сохрани копию себе кнопкой ниже.";
+    })
+    .catch(function(){
+      note.textContent = "Не получилось отправить. Скачай файл кнопкой ниже и пришли его вручную.";
+    });
+});
+
+document.getElementById("report").addEventListener("click", function(){
+  var r = buildReport();
+  var blob = new Blob([r.html], {type:"text/html;charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = r.file;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  document.getElementById("repnote").textContent = "Файл скачан — он в папке загрузок.";
+});
+
+
+/* ---------- движок тренажёров ---------- */
+function makeTrainer(id, items){
+  var q=document.getElementById(id+"q"), f=document.getElementById(id+"f"),
+      a=document.getElementById(id+"a"), m=document.getElementById(id+"m"),
+      b=document.getElementById(id+"b"), sc=document.getElementById(id+"s");
+  var order=[], perm=[], i=0, ok=0, answered=false;
+
+  function shuffle(n){
+    var arr=[], k, j, t;
+    for(k=0;k<n;k++) arr.push(k);
+    for(k=arr.length-1;k>0;k--){ j=Math.floor(Math.random()*(k+1)); t=arr[k]; arr[k]=arr[j]; arr[j]=t; }
+    return arr;
+  }
+  function norm(s){
+    return String(s).trim().toLowerCase().replace(/\s+/g,"").replace(/−/g,"-").replace(/,/g,".");
+  }
+  function same(x, y){
+    var p=parseFloat(norm(x)), r=parseFloat(norm(y));
+    if(isFinite(p) && isFinite(r)) return Math.abs(p-r) < 1e-9;
+    return norm(x) === norm(y);
+  }
+  function score(){
+    sc.textContent = "вопрос " + Math.min(i + 1, items.length) + " из " + items.length +
+                     " · верно " + ok;
+  }
+
+  function finish(){
+    q.innerHTML=""; f.innerHTML=""; a.innerHTML=""; m.innerHTML="";
+    var pct=Math.round(ok/items.length*100);
+    var word = pct===100 ? "Всё верно — тема закрыта." :
+               pct>=70 ? "Хорошо, но пару мест стоит перечитать." :
+               "Стоит вернуться к теории и пройти ещё раз.";
+    b.innerHTML='<div class="trdone" style="flex:1 1 100%">'+ok+" из "+items.length+
+      " ("+pct+" %) · "+word+'</div><button type="button" class="pri" data-go="1">Пройти заново</button>';
+    sc.textContent="готово";
+  }
+
+  function show(){
+    answered=false;
+    m.innerHTML=""; b.innerHTML="";
+    var t=items[order[i]];
+    q.innerHTML="<b>"+(i+1)+".</b> "+t.q;
+    f.innerHTML=t.fig || "";
+    f.style.display = t.fig ? "" : "none";
+    if(t.opts){
+      perm = shuffle(t.opts.length);          /* perm[позиция] = номер варианта в банке */
+      var html='<div class="tropts" id="'+id+'o">';
+      for(var k=0;k<perm.length;k++)
+        html+='<button type="button" class="tropt" data-k="'+perm[k]+'">'+t.opts[perm[k]]+'</button>';
+      a.innerHTML = html+"</div>";
+      var box=document.getElementById(id+"o");
+      box.addEventListener("click", function(ev){
+        var el=ev.target; while(el && el!==box && el.className.indexOf("tropt")<0) el=el.parentNode;
+        if(!el || el===box || answered) return;
+        pick(parseInt(el.getAttribute("data-k"),10), box);
+      });
+    } else {
+      a.innerHTML='<div class="trnum"><span>Ответ:</span>'+
+        '<input type="text" id="'+id+'i" inputmode="text" autocomplete="off" '+
+        'autocorrect="off" spellcheck="false" placeholder="число">'+
+        '<button type="button" class="pri" data-check="1">Проверить</button></div>';
+      var inp=document.getElementById(id+"i");
+      inp.addEventListener("keydown", function(ev){ if(ev.key==="Enter") check(); });
+    }
+    score();
+  }
+
+  function verdict(good, t){
+    answered=true;
+    if(good) ok++;
+    i++;
+    m.innerHTML='<div class="v '+(good?"ok":"bad")+'">'+(good?"Верно.":"Неверно.")+"</div>"+
+                '<div class="why">'+t.why+"</div>";
+    b.innerHTML = (i<items.length)
+      ? '<button type="button" class="pri" data-next="1">Дальше</button>'
+      : '<button type="button" class="pri" data-next="1">Показать итог</button>';
+    score();
+  }
+  function pick(k, box){
+    var t=items[order[i]], good = (k === t.ans);
+    var bs=box.querySelectorAll(".tropt");
+    for(var j=0;j<bs.length;j++){
+      var n=parseInt(bs[j].getAttribute("data-k"),10);
+      if(n===t.ans) bs[j].className="tropt right";
+      else if(n===k) bs[j].className="tropt wrong";
+    }
+    box.className="tropts done";
+    verdict(good, t);
+  }
+  function check(){
+    if(answered) return;
+    var t=items[order[i]], inp=document.getElementById(id+"i");
+    var v=(inp.value||"").trim();
+    if(!v){ m.innerHTML='<div class="why">Впиши ответ.</div>'; return; }
+    var good = t.ans.some(function(x){ return same(v, x); });
+    inp.disabled=true;
+    if(!good) m.innerHTML="";
+    verdict(good, t);
+    if(!good) m.innerHTML='<div class="v bad">Неверно. Правильный ответ: '+t.ans[0]+".</div>"+
+                          '<div class="why">'+t.why+"</div>";
+  }
+
+  b.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-next")){ if(i<items.length) show(); else finish(); }
+    if(el.getAttribute && el.getAttribute("data-go")){ start(); }
+  });
+  a.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-check")) check();
+  });
+
+  function start(){ order=shuffle(items.length); i=0; ok=0; show(); }
+  start();
+}
+
+makeTrainer("tr1", [{"q": "Какое это выражение?<br><span style='font-size:21px'>6,7z + <span class=\"fr\"><b>2</b><i>3</i></span>xy</span>", "fig": "", "opts": ["целое рациональное", "дробное рациональное", "не рациональное"], "ans": 0, "why": "Только сложение и умножение, деления на переменную нет."}, {"q": "Какое это выражение?<br><span style='font-size:21px'><span class=\"fr\"><b>3</b><i>x − y</i></span></span>", "fig": "", "opts": ["целое рациональное", "дробное рациональное", "не рациональное"], "ans": 1, "why": "Делим на x − y — в знаменателе буквы."}, {"q": "Какое это выражение?<br><span style='font-size:21px'>2,3x − <span class=\"fr\"><b>1</b><i>5y</i></span></span>", "fig": "", "opts": ["целое рациональное", "дробное рациональное", "не рациональное"], "ans": 1, "why": "Вторая дробь делится на 5y. Одной буквы в знаменателе достаточно."}, {"q": "Какое это выражение?<br><span style='font-size:21px'>4 + <span class=\"fr\"><b>1</b><i>30</i></span>x<sup>2</sup>y</span>", "fig": "", "opts": ["целое рациональное", "дробное рациональное", "не рациональное"], "ans": 0, "why": "В знаменателе число 30, переменных там нет — выражение целое."}, {"q": "Какое это выражение?<br><span style='font-size:21px'>2√<span style='border-top:1.4px solid currentColor;padding:0 2px'>xy</span></span>", "fig": "", "opts": ["целое рациональное", "дробное рациональное", "не рациональное"], "ans": 2, "why": "Под корнем стоят переменные, значит выражение вообще не рациональное."}, {"q": "Какое это выражение?<br><span style='font-size:21px'><span class=\"fr\"><b>y<sup>2</sup></b><i>25x − 6</i></span></span>", "fig": "", "opts": ["целое рациональное", "дробное рациональное", "не рациональное"], "ans": 1, "why": "Знаменатель 25x − 6 содержит переменную."}, {"q": "Какое это выражение?<br><span style='font-size:21px'><span class=\"fr\"><b>5a</b><i>3</i></span> − 1</span>", "fig": "", "opts": ["целое рациональное", "дробное рациональное", "не рациональное"], "ans": 0, "why": "Делим на тройку. Дробная черта есть, а деления на переменную нет — целое."}, {"q": "Какое это выражение?<br><span style='font-size:21px'>x + <span class=\"fr\"><b>x<sup>3</sup> − 1</b><i>12</i></span></span>", "fig": "", "opts": ["целое рациональное", "дробное рациональное", "не рациональное"], "ans": 0, "why": "Знаменатель 12 — число. Целое выражение."}, {"q": "Какое это выражение?<br><span style='font-size:21px'><span class=\"fr\"><b>1</b><i>a</i></span> − 2,5</span>", "fig": "", "opts": ["целое рациональное", "дробное рациональное", "не рациональное"], "ans": 1, "why": "Выглядит как почти число, но деление на a есть. Дробное."}, {"q": "Какое это выражение?<br><span style='font-size:21px'><span class=\"fr\"><b>5</b><i>√<span style='border-top:1.4px solid currentColor;padding:0 2px'>x</span> + 1</i></span></span>", "fig": "", "opts": ["целое рациональное", "дробное рациональное", "не рациональное"], "ans": 2, "why": "В знаменателе корень из переменной — такое выражение не рациональное."}]);
+makeTrainer("tr2", [{"q": "При каком значении переменной знаменатель обращается в нуль?<br><span style='font-size:21px'>знаменатель: <b>x − 8</b></span>", "fig": "", "ans": ["8"], "why": "x − 8 = 0, отсюда x = 8."}, {"q": "При каком значении переменной знаменатель обращается в нуль?<br><span style='font-size:21px'>знаменатель: <b>2x + 3</b></span>", "fig": "", "ans": ["−1,5"], "why": "2x + 3 = 0 → 2x = −3 → x = −1,5."}, {"q": "При каком значении переменной знаменатель обращается в нуль?<br><span style='font-size:21px'>знаменатель: <b>6 − 2x</b></span>", "fig": "", "ans": ["3"], "why": "6 − 2x = 0 → 2x = 6 → x = 3."}, {"q": "При каком значении переменной знаменатель обращается в нуль?<br><span style='font-size:21px'>знаменатель: <b>4,5 − x</b></span>", "fig": "", "ans": ["4,5"], "why": "4,5 − x = 0 → x = 4,5."}, {"q": "При каком значении переменной знаменатель обращается в нуль?<br><span style='font-size:21px'>знаменатель: <b>0,4x − 2</b></span>", "fig": "", "ans": ["5"], "why": "0,4x = 2 → x = 2 : 0,4 = 5."}, {"q": "При каком значении переменной знаменатель обращается в нуль?<br><span style='font-size:21px'>знаменатель: <b>0,5x + 4</b></span>", "fig": "", "ans": ["−8"], "why": "0,5x = −4 → x = −4 : 0,5 = −8."}, {"q": "При каком значении переменной знаменатель обращается в нуль?<br><span style='font-size:21px'>знаменатель: <b>5x + 2</b></span>", "fig": "", "ans": ["−0,4"], "why": "5x = −2 → x = −0,4."}, {"q": "При каком значении переменной знаменатель обращается в нуль?<br><span style='font-size:21px'>знаменатель: <b>2 − 5a</b></span>", "fig": "", "ans": ["0,4"], "why": "5a = 2 → a = 0,4."}, {"q": "При каком значении переменной знаменатель обращается в нуль?<br><span style='font-size:21px'>знаменатель: <b>1 − 5c</b></span>", "fig": "", "ans": ["0,2"], "why": "5c = 1 → c = 0,2."}, {"q": "При каком значении переменной знаменатель обращается в нуль?<br><span style='font-size:21px'>знаменатель: <b>0,8 − 0,4x</b></span>", "fig": "", "ans": ["2"], "why": "0,4x = 0,8 → x = 2."}]);
+makeTrainer("tr3", [{"q": "Какие числа <b>не входят</b> в область определения?<br><span style='font-size:21px'><span class=\"fr\"><b>x + 2</b><i>x<sup>2</sup> − 9</i></span></span>", "fig": "", "opts": ["−3 и 3", "только 3", "9", "никакие"], "ans": 0, "why": "x² − 9 = 0 → x² = 9 → x = 3 и x = −3. Оба выбрасываем."}, {"q": "Какие числа <b>не входят</b> в область определения?<br><span style='font-size:21px'><span class=\"fr\"><b>3</b><i>2 − 5a</i></span></span>", "fig": "", "opts": ["0,4", "2,5", "−0,4", "никакие"], "ans": 0, "why": "2 − 5a = 0 → 5a = 2 → a = 0,4."}, {"q": "Какие числа <b>не входят</b> в область определения?<br><span style='font-size:21px'><span class=\"fr\"><b>8</b><i>2m<sup>2</sup> + 5</i></span></span>", "fig": "", "opts": ["никакие", "0", "2,5", "−2,5"], "ans": 0, "why": "m² ≥ 0, значит 2m² + 5 ≥ 5. Нулём этот знаменатель не бывает."}, {"q": "Какие числа <b>не входят</b> в область определения?<br><span style='font-size:21px'><span class=\"fr\"><b>5</b><i>x − 1</i></span> + <span class=\"fr\"><b>x + 6</b><i>x + 3</i></span></span>", "fig": "", "opts": ["1 и −3", "−1 и 3", "1 и 3", "−1 и −3"], "ans": 0, "why": "Первый знаменатель даёт x = 1, второй x = −3. Знаки часто путают: из x + 3 = 0 получается именно −3."}, {"q": "Какие числа <b>не входят</b> в область определения?<br><span style='font-size:21px'><span class=\"fr\"><b>x</b><i>x(x + 3)</i></span></span>", "fig": "", "opts": ["0 и −3", "только −3", "только 0", "никакие"], "ans": 0, "why": "Сокращать нельзя до того, как выписали запреты: нуль и −3 всё равно выброшены."}, {"q": "Какие числа <b>не входят</b> в область определения?<br><span style='font-size:21px'><span class=\"fr\"><b>x + 4</b><i>x<sup>2</sup> − 6x + 9</i></span></span>", "fig": "", "opts": ["только 3", "3 и −3", "−3", "никакие"], "ans": 0, "why": "x² − 6x + 9 = (x − 3)². Квадрат равен нулю только при x = 3."}, {"q": "Какие числа <b>не входят</b> в область определения?<br><span style='font-size:21px'><span class=\"fr\"><b>12</b><i>2x<sup>2</sup> − 72</i></span></span>", "fig": "", "opts": ["6 и −6", "36", "только 6", "никакие"], "ans": 0, "why": "2x² = 72 → x² = 36 → x = 6 и x = −6."}, {"q": "Какие числа <b>не входят</b> в область определения?<br><span style='font-size:21px'><span class=\"fr\"><b>9</b><i>x<sup>2</sup> + 7</i></span></span>", "fig": "", "opts": ["никакие", "7 и −7", "−7", "0"], "ans": 0, "why": "x² + 7 ≥ 7, нулю не равно ни при каком x."}]);
+
+</script>
+</body>
+</html>
