@@ -1,0 +1,814 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Минус, дроби и знак неравенства — короткая работа</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:800px;margin:0 auto;padding:16px 14px 60px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+.f-formula{font-size:19px}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.step{margin:6px 0}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.fig{margin:12px 0;text-align:center}
+
+.tr{border:1px solid var(--line);border-radius:12px;padding:14px;margin:16px 0;background:var(--bg)}
+.trhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;
+  margin-bottom:8px}
+.trhead b{font-size:17px}
+.trscore{color:var(--muted);font-size:15px;white-space:nowrap}
+.trq{font-size:17px;margin:8px 0}
+.trfig{text-align:center;margin:8px 0}
+.trfig svg{width:100%;max-width:330px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.tropts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
+.tropt{border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;
+  background:var(--card);font-size:16px;text-align:left;min-height:46px}
+.tropt:hover{border-color:var(--acc)}
+.tropt.right{border-color:var(--ok);background:var(--ok-soft);font-weight:600}
+.tropt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.tropts.done .tropt{cursor:default}
+.trnum{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.trnum input{font:inherit;font-size:18px;padding:9px 11px;border-radius:9px;
+  border:1.5px solid var(--line);background:var(--card);color:var(--ink);max-width:130px}
+.trmsg{font-size:16px;margin-top:8px}
+.trmsg .v{font-weight:700}
+.trmsg .v.ok{color:var(--ok)} .trmsg .v.bad{color:var(--bad)}
+.trmsg .why{color:var(--muted);font-size:15px;margin-top:4px}
+.trbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.trbar button{font-size:15px;padding:8px 13px;min-height:42px}
+.trdone{background:var(--acc-soft);border-radius:10px;padding:12px;font-size:17px;
+  text-align:center;font-weight:600}
+
+.fig svg{width:100%;max-width:430px;height:auto}
+.fig{text-align:center;margin:14px 0}
+.pick4{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin:12px 0}
+.pk{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px}
+.pk svg{width:100%;height:auto;display:block}
+.fx{display:block;background:var(--acc-soft);border:1px solid var(--line);border-radius:10px;
+  padding:11px 13px;margin:12px 0;text-align:center;font-size:21px;line-height:1.9;
+  font-weight:600;overflow-x:auto}
+.sol .fx,.ex .fx{font-size:19px;margin:9px 0}
+.rule{border:1px solid var(--line);border-left:4px solid #c0397a;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdf0f6}
+.rule .n{font-size:14px;color:#a02a62;font-weight:700;letter-spacing:.4px}
+@media (prefers-color-scheme:dark){.rule{background:#2a1b23}}
+.ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;background:var(--bg)}
+.ex h3{margin-top:0}
+.wrap-t th,.wrap-t td{white-space:normal;text-align:left;vertical-align:top}
+.small,.mini{color:var(--muted);font-size:15px}
+.fr{display:inline-block;vertical-align:-0.58em;text-align:center;margin:0 3px}
+.fr b{display:block;border-bottom:1.7px solid currentColor;padding:0 5px;font-weight:400}
+.fr i{display:block;font-style:normal;padding:0 5px}
+.bad{color:#b3261e;font-weight:700}
+.good{color:#137a45;font-weight:700}
+.sheet .f-formula{margin:6px 0;font-size:15px;line-height:1.45}
+@media print{.sheet>.meta{display:none}}
+
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+@media print{
+  body{background:#fff}
+  .bar{display:none !important}
+  .wrap>*{display:none !important}
+  .wrap>.sheet{display:block !important;border:none;margin:0;padding:0}
+  .sheet{font-size:13px}
+  .sheet h2{font-size:18px}
+  .sheet th,.sheet td{padding:4px 5px;font-size:12px}
+  @page{size:A4;margin:12mm}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card top">
+  <h1>Минус, дроби и знак неравенства</h1>
+  <div class="meta">Алгебра · короткая работа на 15–20 минут · 10 задач</div>
+  <label class="f" for="name">Имя и фамилия</label>
+  <input type="text" id="name" placeholder="напиши, как в журнале" autocapitalize="words" spellcheck="false">
+  <div class="note" style="margin-top:14px">
+    <b>Как работать.</b> Сначала прочитай памятку — это три минуты и ровно те четыре правила,
+    на которых сыпется больше всего ответов. Потом разбери три примера.
+    <div style="margin-top:8px">Дальше три коротких тренажёра: раскрыть скобку, назвать общий
+    знаменатель, выбрать знак и точку. Они в отчёт не идут — проходи сколько нужно.</div>
+    <div style="margin-top:8px">И десять задач. Решай в тетради, в поле вводи только число.
+    У каждой три подсказки, полное решение открывается после верного ответа или после
+    второй попытки. Минус пишется обычным знаком, запятая и точка равнозначны.</div>
+  </div>
+</div>
+
+<div class="card">
+<h2>Памятка</h2>
+<div class="meta">Четыре правила, из-за которых чаще всего теряются ответы. Прочитай — это три минуты.</div>
+<h3>1. Минус перед скобкой</h3>
+<div class="rule"><div class="n">ПРАВИЛО</div>Минус перед скобкой меняет знак у <b>каждого</b> слагаемого внутри. Удобно думать так: −(…) это то же самое, что (−1) · (…), и надо умножить на −1 всё, что стоит в скобках.</div>
+<div class="fx">−(a − b) = −a + b &nbsp;&nbsp;&nbsp; −(a + b) = −a − b</div>
+<div class="scroll"><table class="wrap-t"><tr><th>было</th><th>стало</th><th>частая ошибка</th></tr><tr><td>7 − (x − 4)</td><td class='good'>7 − x + 4 = 11 − x</td><td class='bad'>7 − x − 4</td></tr><tr><td>5 − 2(x − 3)</td><td class='good'>5 − 2x + 6 = 11 − 2x</td><td class='bad'>5 − 2x − 6</td></tr><tr><td>−3(x − 2)</td><td class='good'>−3x + 6</td><td class='bad'>−3x − 6</td></tr></table></div>
+<p class="small">Проверка за пять секунд: подставь вместо x любое число, например 1, в исходное выражение и в раскрытое. Должно получиться одинаково.</p>
+<h3>2. Дроби: на что домножать</h3>
+<div class="rule"><div class="n">ПОРЯДОК ДЕЙСТВИЙ</div>Найти <b>общий знаменатель</b> — наименьшее число, которое делится на все знаменатели. Домножить на него <b>каждое</b> слагаемое, включая те, что стоят без дроби. Знаменатели уйдут, останется линейное уравнение.</div>
+<p>Домножаем <span class="fr"><b>x</b><i>2</i></span> − <span class="fr"><b>x</b><i>3</i></span> = <span class="fr"><b>1</b><i>6</i></span> на 6:</p>
+<div class="fx">6 · <span class="fr"><b>x</b><i>2</i></span> − 6 · <span class="fr"><b>x</b><i>3</i></span> = 6 · <span class="fr"><b>1</b><i>6</i></span> &nbsp;→&nbsp; 3x − 2x = 1</div>
+<p class="small">Две ловушки. Первая — забыть домножить слагаемое без дроби: в 6 · ( <span class="fr"><b>x</b><i>3</i></span> + 1 ) единица тоже превращается в 6. Вторая — когда в числителе стоит скобка, после домножения её надо взять в скобки: 6 · <span class="fr"><b>x − 1</b><i>2</i></span> это 3(x − 1), а не 3x − 1.</p>
+<h3>3. Умножение на −1</h3>
+<div class="rule"><div class="n">ГЛАВНОЕ РАЗЛИЧИЕ</div>В <b>уравнении</b> знак равенства при умножении на −1 не меняется. В <b>неравенстве</b> знак неравенства <b>переворачивается</b>: &gt; становится &lt;, ≤ становится ≥. То же самое при делении на отрицательное число.</div>
+<div class="scroll"><table class="wrap-t"><tr><th>было</th><th>умножили на −1</th></tr><tr><td>−x = 5</td><td class='good'>x = −5 &nbsp;<span class='small'>знак «=» тот же</span></td></tr><tr><td>−x &gt; 5</td><td class='good'>x &lt; −5 &nbsp;<span class='small'>знак перевернулся</span></td></tr><tr><td>−2x ≤ 8</td><td class='good'>2x ≥ −8, то есть x ≥ −4</td></tr></table></div>
+<p class="small">Если сомневаешься — проверь числом. В −x &gt; 5 подходит x = −6: −(−6) = 6 &gt; 5 ✓. А x = 6 не подходит. Значит ответ уходит в минус, и знак действительно перевернулся.</p>
+<h3>4. Точки на прямой</h3>
+<div class="rule"><div class="n">ПРАВИЛО</div>Знак <b>строгий</b> (&lt; или &gt;) — точка <b>выколотая</b>, пустой кружок: само число в ответ не входит. Знак <b>нестрогий</b> (≤ или ≥) — точка <b>закрашенная</b>: число входит.</div>
+<div class="pick4"><div class="pk"><svg viewBox="0 0 380 162"><rect x="0" y="0" width="380" height="162" rx="12" fill="#ffffff"/><line x1="215.3" y1="70.0" x2="358.0" y2="70.0" stroke="#2f6bd8" stroke-width="5" stroke-linecap="round" opacity=".85"/><line x1="228.3" y1="66.0" x2="221.3" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="241.3" y1="66.0" x2="234.3" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="254.3" y1="66.0" x2="247.3" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="267.3" y1="66.0" x2="260.3" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="280.3" y1="66.0" x2="273.3" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="293.3" y1="66.0" x2="286.3" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="306.3" y1="66.0" x2="299.3" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="319.3" y1="66.0" x2="312.3" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="332.3" y1="66.0" x2="325.3" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="20.0" y1="70.0" x2="366.0" y2="70.0" stroke="#15181e" stroke-width="2.2" stroke-linecap="round"/><path d="M 366.0 70.0 L 357.5 72.8 L 357.5 67.2 z" fill="#15181e"/><text x="360.0" y="56.0" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600" font-style="italic">x</text><line x1="114.2" y1="64.0" x2="114.2" y2="76.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><text x="114.2" y="98.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">0</text><line x1="164.7" y1="64.0" x2="164.7" y2="76.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><text x="164.7" y="98.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">1</text><line x1="215.3" y1="64.0" x2="215.3" y2="76.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><text x="215.3" y="98.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">2</text><line x1="265.8" y1="64.0" x2="265.8" y2="76.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><text x="265.8" y="98.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">3</text><circle cx="215.3" cy="70.0" r="6.5" fill="#ffffff" stroke="#15181e" stroke-width="2.6"/><text x="190" y="156" font-size="14" fill="#5b6270" text-anchor="middle">x > 2 — точка выколотая, сама двойка не входит</text></svg></div><div class="pk"><svg viewBox="0 0 380 162"><rect x="0" y="0" width="380" height="162" rx="12" fill="#ffffff"/><line x1="215.3" y1="70.0" x2="358.0" y2="70.0" stroke="#2f6bd8" stroke-width="5" stroke-linecap="round" opacity=".85"/><line x1="228.3" y1="66.0" x2="221.3" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="241.3" y1="66.0" x2="234.3" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="254.3" y1="66.0" x2="247.3" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="267.3" y1="66.0" x2="260.3" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="280.3" y1="66.0" x2="273.3" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="293.3" y1="66.0" x2="286.3" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="306.3" y1="66.0" x2="299.3" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="319.3" y1="66.0" x2="312.3" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="332.3" y1="66.0" x2="325.3" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="20.0" y1="70.0" x2="366.0" y2="70.0" stroke="#15181e" stroke-width="2.2" stroke-linecap="round"/><path d="M 366.0 70.0 L 357.5 72.8 L 357.5 67.2 z" fill="#15181e"/><text x="360.0" y="56.0" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600" font-style="italic">x</text><line x1="114.2" y1="64.0" x2="114.2" y2="76.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><text x="114.2" y="98.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">0</text><line x1="164.7" y1="64.0" x2="164.7" y2="76.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><text x="164.7" y="98.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">1</text><line x1="215.3" y1="64.0" x2="215.3" y2="76.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><text x="215.3" y="98.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">2</text><line x1="265.8" y1="64.0" x2="265.8" y2="76.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><text x="265.8" y="98.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">3</text><circle cx="215.3" cy="70.0" r="7" fill="#15181e"/><text x="190" y="156" font-size="14" fill="#5b6270" text-anchor="middle">x ≥ 2 — точка закрашенная, двойка входит</text></svg></div></div>
+<p class="small">Штриховка идёт туда, где неравенство выполняется. Проверить просто: возьми любое число из заштрихованной части и подставь в неравенство — должно получиться верно.</p>
+</div>
+
+<div class="card">
+<h2>Разбор</h2>
+<div class="meta">Три примера — по одному на каждое правило. Сначала попробуй сам, потом сверься.</div>
+<div class="ex"><h3>Пример 1. Минус перед скобкой</h3><div class="fx">5 − 2(3x − 4) = 7 − x</div><div class="step">1. Раскрываем скобку. Перед ней стоит −2, значит умножаем на −2 и 3x, и −4:</div><div class="fx">−2 · 3x = −6x,&nbsp;&nbsp; −2 · (−4) = <b>+8</b></div><div class="step">2. Подставляем обратно:</div><div class="fx">5 − 6x + 8 = 7 − x</div><div class="step">3. Слева складываем числа: 5 + 8 = 13.</div><div class="fx">13 − 6x = 7 − x</div><div class="step">4. Иксы влево, числа вправо. Переносим — знак меняется:</div><div class="fx">−6x + x = 7 − 13 &nbsp;→&nbsp; −5x = −6</div><div class="step">5. Делим обе части на −5. Это уравнение, поэтому знак «=» остаётся на месте:</div><div class="fx">x = <span class="fr"><b>−6</b><i>−5</i></span> = 1,2</div><div class="step"><b>Ответ: 1,2.</b></div><div class="step mini">Проверка: 5 − 2(3 · 1,2 − 4) = 5 − 2 · (−0,4) = 5 + 0,8 = 5,8, и справа 7 − 1,2 = 5,8 ✓. Если бы на шаге 1 получилось −8 вместо +8, ответ вышел бы другим — это и есть та самая ошибка со знаком.</div></div>
+<div class="ex"><h3>Пример 2. Дроби</h3><div class="fx"><span class="fr"><b>x</b><i>3</i></span> − <span class="fr"><b>x − 1</b><i>2</i></span> = <span class="fr"><b>1</b><i>6</i></span></div><div class="step">1. Знаменатели 3, 2 и 6. Наименьшее число, которое делится на все три, — это 6. На него и домножаем каждое слагаемое.</div><div class="fx">6 · <span class="fr"><b>x</b><i>3</i></span> − 6 · <span class="fr"><b>x − 1</b><i>2</i></span> = 6 · <span class="fr"><b>1</b><i>6</i></span></div><div class="step">2. Считаем каждое: 6 : 3 = 2, значит первое даёт 2x. 6 : 2 = 3, значит второе даёт 3(x − 1) — числитель обязательно в скобках. Справа 6 : 6 = 1.</div><div class="fx">2x − 3(x − 1) = 1</div><div class="step">3. Раскрываем скобку. Перед ней минус три:</div><div class="fx">2x − 3x + 3 = 1</div><div class="step">4. Приводим подобные и решаем:</div><div class="fx">−x = −2 &nbsp;→&nbsp; x = 2</div><div class="step"><b>Ответ: 2.</b></div><div class="step mini">Проверка: <span class="fr"><b>2</b><i>3</i></span> − <span class="fr"><b>1</b><i>2</i></span> = <span class="fr"><b>4</b><i>6</i></span> − <span class="fr"><b>3</b><i>6</i></span> = <span class="fr"><b>1</b><i>6</i></span> ✓. Если бы на шаге 2 забыли скобку и написали 3x − 1, дальше всё поехало бы.</div></div>
+<div class="ex"><h3>Пример 3. Неравенство и точка</h3><div class="fx">4 − 3x &gt; 10</div><div class="step">1. Сначала уносим число вправо, чтобы слева остался только икс. Переносим 4 — знак меняется на минус.</div><div class="fx">−3x &gt; 10 − 4 &nbsp;→&nbsp; −3x &gt; 6</div><div class="step">2. Делим обе части на −3. Число отрицательное, значит знак неравенства <b>переворачивается</b>:</div><div class="fx">x &lt; −2</div><div class="step">3. Рисуем. Знак строгий, поэтому точка выколотая, а штриховка идёт влево:</div><div class="fig"><svg viewBox="0 0 430 162"><rect x="0" y="0" width="430" height="162" rx="12" fill="#ffffff"/><line x1="215.0" y1="70.0" x2="22.0" y2="70.0" stroke="#2f6bd8" stroke-width="5" stroke-linecap="round" opacity=".85"/><line x1="202.0" y1="66.0" x2="195.0" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="189.0" y1="66.0" x2="182.0" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="176.0" y1="66.0" x2="169.0" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="163.0" y1="66.0" x2="156.0" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="150.0" y1="66.0" x2="143.0" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="137.0" y1="66.0" x2="130.0" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="124.0" y1="66.0" x2="117.0" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="111.0" y1="66.0" x2="104.0" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="98.0" y1="66.0" x2="91.0" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="85.0" y1="66.0" x2="78.0" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="72.0" y1="66.0" x2="65.0" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="59.0" y1="66.0" x2="52.0" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="46.0" y1="66.0" x2="39.0" y2="50.0" stroke="#2f6bd8" stroke-width="1.8" opacity=".75"/><line x1="20.0" y1="70.0" x2="416.0" y2="70.0" stroke="#15181e" stroke-width="2.2" stroke-linecap="round"/><path d="M 416.0 70.0 L 407.5 72.8 L 407.5 67.2 z" fill="#15181e"/><text x="410.0" y="56.0" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600" font-style="italic">x</text><line x1="126.1" y1="64.0" x2="126.1" y2="76.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><text x="126.1" y="98.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">−4</text><line x1="170.5" y1="64.0" x2="170.5" y2="76.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><text x="170.5" y="98.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">−3</text><line x1="215.0" y1="64.0" x2="215.0" y2="76.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><text x="215.0" y="98.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">−2</text><line x1="259.5" y1="64.0" x2="259.5" y2="76.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><text x="259.5" y="98.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">−1</text><line x1="303.9" y1="64.0" x2="303.9" y2="76.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><text x="303.9" y="98.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">0</text><circle cx="215.0" cy="70.0" r="6.5" fill="#ffffff" stroke="#15181e" stroke-width="2.6"/><text x="215" y="156" font-size="14" fill="#5b6270" text-anchor="middle">x < −2: точка выколотая, штриховка влево</text></svg></div><div class="step"><b>Ответ: x &lt; −2.</b></div><div class="step mini">Проверка числом из штриховки: x = −3 даёт 4 − 3 · (−3) = 13 &gt; 10 ✓. А x = −1 даёт 7, это не больше 10 — значит справа от −2 решений нет, штриховка стоит правильно.</div></div>
+</div>
+
+<div class="card">
+  <h2>Тренажёры</h2>
+  <div class="meta">Вопросы каждый раз идут в новом порядке, варианты перемешиваются.
+  После каждого ответа читай разбор — даже когда ответил верно.</div>
+<div class="tr" id="tl1"><div class="trhead"><b>Тренажёр 1. Раскрой скобку</b><span class="trscore" id="tl1s"></span></div><div class="meta">Десять выражений. Смотри только на знаки — именно там теряются ответы.</div><div class="trq" id="tl1q"></div><div class="trfig" id="tl1f"></div><div id="tl1a"></div><div class="trmsg" id="tl1m"></div><div class="trbar" id="tl1b"></div></div><div class="tr" id="tl2"><div class="trhead"><b>Тренажёр 2. На что домножить</b><span class="trscore" id="tl2s"></span></div><div class="meta">Восемь уравнений с дробями. Нужно назвать общий знаменатель — это первый шаг любого такого уравнения.</div><div class="trq" id="tl2q"></div><div class="trfig" id="tl2f"></div><div id="tl2a"></div><div class="trmsg" id="tl2m"></div><div class="trbar" id="tl2b"></div></div><div class="tr" id="tl3"><div class="trhead"><b>Тренажёр 3. Знак и точка</b><span class="trscore" id="tl3s"></span></div><div class="meta">Десять вопросов про умножение на −1 и про то, какой кружок рисовать.</div><div class="trq" id="tl3q"></div><div class="trfig" id="tl3f"></div><div id="tl3a"></div><div class="trmsg" id="tl3m"></div><div class="trbar" id="tl3b"></div></div>
+</div>
+
+<div class="card">
+  <h2>Задачи</h2>
+  <div class="meta">Пять на раскрытие скобок, три на дроби и две на неравенства.</div>
+</div>
+<div id="tasks"></div>
+
+<div class="card sheet">
+  <h2>Шпаргалка</h2>
+  <div class="meta">Печатается на один лист A4: Ctrl+P (⌘+P) → печать.</div>
+  <p class="f-formula"><b>Минус перед скобкой</b> меняет знак у каждого слагаемого внутри:
+  −(a − b) = −a + b. Думай как об умножении на −1.
+  7 − (x − 4) = 11 − x, а не 3 − x.</p>
+  <p class="f-formula"><b>Дроби.</b> Найти наименьший общий знаменатель, домножить на него
+  <u>каждое</u> слагаемое, включая те, что без дроби. Числитель со скобкой после домножения
+  берётся в скобки: 6 · (x − 1)/2 = 3(x − 1), а не 3x − 1.</p>
+  <p class="f-formula"><b>Умножение на −1.</b> В уравнении знак «=» не меняется.
+  В неравенстве знак переворачивается: &gt; → &lt;, ≤ → ≥. То же при делении
+  на любое отрицательное число.</p>
+  <p class="f-formula"><b>Точки.</b> Строгий знак (&lt; &gt;) — кружок пустой, число
+  не входит. Нестрогий (≤ ≥) — кружок закрашен, число входит.
+  Штриховка идёт туда, где неравенство выполняется.</p>
+  <p class="f-formula"><b>Проверка за пять секунд.</b> Подставь число: в уравнение — найденный
+  корень, в неравенство — любое число из штриховки. Должно получиться верно.</p>
+</div>
+
+<div class="card">
+  <h2>Шаг 1. Фото решений — по желанию</h2>
+  <div class="meta">В поле уходит только число, а я смотрю ещё и ход решения.
+  Фото прикладывать не обязательно, но с ними разбор будет точнее.</div>
+  <ol class="steps-list">
+    <li>Расписывай раскрытие скобок отдельной строкой — там и видно ошибку со знаком.</li>
+    <li>В дробных уравнениях пиши, на что домножаешь.</li>
+    <li>В неравенствах рисуй числовую прямую с точкой.</li>
+  </ol>
+  <input type="file" id="photos" accept="image/*" multiple style="margin-top:12px">
+  <div class="thumbs" id="thumbs"></div>
+</div>
+
+<div class="card">
+  <h2>Шаг 2. Отправь работу</h2>
+  <div class="meta">Проверь, что вверху написано твоё имя. По кнопке ответы и результат
+  уходят преподавателю. Вторая кнопка сохраняет копию тебе.</div>
+  <div class="row" style="margin-top:12px">
+    <button class="pri" id="send">Отправить на проверку</button>
+    <button id="report">Скачать копию себе</button>
+  </div>
+  <div id="repnote" class="meta" style="margin-top:8px"></div>
+</div>
+
+</div>
+
+<div class="bar">
+  <button class="pri" id="checkall">Проверить всё</button>
+  <span id="progress" class="meta">решено 0 из 10</span>
+</div>
+
+<script>
+var CF = {"z9": "<svg viewBox=\"0 0 380 152\"><rect x=\"0\" y=\"0\" width=\"380\" height=\"152\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"215.3\" y1=\"70.0\" x2=\"22.0\" y2=\"70.0\" stroke=\"#2f6bd8\" stroke-width=\"5\" stroke-linecap=\"round\" opacity=\".85\"/><line x1=\"202.3\" y1=\"66.0\" x2=\"195.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"189.3\" y1=\"66.0\" x2=\"182.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"176.3\" y1=\"66.0\" x2=\"169.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"163.3\" y1=\"66.0\" x2=\"156.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"150.3\" y1=\"66.0\" x2=\"143.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"137.3\" y1=\"66.0\" x2=\"130.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"124.3\" y1=\"66.0\" x2=\"117.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"111.3\" y1=\"66.0\" x2=\"104.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"98.3\" y1=\"66.0\" x2=\"91.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"85.3\" y1=\"66.0\" x2=\"78.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"72.3\" y1=\"66.0\" x2=\"65.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"59.3\" y1=\"66.0\" x2=\"52.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"46.3\" y1=\"66.0\" x2=\"39.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"20.0\" y1=\"70.0\" x2=\"366.0\" y2=\"70.0\" stroke=\"#15181e\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 366.0 70.0 L 357.5 72.8 L 357.5 67.2 z\" fill=\"#15181e\"/><text x=\"360.0\" y=\"56.0\" font-size=\"15\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\" font-style=\"italic\">x</text><line x1=\"114.2\" y1=\"64.0\" x2=\"114.2\" y2=\"76.0\" stroke=\"#15181e\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"114.2\" y=\"98.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">−5</text><line x1=\"164.7\" y1=\"64.0\" x2=\"164.7\" y2=\"76.0\" stroke=\"#15181e\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"164.7\" y=\"98.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">−4</text><line x1=\"215.3\" y1=\"64.0\" x2=\"215.3\" y2=\"76.0\" stroke=\"#15181e\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"215.3\" y=\"98.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">−3</text><line x1=\"265.8\" y1=\"64.0\" x2=\"265.8\" y2=\"76.0\" stroke=\"#15181e\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"265.8\" y=\"98.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">−2</text><circle cx=\"215.3\" cy=\"70.0\" r=\"6.5\" fill=\"#ffffff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><text x=\"190\" y=\"146\" font-size=\"14\" fill=\"#5b6270\" text-anchor=\"middle\">x < −3</text></svg>", "z10": "<svg viewBox=\"0 0 380 152\"><rect x=\"0\" y=\"0\" width=\"380\" height=\"152\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"215.3\" y1=\"70.0\" x2=\"358.0\" y2=\"70.0\" stroke=\"#2f6bd8\" stroke-width=\"5\" stroke-linecap=\"round\" opacity=\".85\"/><line x1=\"228.3\" y1=\"66.0\" x2=\"221.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"241.3\" y1=\"66.0\" x2=\"234.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"254.3\" y1=\"66.0\" x2=\"247.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"267.3\" y1=\"66.0\" x2=\"260.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"280.3\" y1=\"66.0\" x2=\"273.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"293.3\" y1=\"66.0\" x2=\"286.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"306.3\" y1=\"66.0\" x2=\"299.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"319.3\" y1=\"66.0\" x2=\"312.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"332.3\" y1=\"66.0\" x2=\"325.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"20.0\" y1=\"70.0\" x2=\"366.0\" y2=\"70.0\" stroke=\"#15181e\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 366.0 70.0 L 357.5 72.8 L 357.5 67.2 z\" fill=\"#15181e\"/><text x=\"360.0\" y=\"56.0\" font-size=\"15\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\" font-style=\"italic\">x</text><line x1=\"114.2\" y1=\"64.0\" x2=\"114.2\" y2=\"76.0\" stroke=\"#15181e\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"114.2\" y=\"98.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">0</text><line x1=\"164.7\" y1=\"64.0\" x2=\"164.7\" y2=\"76.0\" stroke=\"#15181e\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"164.7\" y=\"98.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">1</text><line x1=\"215.3\" y1=\"64.0\" x2=\"215.3\" y2=\"76.0\" stroke=\"#15181e\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"215.3\" y=\"98.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">2</text><line x1=\"265.8\" y1=\"64.0\" x2=\"265.8\" y2=\"76.0\" stroke=\"#15181e\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"265.8\" y=\"98.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">3</text><circle cx=\"215.3\" cy=\"70.0\" r=\"7\" fill=\"#15181e\"/><text x=\"190\" y=\"146\" font-size=\"14\" fill=\"#5b6270\" text-anchor=\"middle\">x ≥ 2</text></svg>"};
+var STUDENT_CODE = (function(){
+  try{ var m = /[#&?]code=([^&]+)/.exec(location.hash + location.search);
+       return m ? decodeURIComponent(m[1]) : ""; }catch(e){ return ""; }
+})();
+var TOPIC = "Минус перед скобкой, общий знаменатель, знак неравенства";
+
+"use strict";
+var started = Date.now();
+
+/* ---------- данные задач; ответы закодированы, чтобы не читались в исходнике ---------- */
+function e(s){return btoa(unescape(encodeURIComponent(s)));}
+function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return s;}}
+
+var TASKS = [
+ {id:1,lvl:"база",type:"num",text:"Реши уравнение: 3(x − 2) = 9",ans:[e("5")],img:"",
+  hints:["Раскрой скобку: умножь 3 на x и 3 на (−2).",
+         "3x − 6 = 9.",
+         "Перенеси −6 вправо со сменой знака."],
+  sol:"<div class='step'>1. Раскрываем: 3 · x = 3x, 3 · (−2) = −6.</div>"+
+      "<div class='fx'>3x − 6 = 9</div>"+
+      "<div class='step'>2. Переносим −6 вправо, знак меняется:</div>"+
+      "<div class='fx'>3x = 15 → x = 5</div>"+
+      "<div class='step'><b>Ответ: 5.</b></div>"+
+      "<div class='step mini'>Проверка: 3(5 − 2) = 3 · 3 = 9 ✓</div>"},
+
+ {id:2,lvl:"база",type:"num",text:"Реши уравнение: 5 − 2(x − 3) = 3",ans:[e("4")],img:"",
+  hints:["Перед скобкой стоит −2. Умножай на −2 оба слагаемых внутри.",
+         "−2 · (−3) = +6, а не −6.",
+         "Получится 11 − 2x = 3."],
+  sol:"<div class='step'>1. Раскрываем: −2 · x = −2x, −2 · (−3) = +6.</div>"+
+      "<div class='fx'>5 − 2x + 6 = 3</div>"+
+      "<div class='step'>2. Складываем числа слева: 5 + 6 = 11.</div>"+
+      "<div class='fx'>11 − 2x = 3 → −2x = −8 → x = 4</div>"+
+      "<div class='step'><b>Ответ: 4.</b></div>"+
+      "<div class='step mini'>Проверка: 5 − 2(4 − 3) = 5 − 2 = 3 ✓. Если бы получилось −6, вышло бы −1 − 2x = 3 и ответ был бы неверный.</div>"},
+
+ {id:3,lvl:"база",type:"num",text:"Реши уравнение: 7 − (3x − 5) = 3",ans:[e("3")],img:"",
+  hints:["Перед скобкой просто минус — это то же, что умножить на −1.",
+         "Знаки внутри меняются оба: 3x → −3x, а −5 → +5.",
+         "Получится 12 − 3x = 3."],
+  sol:"<div class='step'>1. Минус перед скобкой меняет оба знака:</div>"+
+      "<div class='fx'>7 − 3x + 5 = 3</div>"+
+      "<div class='step'>2. 7 + 5 = 12.</div>"+
+      "<div class='fx'>12 − 3x = 3 → −3x = −9 → x = 3</div>"+
+      "<div class='step'><b>Ответ: 3.</b></div>"+
+      "<div class='step mini'>Проверка: 7 − (9 − 5) = 7 − 4 = 3 ✓</div>"},
+
+ {id:4,lvl:"база",type:"num",text:"Реши уравнение: −(2x − 8) = 4",ans:[e("2")],img:"",
+  hints:["Раскрой скобку: −2x + 8.",
+         "−2x + 8 = 4.",
+         "Перенеси 8 вправо: −2x = −4."],
+  sol:"<div class='fx'>−2x + 8 = 4</div>"+
+      "<div class='step'>Переносим 8: −2x = 4 − 8 = −4.</div>"+
+      "<div class='fx'>x = <span class='fr'><b>−4</b><i>−2</i></span> = 2</div>"+
+      "<div class='step'><b>Ответ: 2.</b></div>"+
+      "<div class='step mini'>Это уравнение, поэтому при делении на −2 ничего не переворачивается. Проверка: −(4 − 8) = 4 ✓</div>"},
+
+ {id:5,lvl:"база",type:"num",text:"Реши уравнение: 4(x − 1) − 3(x − 2) = 9",ans:[e("7")],img:"",
+  hints:["Раскрой обе скобки по очереди.",
+         "Вторая скобка с минусом: −3 · x = −3x и −3 · (−2) = +6.",
+         "Соберётся x + 2 = 9."],
+  sol:"<div class='step'>1. Первая скобка: 4x − 4. Вторая: −3x + 6.</div>"+
+      "<div class='fx'>4x − 4 − 3x + 6 = 9</div>"+
+      "<div class='step'>2. Приводим подобные: 4x − 3x = x, −4 + 6 = 2.</div>"+
+      "<div class='fx'>x + 2 = 9 → x = 7</div>"+
+      "<div class='step'><b>Ответ: 7.</b></div>"+
+      "<div class='step mini'>Проверка: 4 · 6 − 3 · 5 = 24 − 15 = 9 ✓</div>"},
+
+ {id:6,lvl:"средний",type:"num",text:"Реши уравнение: x/2 − x/3 = 1",ans:[e("6")],img:"",
+  hints:["Найди общий знаменатель для 2 и 3.",
+         "Это 6. Домножь на 6 каждое слагаемое, включая единицу справа.",
+         "Получится 3x − 2x = 6."],
+  sol:"<div class='step'>1. Общий знаменатель 6. Домножаем всё:</div>"+
+      "<div class='fx'>6 · <span class='fr'><b>x</b><i>2</i></span> − 6 · <span class='fr'><b>x</b><i>3</i></span> = 6 · 1</div>"+
+      "<div class='step'>2. 6 : 2 = 3 и 6 : 3 = 2:</div>"+
+      "<div class='fx'>3x − 2x = 6 → x = 6</div>"+
+      "<div class='step'><b>Ответ: 6.</b></div>"+
+      "<div class='step mini'>Частая потеря: забыть домножить единицу справа и написать 3x − 2x = 1.</div>"},
+
+ {id:7,lvl:"средний",type:"num",text:"Реши уравнение: (x + 1)/3 − (x − 1)/4 = 1",ans:[e("5")],img:"",
+  hints:["Общий знаменатель для 3 и 4 — это 12.",
+         "После домножения числители обязательно берутся в скобки: 4(x + 1) и 3(x − 1).",
+         "Не забудь: перед второй скобкой минус."],
+  sol:"<div class='step'>1. Домножаем на 12. 12 : 3 = 4, 12 : 4 = 3:</div>"+
+      "<div class='fx'>4(x + 1) − 3(x − 1) = 12</div>"+
+      "<div class='step'>2. Раскрываем. Вторая скобка с минусом:</div>"+
+      "<div class='fx'>4x + 4 − 3x + 3 = 12</div>"+
+      "<div class='step'>3. Приводим подобные:</div>"+
+      "<div class='fx'>x + 7 = 12 → x = 5</div>"+
+      "<div class='step'><b>Ответ: 5.</b></div>"+
+      "<div class='step mini'>Проверка: 6/3 − 4/4 = 2 − 1 = 1 ✓</div>"},
+
+ {id:8,lvl:"средний",type:"num",text:"Реши уравнение: (2x − 1)/5 = (x + 4)/3",ans:[e("23")],img:"",
+  hints:["Общий знаменатель 5 и 3 — это 15.",
+         "Домножив, получишь 3(2x − 1) = 5(x + 4).",
+         "Раскрой обе скобки и собери иксы слева."],
+  sol:"<div class='step'>1. Домножаем на 15: слева 15 : 5 = 3, справа 15 : 3 = 5.</div>"+
+      "<div class='fx'>3(2x − 1) = 5(x + 4)</div>"+
+      "<div class='step'>2. Раскрываем обе скобки:</div>"+
+      "<div class='fx'>6x − 3 = 5x + 20</div>"+
+      "<div class='step'>3. Иксы влево, числа вправо:</div>"+
+      "<div class='fx'>6x − 5x = 20 + 3 → x = 23</div>"+
+      "<div class='step'><b>Ответ: 23.</b></div>"+
+      "<div class='step mini'>Проверка: (46 − 1)/5 = 9 и (23 + 4)/3 = 9 ✓</div>"},
+
+ {id:9,lvl:"сложный",type:"num",text:"Реши неравенство −2x > 6 и назови наибольшее целое число, которое ему удовлетворяет.",ans:[e("-4")],img:CF["z9"],
+  hints:["Раздели обе части на −2.",
+         "Делим на отрицательное — знак неравенства переворачивается: x < −3.",
+         "Ближайшее целое левее −3 и есть ответ. Сама −3 не подходит: знак строгий."],
+  sol:"<div class='step'>1. Делим на −2 и переворачиваем знак:</div>"+
+      "<div class='fx'>x &lt; −3</div>"+
+      "<div class='step'>2. Точка −3 выколотая, штриховка влево. Наибольшее целое в этой части — это −4.</div>"+
+      "<div class='step'><b>Ответ: −4.</b></div>"+
+      "<div class='step mini'>Проверка: при x = −4 получаем −2 · (−4) = 8 &gt; 6 ✓, а при x = −3 выходит ровно 6, что уже не больше шести.</div>"},
+
+ {id:10,lvl:"сложный",type:"num",text:"Реши неравенство 5 − 3x ≤ −1 и назови наименьшее целое число, которое ему удовлетворяет.",ans:[e("2")],img:CF["z10"],
+  hints:["Перенеси 5 вправо: −3x ≤ −6.",
+         "Дели на −3 и переворачивай знак: x ≥ 2.",
+         "Знак нестрогий, значит сама двойка подходит."],
+  sol:"<div class='step'>1. Переносим 5 вправо:</div>"+
+      "<div class='fx'>−3x ≤ −1 − 5 = −6</div>"+
+      "<div class='step'>2. Делим на −3, знак переворачивается:</div>"+
+      "<div class='fx'>x ≥ 2</div>"+
+      "<div class='step'>3. Точка закрашенная, двойка входит. Она и есть наименьшее целое.</div>"+
+      "<div class='step'><b>Ответ: 2.</b></div>"+
+      "<div class='step mini'>Проверка: при x = 2 получаем 5 − 6 = −1 ≤ −1 ✓, а при x = 1 выходит 2, это больше −1.</div>"}
+];
+
+/* ---------- разбор ответа ---------- */
+function norm(s){
+  return String(s).toLowerCase().replace(/\s+/g,"")
+    .replace(/[\u2013\u2014\u2212]/g,"-")
+    .replace(/[\u00d7\u00b7]/g,"*")
+    .replace(/,/g,".")
+    .replace(/^(ответ:?|x=|y=|α=|a=)/,"");
+}
+function toNum(str){
+  var t = norm(str);
+  if(!t) return NaN;
+  t = t.replace(/\u221a/g,"sqrt").replace(/\u03c0/g,"pi");
+  t = t.replace(/sqrt(\d+(?:\.\d+)?)/g,"sqrt($1)");
+  t = t.replace(/(\d)sqrt/g,"$1*sqrt");
+  t = t.replace(/(\d)pi/g,"$1*pi");
+  t = t.replace(/(\d)\(/g,"$1*(").replace(/\)(\d)/g,")*$1").replace(/\)\(/g,")*(");
+  if(!/^[-+*/().0-9a-z]+$/.test(t)) return NaN;
+  if(t.replace(/sqrt|pi/g,"").match(/[a-z]/)) return NaN;
+  try{
+    var v = new Function("sqrt","pi","return ("+t+");")(Math.sqrt, Math.PI);
+    return (typeof v === "number" && isFinite(v)) ? v : NaN;
+  }catch(err){ return NaN; }
+}
+function same(given, right, tol){
+  var a = toNum(given), b = toNum(right);
+  if(!isNaN(a) && !isNaN(b)){
+    var t = tol || 1e-9;
+    return Math.abs(a-b) <= Math.max(t, Math.abs(b)*t);
+  }
+  return norm(given) === norm(right);
+}
+
+/* ---------- отрисовка ---------- */
+var state = {};
+var box = document.getElementById("tasks");
+
+TASKS.forEach(function(t){
+  state[t.id] = {tries:0, hints:0, done:false, ok:false, given:"", sel:null};
+  var el = document.createElement("div");
+  el.className = "task"; el.id = "t"+t.id;
+  var body = '<div><span class="tnum">'+t.id+'.</span>'+t.text+
+             '<span class="lvl">'+t.lvl+'</span></div>';
+  if(t.img){ body += '<div class="fig">'+t.img+'</div>'; }
+  if(t.type === "choice"){
+    body += '<div class="opts">'+t.options.map(function(o,i){
+      return '<label class="opt" data-v="'+o+'"><input type="radio" name="q'+t.id+'" value="'+o+'"> '+o+'</label>';
+    }).join("")+'</div>';
+  } else {
+    body += '<div class="keys">'+
+      ["−",","].map(function(k){
+        return '<button class="key" data-k="'+k+'" type="button">'+k+'</button>';}).join("")+
+      '</div><input type="text" id="in'+t.id+'" inputmode="text" autocapitalize="off" '+
+      'autocorrect="off" autocomplete="off" spellcheck="false" placeholder="ответ">';
+  }
+  body += '<div class="row" style="margin-top:10px">'+
+          '<button class="pri sm chk">Проверить</button>'+
+          '<button class="sm hnt">Подсказка</button></div>'+
+          '<div class="hints"></div><div class="verdict"></div><div class="sol"></div>';
+  el.innerHTML = body;
+  box.appendChild(el);
+
+  el.querySelectorAll(".key").forEach(function(b){
+    b.addEventListener("click", function(){
+      var inp = document.getElementById("in"+t.id);
+      var k = b.dataset.k === "−" ? "-" : b.dataset.k;
+      var s = inp.selectionStart || inp.value.length;
+      inp.value = inp.value.slice(0,s) + k + inp.value.slice(inp.selectionEnd || s);
+      inp.focus(); inp.setSelectionRange(s+k.length, s+k.length);
+    });
+  });
+  if(t.type === "choice"){
+    el.querySelectorAll(".opt").forEach(function(l){
+      l.addEventListener("click", function(){
+        el.querySelectorAll(".opt").forEach(function(x){x.classList.remove("sel");});
+        l.classList.add("sel"); state[t.id].sel = l.dataset.v;
+      });
+    });
+  } else {
+    el.querySelector("#in"+t.id).addEventListener("keydown", function(ev){
+      if(ev.key === "Enter"){ ev.preventDefault(); check(t.id); }
+    });
+  }
+  el.querySelector(".chk").addEventListener("click", function(){ check(t.id); });
+  el.querySelector(".hnt").addEventListener("click", function(){ hint(t.id); });
+});
+
+function hint(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var host = document.querySelector("#t"+id+" .hints");
+  if(s.hints >= t.hints.length){
+    if(!host.querySelector(".last")){
+      var w = document.createElement("div");
+      w.className = "hint last"; w.textContent = "Подсказки закончились — нажми «Проверить», решение откроется после второй попытки.";
+      host.appendChild(w);
+    }
+    return;
+  }
+  var h = document.createElement("div");
+  h.className = "hint";
+  h.textContent = "Подсказка " + (s.hints+1) + ": " + t.hints[s.hints];
+  host.appendChild(h);
+  s.hints++;
+}
+
+function check(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var el = document.getElementById("t"+id);
+  var v = document.querySelector(".verdict");
+  v = el.querySelector(".verdict");
+  var given = (t.type === "choice") ? (s.sel || "") :
+              (document.getElementById("in"+id).value || "");
+  if(!given.trim()){ v.className = "verdict bad"; v.textContent = "Введи ответ."; return; }
+  s.given = given; s.tries++;
+  var ok = t.ans.some(function(a){ return same(given, d(a), t.tol); });
+  s.ok = ok; s.done = ok || s.tries >= 2;
+  el.classList.remove("ok","bad");
+  el.classList.add(ok ? "ok" : "bad");
+  v.className = "verdict " + (ok ? "ok" : "bad");
+  if(ok){
+    v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    showSol(el, t);
+  } else if(s.tries === 1){
+    v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+  } else {
+    v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    showSol(el, t);
+  }
+  progress();
+}
+function showSol(el, t){
+  var host = el.querySelector(".sol");
+  if(host.dataset.on) return;
+  host.dataset.on = "1";
+  var det = document.createElement("details");
+  det.open = true;
+  det.innerHTML = "<summary>Решение</summary><div class='step'>"+t.sol+"</div>";
+  host.appendChild(det);
+}
+function progress(){
+  var done = TASKS.filter(function(t){return state[t.id].done;}).length;
+  var ok = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  document.getElementById("progress").textContent =
+    "решено " + done + " из " + TASKS.length + " · верно " + ok;
+}
+document.getElementById("checkall").addEventListener("click", function(){
+  TASKS.forEach(function(t){
+    var s = state[t.id];
+    var given = (t.type === "choice") ? (s.sel || "") : (document.getElementById("in"+t.id).value || "");
+    if(given.trim() && !s.done) check(t.id);
+  });
+  var first = TASKS.find(function(t){ return !state[t.id].done; });
+  var note = first ? "Осталась задача " + first.id + "." : "Все задачи закрыты.";
+  document.getElementById("progress").textContent += " · " + note;
+});
+progress();
+
+/* ---------- фото ---------- */
+var photos = [];
+document.getElementById("photos").addEventListener("change", function(ev){
+  var files = Array.prototype.slice.call(ev.target.files || []);
+  files.forEach(function(f){
+    var r = new FileReader();
+    r.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var m = 1400, w = img.width, h = img.height;
+        if(Math.max(w,h) > m){ var k = m/Math.max(w,h); w = Math.round(w*k); h = Math.round(h*k); }
+        var c = document.createElement("canvas"); c.width = w; c.height = h;
+        c.getContext("2d").drawImage(img, 0, 0, w, h);
+        photos.push({url: c.toDataURL("image/jpeg", 0.7), task: ""});
+        drawThumbs();
+      };
+      img.src = r.result;
+    };
+    r.readAsDataURL(f);
+  });
+  ev.target.value = "";
+});
+function drawThumbs(){
+  var host = document.getElementById("thumbs");
+  host.innerHTML = "";
+  var total = 0;
+  photos.forEach(function(p, i){
+    total += p.url.length * 0.75;
+    var d0 = document.createElement("div"); d0.className = "thumb";
+    var opts = '<option value="">задача…</option>' + TASKS.map(function(t){
+      return '<option value="'+t.id+'"'+(p.task==String(t.id)?" selected":"")+'>№'+t.id+'</option>';
+    }).join("");
+    d0.innerHTML = '<img src="'+p.url+'" alt="фото решения"><button type="button">×</button>'+
+                   '<select>'+opts+'</select>';
+    d0.querySelector("button").addEventListener("click", function(){ photos.splice(i,1); drawThumbs(); });
+    d0.querySelector("select").addEventListener("change", function(ev){ p.task = ev.target.value; });
+    host.appendChild(d0);
+  });
+  var note = document.getElementById("repnote");
+  if(total > 15e6){ note.textContent = "Фото уже больше 15 МБ — отчёт может отправляться долго, лишние лучше удалить."; }
+  else if(photos.length){ note.textContent = "Фото в отчёте: " + photos.length + "."; }
+  else { note.textContent = ""; }
+}
+
+/* ---------- отчёт ---------- */
+var ENDPOINT = "https://script.google.com/macros/s/AKfycbwqIhgBtFnoUik3N1Lh_YRhNeEFAjmXWSxBNoX1a_Yxu-2dEKHFwo4Dd5Ch9UTOHH-X/exec";
+var SECRET = "artteach2026";
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function buildReport(){
+  var name = (document.getElementById("name").value || "").trim() || "без имени";
+  var now = new Date();
+  var mins = Math.max(1, Math.round((Date.now()-started)/60000));
+  var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  var data = {tип:"дз", предмет:"математика", тема:"Минус перед скобкой, общий знаменатель, знак неравенства",
+    ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
+    верно:okN, всего:TASKS.length, задачи:[]};
+  var rows = TASKS.map(function(t){
+    var s = state[t.id];
+    data.задачи.push({n:t.id, условие:t.text.replace(/<[^>]+>/g,""), ответ_ученика:s.given,
+      верный_ответ:t.ans.map(d).join(" или "), верно:s.ok, попыток:s.tries, подсказок:s.hints,
+      уровень:t.lvl});
+    return "<tr><td>"+t.id+"</td><td style='text-align:left'>"+esc(t.text.replace(/<[^>]+>/g,""))+
+      "</td><td>"+esc(s.given||"—")+"</td><td>"+esc(t.ans.map(d).join(" / "))+"</td><td>"+
+      (s.ok?"верно":(s.given?"неверно":"не решал"))+"</td><td>"+s.tries+"</td><td>"+s.hints+"</td></tr>";
+  }).join("");
+  var pics = photos.map(function(p,i){
+    return "<figure><img src='"+p.url+"'><figcaption>Фото "+(i+1)+
+      (p.task?" — к задаче №"+p.task:"")+"</figcaption></figure>";
+  }).join("");
+  var html = "<!doctype html><html lang='ru'><head><meta charset='utf-8'>"+
+    "<meta name='viewport' content='width=device-width,initial-scale=1'>"+
+    "<title>Отчёт — "+esc(name)+" — минус, дроби и знак неравенства</title><style>"+
+    "body{font:16px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;padding:20px;color:#16181d;background:#fff}"+
+    "h1{font-size:22px;margin:0 0 4px}.m{color:#5b6270;font-size:15px}"+
+    "table{border-collapse:collapse;width:100%;margin-top:14px;font-size:15px}"+
+    "th,td{border:1px solid #dfe3ea;padding:6px 8px;text-align:center}th{background:#eef3fb}"+
+    "figure{margin:14px 0}img{max-width:100%;border:1px solid #dfe3ea;border-radius:8px}"+
+    "figcaption{color:#5b6270;font-size:14px;margin-top:4px}</style></head><body>"+
+    "<h1>Отчёт по домашнему заданию</h1>"+
+    "<div class='m'>Тема: минус перед скобкой, общий знаменатель, знак неравенства</div>"+
+    "<div class='m'>Ученик: <b>"+esc(name)+"</b> · сдано: "+esc(now.toLocaleString("ru-RU"))+
+    " · время работы: около "+mins+" мин</div>"+
+    "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)</h2>"+
+    "<table><tr><th>№</th><th>Задача</th><th>Ответ ученика</th><th>Верный ответ</th>"+
+    "<th>Итог</th><th>Попыток</th><th>Подсказок</th></tr>"+rows+"</table>"+
+    (pics ? "<h2>Фото решений</h2>"+pics : "<p class='m'>Фото решений не прикреплены.</p>")+
+    "<script type='application/json' id='result-data'>"+
+    JSON.stringify(data).replace(/</g,"\\u003c")+"<\/script></body></html>";
+  var stamp = now.getDate()+"-"+(now.getMonth()+1);
+  return {
+    html: html,
+    name: name,
+    ok: okN,
+    total: TASKS.length,
+    file: "Отчёт_Минус_дроби_неравенства_"+name.replace(/\s+/g,"_")+"_"+stamp+".html",
+    caption: name+" · минус, дроби и знак неравенства · "+okN+" из "+TASKS.length+
+             " ("+Math.round(okN/TASKS.length*100)+"%)"
+  };
+}
+
+document.getElementById("send").addEventListener("click", function(){
+  var note = document.getElementById("repnote");
+  var who = (document.getElementById("name").value || "").trim();
+  if(!who){ note.className = "meta bad-note"; note.textContent = "Сначала впиши имя вверху страницы."; return; }
+  note.className = "meta";
+  var r = buildReport();
+  note.textContent = "Отправляю…";
+  var payload = {
+    secret: SECRET,
+    code: STUDENT_CODE,
+    student: r.name,
+    topic: TOPIC,
+    ok: r.ok,
+    total: r.total,
+    name: r.file,
+    caption: r.caption,
+    file: btoa(unescape(encodeURIComponent(r.html)))
+  };
+  fetch(ENDPOINT, {method:"POST", mode:"no-cors", body: JSON.stringify(payload)})
+    .then(function(){
+      note.textContent = "Отправлено преподавателю." +
+        (photos.length ? "" : " Фото решений не приложены — если решал в тетради, приложи их и отправь ещё раз.") +
+        " Если хочешь, сохрани копию себе кнопкой ниже.";
+    })
+    .catch(function(){
+      note.textContent = "Не получилось отправить. Скачай файл кнопкой ниже и пришли его вручную.";
+    });
+});
+
+document.getElementById("report").addEventListener("click", function(){
+  var r = buildReport();
+  var blob = new Blob([r.html], {type:"text/html;charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = r.file;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  document.getElementById("repnote").textContent = "Файл скачан — он в папке загрузок.";
+});
+
+
+/* ---------- движок тренажёров ---------- */
+function makeTrainer(id, items){
+  var q=document.getElementById(id+"q"), f=document.getElementById(id+"f"),
+      a=document.getElementById(id+"a"), m=document.getElementById(id+"m"),
+      b=document.getElementById(id+"b"), sc=document.getElementById(id+"s");
+  var order=[], perm=[], i=0, ok=0, answered=false;
+
+  function shuffle(n){
+    var arr=[], k, j, t;
+    for(k=0;k<n;k++) arr.push(k);
+    for(k=arr.length-1;k>0;k--){ j=Math.floor(Math.random()*(k+1)); t=arr[k]; arr[k]=arr[j]; arr[j]=t; }
+    return arr;
+  }
+  function norm(s){
+    return String(s).trim().toLowerCase().replace(/\s+/g,"").replace(/−/g,"-").replace(/,/g,".");
+  }
+  function same(x, y){
+    var p=parseFloat(norm(x)), r=parseFloat(norm(y));
+    if(isFinite(p) && isFinite(r)) return Math.abs(p-r) < 1e-9;
+    return norm(x) === norm(y);
+  }
+  function score(){
+    sc.textContent = "вопрос " + Math.min(i + 1, items.length) + " из " + items.length +
+                     " · верно " + ok;
+  }
+
+  function finish(){
+    q.innerHTML=""; f.innerHTML=""; a.innerHTML=""; m.innerHTML="";
+    var pct=Math.round(ok/items.length*100);
+    var word = pct===100 ? "Всё верно — тема закрыта." :
+               pct>=70 ? "Хорошо, но пару мест стоит перечитать." :
+               "Стоит вернуться к теории и пройти ещё раз.";
+    b.innerHTML='<div class="trdone" style="flex:1 1 100%">'+ok+" из "+items.length+
+      " ("+pct+" %) · "+word+'</div><button type="button" class="pri" data-go="1">Пройти заново</button>';
+    sc.textContent="готово";
+  }
+
+  function show(){
+    answered=false;
+    m.innerHTML=""; b.innerHTML="";
+    var t=items[order[i]];
+    q.innerHTML="<b>"+(i+1)+".</b> "+t.q;
+    f.innerHTML=t.fig || "";
+    f.style.display = t.fig ? "" : "none";
+    if(t.opts){
+      perm = shuffle(t.opts.length);          /* perm[позиция] = номер варианта в банке */
+      var html='<div class="tropts" id="'+id+'o">';
+      for(var k=0;k<perm.length;k++)
+        html+='<button type="button" class="tropt" data-k="'+perm[k]+'">'+t.opts[perm[k]]+'</button>';
+      a.innerHTML = html+"</div>";
+      var box=document.getElementById(id+"o");
+      box.addEventListener("click", function(ev){
+        var el=ev.target; while(el && el!==box && el.className.indexOf("tropt")<0) el=el.parentNode;
+        if(!el || el===box || answered) return;
+        pick(parseInt(el.getAttribute("data-k"),10), box);
+      });
+    } else {
+      a.innerHTML='<div class="trnum"><span>Ответ:</span>'+
+        '<input type="text" id="'+id+'i" inputmode="text" autocomplete="off" '+
+        'autocorrect="off" spellcheck="false" placeholder="число">'+
+        '<button type="button" class="pri" data-check="1">Проверить</button></div>';
+      var inp=document.getElementById(id+"i");
+      inp.addEventListener("keydown", function(ev){ if(ev.key==="Enter") check(); });
+    }
+    score();
+  }
+
+  function verdict(good, t){
+    answered=true;
+    if(good) ok++;
+    i++;
+    m.innerHTML='<div class="v '+(good?"ok":"bad")+'">'+(good?"Верно.":"Неверно.")+"</div>"+
+                '<div class="why">'+t.why+"</div>";
+    b.innerHTML = (i<items.length)
+      ? '<button type="button" class="pri" data-next="1">Дальше</button>'
+      : '<button type="button" class="pri" data-next="1">Показать итог</button>';
+    score();
+  }
+  function pick(k, box){
+    var t=items[order[i]], good = (k === t.ans);
+    var bs=box.querySelectorAll(".tropt");
+    for(var j=0;j<bs.length;j++){
+      var n=parseInt(bs[j].getAttribute("data-k"),10);
+      if(n===t.ans) bs[j].className="tropt right";
+      else if(n===k) bs[j].className="tropt wrong";
+    }
+    box.className="tropts done";
+    verdict(good, t);
+  }
+  function check(){
+    if(answered) return;
+    var t=items[order[i]], inp=document.getElementById(id+"i");
+    var v=(inp.value||"").trim();
+    if(!v){ m.innerHTML='<div class="why">Впиши ответ.</div>'; return; }
+    var good = t.ans.some(function(x){ return same(v, x); });
+    inp.disabled=true;
+    if(!good) m.innerHTML="";
+    verdict(good, t);
+    if(!good) m.innerHTML='<div class="v bad">Неверно. Правильный ответ: '+t.ans[0]+".</div>"+
+                          '<div class="why">'+t.why+"</div>";
+  }
+
+  b.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-next")){ if(i<items.length) show(); else finish(); }
+    if(el.getAttribute && el.getAttribute("data-go")){ start(); }
+  });
+  a.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-check")) check();
+  });
+
+  function start(){ order=shuffle(items.length); i=0; ok=0; show(); }
+  start();
+}
+
+makeTrainer("tl1", [{"q": "Раскрой скобки: <b>−(x − 5)</b>", "fig": "", "opts": ["−x + 5", "−x − 5", "x − 5", "x + 5"], "ans": 0, "why": "Минус меняет знак у обоих слагаемых: x становится −x, а −5 становится +5."}, {"q": "Раскрой скобки: <b>−(3x + 2)</b>", "fig": "", "opts": ["−3x − 2", "−3x + 2", "3x − 2", "3x + 2"], "ans": 0, "why": "Оба слагаемых были со знаком плюс, оба стали со знаком минус."}, {"q": "Раскрой скобки: <b>7 − (x − 4)</b>", "fig": "", "opts": ["11 − x", "3 − x", "11 + x", "3 + x"], "ans": 0, "why": "7 − x + 4. Минус перед скобкой превратил −4 в +4, и 7 + 4 = 11. Ответ 3 − x получается, если забыть поменять знак у четвёрки."}, {"q": "Раскрой скобки: <b>5 − 2(x − 3)</b>", "fig": "", "opts": ["11 − 2x", "−1 − 2x", "11 + 2x", "5 − 2x − 6"], "ans": 0, "why": "−2 · x = −2x и −2 · (−3) = +6, значит 5 − 2x + 6 = 11 − 2x."}, {"q": "Раскрой скобки: <b>−2(4 − x)</b>", "fig": "", "opts": ["−8 + 2x", "−8 − 2x", "8 − 2x", "8 + 2x"], "ans": 0, "why": "−2 · 4 = −8, а −2 · (−x) = +2x. Минус на минус даёт плюс."}, {"q": "Раскрой скобки: <b>3 − (2 − x)</b>", "fig": "", "opts": ["1 + x", "1 − x", "5 − x", "5 + x"], "ans": 0, "why": "3 − 2 + x = 1 + x. У двойки знак стал минус, у −x стал плюс."}, {"q": "Раскрой скобки: <b>−(−x + 6)</b>", "fig": "", "opts": ["x − 6", "−x − 6", "x + 6", "−x + 6"], "ans": 0, "why": "Минус перед скобкой переворачивает оба знака: −x становится +x, +6 становится −6."}, {"q": "Раскрой скобки: <b>−3(x − 2)</b>", "fig": "", "opts": ["−3x + 6", "−3x − 6", "3x − 6", "−3x + 2"], "ans": 0, "why": "−3 · x = −3x, −3 · (−2) = +6."}, {"q": "Раскрой скобки: <b>a − (b − c)</b>", "fig": "", "opts": ["a − b + c", "a − b − c", "a + b − c", "a + b + c"], "ans": 0, "why": "Скобка раскрывается по тому же правилу, буквы ничего не меняют."}, {"q": "Раскрой скобки: <b>10 − 4(2 − 3x)</b>", "fig": "", "opts": ["2 + 12x", "2 − 12x", "18 − 12x", "18 + 12x"], "ans": 0, "why": "−4 · 2 = −8 и −4 · (−3x) = +12x, значит 10 − 8 + 12x = 2 + 12x."}]);
+makeTrainer("tl2", [{"q": "На какое число домножить обе части, чтобы ушли дроби?<br><span style=\"font-size:20px\"><span class=\"fr\"><b>x</b><i>2</i></span> + <span class=\"fr\"><b>x</b><i>3</i></span> = 1</span>", "fig": "", "opts": ["6", "5", "12", "2"], "ans": 0, "why": "Нужно наименьшее число, которое делится и на 2, и на 3. Это 6. Пятёрка не годится: 2 и 3 не складывают, а перемножают или берут НОК."}, {"q": "На какое число домножить обе части, чтобы ушли дроби?<br><span style=\"font-size:20px\"><span class=\"fr\"><b>x</b><i>4</i></span> − <span class=\"fr\"><b>1</b><i>6</i></span> = 0</span>", "fig": "", "opts": ["12", "24", "10", "6"], "ans": 0, "why": "12 делится и на 4, и на 6. Число 24 тоже подойдёт, но оно лишнее — берут наименьшее."}, {"q": "На какое число домножить обе части, чтобы ушли дроби?<br><span style=\"font-size:20px\"><span class=\"fr\"><b>x − 1</b><i>5</i></span> = <span class=\"fr\"><b>2</b><i>3</i></span></span>", "fig": "", "opts": ["15", "8", "5", "10"], "ans": 0, "why": "5 и 3 не делятся друг на друга, поэтому общий знаменатель 5 · 3 = 15."}, {"q": "На какое число домножить обе части, чтобы ушли дроби?<br><span style=\"font-size:20px\"><span class=\"fr\"><b>x</b><i>2</i></span> − <span class=\"fr\"><b>x + 1</b><i>8</i></span> = 1</span>", "fig": "", "opts": ["8", "16", "10", "2"], "ans": 0, "why": "8 уже делится на 2, поэтому больше ничего искать не нужно. И не забудь домножить единицу справа: она станет 8."}, {"q": "На какое число домножить обе части, чтобы ушли дроби?<br><span style=\"font-size:20px\"><span class=\"fr\"><b>1</b><i>3</i></span> + <span class=\"fr\"><b>x</b><i>9</i></span> = 2</span>", "fig": "", "opts": ["9", "27", "12", "3"], "ans": 0, "why": "9 делится на 3, значит 9 и есть общий знаменатель."}, {"q": "На какое число домножить обе части, чтобы ушли дроби?<br><span style=\"font-size:20px\"><span class=\"fr\"><b>2x</b><i>7</i></span> − <span class=\"fr\"><b>x</b><i>2</i></span> = 1</span>", "fig": "", "opts": ["14", "9", "7", "28"], "ans": 0, "why": "7 и 2 взаимно просты, общий знаменатель 7 · 2 = 14."}, {"q": "На какое число домножить обе части, чтобы ушли дроби?<br><span style=\"font-size:20px\"><span class=\"fr\"><b>x</b><i>10</i></span> − <span class=\"fr\"><b>x</b><i>15</i></span> = 1</span>", "fig": "", "opts": ["30", "25", "150", "5"], "ans": 0, "why": "Нужно наименьшее общее кратное 10 и 15 — это 30. 150 тоже делится на оба, но это лишние нули в вычислениях."}, {"q": "На какое число домножить обе части, чтобы ушли дроби?<br><span style=\"font-size:20px\"><span class=\"fr\"><b>x + 2</b><i>6</i></span> = <span class=\"fr\"><b>x − 1</b><i>4</i></span></span>", "fig": "", "opts": ["12", "24", "10", "2"], "ans": 0, "why": "12 делится и на 6, и на 4. После домножения будет 2(x + 2) = 3(x − 1) — числители обязательно в скобках."}]);
+makeTrainer("tl3", [{"q": "Умножаем обе части на −1. Что получится?<br><b>−x &gt; 3</b>", "fig": "", "opts": ["x &lt; −3", "x &gt; −3", "x &lt; 3", "x &gt; 3"], "ans": 0, "why": "Умножили на отрицательное — знак неравенства перевернулся. Проверь числом: x = −4 даёт −(−4) = 4 &gt; 3 ✓."}, {"q": "Раздели обе части на −2.<br><b>−2x ≤ 8</b>", "fig": "", "opts": ["x ≥ −4", "x ≤ −4", "x ≥ 4", "x ≤ 4"], "ans": 0, "why": "Делили на отрицательное, значит ≤ стало ≥. Проверка: x = 0 даёт 0 ≤ 8 ✓, и ноль действительно больше −4."}, {"q": "Что происходит со знаком, когда <b>неравенство</b> умножают на −1?", "fig": "", "opts": ["переворачивается на противоположный", "остаётся прежним", "становится знаком равенства", "исчезает"], "ans": 0, "why": "Это главное правило неравенств. Умножение и деление на любое отрицательное число переворачивает знак."}, {"q": "Что происходит со знаком, когда <b>уравнение</b> умножают на −1?", "fig": "", "opts": ["ничего, знак равенства остаётся", "равенство становится неравенством", "знак переворачивается", "уравнение теряет корень"], "ans": 0, "why": "Знак равенства не переворачивается никогда. Переворачивается только знак неравенства — вот это место чаще всего и путают."}, {"q": "Какая точка нужна для ответа <b>x &gt; 2</b>?", "fig": "", "opts": ["выколотая, пустой кружок", "закрашенная", "любая", "закрашенная, но со стрелкой"], "ans": 0, "why": "Знак строгий, значит сама двойка в ответ не входит — кружок пустой."}, {"q": "Какая точка нужна для ответа <b>x ≤ 1</b>?", "fig": "", "opts": ["закрашенная", "выколотая", "две точки", "точка не нужна"], "ans": 0, "why": "Знак нестрогий, единица входит в ответ — кружок закрашивают."}, {"q": "Какое неравенство нарисовано?", "fig": "<svg viewBox=\"0 0 380 130\"><rect x=\"0\" y=\"0\" width=\"380\" height=\"130\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"215.3\" y1=\"70.0\" x2=\"22.0\" y2=\"70.0\" stroke=\"#2f6bd8\" stroke-width=\"5\" stroke-linecap=\"round\" opacity=\".85\"/><line x1=\"202.3\" y1=\"66.0\" x2=\"195.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"189.3\" y1=\"66.0\" x2=\"182.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"176.3\" y1=\"66.0\" x2=\"169.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"163.3\" y1=\"66.0\" x2=\"156.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"150.3\" y1=\"66.0\" x2=\"143.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"137.3\" y1=\"66.0\" x2=\"130.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"124.3\" y1=\"66.0\" x2=\"117.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"111.3\" y1=\"66.0\" x2=\"104.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"98.3\" y1=\"66.0\" x2=\"91.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"85.3\" y1=\"66.0\" x2=\"78.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"72.3\" y1=\"66.0\" x2=\"65.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"59.3\" y1=\"66.0\" x2=\"52.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"46.3\" y1=\"66.0\" x2=\"39.3\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"20.0\" y1=\"70.0\" x2=\"366.0\" y2=\"70.0\" stroke=\"#15181e\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 366.0 70.0 L 357.5 72.8 L 357.5 67.2 z\" fill=\"#15181e\"/><text x=\"360.0\" y=\"56.0\" font-size=\"15\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\" font-style=\"italic\">x</text><line x1=\"114.2\" y1=\"64.0\" x2=\"114.2\" y2=\"76.0\" stroke=\"#15181e\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"114.2\" y=\"98.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">−1</text><line x1=\"164.7\" y1=\"64.0\" x2=\"164.7\" y2=\"76.0\" stroke=\"#15181e\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"164.7\" y=\"98.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">0</text><line x1=\"215.3\" y1=\"64.0\" x2=\"215.3\" y2=\"76.0\" stroke=\"#15181e\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"215.3\" y=\"98.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">1</text><line x1=\"265.8\" y1=\"64.0\" x2=\"265.8\" y2=\"76.0\" stroke=\"#15181e\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"265.8\" y=\"98.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">2</text><circle cx=\"215.3\" cy=\"70.0\" r=\"6.5\" fill=\"#ffffff\" stroke=\"#15181e\" stroke-width=\"2.6\"/></svg>", "opts": ["x &lt; 1", "x ≤ 1", "x &gt; 1", "x ≥ 1"], "ans": 0, "why": "Точка пустая — знак строгий. Штриховка влево — значит меньше."}, {"q": "Какое неравенство нарисовано?", "fig": "<svg viewBox=\"0 0 380 130\"><rect x=\"0\" y=\"0\" width=\"380\" height=\"130\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"164.7\" y1=\"70.0\" x2=\"358.0\" y2=\"70.0\" stroke=\"#2f6bd8\" stroke-width=\"5\" stroke-linecap=\"round\" opacity=\".85\"/><line x1=\"177.7\" y1=\"66.0\" x2=\"170.7\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"190.7\" y1=\"66.0\" x2=\"183.7\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"203.7\" y1=\"66.0\" x2=\"196.7\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"216.7\" y1=\"66.0\" x2=\"209.7\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"229.7\" y1=\"66.0\" x2=\"222.7\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"242.7\" y1=\"66.0\" x2=\"235.7\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"255.7\" y1=\"66.0\" x2=\"248.7\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"268.7\" y1=\"66.0\" x2=\"261.7\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"281.7\" y1=\"66.0\" x2=\"274.7\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"294.7\" y1=\"66.0\" x2=\"287.7\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"307.7\" y1=\"66.0\" x2=\"300.7\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"320.7\" y1=\"66.0\" x2=\"313.7\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"333.7\" y1=\"66.0\" x2=\"326.7\" y2=\"50.0\" stroke=\"#2f6bd8\" stroke-width=\"1.8\" opacity=\".75\"/><line x1=\"20.0\" y1=\"70.0\" x2=\"366.0\" y2=\"70.0\" stroke=\"#15181e\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 366.0 70.0 L 357.5 72.8 L 357.5 67.2 z\" fill=\"#15181e\"/><text x=\"360.0\" y=\"56.0\" font-size=\"15\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\" font-style=\"italic\">x</text><line x1=\"114.2\" y1=\"64.0\" x2=\"114.2\" y2=\"76.0\" stroke=\"#15181e\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"114.2\" y=\"98.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">−3</text><line x1=\"164.7\" y1=\"64.0\" x2=\"164.7\" y2=\"76.0\" stroke=\"#15181e\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"164.7\" y=\"98.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">−2</text><line x1=\"215.3\" y1=\"64.0\" x2=\"215.3\" y2=\"76.0\" stroke=\"#15181e\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"215.3\" y=\"98.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">−1</text><line x1=\"265.8\" y1=\"64.0\" x2=\"265.8\" y2=\"76.0\" stroke=\"#15181e\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"265.8\" y=\"98.0\" font-size=\"16\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">0</text><circle cx=\"164.7\" cy=\"70.0\" r=\"7\" fill=\"#15181e\"/></svg>", "opts": ["x ≥ −2", "x &gt; −2", "x ≤ −2", "x &lt; −2"], "ans": 0, "why": "Точка закрашена — знак нестрогий. Штриховка вправо — значит больше."}, {"q": "Реши: <b>−3x &lt; 9</b>", "fig": "", "opts": ["x &gt; −3", "x &lt; −3", "x &gt; 3", "x &lt; 3"], "ans": 0, "why": "Делим на −3, знак переворачивается: x &gt; −3. Проверка: x = 0 даёт 0 &lt; 9 ✓."}, {"q": "Реши: <b>5 − x ≥ 2</b>", "fig": "", "opts": ["x ≤ 3", "x ≥ 3", "x ≤ −3", "x ≥ −3"], "ans": 0, "why": "Переносим: −x ≥ −3. Умножаем на −1 и переворачиваем знак: x ≤ 3. Проверка: x = 0 даёт 5 ≥ 2 ✓."}]);
+
+</script>
+</body>
+</html>
