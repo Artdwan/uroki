@@ -90,9 +90,9 @@ details[open] summary{margin-bottom:8px}
 .fig svg{width:100%;max-width:580px;height:auto}
 .fig{text-align:center;margin:14px 0}
 .trfig svg{width:100%;max-width:320px;height:auto}
-.fx{display:block;background:var(--acc-soft);border:1px solid var(--line);border-radius:10px;
-  padding:11px 13px;margin:12px 0;text-align:center;font-size:21px;line-height:2.1;
-  font-weight:600;overflow-x:auto}
+.fx{display:block;background:var(--acc-soft,var(--acc2,#e8f0ff));border:1px solid var(--line);
+  border-radius:10px;padding:11px 13px;margin:12px 0;text-align:center;font-size:21px;
+  line-height:2.1;font-weight:600;overflow-x:auto}
 .sol .fx,.ex .fx{font-size:19px;margin:9px 0}
 .def{border:1px solid var(--line);border-left:4px solid #2f6bd8;border-radius:10px;
   padding:11px 13px;margin:11px 0;background:#eef3fb}
@@ -120,11 +120,31 @@ details[open] summary{margin-bottom:8px}
 .steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
   border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
   display:flex;align-items:center;justify-content:center}
-.sheet .f-formula{margin:5px 0;font-size:14.5px;line-height:1.4}
+.pam h3{font-size:18px;margin:18px 0 2px}
+.pam h3:first-of-type{margin-top:10px}
+.fgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin:9px 0}
+.fbox{border:1px solid var(--line);border-radius:12px;padding:9px 12px 11px;background:var(--bg)}
+.fbox h4{margin:0 0 3px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.ff{font-size:18px;line-height:2.05;text-align:center;margin:4px 0;overflow-x:auto;
+  overflow-y:hidden;white-space:nowrap}
+@media (max-width:440px){.ff{font-size:17px}}
+.fbox p.small{margin:7px 0 0;line-height:1.45}
+.way{border:1px solid var(--line);border-radius:12px;padding:10px 12px 11px 46px;margin:9px 0;
+  position:relative;background:var(--bg)}
+.way .num{position:absolute;left:11px;top:12px;width:25px;height:25px;border-radius:50%;
+  background:var(--acc);color:#fff;font-size:14px;font-weight:700;display:flex;
+  align-items:center;justify-content:center}
+.way b.t{display:block;font-size:17px;margin-bottom:1px;line-height:1.3}
+.way .when{color:var(--muted);font-size:14.5px;line-height:1.4}
+.way p.small{margin:7px 0 0;line-height:1.45}
+.mn{color:#b3261e;font-weight:700}
+.sheet .f-formula{margin:5px 0;font-size:14.5px;line-height:1.75}
 @media print{
   .sheet>.meta{display:none}
-  .sheet h2{font-size:18px;margin:0 0 6px}
-  .sheet .f-formula{font-size:12.5px;line-height:1.33;margin:3px 0}
+  .sheet h2{font-size:18px;margin:0 0 5px}
+  .sheet .f-formula{font-size:12px;line-height:1.62;margin:2px 0}
+  .sheet .fr{font-size:11px;vertical-align:-0.55em}
 }
 
 .task.ok{border-color:var(--ok);background:var(--ok-soft)}
@@ -187,25 +207,45 @@ details[open] summary{margin-bottom:8px}
   </div>
 </div>
 
+<div class="card pam">
+
+<h2>Памятка: всё, что понадобится</h2>
+<div class="meta">Сюда возвращаются, когда застряли. Читать целиком сразу не нужно.</div>
+
+<h3>Знак минус</h3>
+<div class="fgrid"><div class="fbox"><h4>Минус у дроби</h4><div class="ff">−<span class='fr'><b>A</b><i>B</i></span> = <span class='fr'><b>−A</b><i>B</i></span> = <span class='fr'><b>A</b><i>−B</i></span></div><div class="ff"><span class='fr'><b>−A</b><i>−B</i></span> = <span class='fr'><b>A</b><i>B</i></span></div><p class="small">Минус можно держать перед дробью, у числителя или у знаменателя — значение одно и то же. Два минуса гасят друг друга.</p></div><div class="fbox"><h4>Вынести минус из разности</h4><div class="ff">a − b = −(b − a)</div><div class="ff">3x − 12 = −(12 − 3x)</div><p class="small">Меняем порядок — выносим минус. Отсюда вся работа с противоположными скобками: <span class='fr'><b>a − b</b><i>b − a</i></span> = −1.</p></div><div class="fbox"><h4>Вынести минус из суммы</h4><div class="ff">−a − b = −(a + b)</div><div class="ff">−4x − 20 = −4(x + 5)</div><p class="small">Если оба слагаемых со знаком минус, минус выносится за скобку целиком — вместе с общим множителем.</p></div><div class="fbox"><h4>Внести минус обратно</h4><div class="ff">−(a − b) = −a + b = b − a</div><div class="ff">−(a + b) = −a − b</div><p class="small">Раскрывая скобку с минусом, меняем знак <b>у каждого</b> слагаемого. Поменять только у первого — <span class="mn">ошибка</span>.</p></div></div>
+
+<h3>Формулы сокращённого умножения</h3>
+<div class="fgrid"><div class="fbox"><h4>Разность квадратов</h4><div class="ff">a² − b² = (a − b)(a + b)</div><div class="ff">9x² − 25 =</div><div class="ff">= (3x − 5)(3x + 5)</div></div><div class="fbox"><h4>Квадрат суммы</h4><div class="ff">(a + b)² = a² + 2ab + b²</div><div class="ff">x² + 6x + 9 = (x + 3)²</div></div><div class="fbox"><h4>Квадрат разности</h4><div class="ff">(a − b)² = a² − 2ab + b²</div><div class="ff">4x² − 12x + 9 = (2x − 3)²</div></div><div class="fbox"><h4>Под квадратом знаки меняют свободно</h4><div class="ff">(a − b)² = (b − a)²</div><div class="ff">(1 − 3x)² = (3x − 1)²</div><p class="small">Квадрат разности от перестановки <b>не меняется</b>, а сама разность — меняет знак: a − b = −(b − a). Путать эти два факта <span class="mn">нельзя</span>.</p></div></div>
+
+<h3>Разложение квадратного трёхчлена</h3>
+<div class="fx">ax² + bx + c = a(x − x₁)(x − x₂)</div><div class="ff">D = b² − 4ac,&nbsp;&nbsp;&nbsp;x₁,₂ = <span class='fr'><b>−b ± √<span class='rt'>D</span></b><i>2a</i></span></div><div class="fgrid"><div class="fbox"><h4>Когда a = 1</h4><div class="ff">x² − 7x + 10</div><div class="ff">D = 49 − 40 = 9</div><div class="ff">x = <span class='fr'><b>7 ± 3</b><i>2</i></span>, корни 5 и 2</div><div class="ff">= (x − 5)(x − 2)</div><p class="small">Корень x₁ даёт скобку (x − x₁): у корня 5 скобка (x − 5), у корня −1 — (x + 1).</p></div><div class="fbox"><h4>Когда a ≠ 1</h4><div class="ff">3x² + 5x − 2</div><div class="ff">D = 25 + 24 = 49</div><div class="ff">x = <span class='fr'><b>−5 ± 7</b><i>6</i></span>, корни <span class='fr'><b>1</b><i>3</i></span> и −2</div><div class="ff">= 3(x − <span class='fr'><b>1</b><i>3</i></span>)(x + 2) =</div><div class="ff">= (3x − 1)(x + 2)</div><p class="small">Коэффициент a обязательно заносят внутрь скобки с дробным корнем. Забыть его — <span class="mn">лишний множитель в ответе</span>.</p></div></div>
+
+<h3>Четыре способа разложить на множители</h3>
+<p class="small">Порядок всегда один: сначала пробуем вынести общий множитель,
+и только потом смотрим на формулу, трёхчлен или группировку.</p>
+<div class="way"><span class="num">1</span><b class="t">Вынесение общего множителя</b><div class="when">в каждом слагаемом есть одна и та же буква или у чисел есть общий делитель</div><div class="ff">6x³ − 9x² = 3x²(2x − 3)</div><div class="ff">2xy − x = x(2y − 1)</div><p class="small">Берут НОД чисел и каждую букву в <u>наименьшей</u> степени. Проверка — раскрыть скобку обратно.</p></div><div class="way"><span class="num">2</span><b class="t">Формула сокращённого умножения</b><div class="when">два члена и оба квадраты, либо три члена, где средний — удвоенное произведение</div><div class="ff">16 − x² = (4 − x)(4 + x)</div><div class="ff">a² − 8a + 16 = (a − 4)²</div><p class="small">Сумма квадратов a² + b² на множители <span class="mn">не раскладывается</span>.</p></div><div class="way"><span class="num">3</span><b class="t">Квадратный трёхчлен по корням</b><div class="when">три члена, а формула не подошла</div><div class="ff">2x² + 5x − 3, D = 49</div><div class="ff">корни −3 и <span class='fr'><b>1</b><i>2</i></span></div><div class="ff">= 2(x + 3)(x − <span class='fr'><b>1</b><i>2</i></span>) =</div><div class="ff">= (x + 3)(2x − 1)</div></div><div class="way"><span class="num">4</span><b class="t">Группировка</b><div class="when">четыре члена</div><div class="ff">ax + ay + bx + by =</div><div class="ff">= a(x + y) + b(x + y) =</div><div class="ff">= (x + y)(a + b)</div><p class="small">Пары подбирают так, чтобы в обеих вышла одна и та же скобка. Не вышла — переставь слагаемые и попробуй другую пару.</p></div>
+</div>
+
 <div class="card">
 
 <h2>1. Основное свойство дроби</h2>
 <p>С рациональными дробями работают по тем же правилам, что и с обыкновенными. Вспомни:
-<span class="fr"><b>5</b><i>12</i></span> = <span class="fr"><b>5 · 7</b><i>12 · 7</i></span> = <span class="fr"><b>35</b><i>84</i></span>, и значение
+<span class='fr'><b>5</b><i>12</i></span> = <span class='fr'><b>5 · 7</b><i>12 · 7</i></span> = <span class='fr'><b>35</b><i>84</i></span>, и значение
 дроби не изменилось.</p>
 <div class="def"><div class="n">ОСНОВНОЕ СВОЙСТВО</div>
 Если числитель и знаменатель дроби умножить или разделить на одно и то же выражение,
 <b>не равное нулю</b>, получится дробь, тождественно равная данной.</div>
-<div class="fx"><span class="fr"><b>A</b><i>B</i></span> = <span class="fr"><b>A · C</b><i>B · C</i></span>, где C ≠ 0</div>
+<div class="fx"><span class='fr'><b>A</b><i>B</i></span> = <span class='fr'><b>A · C</b><i>B · C</i></span>, где C ≠ 0</div>
 <p class="small"><b>Тождество</b> — это равенство, верное при <u>всех</u> значениях переменных,
-при которых обе части имеют смысл. Например, <span class="fr"><b>x − 1</b><i>x − 1</i></span> = 1 — тождество:
+при которых обе части имеют смысл. Например, <span class='fr'><b>x − 1</b><i>x − 1</i></span> = 1 — тождество:
 оно выполняется при всех x, кроме x = 1.</p>
 <div class="ex"><h3>Пример 1</h3>
-<p>Умножим числитель и знаменатель дроби <span class="fr"><b>3a²</b><i>4b</i></span> на одночлен 5b²:</p>
-<div class="fx"><span class="fr"><b>3a²</b><i>4b</i></span> = <span class="fr"><b>3a² · 5b²</b><i>4b · 5b²</i></span> = <span class="fr"><b>15a²b²</b><i>20b³</i></span></div>
+<p>Умножим числитель и знаменатель дроби <span class='fr'><b>3a²</b><i>4b</i></span> на одночлен 5b²:</p>
+<div class="fx"><span class='fr'><b>3a²</b><i>4b</i></span> = <span class='fr'><b>3a² · 5b²</b><i>4b · 5b²</i></span> = <span class='fr'><b>15a²b²</b><i>20b³</i></span></div>
 <div class="step">Говорят, что дробь <b>привели к новому знаменателю</b> 20b³.</div>
 <div class="step mini">Читая то же равенство справа налево, получаем сокращение:
-<span class="fr"><b>15a²b²</b><i>20b³</i></span> = <span class="fr"><b>3a²</b><i>4b</i></span>. Это две стороны одного свойства.</div></div>
+<span class='fr'><b>15a²b²</b><i>20b³</i></span> = <span class='fr'><b>3a²</b><i>4b</i></span>. Это две стороны одного свойства.</div></div>
 <div class="tohw">Задание 1<span>Две задачи. Проверь равенство и найди дополнительный множитель.</span></div>
 </div>
 <div id="tasks1"></div>
@@ -219,15 +259,15 @@ details[open] summary{margin-bottom:8px}
 <b>числитель</b>.</div>
 <div class="fig"><svg viewBox="0 0 580 176"><rect x="0" y="0" width="580" height="176" rx="12" fill="#ffffff"/><rect x="12.0" y="56" width="176" height="66" rx="12" fill="#eef3fb" stroke="#b9c0cc" stroke-width="1.6"/><rect x="202.0" y="56" width="176" height="66" rx="12" fill="#eef3fb" stroke="#b9c0cc" stroke-width="1.6"/><rect x="392.0" y="56" width="176" height="66" rx="12" fill="#eef3fb" stroke="#b9c0cc" stroke-width="1.6"/><text x="100.0" y="82.0" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">новый знаменатель</text><text x="100.0" y="103.0" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">делим на старый</text><text x="290.0" y="82.0" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">получаем</text><text x="290.0" y="103.0" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">доп. множитель</text><text x="480.0" y="82.0" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">умножаем на него</text><text x="480.0" y="103.0" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">оба этажа</text><line x1="190.0" y1="88.0" x2="200.0" y2="88.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><path d="M 200.0 88.0 L 191.5 90.8 L 191.5 85.2 z" fill="#5b6270"/><line x1="380.0" y1="88.0" x2="390.0" y2="88.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><path d="M 390.0 88.0 L 381.5 90.8 L 381.5 85.2 z" fill="#5b6270"/><text x="290.0" y="34.0" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600" font-style="italic">Приведение к новому знаменателю</text><text x="290.0" y="152.0" font-size="14" fill="#5b6270" text-anchor="middle">Дополнительный множитель умножается и на числитель тоже</text></svg></div>
 <div class="ex"><h3>Пример 2</h3>
-<p>а) Привести <span class="fr"><b>5x</b><i>2y²</i></span> к знаменателю 6y³.</p>
+<p>а) Привести <span class='fr'><b>5x</b><i>2y²</i></span> к знаменателю 6y³.</p>
 <div class="step">6y³ : 2y² = 3y — это дополнительный множитель.</div>
-<div class="fx"><span class="fr"><b>5x</b><i>2y²</i></span> = <span class="fr"><b>5x · 3y</b><i>2y² · 3y</i></span> = <span class="fr"><b>15xy</b><i>6y³</i></span></div>
-<p>б) Привести <span class="fr"><b>a + 1</b><i>a</i></span> к знаменателю a² − a.</p>
+<div class="fx"><span class='fr'><b>5x</b><i>2y²</i></span> = <span class='fr'><b>5x · 3y</b><i>2y² · 3y</i></span> = <span class='fr'><b>15xy</b><i>6y³</i></span></div>
+<p>б) Привести <span class='fr'><b>a + 1</b><i>a</i></span> к знаменателю a² − a.</p>
 <div class="step">a² − a = a(a − 1), значит дополнительный множитель равен a − 1.</div>
-<div class="fx"><span class="fr"><b>a + 1</b><i>a</i></span> = <span class="fr"><b>(a + 1)(a − 1)</b><i>a(a − 1)</i></span> = <span class="fr"><b>a² − 1</b><i>a² − a</i></span></div>
-<p>в) Привести <span class="fr"><b>5</b><i>x − 4</i></span> к знаменателю x² − 16.</p>
+<div class="fx"><span class='fr'><b>a + 1</b><i>a</i></span> = <span class='fr'><b>(a + 1)(a − 1)</b><i>a(a − 1)</i></span> = <span class='fr'><b>a² − 1</b><i>a² − a</i></span></div>
+<p>в) Привести <span class='fr'><b>5</b><i>x − 4</i></span> к знаменателю x² − 16.</p>
 <div class="step">x² − 16 = (x − 4)(x + 4), дополнительный множитель x + 4.</div>
-<div class="fx"><span class="fr"><b>5</b><i>x − 4</i></span> = <span class="fr"><b>5(x + 4)</b><i>(x − 4)(x + 4)</i></span> = <span class="fr"><b>5(x + 4)</b><i>x² − 16</i></span></div>
+<div class="fx"><span class='fr'><b>5</b><i>x − 4</i></span> = <span class='fr'><b>5(x + 4)</b><i>(x − 4)(x + 4)</i></span> = <span class='fr'><b>5(x + 4)</b><i>x² − 16</i></span></div>
 <div class="step mini">Главная потеря в этой теме — умножить только знаменатель.
 Проверка: новый числитель должен измениться ровно во столько же раз.</div></div>
 <div class="tohw">Задание 2<span>Две задачи на приведение к новому знаменателю.</span></div>
@@ -242,10 +282,10 @@ details[open] summary{margin-bottom:8px}
 на их <b>общий множитель</b>.</div>
 <div class="fig"><svg viewBox="0 0 580 176"><rect x="0" y="0" width="580" height="176" rx="12" fill="#ffffff"/><rect x="12.0" y="56" width="176" height="66" rx="12" fill="#eef3fb" stroke="#b9c0cc" stroke-width="1.6"/><rect x="202.0" y="56" width="176" height="66" rx="12" fill="#eef3fb" stroke="#b9c0cc" stroke-width="1.6"/><rect x="392.0" y="56" width="176" height="66" rx="12" fill="#eef3fb" stroke="#b9c0cc" stroke-width="1.6"/><text x="100.0" y="82.0" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">разложить оба этажа</text><text x="100.0" y="103.0" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">на множители</text><text x="290.0" y="82.0" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">найти общий</text><text x="290.0" y="103.0" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">множитель</text><text x="480.0" y="82.0" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">разделить</text><text x="480.0" y="103.0" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">на него оба этажа</text><line x1="190.0" y1="88.0" x2="200.0" y2="88.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><path d="M 200.0 88.0 L 191.5 90.8 L 191.5 85.2 z" fill="#5b6270"/><line x1="380.0" y1="88.0" x2="390.0" y2="88.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><path d="M 390.0 88.0 L 381.5 90.8 L 381.5 85.2 z" fill="#5b6270"/><text x="290.0" y="34.0" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600" font-style="italic">Сокращение дроби — за три шага</text><text x="290.0" y="152.0" font-size="14" fill="#5b6270" text-anchor="middle">Сокращать можно только множители, но никогда — слагаемые</text></svg></div>
 <div class="ex"><h3>Пример 3</h3>
-<p>Сократить <span class="fr"><b>15x²y</b><i>12xy²</i></span>.</p>
+<p>Сократить <span class='fr'><b>15x²y</b><i>12xy²</i></span>.</p>
 <div class="step">Одночлены 15x²y и 12xy² имеют общий множитель 3xy: числа 15 и 12 делятся
 на 3, буква x есть в обоих, буква y тоже.</div>
-<div class="fx"><span class="fr"><b>15x²y</b><i>12xy²</i></span> = <span class="fr"><b>15x²y : (3xy)</b><i>12xy² : (3xy)</i></span> = <span class="fr"><b>5x</b><i>4y</i></span></div>
+<div class="fx"><span class='fr'><b>15x²y</b><i>12xy²</i></span> = <span class='fr'><b>15x²y : (3xy)</b><i>12xy² : (3xy)</i></span> = <span class='fr'><b>5x</b><i>4y</i></span></div>
 <div class="step mini">Берут <u>наибольший</u> общий множитель — иначе дробь сократится
 не до конца. Проверка: у результата числитель и знаменатель уже не должны иметь
 общих букв и общих делителей.</div></div>
@@ -266,21 +306,21 @@ details[open] summary{margin-bottom:8px}
 <div class="rule"><div class="n">САМОЕ ВАЖНОЕ В ТЕМЕ</div>
 Сокращать можно <b>только множители</b>. Слагаемые сокращать <b>нельзя</b> никогда.
 Поэтому первый шаг всегда один: превратить сумму в произведение — вынесением общего
-множителя, группировкой или формулой.</div>
+множителя, группировкой или формулой. Все четыре способа собраны в памятке наверху.</div>
 <div class="scroll"><table class="wrap-t">
 <tr><th>дробь</th><th>так нельзя</th><th>как надо</th></tr>
-<tr><td><span class="fr"><b>a + 3</b><i>3a²</i></span></td><td class='bad'>сократить на 3</td><td class='good'>ничего не сокращается: в числителе сумма</td></tr><tr><td><span class="fr"><b>2xy − x</b><i>4xy − x²</i></span></td><td class='bad'>сократить на x сразу</td><td class='good'>вынести x: <span class="fr"><b>x(2y − 1)</b><i>x(4y − x)</i></span> = <span class="fr"><b>2y − 1</b><i>4y − x</i></span></td></tr>
+<tr><td><span class='fr'><b>a + 3</b><i>3a²</i></span></td><td class='bad'>сократить на 3</td><td class='good'>ничего не сокращается: в числителе сумма</td></tr><tr><td><span class='fr'><b>2xy − x</b><i>4xy − x²</i></span></td><td class='bad'>сократить на x сразу</td><td class='good'>вынести x: <span class='fr'><b>x(2y − 1)</b><i>x(4y − x)</i></span> = <span class='fr'><b>2y − 1</b><i>4y − x</i></span></td></tr>
 </table></div>
 <div class="ex"><h3>Пример 4</h3>
-<p>а) Сократить <span class="fr"><b>a³ − 2a²</b><i>3a²b</i></span>.</p>
+<p>а) Сократить <span class='fr'><b>a³ − 2a²</b><i>3a²b</i></span>.</p>
 <div class="step">1. Выносим общий множитель a²: числитель равен a²(a − 2).</div>
 <div class="step">2. Общий множитель числителя и знаменателя — a².</div>
-<div class="fx"><span class="fr"><b>a²(a − 2)</b><i>3a²b</i></span> = <span class="fr"><b>a − 2</b><i>3b</i></span></div>
-<p>б) Сократить <span class="fr"><b>ay − bx + by − ax</b><i>x² − y²</i></span>.</p>
+<div class="fx"><span class='fr'><b>a²(a − 2)</b><i>3a²b</i></span> = <span class='fr'><b>a − 2</b><i>3b</i></span></div>
+<p>б) Сократить <span class='fr'><b>ay − bx + by − ax</b><i>x² − y²</i></span>.</p>
 <div class="step">1. Группируем: (ay + by) − (ax + bx) = y(a + b) − x(a + b) = (y − x)(a + b).</div>
 <div class="step">2. Знаменатель: x² − y² = (x − y)(x + y).</div>
 <div class="step">3. Скобки y − x и x − y отличаются только знаком:</div>
-<div class="fx"><span class="fr"><b>(y − x)(a + b)</b><i>(x − y)(x + y)</i></span> = −<span class="fr"><b>a + b</b><i>x + y</i></span></div>
+<div class="fx"><span class='fr'><b>(y − x)(a + b)</b><i>(x − y)(x + y)</i></span> = −<span class='fr'><b>a + b</b><i>x + y</i></span></div>
 <div class="step mini">Группировку выбирают так, чтобы в обеих парах вышла одна и та же скобка.
 Если не вышла — попробуй переставить слагаемые по-другому.</div></div>
 <div class="tohw">Задание 4<span>Три задачи. Сначала вынеси общий множитель или сгруппируй, и только потом сокращай.</span></div>
@@ -292,17 +332,18 @@ details[open] summary{margin-bottom:8px}
 <h2>5. Формулы сокращённого умножения</h2>
 <div class="rule"><div class="n">ЧТО ИСКАТЬ</div>
 Разность квадратов a² − b² = (a − b)(a + b) и квадрат суммы или разности
-a² ± 2ab + b² = (a ± b)². Увидел квадрат — попробуй эти две формулы прежде всего.</div>
+a² ± 2ab + b² = (a ± b)². Увидел квадрат — попробуй эти две формулы прежде всего.
+Про кубы в этом параграфе речи нет.</div>
 <div class="ex"><h3>Пример 5</h3>
-<p>а) Сократить <span class="fr"><b>a² − 16</b><i>a² − 8a + 16</i></span>.</p>
+<p>а) Сократить <span class='fr'><b>a² − 16</b><i>a² − 8a + 16</i></span>.</p>
 <div class="step">Числитель — разность квадратов, знаменатель — квадрат разности:</div>
-<div class="fx"><span class="fr"><b>(a − 4)(a + 4)</b><i>(a − 4)²</i></span> = <span class="fr"><b>a + 4</b><i>a − 4</i></span></div>
-<p>б) Сократить <span class="fr"><b>m² − n²</b><i>m² + n² − 2mn</i></span>.</p>
+<div class="fx"><span class='fr'><b>(a − 4)(a + 4)</b><i>(a − 4)²</i></span> = <span class='fr'><b>a + 4</b><i>a − 4</i></span></div>
+<p>б) Сократить <span class='fr'><b>m² − n²</b><i>m² + n² − 2mn</i></span>.</p>
 <div class="step">В знаменателе слагаемые переставлены: m² − 2mn + n² = (m − n)².</div>
-<div class="fx"><span class="fr"><b>(m − n)(m + n)</b><i>(m − n)²</i></span> = <span class="fr"><b>m + n</b><i>m − n</i></span></div>
-<p>в) Сократить <span class="fr"><b>16 − x²</b><i>(x − 4)²</i></span>.</p>
+<div class="fx"><span class='fr'><b>(m − n)(m + n)</b><i>(m − n)²</i></span> = <span class='fr'><b>m + n</b><i>m − n</i></span></div>
+<p>в) Сократить <span class='fr'><b>16 − x²</b><i>(x − 4)²</i></span>.</p>
 <div class="step">Здесь пригодится (a − b)² = (b − a)², то есть (x − 4)² = (4 − x)²:</div>
-<div class="fx"><span class="fr"><b>(4 − x)(4 + x)</b><i>(4 − x)²</i></span> = <span class="fr"><b>4 + x</b><i>4 − x</i></span></div>
+<div class="fx"><span class='fr'><b>(4 − x)(4 + x)</b><i>(4 − x)²</i></span> = <span class='fr'><b>4 + x</b><i>4 − x</i></span></div>
 <div class="step mini">Квадрат разности от перестановки не меняется, а сама разность —
 меняет знак. Путать эти два факта — вторая по частоте ошибка темы.</div></div>
 <div class="tohw">Задание 5<span>Три задачи на формулы сокращённого умножения.</span></div>
@@ -319,19 +360,19 @@ a² ± 2ab + b² = (a ± b)². Увидел квадрат — попробуй 
 
 <h2>6. Противоположные скобки и знак минус</h2>
 <div class="def"><div class="n">ТРИ РАВНЫЕ ЗАПИСИ</div>
-<div class="fx"><span class="fr"><b>−A</b><i>B</i></span> = <span class="fr"><b>A</b><i>−B</i></span> = −<span class="fr"><b>A</b><i>B</i></span></div>
+<div class="fx"><span class='fr'><b>−A</b><i>B</i></span> = <span class='fr'><b>A</b><i>−B</i></span> = −<span class='fr'><b>A</b><i>B</i></span></div>
 Знак минус можно держать у числителя, у знаменателя или перед всей дробью — значение
-одно и то же. А вот <b>два</b> минуса сразу друг друга гасят: <span class="fr"><b>−A</b><i>−B</i></span> = <span class="fr"><b>A</b><i>B</i></span>.</div>
+одно и то же. А вот <b>два</b> минуса сразу друг друга гасят: <span class='fr'><b>−A</b><i>−B</i></span> = <span class='fr'><b>A</b><i>B</i></span>.</div>
 <div class="rule"><div class="n">ПРИЁМ</div>
 Скобки вида a − b и b − a отличаются только знаком: b − a = −(a − b). Значит из любой
 из них можно вынести минус и сократить дробь.</div>
 <div class="ex"><h3>Пример 6</h3>
-<p>а) Сократить <span class="fr"><b>x² − y²</b><i>3y − 3x</i></span>.</p>
+<p>а) Сократить <span class='fr'><b>x² − y²</b><i>3y − 3x</i></span>.</p>
 <div class="step">Числитель: (x − y)(x + y). Знаменатель: 3(y − x) = −3(x − y).</div>
-<div class="fx"><span class="fr"><b>(x − y)(x + y)</b><i>−3(x − y)</i></span> = −<span class="fr"><b>x + y</b><i>3</i></span></div>
-<p>б) Сократить <span class="fr"><b>y² − 25</b><i>5y − y²</i></span>.</p>
+<div class="fx"><span class='fr'><b>(x − y)(x + y)</b><i>−3(x − y)</i></span> = −<span class='fr'><b>x + y</b><i>3</i></span></div>
+<p>б) Сократить <span class='fr'><b>y² − 25</b><i>5y − y²</i></span>.</p>
 <div class="step">Числитель: (y − 5)(y + 5). Знаменатель: y(5 − y) = −y(y − 5).</div>
-<div class="fx"><span class="fr"><b>(y − 5)(y + 5)</b><i>−y(y − 5)</i></span> = −<span class="fr"><b>y + 5</b><i>y</i></span></div>
+<div class="fx"><span class='fr'><b>(y − 5)(y + 5)</b><i>−y(y − 5)</i></span> = −<span class='fr'><b>y + 5</b><i>y</i></span></div>
 <div class="step mini">Проверка за секунду: подставь любое допустимое число в исходную дробь
 и в ответ. Если знаки разошлись — минус потерян.</div></div>
 <div class="tohw">Задание 6<span>Три задачи на противоположные скобки и знак минус.</span></div>
@@ -349,20 +390,20 @@ a² ± 2ab + b² = (a ± b)². Увидел квадрат — попробуй 
 <h2>7. Квадратный трёхчлен и выколотая точка</h2>
 <div class="rule"><div class="n">РАЗЛОЖЕНИЕ ТРЁХЧЛЕНА</div>
 Если формулы не помогают, находят корни: ax² + bx + c = a(x − x₁)(x − x₂), где x₁ и x₂ —
-корни уравнения ax² + bx + c = 0.</div>
-<div class="ex"><h3>Пример 7. Сократить <span class="fr"><b>(1 − 3x)²</b><i>3x² + 5x − 2</i></span></h3>
-<div class="step">1. Решаем 3x² + 5x − 2 = 0: D = 25 + 24 = 49, x₁ = −2, x₂ = ⅓.</div>
-<div class="step">2. Значит 3x² + 5x − 2 = 3(x + 2)(x − ⅓) = (x + 2)(3x − 1).</div>
+корни уравнения ax² + bx + c = 0. Полная схема с примерами — в памятке наверху.</div>
+<div class="ex"><h3>Пример 7. Сократить <span class='fr'><b>(1 − 3x)²</b><i>3x² + 5x − 2</i></span></h3>
+<div class="step">1. Решаем 3x² + 5x − 2 = 0: D = 25 + 24 = 49, x₁ = −2, x₂ = <span class='fr'><b>1</b><i>3</i></span>.</div>
+<div class="step">2. Значит 3x² + 5x − 2 = 3(x + 2)(x − <span class='fr'><b>1</b><i>3</i></span>) = (x + 2)(3x − 1).</div>
 <div class="step">3. В числителе (1 − 3x)² = (3x − 1)², потому что квадрат разности
 от перестановки не меняется.</div>
-<div class="fx"><span class="fr"><b>(3x − 1)²</b><i>(x + 2)(3x − 1)</i></span> = <span class="fr"><b>3x − 1</b><i>x + 2</i></span></div></div>
+<div class="fx"><span class='fr'><b>(3x − 1)²</b><i>(x + 2)(3x − 1)</i></span> = <span class='fr'><b>3x − 1</b><i>x + 2</i></span></div></div>
 <div class="rule"><div class="n">ВЫКОЛОТАЯ ТОЧКА</div>
 Сокращение не возвращает потерянные значения. Если знаменатель обращался в нуль при x = a,
 то x = a не входит в область определения и после сокращения — на графике в этом месте
 остаётся <b>дырка</b>.</div>
-<div class="ex"><h3>Пример 8. Построить график y = <span class="fr"><b>x² − 4</b><i>x − 2</i></span></h3>
+<div class="ex"><h3>Пример 8. Построить график y = <span class='fr'><b>x² − 4</b><i>x − 2</i></span></h3>
 <div class="step">1. Область определения: x ≠ 2.</div>
-<div class="step">2. Сокращаем: <span class="fr"><b>(x − 2)(x + 2)</b><i>x − 2</i></span> = x + 2.</div>
+<div class="step">2. Сокращаем: <span class='fr'><b>(x − 2)(x + 2)</b><i>x − 2</i></span> = x + 2.</div>
 <div class="step">3. Значит это прямая y = x + 2, но <b>без</b> точки при x = 2.
 Её ордината: 2 + 2 = 4.</div>
 <div class="fig"><svg viewBox="0 0 400 350"><rect x="0" y="0" width="400" height="350" rx="12" fill="#ffffff"/><line x1="74.4" y1="292.0" x2="74.4" y2="18.0" stroke="#cfe3f5" stroke-width="1"/><line x1="97.3" y1="292.0" x2="97.3" y2="18.0" stroke="#cfe3f5" stroke-width="1"/><line x1="120.1" y1="292.0" x2="120.1" y2="18.0" stroke="#cfe3f5" stroke-width="1"/><line x1="142.9" y1="292.0" x2="142.9" y2="18.0" stroke="#cfe3f5" stroke-width="1"/><line x1="165.8" y1="292.0" x2="165.8" y2="18.0" stroke="#cfe3f5" stroke-width="1"/><line x1="188.6" y1="292.0" x2="188.6" y2="18.0" stroke="#cfe3f5" stroke-width="1"/><line x1="211.4" y1="292.0" x2="211.4" y2="18.0" stroke="#cfe3f5" stroke-width="1"/><line x1="234.2" y1="292.0" x2="234.2" y2="18.0" stroke="#cfe3f5" stroke-width="1"/><line x1="257.1" y1="292.0" x2="257.1" y2="18.0" stroke="#cfe3f5" stroke-width="1"/><line x1="279.9" y1="292.0" x2="279.9" y2="18.0" stroke="#cfe3f5" stroke-width="1"/><line x1="302.8" y1="292.0" x2="302.8" y2="18.0" stroke="#cfe3f5" stroke-width="1"/><line x1="325.6" y1="292.0" x2="325.6" y2="18.0" stroke="#cfe3f5" stroke-width="1"/><line x1="74.4" y1="292.0" x2="325.6" y2="292.0" stroke="#cfe3f5" stroke-width="1"/><line x1="74.4" y1="269.2" x2="325.6" y2="269.2" stroke="#cfe3f5" stroke-width="1"/><line x1="74.4" y1="246.3" x2="325.6" y2="246.3" stroke="#cfe3f5" stroke-width="1"/><line x1="74.4" y1="223.5" x2="325.6" y2="223.5" stroke="#cfe3f5" stroke-width="1"/><line x1="74.4" y1="200.7" x2="325.6" y2="200.7" stroke="#cfe3f5" stroke-width="1"/><line x1="74.4" y1="177.8" x2="325.6" y2="177.8" stroke="#cfe3f5" stroke-width="1"/><line x1="74.4" y1="155.0" x2="325.6" y2="155.0" stroke="#cfe3f5" stroke-width="1"/><line x1="74.4" y1="132.2" x2="325.6" y2="132.2" stroke="#cfe3f5" stroke-width="1"/><line x1="74.4" y1="109.3" x2="325.6" y2="109.3" stroke="#cfe3f5" stroke-width="1"/><line x1="74.4" y1="86.5" x2="325.6" y2="86.5" stroke="#cfe3f5" stroke-width="1"/><line x1="74.4" y1="63.7" x2="325.6" y2="63.7" stroke="#cfe3f5" stroke-width="1"/><line x1="74.4" y1="40.8" x2="325.6" y2="40.8" stroke="#cfe3f5" stroke-width="1"/><line x1="74.4" y1="18.0" x2="325.6" y2="18.0" stroke="#cfe3f5" stroke-width="1"/><line x1="74.4" y1="200.7" x2="323.6" y2="200.7" stroke="#15181e" stroke-width="1.8"/><line x1="188.6" y1="292.0" x2="188.6" y2="20.0" stroke="#15181e" stroke-width="1.8"/><path d="M 325.6 200.7 l -7 -4 l 0 8 z" fill="#15181e"/><path d="M 188.6 18.0 l -4 7 l 8 0 z" fill="#15181e"/><text x="321.6" y="218.7" font-size="13" font-style="italic" fill="#15181e">x</text><text x="195.6" y="30.0" font-size="13" font-style="italic" fill="#15181e">y</text><text x="175.6" y="215.7" font-size="13" font-style="italic" fill="#15181e">O</text><text x="74.4" y="215.7" font-size="12" fill="#5b6270" text-anchor="middle">−5</text><text x="97.3" y="215.7" font-size="12" fill="#5b6270" text-anchor="middle">−4</text><text x="120.1" y="215.7" font-size="12" fill="#5b6270" text-anchor="middle">−3</text><text x="142.9" y="215.7" font-size="12" fill="#5b6270" text-anchor="middle">−2</text><text x="165.8" y="215.7" font-size="12" fill="#5b6270" text-anchor="middle">−1</text><text x="211.4" y="215.7" font-size="12" fill="#5b6270" text-anchor="middle">1</text><text x="234.2" y="215.7" font-size="12" fill="#5b6270" text-anchor="middle">2</text><text x="257.1" y="215.7" font-size="12" fill="#5b6270" text-anchor="middle">3</text><text x="279.9" y="215.7" font-size="12" fill="#5b6270" text-anchor="middle">4</text><text x="302.8" y="215.7" font-size="12" fill="#5b6270" text-anchor="middle">5</text><text x="182.6" y="296.0" font-size="12" fill="#5b6270" text-anchor="end">−4</text><text x="182.6" y="273.2" font-size="12" fill="#5b6270" text-anchor="end">−3</text><text x="182.6" y="250.3" font-size="12" fill="#5b6270" text-anchor="end">−2</text><text x="182.6" y="227.5" font-size="12" fill="#5b6270" text-anchor="end">−1</text><text x="182.6" y="181.8" font-size="12" fill="#5b6270" text-anchor="end">1</text><text x="182.6" y="159.0" font-size="12" fill="#5b6270" text-anchor="end">2</text><text x="182.6" y="136.2" font-size="12" fill="#5b6270" text-anchor="end">3</text><text x="182.6" y="113.3" font-size="12" fill="#5b6270" text-anchor="end">4</text><text x="182.6" y="90.5" font-size="12" fill="#5b6270" text-anchor="end">5</text><text x="182.6" y="67.7" font-size="12" fill="#5b6270" text-anchor="end">6</text><text x="182.6" y="44.8" font-size="12" fill="#5b6270" text-anchor="end">7</text><polyline points="74.4,269.2 75.0,268.6 75.6,268.0 76.2,267.4 76.8,266.8 77.4,266.2 78.0,265.6 78.6,265.0 79.2,264.4 79.8,263.8 80.4,263.2 81.0,262.6 81.6,262.0 82.2,261.4 82.8,260.8 83.4,260.2 84.0,259.6 84.6,259.0 85.2,258.4 85.8,257.8 86.4,257.2 87.0,256.6 87.6,256.0 88.2,255.4 88.8,254.8 89.4,254.2 90.0,253.6 90.6,253.0 91.2,252.4 91.8,251.8 92.4,251.2 93.0,250.6 93.6,250.0 94.2,249.4 94.7,248.8 95.3,248.2 95.9,247.6 96.5,247.0 97.1,246.4 97.7,245.8 98.3,245.2 98.9,244.6 99.5,244.0 100.1,243.5 100.7,242.9 101.3,242.3 101.9,241.7 102.5,241.1 103.1,240.5 103.7,239.9 104.3,239.3 104.9,238.7 105.5,238.1 106.1,237.5 106.7,236.9 107.3,236.3 107.9,235.7 108.5,235.1 109.1,234.5 109.7,233.9 110.3,233.3 110.9,232.7 111.5,232.1 112.1,231.5 112.7,230.9 113.3,230.3 113.9,229.7 114.5,229.1 115.1,228.5 115.7,227.9 116.3,227.3 116.9,226.7 117.5,226.1 118.1,225.5 118.7,224.9 119.3,224.3 119.9,223.7 120.5,223.1 121.1,222.5 121.7,221.9 122.3,221.3 122.9,220.7 123.5,220.1 124.1,219.5 124.7,218.9 125.2,218.3 125.8,217.7 126.4,217.1 127.0,216.5 127.6,215.9 128.2,215.3 128.8,214.7 129.4,214.1 130.0,213.6 130.6,213.0 131.2,212.4 131.8,211.8 132.4,211.2 133.0,210.6 133.6,210.0 134.2,209.4 134.8,208.8 135.4,208.2 136.0,207.6 136.6,207.0 137.2,206.4 137.8,205.8 138.4,205.2 139.0,204.6 139.6,204.0 140.2,203.4 140.8,202.8 141.4,202.2 142.0,201.6 142.6,201.0 143.2,200.4 143.8,199.8 144.4,199.2 145.0,198.6 145.6,198.0 146.2,197.4 146.8,196.8 147.4,196.2 148.0,195.6 148.6,195.0 149.2,194.4 149.8,193.8 150.4,193.2 151.0,192.6 151.6,192.0 152.2,191.4 152.8,190.8 153.4,190.2 154.0,189.6 154.6,189.0 155.1,188.4 155.7,187.8 156.3,187.2 156.9,186.6 157.5,186.0 158.1,185.4 158.7,184.8 159.3,184.2 159.9,183.7 160.5,183.1 161.1,182.5 161.7,181.9 162.3,181.3 162.9,180.7 163.5,180.1 164.1,179.5 164.7,178.9 165.3,178.3 165.9,177.7 166.5,177.1 167.1,176.5 167.7,175.9 168.3,175.3 168.9,174.7 169.5,174.1 170.1,173.5 170.7,172.9 171.3,172.3 171.9,171.7 172.5,171.1 173.1,170.5 173.7,169.9 174.3,169.3 174.9,168.7 175.5,168.1 176.1,167.5 176.7,166.9 177.3,166.3 177.9,165.7 178.5,165.1 179.1,164.5 179.7,163.9 180.3,163.3 180.9,162.7 181.5,162.1 182.1,161.5 182.7,160.9 183.3,160.3 183.9,159.7 184.5,159.1 185.0,158.5 185.6,157.9 186.2,157.3 186.8,156.7 187.4,156.1 188.0,155.5 188.6,154.9 189.2,154.3 189.8,153.7 190.4,153.2 191.0,152.6 191.6,152.0 192.2,151.4 192.8,150.8 193.4,150.2 194.0,149.6 194.6,149.0 195.2,148.4 195.8,147.8 196.4,147.2 197.0,146.6 197.6,146.0 198.2,145.4 198.8,144.8 199.4,144.2 200.0,143.6 200.6,143.0 201.2,142.4 201.8,141.8 202.4,141.2 203.0,140.6 203.6,140.0 204.2,139.4 204.8,138.8 205.4,138.2 206.0,137.6 206.6,137.0 207.2,136.4 207.8,135.8 208.4,135.2 209.0,134.6 209.6,134.0 210.2,133.4 210.8,132.8 211.4,132.2 212.0,131.6 212.6,131.0 213.2,130.4 213.8,129.8 214.4,129.2 215.0,128.6 215.5,128.0 216.1,127.4 216.7,126.8 217.3,126.2 217.9,125.6 218.5,125.0 219.1,124.4 219.7,123.8 220.3,123.3 220.9,122.7 221.5,122.1 222.1,121.5 222.7,120.9 223.3,120.3 223.9,119.7 224.5,119.1 225.1,118.5 225.7,117.9 226.3,117.3 226.9,116.7 227.5,116.1 228.1,115.5 228.7,114.9 229.3,114.3 229.9,113.7 230.5,113.1 231.1,112.5 231.7,111.9 232.3,111.3 232.9,110.7 233.5,110.1 234.1,109.5 234.7,108.9 235.3,108.3 235.9,107.7 236.5,107.1 237.1,106.5 237.7,105.9 238.3,105.3 238.9,104.7 239.5,104.1 240.1,103.5 240.7,102.9 241.3,102.3 241.9,101.7 242.5,101.1 243.1,100.5 243.7,99.9 244.3,99.3 244.9,98.7 245.4,98.1 246.0,97.5 246.6,96.9 247.2,96.3 247.8,95.7 248.4,95.1 249.0,94.5 249.6,93.9 250.2,93.3 250.8,92.8 251.4,92.2 252.0,91.6 252.6,91.0 253.2,90.4 253.8,89.8 254.4,89.2 255.0,88.6 255.6,88.0 256.2,87.4 256.8,86.8 257.4,86.2 258.0,85.6 258.6,85.0 259.2,84.4 259.8,83.8 260.4,83.2 261.0,82.6 261.6,82.0 262.2,81.4 262.8,80.8 263.4,80.2 264.0,79.6 264.6,79.0 265.2,78.4 265.8,77.8 266.4,77.2 267.0,76.6 267.6,76.0 268.2,75.4 268.8,74.8 269.4,74.2 270.0,73.6 270.6,73.0 271.2,72.4 271.8,71.8 272.4,71.2 273.0,70.6 273.6,70.0 274.2,69.4 274.8,68.8 275.4,68.2 275.9,67.6 276.5,67.0 277.1,66.4 277.7,65.8 278.3,65.2 278.9,64.6 279.5,64.0 280.1,63.4 280.7,62.9 281.3,62.3 281.9,61.7 282.5,61.1 283.1,60.5 283.7,59.9 284.3,59.3 284.9,58.7 285.5,58.1 286.1,57.5 286.7,56.9 287.3,56.3 287.9,55.7 288.5,55.1 289.1,54.5 289.7,53.9 290.3,53.3 290.9,52.7 291.5,52.1 292.1,51.5 292.7,50.9 293.3,50.3 293.9,49.7 294.5,49.1 295.1,48.5 295.7,47.9 296.3,47.3 296.9,46.7 297.5,46.1 298.1,45.5 298.7,44.9 299.3,44.3 299.9,43.7 300.5,43.1 301.1,42.5 301.7,41.9 302.3,41.3 302.9,40.7 303.5,40.1 304.1,39.5 304.7,38.9 305.3,38.3 305.8,37.7 306.4,37.1 307.0,36.5 307.6,35.9 308.2,35.3 308.8,34.7 309.4,34.1 310.0,33.5 310.6,33.0 311.2,32.4 311.8,31.8 312.4,31.2 313.0,30.6 313.6,30.0 314.2,29.4 314.8,28.8 315.4,28.2 316.0,27.6 316.6,27.0 317.2,26.4 317.8,25.8 318.4,25.2 319.0,24.6 319.6,24.0 320.2,23.4 320.8,22.8 321.4,22.2 322.0,21.6 322.6,21.0 323.2,20.4 323.8,19.8 324.4,19.2 325.0,18.6 325.6,18.0" fill="none" stroke="#2f6bd8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="234.2" cy="109.3" r="5.2" fill="#ffffff" stroke="#b3261e" stroke-width="2"/><text x="246.2" y="95.3" font-size="13" font-weight="600" fill="#b3261e" text-anchor="start">(2; 4)</text><text x="200" y="326" font-size="14" fill="#5b6270" text-anchor="middle">y = (x² − 4) : (x − 2) — прямая y = x + 2 без</text><text x="200" y="344" font-size="14" fill="#5b6270" text-anchor="middle">точки (2; 4)</text></svg></div>
@@ -376,24 +417,28 @@ a² ± 2ab + b² = (a ± b)². Увидел квадрат — попробуй 
 <div class="card sheet">
   <h2>Шпаргалка</h2>
   <div class="meta">Печатается на один лист A4: Ctrl+P (⌘+P) → печать.</div>
-  <p class="f-formula"><b>Основное свойство:</b> A/B = A·C/(B·C) при C ≠ 0. Умножили или
+  <p class="f-formula"><b>Основное свойство:</b> <span class='fr'><b>A</b><i>B</i></span> = <span class='fr'><b>A · C</b><i>B · C</i></span> при C ≠ 0. Умножили или
   разделили оба этажа на одно и то же ненулевое выражение — значение не изменилось.</p>
   <p class="f-formula"><b>Привести к новому знаменателю.</b> Дополнительный множитель =
-  новый знаменатель : старый. Умножаем на него <u>оба</u> этажа. 5/(x − 4) к знаменателю
-  x² − 16: множитель x + 4, получаем 5(x + 4)/(x² − 16).</p>
+  новый знаменатель : старый. Умножаем на него <u>оба</u> этажа. <span class='fr'><b>5</b><i>x − 4</i></span> к знаменателю
+  x² − 16: множитель x + 4, получаем <span class='fr'><b>5(x + 4)</b><i>x² − 16</i></span>.</p>
   <p class="f-formula"><b>Сократить</b> — разделить оба этажа на общий множитель. Порядок:
   разложить на множители → найти общий множитель → разделить. Берут <u>наибольший</u>
   общий множитель.</p>
   <p class="f-formula"><b>Главный запрет:</b> сокращают только множители, слагаемые — никогда.
-  В (a + 3)/(3a²) тройка не сокращается. Сначала вынести общий множитель или сгруппировать.</p>
+  В <span class='fr'><b>a + 3</b><i>3a²</i></span> тройка не сокращается. Сначала вынести общий множитель или сгруппировать.</p>
+  <p class="f-formula"><b>Четыре способа разложить:</b> вынести общий множитель
+  (6x³ − 9x² = 3x²(2x − 3)); формула (16 − x² = (4 − x)(4 + x), a² − 8a + 16 = (a − 4)²);
+  трёхчлен по корням; группировка (ax + ay + bx + by = (x + y)(a + b)).</p>
   <p class="f-formula"><b>Формулы:</b> a² − b² = (a − b)(a + b), a² ± 2ab + b² = (a ± b)².
   Полезно: (a − b)² = (b − a)², но a − b = −(b − a).</p>
-  <p class="f-formula"><b>Знаки:</b> −A/B = A/(−B) = −(A/B), а (−A)/(−B) = A/B. Скобки a − b
-  и b − a отличаются только знаком: (m − n)/(n − m) = −1.</p>
-  <p class="f-formula"><b>Трёхчлен:</b> ax² + bx + c = a(x − x₁)(x − x₂) по корням уравнения.
-  Не забыть занести коэффициент a внутрь скобки.</p>
+  <p class="f-formula"><b>Знаки:</b> <span class='fr'><b>−A</b><i>B</i></span> = <span class='fr'><b>A</b><i>−B</i></span> = −<span class='fr'><b>A</b><i>B</i></span>, а <span class='fr'><b>−A</b><i>−B</i></span> = <span class='fr'><b>A</b><i>B</i></span>. Скобки a − b
+  и b − a отличаются только знаком: <span class='fr'><b>m − n</b><i>n − m</i></span> = −1. Ещё: −a − b = −(a + b),
+  а −(a − b) = b − a.</p>
+  <p class="f-formula"><b>Трёхчлен:</b> ax² + bx + c = a(x − x₁)(x − x₂), где x₁,₂ = <span class='fr'><b>−b ± √<span class='rt'>D</span></b><i>2a</i></span>.
+  Коэффициент a обязательно занести внутрь скобки.</p>
   <p class="f-formula"><b>Выколотая точка.</b> Область определения выписывают <u>до</u>
-  сокращения. y = (x² − 4)/(x − 2) — это прямая y = x + 2 без точки (2; 4).</p>
+  сокращения. y = <span class='fr'><b>x² − 4</b><i>x − 2</i></span> — это прямая y = x + 2 без точки (2; 4).</p>
 </div>
 
 <div class="card">
@@ -445,73 +490,77 @@ function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return 
 var TASKS = [
  {id:1,blk:"1",lvl:"база",type:"choice",text:"Какое из равенств верно при всех допустимых значениях переменных?",
   options:["3mn/(6n) = m/2","6a²/a = 6a³","12a(a + 1)/(3a) = 4(a − 1)","3a/a = 3a"],
+  optionsHtml:["<span class='fr'><b>3mn</b><i>6n</i></span> = <span class='fr'><b>m</b><i>2</i></span>","<span class='fr'><b>6a²</b><i>a</i></span> = 6a³","<span class='fr'><b>12a(a + 1)</b><i>3a</i></span> = 4(a − 1)","<span class='fr'><b>3a</b><i>a</i></span> = 3a"],
   ans:[e("3mn/(6n) = m/2")],img:"",
   hints:["Проверь каждое равенство отдельно: сократи левую часть и сравни с правой.",
          "При сокращении степень уменьшается, а не растёт: 6a² : a = 6a.",
          "Скобка (a + 1) при сокращении на 3a никак не превращается в (a − 1)."],
-  sol:"<div class='step'>3mn : (6n) — сокращаем на 3n, получаем m : 2. <b>Верно.</b></div>"+
-      "<div class='step'>6a² : a = 6a, а не 6a³. Неверно.</div>"+
-      "<div class='step'>12a(a + 1) : (3a) = 4(a + 1), а не 4(a − 1). Неверно.</div>"+
-      "<div class='step'>3a : a = 3, а не 3a. Неверно.</div>"+
-      "<div class='step'><b>Ответ: 3mn/(6n) = m/2.</b></div>"+
+  sol:"<div class='step'>1. <span class='fr'><b>3mn</b><i>6n</i></span> — сокращаем на 3n, получаем <span class='fr'><b>m</b><i>2</i></span>. <b>Верно.</b></div>"+
+      "<div class='step'>2. <span class='fr'><b>6a²</b><i>a</i></span> = 6a, а не 6a³. Неверно.</div>"+
+      "<div class='step'>3. <span class='fr'><b>12a(a + 1)</b><i>3a</i></span> = 4(a + 1), а не 4(a − 1). Неверно.</div>"+
+      "<div class='step'>4. <span class='fr'><b>3a</b><i>a</i></span> = 3, а не 3a. Неверно.</div>"+
+      "<div class='step'><b>Ответ: <span class='fr'><b>3mn</b><i>6n</i></span> = <span class='fr'><b>m</b><i>2</i></span>.</b></div>"+
       "<div class='step mini'>Два последних варианта — самая частая ошибка: при сокращении буква не остаётся «на память», она уходит совсем.</div>"},
 
- {id:2,blk:"1",lvl:"база",type:"num",text:"Дробь 2a/(3b) привели к знаменателю 12b³. Найди дополнительный множитель и запиши его значение при b = 3.",ans:[e("36")],img:"",
-  hints:["Дополнительный множитель — это новый знаменатель, делённый на старый.",
-         "12b³ : (3b) = ?",
+ {id:2,blk:"1",lvl:"база",type:"num",text:"Дробь <span class='fr'><b>2a</b><i>3b</i></span> привели к знаменателю 12b³. Найди дополнительный множитель и запиши его значение при b = 3.",ans:[e("36")],img:"",
+  hints:["Дополнительный множитель — это новый знаменатель, делённый на старый: <span class='fr'><b>12b³</b><i>3b</i></span>.",
+         "<span class='fr'><b>12b³</b><i>3b</i></span> = ?",
          "Получится 4b². Подставь b = 3."],
   sol:"<div class='step'>1. Делим новый знаменатель на старый:</div>"+
-      "<div class='fx'>12b³ : (3b) = 4b²</div>"+
+      "<div class='fx'><span class='fr'><b>12b³</b><i>3b</i></span> = 4b²</div>"+
       "<div class='step'>2. При b = 3:</div>"+
       "<div class='fx'>4 · 3² = 4 · 9 = 36</div>"+
       "<div class='step'><b>Ответ: 36.</b></div>"+
-      "<div class='step mini'>Сама дробь при этом равна 2a · 4b² : (12b³) = 8ab² : (12b³). Числитель тоже пришлось умножить — про это забывают чаще всего.</div>"},
+      "<div class='step mini'>Сама дробь при этом равна <span class='fr'><b>2a · 4b²</b><i>12b³</i></span> = <span class='fr'><b>8ab²</b><i>12b³</i></span>. Числитель тоже пришлось умножить — про это забывают чаще всего.</div>"},
 
- {id:3,blk:"2",lvl:"база",type:"num",text:"Приведи дробь 5x/(2y²) к знаменателю 6y³. Найди значение получившегося числителя при x = 2 и y = 1.",ans:[e("30")],img:"",
-  hints:["Сначала найди дополнительный множитель: 6y³ : (2y²).",
+ {id:3,blk:"2",lvl:"база",type:"num",text:"Приведи дробь <span class='fr'><b>5x</b><i>2y²</i></span> к знаменателю 6y³. Найди значение получившегося числителя при x = 2 и y = 1.",ans:[e("30")],img:"",
+  hints:["Сначала найди дополнительный множитель: <span class='fr'><b>6y³</b><i>2y²</i></span>.",
          "Он равен 3y. Умножь на него числитель.",
          "Новый числитель 15xy. Подставь x = 2, y = 1."],
-  sol:"<div class='step'>1. Дополнительный множитель: 6y³ : (2y²) = 3y.</div>"+
+  sol:"<div class='step'>1. Дополнительный множитель: <span class='fr'><b>6y³</b><i>2y²</i></span> = 3y.</div>"+
       "<div class='fx'><span class='fr'><b>5x</b><i>2y²</i></span> = <span class='fr'><b>5x · 3y</b><i>2y² · 3y</i></span> = <span class='fr'><b>15xy</b><i>6y³</i></span></div>"+
       "<div class='step'>2. При x = 2, y = 1: 15 · 2 · 1 = 30.</div>"+
       "<div class='step'><b>Ответ: 30.</b></div>"+
       "<div class='step mini'>Ответ 10 получается, если умножить только знаменатель и оставить числитель прежним.</div>"},
 
- {id:4,blk:"2",lvl:"средний",type:"choice",text:"Во что превратится дробь 5/(x − 4) при приведении к знаменателю x² − 16?",
+ {id:4,blk:"2",lvl:"средний",type:"choice",text:"Во что превратится дробь <span class='fr'><b>5</b><i>x − 4</i></span> при приведении к знаменателю x² − 16?",
   options:["5(x + 4)/(x² − 16)","5(x − 4)/(x² − 16)","5/(x² − 16)","(x + 4)/(x² − 16)"],
+  optionsHtml:["<span class='fr'><b>5(x + 4)</b><i>x² − 16</i></span>","<span class='fr'><b>5(x − 4)</b><i>x² − 16</i></span>","<span class='fr'><b>5</b><i>x² − 16</i></span>","<span class='fr'><b>x + 4</b><i>x² − 16</i></span>"],
   ans:[e("5(x + 4)/(x² − 16)")],img:"",
   hints:["Разложи новый знаменатель на множители.",
          "x² − 16 = (x − 4)(x + 4).",
          "Дополнительный множитель равен x + 4 — умножь на него и числитель."],
   sol:"<div class='step'>1. x² − 16 = (x − 4)(x + 4), значит дополнительный множитель — это x + 4.</div>"+
       "<div class='fx'><span class='fr'><b>5</b><i>x − 4</i></span> = <span class='fr'><b>5(x + 4)</b><i>(x − 4)(x + 4)</i></span> = <span class='fr'><b>5(x + 4)</b><i>x² − 16</i></span></div>"+
-      "<div class='step'><b>Ответ: 5(x + 4)/(x² − 16).</b></div>"+
-      "<div class='step mini'>Вариант 5/(x² − 16) неверен: там числитель оставили прежним, а значение дроби от этого изменилось в (x + 4) раз.</div>"},
+      "<div class='step'><b>Ответ: <span class='fr'><b>5(x + 4)</b><i>x² − 16</i></span>.</b></div>"+
+      "<div class='step mini'>Вариант <span class='fr'><b>5</b><i>x² − 16</i></span> неверен: там числитель оставили прежним, а значение дроби от этого изменилось в (x + 4) раз.</div>"},
 
- {id:5,blk:"3",lvl:"база",type:"choice",text:"Сократи дробь 15x²y/(12xy²).",
+ {id:5,blk:"3",lvl:"база",type:"choice",text:"Сократи дробь <span class='fr'><b>15x²y</b><i>12xy²</i></span>.",
   options:["5x/(4y)","5y/(4x)","5x/(4y²)","3x/(4y)"],
+  optionsHtml:["<span class='fr'><b>5x</b><i>4y</i></span>","<span class='fr'><b>5y</b><i>4x</i></span>","<span class='fr'><b>5x</b><i>4y²</i></span>","<span class='fr'><b>3x</b><i>4y</i></span>"],
   ans:[e("5x/(4y)")],img:"",
   hints:["Отдельно числа, отдельно буквы: НОД чисел 15 и 12, потом каждая буква в меньшей степени.",
          "Общий множитель равен 3xy.",
          "15x²y : (3xy) = 5x, а 12xy² : (3xy) = 4y."],
   sol:"<div class='step'>1. Числа: 15 и 12 делятся на 3. Буквы: x есть в обоих (берём x в первой степени), y тоже. Общий множитель 3xy.</div>"+
       "<div class='fx'><span class='fr'><b>15x²y</b><i>12xy²</i></span> = <span class='fr'><b>15x²y : (3xy)</b><i>12xy² : (3xy)</i></span> = <span class='fr'><b>5x</b><i>4y</i></span></div>"+
-      "<div class='step'><b>Ответ: 5x/(4y).</b></div>"+
+      "<div class='step'><b>Ответ: <span class='fr'><b>5x</b><i>4y</i></span>.</b></div>"+
       "<div class='step mini'>Проверка: у ответа 5 и 4 общих делителей нет, и ни одна буква не стоит одновременно вверху и внизу. Значит сократили до конца.</div>"},
 
- {id:6,blk:"3",lvl:"база",type:"num",text:"Сократи дробь 56a³b⁵/(35a²b⁴) и найди её значение при a = 1 и b = 5.",ans:[e("8")],img:"",
+ {id:6,blk:"3",lvl:"база",type:"num",text:"Сократи дробь <span class='fr'><b>56a³b⁵</b><i>35a²b⁴</i></span> и найди её значение при a = 1 и b = 5.",ans:[e("8")],img:"",
   hints:["НОД чисел 56 и 35 равен 7, по буквам берём меньшие степени.",
-         "Общий множитель 7a²b⁴, после сокращения останется 8ab/5.",
+         "Общий множитель 7a²b⁴, после сокращения останется <span class='fr'><b>8ab</b><i>5</i></span>.",
          "Подставь a = 1, b = 5."],
   sol:"<div class='step'>1. Общий множитель: 7a²b⁴.</div>"+
       "<div class='fx'><span class='fr'><b>56a³b⁵</b><i>35a²b⁴</i></span> = <span class='fr'><b>8ab</b><i>5</i></span></div>"+
       "<div class='step'>2. При a = 1, b = 5:</div>"+
-      "<div class='fx'>8 · 1 · 5 : 5 = 8</div>"+
+      "<div class='fx'><span class='fr'><b>8 · 1 · 5</b><i>5</i></span> = 8</div>"+
       "<div class='step'><b>Ответ: 8.</b></div>"+
-      "<div class='step mini'>Считать 56 · 125 : (35 · 625) в лоб — долго и с большими числами. Сократить сначала, подставить потом — вот весь смысл темы.</div>"},
+      "<div class='step mini'>Считать <span class='fr'><b>56 · 125</b><i>35 · 625</i></span> в лоб — долго и с большими числами. Сократить сначала, подставить потом — вот весь смысл темы.</div>"},
 
- {id:7,blk:"4",lvl:"средний",type:"choice",text:"Сократи дробь (8a − 2b)/(4a² − ab).",
+ {id:7,blk:"4",lvl:"средний",type:"choice",text:"Сократи дробь <span class='fr'><b>8a − 2b</b><i>4a² − ab</i></span>.",
   options:["2/a","2/(4a)","(8a − 2b)/a","2a"],
+  optionsHtml:["<span class='fr'><b>2</b><i>a</i></span>","<span class='fr'><b>2</b><i>4a</i></span>","<span class='fr'><b>8a − 2b</b><i>a</i></span>","2a"],
   ans:[e("2/a")],img:"",
   hints:["Слагаемые сокращать нельзя — сначала вынеси общий множитель из числителя и из знаменателя.",
          "8a − 2b = 2(4a − b), а 4a² − ab = a(4a − b).",
@@ -519,10 +568,10 @@ var TASKS = [
   sol:"<div class='step'>1. Числитель: 8a − 2b = 2(4a − b).</div>"+
       "<div class='step'>2. Знаменатель: 4a² − ab = a(4a − b).</div>"+
       "<div class='fx'><span class='fr'><b>2(4a − b)</b><i>a(4a − b)</i></span> = <span class='fr'><b>2</b><i>a</i></span></div>"+
-      "<div class='step'><b>Ответ: 2/a.</b></div>"+
+      "<div class='step'><b>Ответ: <span class='fr'><b>2</b><i>a</i></span>.</b></div>"+
       "<div class='step mini'>Попытка сократить 8a и 4a² сразу, не вынося скобку, — ошибка: 8a и 4a² здесь слагаемые, а не множители.</div>"},
 
- {id:8,blk:"4",lvl:"средний",type:"num",text:"Упрости выражение (2x²y − xy²)/(2x − y) и найди его значение при x = 2,56 и y = 10.",ans:[e("25,6")],img:"",
+ {id:8,blk:"4",lvl:"средний",type:"num",text:"Упрости выражение <span class='fr'><b>2x²y − xy²</b><i>2x − y</i></span> и найди его значение при x = 2,56 и y = 10.",ans:[e("25,6")],img:"",
   hints:["Вынеси из числителя общий множитель xy.",
          "2x²y − xy² = xy(2x − y).",
          "Скобка 2x − y сократится, останется xy."],
@@ -531,10 +580,11 @@ var TASKS = [
       "<div class='step'>2. Подставляем:</div>"+
       "<div class='fx'>2,56 · 10 = 25,6</div>"+
       "<div class='step'><b>Ответ: 25,6.</b></div>"+
-      "<div class='step mini'>Без сокращения пришлось бы считать 2 · 2,56² · 10 − 2,56 · 100 и делить на 2 · 2,56 − 10. Ответ тот же, работы втрое больше.</div>"},
+      "<div class='step mini'>Без сокращения пришлось бы считать <span class='fr'><b>2 · 2,56² · 10 − 2,56 · 100</b><i>2 · 2,56 − 10</i></span>. Ответ тот же, работы втрое больше.</div>"},
 
- {id:9,blk:"4",lvl:"сложный",type:"choice",text:"Сократи дробь (ay − bx + by − ax)/(x² − y²).",
+ {id:9,blk:"4",lvl:"сложный",type:"choice",text:"Сократи дробь <span class='fr'><b>ay − bx + by − ax</b><i>x² − y²</i></span>.",
   options:["−(a + b)/(x + y)","(a + b)/(x + y)","(a − b)/(x + y)","−(a + b)/(x − y)"],
+  optionsHtml:["−<span class='fr'><b>a + b</b><i>x + y</i></span>","<span class='fr'><b>a + b</b><i>x + y</i></span>","<span class='fr'><b>a − b</b><i>x + y</i></span>","−<span class='fr'><b>a + b</b><i>x − y</i></span>"],
   ans:[e("−(a + b)/(x + y)")],img:"",
   hints:["Сгруппируй слагаемые числителя так, чтобы в обеих парах вышла одна скобка.",
          "(ay + by) − (ax + bx) = y(a + b) − x(a + b) = (y − x)(a + b).",
@@ -544,11 +594,12 @@ var TASKS = [
       "<div class='step'>2. Знаменатель: x² − y² = (x − y)(x + y).</div>"+
       "<div class='step'>3. Заменяем y − x на −(x − y) и сокращаем:</div>"+
       "<div class='fx'><span class='fr'><b>−(x − y)(a + b)</b><i>(x − y)(x + y)</i></span> = −<span class='fr'><b>a + b</b><i>x + y</i></span></div>"+
-      "<div class='step'><b>Ответ: −(a + b)/(x + y).</b></div>"+
+      "<div class='step'><b>Ответ: −<span class='fr'><b>a + b</b><i>x + y</i></span>.</b></div>"+
       "<div class='step mini'>Потерянный здесь минус — самая дорогая ошибка темы: ответ отличается от верного знаком, а по виду почти не отличается.</div>"},
 
- {id:10,blk:"5",lvl:"средний",type:"choice",text:"Сократи дробь (a² − 16)/(a² − 8a + 16).",
+ {id:10,blk:"5",lvl:"средний",type:"choice",text:"Сократи дробь <span class='fr'><b>a² − 16</b><i>a² − 8a + 16</i></span>.",
   options:["(a + 4)/(a − 4)","(a − 4)/(a + 4)","(a + 4)/(a + 4)","a/4"],
+  optionsHtml:["<span class='fr'><b>a + 4</b><i>a − 4</i></span>","<span class='fr'><b>a − 4</b><i>a + 4</i></span>","<span class='fr'><b>a + 4</b><i>a + 4</i></span>","<span class='fr'><b>a</b><i>4</i></span>"],
   ans:[e("(a + 4)/(a − 4)")],img:"",
   hints:["Числитель — разность квадратов, знаменатель — квадрат разности.",
          "a² − 16 = (a − 4)(a + 4), a² − 8a + 16 = (a − 4)².",
@@ -557,10 +608,10 @@ var TASKS = [
       "<div class='fx'><span class='fr'><b>(a − 4)(a + 4)</b><i>(a − 4)²</i></span></div>"+
       "<div class='step'>2. Общий множитель a − 4:</div>"+
       "<div class='fx'>= <span class='fr'><b>a + 4</b><i>a − 4</i></span></div>"+
-      "<div class='step'><b>Ответ: (a + 4)/(a − 4).</b></div>"+
+      "<div class='step'><b>Ответ: <span class='fr'><b>a + 4</b><i>a − 4</i></span>.</b></div>"+
       "<div class='step mini'>Дальше сокращать нечего: a + 4 и a − 4 — разные множители, а не одинаковые слагаемые.</div>"},
 
- {id:11,blk:"5",lvl:"средний",type:"num",text:"Сократи дробь (x² − 9)/(3 − x) и найди её значение при x = 5,65.",ans:[e("-8,65")],img:"",
+ {id:11,blk:"5",lvl:"средний",type:"num",text:"Сократи дробь <span class='fr'><b>x² − 9</b><i>3 − x</i></span> и найди её значение при x = 5,65.",ans:[e("-8,65")],img:"",
   hints:["Числитель — разность квадратов: (x − 3)(x + 3).",
          "Знаменатель 3 − x = −(x − 3).",
          "После сокращения останется −(x + 3)."],
@@ -571,10 +622,10 @@ var TASKS = [
       "<div class='step'><b>Ответ: −8,65.</b></div>"+
       "<div class='step mini'>Ответ 8,65 — это тот же случай с потерянным минусом. Проверка: числитель при x = 5,65 положителен, знаменатель 3 − 5,65 отрицателен, значит дробь обязана быть отрицательной.</div>"},
 
- {id:12,blk:"5",lvl:"средний",type:"num",text:"Найди значение дроби (a² − 2ab + b²)/(2a² − 2ab) при a = 1,6 и b = −4,8.",ans:[e("2")],img:"",
+ {id:12,blk:"5",lvl:"средний",type:"num",text:"Найди значение дроби <span class='fr'><b>a² − 2ab + b²</b><i>2a² − 2ab</i></span> при a = 1,6 и b = −4,8.",ans:[e("2")],img:"",
   hints:["Числитель — квадрат разности, из знаменателя вынеси 2a.",
          "(a − b)² сверху, 2a(a − b) снизу.",
-         "После сокращения останется (a − b)/(2a)."],
+         "После сокращения останется <span class='fr'><b>a − b</b><i>2a</i></span>."],
   sol:"<div class='step'>1. Раскладываем:</div>"+
       "<div class='fx'><span class='fr'><b>(a − b)²</b><i>2a(a − b)</i></span> = <span class='fr'><b>a − b</b><i>2a</i></span></div>"+
       "<div class='step'>2. Подставляем a = 1,6 и b = −4,8:</div>"+
@@ -582,29 +633,30 @@ var TASKS = [
       "<div class='step'><b>Ответ: 2.</b></div>"+
       "<div class='step mini'>Минус на минус даёт плюс: 1,6 − (−4,8) = 6,4, а не −3,2. Скобка вокруг отрицательного числа здесь обязательна.</div>"},
 
- {id:13,blk:"6",lvl:"база",type:"choice",text:"Какая дробь тождественно равна дроби (a − b)/(3b − a)?",
+ {id:13,blk:"6",lvl:"база",type:"choice",text:"Какая дробь тождественно равна дроби <span class='fr'><b>a − b</b><i>3b − a</i></span>?",
   options:["(b − a)/(a − 3b)","(a − b)/(a − 3b)","(b − a)/(3b − a)","(a + b)/(a − 3b)"],
+  optionsHtml:["<span class='fr'><b>b − a</b><i>a − 3b</i></span>","<span class='fr'><b>a − b</b><i>a − 3b</i></span>","<span class='fr'><b>b − a</b><i>3b − a</i></span>","<span class='fr'><b>a + b</b><i>a − 3b</i></span>"],
   ans:[e("(b − a)/(a − 3b)")],img:"",
   hints:["Значение дроби не меняется, если знак поменять сразу у числителя и у знаменателя.",
          "−(a − b) = b − a, а −(3b − a) = a − 3b.",
          "Меняем оба этажа одновременно."],
   sol:"<div class='step'>Умножаем числитель и знаменатель на −1:</div>"+
       "<div class='fx'><span class='fr'><b>a − b</b><i>3b − a</i></span> = <span class='fr'><b>−(a − b)</b><i>−(3b − a)</i></span> = <span class='fr'><b>b − a</b><i>a − 3b</i></span></div>"+
-      "<div class='step'><b>Ответ: (b − a)/(a − 3b).</b></div>"+
+      "<div class='step'><b>Ответ: <span class='fr'><b>b − a</b><i>a − 3b</i></span>.</b></div>"+
       "<div class='step mini'>Менять знак надо у обоих этажей сразу. Если поменять только у одного, дробь изменит знак — получится выражение, противоположное данному.</div>"},
 
- {id:14,blk:"6",lvl:"средний",type:"num",text:"Сократи дробь (y² − 25)/(5y − y²) и найди её значение при y = 2.",ans:[e("-3,5")],img:"",
+ {id:14,blk:"6",lvl:"средний",type:"num",text:"Сократи дробь <span class='fr'><b>y² − 25</b><i>5y − y²</i></span> и найди её значение при y = 2.",ans:[e("-3,5")],img:"",
   hints:["Числитель — разность квадратов, из знаменателя вынеси y.",
          "5y − y² = y(5 − y) = −y(y − 5).",
-         "После сокращения останется −(y + 5)/y."],
+         "После сокращения останется −<span class='fr'><b>y + 5</b><i>y</i></span>."],
   sol:"<div class='step'>1. Раскладываем оба этажа:</div>"+
       "<div class='fx'><span class='fr'><b>(y − 5)(y + 5)</b><i>y(5 − y)</i></span> = <span class='fr'><b>(y − 5)(y + 5)</b><i>−y(y − 5)</i></span> = −<span class='fr'><b>y + 5</b><i>y</i></span></div>"+
       "<div class='step'>2. При y = 2:</div>"+
-      "<div class='fx'>−(2 + 5) : 2 = −3,5</div>"+
+      "<div class='fx'>−<span class='fr'><b>2 + 5</b><i>2</i></span> = −3,5</div>"+
       "<div class='step'><b>Ответ: −3,5.</b></div>"+
-      "<div class='step mini'>Проверка прямой подстановкой: (4 − 25) : (10 − 4) = −21 : 6 = −3,5 ✓</div>"},
+      "<div class='step mini'>Проверка прямой подстановкой: <span class='fr'><b>4 − 25</b><i>10 − 4</i></span> = <span class='fr'><b>−21</b><i>6</i></span> = −3,5 ✓</div>"},
 
- {id:15,blk:"6",lvl:"средний",type:"num",text:"Найди значение выражения (4b² − a²)/(a + 2b) при a = 4,4 и b = 3,7.",ans:[e("3")],img:"",
+ {id:15,blk:"6",lvl:"средний",type:"num",text:"Найди значение выражения <span class='fr'><b>4b² − a²</b><i>a + 2b</i></span> при a = 4,4 и b = 3,7.",ans:[e("3")],img:"",
   hints:["Числитель — разность квадратов: (2b)² − a².",
          "4b² − a² = (2b − a)(2b + a), а 2b + a — это тот же знаменатель.",
          "После сокращения останется 2b − a."],
@@ -615,20 +667,21 @@ var TASKS = [
       "<div class='step'><b>Ответ: 3.</b></div>"+
       "<div class='step mini'>Порядок слагаемых в скобке значения не имеет: a + 2b и 2b + a — это одно и то же. А вот 2b − a и a − 2b — разные вещи.</div>"},
 
- {id:16,blk:"7",lvl:"сложный",type:"choice",text:"Сократи дробь (1 − 3x)²/(3x² + 5x − 2).",
+ {id:16,blk:"7",lvl:"сложный",type:"choice",text:"Сократи дробь <span class='fr'><b>(1 − 3x)²</b><i>3x² + 5x − 2</i></span>.",
   options:["(3x − 1)/(x + 2)","(1 − 3x)/(x + 2)","(3x − 1)/(3x + 6)","(x + 2)/(3x − 1)"],
+  optionsHtml:["<span class='fr'><b>3x − 1</b><i>x + 2</i></span>","<span class='fr'><b>1 − 3x</b><i>x + 2</i></span>","<span class='fr'><b>3x − 1</b><i>3x + 6</i></span>","<span class='fr'><b>x + 2</b><i>3x − 1</i></span>"],
   ans:[e("(3x − 1)/(x + 2)")],img:"",
   hints:["Разложи знаменатель по корням: реши 3x² + 5x − 2 = 0.",
-         "D = 25 + 24 = 49, корни x = −2 и x = 1/3, значит 3x² + 5x − 2 = (x + 2)(3x − 1).",
+         "D = 25 + 24 = 49, корни x = −2 и x = <span class='fr'><b>1</b><i>3</i></span>, значит 3x² + 5x − 2 = (x + 2)(3x − 1).",
          "В числителе (1 − 3x)² = (3x − 1)², квадрат разности от перестановки не меняется."],
-  sol:"<div class='step'>1. Корни знаменателя: D = 5² − 4 · 3 · (−2) = 49, x₁ = −2, x₂ = 1/3.</div>"+
-      "<div class='fx'>3x² + 5x − 2 = 3(x + 2)(x − 1/3) = (x + 2)(3x − 1)</div>"+
+  sol:"<div class='step'>1. Корни знаменателя: D = 5² − 4 · 3 · (−2) = 49, x₁ = −2, x₂ = <span class='fr'><b>1</b><i>3</i></span>.</div>"+
+      "<div class='fx'>3x² + 5x − 2 = 3(x + 2)(x − <span class='fr'><b>1</b><i>3</i></span>) = (x + 2)(3x − 1)</div>"+
       "<div class='step'>2. Числитель: (1 − 3x)² = (3x − 1)².</div>"+
       "<div class='fx'><span class='fr'><b>(3x − 1)²</b><i>(x + 2)(3x − 1)</i></span> = <span class='fr'><b>3x − 1</b><i>x + 2</i></span></div>"+
-      "<div class='step'><b>Ответ: (3x − 1)/(x + 2).</b></div>"+
-      "<div class='step mini'>Тройку из 3(x − 1/3) обязательно заносят внутрь скобки — иначе в ответе останется лишний множитель.</div>"},
+      "<div class='step'><b>Ответ: <span class='fr'><b>3x − 1</b><i>x + 2</i></span>.</b></div>"+
+      "<div class='step mini'>Тройку из 3(x − <span class='fr'><b>1</b><i>3</i></span>) обязательно заносят внутрь скобки — иначе в ответе останется лишний множитель.</div>"},
 
- {id:17,blk:"7",lvl:"сложный",type:"num",text:"Построй график функции y = (x² − 4)/(x − 2). Запиши ординату выколотой точки.",ans:[e("4")],img:"",
+ {id:17,blk:"7",lvl:"сложный",type:"num",text:"Построй график функции y = <span class='fr'><b>x² − 4</b><i>x − 2</i></span>. Запиши ординату выколотой точки.",ans:[e("4")],img:"",
   hints:["Сначала выпиши область определения: при каком x знаменатель равен нулю?",
          "x ≠ 2. Теперь сократи дробь.",
          "Получится прямая y = x + 2 без точки при x = 2."],
@@ -640,7 +693,7 @@ var TASKS = [
       "<div class='step'><b>Ответ: 4.</b></div>"+
       "<div class='step mini'>Сокращение не возвращает потерянное значение. Область определения выписывают <u>до</u> сокращения, а не после.</div>"},
 
- {id:18,blk:"7",lvl:"сложный",type:"num",text:"Построй график функции y = (x² − 9)/(x + 3). Запиши сумму координат выколотой точки.",ans:[e("-9")],img:"",
+ {id:18,blk:"7",lvl:"сложный",type:"num",text:"Построй график функции y = <span class='fr'><b>x² − 9</b><i>x + 3</i></span>. Запиши сумму координат выколотой точки.",ans:[e("-9")],img:"",
   hints:["Знаменатель обращается в нуль при x = −3 — это и есть выколотая точка.",
          "Сократи дробь: получится прямая y = x − 3.",
          "Ордината выколотой точки: −3 − 3 = −6. Сложи её с абсциссой."],
@@ -702,7 +755,7 @@ TASKS.forEach(function(t){
   if(t.img){ body += '<div class="fig">'+t.img+'</div>'; }
   if(t.type === "choice"){
     body += '<div class="opts">'+t.options.map(function(o,i){
-      return '<label class="opt" data-v="'+o+'"><input type="radio" name="q'+t.id+'" value="'+o+'"> '+o+'</label>';
+      return '<label class="opt" data-v="'+o+'"><input type="radio" name="q'+t.id+'" value="'+o+'"> '+((t.optionsHtml && t.optionsHtml[i]) || o)+'</label>';
     }).join("")+'</div>';
   } else {
     body += '<div class="keys">'+
@@ -756,7 +809,7 @@ function hint(id){
   }
   var h = document.createElement("div");
   h.className = "hint";
-  h.textContent = "Подсказка " + (s.hints+1) + ": " + t.hints[s.hints];
+  h.innerHTML = "Подсказка " + (s.hints+1) + ": " + t.hints[s.hints];
   host.appendChild(h);
   s.hints++;
 }
@@ -1070,10 +1123,10 @@ function makeTrainer(id, items){
   start();
 }
 
-makeTrainer("ts1", [{"q": "Верно ли равенство?<br><span style='font-size:22px'><span class=\"fr\"><b>3xy³</b><i>xy</i></span> = 3y²</span>", "fig": "", "opts": ["верно", "неверно"], "ans": 0, "why": "Общий множитель xy: 3xy³ : xy = 3y², xy : xy = 1."}, {"q": "Верно ли равенство?<br><span style='font-size:22px'><span class=\"fr\"><b>a³b</b><i>ab²</i></span> = <span class=\"fr\"><b>a²</b><i>b</i></span></span>", "fig": "", "opts": ["верно", "неверно"], "ans": 0, "why": "Общий множитель ab."}, {"q": "Верно ли равенство?<br><span style='font-size:22px'><span class=\"fr\"><b>3xy</b><i>x</i></span> = 3y</span>", "fig": "", "opts": ["верно", "неверно"], "ans": 0, "why": "Сокращаем на x."}, {"q": "Верно ли равенство?<br><span style='font-size:22px'><span class=\"fr\"><b>a³b</b><i>4ab</i></span> = <span class=\"fr\"><b>a²</b><i>4</i></span></span>", "fig": "", "opts": ["верно", "неверно"], "ans": 0, "why": "Общий множитель ab, четвёрка остаётся внизу."}, {"q": "Верно ли равенство?<br><span style='font-size:22px'><span class=\"fr\"><b>x²</b><i>3x</i></span> = <span class=\"fr\"><b>x</b><i>3</i></span></span>", "fig": "", "opts": ["верно", "неверно"], "ans": 0, "why": "Сокращаем на x."}, {"q": "Верно ли равенство?<br><span style='font-size:22px'><span class=\"fr\"><b>x²</b><i>3x³</i></span> = <span class=\"fr\"><b>1</b><i>3x</i></span></span>", "fig": "", "opts": ["верно", "неверно"], "ans": 0, "why": "Общий множитель x²."}, {"q": "Верно ли равенство?<br><span style='font-size:22px'><span class=\"fr\"><b>3a</b><i>a</i></span> = 3a</span>", "fig": "", "opts": ["верно", "неверно"], "ans": 1, "why": "Должно получиться 3, а не 3a: a : a = 1."}, {"q": "Верно ли равенство?<br><span style='font-size:22px'><span class=\"fr\"><b>6a²</b><i>a</i></span> = 6a³</span>", "fig": "", "opts": ["верно", "неверно"], "ans": 1, "why": "При сокращении степень <u>уменьшается</u>: 6a² : a = 6a."}, {"q": "Верно ли равенство?<br><span style='font-size:22px'><span class=\"fr\"><b>a + 3</b><i>3a²</i></span> = <span class=\"fr\"><b>a + 1</b><i>a²</i></span></span>", "fig": "", "opts": ["верно", "неверно"], "ans": 1, "why": "Здесь вообще ничего не сокращается: в числителе <b>сумма</b>, а не произведение. Тройку из a + 3 вынести нельзя."}, {"q": "Верно ли равенство?<br><span style='font-size:22px'><span class=\"fr\"><b>12a(a + 1)</b><i>3a</i></span> = 4(a − 1)</span>", "fig": "", "opts": ["верно", "неверно"], "ans": 1, "why": "Сокращается на 3a и остаётся 4(a + 1). Скобка не меняет знак при сокращении."}]);
-makeTrainer("ts2", [{"q": "На какой наибольший общий множитель сокращается дробь?<br><span style='font-size:22px'><span class=\"fr\"><b>7a</b><i>14b</i></span></span>", "fig": "", "opts": ["7", "7a", "a", "14"], "ans": 0, "why": "Буква a есть только вверху, b только внизу — остаётся числовой множитель 7."}, {"q": "На какой наибольший общий множитель сокращается дробь?<br><span style='font-size:22px'><span class=\"fr\"><b>12a²</b><i>4a³</i></span></span>", "fig": "", "opts": ["4a²", "4a³", "12a²", "a"], "ans": 0, "why": "Числа: наибольший общий делитель 12 и 4 равен 4. Буквы: берём меньшую степень, a²."}, {"q": "На какой наибольший общий множитель сокращается дробь?<br><span style='font-size:22px'><span class=\"fr\"><b>8ab</b><i>20a²b</i></span></span>", "fig": "", "opts": ["4ab", "8ab", "20ab", "2a"], "ans": 0, "why": "НОД чисел 8 и 20 равен 4, по буквам берём a в первой степени и b."}, {"q": "На какой наибольший общий множитель сокращается дробь?<br><span style='font-size:22px'><span class=\"fr\"><b>18a⁴b²c</b><i>12a²b²c³</i></span></span>", "fig": "", "opts": ["6a²b²c", "12a²b²c", "6a⁴b²c³", "2a²bc"], "ans": 0, "why": "НОД чисел 18 и 12 равен 6, по каждой букве берём меньшую степень."}, {"q": "На какой наибольший общий множитель сокращается дробь?<br><span style='font-size:22px'><span class=\"fr\"><b>15a</b><i>3</i></span></span>", "fig": "", "opts": ["3", "15", "15a", "a"], "ans": 0, "why": "Внизу буквы нет вовсе, значит общий множитель — только число 3."}, {"q": "На какой наибольший общий множитель сокращается дробь?<br><span style='font-size:22px'><span class=\"fr\"><b>6</b><i>18b</i></span></span>", "fig": "", "opts": ["6", "18", "6b", "b"], "ans": 0, "why": "Вверху буквы нет, остаётся НОД чисел 6 и 18."}, {"q": "На какой наибольший общий множитель сокращается дробь?<br><span style='font-size:22px'><span class=\"fr\"><b>8c</b><i>9c</i></span></span>", "fig": "", "opts": ["c", "8c", "9c", "72"], "ans": 0, "why": "У чисел 8 и 9 общих делителей, кроме единицы, нет — сокращается только буква."}, {"q": "На какой наибольший общий множитель сокращается дробь?<br><span style='font-size:22px'><span class=\"fr\"><b>15d</b><i>35d</i></span></span>", "fig": "", "opts": ["5d", "15d", "35d", "5"], "ans": 0, "why": "НОД чисел 15 и 35 равен 5, буква d есть в обоих этажах."}, {"q": "На какой наибольший общий множитель сокращается дробь?<br><span style='font-size:22px'><span class=\"fr\"><b>5xy</b><i>4x</i></span></span>", "fig": "", "opts": ["x", "5x", "4x", "20xy"], "ans": 0, "why": "Числа 5 и 4 взаимно просты, буква y только вверху."}, {"q": "На какой наибольший общий множитель сокращается дробь?<br><span style='font-size:22px'><span class=\"fr\"><b>7m</b><i>21mn</i></span></span>", "fig": "", "opts": ["7m", "7mn", "21m", "m"], "ans": 0, "why": "НОД чисел 7 и 21 равен 7, буква m есть в обоих этажах, n — только внизу."}]);
-makeTrainer("ts3", [{"q": "Чему равно выражение?<br><span style='font-size:22px'><span class=\"fr\"><b>m − n</b><i>n − m</i></span></span>", "fig": "", "opts": ["−1", "1", "0", "m/n"], "ans": 0, "why": "n − m = −(m − n), значит дробь равна −1. Это самый частый случай во всей теме."}, {"q": "Чему равно выражение?<br><span style='font-size:22px'><span class=\"fr\"><b>c − d</b><i>3(d − c)</i></span></span>", "fig": "", "opts": ["−1/3", "1/3", "−3", "3"], "ans": 0, "why": "d − c = −(c − d), остаётся −1 : 3."}, {"q": "Чему равно выражение?<br><span style='font-size:22px'><span class=\"fr\"><b>5x − 5y</b><i>7y − 7x</i></span></span>", "fig": "", "opts": ["−5/7", "5/7", "−7/5", "−1"], "ans": 0, "why": "5(x − y) и 7(y − x) = −7(x − y), значит 5 : (−7)."}, {"q": "Чему равно выражение?<br><span style='font-size:22px'><span class=\"fr\"><b>a − b</b><i>6(b − a)</i></span></span>", "fig": "", "opts": ["−1/6", "1/6", "−6", "6"], "ans": 0, "why": "b − a = −(a − b), остаётся −1 : 6."}, {"q": "Чему равно выражение?<br><span style='font-size:22px'>−<span class=\"fr\"><b>x − 2</b><i>x + 3</i></span> — записать без минуса перед дробью</span>", "fig": "", "opts": ["(2 − x)/(x + 3)", "(x − 2)/(x + 3)", "(x + 2)/(x + 3)", "(2 − x)/(−x − 3)"], "ans": 0, "why": "Минус перед дробью убирают, меняя знак у одного этажа. Меняем числитель."}, {"q": "Чему равно выражение?<br><span style='font-size:22px'><span class=\"fr\"><b>x − y</b><i>y − z</i></span> — поставить минус перед дробью</span>", "fig": "", "opts": ["−(y − x)/(y − z)", "−(x − y)/(y − z)", "−(x − y)/(z − y)", "−(y − x)/(z − y)"], "ans": 0, "why": "Меняем знак у числителя и ставим минус снаружи: значение не изменилось."}, {"q": "Чему равно выражение?<br><span style='font-size:22px'><span class=\"fr\"><b>16 − x²</b><i>(x − 4)²</i></span></span>", "fig": "", "opts": ["(4 + x)/(4 − x)", "(4 + x)/(x − 4)", "(x + 4)/(x + 4)", "−(4 + x)/(4 − x)"], "ans": 0, "why": "(x − 4)² = (4 − x)², а 16 − x² = (4 − x)(4 + x). Сокращаем на 4 − x."}, {"q": "Чему равно выражение?<br><span style='font-size:22px'><span class=\"fr\"><b>A</b><i>−B</i></span></span>", "fig": "", "opts": ["−A/B", "A/B", "−A/−B", "B/A"], "ans": 0, "why": "Минус у знаменателя всё равно что минус перед дробью."}, {"q": "Чему равно выражение?<br><span style='font-size:22px'><span class=\"fr\"><b>−A</b><i>−B</i></span></span>", "fig": "", "opts": ["A/B", "−A/B", "A/−B", "−A/−B не упрощается"], "ans": 0, "why": "Два минуса гасят друг друга."}, {"q": "Чему равно выражение?<br><span style='font-size:22px'><span class=\"fr\"><b>a − b</b><i>3b − a</i></span> — тождественно равна…</span>", "fig": "", "opts": ["(b − a)/(a − 3b)", "(a − b)/(a − 3b)", "(b − a)/(3b − a)", "(a + b)/(a − 3b)"], "ans": 0, "why": "Меняем знак у обоих этажей сразу — значение дроби не меняется."}]);
-makeTrainer("ts4", [{"q": "Сократи дробь.<br><span style='font-size:22px'><span class=\"fr\"><b>x² − y²</b><i>3y − 3x</i></span></span>", "fig": "", "opts": ["−(x + y)/3", "(x + y)/3", "(x − y)/3", "−(x − y)/3"], "ans": 0, "why": "(x − y)(x + y) сверху, −3(x − y) снизу."}, {"q": "Сократи дробь.<br><span style='font-size:22px'><span class=\"fr\"><b>m² − n²</b><i>m² + n² − 2mn</i></span></span>", "fig": "", "opts": ["(m + n)/(m − n)", "(m − n)/(m + n)", "m/n", "(m + n)/(m + n)"], "ans": 0, "why": "Знаменатель — это (m − n)², просто слагаемые переставлены."}, {"q": "Сократи дробь.<br><span style='font-size:22px'><span class=\"fr\"><b>a² − 16</b><i>a² − 8a + 16</i></span></span>", "fig": "", "opts": ["(a + 4)/(a − 4)", "(a − 4)/(a + 4)", "(a + 4)/(a + 4)", "a/4"], "ans": 0, "why": "Разность квадратов сверху, квадрат разности снизу."}, {"q": "Сократи дробь.<br><span style='font-size:22px'><span class=\"fr\"><b>x² + 4x + 4</b><i>2x + 4</i></span></span>", "fig": "", "opts": ["(x + 2)/2", "2/(x + 2)", "(x + 2)/(2x)", "(x + 4)/2"], "ans": 0, "why": "(x + 2)² сверху, 2(x + 2) снизу."}, {"q": "Сократи дробь.<br><span style='font-size:22px'><span class=\"fr\"><b>b² − 6b + 9</b><i>b² − 9</i></span></span>", "fig": "", "opts": ["(b − 3)/(b + 3)", "(b + 3)/(b − 3)", "(b − 3)/(b − 3)", "b/3"], "ans": 0, "why": "(b − 3)² сверху, (b − 3)(b + 3) снизу."}, {"q": "Сократи дробь.<br><span style='font-size:22px'><span class=\"fr\"><b>25c² − 1</b><i>25c² + 10c + 1</i></span></span>", "fig": "", "opts": ["(5c − 1)/(5c + 1)", "(5c + 1)/(5c − 1)", "(5c − 1)/(5c − 1)", "1/(10c)"], "ans": 0, "why": "(5c − 1)(5c + 1) сверху, (5c + 1)² снизу."}, {"q": "Сократи дробь.<br><span style='font-size:22px'><span class=\"fr\"><b>x² + 2x − 15</b><i>x² − 9</i></span></span>", "fig": "", "opts": ["(x + 5)/(x + 3)", "(x − 5)/(x + 3)", "(x + 5)/(x − 3)", "(x + 3)/(x + 5)"], "ans": 0, "why": "Корни трёхчлена 3 и −5, значит x² + 2x − 15 = (x − 3)(x + 5). Снизу (x − 3)(x + 3)."}, {"q": "Сократи дробь.<br><span style='font-size:22px'><span class=\"fr\"><b>x² − 4x − 5</b><i>x² + 2x + 1</i></span></span>", "fig": "", "opts": ["(x − 5)/(x + 1)", "(x + 5)/(x + 1)", "(x − 5)/(x − 1)", "(x + 1)/(x − 5)"], "ans": 0, "why": "Корни 5 и −1: (x − 5)(x + 1). Снизу (x + 1)²."}, {"q": "Сократи дробь.<br><span style='font-size:22px'><span class=\"fr\"><b>2x² + 5x − 3</b><i>2x² − 7x + 3</i></span></span>", "fig": "", "opts": ["(x + 3)/(x − 3)", "(x − 3)/(x + 3)", "(2x + 3)/(2x − 3)", "(x + 3)/(x + 3)"], "ans": 0, "why": "Оба трёхчлена содержат множитель 2x − 1: сверху (2x − 1)(x + 3), снизу (2x − 1)(x − 3)."}, {"q": "Сократи дробь.<br><span style='font-size:22px'><span class=\"fr\"><b>18mn − 27n</b><i>9mn</i></span></span>", "fig": "", "opts": ["(2m − 3)/m", "(2m − 3)/(mn)", "2m − 3", "(2m − 3)/n"], "ans": 0, "why": "Выносим 9n из числителя и сокращаем на него."}]);
+makeTrainer("ts1", [{"q": "Верно ли равенство?<br><span style='font-size:22px'><span class='fr'><b>3xy³</b><i>xy</i></span> = 3y²</span>", "fig": "", "opts": ["верно", "неверно"], "ans": 0, "why": "Общий множитель xy: 3xy³ : xy = 3y², xy : xy = 1."}, {"q": "Верно ли равенство?<br><span style='font-size:22px'><span class='fr'><b>a³b</b><i>ab²</i></span> = <span class='fr'><b>a²</b><i>b</i></span></span>", "fig": "", "opts": ["верно", "неверно"], "ans": 0, "why": "Общий множитель ab."}, {"q": "Верно ли равенство?<br><span style='font-size:22px'><span class='fr'><b>3xy</b><i>x</i></span> = 3y</span>", "fig": "", "opts": ["верно", "неверно"], "ans": 0, "why": "Сокращаем на x."}, {"q": "Верно ли равенство?<br><span style='font-size:22px'><span class='fr'><b>a³b</b><i>4ab</i></span> = <span class='fr'><b>a²</b><i>4</i></span></span>", "fig": "", "opts": ["верно", "неверно"], "ans": 0, "why": "Общий множитель ab, четвёрка остаётся внизу."}, {"q": "Верно ли равенство?<br><span style='font-size:22px'><span class='fr'><b>x²</b><i>3x</i></span> = <span class='fr'><b>x</b><i>3</i></span></span>", "fig": "", "opts": ["верно", "неверно"], "ans": 0, "why": "Сокращаем на x."}, {"q": "Верно ли равенство?<br><span style='font-size:22px'><span class='fr'><b>x²</b><i>3x³</i></span> = <span class='fr'><b>1</b><i>3x</i></span></span>", "fig": "", "opts": ["верно", "неверно"], "ans": 0, "why": "Общий множитель x²."}, {"q": "Верно ли равенство?<br><span style='font-size:22px'><span class='fr'><b>3a</b><i>a</i></span> = 3a</span>", "fig": "", "opts": ["верно", "неверно"], "ans": 1, "why": "Должно получиться 3, а не 3a: a : a = 1."}, {"q": "Верно ли равенство?<br><span style='font-size:22px'><span class='fr'><b>6a²</b><i>a</i></span> = 6a³</span>", "fig": "", "opts": ["верно", "неверно"], "ans": 1, "why": "При сокращении степень <u>уменьшается</u>: 6a² : a = 6a."}, {"q": "Верно ли равенство?<br><span style='font-size:22px'><span class='fr'><b>a + 3</b><i>3a²</i></span> = <span class='fr'><b>a + 1</b><i>a²</i></span></span>", "fig": "", "opts": ["верно", "неверно"], "ans": 1, "why": "Здесь вообще ничего не сокращается: в числителе <b>сумма</b>, а не произведение. Тройку из a + 3 вынести нельзя."}, {"q": "Верно ли равенство?<br><span style='font-size:22px'><span class='fr'><b>12a(a + 1)</b><i>3a</i></span> = 4(a − 1)</span>", "fig": "", "opts": ["верно", "неверно"], "ans": 1, "why": "Сокращается на 3a и остаётся 4(a + 1). Скобка не меняет знак при сокращении."}]);
+makeTrainer("ts2", [{"q": "На какой наибольший общий множитель сокращается дробь?<br><span style='font-size:22px'><span class='fr'><b>7a</b><i>14b</i></span></span>", "fig": "", "opts": ["7", "7a", "a", "14"], "ans": 0, "why": "Буква a есть только вверху, b только внизу — остаётся числовой множитель 7."}, {"q": "На какой наибольший общий множитель сокращается дробь?<br><span style='font-size:22px'><span class='fr'><b>12a²</b><i>4a³</i></span></span>", "fig": "", "opts": ["4a²", "4a³", "12a²", "a"], "ans": 0, "why": "Числа: наибольший общий делитель 12 и 4 равен 4. Буквы: берём меньшую степень, a²."}, {"q": "На какой наибольший общий множитель сокращается дробь?<br><span style='font-size:22px'><span class='fr'><b>8ab</b><i>20a²b</i></span></span>", "fig": "", "opts": ["4ab", "8ab", "20ab", "2a"], "ans": 0, "why": "НОД чисел 8 и 20 равен 4, по буквам берём a в первой степени и b."}, {"q": "На какой наибольший общий множитель сокращается дробь?<br><span style='font-size:22px'><span class='fr'><b>18a⁴b²c</b><i>12a²b²c³</i></span></span>", "fig": "", "opts": ["6a²b²c", "12a²b²c", "6a⁴b²c³", "2a²bc"], "ans": 0, "why": "НОД чисел 18 и 12 равен 6, по каждой букве берём меньшую степень."}, {"q": "На какой наибольший общий множитель сокращается дробь?<br><span style='font-size:22px'><span class='fr'><b>15a</b><i>3</i></span></span>", "fig": "", "opts": ["3", "15", "15a", "a"], "ans": 0, "why": "Внизу буквы нет вовсе, значит общий множитель — только число 3."}, {"q": "На какой наибольший общий множитель сокращается дробь?<br><span style='font-size:22px'><span class='fr'><b>6</b><i>18b</i></span></span>", "fig": "", "opts": ["6", "18", "6b", "b"], "ans": 0, "why": "Вверху буквы нет, остаётся НОД чисел 6 и 18."}, {"q": "На какой наибольший общий множитель сокращается дробь?<br><span style='font-size:22px'><span class='fr'><b>8c</b><i>9c</i></span></span>", "fig": "", "opts": ["c", "8c", "9c", "72"], "ans": 0, "why": "У чисел 8 и 9 общих делителей, кроме единицы, нет — сокращается только буква."}, {"q": "На какой наибольший общий множитель сокращается дробь?<br><span style='font-size:22px'><span class='fr'><b>15d</b><i>35d</i></span></span>", "fig": "", "opts": ["5d", "15d", "35d", "5"], "ans": 0, "why": "НОД чисел 15 и 35 равен 5, буква d есть в обоих этажах."}, {"q": "На какой наибольший общий множитель сокращается дробь?<br><span style='font-size:22px'><span class='fr'><b>5xy</b><i>4x</i></span></span>", "fig": "", "opts": ["x", "5x", "4x", "20xy"], "ans": 0, "why": "Числа 5 и 4 взаимно просты, буква y только вверху."}, {"q": "На какой наибольший общий множитель сокращается дробь?<br><span style='font-size:22px'><span class='fr'><b>7m</b><i>21mn</i></span></span>", "fig": "", "opts": ["7m", "7mn", "21m", "m"], "ans": 0, "why": "НОД чисел 7 и 21 равен 7, буква m есть в обоих этажах, n — только внизу."}]);
+makeTrainer("ts3", [{"q": "Чему равно выражение?<br><span style='font-size:22px'><span class='fr'><b>m − n</b><i>n − m</i></span></span>", "fig": "", "opts": ["−1", "1", "0", "<span class='fr'><b>m</b><i>n</i></span>"], "ans": 0, "why": "n − m = −(m − n), значит дробь равна −1. Это самый частый случай во всей теме."}, {"q": "Чему равно выражение?<br><span style='font-size:22px'><span class='fr'><b>c − d</b><i>3(d − c)</i></span></span>", "fig": "", "opts": ["−<span class='fr'><b>1</b><i>3</i></span>", "<span class='fr'><b>1</b><i>3</i></span>", "−3", "3"], "ans": 0, "why": "d − c = −(c − d), остаётся −1 : 3."}, {"q": "Чему равно выражение?<br><span style='font-size:22px'><span class='fr'><b>5x − 5y</b><i>7y − 7x</i></span></span>", "fig": "", "opts": ["−<span class='fr'><b>5</b><i>7</i></span>", "<span class='fr'><b>5</b><i>7</i></span>", "−<span class='fr'><b>7</b><i>5</i></span>", "−1"], "ans": 0, "why": "5(x − y) и 7(y − x) = −7(x − y), значит 5 : (−7)."}, {"q": "Чему равно выражение?<br><span style='font-size:22px'><span class='fr'><b>a − b</b><i>6(b − a)</i></span></span>", "fig": "", "opts": ["−<span class='fr'><b>1</b><i>6</i></span>", "<span class='fr'><b>1</b><i>6</i></span>", "−6", "6"], "ans": 0, "why": "b − a = −(a − b), остаётся −1 : 6."}, {"q": "Чему равно выражение?<br><span style='font-size:22px'>−<span class='fr'><b>x − 2</b><i>x + 3</i></span> — записать без минуса перед дробью</span>", "fig": "", "opts": ["<span class='fr'><b>2 − x</b><i>x + 3</i></span>", "<span class='fr'><b>x − 2</b><i>x + 3</i></span>", "<span class='fr'><b>x + 2</b><i>x + 3</i></span>", "<span class='fr'><b>2 − x</b><i>−x − 3</i></span>"], "ans": 0, "why": "Минус перед дробью убирают, меняя знак у одного этажа. Меняем числитель."}, {"q": "Чему равно выражение?<br><span style='font-size:22px'><span class='fr'><b>x − y</b><i>y − z</i></span> — поставить минус перед дробью</span>", "fig": "", "opts": ["−<span class='fr'><b>y − x</b><i>y − z</i></span>", "−<span class='fr'><b>x − y</b><i>y − z</i></span>", "−<span class='fr'><b>x − y</b><i>z − y</i></span>", "−<span class='fr'><b>y − x</b><i>z − y</i></span>"], "ans": 0, "why": "Меняем знак у числителя и ставим минус снаружи: значение не изменилось."}, {"q": "Чему равно выражение?<br><span style='font-size:22px'><span class='fr'><b>16 − x²</b><i>(x − 4)²</i></span></span>", "fig": "", "opts": ["<span class='fr'><b>4 + x</b><i>4 − x</i></span>", "<span class='fr'><b>4 + x</b><i>x − 4</i></span>", "<span class='fr'><b>x + 4</b><i>x + 4</i></span>", "−<span class='fr'><b>4 + x</b><i>4 − x</i></span>"], "ans": 0, "why": "(x − 4)² = (4 − x)², а 16 − x² = (4 − x)(4 + x). Сокращаем на 4 − x."}, {"q": "Чему равно выражение?<br><span style='font-size:22px'><span class='fr'><b>A</b><i>−B</i></span></span>", "fig": "", "opts": ["−<span class='fr'><b>A</b><i>B</i></span>", "<span class='fr'><b>A</b><i>B</i></span>", "<span class='fr'><b>−A</b><i>−B</i></span>", "<span class='fr'><b>B</b><i>A</i></span>"], "ans": 0, "why": "Минус у знаменателя всё равно что минус перед дробью."}, {"q": "Чему равно выражение?<br><span style='font-size:22px'><span class='fr'><b>−A</b><i>−B</i></span></span>", "fig": "", "opts": ["<span class='fr'><b>A</b><i>B</i></span>", "−<span class='fr'><b>A</b><i>B</i></span>", "<span class='fr'><b>−A</b><i>B</i></span>", "<span class='fr'><b>A</b><i>−B</i></span>"], "ans": 0, "why": "Два минуса гасят друг друга."}, {"q": "Чему равно выражение?<br><span style='font-size:22px'><span class='fr'><b>a − b</b><i>3b − a</i></span> — тождественно равна…</span>", "fig": "", "opts": ["<span class='fr'><b>b − a</b><i>a − 3b</i></span>", "<span class='fr'><b>a − b</b><i>a − 3b</i></span>", "<span class='fr'><b>b − a</b><i>3b − a</i></span>", "<span class='fr'><b>a + b</b><i>a − 3b</i></span>"], "ans": 0, "why": "Меняем знак у обоих этажей сразу — значение дроби не меняется."}]);
+makeTrainer("ts4", [{"q": "Сократи дробь.<br><span style='font-size:22px'><span class='fr'><b>x² − y²</b><i>3y − 3x</i></span></span>", "fig": "", "opts": ["−<span class='fr'><b>x + y</b><i>3</i></span>", "<span class='fr'><b>x + y</b><i>3</i></span>", "<span class='fr'><b>x − y</b><i>3</i></span>", "−<span class='fr'><b>x − y</b><i>3</i></span>"], "ans": 0, "why": "(x − y)(x + y) сверху, −3(x − y) снизу."}, {"q": "Сократи дробь.<br><span style='font-size:22px'><span class='fr'><b>m² − n²</b><i>m² + n² − 2mn</i></span></span>", "fig": "", "opts": ["<span class='fr'><b>m + n</b><i>m − n</i></span>", "<span class='fr'><b>m − n</b><i>m + n</i></span>", "<span class='fr'><b>m</b><i>n</i></span>", "<span class='fr'><b>m + n</b><i>m + n</i></span>"], "ans": 0, "why": "Знаменатель — это (m − n)², просто слагаемые переставлены."}, {"q": "Сократи дробь.<br><span style='font-size:22px'><span class='fr'><b>a² − 16</b><i>a² − 8a + 16</i></span></span>", "fig": "", "opts": ["<span class='fr'><b>a + 4</b><i>a − 4</i></span>", "<span class='fr'><b>a − 4</b><i>a + 4</i></span>", "<span class='fr'><b>a + 4</b><i>a + 4</i></span>", "<span class='fr'><b>a</b><i>4</i></span>"], "ans": 0, "why": "Разность квадратов сверху, квадрат разности снизу."}, {"q": "Сократи дробь.<br><span style='font-size:22px'><span class='fr'><b>x² + 4x + 4</b><i>2x + 4</i></span></span>", "fig": "", "opts": ["<span class='fr'><b>x + 2</b><i>2</i></span>", "<span class='fr'><b>2</b><i>x + 2</i></span>", "<span class='fr'><b>x + 2</b><i>2x</i></span>", "<span class='fr'><b>x + 4</b><i>2</i></span>"], "ans": 0, "why": "(x + 2)² сверху, 2(x + 2) снизу."}, {"q": "Сократи дробь.<br><span style='font-size:22px'><span class='fr'><b>b² − 6b + 9</b><i>b² − 9</i></span></span>", "fig": "", "opts": ["<span class='fr'><b>b − 3</b><i>b + 3</i></span>", "<span class='fr'><b>b + 3</b><i>b − 3</i></span>", "<span class='fr'><b>b − 3</b><i>b − 3</i></span>", "<span class='fr'><b>b</b><i>3</i></span>"], "ans": 0, "why": "(b − 3)² сверху, (b − 3)(b + 3) снизу."}, {"q": "Сократи дробь.<br><span style='font-size:22px'><span class='fr'><b>25c² − 1</b><i>25c² + 10c + 1</i></span></span>", "fig": "", "opts": ["<span class='fr'><b>5c − 1</b><i>5c + 1</i></span>", "<span class='fr'><b>5c + 1</b><i>5c − 1</i></span>", "<span class='fr'><b>5c − 1</b><i>5c − 1</i></span>", "<span class='fr'><b>1</b><i>10c</i></span>"], "ans": 0, "why": "(5c − 1)(5c + 1) сверху, (5c + 1)² снизу."}, {"q": "Сократи дробь.<br><span style='font-size:22px'><span class='fr'><b>x² + 2x − 15</b><i>x² − 9</i></span></span>", "fig": "", "opts": ["<span class='fr'><b>x + 5</b><i>x + 3</i></span>", "<span class='fr'><b>x − 5</b><i>x + 3</i></span>", "<span class='fr'><b>x + 5</b><i>x − 3</i></span>", "<span class='fr'><b>x + 3</b><i>x + 5</i></span>"], "ans": 0, "why": "Корни трёхчлена 3 и −5, значит x² + 2x − 15 = (x − 3)(x + 5). Снизу (x − 3)(x + 3)."}, {"q": "Сократи дробь.<br><span style='font-size:22px'><span class='fr'><b>x² − 4x − 5</b><i>x² + 2x + 1</i></span></span>", "fig": "", "opts": ["<span class='fr'><b>x − 5</b><i>x + 1</i></span>", "<span class='fr'><b>x + 5</b><i>x + 1</i></span>", "<span class='fr'><b>x − 5</b><i>x − 1</i></span>", "<span class='fr'><b>x + 1</b><i>x − 5</i></span>"], "ans": 0, "why": "Корни 5 и −1: (x − 5)(x + 1). Снизу (x + 1)²."}, {"q": "Сократи дробь.<br><span style='font-size:22px'><span class='fr'><b>2x² + 5x − 3</b><i>2x² − 7x + 3</i></span></span>", "fig": "", "opts": ["<span class='fr'><b>x + 3</b><i>x − 3</i></span>", "<span class='fr'><b>x − 3</b><i>x + 3</i></span>", "<span class='fr'><b>2x + 3</b><i>2x − 3</i></span>", "<span class='fr'><b>x + 3</b><i>x + 3</i></span>"], "ans": 0, "why": "Оба трёхчлена содержат множитель 2x − 1: сверху (2x − 1)(x + 3), снизу (2x − 1)(x − 3)."}, {"q": "Сократи дробь.<br><span style='font-size:22px'><span class='fr'><b>18mn − 27n</b><i>9mn</i></span></span>", "fig": "", "opts": ["<span class='fr'><b>2m − 3</b><i>m</i></span>", "<span class='fr'><b>2m − 3</b><i>mn</i></span>", "2m − 3", "<span class='fr'><b>2m − 3</b><i>n</i></span>"], "ans": 0, "why": "Выносим 9n из числителя и сокращаем на него."}]);
 
 </script>
 </body>

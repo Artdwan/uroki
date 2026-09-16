@@ -125,9 +125,9 @@ input[type=text]:focus{outline:none;border-color:var(--acc)}
 .fig svg{width:100%;max-width:580px;height:auto}
 .fig{text-align:center;margin:14px 0}
 .trfig svg{width:100%;max-width:320px;height:auto}
-.fx{display:block;background:var(--acc-soft);border:1px solid var(--line);border-radius:10px;
-  padding:11px 13px;margin:12px 0;text-align:center;font-size:21px;line-height:2.1;
-  font-weight:600;overflow-x:auto}
+.fx{display:block;background:var(--acc-soft,var(--acc2,#e8f0ff));border:1px solid var(--line);
+  border-radius:10px;padding:11px 13px;margin:12px 0;text-align:center;font-size:21px;
+  line-height:2.1;font-weight:600;overflow-x:auto}
 .sol .fx,.ex .fx{font-size:19px;margin:9px 0}
 .def{border:1px solid var(--line);border-left:4px solid #2f6bd8;border-radius:10px;
   padding:11px 13px;margin:11px 0;background:#eef3fb}
@@ -155,15 +155,36 @@ input[type=text]:focus{outline:none;border-color:var(--acc)}
 .steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
   border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
   display:flex;align-items:center;justify-content:center}
-.sheet .f-formula{margin:5px 0;font-size:14.5px;line-height:1.4}
+.pam h3{font-size:18px;margin:18px 0 2px}
+.pam h3:first-of-type{margin-top:10px}
+.fgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin:9px 0}
+.fbox{border:1px solid var(--line);border-radius:12px;padding:9px 12px 11px;background:var(--bg)}
+.fbox h4{margin:0 0 3px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.ff{font-size:18px;line-height:2.05;text-align:center;margin:4px 0;overflow-x:auto;
+  overflow-y:hidden;white-space:nowrap}
+@media (max-width:440px){.ff{font-size:17px}}
+.fbox p.small{margin:7px 0 0;line-height:1.45}
+.way{border:1px solid var(--line);border-radius:12px;padding:10px 12px 11px 46px;margin:9px 0;
+  position:relative;background:var(--bg)}
+.way .num{position:absolute;left:11px;top:12px;width:25px;height:25px;border-radius:50%;
+  background:var(--acc);color:#fff;font-size:14px;font-weight:700;display:flex;
+  align-items:center;justify-content:center}
+.way b.t{display:block;font-size:17px;margin-bottom:1px;line-height:1.3}
+.way .when{color:var(--muted);font-size:14.5px;line-height:1.4}
+.way p.small{margin:7px 0 0;line-height:1.45}
+.mn{color:#b3261e;font-weight:700}
+.sheet .f-formula{margin:5px 0;font-size:14.5px;line-height:1.75}
 @media print{
   .sheet>.meta{display:none}
-  .sheet h2{font-size:18px;margin:0 0 6px}
-  .sheet .f-formula{font-size:12.5px;line-height:1.33;margin:3px 0}
+  .sheet h2{font-size:18px;margin:0 0 5px}
+  .sheet .f-formula{font-size:12px;line-height:1.62;margin:2px 0}
+  .sheet .fr{font-size:11px;vertical-align:-0.55em}
 }
 
 .ex .step,details .step,.note .step{display:block !important}
 .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+.pam .meta{color:var(--muted);font-size:17px}
 </style>
 </head>
 <body>
@@ -186,24 +207,44 @@ input[type=text]:focus{outline:none;border-color:var(--acc)}
   сокращать можно только множители.</p>
 </section>
 
+<section class="pam">
+
+<h2>Памятка: всё, что понадобится</h2>
+<div class="meta">Сюда возвращаются, когда застряли. Читать целиком сразу не нужно.</div>
+
+<h3>Знак минус</h3>
+<div class="fgrid"><div class="fbox"><h4>Минус у дроби</h4><div class="ff">−<span class='fr'><b>A</b><i>B</i></span> = <span class='fr'><b>−A</b><i>B</i></span> = <span class='fr'><b>A</b><i>−B</i></span></div><div class="ff"><span class='fr'><b>−A</b><i>−B</i></span> = <span class='fr'><b>A</b><i>B</i></span></div><p class="small">Минус можно держать перед дробью, у числителя или у знаменателя — значение одно и то же. Два минуса гасят друг друга.</p></div><div class="fbox"><h4>Вынести минус из разности</h4><div class="ff">a − b = −(b − a)</div><div class="ff">3x − 12 = −(12 − 3x)</div><p class="small">Меняем порядок — выносим минус. Отсюда вся работа с противоположными скобками: <span class='fr'><b>a − b</b><i>b − a</i></span> = −1.</p></div><div class="fbox"><h4>Вынести минус из суммы</h4><div class="ff">−a − b = −(a + b)</div><div class="ff">−4x − 20 = −4(x + 5)</div><p class="small">Если оба слагаемых со знаком минус, минус выносится за скобку целиком — вместе с общим множителем.</p></div><div class="fbox"><h4>Внести минус обратно</h4><div class="ff">−(a − b) = −a + b = b − a</div><div class="ff">−(a + b) = −a − b</div><p class="small">Раскрывая скобку с минусом, меняем знак <b>у каждого</b> слагаемого. Поменять только у первого — <span class="mn">ошибка</span>.</p></div></div>
+
+<h3>Формулы сокращённого умножения</h3>
+<div class="fgrid"><div class="fbox"><h4>Разность квадратов</h4><div class="ff">a² − b² = (a − b)(a + b)</div><div class="ff">9x² − 25 =</div><div class="ff">= (3x − 5)(3x + 5)</div></div><div class="fbox"><h4>Квадрат суммы</h4><div class="ff">(a + b)² = a² + 2ab + b²</div><div class="ff">x² + 6x + 9 = (x + 3)²</div></div><div class="fbox"><h4>Квадрат разности</h4><div class="ff">(a − b)² = a² − 2ab + b²</div><div class="ff">4x² − 12x + 9 = (2x − 3)²</div></div><div class="fbox"><h4>Под квадратом знаки меняют свободно</h4><div class="ff">(a − b)² = (b − a)²</div><div class="ff">(1 − 3x)² = (3x − 1)²</div><p class="small">Квадрат разности от перестановки <b>не меняется</b>, а сама разность — меняет знак: a − b = −(b − a). Путать эти два факта <span class="mn">нельзя</span>.</p></div></div>
+
+<h3>Разложение квадратного трёхчлена</h3>
+<div class="fx">ax² + bx + c = a(x − x₁)(x − x₂)</div><div class="ff">D = b² − 4ac,&nbsp;&nbsp;&nbsp;x₁,₂ = <span class='fr'><b>−b ± √<span class='rt'>D</span></b><i>2a</i></span></div><div class="fgrid"><div class="fbox"><h4>Когда a = 1</h4><div class="ff">x² − 7x + 10</div><div class="ff">D = 49 − 40 = 9</div><div class="ff">x = <span class='fr'><b>7 ± 3</b><i>2</i></span>, корни 5 и 2</div><div class="ff">= (x − 5)(x − 2)</div><p class="small">Корень x₁ даёт скобку (x − x₁): у корня 5 скобка (x − 5), у корня −1 — (x + 1).</p></div><div class="fbox"><h4>Когда a ≠ 1</h4><div class="ff">3x² + 5x − 2</div><div class="ff">D = 25 + 24 = 49</div><div class="ff">x = <span class='fr'><b>−5 ± 7</b><i>6</i></span>, корни <span class='fr'><b>1</b><i>3</i></span> и −2</div><div class="ff">= 3(x − <span class='fr'><b>1</b><i>3</i></span>)(x + 2) =</div><div class="ff">= (3x − 1)(x + 2)</div><p class="small">Коэффициент a обязательно заносят внутрь скобки с дробным корнем. Забыть его — <span class="mn">лишний множитель в ответе</span>.</p></div></div>
+
+<h3>Четыре способа разложить на множители</h3>
+<p class="small">Порядок всегда один: сначала пробуем вынести общий множитель,
+и только потом смотрим на формулу, трёхчлен или группировку.</p>
+<div class="way"><span class="num">1</span><b class="t">Вынесение общего множителя</b><div class="when">в каждом слагаемом есть одна и та же буква или у чисел есть общий делитель</div><div class="ff">6x³ − 9x² = 3x²(2x − 3)</div><div class="ff">2xy − x = x(2y − 1)</div><p class="small">Берут НОД чисел и каждую букву в <u>наименьшей</u> степени. Проверка — раскрыть скобку обратно.</p></div><div class="way"><span class="num">2</span><b class="t">Формула сокращённого умножения</b><div class="when">два члена и оба квадраты, либо три члена, где средний — удвоенное произведение</div><div class="ff">16 − x² = (4 − x)(4 + x)</div><div class="ff">a² − 8a + 16 = (a − 4)²</div><p class="small">Сумма квадратов a² + b² на множители <span class="mn">не раскладывается</span>.</p></div><div class="way"><span class="num">3</span><b class="t">Квадратный трёхчлен по корням</b><div class="when">три члена, а формула не подошла</div><div class="ff">2x² + 5x − 3, D = 49</div><div class="ff">корни −3 и <span class='fr'><b>1</b><i>2</i></span></div><div class="ff">= 2(x + 3)(x − <span class='fr'><b>1</b><i>2</i></span>) =</div><div class="ff">= (x + 3)(2x − 1)</div></div><div class="way"><span class="num">4</span><b class="t">Группировка</b><div class="when">четыре члена</div><div class="ff">ax + ay + bx + by =</div><div class="ff">= a(x + y) + b(x + y) =</div><div class="ff">= (x + y)(a + b)</div><p class="small">Пары подбирают так, чтобы в обеих вышла одна и та же скобка. Не вышла — переставь слагаемые и попробуй другую пару.</p></div>
+</section>
+
 <section>
 <h2>1. Основное свойство дроби</h2>
 <p>С рациональными дробями работают по тем же правилам, что и с обыкновенными. Вспомни:
-<span class="fr"><b>5</b><i>12</i></span> = <span class="fr"><b>5 · 7</b><i>12 · 7</i></span> = <span class="fr"><b>35</b><i>84</i></span>, и значение
+<span class='fr'><b>5</b><i>12</i></span> = <span class='fr'><b>5 · 7</b><i>12 · 7</i></span> = <span class='fr'><b>35</b><i>84</i></span>, и значение
 дроби не изменилось.</p>
 <div class="def"><div class="n">ОСНОВНОЕ СВОЙСТВО</div>
 Если числитель и знаменатель дроби умножить или разделить на одно и то же выражение,
 <b>не равное нулю</b>, получится дробь, тождественно равная данной.</div>
-<div class="fx"><span class="fr"><b>A</b><i>B</i></span> = <span class="fr"><b>A · C</b><i>B · C</i></span>, где C ≠ 0</div>
+<div class="fx"><span class='fr'><b>A</b><i>B</i></span> = <span class='fr'><b>A · C</b><i>B · C</i></span>, где C ≠ 0</div>
 <p class="small"><b>Тождество</b> — это равенство, верное при <u>всех</u> значениях переменных,
-при которых обе части имеют смысл. Например, <span class="fr"><b>x − 1</b><i>x − 1</i></span> = 1 — тождество:
+при которых обе части имеют смысл. Например, <span class='fr'><b>x − 1</b><i>x − 1</i></span> = 1 — тождество:
 оно выполняется при всех x, кроме x = 1.</p>
 <div class="ex"><h3>Пример 1</h3>
-<p>Умножим числитель и знаменатель дроби <span class="fr"><b>3a²</b><i>4b</i></span> на одночлен 5b²:</p>
-<div class="fx"><span class="fr"><b>3a²</b><i>4b</i></span> = <span class="fr"><b>3a² · 5b²</b><i>4b · 5b²</i></span> = <span class="fr"><b>15a²b²</b><i>20b³</i></span></div>
+<p>Умножим числитель и знаменатель дроби <span class='fr'><b>3a²</b><i>4b</i></span> на одночлен 5b²:</p>
+<div class="fx"><span class='fr'><b>3a²</b><i>4b</i></span> = <span class='fr'><b>3a² · 5b²</b><i>4b · 5b²</i></span> = <span class='fr'><b>15a²b²</b><i>20b³</i></span></div>
 <div class="step">Говорят, что дробь <b>привели к новому знаменателю</b> 20b³.</div>
 <div class="step mini">Читая то же равенство справа налево, получаем сокращение:
-<span class="fr"><b>15a²b²</b><i>20b³</i></span> = <span class="fr"><b>3a²</b><i>4b</i></span>. Это две стороны одного свойства.</div></div>
+<span class='fr'><b>15a²b²</b><i>20b³</i></span> = <span class='fr'><b>3a²</b><i>4b</i></span>. Это две стороны одного свойства.</div></div>
 
 
 
@@ -214,9 +255,9 @@ input[type=text]:focus{outline:none;border-color:var(--acc)}
 Сокращение не возвращает потерянные значения. Если знаменатель обращался в нуль при x = a,
 то x = a не входит в область определения и после сокращения — на графике в этом месте
 остаётся <b>дырка</b>.</div>
-<div class="ex"><h3>Пример 8. Построить график y = <span class="fr"><b>x² − 4</b><i>x − 2</i></span></h3>
+<div class="ex"><h3>Пример 8. Построить график y = <span class='fr'><b>x² − 4</b><i>x − 2</i></span></h3>
 <div class="step">1. Область определения: x ≠ 2.</div>
-<div class="step">2. Сокращаем: <span class="fr"><b>(x − 2)(x + 2)</b><i>x − 2</i></span> = x + 2.</div>
+<div class="step">2. Сокращаем: <span class='fr'><b>(x − 2)(x + 2)</b><i>x − 2</i></span> = x + 2.</div>
 <div class="step">3. Значит это прямая y = x + 2, но <b>без</b> точки при x = 2.
 Её ордината: 2 + 2 = 4.</div>
 <div class="fig"><svg viewBox="0 0 400 350"><rect x="0" y="0" width="400" height="350" rx="12" fill="#ffffff"/><line x1="74.4" y1="292.0" x2="74.4" y2="18.0" stroke="#cfe3f5" stroke-width="1"/><line x1="97.3" y1="292.0" x2="97.3" y2="18.0" stroke="#cfe3f5" stroke-width="1"/><line x1="120.1" y1="292.0" x2="120.1" y2="18.0" stroke="#cfe3f5" stroke-width="1"/><line x1="142.9" y1="292.0" x2="142.9" y2="18.0" stroke="#cfe3f5" stroke-width="1"/><line x1="165.8" y1="292.0" x2="165.8" y2="18.0" stroke="#cfe3f5" stroke-width="1"/><line x1="188.6" y1="292.0" x2="188.6" y2="18.0" stroke="#cfe3f5" stroke-width="1"/><line x1="211.4" y1="292.0" x2="211.4" y2="18.0" stroke="#cfe3f5" stroke-width="1"/><line x1="234.2" y1="292.0" x2="234.2" y2="18.0" stroke="#cfe3f5" stroke-width="1"/><line x1="257.1" y1="292.0" x2="257.1" y2="18.0" stroke="#cfe3f5" stroke-width="1"/><line x1="279.9" y1="292.0" x2="279.9" y2="18.0" stroke="#cfe3f5" stroke-width="1"/><line x1="302.8" y1="292.0" x2="302.8" y2="18.0" stroke="#cfe3f5" stroke-width="1"/><line x1="325.6" y1="292.0" x2="325.6" y2="18.0" stroke="#cfe3f5" stroke-width="1"/><line x1="74.4" y1="292.0" x2="325.6" y2="292.0" stroke="#cfe3f5" stroke-width="1"/><line x1="74.4" y1="269.2" x2="325.6" y2="269.2" stroke="#cfe3f5" stroke-width="1"/><line x1="74.4" y1="246.3" x2="325.6" y2="246.3" stroke="#cfe3f5" stroke-width="1"/><line x1="74.4" y1="223.5" x2="325.6" y2="223.5" stroke="#cfe3f5" stroke-width="1"/><line x1="74.4" y1="200.7" x2="325.6" y2="200.7" stroke="#cfe3f5" stroke-width="1"/><line x1="74.4" y1="177.8" x2="325.6" y2="177.8" stroke="#cfe3f5" stroke-width="1"/><line x1="74.4" y1="155.0" x2="325.6" y2="155.0" stroke="#cfe3f5" stroke-width="1"/><line x1="74.4" y1="132.2" x2="325.6" y2="132.2" stroke="#cfe3f5" stroke-width="1"/><line x1="74.4" y1="109.3" x2="325.6" y2="109.3" stroke="#cfe3f5" stroke-width="1"/><line x1="74.4" y1="86.5" x2="325.6" y2="86.5" stroke="#cfe3f5" stroke-width="1"/><line x1="74.4" y1="63.7" x2="325.6" y2="63.7" stroke="#cfe3f5" stroke-width="1"/><line x1="74.4" y1="40.8" x2="325.6" y2="40.8" stroke="#cfe3f5" stroke-width="1"/><line x1="74.4" y1="18.0" x2="325.6" y2="18.0" stroke="#cfe3f5" stroke-width="1"/><line x1="74.4" y1="200.7" x2="323.6" y2="200.7" stroke="#15181e" stroke-width="1.8"/><line x1="188.6" y1="292.0" x2="188.6" y2="20.0" stroke="#15181e" stroke-width="1.8"/><path d="M 325.6 200.7 l -7 -4 l 0 8 z" fill="#15181e"/><path d="M 188.6 18.0 l -4 7 l 8 0 z" fill="#15181e"/><text x="321.6" y="218.7" font-size="13" font-style="italic" fill="#15181e">x</text><text x="195.6" y="30.0" font-size="13" font-style="italic" fill="#15181e">y</text><text x="175.6" y="215.7" font-size="13" font-style="italic" fill="#15181e">O</text><text x="74.4" y="215.7" font-size="12" fill="#5b6270" text-anchor="middle">−5</text><text x="97.3" y="215.7" font-size="12" fill="#5b6270" text-anchor="middle">−4</text><text x="120.1" y="215.7" font-size="12" fill="#5b6270" text-anchor="middle">−3</text><text x="142.9" y="215.7" font-size="12" fill="#5b6270" text-anchor="middle">−2</text><text x="165.8" y="215.7" font-size="12" fill="#5b6270" text-anchor="middle">−1</text><text x="211.4" y="215.7" font-size="12" fill="#5b6270" text-anchor="middle">1</text><text x="234.2" y="215.7" font-size="12" fill="#5b6270" text-anchor="middle">2</text><text x="257.1" y="215.7" font-size="12" fill="#5b6270" text-anchor="middle">3</text><text x="279.9" y="215.7" font-size="12" fill="#5b6270" text-anchor="middle">4</text><text x="302.8" y="215.7" font-size="12" fill="#5b6270" text-anchor="middle">5</text><text x="182.6" y="296.0" font-size="12" fill="#5b6270" text-anchor="end">−4</text><text x="182.6" y="273.2" font-size="12" fill="#5b6270" text-anchor="end">−3</text><text x="182.6" y="250.3" font-size="12" fill="#5b6270" text-anchor="end">−2</text><text x="182.6" y="227.5" font-size="12" fill="#5b6270" text-anchor="end">−1</text><text x="182.6" y="181.8" font-size="12" fill="#5b6270" text-anchor="end">1</text><text x="182.6" y="159.0" font-size="12" fill="#5b6270" text-anchor="end">2</text><text x="182.6" y="136.2" font-size="12" fill="#5b6270" text-anchor="end">3</text><text x="182.6" y="113.3" font-size="12" fill="#5b6270" text-anchor="end">4</text><text x="182.6" y="90.5" font-size="12" fill="#5b6270" text-anchor="end">5</text><text x="182.6" y="67.7" font-size="12" fill="#5b6270" text-anchor="end">6</text><text x="182.6" y="44.8" font-size="12" fill="#5b6270" text-anchor="end">7</text><polyline points="74.4,269.2 75.0,268.6 75.6,268.0 76.2,267.4 76.8,266.8 77.4,266.2 78.0,265.6 78.6,265.0 79.2,264.4 79.8,263.8 80.4,263.2 81.0,262.6 81.6,262.0 82.2,261.4 82.8,260.8 83.4,260.2 84.0,259.6 84.6,259.0 85.2,258.4 85.8,257.8 86.4,257.2 87.0,256.6 87.6,256.0 88.2,255.4 88.8,254.8 89.4,254.2 90.0,253.6 90.6,253.0 91.2,252.4 91.8,251.8 92.4,251.2 93.0,250.6 93.6,250.0 94.2,249.4 94.7,248.8 95.3,248.2 95.9,247.6 96.5,247.0 97.1,246.4 97.7,245.8 98.3,245.2 98.9,244.6 99.5,244.0 100.1,243.5 100.7,242.9 101.3,242.3 101.9,241.7 102.5,241.1 103.1,240.5 103.7,239.9 104.3,239.3 104.9,238.7 105.5,238.1 106.1,237.5 106.7,236.9 107.3,236.3 107.9,235.7 108.5,235.1 109.1,234.5 109.7,233.9 110.3,233.3 110.9,232.7 111.5,232.1 112.1,231.5 112.7,230.9 113.3,230.3 113.9,229.7 114.5,229.1 115.1,228.5 115.7,227.9 116.3,227.3 116.9,226.7 117.5,226.1 118.1,225.5 118.7,224.9 119.3,224.3 119.9,223.7 120.5,223.1 121.1,222.5 121.7,221.9 122.3,221.3 122.9,220.7 123.5,220.1 124.1,219.5 124.7,218.9 125.2,218.3 125.8,217.7 126.4,217.1 127.0,216.5 127.6,215.9 128.2,215.3 128.8,214.7 129.4,214.1 130.0,213.6 130.6,213.0 131.2,212.4 131.8,211.8 132.4,211.2 133.0,210.6 133.6,210.0 134.2,209.4 134.8,208.8 135.4,208.2 136.0,207.6 136.6,207.0 137.2,206.4 137.8,205.8 138.4,205.2 139.0,204.6 139.6,204.0 140.2,203.4 140.8,202.8 141.4,202.2 142.0,201.6 142.6,201.0 143.2,200.4 143.8,199.8 144.4,199.2 145.0,198.6 145.6,198.0 146.2,197.4 146.8,196.8 147.4,196.2 148.0,195.6 148.6,195.0 149.2,194.4 149.8,193.8 150.4,193.2 151.0,192.6 151.6,192.0 152.2,191.4 152.8,190.8 153.4,190.2 154.0,189.6 154.6,189.0 155.1,188.4 155.7,187.8 156.3,187.2 156.9,186.6 157.5,186.0 158.1,185.4 158.7,184.8 159.3,184.2 159.9,183.7 160.5,183.1 161.1,182.5 161.7,181.9 162.3,181.3 162.9,180.7 163.5,180.1 164.1,179.5 164.7,178.9 165.3,178.3 165.9,177.7 166.5,177.1 167.1,176.5 167.7,175.9 168.3,175.3 168.9,174.7 169.5,174.1 170.1,173.5 170.7,172.9 171.3,172.3 171.9,171.7 172.5,171.1 173.1,170.5 173.7,169.9 174.3,169.3 174.9,168.7 175.5,168.1 176.1,167.5 176.7,166.9 177.3,166.3 177.9,165.7 178.5,165.1 179.1,164.5 179.7,163.9 180.3,163.3 180.9,162.7 181.5,162.1 182.1,161.5 182.7,160.9 183.3,160.3 183.9,159.7 184.5,159.1 185.0,158.5 185.6,157.9 186.2,157.3 186.8,156.7 187.4,156.1 188.0,155.5 188.6,154.9 189.2,154.3 189.8,153.7 190.4,153.2 191.0,152.6 191.6,152.0 192.2,151.4 192.8,150.8 193.4,150.2 194.0,149.6 194.6,149.0 195.2,148.4 195.8,147.8 196.4,147.2 197.0,146.6 197.6,146.0 198.2,145.4 198.8,144.8 199.4,144.2 200.0,143.6 200.6,143.0 201.2,142.4 201.8,141.8 202.4,141.2 203.0,140.6 203.6,140.0 204.2,139.4 204.8,138.8 205.4,138.2 206.0,137.6 206.6,137.0 207.2,136.4 207.8,135.8 208.4,135.2 209.0,134.6 209.6,134.0 210.2,133.4 210.8,132.8 211.4,132.2 212.0,131.6 212.6,131.0 213.2,130.4 213.8,129.8 214.4,129.2 215.0,128.6 215.5,128.0 216.1,127.4 216.7,126.8 217.3,126.2 217.9,125.6 218.5,125.0 219.1,124.4 219.7,123.8 220.3,123.3 220.9,122.7 221.5,122.1 222.1,121.5 222.7,120.9 223.3,120.3 223.9,119.7 224.5,119.1 225.1,118.5 225.7,117.9 226.3,117.3 226.9,116.7 227.5,116.1 228.1,115.5 228.7,114.9 229.3,114.3 229.9,113.7 230.5,113.1 231.1,112.5 231.7,111.9 232.3,111.3 232.9,110.7 233.5,110.1 234.1,109.5 234.7,108.9 235.3,108.3 235.9,107.7 236.5,107.1 237.1,106.5 237.7,105.9 238.3,105.3 238.9,104.7 239.5,104.1 240.1,103.5 240.7,102.9 241.3,102.3 241.9,101.7 242.5,101.1 243.1,100.5 243.7,99.9 244.3,99.3 244.9,98.7 245.4,98.1 246.0,97.5 246.6,96.9 247.2,96.3 247.8,95.7 248.4,95.1 249.0,94.5 249.6,93.9 250.2,93.3 250.8,92.8 251.4,92.2 252.0,91.6 252.6,91.0 253.2,90.4 253.8,89.8 254.4,89.2 255.0,88.6 255.6,88.0 256.2,87.4 256.8,86.8 257.4,86.2 258.0,85.6 258.6,85.0 259.2,84.4 259.8,83.8 260.4,83.2 261.0,82.6 261.6,82.0 262.2,81.4 262.8,80.8 263.4,80.2 264.0,79.6 264.6,79.0 265.2,78.4 265.8,77.8 266.4,77.2 267.0,76.6 267.6,76.0 268.2,75.4 268.8,74.8 269.4,74.2 270.0,73.6 270.6,73.0 271.2,72.4 271.8,71.8 272.4,71.2 273.0,70.6 273.6,70.0 274.2,69.4 274.8,68.8 275.4,68.2 275.9,67.6 276.5,67.0 277.1,66.4 277.7,65.8 278.3,65.2 278.9,64.6 279.5,64.0 280.1,63.4 280.7,62.9 281.3,62.3 281.9,61.7 282.5,61.1 283.1,60.5 283.7,59.9 284.3,59.3 284.9,58.7 285.5,58.1 286.1,57.5 286.7,56.9 287.3,56.3 287.9,55.7 288.5,55.1 289.1,54.5 289.7,53.9 290.3,53.3 290.9,52.7 291.5,52.1 292.1,51.5 292.7,50.9 293.3,50.3 293.9,49.7 294.5,49.1 295.1,48.5 295.7,47.9 296.3,47.3 296.9,46.7 297.5,46.1 298.1,45.5 298.7,44.9 299.3,44.3 299.9,43.7 300.5,43.1 301.1,42.5 301.7,41.9 302.3,41.3 302.9,40.7 303.5,40.1 304.1,39.5 304.7,38.9 305.3,38.3 305.8,37.7 306.4,37.1 307.0,36.5 307.6,35.9 308.2,35.3 308.8,34.7 309.4,34.1 310.0,33.5 310.6,33.0 311.2,32.4 311.8,31.8 312.4,31.2 313.0,30.6 313.6,30.0 314.2,29.4 314.8,28.8 315.4,28.2 316.0,27.6 316.6,27.0 317.2,26.4 317.8,25.8 318.4,25.2 319.0,24.6 319.6,24.0 320.2,23.4 320.8,22.8 321.4,22.2 322.0,21.6 322.6,21.0 323.2,20.4 323.8,19.8 324.4,19.2 325.0,18.6 325.6,18.0" fill="none" stroke="#2f6bd8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="234.2" cy="109.3" r="5.2" fill="#ffffff" stroke="#b3261e" stroke-width="2"/><text x="246.2" y="95.3" font-size="13" font-weight="600" fill="#b3261e" text-anchor="start">(2; 4)</text><text x="200" y="326" font-size="14" fill="#5b6270" text-anchor="middle">y = (x² − 4) : (x − 2) — прямая y = x + 2 без</text><text x="200" y="344" font-size="14" fill="#5b6270" text-anchor="middle">точки (2; 4)</text></svg></div>
@@ -248,12 +289,12 @@ input[type=text]:focus{outline:none;border-color:var(--acc)}
 <section>
   <h2>Что забрать с урока</h2>
   <div class="box acc">
-    <p><b>1.</b> A/B = A·C/(B·C) при C ≠ 0. Читаем слева направо — приводим к новому
+    <p><b>1.</b> <span class='fr'><b>A</b><i>B</i></span> = <span class='fr'><b>A · C</b><i>B · C</i></span> при C ≠ 0. Читаем слева направо — приводим к новому
     знаменателю, справа налево — сокращаем.</p>
     <p><b>2.</b> Дополнительный множитель = новый знаменатель : старый. Умножать на него
     надо <u>оба</u> этажа, а не только знаменатель.</p>
     <p><b>3.</b> Сокращают только множители. Пока стоит сумма — сначала выносим общий
-    множитель, группируем или применяем формулу.</p>
+    множитель, группируем, применяем формулу или раскладываем трёхчлен по корням.</p>
     <p><b>4.</b> a − b = −(b − a), но (a − b)² = (b − a)². Первое меняет знак, второе нет.</p>
     <p><b>5.</b> Область определения выписывают до сокращения. После сокращения на графике
     остаётся выколотая точка.</p>
@@ -270,90 +311,90 @@ function e(s){return btoa(unescape(encodeURIComponent(s)));}
 function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return s;}}
 
 var TASKS = [
- { grp:"main", lvl:"проверь себя", q:"Сократи дробь 15x²y/(12xy²). В ответе запиши числитель.",
+ { grp:"main", lvl:"проверь себя", q:"Сократи дробь <span class='fr'><b>15x²y</b><i>12xy²</i></span>. В ответе запиши числитель.",
    ans:[e("5x")],
    hint:"Общий множитель — 3xy: наибольший общий делитель чисел и каждая буква в меньшей степени.",
    steps:[{t:"Наибольший общий делитель чисел 15 и 12 равен ___", a:[e("3")]},
           {t:"Общий множитель дроби: 3xy. Тогда 15x²y : (3xy) = ___", a:[e("5x")]},
           {t:"А 12xy² : (3xy) = ___", a:[e("4y")]}] },
 
- { grp:"main", lvl:"проверь себя", q:"Приведи дробь 2a/(3b) к знаменателю 12b³. Чему равен дополнительный множитель при b = 3?",
+ { grp:"main", lvl:"проверь себя", q:"Приведи дробь <span class='fr'><b>2a</b><i>3b</i></span> к знаменателю 12b³. Чему равен дополнительный множитель при b = 3?",
    ans:[e("36")],
-   hint:"Дополнительный множитель — это новый знаменатель, делённый на старый.",
-   steps:[{t:"12b³ : (3b) = ___ (запиши одночлен)", a:[e("4b²")]},
+   hint:"Дополнительный множитель — это новый знаменатель, делённый на старый: <span class='fr'><b>12b³</b><i>3b</i></span>.",
+   steps:[{t:"<span class='fr'><b>12b³</b><i>3b</i></span> = ___ (запиши одночлен)", a:[e("4b²")]},
           {t:"При b = 3 это равно ___", a:[e("36")]}] },
 
- { grp:"main", lvl:"проверь себя", q:"Чему равно выражение (m − n)/(n − m)?",
+ { grp:"main", lvl:"проверь себя", q:"Чему равно выражение <span class='fr'><b>m − n</b><i>n − m</i></span>?",
    ans:[e("-1"),e("−1")],
    hint:"Скобки m − n и n − m отличаются только знаком: n − m = −(m − n).",
    steps:[{t:"n − m = ___ · (m − n), где в пропуске число", a:[e("-1"),e("−1")]},
           {t:"Значит вся дробь равна ___", a:[e("-1"),e("−1")]}] },
 
- { grp:"main", lvl:"проверь себя", q:"Можно ли сократить дробь (a + 3)/(3a²) на 3? Ответь 1 — да, 0 — нет.",
+ { grp:"main", lvl:"проверь себя", q:"Можно ли сократить дробь <span class='fr'><b>a + 3</b><i>3a²</i></span> на 3? Ответь 1 — да, 0 — нет.",
    ans:[e("0")],
    hint:"Сокращать можно только множители. В числителе стоит сумма, а не произведение.",
    steps:[{t:"В числителе a + 3 — это сумма или произведение? Запиши 1, если произведение, и 0, если сумма", a:[e("0")]},
           {t:"Значит сокращать нельзя. Ответ ___", a:[e("0")]}] },
 
- { grp:"extra", lvl:"база", q:"Сократи дробь (18mn − 27n)/(9mn). В ответе запиши числитель.",
+ { grp:"extra", lvl:"база", q:"Сократи дробь <span class='fr'><b>18mn − 27n</b><i>9mn</i></span>. В ответе запиши числитель.",
    ans:[e("2m-3"),e("2m − 3"),e("2m-3")],
    hint:"Вынеси из числителя общий множитель 9n.",
    steps:[{t:"18mn − 27n = 9n · (___)", a:[e("2m-3"),e("2m − 3")]},
           {t:"После сокращения на 9n знаменатель станет равен ___", a:[e("m")]}] },
 
- { grp:"extra", lvl:"база", q:"Сократи дробь (2xy − x)/(4xy − x²). В ответе запиши знаменатель.",
+ { grp:"extra", lvl:"база", q:"Сократи дробь <span class='fr'><b>2xy − x</b><i>4xy − x²</i></span>. В ответе запиши знаменатель.",
    ans:[e("4y-x"),e("4y − x")],
    hint:"Вынеси x и сверху, и снизу.",
    steps:[{t:"2xy − x = x(___)", a:[e("2y-1"),e("2y − 1")]},
           {t:"4xy − x² = x(___)", a:[e("4y-x"),e("4y − x")]}] },
 
- { grp:"extra", lvl:"средний", q:"Сократи дробь (a² − 16)/(a² − 8a + 16). В ответе запиши числитель.",
+ { grp:"extra", lvl:"средний", q:"Сократи дробь <span class='fr'><b>a² − 16</b><i>a² − 8a + 16</i></span>. В ответе запиши числитель.",
    ans:[e("a+4"),e("a + 4")],
    hint:"Разность квадратов сверху, квадрат разности снизу.",
    steps:[{t:"a² − 16 = (a − 4)(___)", a:[e("a+4"),e("a + 4")]},
           {t:"a² − 8a + 16 = (___)²", a:[e("a-4"),e("a − 4")]},
           {t:"После сокращения знаменатель равен ___", a:[e("a-4"),e("a − 4")]}] },
 
- { grp:"extra", lvl:"средний", q:"Найди значение выражения (4b² − a²)/(a + 2b) при a = 4,4 и b = 3,7.",
+ { grp:"extra", lvl:"средний", q:"Найди значение выражения <span class='fr'><b>4b² − a²</b><i>a + 2b</i></span> при a = 4,4 и b = 3,7.",
    ans:[e("3")],
    hint:"Числитель — разность квадратов: (2b)² − a².",
    steps:[{t:"4b² − a² = (2b − a)(___)", a:[e("2b+a"),e("2b + a"),e("a+2b"),e("a + 2b")]},
           {t:"После сокращения останется 2b − a. Это равно ___", a:[e("3")]}] },
 
- { grp:"extra", lvl:"средний", q:"Упрости выражение (2x²y − xy²)/(2x − y) и найди его значение при x = 2,56 и y = 10.",
+ { grp:"extra", lvl:"средний", q:"Упрости выражение <span class='fr'><b>2x²y − xy²</b><i>2x − y</i></span> и найди его значение при x = 2,56 и y = 10.",
    ans:[e("25,6")],
    hint:"Вынеси из числителя общий множитель xy.",
    steps:[{t:"2x²y − xy² = xy(___)", a:[e("2x-y"),e("2x − y")]},
           {t:"После сокращения останется xy. При данных значениях это ___", a:[e("25,6")]}] },
 
- { grp:"extra", lvl:"средний", q:"Сократи дробь (x² − 9)/(3 − x) и найди её значение при x = 5,65.",
+ { grp:"extra", lvl:"средний", q:"Сократи дробь <span class='fr'><b>x² − 9</b><i>3 − x</i></span> и найди её значение при x = 5,65.",
    ans:[e("-8,65"),e("−8,65")],
    hint:"3 − x = −(x − 3). Минус придётся вынести.",
    steps:[{t:"x² − 9 = (x − 3)(___)", a:[e("x+3"),e("x + 3")]},
           {t:"После сокращения получится −(x + 3). При x = 5,65 это ___", a:[e("-8,65"),e("−8,65")]}] },
 
- { grp:"extra", lvl:"посложнее", q:"Сократи дробь (1 − 3x)²/(3x² + 5x − 2). В ответе запиши знаменатель.",
+ { grp:"extra", lvl:"посложнее", q:"Сократи дробь <span class='fr'><b>(1 − 3x)²</b><i>3x² + 5x − 2</i></span>. В ответе запиши знаменатель.",
    ans:[e("x+2"),e("x + 2")],
    hint:"Найди корни трёхчлена 3x² + 5x − 2 и разложи его на множители.",
    steps:[{t:"D = 5² − 4 · 3 · (−2) = ___", a:[e("49")]},
-          {t:"Корни: 1/3 и ___", a:[e("-2"),e("−2")]},
+          {t:"Корни: <span class='fr'><b>1</b><i>3</i></span> и ___", a:[e("-2"),e("−2")]},
           {t:"Тогда 3x² + 5x − 2 = (3x − 1)(___)", a:[e("x+2"),e("x + 2")]}] },
 
- { grp:"extra", lvl:"посложнее", q:"Сократи дробь (ay − bx + by − ax)/(x² − y²). В ответе запиши знаменатель получившейся дроби (без минуса).",
+ { grp:"extra", lvl:"посложнее", q:"Сократи дробь <span class='fr'><b>ay − bx + by − ax</b><i>x² − y²</i></span>. В ответе запиши знаменатель получившейся дроби (без минуса).",
    ans:[e("x+y"),e("x + y")],
    hint:"Группируй: (ay + by) − (ax + bx).",
    steps:[{t:"(ay + by) − (ax + bx) = (a + b)(___)", a:[e("y-x"),e("y − x")]},
           {t:"x² − y² = (x − y)(___)", a:[e("x+y"),e("x + y")]},
           {t:"После сокращения на x − y остаётся −(a + b) : (___)", a:[e("x+y"),e("x + y")]}] },
 
- { grp:"extra", lvl:"построение", q:"Построй график функции y = (x² − 4)/(x − 2). Запиши ординату выколотой точки.",
+ { grp:"extra", lvl:"построение", q:"Построй график функции y = <span class='fr'><b>x² − 4</b><i>x − 2</i></span>. Запиши ординату выколотой точки.",
    ans:[e("4")],
    hint:"Сначала область определения, потом сокращение. Дырка остаётся там, где знаменатель обращался в нуль.",
    steps:[{t:"Знаменатель равен нулю при x = ___", a:[e("2")]},
           {t:"После сокращения получается прямая y = x + ___", a:[e("2")]},
           {t:"Ордината выколотой точки: 2 + 2 = ___", a:[e("4")]}] },
 
- { grp:"extra", lvl:"построение", q:"Построй график функции y = (x² − 9)/(x + 3). Запиши сумму координат выколотой точки.",
+ { grp:"extra", lvl:"построение", q:"Построй график функции y = <span class='fr'><b>x² − 9</b><i>x + 3</i></span>. Запиши сумму координат выколотой точки.",
    ans:[e("-9"),e("−9")],
    hint:"Знаменатель обращается в нуль при x = −3. После сокращения остаётся прямая y = x − 3.",
    steps:[{t:"Выколота точка с абсциссой ___", a:[e("-3"),e("−3")]},
