@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Прямые и плоскости — домашнее задание, 10 класс</title>
+<title>Прямые и плоскости — §2, геометрия 10 класс</title>
 <style>
 :root{
   --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
@@ -56,51 +56,94 @@ details[open] summary{margin-bottom:8px}
 .task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
 .fig{margin:12px 0;text-align:center}
 
-.tm{display:inline-block;background:var(--acc-soft);color:var(--acc);border-radius:20px;
-  padding:2px 11px;font-size:14px;font-weight:700;margin-left:10px;white-space:nowrap;
-  vertical-align:middle}
-.grp{background:#f2f7ee;border-left:4px solid #4c9a2a;border-radius:10px;padding:10px 13px;
-  margin:12px 0;font-size:16px}
-.grp b{color:#3d7d22}
-.ax{border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:10px;
-  padding:11px 13px;margin:11px 0;background:var(--card)}
-.ax .n{font-size:14px;color:var(--muted);font-weight:700;letter-spacing:.4px}
-.thm{border:1px solid var(--line);border-left:4px solid #c98a00;border-radius:10px;
-  padding:11px 13px;margin:11px 0;background:#fffaf0}
-.thm .n{font-size:14px;color:#a06f00;font-weight:700;letter-spacing:.4px}
-.wrap-t th,.wrap-t td{white-space:normal;text-align:left;vertical-align:top}
-.fx{display:block;background:var(--acc-soft);border:1px solid var(--line);border-radius:10px;
-  padding:11px 13px;margin:12px 0;text-align:center;font-size:20px;line-height:1.7;
-  font-weight:600;overflow-x:auto}
+.tr{border:1px solid var(--line);border-radius:12px;padding:14px;margin:16px 0;background:var(--bg)}
+.trhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;
+  margin-bottom:8px}
+.trhead b{font-size:17px}
+.trscore{color:var(--muted);font-size:15px;white-space:nowrap}
+.trq{font-size:17px;margin:8px 0}
+.trfig{text-align:center;margin:8px 0}
+.trfig svg{width:100%;max-width:330px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.tropts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
+.tropt{border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;
+  background:var(--card);font-size:16px;text-align:left;min-height:46px}
+.tropt:hover{border-color:var(--acc)}
+.tropt.right{border-color:var(--ok);background:var(--ok-soft);font-weight:600}
+.tropt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.tropts.done .tropt{cursor:default}
+.trnum{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.trnum input{font:inherit;font-size:18px;padding:9px 11px;border-radius:9px;
+  border:1.5px solid var(--line);background:var(--card);color:var(--ink);max-width:130px}
+.trmsg{font-size:16px;margin-top:8px}
+.trmsg .v{font-weight:700}
+.trmsg .v.ok{color:var(--ok)} .trmsg .v.bad{color:var(--bad)}
+.trmsg .why{color:var(--muted);font-size:15px;margin-top:4px}
+.trbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.trbar button{font-size:15px;padding:8px 13px;min-height:42px}
+.trdone{background:var(--acc-soft);border-radius:10px;padding:12px;font-size:17px;
+  text-align:center;font-weight:600}
+
+.rt{border-top:1.7px solid currentColor;padding:0 3px 0 2px;margin-left:-1px;
+  display:inline-block;line-height:1.15}
+
+.fig svg{width:100%;max-width:330px;height:auto}
+.fig{text-align:center;margin:14px 0}
+.figrow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:12px 0}
+.figrow svg{width:100%;max-width:290px;height:auto}
+.trfig svg{width:100%;max-width:300px;height:auto}
+.fx{display:block;background:var(--acc-soft,var(--acc2,#e8f0ff));border:1px solid var(--line);
+  border-radius:10px;padding:11px 13px;margin:12px 0;text-align:center;font-size:20px;
+  line-height:1.9;font-weight:600;overflow-x:auto}
+.sol .fx,.ex .fx{font-size:18px;margin:9px 0}
+.def{border:1px solid var(--line);border-left:4px solid #2f6bd8;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#eef3fb}
+.def .n{font-size:14px;color:#2f6bd8;font-weight:700;letter-spacing:.4px}
+.rule{border:1px solid var(--line);border-left:4px solid #c0397a;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdf0f6}
+.rule .n{font-size:14px;color:#a02a62;font-weight:700;letter-spacing:.4px}
+.ax{border:1px solid var(--line);border-left:4px solid #137a45;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#eef8f2}
+.ax .n{font-size:14px;color:#0f6b3c;font-weight:700;letter-spacing:.4px}
+@media (prefers-color-scheme:dark){.rule{background:#2a1b23}.def{background:#18212f}
+  .ax{background:#16261e}}
 .ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;background:var(--bg)}
 .ex h3{margin-top:0}
-.ex .step,details .step,.note .step{display:block !important}
+.tohw{font-weight:700;margin:18px 0 0;font-size:18px}
+.tohw span{color:var(--muted);font-weight:400;font-size:15px;display:block;margin-top:3px}
+.wrap-t th,.wrap-t td{white-space:normal;text-align:left;vertical-align:top}
 .small,.mini{color:var(--muted);font-size:15px}
-.note{background:#fff6e0;border-radius:10px;padding:10px 12px;margin:10px 0}
-.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+.bad{color:#b3261e;font-weight:700}
+.good{color:#137a45;font-weight:700}
+.opts .opt{font-size:17px}
 .steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
 .steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative}
 .steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
   border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
   display:flex;align-items:center;justify-content:center}
-.life{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin:12px 0}
-.life div{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;
-  font-size:15px}
-.life b{display:block;margin-bottom:3px}
-
-.m3d{margin:14px 0}
-.m3d svg{width:100%;max-width:470px;height:auto;display:block;margin:0 auto;border-radius:12px;
-  border:1px solid var(--line);background:#fff;touch-action:pan-y;cursor:grab;-webkit-user-select:none;user-select:none}
-.m3d svg:active{cursor:grabbing}
-.m3dbar{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin:10px 0 0}
-.m3dbar button{padding:6px 11px;min-height:38px;font-size:15px;display:inline-flex;align-items:center;gap:6px}
-.m3dbar button.on{border-color:var(--acc);background:var(--acc-soft);font-weight:600}
-.sw{width:14px;height:14px;border-radius:4px;display:inline-block;border:1px solid rgba(0,0,0,.25);flex:none}
-.sw.dot{border-radius:50%}
-.sw.ln{height:5px;width:18px;border-radius:2px}
-.m3dcap{background:var(--acc-soft);border-radius:10px;padding:11px 13px;margin:11px 0 0;font-size:16px}
-.m3dhint{color:var(--muted);font-size:14px;text-align:center;margin-top:9px}
-.cap3d{color:var(--muted);font-size:14px;text-align:center;margin-top:4px}
+.pam h3{font-size:18px;margin:18px 0 2px}
+.pam h3:first-of-type{margin-top:10px}
+.fgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin:9px 0}
+.fbox{border:1px solid var(--line);border-radius:12px;padding:9px 12px 11px;background:var(--bg)}
+.fbox h4{margin:0 0 3px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.fbox p{margin:6px 0 0;line-height:1.45;font-size:16px}
+.fbox p.small{font-size:15px}
+.dot{display:inline-block;min-width:92px;padding-right:8px;font-weight:700;color:#137a45}
+.way{border:1px solid var(--line);border-radius:12px;padding:10px 12px 11px 46px;margin:9px 0;
+  position:relative;background:var(--bg)}
+.way .num{position:absolute;left:11px;top:12px;width:25px;height:25px;border-radius:50%;
+  background:var(--acc);color:#fff;font-size:14px;font-weight:700;display:flex;
+  align-items:center;justify-content:center}
+.way b.t{display:block;font-size:17px;margin-bottom:1px;line-height:1.3}
+.way .when{color:var(--muted);font-size:14.5px;line-height:1.4}
+.mn{color:#b3261e;font-weight:700}
+.sheet .f-formula{margin:5px 0;font-size:14.5px;line-height:1.55}
+@media print{
+  .sheet>.meta{display:none}
+  .sheet h2{font-size:18px;margin:0 0 5px}
+  .sheet .f-formula{font-size:12px;line-height:1.45;margin:2px 0}
+}
 
 .task.ok{border-color:var(--ok);background:var(--ok-soft)}
 .task.bad{border-color:var(--bad);background:var(--bad-soft)}
@@ -134,7 +177,7 @@ details[open] summary{margin-bottom:8px}
   .bar{display:none !important}
   .wrap>*{display:none !important}
   .wrap>.sheet{display:block !important;border:none;margin:0;padding:0}
-  .sheet{font-size:12px}
+  .sheet{font-size:13px}
   .sheet h2{font-size:18px}
   .sheet th,.sheet td{padding:4px 5px;font-size:12px}
   @page{size:A4;margin:12mm}
@@ -147,87 +190,257 @@ details[open] summary{margin-bottom:8px}
 
 <div class="card top">
   <h1>Прямые и плоскости</h1>
-  <div class="meta">Геометрия, 10 класс · §2 · домашнее задание · 14 задач</div>
+  <div class="meta">Геометрия · 10 класс · §2 · теория порциями, 4 тренажёра, 18 задач</div>
   <label class="f" for="name">Имя и фамилия</label>
   <input type="text" id="name" placeholder="напиши, как в журнале" autocapitalize="words" spellcheck="false">
   <div class="note" style="margin-top:14px">
-    <b>Как работать.</b> Почти в каждой задаче нужно <b>нарисовать параллелепипед в тетради</b>
-    и отмечать на нём рёбра карандашом. Считать «в уме» здесь почти невозможно — легко
-    сбиться и потерять пару рёбер.
-    <div style="margin-top:8px">Ответ — число. У каждой задачи три подсказки, они открываются
-    по одной. Полное решение появляется после верного ответа или после второй попытки.</div>
-    <div style="margin-top:8px">Чертёж на этой странице можно крутить пальцем — но сначала
-    попробуй решить по своему рисунку, а модель используй для проверки.</div>
+    <b>Как работать.</b> Страница идёт по кругу: короткая порция теории — разобранный
+    пример — задачи ровно на эту порцию. Не перепрыгивай вперёд.
+    <div style="margin-top:8px">Вся тема держится на одном вопросе: <b>сколько общих точек</b>.
+    Ноль, одна, прямая или все — по этому числу и называют расположение.</div>
+    <div style="margin-top:8px">Часть задач с выбором ответа, часть — с вводом числа.
+    У каждой три подсказки; решение открывается после верного ответа или после второй
+    попытки. Тренажёры в отчёт не идут.</div>
   </div>
 </div>
 
-<div class="card">
-  <h2>Что нужно помнить</h2>
-  <div class="scroll"><table class="wrap-t">
-    <tr><th>объекты</th><th>случаи взаимного расположения</th></tr>
-    <tr><td>две прямые</td><td>пересекаются (одна общая точка) · параллельны (общей точки нет,
-        плоскость общая есть) · <b>скрещиваются</b> (общей плоскости нет)</td></tr>
-    <tr><td>прямая и плоскость</td><td>прямая лежит в плоскости · пересекает её в одной точке ·
-        параллельна ей</td></tr>
-    <tr><td>две плоскости</td><td>пересекаются по прямой · параллельны</td></tr>
-  </table></div>
-  <div class="note"><b>Аксиома 1.</b> Через три точки, не лежащие на одной прямой, проходит
-  единственная плоскость.<br>
-  <b>Аксиома 2.</b> Если две точки прямой лежат в плоскости, то и вся прямая лежит в ней.<br>
-  <b>Аксиома 3.</b> Если две плоскости имеют общую точку, то они имеют и общую прямую.</div>
-  <p><b>Теорема 3.</b> Через прямую и точку вне её проходит единственная плоскость.<br>
-  <b>Теорема 4.</b> Через две пересекающиеся прямые проходит единственная плоскость.</p>
-  <p class="small">Рабочий приём почти для всех задач ниже: считай рёбра по группам.
-  Всего рёбер минус само ребро, минус пересекающиеся с ним, минус параллельные ему —
-  остаток и есть скрещивающиеся.</p>
-  <div class="m3d"><svg id="dve" viewBox="0 0 460 274" aria-label="объёмный чертёж"></svg><div class="m3dbar" id="dvebar"></div><div class="m3dcap" id="dvecap"></div><div class="m3dhint">Крути фигуру пальцем или мышкой. Нажимай на элементы — появится подпись.</div><div class="cap3d">Проверь свои подсчёты на модели: кнопки показывают по паре рёбер каждого типа</div></div>
+<div class="card pam">
+
+<h2>Памятка: всё, что понадобится</h2>
+<div class="meta">Сюда возвращаются, когда застряли. Читать целиком сразу не нужно.</div>
+
+<h3>Сколько общих точек — такое и расположение</h3>
+<div class="fgrid"><div class="fbox"><h4>Две прямые</h4><p><span class="dot">1 точка</span>пересекаются</p><p><span class="dot">0 точек</span>параллельны — лежат в одной плоскости и не пересекаются</p><p><span class="dot">0 точек</span>скрещиваются — нет плоскости, в которой лежали бы обе</p><p class="small">Ноль общих точек сам по себе ещё не значит «параллельны». Надо проверить, лежат ли прямые в одной плоскости.</p></div><div class="fbox"><h4>Прямая и плоскость</h4><p><span class="dot">все точки</span>прямая лежит в плоскости</p><p><span class="dot">1 точка</span>прямая пересекает плоскость</p><p><span class="dot">0 точек</span>прямая параллельна плоскости</p><p class="small">Двух общих точек быть не может: по аксиоме 2 тогда вся прямая лежала бы в плоскости.</p></div><div class="fbox"><h4>Две плоскости</h4><p><span class="dot">прямая</span>пересекаются — общих точек бесконечно много, и все они на одной прямой</p><p><span class="dot">0 точек</span>параллельны</p><p class="small">Одной-единственной общей точки у двух плоскостей не бывает: по аксиоме 3 вместе с точкой появляется целая прямая.</p></div></div>
+
+<h3>Три аксиомы</h3>
+<div class="fgrid"><div class="fbox"><h4>Аксиома 1</h4><p>Через три точки, не лежащие на одной прямой, проходит <b>единственная</b> плоскость.</p><p class="small">Модель: штатив на трёх ножках и табурет на трёх ножках не качаются.</p></div><div class="fbox"><h4>Аксиома 2</h4><p>Если две точки прямой лежат в плоскости, то <b>вся прямая</b> лежит в этой плоскости.</p><p class="small">Модель: ровная линейка прилегает к столу всем краем, без щели.</p></div><div class="fbox"><h4>Аксиома 3</h4><p>Если две плоскости имеют общую точку, то они имеют и <b>общую прямую</b>, проходящую через эту точку.</p><p class="small">Модель: две смежные стены комнаты сходятся по вертикальной линии.</p></div></div>
+
+<h3>Четыре способа задать плоскость</h3>
+<div class="way"><span class="num">1</span><b class="t">Три точки, не лежащие на одной прямой</b><div class="when">аксиома 1</div><p class="small">Если же три точки лежат на одной прямой, плоскостей через них <span class='mn'>бесконечно много</span>.</p></div><div class="way"><span class="num">2</span><b class="t">Прямая и точка вне её</b><div class="when">теорема 3</div><p class="small">Берём на прямой две точки — вместе с данной получаются три точки не на одной прямой.</p></div><div class="way"><span class="num">3</span><b class="t">Две пересекающиеся прямые</b><div class="when">теорема 4</div><p class="small">Практика: столяр проводит в двух смежных гранях бруска пересекающиеся прямые — они и задают плоскость распила.</p></div><div class="way"><span class="num">4</span><b class="t">Две параллельные прямые</b><div class="when">следствие того же</div><p class="small">Они по определению лежат в одной плоскости, и эта плоскость единственная.</p></div>
+
+<h3>Два приёма построения</h3>
+<div class="fgrid"><div class="fbox"><h4>Линия пересечения двух плоскостей</h4><p>Ищем <b>две</b> точки, каждая из которых принадлежит обеим плоскостям. Прямая через них и есть линия пересечения.</p><p class="small">Точку ищут так: берут прямую в одной плоскости и прямую в другой, лежащие в общей вспомогательной плоскости, и находят их точку пересечения — при необходимости продлив отрезки.</p></div><div class="fbox"><h4>Точка пересечения прямой с плоскостью</h4><p>Проводим через прямую вспомогательную плоскость, находим линию её пересечения с данной плоскостью и пересекаем эту линию с исходной прямой.</p><p class="small">Если прямая и найденная линия оказались параллельны — значит прямая параллельна плоскости и точки нет.</p></div></div>
 </div>
 
 <div class="card">
-  <h2>Домашнее задание</h2>
-  <div class="meta">Шесть задач базы, пять среднего уровня и три посложнее.</div>
+
+<h2>1. Две прямые в пространстве</h2>
+<p>На плоскости прямые либо пересекаются, либо параллельны. В пространстве появляется
+третий случай.</p>
+<div class="fig"><svg viewBox="0 0 320 170"><rect x="0" y="0" width="320" height="170" rx="12" fill="#ffffff"/><line x1="28.0" y1="40.0" x2="140.0" y2="118.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="28.0" y1="118.0" x2="140.0" y2="40.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><circle cx="84.0" cy="79.0" r="4.6" fill="#b3261e"/><text x="88" y="74" font-size="17" fill="#b3261e" text-anchor="start" font-weight="600">T</text><text x="20" y="36" font-size="18" fill="#15181e" text-anchor="end" font-weight="600">b</text><text x="20" y="126" font-size="18" fill="#15181e" text-anchor="end" font-weight="600">a</text><line x1="186.0" y1="58.0" x2="298.0" y2="44.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="186.0" y1="112.0" x2="298.0" y2="98.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="180" y="56" font-size="18" fill="#15181e" text-anchor="end" font-weight="600">c</text><text x="180" y="112" font-size="18" fill="#15181e" text-anchor="end" font-weight="600">d</text><text x="84" y="150" font-size="15" fill="#5b6270" text-anchor="middle">пересекаются</text><text x="242" y="150" font-size="15" fill="#5b6270" text-anchor="middle">параллельны</text></svg></div>
+<div class="def"><div class="n">ТРИ СЛУЧАЯ</div>
+<b>Пересекающиеся</b> — имеют ровно одну общую точку.<br>
+<b>Параллельные</b> — лежат в одной плоскости и не имеют общих точек.<br>
+<b>Скрещивающиеся</b> — нет такой плоскости, в которой лежали бы обе.</div>
+<p class="small">Представление о скрещивающихся прямых дают две дороги: одна идёт по эстакаде,
+другая — под ней. Они не пересекаются и не параллельны.</p>
+<div class="ex"><h3>Пример 1</h3>
+<p>Как расположены прямые AB и CC₁ параллелепипеда ABCDA₁B₁C₁D₁?</p>
+<div class="fig"><svg viewBox="0 0 300 250"><rect x="0" y="0" width="300" height="250" rx="12" fill="#ffffff"/><polygon points="52.0,103.0 184.0,103.0 242.0,67.0 110.0,67.0" fill="#e8f0ff"/><polygon points="52.0,195.0 184.0,195.0 184.0,103.0 52.0,103.0" fill="#dbe6f8"/><polygon points="184.0,195.0 242.0,159.0 242.0,67.0 184.0,103.0" fill="#dbe6f8"/><line x1="52.0" y1="195.0" x2="110.0" y2="159.0" stroke="#15181e" stroke-width="2.4" stroke-dasharray="7 6"/><line x1="110.0" y1="159.0" x2="242.0" y2="159.0" stroke="#15181e" stroke-width="2.4" stroke-dasharray="7 6"/><line x1="110.0" y1="159.0" x2="110.0" y2="67.0" stroke="#15181e" stroke-width="2.4" stroke-dasharray="7 6"/><line x1="52.0" y1="195.0" x2="184.0" y2="195.0" stroke="#15181e" stroke-width="2.4"/><line x1="184.0" y1="195.0" x2="242.0" y2="159.0" stroke="#15181e" stroke-width="2.4"/><line x1="52.0" y1="195.0" x2="52.0" y2="103.0" stroke="#15181e" stroke-width="2.4"/><line x1="184.0" y1="195.0" x2="184.0" y2="103.0" stroke="#15181e" stroke-width="2.4"/><line x1="242.0" y1="159.0" x2="242.0" y2="67.0" stroke="#15181e" stroke-width="2.4"/><line x1="52.0" y1="103.0" x2="184.0" y2="103.0" stroke="#15181e" stroke-width="2.4"/><line x1="184.0" y1="103.0" x2="242.0" y2="67.0" stroke="#15181e" stroke-width="2.4"/><line x1="242.0" y1="67.0" x2="110.0" y2="67.0" stroke="#15181e" stroke-width="2.4"/><line x1="110.0" y1="67.0" x2="52.0" y2="103.0" stroke="#15181e" stroke-width="2.4"/><line x1="52.0" y1="192.0" x2="184.0" y2="192.0" stroke="#b3261e" stroke-width="4" stroke-linecap="round"/><line x1="242.0" y1="156.0" x2="242.0" y2="64.0" stroke="#137a45" stroke-width="4" stroke-linecap="round"/><text x="38" y="210" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">A</text><text x="192" y="210" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">B</text><text x="250" y="170" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">C</text><text x="94" y="168" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">D</text><text x="32" y="106" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">A₁</text><text x="192" y="106" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">B₁</text><text x="250" y="66" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">C₁</text><text x="88" y="64" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">D₁</text><text x="150" y="240" font-size="15" fill="#5b6270" text-anchor="middle">AB и CC₁ — скрещивающиеся прямые</text></svg></div>
+<div class="step">1. Общих точек нет: точка C не лежит на прямой AB.</div>
+<div class="step">2. Параллельными быть не могут: AB лежит в нижней грани, а CC₁ выходит из неё
+вверх. Одной плоскости, содержащей обе, нет.</div>
+<div class="fx">AB и CC₁ — скрещивающиеся</div>
+<div class="step mini">Проверка на скрещивание всегда одна: попробуй найти плоскость,
+в которой лежали бы обе прямые. Не нашлась — скрещиваются.</div></div>
+<div class="tohw">Задание 1<span>Две задачи на взаимное расположение двух прямых.</span></div>
 </div>
+<div id="tasks1"></div>
+
+<div class="card">
+
+<h2>2. Прямая и плоскость</h2>
+<div class="figrow"><svg viewBox="0 0 300 190"><rect x="0" y="0" width="300" height="190" rx="12" fill="#ffffff"/><polygon points="40.0,130.0 220.0,130.0 282.0,68.0 102.0,68.0" fill="#e6eefc" fill-opacity="1" stroke="#9fb4d6" stroke-width="1.8"/><line x1="72.0" y1="118.0" x2="232.0" y2="84.0" stroke="#2f6bd8" stroke-width="3" stroke-linecap="round"/><text x="60" y="112" font-size="19" fill="#2f6bd8" text-anchor="start" font-weight="600">a</text><text x="150" y="180" font-size="15" fill="#5b6270" text-anchor="middle">прямая a лежит в плоскости</text></svg><svg viewBox="0 0 300 190"><rect x="0" y="0" width="300" height="190" rx="12" fill="#ffffff"/><polygon points="40.0,130.0 220.0,130.0 282.0,68.0 102.0,68.0" fill="#e6eefc" fill-opacity="1" stroke="#9fb4d6" stroke-width="1.8"/><line x1="150.0" y1="40.0" x2="170.0" y2="168.0" stroke="#2f6bd8" stroke-width="3" stroke-linecap="round"/><circle cx="160.0" cy="104.0" r="4.6" fill="#b3261e"/><text x="176" y="100" font-size="18" fill="#b3261e" text-anchor="start" font-weight="600">K</text><text x="140" y="44" font-size="19" fill="#2f6bd8" text-anchor="end" font-weight="600">b</text><text x="150" y="180" font-size="15" fill="#5b6270" text-anchor="middle">прямая b пересекает плоскость в точке K</text></svg><svg viewBox="0 0 300 190"><rect x="0" y="0" width="300" height="190" rx="12" fill="#ffffff"/><polygon points="40.0,130.0 220.0,130.0 282.0,68.0 102.0,68.0" fill="#e6eefc" fill-opacity="1" stroke="#9fb4d6" stroke-width="1.8"/><line x1="72.0" y1="72.0" x2="232.0" y2="38.0" stroke="#2f6bd8" stroke-width="3" stroke-linecap="round"/><line x1="78.0" y1="76.0" x2="78.0" y2="114.0" stroke="#9aa3b2" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="7 6"/><line x1="226.0" y1="42.0" x2="226.0" y2="88.0" stroke="#9aa3b2" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="7 6"/><text x="60" y="66" font-size="19" fill="#2f6bd8" text-anchor="start" font-weight="600">c</text><text x="150" y="180" font-size="15" fill="#5b6270" text-anchor="middle">прямая c параллельна плоскости</text></svg></div>
+<div class="def"><div class="n">ТРИ СЛУЧАЯ</div>
+Прямая <b>лежит</b> в плоскости — общих точек бесконечно много.<br>
+Прямая <b>пересекает</b> плоскость — ровно одна общая точка.<br>
+Прямая <b>параллельна</b> плоскости — общих точек нет. Пишут a ∥ α.</div>
+<div class="rule"><div class="n">ПОЧЕМУ НЕ БЫВАЕТ ДВУХ ТОЧЕК</div>
+Если у прямой и плоскости две общие точки, то по аксиоме 2 вся прямая лежит в плоскости.
+Значит ровно двух общих точек быть не может — либо одна, либо ни одной, либо все.</div>
+<div class="ex"><h3>Пример 2</h3>
+<p>Как расположены прямая CC₁ и плоскость грани ABB₁A₁?</p>
+<div class="step">1. Точек грани ABB₁A₁ на прямой CC₁ нет: ребро CC₁ стоит на задней стороне.</div>
+<div class="step">2. Общих точек нет — значит прямая параллельна плоскости.</div>
+<div class="fx">CC₁ ∥ (ABB₁A₁)</div>
+<div class="step mini">Заодно: прямая AB лежит в этой плоскости, а прямая AD её пересекает —
+в точке A.</div></div>
+<div class="tohw">Задание 2<span>Две задачи на прямую и плоскость.</span></div>
+</div>
+<div id="tasks2"></div>
+
+<div class="card">
+
+<h2>3. Две плоскости</h2>
+<div class="figrow"><svg viewBox="0 0 300 200"><rect x="0" y="0" width="300" height="200" rx="12" fill="#ffffff"/><polygon points="30.0,150.0 210.0,150.0 270.0,84.0 90.0,84.0" fill="#e6eefc" fill-opacity="1" stroke="#9fb4d6" stroke-width="1.8"/><polygon points="96.0,176.0 206.0,176.0 246.0,44.0 136.0,44.0" fill="#fdeef5" fill-opacity="1" stroke="#9fb4d6" stroke-width="1.8"/><line x1="118.0" y1="150.0" x2="176.0" y2="86.0" stroke="#b3261e" stroke-width="3" stroke-linecap="round"/><text x="186" y="82" font-size="19" fill="#b3261e" text-anchor="start" font-weight="600">c</text><text x="44" y="146" font-size="18" fill="#5b6270" text-anchor="start" font-weight="600">α</text><text x="200" y="172" font-size="18" fill="#5b6270" text-anchor="start" font-weight="600">β</text><text x="150" y="190" font-size="15" fill="#5b6270" text-anchor="middle">плоскости пересекаются по прямой c</text></svg><svg viewBox="0 0 300 200"><rect x="0" y="0" width="300" height="200" rx="12" fill="#ffffff"/><polygon points="40.0,172.0 220.0,172.0 278.0,114.0 98.0,114.0" fill="#e6eefc" fill-opacity="1" stroke="#9fb4d6" stroke-width="1.8"/><polygon points="40.0,96.0 220.0,96.0 278.0,38.0 98.0,38.0" fill="#e6eefc" fill-opacity="1" stroke="#9fb4d6" stroke-width="1.8"/><text x="24" y="168" font-size="18" fill="#5b6270" text-anchor="start" font-weight="600">β</text><text x="24" y="92" font-size="18" fill="#5b6270" text-anchor="start" font-weight="600">α</text><text x="150" y="190" font-size="15" fill="#5b6270" text-anchor="middle">плоскости параллельны: общих точек нет</text></svg></div>
+<div class="def"><div class="n">ДВА СЛУЧАЯ</div>
+Плоскости <b>пересекаются</b> — у них есть общая прямая.<br>
+Плоскости <b>параллельны</b> — общих точек нет. Пишут α ∥ β.</div>
+<p class="small">Плоскости обозначают строчными греческими буквами α, β, γ. Знак ∥ работает
+для всех трёх случаев: a ∥ b, c ∥ α, α ∥ β.</p>
+<div class="ex"><h3>Пример 3</h3>
+<p>Как расположены плоскости граней ABB₁A₁ и DCC₁D₁ параллелепипеда?</p>
+<div class="step">Это противоположные грани. Общих точек у них нет.</div>
+<div class="fx">(ABB₁A₁) ∥ (DCC₁D₁)</div>
+<div class="step mini">Модель пересекающихся плоскостей — столешница и боковина стола,
+параллельных — пол и потолок.</div></div>
+<div class="tohw">Задание 3<span>Две задачи на две плоскости.</span></div>
+</div>
+<div id="tasks3"></div>
+
+<div class="card">
+  <h2>Проверь себя</h2>
+  <div class="meta">Два тренажёра на самое главное: считать общие точки и различать пары прямых.</div>
+<div class="tr" id="ts1"><div class="trhead"><b>Тренажёр 1. Сколько общих точек</b><span class="trscore" id="ts1s"></span></div><div class="meta">Десять случаев. Число общих точек и есть название расположения.</div><div class="trq" id="ts1q"></div><div class="trfig" id="ts1f"></div><div id="ts1a"></div><div class="trmsg" id="ts1m"></div><div class="trbar" id="ts1b"></div></div>
+<div class="tr" id="ts2"><div class="trhead"><b>Тренажёр 2. Прямые на параллелепипеде</b><span class="trscore" id="ts2s"></span></div><div class="meta">Десять пар рёбер и диагоналей. Главный вопрос: есть ли плоскость, где лежат обе.</div><div class="trq" id="ts2q"></div><div class="trfig" id="ts2f"></div><div id="ts2a"></div><div class="trmsg" id="ts2m"></div><div class="trbar" id="ts2b"></div></div>
+</div>
+
+<div class="card">
+
+<h2>4. Три аксиомы</h2>
+<div class="ax"><div class="n">АКСИОМА 1</div>
+Если три точки не лежат на одной прямой, то через них проходит <b>единственная</b> плоскость.</div>
+<div class="fig"><svg viewBox="0 0 300 180"><rect x="0" y="0" width="300" height="180" rx="12" fill="#ffffff"/><polygon points="34.0,140.0 224.0,140.0 280.0,88.0 90.0,88.0" fill="#e6eefc" fill-opacity="1" stroke="#9fb4d6" stroke-width="1.8"/><line x1="150.0" y1="36.0" x2="96.0" y2="134.0" stroke="#15181e" stroke-width="2.8" stroke-linecap="round"/><line x1="150.0" y1="36.0" x2="156.0" y2="132.0" stroke="#15181e" stroke-width="2.8" stroke-linecap="round"/><line x1="150.0" y1="36.0" x2="196.0" y2="120.0" stroke="#15181e" stroke-width="2.8" stroke-linecap="round"/><circle cx="96.0" cy="134.0" r="4.6" fill="#b3261e"/><circle cx="156.0" cy="132.0" r="4.6" fill="#b3261e"/><circle cx="196.0" cy="120.0" r="4.6" fill="#b3261e"/><circle cx="150" cy="30" r="9" fill="#2f6bd8"/><text x="150" y="170" font-size="15" fill="#5b6270" text-anchor="middle">три точки — одна плоскость</text></svg></div>
+<p class="small">Поэтому штатив фотоаппарата делают на трёх ножках — три острия всегда
+задают одну плоскость, и штатив стоит устойчиво. У табурета на четырёх ножках при неровной
+подрезке одна ножка висит.</p>
+<div class="ax"><div class="n">АКСИОМА 2</div>
+Если две точки прямой лежат в плоскости, то <b>каждая</b> точка этой прямой принадлежит
+плоскости.</div>
+<p class="small">Так проверяют линейку: если край прямолинейный, он прилегает к столу
+всеми точками. Неровный край даёт щель.</p>
+<div class="ax"><div class="n">АКСИОМА 3</div>
+Если две плоскости имеют общую точку, то они имеют и <b>общую прямую</b>, проходящую
+через эту точку.</div>
+<div class="fig"><svg viewBox="0 0 300 190"><rect x="0" y="0" width="300" height="190" rx="12" fill="#ffffff"/><polygon points="40,150 150,126 150,36 40,50" fill="#e6eefc" stroke="#9fb4d6" stroke-width="1.8"/><polygon points="150,126 262,150 262,50 150,36" fill="#fdeef5" stroke="#9fb4d6" stroke-width="1.8"/><line x1="150.0" y1="126.0" x2="150.0" y2="36.0" stroke="#b3261e" stroke-width="3.2" stroke-linecap="round"/><text x="160" y="90" font-size="19" fill="#b3261e" text-anchor="start" font-weight="600">c</text><text x="150" y="180" font-size="15" fill="#5b6270" text-anchor="middle">две стены — общая прямая c</text></svg></div>
+<div class="ex"><h3>Пример 4</h3>
+<p>Сколько плоскостей проходит через три точки, лежащие на одной прямой?</p>
+<div class="step">Аксиома 1 требует, чтобы точки <u>не</u> лежали на одной прямой.
+Здесь условие нарушено.</div>
+<div class="step">Возьмём прямую и любую точку вне её — получится плоскость, содержащая
+все три точки. Таких точек вне прямой бесконечно много.</div>
+<div class="fx">плоскостей бесконечно много</div>
+<div class="step mini">Отсюда и правило: три точки задают плоскость, только если они
+<b>не</b> на одной прямой.</div></div>
+<div class="tohw">Задание 4<span>Три задачи на аксиомы.</span></div>
+</div>
+<div id="tasks4"></div>
+
+<div class="card">
+
+<h2>5. Чем задаётся плоскость</h2>
+<div class="rule"><div class="n">ТЕОРЕМА 3</div>
+Через прямую и точку вне её проходит единственная плоскость.</div>
+<p class="small">Доказательство короткое: берём на прямой две точки B и C. Вместе с точкой A
+получаются три точки не на одной прямой — по аксиоме 1 плоскость единственная,
+а по аксиоме 2 она содержит всю прямую.</p>
+<div class="rule"><div class="n">ТЕОРЕМА 4</div>
+Через две пересекающиеся прямые проходит единственная плоскость.</div>
+<p class="small">Применение: чтобы распилить брусок под нужным углом, столяр проводит
+в двух смежных гранях две пересекающиеся прямые — они и задают плоскость распила.</p>
+<div class="ex"><h3>Пример 5</h3>
+<p>Точки A, B, C, D не лежат в одной плоскости, никакие три из них не лежат на одной прямой.
+Сколько различных плоскостей они задают?</p>
+<div class="step">1. Каждая плоскость определяется тройкой точек.</div>
+<div class="step">2. Троек всего четыре: ABC, ABD, ACD, BCD.</div>
+<div class="step">3. Все четыре плоскости различны — иначе все точки лежали бы в одной.</div>
+<div class="fx">4 плоскости</div>
+<div class="step mini">Тот же счёт для прямых: пар точек шесть, значит и прямых шесть.</div></div>
+<div class="tohw">Задание 5<span>Три задачи: чем задаётся плоскость и сколько их получается.</span></div>
+</div>
+<div id="tasks5"></div>
+
+<div class="card">
+  <h2>Проверь себя</h2>
+  <div class="meta">Десять вопросов про аксиомы и способы задания плоскости.</div>
+<div class="tr" id="ts3"><div class="trhead"><b>Тренажёр 3. Аксиомы и задание плоскости</b><span class="trscore" id="ts3s"></span></div><div class="meta">Десять вопросов: задаёт ли набор единственную плоскость и какая аксиома работает.</div><div class="trq" id="ts3q"></div><div class="trfig" id="ts3f"></div><div id="ts3a"></div><div class="trmsg" id="ts3m"></div><div class="trbar" id="ts3b"></div></div>
+</div>
+
+<div class="card">
+
+<h2>6. Линия пересечения двух плоскостей</h2>
+<div class="rule"><div class="n">ПРИЁМ</div>
+Чтобы построить линию пересечения, достаточно найти <b>две</b> точки, принадлежащие
+обеим плоскостям. Прямая через них и есть ответ.</div>
+<div class="ex"><h3>Пример 6</h3>
+<p>По какой прямой пересекаются плоскости ABB₁ и BCC₁ параллелепипеда?</p>
+<div class="fig"><svg viewBox="0 0 300 250"><rect x="0" y="0" width="300" height="250" rx="12" fill="#ffffff"/><polygon points="52.0,103.0 184.0,103.0 242.0,67.0 110.0,67.0" fill="#e8f0ff"/><polygon points="52.0,195.0 184.0,195.0 184.0,103.0 52.0,103.0" fill="#dbe6f8"/><polygon points="184.0,195.0 242.0,159.0 242.0,67.0 184.0,103.0" fill="#dbe6f8"/><line x1="52.0" y1="195.0" x2="110.0" y2="159.0" stroke="#15181e" stroke-width="2.4" stroke-dasharray="7 6"/><line x1="110.0" y1="159.0" x2="242.0" y2="159.0" stroke="#15181e" stroke-width="2.4" stroke-dasharray="7 6"/><line x1="110.0" y1="159.0" x2="110.0" y2="67.0" stroke="#15181e" stroke-width="2.4" stroke-dasharray="7 6"/><line x1="52.0" y1="195.0" x2="184.0" y2="195.0" stroke="#15181e" stroke-width="2.4"/><line x1="184.0" y1="195.0" x2="242.0" y2="159.0" stroke="#15181e" stroke-width="2.4"/><line x1="52.0" y1="195.0" x2="52.0" y2="103.0" stroke="#15181e" stroke-width="2.4"/><line x1="184.0" y1="195.0" x2="184.0" y2="103.0" stroke="#15181e" stroke-width="2.4"/><line x1="242.0" y1="159.0" x2="242.0" y2="67.0" stroke="#15181e" stroke-width="2.4"/><line x1="52.0" y1="103.0" x2="184.0" y2="103.0" stroke="#15181e" stroke-width="2.4"/><line x1="184.0" y1="103.0" x2="242.0" y2="67.0" stroke="#15181e" stroke-width="2.4"/><line x1="242.0" y1="67.0" x2="110.0" y2="67.0" stroke="#15181e" stroke-width="2.4"/><line x1="110.0" y1="67.0" x2="52.0" y2="103.0" stroke="#15181e" stroke-width="2.4"/><text x="38" y="210" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">A</text><text x="192" y="210" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">B</text><text x="250" y="170" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">C</text><text x="94" y="168" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">D</text><text x="32" y="106" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">A₁</text><text x="192" y="106" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">B₁</text><text x="250" y="66" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">C₁</text><text x="88" y="64" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">D₁</text><text x="150" y="240" font-size="15" fill="#5b6270" text-anchor="middle">параллелепипед ABCDA₁B₁C₁D₁</text></svg></div>
+<div class="step">1. Точка B принадлежит обеим: она есть и в первой записи, и во второй.</div>
+<div class="step">2. Точка B₁ тоже принадлежит обеим: B₁ лежит в грани ABB₁A₁ и в грани BCC₁B₁.</div>
+<div class="step">3. Две общие точки найдены.</div>
+<div class="fx">(ABB₁) ∩ (BCC₁) = BB₁</div>
+<div class="step mini">Чаще всего обе общие точки — это вершины, названные в обеих плоскостях
+сразу. Начинай поиск именно с них.</div></div>
+<div class="tohw">Задание 6<span>Три задачи на линию пересечения двух плоскостей.</span></div>
+</div>
+<div id="tasks6"></div>
+
+<div class="card">
+  <h2>Проверь себя</h2>
+  <div class="meta">Десять пар плоскостей. Ищи две общие точки.</div>
+<div class="tr" id="ts4"><div class="trhead"><b>Тренажёр 4. Линия пересечения</b><span class="trscore" id="ts4s"></span></div><div class="meta">Десять пар плоскостей многогранника. Ищи две общие точки.</div><div class="trq" id="ts4q"></div><div class="trfig" id="ts4f"></div><div id="ts4a"></div><div class="trmsg" id="ts4m"></div><div class="trbar" id="ts4b"></div></div>
+</div>
+
+<div class="card">
+
+<h2>7. Сечение и след</h2>
+<p>Если три точки сечения лежат в одной грани — просто соединяем их. Если в разных,
+приходится искать след: точку, в которой прямая сечения выходит на плоскость основания.</p>
+<div class="fig"><svg viewBox="0 0 300 250"><rect x="0" y="0" width="300" height="250" rx="12" fill="#ffffff"/><polygon points="52.0,103.0 184.0,103.0 242.0,67.0 110.0,67.0" fill="#e8f0ff"/><polygon points="52.0,195.0 184.0,195.0 184.0,103.0 52.0,103.0" fill="#dbe6f8"/><polygon points="184.0,195.0 242.0,159.0 242.0,67.0 184.0,103.0" fill="#dbe6f8"/><line x1="52.0" y1="195.0" x2="110.0" y2="159.0" stroke="#15181e" stroke-width="2.4" stroke-dasharray="7 6"/><line x1="110.0" y1="159.0" x2="242.0" y2="159.0" stroke="#15181e" stroke-width="2.4" stroke-dasharray="7 6"/><line x1="110.0" y1="159.0" x2="110.0" y2="67.0" stroke="#15181e" stroke-width="2.4" stroke-dasharray="7 6"/><line x1="52.0" y1="195.0" x2="184.0" y2="195.0" stroke="#15181e" stroke-width="2.4"/><line x1="184.0" y1="195.0" x2="242.0" y2="159.0" stroke="#15181e" stroke-width="2.4"/><line x1="52.0" y1="195.0" x2="52.0" y2="103.0" stroke="#15181e" stroke-width="2.4"/><line x1="184.0" y1="195.0" x2="184.0" y2="103.0" stroke="#15181e" stroke-width="2.4"/><line x1="242.0" y1="159.0" x2="242.0" y2="67.0" stroke="#15181e" stroke-width="2.4"/><line x1="52.0" y1="103.0" x2="184.0" y2="103.0" stroke="#15181e" stroke-width="2.4"/><line x1="184.0" y1="103.0" x2="242.0" y2="67.0" stroke="#15181e" stroke-width="2.4"/><line x1="242.0" y1="67.0" x2="110.0" y2="67.0" stroke="#15181e" stroke-width="2.4"/><line x1="110.0" y1="67.0" x2="52.0" y2="103.0" stroke="#15181e" stroke-width="2.4"/><line x1="52.0" y1="192.0" x2="184.0" y2="100.0" stroke="#7a3fbf" stroke-width="3.4" stroke-linecap="round"/><line x1="184.0" y1="100.0" x2="242.0" y2="156.0" stroke="#7a3fbf" stroke-width="3.4" stroke-linecap="round"/><line x1="242.0" y1="156.0" x2="52.0" y2="192.0" stroke="#7a3fbf" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="7 6"/><circle cx="184.0" cy="100.0" r="4.6" fill="#7a3fbf"/><circle cx="52.0" cy="192.0" r="4.6" fill="#7a3fbf"/><circle cx="242.0" cy="156.0" r="4.6" fill="#7a3fbf"/><text x="38" y="210" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">A</text><text x="192" y="210" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">B</text><text x="250" y="170" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">C</text><text x="94" y="168" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">D</text><text x="32" y="106" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">A₁</text><text x="192" y="106" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">B₁</text><text x="250" y="66" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">C₁</text><text x="88" y="64" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">D₁</text><text x="150" y="240" font-size="15" fill="#5b6270" text-anchor="middle">сечение по трём точкам A, B₁, C</text></svg></div>
+<div class="ex"><h3>Пример 7</h3>
+<p>Точки P, Q, R лежат на рёбрах SA, SC и BC пирамиды SABCD. По какой прямой плоскость PQR
+пересекает плоскость основания ABC?</p>
+<div class="fig"><svg viewBox="0 0 310 260"><rect x="0" y="0" width="310" height="260" rx="12" fill="#ffffff"/><polygon points="150.0,48.0 56.0,200.0 196.0,200.0" fill="#dbe6f8" stroke="none"/><polygon points="150.0,48.0 196.0,200.0 250.0,166.0" fill="#dbe6f8" stroke="none"/><line x1="110.0" y1="166.0" x2="56.0" y2="200.0" stroke="#15181e" stroke-width="2.4" stroke-dasharray="7 6"/><line x1="250.0" y1="166.0" x2="110.0" y2="166.0" stroke="#15181e" stroke-width="2.4" stroke-dasharray="7 6"/><line x1="150.0" y1="48.0" x2="110.0" y2="166.0" stroke="#15181e" stroke-width="2.4" stroke-dasharray="7 6"/><line x1="56.0" y1="200.0" x2="196.0" y2="200.0" stroke="#15181e" stroke-width="2.4"/><line x1="196.0" y1="200.0" x2="250.0" y2="166.0" stroke="#15181e" stroke-width="2.4"/><line x1="150.0" y1="48.0" x2="56.0" y2="200.0" stroke="#15181e" stroke-width="2.4"/><line x1="150.0" y1="48.0" x2="196.0" y2="200.0" stroke="#15181e" stroke-width="2.4"/><line x1="150.0" y1="48.0" x2="250.0" y2="166.0" stroke="#15181e" stroke-width="2.4"/><line x1="103.0" y1="124.0" x2="200.0" y2="107.0" stroke="#7a3fbf" stroke-width="3" stroke-linecap="round"/><line x1="200.0" y1="107.0" x2="223.0" y2="183.0" stroke="#7a3fbf" stroke-width="3" stroke-linecap="round"/><line x1="223.0" y1="183.0" x2="103.0" y2="124.0" stroke="#7a3fbf" stroke-width="3" stroke-linecap="round" stroke-dasharray="7 6"/><circle cx="103.0" cy="124.0" r="4.6" fill="#7a3fbf"/><circle cx="200.0" cy="107.0" r="4.6" fill="#7a3fbf"/><circle cx="223.0" cy="183.0" r="4.6" fill="#7a3fbf"/><text x="84" y="128" font-size="17" fill="#7a3fbf" text-anchor="start" font-weight="600">P</text><text x="207" y="109" font-size="17" fill="#7a3fbf" text-anchor="start" font-weight="600">Q</text><text x="230" y="189" font-size="17" fill="#7a3fbf" text-anchor="start" font-weight="600">R</text><text x="36" y="216" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">A</text><text x="206" y="216" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">B</text><text x="260" y="172" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">C</text><text x="88" y="168" font-size="17" fill="#15181e" text-anchor="start" font-weight="600">D</text><text x="150" y="39" font-size="17" fill="#15181e" text-anchor="middle" font-weight="600">S</text><text x="155" y="250" font-size="15" fill="#5b6270" text-anchor="middle">P, Q, R — на рёбрах SA, SC и BC</text></svg></div>
+<div class="step">1. Точка R лежит на ребре BC, значит R принадлежит основанию — это первая
+общая точка.</div>
+<div class="step">2. Нужна вторая. Прямые PQ и AC обе лежат в плоскости SAC, поэтому
+пересекаются — продлим их до точки X.</div>
+<div class="step">3. X лежит на PQ, значит принадлежит плоскости PQR; X лежит на AC, значит
+принадлежит основанию.</div>
+<div class="fx">(PQR) ∩ (ABC) = XR</div>
+<div class="step mini">Общий рецепт: вспомогательная плоскость — та, в которой лежат сразу
+две нужные прямые. Здесь это плоскость SAC.</div></div>
+<div class="tohw">Задание 7<span>Три задачи посложнее: сечение, подсчёт прямых и построение следа.</span></div>
+</div>
+<div id="tasks7"></div>
 <div id="tasks"></div>
 
 <div class="card sheet">
   <h2>Шпаргалка</h2>
-  <div class="meta">Этот блок печатается отдельно на один лист A4: Ctrl+P (⌘+P) → печать.</div>
-  <p class="f-formula"><b>Две прямые:</b> пересекающиеся — ровно одна общая точка;
-  параллельные — общих точек нет, но есть общая плоскость; скрещивающиеся — общей плоскости нет.</p>
-  <p class="f-formula"><b>Прямая и плоскость:</b> лежит в плоскости (a ⊂ α) · пересекает
-  в одной точке (b ∩ α = K) · параллельна (c ∥ α). Две общие точки означают, что прямая
-  лежит в плоскости.</p>
-  <p class="f-formula"><b>Две плоскости:</b> пересекаются по прямой или параллельны.
-  Третьего не дано.</p>
-  <p class="f-formula"><b>Аксиома 1.</b> Три точки не на одной прямой задают единственную
-  плоскость. <b>Аксиома 2.</b> Две точки прямой в плоскости — вся прямая в плоскости.
-  <b>Аксиома 3.</b> Общая точка двух плоскостей — есть и общая прямая.</p>
-  <p class="f-formula"><b>Четыре способа задать плоскость:</b> три точки не на одной прямой ·
-  прямая и точка вне её · две пересекающиеся прямые · две параллельные прямые.</p>
-  <p class="f-formula"><b>Линия пересечения плоскостей</b> строится по двум их общим точкам.
-  Каждую точку получают, пересекая прямую из первой плоскости с прямой из второй, — обе эти
-  прямые должны лежать в одной уже известной плоскости.</p>
-  <div class="scroll"><table>
-    <tr><th>фигура и ребро</th><th>всего</th><th>пересек.</th><th>парал.</th><th>скрещ.</th></tr>
-    <tr><td>параллелепипед, любое ребро</td><td>12</td><td>4</td><td>3</td><td>4</td></tr>
-    <tr><td>треугольная призма, ребро основания</td><td>9</td><td>4</td><td>1</td><td>3</td></tr>
-    <tr><td>треугольная призма, боковое ребро</td><td>9</td><td>4</td><td>2</td><td>2</td></tr>
-    <tr><td>пирамида SABCD, ребро основания</td><td>8</td><td>4</td><td>1</td><td>2</td></tr>
-  </table></div>
-  <p style="font-size:15px"><b>Ловушка:</b> параллельные рёбра тоже не имеют общих точек —
-  не записывай их в скрещивающиеся.</p>
+  <div class="meta">Печатается на один лист A4: Ctrl+P (⌘+P) → печать.</div>
+  <p class="f-formula"><b>Две прямые:</b> одна общая точка — пересекаются; нет общих точек
+  и лежат в одной плоскости — параллельны; нет общих точек и общей плоскости нет —
+  скрещиваются.</p>
+  <p class="f-formula"><b>Прямая и плоскость:</b> все точки общие — прямая лежит в плоскости;
+  одна общая точка — пересекает; ни одной — параллельна (a ∥ α). Ровно двух общих точек
+  не бывает.</p>
+  <p class="f-formula"><b>Две плоскости:</b> есть общая точка — есть и общая прямая
+  (пересекаются); нет общих точек — параллельны (α ∥ β).</p>
+  <p class="f-formula"><b>Аксиома 1.</b> Через три точки, не лежащие на одной прямой,
+  проходит единственная плоскость. Штатив и табурет на трёх ножках не качаются.</p>
+  <p class="f-formula"><b>Аксиома 2.</b> Если две точки прямой лежат в плоскости, то вся
+  прямая лежит в этой плоскости. Ровная линейка прилегает к столу всем краем.</p>
+  <p class="f-formula"><b>Аксиома 3.</b> Если две плоскости имеют общую точку, то они имеют
+  общую прямую через эту точку. Две смежные стены сходятся по линии.</p>
+  <p class="f-formula"><b>Плоскость задают:</b> три точки не на одной прямой; прямая и точка
+  вне её; две пересекающиеся прямые; две параллельные прямые. Три точки <u>на</u> одной
+  прямой плоскость не задают — их бесконечно много.</p>
+  <p class="f-formula"><b>Линия пересечения двух плоскостей:</b> найти две точки, общие для
+  обеих плоскостей, и провести через них прямую. Начинать с вершин, названных в обеих записях.</p>
+  <p class="f-formula"><b>След:</b> если второй общей точки не видно, берут вспомогательную
+  плоскость, где лежат сразу две нужные прямые, и продлевают их до пересечения.</p>
+  <p class="f-formula"><b>Счёт:</b> n точек в общем положении дают C(n,2) прямых и C(n,3)
+  плоскостей. Для четырёх точек — 6 прямых и 4 плоскости.</p>
 </div>
 
 <div class="card">
   <h2>Шаг 1. Фото решений — по желанию</h2>
-  <div class="meta">В этой теме ответ — одно число, поэтому по чертежу видно гораздо больше:
-  правильно ли подписаны вершины и какие рёбра отмечены. Прикладывать фото не обязательно,
-  но с ним разбор будет точнее.</div>
+  <div class="meta">В поле уходит только ответ, а я смотрю ещё и ход рассуждения.
+  Фото прикладывать не обязательно, но с ними разбор будет точнее.</div>
   <ol class="steps-list">
-    <li>Нарисуй параллелепипед или призму, подпиши все вершины.</li>
-    <li>Отметь цветом или штриховкой те рёбра, которые считал.</li>
-    <li>Рядом запиши подсчёт: всего 12, минус само, минус пересекающиеся, минус параллельные.</li>
-    <li>Сфотографируй страницы при дневном свете.</li>
+    <li>Чертёж делай сразу — в стереометрии без рисунка почти ничего не видно.</li>
+    <li>Невидимые рёбра проводи пунктиром, иначе легко перепутать переднее и заднее.</li>
+    <li>В задачах на пересечение выписывай обе общие точки отдельной строкой.</li>
   </ol>
   <input type="file" id="photos" accept="image/*" multiple style="margin-top:12px">
   <div class="thumbs" id="thumbs"></div>
@@ -235,8 +448,8 @@ details[open] summary{margin-bottom:8px}
 
 <div class="card">
   <h2>Шаг 2. Отправь работу</h2>
-  <div class="meta">Проверь, что вверху написано твоё имя. Фото — по желанию. По кнопке
-  ответы, результат и фотографии уходят преподавателю. Вторая кнопка сохраняет копию тебе.</div>
+  <div class="meta">Проверь, что вверху написано твоё имя. По кнопке ответы и результат
+  уходят преподавателю. Вторая кнопка сохраняет копию тебе.</div>
   <div class="row" style="margin-top:12px">
     <button class="pri" id="send">Отправить на проверку</button>
     <button id="report">Скачать копию себе</button>
@@ -248,10 +461,16 @@ details[open] summary{margin-bottom:8px}
 
 <div class="bar">
   <button class="pri" id="checkall">Проверить всё</button>
-  <span id="progress" class="meta">решено 0 из 14</span>
+  <span id="progress" class="meta">решено 0 из 18</span>
 </div>
 
 <script>
+var CF = {"box": "<svg viewBox=\"0 0 300 250\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"250\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"52.0,103.0 184.0,103.0 242.0,67.0 110.0,67.0\" fill=\"#e8f0ff\"/><polygon points=\"52.0,195.0 184.0,195.0 184.0,103.0 52.0,103.0\" fill=\"#dbe6f8\"/><polygon points=\"184.0,195.0 242.0,159.0 242.0,67.0 184.0,103.0\" fill=\"#dbe6f8\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"110.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"184.0\" y2=\"195.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"159.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"103.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"103.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"67.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"110.0\" y1=\"67.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"38\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A</text><text x=\"192\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B</text><text x=\"250\" y=\"170\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C</text><text x=\"94\" y=\"168\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D</text><text x=\"32\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A₁</text><text x=\"192\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B₁</text><text x=\"250\" y=\"66\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C₁</text><text x=\"88\" y=\"64\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D₁</text><text x=\"150\" y=\"240\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">параллелепипед ABCDA₁B₁C₁D₁</text></svg>", "pyr": "<svg viewBox=\"0 0 310 260\"><rect x=\"0\" y=\"0\" width=\"310\" height=\"260\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"150.0,48.0 56.0,200.0 196.0,200.0\" fill=\"#dbe6f8\" stroke=\"none\"/><polygon points=\"150.0,48.0 196.0,200.0 250.0,166.0\" fill=\"#dbe6f8\" stroke=\"none\"/><line x1=\"110.0\" y1=\"166.0\" x2=\"56.0\" y2=\"200.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"250.0\" y1=\"166.0\" x2=\"110.0\" y2=\"166.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"150.0\" y1=\"48.0\" x2=\"110.0\" y2=\"166.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"56.0\" y1=\"200.0\" x2=\"196.0\" y2=\"200.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"196.0\" y1=\"200.0\" x2=\"250.0\" y2=\"166.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"150.0\" y1=\"48.0\" x2=\"56.0\" y2=\"200.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"150.0\" y1=\"48.0\" x2=\"196.0\" y2=\"200.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"150.0\" y1=\"48.0\" x2=\"250.0\" y2=\"166.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"36\" y=\"216\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A</text><text x=\"206\" y=\"216\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B</text><text x=\"260\" y=\"172\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C</text><text x=\"88\" y=\"168\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D</text><text x=\"150\" y=\"39\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">S</text><text x=\"155\" y=\"250\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">пирамида SABCD</text></svg>", "pyrcut": "<svg viewBox=\"0 0 310 260\"><rect x=\"0\" y=\"0\" width=\"310\" height=\"260\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"150.0,48.0 56.0,200.0 196.0,200.0\" fill=\"#dbe6f8\" stroke=\"none\"/><polygon points=\"150.0,48.0 196.0,200.0 250.0,166.0\" fill=\"#dbe6f8\" stroke=\"none\"/><line x1=\"110.0\" y1=\"166.0\" x2=\"56.0\" y2=\"200.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"250.0\" y1=\"166.0\" x2=\"110.0\" y2=\"166.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"150.0\" y1=\"48.0\" x2=\"110.0\" y2=\"166.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"56.0\" y1=\"200.0\" x2=\"196.0\" y2=\"200.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"196.0\" y1=\"200.0\" x2=\"250.0\" y2=\"166.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"150.0\" y1=\"48.0\" x2=\"56.0\" y2=\"200.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"150.0\" y1=\"48.0\" x2=\"196.0\" y2=\"200.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"150.0\" y1=\"48.0\" x2=\"250.0\" y2=\"166.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"103.0\" y1=\"124.0\" x2=\"200.0\" y2=\"107.0\" stroke=\"#7a3fbf\" stroke-width=\"3\" stroke-linecap=\"round\"/><line x1=\"200.0\" y1=\"107.0\" x2=\"223.0\" y2=\"183.0\" stroke=\"#7a3fbf\" stroke-width=\"3\" stroke-linecap=\"round\"/><line x1=\"223.0\" y1=\"183.0\" x2=\"103.0\" y2=\"124.0\" stroke=\"#7a3fbf\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-dasharray=\"7 6\"/><circle cx=\"103.0\" cy=\"124.0\" r=\"4.6\" fill=\"#7a3fbf\"/><circle cx=\"200.0\" cy=\"107.0\" r=\"4.6\" fill=\"#7a3fbf\"/><circle cx=\"223.0\" cy=\"183.0\" r=\"4.6\" fill=\"#7a3fbf\"/><text x=\"84\" y=\"128\" font-size=\"17\" fill=\"#7a3fbf\" text-anchor=\"start\" font-weight=\"600\">P</text><text x=\"207\" y=\"109\" font-size=\"17\" fill=\"#7a3fbf\" text-anchor=\"start\" font-weight=\"600\">Q</text><text x=\"230\" y=\"189\" font-size=\"17\" fill=\"#7a3fbf\" text-anchor=\"start\" font-weight=\"600\">R</text><text x=\"36\" y=\"216\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A</text><text x=\"206\" y=\"216\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B</text><text x=\"260\" y=\"172\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C</text><text x=\"88\" y=\"168\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D</text><text x=\"150\" y=\"39\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">S</text><text x=\"155\" y=\"250\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">P, Q, R — на рёбрах SA, SC и BC</text></svg>", "boxcut": "<svg viewBox=\"0 0 300 250\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"250\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"52.0,103.0 184.0,103.0 242.0,67.0 110.0,67.0\" fill=\"#e8f0ff\"/><polygon points=\"52.0,195.0 184.0,195.0 184.0,103.0 52.0,103.0\" fill=\"#dbe6f8\"/><polygon points=\"184.0,195.0 242.0,159.0 242.0,67.0 184.0,103.0\" fill=\"#dbe6f8\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"110.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"184.0\" y2=\"195.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"159.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"103.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"103.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"67.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"110.0\" y1=\"67.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"192.0\" x2=\"184.0\" y2=\"100.0\" stroke=\"#7a3fbf\" stroke-width=\"3.4\" stroke-linecap=\"round\"/><line x1=\"184.0\" y1=\"100.0\" x2=\"242.0\" y2=\"156.0\" stroke=\"#7a3fbf\" stroke-width=\"3.4\" stroke-linecap=\"round\"/><line x1=\"242.0\" y1=\"156.0\" x2=\"52.0\" y2=\"192.0\" stroke=\"#7a3fbf\" stroke-width=\"3.4\" stroke-linecap=\"round\" stroke-dasharray=\"7 6\"/><circle cx=\"184.0\" cy=\"100.0\" r=\"4.6\" fill=\"#7a3fbf\"/><circle cx=\"52.0\" cy=\"192.0\" r=\"4.6\" fill=\"#7a3fbf\"/><circle cx=\"242.0\" cy=\"156.0\" r=\"4.6\" fill=\"#7a3fbf\"/><text x=\"38\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A</text><text x=\"192\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B</text><text x=\"250\" y=\"170\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C</text><text x=\"94\" y=\"168\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D</text><text x=\"32\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A₁</text><text x=\"192\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B₁</text><text x=\"250\" y=\"66\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C₁</text><text x=\"88\" y=\"64\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D₁</text><text x=\"150\" y=\"240\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">сечение по трём точкам A, B₁, C</text></svg>"};
+var STUDENT_CODE = (function(){
+  try{ var m = /[#&?]code=([^&]+)/.exec(location.hash + location.search);
+       return m ? decodeURIComponent(m[1]) : ""; }catch(e){ return ""; }
+})();
+var TOPIC = "Прямые и плоскости (§2, геометрия 10 класс)";
 
 "use strict";
 var started = Date.now();
@@ -261,137 +480,200 @@ function e(s){return btoa(unescape(encodeURIComponent(s)));}
 function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return s;}}
 
 var TASKS = [
- {id:1,lvl:"база",type:"num",text:"Сколько граней у параллелепипеда?",ans:[e("6")],
-  hints:["Представь коробку.","Две противоположные пары боковых и два основания.","4 + 2."],
-  sol:"<div class='step'>Параллелепипед ограничен шестью параллелограммами: два основания "+
-      "и четыре боковые грани.</div><div class='step'><b>Ответ: 6.</b></div>"},
+ {id:1,blk:"1",lvl:"база",type:"num",text:"Прямые a и b скрещиваются. Сколько у них общих точек?",ans:[e("0")],img:"",
+  hints:["Скрещивающиеся прямые не лежат в одной плоскости.",
+         "Если бы у них была общая точка, через эту точку и две прямые проходила бы плоскость.",
+         "Значит общих точек нет."],
+  sol:"<div class='step'>1. Пусть у скрещивающихся прямых нашлась общая точка.</div>"+
+      "<div class='step'>2. Тогда по теореме 4 через две пересекающиеся прямые прошла бы плоскость — и обе прямые лежали бы в ней.</div>"+
+      "<div class='step'>3. Но скрещивающиеся прямые как раз тем и определяются, что такой плоскости нет.</div>"+
+      "<div class='fx'>Ответ: 0</div>"+
+      "<div class='step mini'>У параллельных прямых общих точек тоже нет. Разница не в числе точек, а в том, есть ли общая плоскость.</div>"},
 
- {id:2,lvl:"база",type:"num",text:"Сколько вершин у параллелепипеда?",ans:[e("8")],
-  hints:["В каждом основании по четыре вершины.","Оснований два.","4 · 2."],
-  sol:"<div class='fx'>4 + 4 = 8</div>"+
-      "<div class='step'>В каждой вершине сходятся ровно три ребра.</div>"+
-      "<div class='step'><b>Ответ: 8.</b></div>"},
+ {id:2,blk:"1",lvl:"база",type:"choice",text:"Как расположены прямые AD и B₁C₁ параллелепипеда ABCDA₁B₁C₁D₁?",
+  options:["параллельны","пересекаются","скрещиваются","совпадают"],
+  ans:[e("параллельны")],img:CF["box"],
+  hints:["Посмотри, чему параллельно ребро AD в основании.",
+         "AD ∥ BC, потому что ABCD — параллелограмм.",
+         "А BC ∥ B₁C₁, потому что BCC₁B₁ — тоже параллелограмм."],
+  sol:"<div class='step'>1. В основании ABCD противоположные стороны параллельны: AD ∥ BC.</div>"+
+      "<div class='step'>2. В боковой грани BCC₁B₁ противоположные стороны параллельны: BC ∥ B₁C₁.</div>"+
+      "<div class='step'>3. Две прямые, параллельные третьей, параллельны между собой.</div>"+
+      "<div class='fx'>AD ∥ B₁C₁</div>"+
+      "<div class='step mini'>А вот AB и B₁C₁ уже скрещиваются: цепочку из параллельностей для них не построить.</div>"},
 
- {id:3,lvl:"база",type:"num",text:"В параллелепипеде ABCDA₁B₁C₁D₁ сколько рёбер пересекаются с ребром CD?",ans:[e("4")],
-  hints:["Пересекаются те рёбра, у которых с CD есть общая вершина.","Общие вершины у CD — это C и D.","В каждой вершине сходятся три ребра, одно из них — само CD."],
-  sol:"<div class='step'>1. Ребро CD имеет две вершины: C и D. В каждой из них сходятся три "+
-      "ребра, одно из которых — само CD.</div>"+
-      "<div class='step'>2. Через C проходят ещё BC и CC₁, через D — ещё AD и DD₁.</div>"+
-      "<div class='fx'>2 + 2 = 4</div>"+
-      "<div class='step'><b>Ответ: 4.</b></div>"},
+ {id:3,blk:"2",lvl:"база",type:"num",text:"Прямая не лежит в плоскости, но и не параллельна ей. Сколько общих точек у прямой и плоскости?",ans:[e("1")],img:"",
+  hints:["Случаев всего три: лежит, пересекает, параллельна.",
+         "Два из трёх условие исключает.",
+         "Остаётся пересечение."],
+  sol:"<div class='step'>1. Прямая не лежит в плоскости — значит не все её точки общие.</div>"+
+      "<div class='step'>2. Прямая не параллельна плоскости — значит общие точки есть.</div>"+
+      "<div class='step'>3. Их не может быть две: по аксиоме 2 тогда вся прямая лежала бы в плоскости.</div>"+
+      "<div class='fx'>Ответ: 1</div>"+
+      "<div class='step mini'>Ровно двух общих точек у прямой и плоскости не бывает никогда — это прямое следствие аксиомы 2.</div>"},
 
- {id:4,lvl:"база",type:"num",text:"Сколько рёбер параллелепипеда ABCDA₁B₁C₁D₁ параллельны ребру CC₁?",ans:[e("3")],
-  hints:["Параллельны CC₁ все боковые рёбра.","Боковых рёбер всего четыре.","Само CC₁ не считаем."],
-  sol:"<div class='step'>1. Все четыре боковых ребра параллелепипеда параллельны между собой: "+
-      "AA₁, BB₁, CC₁ и DD₁.</div>"+
-      "<div class='step'>2. Само ребро CC₁ в ответ не входит, остаются AA₁, BB₁ и DD₁.</div>"+
-      "<div class='step'><b>Ответ: 3.</b></div>"},
+ {id:4,blk:"2",lvl:"средний",type:"choice",text:"Как расположены прямая CC₁ и плоскость грани ABB₁A₁ параллелепипеда?",
+  options:["прямая параллельна плоскости","прямая лежит в плоскости","прямая пересекает плоскость в одной точке","прямая пересекает плоскость по отрезку"],
+  ans:[e("прямая параллельна плоскости")],img:CF["box"],
+  hints:["Найди на чертеже грань ABB₁A₁ и ребро CC₁.",
+         "Есть ли у них хоть одна общая точка?",
+         "Нет общих точек — значит прямая параллельна плоскости."],
+  sol:"<div class='step'>1. Грань ABB₁A₁ — передняя, ребро CC₁ стоит на задней стороне.</div>"+
+      "<div class='step'>2. Общих точек у них нет.</div>"+
+      "<div class='step'>3. Прямая, не имеющая с плоскостью общих точек, параллельна ей.</div>"+
+      "<div class='fx'>CC₁ ∥ (ABB₁A₁)</div>"+
+      "<div class='step mini'>Вариант «пересекает по отрезку» невозможен в принципе: прямая и плоскость не могут иметь ровно две общие точки, а значит и отрезка.</div>"},
 
- {id:5,lvl:"база",type:"num",text:"Через сколько точек, не лежащих на одной прямой, проходит единственная плоскость?",ans:[e("3")],
-  hints:["Это формулировка аксиомы 1.","Двух точек мало: через прямую проходит бесконечно много плоскостей.","Столько же, сколько вершин у треугольника."],
-  sol:"<div class='step'>1. По аксиоме 1 через три точки, не лежащие на одной прямой, проходит "+
-      "единственная плоскость.</div>"+
-      "<div class='step'>2. Через две точки проходит бесконечно много плоскостей: их все "+
-      "можно «провернуть» вокруг прямой, соединяющей эти точки.</div>"+
-      "<div class='step'><b>Ответ: 3.</b></div>"},
+ {id:5,blk:"3",lvl:"база",type:"num",text:"Две различные плоскости имеют общую точку. Сколько общих прямых у этих плоскостей?",ans:[e("1")],img:"",
+  hints:["Вспомни аксиому 3.",
+         "Из общей точки обязательно появляется общая прямая.",
+         "Двух разных общих прямых быть не может — иначе плоскости совпали бы."],
+  sol:"<div class='step'>1. По аксиоме 3 у плоскостей есть общая прямая, проходящая через эту точку.</div>"+
+      "<div class='step'>2. Если бы общих прямых было две, они пересекались бы, и по теореме 4 через них проходила бы единственная плоскость — плоскости совпали бы.</div>"+
+      "<div class='step'>3. По условию плоскости различны.</div>"+
+      "<div class='fx'>Ответ: 1</div>"+
+      "<div class='step mini'>Отсюда же: две различные плоскости не могут иметь ровно одну общую точку — точка всегда «тянет» за собой прямую.</div>"},
 
- {id:6,lvl:"база",type:"num",text:"Сколько плоскостей проходит через прямую и точку, не лежащую на этой прямой?",ans:[e("1")],
-  hints:["Это теорема 3.","Возьми на прямой две точки — вместе с данной их станет три.","Дальше работает аксиома 1."],
-  sol:"<div class='step'>1. Отметим на прямой две точки. Вместе с данной точкой их три, "+
-      "и на одной прямой они не лежат.</div>"+
-      "<div class='step'>2. По аксиоме 1 через них проходит единственная плоскость, а по "+
-      "аксиоме 2 она содержит и всю прямую.</div>"+
-      "<div class='step'><b>Ответ: 1.</b></div>"},
+ {id:6,blk:"3",lvl:"средний",type:"choice",text:"Как расположены плоскости граней ABB₁A₁ и DCC₁D₁ параллелепипеда?",
+  options:["параллельны","пересекаются по прямой AD","пересекаются по прямой BC","пересекаются по прямой AA₁"],
+  ans:[e("параллельны")],img:CF["box"],
+  hints:["Найди обе грани на чертеже.",
+         "Это противоположные грани параллелепипеда.",
+         "Есть ли у них общие точки?"],
+  sol:"<div class='step'>1. ABB₁A₁ — передняя грань, DCC₁D₁ — задняя.</div>"+
+      "<div class='step'>2. Общих точек у них нет.</div>"+
+      "<div class='fx'>(ABB₁A₁) ∥ (DCC₁D₁)</div>"+
+      "<div class='step mini'>Прямая AD при этом пересекает обе плоскости: она идёт из передней грани в заднюю.</div>"},
 
- {id:7,lvl:"средний",type:"num",text:"Сколько рёбер параллелепипеда ABCDA₁B₁C₁D₁ скрещиваются с ребром AD?",ans:[e("4")],
-  hints:["Всего рёбер 12. Вычти само AD, пересекающиеся с ним и параллельные ему.",
-         "С AD пересекаются AB, DC, AA₁, DD₁ — четыре штуки.",
-         "Параллельны AD рёбра BC, A₁D₁, B₁C₁ — три штуки."],
-  sol:"<div class='step'>1. Всего рёбер 12.</div>"+
-      "<div class='step'>2. Пересекаются с AD: AB, DC, AA₁, DD₁ — четыре.</div>"+
-      "<div class='step'>3. Параллельны AD: BC, A₁D₁, B₁C₁ — три.</div>"+
-      "<div class='fx'>12 − 1 − 4 − 3 = 4</div>"+
-      "<div class='step'>4. Это рёбра BB₁, CC₁, A₁B₁ и D₁C₁: с AD они не пересекаются, "+
-      "и общей плоскости у них нет.</div>"+
-      "<div class='step'><b>Ответ: 4.</b></div>"},
+ {id:7,blk:"4",lvl:"база",type:"num",text:"Сколько плоскостей проходит через три точки, не лежащие на одной прямой?",ans:[e("1")],img:"",
+  hints:["Это прямая формулировка одной из аксиом.",
+         "Аксиома 1.",
+         "Плоскость единственная."],
+  sol:"<div class='step'>По аксиоме 1 через три точки, не лежащие на одной прямой, проходит единственная плоскость.</div>"+
+      "<div class='fx'>Ответ: 1</div>"+
+      "<div class='step mini'>Слова «не лежащие на одной прямой» здесь главные: без них ответ был бы совсем другим.</div>"},
 
- {id:8,lvl:"средний",type:"num",text:"Сколько граней параллелепипеда ABCDA₁B₁C₁D₁ параллельны прямой CC₁?",ans:[e("2")],
-  hints:["Грань параллельна прямой, если у них нет общих точек.",
-         "Грани BCC₁B₁ и DCC₁D₁ содержат CC₁ — они не считаются.",
-         "Основания прямую CC₁ пересекают."],
-  sol:"<div class='step'>1. Грани BCC₁B₁ и DCC₁D₁ содержат ребро CC₁ целиком — параллельными "+
-      "они не считаются.</div>"+
-      "<div class='step'>2. Основания ABCD и A₁B₁C₁D₁ пересекают прямую CC₁ в точках C и C₁.</div>"+
-      "<div class='step'>3. Остаются грани ABB₁A₁ и ADD₁A₁: с прямой CC₁ у них нет общих точек.</div>"+
-      "<div class='step'><b>Ответ: 2.</b></div>"},
+ {id:8,blk:"4",lvl:"средний",type:"choice",text:"Сколько плоскостей проходит через три точки, лежащие на одной прямой?",
+  options:["бесконечно много","ровно одна","ни одной","ровно две"],
+  ans:[e("бесконечно много")],img:"",
+  hints:["Аксиома 1 здесь не работает: её условие нарушено.",
+         "Через прямую и точку вне её проходит плоскость.",
+         "Точек вне прямой бесконечно много."],
+  sol:"<div class='step'>1. Все три точки лежат на одной прямой l.</div>"+
+      "<div class='step'>2. Возьмём любую точку вне l. По теореме 3 через прямую и эту точку проходит плоскость, и она содержит все три точки.</div>"+
+      "<div class='step'>3. Точек вне прямой бесконечно много, и плоскости получаются разные.</div>"+
+      "<div class='fx'>Ответ: бесконечно много</div>"+
+      "<div class='step mini'>Наглядно: страницы раскрытой книги — это разные плоскости, проходящие через одну и ту же прямую корешка.</div>"},
 
- {id:9,lvl:"средний",type:"num",text:"В треугольной призме ABCA₁B₁C₁ сколько рёбер скрещиваются с боковым ребром AA₁?",ans:[e("2")],
-  hints:["У треугольной призмы девять рёбер.",
-         "С AA₁ пересекаются AB, AC, A₁B₁, A₁C₁ — четыре.",
-         "Параллельны AA₁ рёбра BB₁ и CC₁ — два."],
-  sol:"<div class='step'>1. Всего рёбер 9: по три в каждом основании и три боковых.</div>"+
-      "<div class='step'>2. Пересекаются с AA₁: AB, AC, A₁B₁, A₁C₁ — четыре.</div>"+
-      "<div class='step'>3. Параллельны AA₁: BB₁ и CC₁ — два.</div>"+
-      "<div class='fx'>9 − 1 − 4 − 2 = 2</div>"+
-      "<div class='step'>4. Скрещиваются с AA₁ рёбра BC и B₁C₁.</div>"+
-      "<div class='step'><b>Ответ: 2.</b></div>"},
+ {id:9,blk:"4",lvl:"база",type:"num",text:"Сколько ножек достаточно табурету, чтобы он при любой их длине стоял, не качаясь?",ans:[e("3")],img:"",
+  hints:["Концы ножек — это точки, пол — плоскость.",
+         "Какая аксиома говорит про три точки?",
+         "Через три точки проходит плоскость — всегда."],
+  sol:"<div class='step'>1. Концы трёх ножек — три точки. По аксиоме 1 через них проходит плоскость.</div>"+
+      "<div class='step'>2. Значит три конца всегда лежат в одной плоскости — в плоскости пола.</div>"+
+      "<div class='step'>3. Четвёртая точка в общем случае в эту плоскость не попадает, и четвёртая ножка повисает.</div>"+
+      "<div class='fx'>Ответ: 3</div>"+
+      "<div class='step mini'>По той же причине штатив фотоаппарата делают трёхногим.</div>"},
 
- {id:10,lvl:"средний",type:"num",text:"Даны четыре точки, никакие три из которых не лежат на одной прямой и которые не лежат в одной плоскости. Сколько различных плоскостей они задают?",ans:[e("4")],
-  hints:["Плоскость задаётся тройкой точек (аксиома 1).",
-         "Сосчитай, сколькими способами из четырёх точек можно выбрать три.",
-         "Каждый раз одна точка остаётся лишней — вариантов столько же, сколько точек."],
-  sol:"<div class='step'>1. По аксиоме 1 каждая тройка точек задаёт свою плоскость.</div>"+
-      "<div class='step'>2. Выбрать тройку из четырёх точек — то же самое, что выбрать ту "+
-      "единственную точку, которая останется лишней. Значит вариантов 4.</div>"+
-      "<div class='step'>3. Это в точности четыре грани треугольной пирамиды с вершинами "+
-      "в этих точках.</div>"+
-      "<div class='step'><b>Ответ: 4.</b></div>"},
+ {id:10,blk:"5",lvl:"средний",type:"num",text:"Сколько плоскостей проходит через прямую и точку, не лежащую на этой прямой?",ans:[e("1")],img:"",
+  hints:["Это теорема 3.",
+         "Возьми на прямой две точки — вместе с данной получится три точки не на одной прямой.",
+         "Дальше работает аксиома 1."],
+  sol:"<div class='step'>1. Возьмём на прямой l две точки B и C. Точка A на l не лежит.</div>"+
+      "<div class='step'>2. Точки A, B, C не лежат на одной прямой — по аксиоме 1 через них проходит единственная плоскость α.</div>"+
+      "<div class='step'>3. Две точки прямой l лежат в α, значит по аксиоме 2 вся прямая l лежит в α.</div>"+
+      "<div class='fx'>Ответ: 1</div>"+
+      "<div class='step mini'>Если же точку взять на самой прямой, плоскостей снова станет бесконечно много.</div>"},
 
- {id:11,lvl:"средний",type:"num",text:"Три плоскости попарно пересекаются. Какое наибольшее число различных прямых при этом может получиться?",ans:[e("3")],
-  hints:["Пар плоскостей всего три.","Каждая пара даёт ровно одну линию пересечения.",
-         "Линии могут и совпасть — но вопрос про наибольшее число."],
-  sol:"<div class='step'>1. Пар плоскостей три: первая со второй, первая с третьей, "+
-      "вторая с третьей.</div>"+
-      "<div class='step'>2. Каждая пара по аксиоме 3 даёт ровно одну прямую.</div>"+
-      "<div class='step'>3. Если все три прямые различны, их получается три — так устроены, "+
-      "например, три грани параллелепипеда, сходящиеся в одной вершине. Если же все три "+
-      "плоскости проходят через одну прямую, линия всего одна.</div>"+
-      "<div class='step'><b>Ответ: 3.</b></div>"},
+ {id:11,blk:"5",lvl:"средний",type:"choice",text:"Что из перечисленного НЕ задаёт единственную плоскость?",
+  options:["три точки, лежащие на одной прямой","три точки, не лежащие на одной прямой","прямая и точка вне её","две пересекающиеся прямые"],
+  ans:[e("три точки, лежащие на одной прямой")],img:"",
+  hints:["Три варианта — это аксиома 1 и теоремы 3 и 4.",
+         "Один вариант ломает условие аксиомы 1.",
+         "Через прямую проходит бесконечно много плоскостей."],
+  sol:"<div class='step'>Три точки не на одной прямой — аксиома 1. Прямая и точка вне её — теорема 3. Две пересекающиеся прямые — теорема 4.</div>"+
+      "<div class='step'>Остаётся первый вариант: три точки на одной прямой задают бесконечно много плоскостей.</div>"+
+      "<div class='fx'>Ответ: три точки, лежащие на одной прямой</div>"+
+      "<div class='step mini'>Две скрещивающиеся прямые тоже не задают плоскость — но по другой причине: такой плоскости нет вовсе.</div>"},
 
- {id:12,lvl:"посложнее",type:"num",text:"Даны пять точек, никакие три из которых не лежат на одной прямой. Сколько различных прямых они задают?",ans:[e("10")],
-  hints:["Каждая пара точек задаёт свою прямую.","Из первой точки выходят четыре прямые, из второй — три новые.",
-         "4 + 3 + 2 + 1."],
-  sol:"<div class='step'>1. Прямая задаётся парой точек, и все пары дают разные прямые: "+
-      "иначе три точки оказались бы на одной прямой.</div>"+
-      "<div class='fx'>4 + 3 + 2 + 1 = 10</div>"+
-      "<div class='step'>2. Считали так: от первой точки четыре прямые к остальным, от второй "+
-      "три новые, от третьей две, от четвёртой одна.</div>"+
-      "<div class='step'><b>Ответ: 10.</b></div>"},
+ {id:12,blk:"5",lvl:"сложный",type:"num",text:"Точки A, B, C, D не лежат в одной плоскости, и никакие три из них не лежат на одной прямой. Сколько различных плоскостей они задают?",ans:[e("4")],img:"",
+  hints:["Каждая плоскость определяется тройкой точек.",
+         "Выпиши все тройки: ABC, ABD, ACD, BCD.",
+         "Проверь, что все четыре плоскости разные."],
+  sol:"<div class='step'>1. Плоскость задаётся тремя точками, не лежащими на одной прямой, — по условию любая тройка годится.</div>"+
+      "<div class='step'>2. Троек из четырёх точек ровно четыре: ABC, ABD, ACD, BCD.</div>"+
+      "<div class='step'>3. Плоскости различны: совпади хоть две, все четыре точки оказались бы в одной плоскости.</div>"+
+      "<div class='fx'>Ответ: 4</div>"+
+      "<div class='step mini'>Это вершины треугольной пирамиды: четыре точки — четыре грани.</div>"},
 
- {id:13,lvl:"посложнее",type:"num",text:"В правильной четырёхугольной пирамиде SABCD сколько рёбер скрещиваются с ребром AB?",ans:[e("2")],
-  hints:["У этой пирамиды восемь рёбер: четыре в основании и четыре боковых.",
-         "С AB пересекаются AD, BC, SA, SB — четыре.",
-         "Параллельно AB только ребро CD."],
-  sol:"<div class='step'>1. Всего рёбер 8: AB, BC, CD, DA, SA, SB, SC, SD.</div>"+
-      "<div class='step'>2. Пересекаются с AB: AD и BC (по вершинам A и B), а также боковые "+
-      "SA и SB — четыре.</div>"+
-      "<div class='step'>3. Параллельно AB ребро CD: основание — квадрат.</div>"+
-      "<div class='fx'>8 − 1 − 4 − 1 = 2</div>"+
-      "<div class='step'>4. Скрещиваются с AB рёбра SC и SD: общих точек с AB нет, "+
-      "и общей плоскости тоже нет.</div>"+
-      "<div class='step'><b>Ответ: 2.</b></div>"},
+ {id:13,blk:"6",lvl:"средний",type:"choice",text:"По какой прямой пересекаются плоскости ABB₁ и BCC₁ параллелепипеда?",
+  options:["BB₁","AB","BC","B₁C₁"],
+  ans:[e("BB₁")],img:CF["box"],
+  hints:["Ищи две точки, которые принадлежат обеим плоскостям.",
+         "Точка B названа в обеих записях.",
+         "Точка B₁ тоже лежит и в грани ABB₁A₁, и в грани BCC₁B₁."],
+  sol:"<div class='step'>1. Плоскость ABB₁ — это плоскость грани ABB₁A₁, плоскость BCC₁ — грани BCC₁B₁.</div>"+
+      "<div class='step'>2. Общие точки: B и B₁.</div>"+
+      "<div class='step'>3. Прямая через две общие точки и есть линия пересечения.</div>"+
+      "<div class='fx'>(ABB₁) ∩ (BCC₁) = BB₁</div>"+
+      "<div class='step mini'>Прямая AB здесь не подходит: точка A не принадлежит грани BCC₁B₁.</div>"},
 
- {id:14,lvl:"посложнее",type:"num",text:"Измерения прямоугольного параллелепипеда равны 3, 4 и 12. Найди длину его диагонали.",ans:[e("13")],
-  hints:["Сначала найди диагональ основания по теореме Пифагора.",
-         "Диагональ основания: √(3² + 4²) = 5.",
-         "Теперь снова Пифагор: диагональ основания и боковое ребро — катеты."],
-  sol:"<div class='step'>1. Диагональ основания: d = √(3² + 4²) = √25 = 5.</div>"+
-      "<div class='step'>2. Диагональ параллелепипеда, диагональ основания и боковое ребро "+
-      "образуют прямоугольный треугольник — здесь и работают аксиомы: все три отрезка лежат "+
-      "в одной плоскости диагонального сечения.</div>"+
-      "<div class='fx'>D = √(5² + 12²) = √169 = 13</div>"+
-      "<div class='step'>3. Общая формула: D = √(a² + b² + c²) = √(9 + 16 + 144) = 13.</div>"+
-      "<div class='step'><b>Ответ: 13.</b></div>"}
+ {id:14,blk:"6",lvl:"средний",type:"choice",text:"По какой прямой пересекаются плоскость основания ABC и плоскость боковой грани SBC пирамиды SABCD?",
+  options:["BC","AB","SB","SC"],
+  ans:[e("BC")],img:CF["pyr"],
+  hints:["Какие точки названы и там, и там?",
+         "B и C входят в обе записи.",
+         "Значит линия пересечения проходит через B и C."],
+  sol:"<div class='step'>1. Точки B и C принадлежат и основанию, и боковой грани SBC.</div>"+
+      "<div class='step'>2. Двух общих точек достаточно.</div>"+
+      "<div class='fx'>(ABC) ∩ (SBC) = BC</div>"+
+      "<div class='step mini'>Вершина S основанию не принадлежит, поэтому прямые SB и SC линией пересечения быть не могут.</div>"},
+
+ {id:15,blk:"6",lvl:"сложный",type:"num",text:"Каждые две из трёх прямых пересекаются, причём все три прямые не лежат в одной плоскости. Сколько точек пересечения у них получается?",ans:[e("1")],img:"",
+  hints:["Допусти, что точки пересечения разные, и посмотри, что получится.",
+         "Две пересекающиеся прямые задают плоскость — по теореме 4.",
+         "Если третья прямая пересекает обе в разных точках, она тоже попадает в эту плоскость."],
+  sol:"<div class='step'>1. Прямые a и b пересекаются, значит по теореме 4 задают плоскость α.</div>"+
+      "<div class='step'>2. Пусть прямая c пересекает a в точке M, а b — в точке N, и M ≠ N.</div>"+
+      "<div class='step'>3. Тогда M ∈ α и N ∈ α, и по аксиоме 2 вся прямая c лежит в α — все три прямые в одной плоскости, что противоречит условию.</div>"+
+      "<div class='step'>4. Значит M = N: все три прямые проходят через одну точку.</div>"+
+      "<div class='fx'>Ответ: 1</div>"+
+      "<div class='step mini'>Если бы прямые лежали в одной плоскости, точек могло быть три — как у сторон треугольника.</div>"},
+
+ {id:16,blk:"7",lvl:"средний",type:"choice",text:"По какой прямой плоскость AB₁C пересекает плоскость основания ABC параллелепипеда?",
+  options:["AC","AB","BC","B₁C"],
+  ans:[e("AC")],img:CF["boxcut"],
+  hints:["Какие из точек A, B₁, C лежат в основании?",
+         "A и C лежат, B₁ — нет.",
+         "Две общие точки уже есть."],
+  sol:"<div class='step'>1. Точки A и C принадлежат основанию и названы в плоскости AB₁C.</div>"+
+      "<div class='step'>2. Точка B₁ основанию не принадлежит — она на верхней грани.</div>"+
+      "<div class='step'>3. Двух общих точек хватает.</div>"+
+      "<div class='fx'>(AB₁C) ∩ (ABC) = AC</div>"+
+      "<div class='step mini'>На чертеже линия AC показана пунктиром: она проходит внутри параллелепипеда по диагонали основания.</div>"},
+
+ {id:17,blk:"7",lvl:"средний",type:"num",text:"Четыре точки расположены так, что никакие три из них не лежат на одной прямой. Сколько различных прямых проходит через пары этих точек?",ans:[e("6")],img:"",
+  hints:["Каждая прямая определяется парой точек.",
+         "Выпиши все пары: AB, AC, AD, BC, BD, CD.",
+         "Все прямые различны, потому что никакие три точки не лежат на одной прямой."],
+  sol:"<div class='step'>1. Через каждые две точки проходит единственная прямая.</div>"+
+      "<div class='step'>2. Пар из четырёх точек шесть: AB, AC, AD, BC, BD, CD.</div>"+
+      "<div class='step'>3. Совпасть две из этих прямых не могут: иначе три точки оказались бы на одной прямой.</div>"+
+      "<div class='fx'>Ответ: 6</div>"+
+      "<div class='step mini'>Это рёбра треугольной пирамиды: четыре вершины — шесть рёбер.</div>"},
+
+ {id:18,blk:"7",lvl:"сложный",type:"choice",text:"Точки P, Q, R лежат на рёбрах SA, SC и BC пирамиды SABCD. С чего начинают построение линии пересечения плоскости PQR с плоскостью основания ABC?",
+  options:["продлевают PQ и AC до их точки пересечения","соединяют P и R отрезком","проводят прямую через S и R","продлевают SQ и AB до пересечения"],
+  ans:[e("продлевают PQ и AC до их точки пересечения")],img:CF["pyrcut"],
+  hints:["Одна общая точка уже есть: R лежит на ребре BC, то есть в основании.",
+         "Нужна вторая общая точка. Ищи её там, где две прямые лежат в одной вспомогательной плоскости.",
+         "Прямые PQ и AC обе лежат в плоскости SAC."],
+  sol:"<div class='step'>1. Точка R лежит на BC, значит принадлежит и плоскости PQR, и основанию — это первая общая точка.</div>"+
+      "<div class='step'>2. Точки P и Q лежат на рёбрах SA и SC, поэтому прямая PQ лежит в плоскости SAC. Прямая AC лежит в той же плоскости SAC.</div>"+
+      "<div class='step'>3. Две прямые одной плоскости пересекаются — продлив PQ и AC, получаем точку X.</div>"+
+      "<div class='step'>4. X ∈ PQ ⊂ (PQR) и X ∈ AC ⊂ (ABC) — это вторая общая точка.</div>"+
+      "<div class='fx'>(PQR) ∩ (ABC) = XR</div>"+
+      "<div class='step mini'>Соединять P и R бессмысленно: P не лежит в основании, и прямая PR линией пересечения не является. Весь приём держится на выборе вспомогательной плоскости — здесь SAC.</div>"}
 ];
 
 /* ---------- разбор ответа ---------- */
@@ -428,7 +710,10 @@ function same(given, right, tol){
 
 /* ---------- отрисовка ---------- */
 var state = {};
-var box = document.getElementById("tasks");
+function boxOf(t){
+  return document.getElementById("tasks" + (t.blk || "")) ||
+         document.getElementById("tasks");
+}
 
 TASKS.forEach(function(t){
   state[t.id] = {tries:0, hints:0, done:false, ok:false, given:"", sel:null};
@@ -439,7 +724,7 @@ TASKS.forEach(function(t){
   if(t.img){ body += '<div class="fig">'+t.img+'</div>'; }
   if(t.type === "choice"){
     body += '<div class="opts">'+t.options.map(function(o,i){
-      return '<label class="opt" data-v="'+o+'"><input type="radio" name="q'+t.id+'" value="'+o+'"> '+o+'</label>';
+      return '<label class="opt" data-v="'+o+'"><input type="radio" name="q'+t.id+'" value="'+o+'"> '+((t.optionsHtml && t.optionsHtml[i]) || o)+'</label>';
     }).join("")+'</div>';
   } else {
     body += '<div class="keys">'+
@@ -453,7 +738,7 @@ TASKS.forEach(function(t){
           '<button class="sm hnt">Подсказка</button></div>'+
           '<div class="hints"></div><div class="verdict"></div><div class="sol"></div>';
   el.innerHTML = body;
-  box.appendChild(el);
+  boxOf(t).appendChild(el);
 
   el.querySelectorAll(".key").forEach(function(b){
     b.addEventListener("click", function(){
@@ -493,7 +778,7 @@ function hint(id){
   }
   var h = document.createElement("div");
   h.className = "hint";
-  h.textContent = "Подсказка " + (s.hints+1) + ": " + t.hints[s.hints];
+  h.innerHTML = "Подсказка " + (s.hints+1) + ": " + t.hints[s.hints];
   host.appendChild(h);
   s.hints++;
 }
@@ -595,7 +880,7 @@ function drawThumbs(){
 }
 
 /* ---------- отчёт ---------- */
-var ENDPOINT = "https://script.google.com/macros/s/AKfycbztH9c-wQuKC7pSfD8AcFfnOcGpSHxoeqovulmvLMp9W23SgFx9dDQ2JTlWcIJDMN6W/exec";
+var ENDPOINT = "https://script.google.com/macros/s/AKfycbwqIhgBtFnoUik3N1Lh_YRhNeEFAjmXWSxBNoX1a_Yxu-2dEKHFwo4Dd5Ch9UTOHH-X/exec";
 var SECRET = "artteach2026";
 function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 function buildReport(){
@@ -603,7 +888,7 @@ function buildReport(){
   var now = new Date();
   var mins = Math.max(1, Math.round((Date.now()-started)/60000));
   var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
-  var data = {tип:"дз", предмет:"математика", тема:"Прямые и плоскости (геометрия, 10 класс)",
+  var data = {tип:"дз", предмет:"математика", тема:"Прямые и плоскости (§2, геометрия 10 класс)",
     ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
     верно:okN, всего:TASKS.length, задачи:[]};
   var rows = TASKS.map(function(t){
@@ -629,7 +914,7 @@ function buildReport(){
     "figure{margin:14px 0}img{max-width:100%;border:1px solid #dfe3ea;border-radius:8px}"+
     "figcaption{color:#5b6270;font-size:14px;margin-top:4px}</style></head><body>"+
     "<h1>Отчёт по домашнему заданию</h1>"+
-    "<div class='m'>Тема: прямые и плоскости · геометрия, 10 класс</div>"+
+    "<div class='m'>Тема: прямые и плоскости в пространстве · §2, геометрия 10 класс</div>"+
     "<div class='m'>Ученик: <b>"+esc(name)+"</b> · сдано: "+esc(now.toLocaleString("ru-RU"))+
     " · время работы: около "+mins+" мин</div>"+
     "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)</h2>"+
@@ -642,6 +927,8 @@ function buildReport(){
   return {
     html: html,
     name: name,
+    ok: okN,
+    total: TASKS.length,
     file: "Отчёт_Прямые_и_плоскости_"+name.replace(/\s+/g,"_")+"_"+stamp+".html",
     caption: name+" · прямые и плоскости · геометрия 10 класс · "+okN+" из "+TASKS.length+
              " ("+Math.round(okN/TASKS.length*100)+"%)"
@@ -657,6 +944,11 @@ document.getElementById("send").addEventListener("click", function(){
   note.textContent = "Отправляю…";
   var payload = {
     secret: SECRET,
+    code: STUDENT_CODE,
+    student: r.name,
+    topic: TOPIC,
+    ok: r.ok,
+    total: r.total,
     name: r.file,
     caption: r.caption,
     file: btoa(unescape(encodeURIComponent(r.html)))
@@ -684,249 +976,126 @@ document.getElementById("report").addEventListener("click", function(){
 });
 
 
-/* ============ универсальный интерактивный 3D-чертёж ============ */
-window.FIG3D = function(id, sp){
-  var svg=document.getElementById(id);
-  if(!svg || !svg.addEventListener) return;
-  var cap=document.getElementById(id+"cap"), bar=document.getElementById(id+"bar");
-  var W=460, HH=274, CX=230, CY=136, SC=55, DD=7.6;
-  var V=sp.V, F=sp.F, E=sp.E, EF=sp.EF, SG=sp.segs||[];
-  var AMB="#ffd79a", AMB2="#a8620d", RED="#b3261e", ACC="#2f6bd8", INK="#15181e";
-  var yaw=sp.yaw, pitch=sp.pitch, active=sp.start;
-  var DN={face:"грань", edge:"ребро", vert:"вершина"};
+/* ---------- движок тренажёров ---------- */
+function makeTrainer(id, items){
+  var q=document.getElementById(id+"q"), f=document.getElementById(id+"f"),
+      a=document.getElementById(id+"a"), m=document.getElementById(id+"m"),
+      b=document.getElementById(id+"b"), sc=document.getElementById(id+"s");
+  var order=[], perm=[], i=0, ok=0, answered=false;
 
-  function segByKey(k){ for(var i=0;i<SG.length;i++){ if(SG[i].key===k) return SG[i]; } return null; }
-  function nameOf(k){
-    if(sp.names[k]) return sp.names[k];
-    var s=segByKey(k); if(s) return s.name||k;
-    return DN[k.split(":")[0]]||k;
+  function shuffle(n){
+    var arr=[], k, j, t;
+    for(k=0;k<n;k++) arr.push(k);
+    for(k=arr.length-1;k>0;k--){ j=Math.floor(Math.random()*(k+1)); t=arr[k]; arr[k]=arr[j]; arr[j]=t; }
+    return arr;
   }
-  function textOf(k){
-    if(sp.texts[k]) return sp.texts[k];
-    var s=segByKey(k); if(s&&s.text) return s.text;
-    return sp.texts[k.split(":")[0]]||"";
+  function norm(s){
+    return String(s).trim().toLowerCase().replace(/\s+/g,"").replace(/−/g,"-").replace(/,/g,".");
   }
-  function colOf(k){
-    var t=k.split(":")[0], i=parseInt(k.split(":")[1],10);
-    if(t==="face") return AMB2;
-    if(t==="edge") return (sp.hi.edge&&sp.hi.edge[i])||RED;
-    if(t==="vert") return (sp.hi.vert&&sp.hi.vert[i])||RED;
-    var s=segByKey(k); return s?s.c:ACC;
+  function same(x, y){
+    var p=parseFloat(norm(x)), r=parseFloat(norm(y));
+    if(isFinite(p) && isFinite(r)) return Math.abs(p-r) < 1e-9;
+    return norm(x) === norm(y);
+  }
+  function score(){
+    sc.textContent = "вопрос " + Math.min(i + 1, items.length) + " из " + items.length +
+                     " · верно " + ok;
   }
 
-  function rotp(p){
-    var cy=Math.cos(yaw), sy=Math.sin(yaw), cx=Math.cos(pitch), sx=Math.sin(pitch);
-    var x=p[0]*cy+p[2]*sy, z=-p[0]*sy+p[2]*cy, y=p[1];
-    return [x, y*cx-z*sx, y*sx+z*cx];
-  }
-  function pr(q){ var k=DD/(DD-q[2]); return [CX+q[0]*k*SC, CY-q[1]*k*SC]; }
-  function nrm(f,R){
-    var a=R[f[0]], b=R[f[1]], c=R[f[2]];
-    var u=[b[0]-a[0],b[1]-a[1],b[2]-a[2]], v=[c[0]-a[0],c[1]-a[1],c[2]-a[2]];
-    var n=[u[1]*v[2]-u[2]*v[1], u[2]*v[0]-u[0]*v[2], u[0]*v[1]-u[1]*v[0]];
-    var s=[0,0,0], k;
-    for(k=0;k<f.length;k++){ s[0]+=R[f[k]][0]; s[1]+=R[f[k]][1]; s[2]+=R[f[k]][2]; }
-    if(n[0]*s[0]+n[1]*s[1]+n[2]*s[2]<0){ n=[-n[0],-n[1],-n[2]]; }
-    var L=Math.sqrt(n[0]*n[0]+n[1]*n[1]+n[2]*n[2])||1;
-    return [n[0]/L,n[1]/L,n[2]/L];
-  }
-  function shade(n){
-    var t=0.30*n[0]+0.55*n[1]+0.78*n[2], l=0.50+0.50*Math.max(0,t);
-    return "rgb("+Math.round(255-50*l)+","+Math.round(255-33*l)+","+Math.round(255-8*l)+")";
-  }
-  function poly(f,Q){
-    var s=[],k; for(k=0;k<f.length;k++){ s.push(Q[f[k]][0].toFixed(1)+","+Q[f[k]][1].toFixed(1)); }
-    return s.join(" ");
-  }
-  function line(a,b,c,w,d,extra){
-    return '<line x1="'+a[0].toFixed(1)+'" y1="'+a[1].toFixed(1)+'" x2="'+b[0].toFixed(1)+'" y2="'+b[1].toFixed(1)+
-      '" stroke="'+c+'" stroke-width="'+w+'" stroke-linecap="round"'+(d?' stroke-dasharray="7 6"':'')+
-      (extra||"")+'/>';
+  function finish(){
+    q.innerHTML=""; f.innerHTML=""; a.innerHTML=""; m.innerHTML="";
+    var pct=Math.round(ok/items.length*100);
+    var word = pct===100 ? "Всё верно — тема закрыта." :
+               pct>=70 ? "Хорошо, но пару мест стоит перечитать." :
+               "Стоит вернуться к теории и пройти ещё раз.";
+    b.innerHTML='<div class="trdone" style="flex:1 1 100%">'+ok+" из "+items.length+
+      " ("+pct+" %) · "+word+'</div><button type="button" class="pri" data-go="1">Пройти заново</button>';
+    sc.textContent="готово";
   }
 
-  function draw(){
-    var R=[],Q=[],k,m;
-    for(k=0;k<V.length;k++){ R.push(rotp(V[k])); Q.push(pr(R[k])); }
-    var N=[],vis=[];
-    for(k=0;k<F.length;k++){ N.push(nrm(F[k],R)); vis.push(N[k][2]>0.02); }
-    var ord=[];
-    for(k=0;k<F.length;k++){
-      var z=0; for(m=0;m<F[k].length;m++){ z+=R[F[k][m]][2]; }
-      ord.push({i:k,z:z/F[k].length});
-    }
-    ord.sort(function(a,b){return a.z-b.z;});
-
-    var s='<rect x="0" y="0" width="'+W+'" height="'+HH+'" rx="12" fill="#ffffff"/>';
-    for(k=0;k<ord.length;k++){
-      var fi=ord[k].i, key="face:"+fi;
-      var fill = (key===active) ? AMB : ((sp.hi.face && sp.hi.face[fi]) || shade(N[fi]));
-      s+='<polygon points="'+poly(F[fi],Q)+'" fill="'+fill+'" stroke="none"/>';
-    }
-    for(k=0;k<E.length;k++){
-      var v=false;
-      for(m=0;m<EF[k].length;m++){ if(vis[EF[k][m]]) v=true; }
-      var hc=(sp.hi.edge&&sp.hi.edge[k])||"", ck=hc||INK, wk=hc?5:2.4;
-      if("edge:"+k===active){ ck=hc||RED; wk=hc?7:6.5; }
-      s+=line(Q[E[k][0]],Q[E[k][1]],ck,wk,!v);
-    }
-    var af=active.indexOf("face:")===0?parseInt(active.slice(5),10):-1;
-    if(af>=0 && !vis[af]){
-      s+='<polygon points="'+poly(F[af],Q)+'" fill="none" stroke="'+AMB2+'" stroke-width="3" stroke-dasharray="8 6"/>';
-    }
-    for(k=0;k<SG.length;k++){
-      var g=SG[k], a=pr(rotp(g.a)), b=pr(rotp(g.b));
-      var on=(active===g.key);
-      s+=line(a,b,g.c,(g.w||3)+(on?2.4:0),!!g.dash);
-      if(g.dot!==false){ s+='<circle cx="'+b[0].toFixed(1)+'" cy="'+b[1].toFixed(1)+'" r="'+(on?5:4)+'" fill="'+g.c+'"/>'; }
-      if(g.dot0){ s+='<circle cx="'+a[0].toFixed(1)+'" cy="'+a[1].toFixed(1)+'" r="'+(on?5:4)+'" fill="'+g.c+'"/>'; }
-    }
-    if(sp.hi.vert){
-      for(var vk in sp.hi.vert){
-        var vi=parseInt(vk,10), on2=(active==="vert:"+vi);
-        s+='<circle cx="'+Q[vi][0].toFixed(1)+'" cy="'+Q[vi][1].toFixed(1)+'" r="'+(on2?8:6.5)+'" fill="'+sp.hi.vert[vk]+'"/>';
-      }
-    }
-    if(active.indexOf("vert:")===0){
-      var av=parseInt(active.slice(5),10);
-      s+='<circle cx="'+Q[av][0].toFixed(1)+'" cy="'+Q[av][1].toFixed(1)+'" r="8" fill="'+RED+'"/>';
-    }
-
-    /* буквы вершин и длины */
-    var LB=sp.labels||[];
-    for(k=0;k<LB.length;k++){
-      var L1=LB[k], qx, qy;
-      if(L1.p2){
-        var g1=pr(rotp(L1.p)), g2=pr(rotp(L1.p2));
-        var t0=(L1.at===undefined?0.5:L1.at);
-        var mx1=g1[0]+(g2[0]-g1[0])*t0, my1=g1[1]+(g2[1]-g1[1])*t0;
-        var ddx=g2[0]-g1[0], ddy=g2[1]-g1[1], dl=Math.sqrt(ddx*ddx+ddy*ddy)||1;
-        var nx=-ddy/dl, ny=ddx/dl;
-        if((mx1-CX)*nx+(my1-CY)*ny < 0){ nx=-nx; ny=-ny; }
-        var dd=(L1.d||20);
-        qx=mx1+nx*dd; qy=my1+ny*dd+4;
-      } else {
-        var g0=pr(rotp(L1.p));
-        var wx=g0[0]-CX, wy=g0[1]-CY, wl=Math.sqrt(wx*wx+wy*wy)||1;
-        var d0=(L1.d||21);
-        qx=g0[0]+wx/wl*d0; qy=g0[1]+wy/wl*d0+5;
-      }
-      if(qx<14) qx=14; if(qx>W-14) qx=W-14;
-      if(qy<16) qy=16; if(qy>HH-6) qy=HH-6;
-      s+='<text x="'+qx.toFixed(0)+'" y="'+qy.toFixed(0)+'" font-size="'+(L1.size||16)+
-         '" font-weight="700" fill="'+(L1.c||INK)+'" text-anchor="middle" paint-order="stroke" '+
-         'stroke="#ffffff" stroke-width="4.5">'+L1.t+'</text>';
-    }
-
-    /* подпись активного элемента */
-    var px=0,py=0,t=active.split(":")[0],idx=parseInt(active.split(":")[1],10);
-    if(t==="face"){
-      for(k=0;k<F[idx].length;k++){ px+=Q[F[idx][k]][0]; py+=Q[F[idx][k]][1]; }
-      px/=F[idx].length; py/=F[idx].length;
-    } else if(t==="edge"){
-      px=(Q[E[idx][0]][0]+Q[E[idx][1]][0])/2; py=(Q[E[idx][0]][1]+Q[E[idx][1]][1])/2;
-    } else if(t==="vert"){
-      px=Q[idx][0]; py=Q[idx][1];
+  function show(){
+    answered=false;
+    m.innerHTML=""; b.innerHTML="";
+    var t=items[order[i]];
+    q.innerHTML="<b>"+(i+1)+".</b> "+t.q;
+    f.innerHTML=t.fig || "";
+    f.style.display = t.fig ? "" : "none";
+    if(t.opts){
+      perm = shuffle(t.opts.length);          /* perm[позиция] = номер варианта в банке */
+      var html='<div class="tropts" id="'+id+'o">';
+      for(var k=0;k<perm.length;k++)
+        html+='<button type="button" class="tropt" data-k="'+perm[k]+'">'+t.opts[perm[k]]+'</button>';
+      a.innerHTML = html+"</div>";
+      var box=document.getElementById(id+"o");
+      box.addEventListener("click", function(ev){
+        var el=ev.target; while(el && el!==box && el.className.indexOf("tropt")<0) el=el.parentNode;
+        if(!el || el===box || answered) return;
+        pick(parseInt(el.getAttribute("data-k"),10), box);
+      });
     } else {
-      var g2=segByKey(active);
-      if(g2){ var a2=pr(rotp(g2.a)), b2=pr(rotp(g2.b));
-        px=a2[0]*0.35+b2[0]*0.65; py=a2[1]*0.35+b2[1]*0.65; }
-      else { px=CX; py=CY; }
+      a.innerHTML='<div class="trnum"><span>Ответ:</span>'+
+        '<input type="text" id="'+id+'i" inputmode="text" autocomplete="off" '+
+        'autocorrect="off" spellcheck="false" placeholder="число">'+
+        '<button type="button" class="pri" data-check="1">Проверить</button></div>';
+      var inp=document.getElementById(id+"i");
+      inp.addEventListener("keydown", function(ev){ if(ev.key==="Enter") check(); });
     }
-    var c2=colOf(active), lbl=nameOf(active);
-    var vx=px-CX, vy=py-CY, L=Math.sqrt(vx*vx+vy*vy);
-    if(L<8){ vx=-6; vy=5; L=Math.sqrt(61); }
-    var ux=vx/L, uy=vy/L, pad=(t==="face")?112:76;
-    var tx=CX+ux*(L+pad), ty=CY+uy*(L+pad*0.78)+6;
-    var wpx=lbl.length*10.2+10;
-    if(ux>0){ if(tx>W-8-wpx) tx=W-8-wpx; if(tx<8) tx=8; }
-    else { if(tx<8+wpx) tx=8+wpx; if(tx>W-8) tx=W-8; }
-    if(ty<28) ty=28; if(ty>HH-14) ty=HH-14;
-    s+='<line x1="'+px.toFixed(1)+'" y1="'+py.toFixed(1)+'" x2="'+(tx-(ux>0?8:-8)).toFixed(1)+
-       '" y2="'+(ty-7).toFixed(1)+'" stroke="'+c2+'" stroke-width="1.5" opacity="0.85"/>';
-    s+='<circle cx="'+px.toFixed(1)+'" cy="'+py.toFixed(1)+'" r="3.2" fill="'+c2+'"/>';
-    s+='<text x="'+tx.toFixed(0)+'" y="'+ty.toFixed(0)+'" font-size="18" font-weight="700" fill="'+c2+
-       '" text-anchor="'+(ux>0?"start":"end")+'" paint-order="stroke" stroke="#ffffff" stroke-width="4.5">'+lbl+'</text>';
-
-    /* зоны нажатия */
-    for(k=0;k<F.length;k++){
-      if(!vis[k]) continue;
-      s+='<polygon points="'+poly(F[k],Q)+'" fill="#fff" opacity="0" pointer-events="all" data-k="face:'+k+'"/>';
-    }
-    for(k=0;k<E.length;k++){
-      var v2=false;
-      for(m=0;m<EF[k].length;m++){ if(vis[EF[k][m]]) v2=true; }
-      if(!v2) continue;
-      s+=line(Q[E[k][0]],Q[E[k][1]],"#fff",15,false,' stroke-opacity="0" pointer-events="all" data-k="edge:'+k+'"');
-    }
-    for(k=0;k<SG.length;k++){
-      var g3=SG[k];
-      s+=line(pr(rotp(g3.a)),pr(rotp(g3.b)),"#fff",15,false,' stroke-opacity="0" pointer-events="all" data-k="'+g3.key+'"');
-    }
-    for(k=0;k<V.length;k++){
-      var v3=false;
-      for(m=0;m<F.length;m++){ if(vis[m] && F[m].indexOf(k)>=0) v3=true; }
-      if(!v3) continue;
-      s+='<circle cx="'+Q[k][0].toFixed(1)+'" cy="'+Q[k][1].toFixed(1)+'" r="12" fill="#fff" opacity="0" pointer-events="all" data-k="vert:'+k+'"/>';
-    }
-    svg.innerHTML=s;
+    score();
   }
 
-  var raf=0;
-  function req(){ if(raf) return; raf=requestAnimationFrame(function(){ raf=0; draw(); }); }
-  function pick(k){
-    active=k;
-    if(cap) cap.innerHTML=textOf(k);
-    var bs=bar?bar.querySelectorAll("button[data-k]"):[], i;
-    for(i=0;i<bs.length;i++){ bs[i].className = (bs[i].getAttribute("data-k")===k) ? "on" : ""; }
-    draw();
+  function verdict(good, t){
+    answered=true;
+    if(good) ok++;
+    i++;
+    m.innerHTML='<div class="v '+(good?"ok":"bad")+'">'+(good?"Верно.":"Неверно.")+"</div>"+
+                '<div class="why">'+t.why+"</div>";
+    b.innerHTML = (i<items.length)
+      ? '<button type="button" class="pri" data-next="1">Дальше</button>'
+      : '<button type="button" class="pri" data-next="1">Показать итог</button>';
+    score();
   }
-
-  /* кнопки */
-  if(bar){
-    var html="", i2;
-    for(i2=0;i2<sp.chips.length;i2++){
-      var ch=sp.chips[i2];
-      html+='<button type="button" data-k="'+ch[0]+'"><span class="sw '+(ch[3]||"")+'" style="background:'+ch[2]+'"></span>'+ch[1]+'</button>';
+  function pick(k, box){
+    var t=items[order[i]], good = (k === t.ans);
+    var bs=box.querySelectorAll(".tropt");
+    for(var j=0;j<bs.length;j++){
+      var n=parseInt(bs[j].getAttribute("data-k"),10);
+      if(n===t.ans) bs[j].className="tropt right";
+      else if(n===k) bs[j].className="tropt wrong";
     }
-    html+='<button type="button" data-reset="1">исходный вид</button>';
-    bar.innerHTML=html;
-    bar.addEventListener("click", function(e){
-      var b=e.target; while(b && b!==bar && b.tagName!=="BUTTON"){ b=b.parentNode; }
-      if(!b || b===bar) return;
-      if(b.getAttribute("data-reset")){ yaw=sp.yaw; pitch=sp.pitch; pick(sp.start); return; }
-      var k=b.getAttribute("data-k"); if(k) pick(k);
-    });
+    box.className="tropts done";
+    verdict(good, t);
+  }
+  function check(){
+    if(answered) return;
+    var t=items[order[i]], inp=document.getElementById(id+"i");
+    var v=(inp.value||"").trim();
+    if(!v){ m.innerHTML='<div class="why">Впиши ответ.</div>'; return; }
+    var good = t.ans.some(function(x){ return same(v, x); });
+    inp.disabled=true;
+    if(!good) m.innerHTML="";
+    verdict(good, t);
+    if(!good) m.innerHTML='<div class="v bad">Неверно. Правильный ответ: '+t.ans[0]+".</div>"+
+                          '<div class="why">'+t.why+"</div>";
   }
 
-  var drag=false,lx=0,ly=0,moved=false,pend="";
-  svg.addEventListener("pointerdown", function(e){
-    drag=true; moved=false; lx=e.clientX; ly=e.clientY;
-    pend=(e.target&&e.target.getAttribute)?(e.target.getAttribute("data-k")||""):"";
-    try{ svg.setPointerCapture(e.pointerId); }catch(err){}
-    e.preventDefault();
+  b.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-next")){ if(i<items.length) show(); else finish(); }
+    if(el.getAttribute && el.getAttribute("data-go")){ start(); }
   });
-  svg.addEventListener("pointermove", function(e){
-    if(!drag) return;
-    var dx=e.clientX-lx, dy=e.clientY-ly;
-    if(Math.abs(dx)+Math.abs(dy)>4) moved=true;
-    lx=e.clientX; ly=e.clientY;
-    yaw+=dx*0.011; pitch+=dy*0.011;
-    if(pitch>1.15) pitch=1.15;
-    if(pitch<-1.15) pitch=-1.15;
-    req();
+  a.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-check")) check();
   });
-  svg.addEventListener("pointerup", function(){
-    if(!drag) return; drag=false;
-    if(!moved && pend) pick(pend);
-    pend="";
-  });
-  svg.addEventListener("pointercancel", function(){ drag=false; pend=""; });
 
-  pick(sp.start);
-};
+  function start(){ order=shuffle(items.length); i=0; ok=0; show(); }
+  start();
+}
 
-var SPECS3D = {"dve": {"labels": [{"p": [-1.2110866833868468, -0.7918643699067844, -0.8850248840134649], "t": "A", "size": 16}, {"p": [-1.2110866833868468, 0.7918643699067844, -0.8850248840134649], "t": "A₁", "size": 16}, {"p": [1.2110866833868468, -0.7918643699067844, -0.8850248840134649], "t": "B", "size": 16}, {"p": [1.2110866833868468, 0.7918643699067844, -0.8850248840134649], "t": "B₁", "size": 16}, {"p": [1.2110866833868468, -0.7918643699067844, 0.8850248840134649], "t": "C", "size": 16}, {"p": [1.2110866833868468, 0.7918643699067844, 0.8850248840134649], "t": "C₁", "size": 16}, {"p": [-1.2110866833868468, -0.7918643699067844, 0.8850248840134649], "t": "D", "size": 16}, {"p": [-1.2110866833868468, 0.7918643699067844, 0.8850248840134649], "t": "D₁", "size": 16}], "V": [[-1.2111, -0.7919, -0.885], [1.2111, -0.7919, -0.885], [1.2111, -0.7919, 0.885], [-1.2111, -0.7919, 0.885], [-1.2111, 0.7919, -0.885], [1.2111, 0.7919, -0.885], [1.2111, 0.7919, 0.885], [-1.2111, 0.7919, 0.885]], "F": [[3, 2, 1, 0], [4, 5, 6, 7], [0, 1, 5, 4], [1, 2, 6, 5], [2, 3, 7, 6], [3, 0, 4, 7]], "E": [[0, 1], [1, 2], [2, 3], [3, 0], [4, 5], [5, 6], [6, 7], [7, 4], [0, 4], [1, 5], [2, 6], [3, 7]], "EF": [[0, 2], [0, 3], [0, 4], [0, 5], [1, 2], [1, 3], [1, 4], [1, 5], [2, 5], [2, 3], [3, 4], [4, 5]], "segs": [{"key": "per", "a": [-1.2110866833868468, -0.7918643699067844, -0.8850248840134649], "b": [1.2110866833868468, -0.7918643699067844, -0.8850248840134649], "c": "#b3261e", "w": 3.6, "name": "пересекающиеся", "text": "<b>Пересекающиеся прямые.</b> AB и BC имеют ровно одну общую точку — вершину B. Две пересекающиеся прямые всегда лежат в одной плоскости: через них проходит единственная плоскость (это теорема 4). Здесь такой плоскостью служит плоскость основания ABCD."}, {"key": "per", "a": [1.2110866833868468, -0.7918643699067844, -0.8850248840134649], "b": [1.2110866833868468, -0.7918643699067844, 0.8850248840134649], "c": "#b3261e", "w": 3.6}, {"key": "par", "a": [-1.2110866833868468, -0.7918643699067844, 0.8850248840134649], "b": [-1.2110866833868468, -0.7918643699067844, -0.8850248840134649], "c": "#137a45", "w": 3.6, "name": "параллельные", "text": "<b>Параллельные прямые.</b> AD и B₁C₁ общих точек не имеют, но лежат в одной плоскости — в плоскости ADC₁B₁, которая режет параллелепипед наискось. Именно это отличает параллельные прямые от скрещивающихся: общая плоскость есть."}, {"key": "par", "a": [1.2110866833868468, 0.7918643699067844, -0.8850248840134649], "b": [1.2110866833868468, 0.7918643699067844, 0.8850248840134649], "c": "#137a45", "w": 3.6}, {"key": "skr", "a": [-1.2110866833868468, 0.7918643699067844, -0.8850248840134649], "b": [1.2110866833868468, 0.7918643699067844, -0.8850248840134649], "c": "#7a3fbf", "w": 3.6, "name": "скрещивающиеся", "text": "<b>Скрещивающиеся прямые.</b> A₁B₁ и CC₁ не пересекаются и не параллельны: <i>нет такой плоскости</i>, которой принадлежали бы обе. Это случай, которого нет в планиметрии, — он возможен только в пространстве. Житейский образ: две дороги, одна по эстакаде, другая под ней."}, {"key": "skr", "a": [1.2110866833868468, -0.7918643699067844, 0.8850248840134649], "b": [1.2110866833868468, 0.7918643699067844, 0.8850248840134649], "c": "#7a3fbf", "w": 3.6}], "hi": {}, "names": {}, "texts": {}, "start": "per", "yaw": -0.52, "pitch": 0.3, "chips": [["per", "пересекающиеся", "#b3261e", "ln"], ["par", "параллельные", "#137a45", "ln"], ["skr", "скрещивающиеся", "#7a3fbf", "ln"]]}};
-for (var _k3 in SPECS3D){ FIG3D(_k3, SPECS3D[_k3]); }
+makeTrainer("ts1", [{"q": "Сколько общих точек?<br><span style='font-size:20px'>две пересекающиеся прямые</span>", "fig": "", "opts": ["ровно одну", "ни одной", "бесконечно много"], "ans": 0, "why": "Ровно одна общая точка — это и есть определение."}, {"q": "Сколько общих точек?<br><span style='font-size:20px'>две параллельные прямые</span>", "fig": "", "opts": ["ни одной", "ровно одну", "бесконечно много"], "ans": 0, "why": "Параллельные прямые лежат в одной плоскости и не пересекаются."}, {"q": "Сколько общих точек?<br><span style='font-size:20px'>две скрещивающиеся прямые</span>", "fig": "", "opts": ["ни одной", "ровно одну", "бесконечно много"], "ans": 0, "why": "Общих точек нет — но, в отличие от параллельных, они не лежат в одной плоскости."}, {"q": "Сколько общих точек?<br><span style='font-size:20px'>прямая лежит в плоскости</span>", "fig": "", "opts": ["бесконечно много", "ни одной", "ровно одну"], "ans": 0, "why": "Все точки прямой принадлежат плоскости."}, {"q": "Сколько общих точек?<br><span style='font-size:20px'>прямая пересекает плоскость</span>", "fig": "", "opts": ["ровно одну", "ни одной", "бесконечно много"], "ans": 0, "why": "Ровно одна: будь их две, по аксиоме 2 прямая лежала бы в плоскости."}, {"q": "Сколько общих точек?<br><span style='font-size:20px'>прямая параллельна плоскости</span>", "fig": "", "opts": ["ни одной", "ровно одну", "бесконечно много"], "ans": 0, "why": "Ни одной общей точки — это и есть параллельность прямой и плоскости."}, {"q": "Сколько общих точек?<br><span style='font-size:20px'>две параллельные плоскости</span>", "fig": "", "opts": ["ни одной", "ровно одну", "бесконечно много"], "ans": 0, "why": "У параллельных плоскостей общих точек нет."}, {"q": "Сколько общих точек?<br><span style='font-size:20px'>две пересекающиеся плоскости</span>", "fig": "", "opts": ["бесконечно много", "ни одной", "ровно одну"], "ans": 0, "why": "Все общие точки лежат на одной прямой, и их бесконечно много."}, {"q": "Сколько общих точек?<br><span style='font-size:20px'>прямая AB и плоскость α, если A ∈ α, а B ∉ α</span>", "fig": "", "opts": ["ровно одну", "ни одной", "бесконечно много"], "ans": 0, "why": "Точка A общая. Второй быть не может: иначе вся прямая лежала бы в α, и точка B тоже."}, {"q": "Сколько общих точек?<br><span style='font-size:20px'>две различные плоскости с общей точкой K</span>", "fig": "", "opts": ["бесконечно много", "ни одной", "ровно одну"], "ans": 0, "why": "По аксиоме 3 вместе с точкой K появляется целая общая прямая."}]);
+makeTrainer("ts2", [{"q": "Как расположены прямые <b>AB и BC</b> в параллелепипеде ABCDA₁B₁C₁D₁?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 250\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"250\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"52.0,103.0 184.0,103.0 242.0,67.0 110.0,67.0\" fill=\"#e8f0ff\"/><polygon points=\"52.0,195.0 184.0,195.0 184.0,103.0 52.0,103.0\" fill=\"#dbe6f8\"/><polygon points=\"184.0,195.0 242.0,159.0 242.0,67.0 184.0,103.0\" fill=\"#dbe6f8\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"110.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"184.0\" y2=\"195.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"159.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"103.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"103.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"67.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"110.0\" y1=\"67.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"38\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A</text><text x=\"192\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B</text><text x=\"250\" y=\"170\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C</text><text x=\"94\" y=\"168\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D</text><text x=\"32\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A₁</text><text x=\"192\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B₁</text><text x=\"250\" y=\"66\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C₁</text><text x=\"88\" y=\"64\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D₁</text><text x=\"150\" y=\"240\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">параллелепипед ABCDA₁B₁C₁D₁</text></svg></div>", "opts": ["пересекаются", "параллельны", "скрещиваются"], "ans": 0, "why": "Общая точка B, обе лежат в основании."}, {"q": "Как расположены прямые <b>AB и DC</b> в параллелепипеде ABCDA₁B₁C₁D₁?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 250\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"250\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"52.0,103.0 184.0,103.0 242.0,67.0 110.0,67.0\" fill=\"#e8f0ff\"/><polygon points=\"52.0,195.0 184.0,195.0 184.0,103.0 52.0,103.0\" fill=\"#dbe6f8\"/><polygon points=\"184.0,195.0 242.0,159.0 242.0,67.0 184.0,103.0\" fill=\"#dbe6f8\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"110.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"184.0\" y2=\"195.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"159.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"103.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"103.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"67.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"110.0\" y1=\"67.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"38\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A</text><text x=\"192\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B</text><text x=\"250\" y=\"170\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C</text><text x=\"94\" y=\"168\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D</text><text x=\"32\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A₁</text><text x=\"192\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B₁</text><text x=\"250\" y=\"66\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C₁</text><text x=\"88\" y=\"64\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D₁</text><text x=\"150\" y=\"240\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">параллелепипед ABCDA₁B₁C₁D₁</text></svg></div>", "opts": ["параллельны", "пересекаются", "скрещиваются"], "ans": 0, "why": "ABCD — параллелограмм, противоположные стороны параллельны."}, {"q": "Как расположены прямые <b>AB и CC₁</b> в параллелепипеде ABCDA₁B₁C₁D₁?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 250\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"250\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"52.0,103.0 184.0,103.0 242.0,67.0 110.0,67.0\" fill=\"#e8f0ff\"/><polygon points=\"52.0,195.0 184.0,195.0 184.0,103.0 52.0,103.0\" fill=\"#dbe6f8\"/><polygon points=\"184.0,195.0 242.0,159.0 242.0,67.0 184.0,103.0\" fill=\"#dbe6f8\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"110.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"184.0\" y2=\"195.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"159.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"103.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"103.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"67.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"110.0\" y1=\"67.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"38\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A</text><text x=\"192\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B</text><text x=\"250\" y=\"170\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C</text><text x=\"94\" y=\"168\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D</text><text x=\"32\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A₁</text><text x=\"192\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B₁</text><text x=\"250\" y=\"66\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C₁</text><text x=\"88\" y=\"64\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D₁</text><text x=\"150\" y=\"240\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">параллелепипед ABCDA₁B₁C₁D₁</text></svg></div>", "opts": ["скрещиваются", "пересекаются", "параллельны"], "ans": 0, "why": "Общих точек нет, и одной плоскости для обеих не найти."}, {"q": "Как расположены прямые <b>AA₁ и CC₁</b> в параллелепипеде ABCDA₁B₁C₁D₁?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 250\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"250\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"52.0,103.0 184.0,103.0 242.0,67.0 110.0,67.0\" fill=\"#e8f0ff\"/><polygon points=\"52.0,195.0 184.0,195.0 184.0,103.0 52.0,103.0\" fill=\"#dbe6f8\"/><polygon points=\"184.0,195.0 242.0,159.0 242.0,67.0 184.0,103.0\" fill=\"#dbe6f8\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"110.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"184.0\" y2=\"195.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"159.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"103.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"103.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"67.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"110.0\" y1=\"67.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"38\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A</text><text x=\"192\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B</text><text x=\"250\" y=\"170\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C</text><text x=\"94\" y=\"168\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D</text><text x=\"32\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A₁</text><text x=\"192\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B₁</text><text x=\"250\" y=\"66\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C₁</text><text x=\"88\" y=\"64\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D₁</text><text x=\"150\" y=\"240\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">параллелепипед ABCDA₁B₁C₁D₁</text></svg></div>", "opts": ["параллельны", "пересекаются", "скрещиваются"], "ans": 0, "why": "Боковые рёбра параллелепипеда параллельны между собой."}, {"q": "Как расположены прямые <b>AB и C₁D₁</b> в параллелепипеде ABCDA₁B₁C₁D₁?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 250\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"250\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"52.0,103.0 184.0,103.0 242.0,67.0 110.0,67.0\" fill=\"#e8f0ff\"/><polygon points=\"52.0,195.0 184.0,195.0 184.0,103.0 52.0,103.0\" fill=\"#dbe6f8\"/><polygon points=\"184.0,195.0 242.0,159.0 242.0,67.0 184.0,103.0\" fill=\"#dbe6f8\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"110.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"184.0\" y2=\"195.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"159.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"103.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"103.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"67.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"110.0\" y1=\"67.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"38\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A</text><text x=\"192\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B</text><text x=\"250\" y=\"170\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C</text><text x=\"94\" y=\"168\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D</text><text x=\"32\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A₁</text><text x=\"192\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B₁</text><text x=\"250\" y=\"66\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C₁</text><text x=\"88\" y=\"64\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D₁</text><text x=\"150\" y=\"240\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">параллелепипед ABCDA₁B₁C₁D₁</text></svg></div>", "opts": ["параллельны", "пересекаются", "скрещиваются"], "ans": 0, "why": "AB ∥ DC, а DC ∥ C₁D₁, значит AB ∥ C₁D₁."}, {"q": "Как расположены прямые <b>AB и B₁C₁</b> в параллелепипеде ABCDA₁B₁C₁D₁?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 250\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"250\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"52.0,103.0 184.0,103.0 242.0,67.0 110.0,67.0\" fill=\"#e8f0ff\"/><polygon points=\"52.0,195.0 184.0,195.0 184.0,103.0 52.0,103.0\" fill=\"#dbe6f8\"/><polygon points=\"184.0,195.0 242.0,159.0 242.0,67.0 184.0,103.0\" fill=\"#dbe6f8\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"110.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"184.0\" y2=\"195.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"159.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"103.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"103.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"67.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"110.0\" y1=\"67.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"38\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A</text><text x=\"192\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B</text><text x=\"250\" y=\"170\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C</text><text x=\"94\" y=\"168\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D</text><text x=\"32\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A₁</text><text x=\"192\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B₁</text><text x=\"250\" y=\"66\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C₁</text><text x=\"88\" y=\"64\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D₁</text><text x=\"150\" y=\"240\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">параллелепипед ABCDA₁B₁C₁D₁</text></svg></div>", "opts": ["скрещиваются", "пересекаются", "параллельны"], "ans": 0, "why": "AB лежит в основании, B₁C₁ — в верхней грани; параллельными они не являются."}, {"q": "Как расположены прямые <b>AC и BD</b> в параллелепипеде ABCDA₁B₁C₁D₁?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 250\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"250\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"52.0,103.0 184.0,103.0 242.0,67.0 110.0,67.0\" fill=\"#e8f0ff\"/><polygon points=\"52.0,195.0 184.0,195.0 184.0,103.0 52.0,103.0\" fill=\"#dbe6f8\"/><polygon points=\"184.0,195.0 242.0,159.0 242.0,67.0 184.0,103.0\" fill=\"#dbe6f8\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"110.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"184.0\" y2=\"195.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"159.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"103.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"103.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"67.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"110.0\" y1=\"67.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"38\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A</text><text x=\"192\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B</text><text x=\"250\" y=\"170\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C</text><text x=\"94\" y=\"168\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D</text><text x=\"32\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A₁</text><text x=\"192\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B₁</text><text x=\"250\" y=\"66\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C₁</text><text x=\"88\" y=\"64\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D₁</text><text x=\"150\" y=\"240\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">параллелепипед ABCDA₁B₁C₁D₁</text></svg></div>", "opts": ["пересекаются", "параллельны", "скрещиваются"], "ans": 0, "why": "Это диагонали основания, они пересекаются в его центре."}, {"q": "Как расположены прямые <b>AC и B₁D₁</b> в параллелепипеде ABCDA₁B₁C₁D₁?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 250\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"250\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"52.0,103.0 184.0,103.0 242.0,67.0 110.0,67.0\" fill=\"#e8f0ff\"/><polygon points=\"52.0,195.0 184.0,195.0 184.0,103.0 52.0,103.0\" fill=\"#dbe6f8\"/><polygon points=\"184.0,195.0 242.0,159.0 242.0,67.0 184.0,103.0\" fill=\"#dbe6f8\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"110.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"184.0\" y2=\"195.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"159.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"103.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"103.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"67.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"110.0\" y1=\"67.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"38\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A</text><text x=\"192\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B</text><text x=\"250\" y=\"170\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C</text><text x=\"94\" y=\"168\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D</text><text x=\"32\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A₁</text><text x=\"192\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B₁</text><text x=\"250\" y=\"66\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C₁</text><text x=\"88\" y=\"64\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D₁</text><text x=\"150\" y=\"240\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">параллелепипед ABCDA₁B₁C₁D₁</text></svg></div>", "opts": ["скрещиваются", "пересекаются", "параллельны"], "ans": 0, "why": "AC ∥ A₁C₁, а B₁D₁ — другая диагональ верхней грани; общих точек нет."}, {"q": "Как расположены прямые <b>AA₁ и BC</b> в параллелепипеде ABCDA₁B₁C₁D₁?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 250\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"250\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"52.0,103.0 184.0,103.0 242.0,67.0 110.0,67.0\" fill=\"#e8f0ff\"/><polygon points=\"52.0,195.0 184.0,195.0 184.0,103.0 52.0,103.0\" fill=\"#dbe6f8\"/><polygon points=\"184.0,195.0 242.0,159.0 242.0,67.0 184.0,103.0\" fill=\"#dbe6f8\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"110.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"184.0\" y2=\"195.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"159.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"103.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"103.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"67.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"110.0\" y1=\"67.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"38\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A</text><text x=\"192\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B</text><text x=\"250\" y=\"170\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C</text><text x=\"94\" y=\"168\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D</text><text x=\"32\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A₁</text><text x=\"192\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B₁</text><text x=\"250\" y=\"66\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C₁</text><text x=\"88\" y=\"64\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D₁</text><text x=\"150\" y=\"240\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">параллелепипед ABCDA₁B₁C₁D₁</text></svg></div>", "opts": ["скрещиваются", "пересекаются", "параллельны"], "ans": 0, "why": "Ребро AA₁ идёт вверх из A, а BC лежит в основании и через A не проходит."}, {"q": "Как расположены прямые <b>AD и B₁C₁</b> в параллелепипеде ABCDA₁B₁C₁D₁?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 250\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"250\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"52.0,103.0 184.0,103.0 242.0,67.0 110.0,67.0\" fill=\"#e8f0ff\"/><polygon points=\"52.0,195.0 184.0,195.0 184.0,103.0 52.0,103.0\" fill=\"#dbe6f8\"/><polygon points=\"184.0,195.0 242.0,159.0 242.0,67.0 184.0,103.0\" fill=\"#dbe6f8\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"110.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"184.0\" y2=\"195.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"159.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"103.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"103.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"67.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"110.0\" y1=\"67.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"38\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A</text><text x=\"192\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B</text><text x=\"250\" y=\"170\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C</text><text x=\"94\" y=\"168\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D</text><text x=\"32\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A₁</text><text x=\"192\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B₁</text><text x=\"250\" y=\"66\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C₁</text><text x=\"88\" y=\"64\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D₁</text><text x=\"150\" y=\"240\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">параллелепипед ABCDA₁B₁C₁D₁</text></svg></div>", "opts": ["параллельны", "пересекаются", "скрещиваются"], "ans": 0, "why": "AD ∥ BC, а BC ∥ B₁C₁."}]);
+makeTrainer("ts3", [{"q": "Задают ли единственную плоскость три точки, не лежащие на одной прямой?", "fig": "", "opts": ["да, единственная", "нет, не единственная"], "ans": 0, "why": "Это и есть аксиома 1."}, {"q": "Задают ли единственную плоскость три точки, лежащие на одной прямой?", "fig": "", "opts": ["нет, не единственная", "да, единственная"], "ans": 0, "why": "Через прямую проходит бесконечно много плоскостей."}, {"q": "Задают ли единственную плоскость прямая и точка вне её?", "fig": "", "opts": ["да, единственная", "нет, не единственная"], "ans": 0, "why": "Теорема 3: берём на прямой две точки, получаем три точки не на одной прямой."}, {"q": "Задают ли единственную плоскость прямая и точка на ней?", "fig": "", "opts": ["нет, не единственная", "да, единственная"], "ans": 0, "why": "Точка не добавляет ничего нового — плоскостей через прямую бесконечно много."}, {"q": "Задают ли единственную плоскость две пересекающиеся прямые?", "fig": "", "opts": ["да, единственная", "нет, не единственная"], "ans": 0, "why": "Теорема 4."}, {"q": "Задают ли единственную плоскость две параллельные прямые?", "fig": "", "opts": ["да, единственная", "нет, не единственная"], "ans": 0, "why": "По определению параллельности они лежат в одной плоскости, и она единственная."}, {"q": "Задают ли единственную плоскость две скрещивающиеся прямые?", "fig": "", "opts": ["нет, не единственная", "да, единственная"], "ans": 0, "why": "Плоскости, содержащей обе, не существует вовсе."}, {"q": "Какая аксиома объясняет, почему ровная линейка прилегает к столу всем краем?", "fig": "", "opts": ["аксиома 2", "аксиома 1", "аксиома 3"], "ans": 0, "why": "Две точки края лежат в плоскости стола, значит и весь край лежит в ней."}, {"q": "Какая аксиома объясняет, почему штатив на трёх ножках не качается?", "fig": "", "opts": ["аксиома 1", "аксиома 2", "аксиома 3"], "ans": 0, "why": "Три острия задают единственную плоскость."}, {"q": "Какая аксиома объясняет линию, по которой сходятся две смежные стены?", "fig": "", "opts": ["аксиома 3", "аксиома 1", "аксиома 2"], "ans": 0, "why": "У плоскостей есть общая точка — значит есть и общая прямая."}]);
+makeTrainer("ts4", [{"q": "По какой прямой пересекаются плоскости ABC и BCC₁ параллелепипеда?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 250\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"250\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"52.0,103.0 184.0,103.0 242.0,67.0 110.0,67.0\" fill=\"#e8f0ff\"/><polygon points=\"52.0,195.0 184.0,195.0 184.0,103.0 52.0,103.0\" fill=\"#dbe6f8\"/><polygon points=\"184.0,195.0 242.0,159.0 242.0,67.0 184.0,103.0\" fill=\"#dbe6f8\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"110.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"184.0\" y2=\"195.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"159.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"103.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"103.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"67.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"110.0\" y1=\"67.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"38\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A</text><text x=\"192\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B</text><text x=\"250\" y=\"170\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C</text><text x=\"94\" y=\"168\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D</text><text x=\"32\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A₁</text><text x=\"192\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B₁</text><text x=\"250\" y=\"66\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C₁</text><text x=\"88\" y=\"64\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D₁</text><text x=\"150\" y=\"240\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">параллелепипед ABCDA₁B₁C₁D₁</text></svg></div>", "opts": ["BC", "AB", "CC₁", "B₁C₁"], "ans": 0, "why": "Точки B и C принадлежат обеим плоскостям."}, {"q": "По какой прямой пересекаются плоскости ABB₁ и ADD₁?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 250\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"250\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"52.0,103.0 184.0,103.0 242.0,67.0 110.0,67.0\" fill=\"#e8f0ff\"/><polygon points=\"52.0,195.0 184.0,195.0 184.0,103.0 52.0,103.0\" fill=\"#dbe6f8\"/><polygon points=\"184.0,195.0 242.0,159.0 242.0,67.0 184.0,103.0\" fill=\"#dbe6f8\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"110.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"184.0\" y2=\"195.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"159.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"103.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"103.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"67.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"110.0\" y1=\"67.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"38\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A</text><text x=\"192\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B</text><text x=\"250\" y=\"170\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C</text><text x=\"94\" y=\"168\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D</text><text x=\"32\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A₁</text><text x=\"192\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B₁</text><text x=\"250\" y=\"66\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C₁</text><text x=\"88\" y=\"64\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D₁</text><text x=\"150\" y=\"240\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">параллелепипед ABCDA₁B₁C₁D₁</text></svg></div>", "opts": ["AA₁", "AB", "AD", "BD"], "ans": 0, "why": "Общие точки — A и A₁."}, {"q": "По какой прямой пересекаются плоскости A₁B₁C₁ и BCC₁?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 250\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"250\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"52.0,103.0 184.0,103.0 242.0,67.0 110.0,67.0\" fill=\"#e8f0ff\"/><polygon points=\"52.0,195.0 184.0,195.0 184.0,103.0 52.0,103.0\" fill=\"#dbe6f8\"/><polygon points=\"184.0,195.0 242.0,159.0 242.0,67.0 184.0,103.0\" fill=\"#dbe6f8\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"110.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"184.0\" y2=\"195.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"159.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"103.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"103.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"67.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"110.0\" y1=\"67.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"38\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A</text><text x=\"192\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B</text><text x=\"250\" y=\"170\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C</text><text x=\"94\" y=\"168\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D</text><text x=\"32\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A₁</text><text x=\"192\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B₁</text><text x=\"250\" y=\"66\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C₁</text><text x=\"88\" y=\"64\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D₁</text><text x=\"150\" y=\"240\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">параллелепипед ABCDA₁B₁C₁D₁</text></svg></div>", "opts": ["B₁C₁", "BC", "CC₁", "A₁B₁"], "ans": 0, "why": "Верхняя грань и боковая грань BCC₁B₁ имеют общее ребро B₁C₁."}, {"q": "По какой прямой пересекаются плоскости ACC₁ и ABC?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 250\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"250\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"52.0,103.0 184.0,103.0 242.0,67.0 110.0,67.0\" fill=\"#e8f0ff\"/><polygon points=\"52.0,195.0 184.0,195.0 184.0,103.0 52.0,103.0\" fill=\"#dbe6f8\"/><polygon points=\"184.0,195.0 242.0,159.0 242.0,67.0 184.0,103.0\" fill=\"#dbe6f8\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"110.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"184.0\" y2=\"195.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"159.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"103.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"103.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"67.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"110.0\" y1=\"67.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"38\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A</text><text x=\"192\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B</text><text x=\"250\" y=\"170\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C</text><text x=\"94\" y=\"168\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D</text><text x=\"32\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A₁</text><text x=\"192\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B₁</text><text x=\"250\" y=\"66\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C₁</text><text x=\"88\" y=\"64\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D₁</text><text x=\"150\" y=\"240\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">параллелепипед ABCDA₁B₁C₁D₁</text></svg></div>", "opts": ["AC", "CC₁", "AB", "A₁C₁"], "ans": 0, "why": "Точки A и C лежат в обеих плоскостях."}, {"q": "Как расположены плоскости ABC и A₁B₁C₁ параллелепипеда?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 250\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"250\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"52.0,103.0 184.0,103.0 242.0,67.0 110.0,67.0\" fill=\"#e8f0ff\"/><polygon points=\"52.0,195.0 184.0,195.0 184.0,103.0 52.0,103.0\" fill=\"#dbe6f8\"/><polygon points=\"184.0,195.0 242.0,159.0 242.0,67.0 184.0,103.0\" fill=\"#dbe6f8\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"110.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"184.0\" y2=\"195.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"159.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"103.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"103.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"67.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"110.0\" y1=\"67.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"38\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A</text><text x=\"192\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B</text><text x=\"250\" y=\"170\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C</text><text x=\"94\" y=\"168\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D</text><text x=\"32\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A₁</text><text x=\"192\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B₁</text><text x=\"250\" y=\"66\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C₁</text><text x=\"88\" y=\"64\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D₁</text><text x=\"150\" y=\"240\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">параллелепипед ABCDA₁B₁C₁D₁</text></svg></div>", "opts": ["параллельны", "пересекаются по AA₁", "пересекаются по AC"], "ans": 0, "why": "Это нижняя и верхняя грани, общих точек нет."}, {"q": "Как расположены плоскости ABB₁A₁ и DCC₁D₁?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 250\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"250\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"52.0,103.0 184.0,103.0 242.0,67.0 110.0,67.0\" fill=\"#e8f0ff\"/><polygon points=\"52.0,195.0 184.0,195.0 184.0,103.0 52.0,103.0\" fill=\"#dbe6f8\"/><polygon points=\"184.0,195.0 242.0,159.0 242.0,67.0 184.0,103.0\" fill=\"#dbe6f8\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"110.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"110.0\" y1=\"159.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"184.0\" y2=\"195.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"242.0\" y2=\"159.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"195.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"195.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"159.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"52.0\" y1=\"103.0\" x2=\"184.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"184.0\" y1=\"103.0\" x2=\"242.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"242.0\" y1=\"67.0\" x2=\"110.0\" y2=\"67.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"110.0\" y1=\"67.0\" x2=\"52.0\" y2=\"103.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"38\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A</text><text x=\"192\" y=\"210\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B</text><text x=\"250\" y=\"170\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C</text><text x=\"94\" y=\"168\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D</text><text x=\"32\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A₁</text><text x=\"192\" y=\"106\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B₁</text><text x=\"250\" y=\"66\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C₁</text><text x=\"88\" y=\"64\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D₁</text><text x=\"150\" y=\"240\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">параллелепипед ABCDA₁B₁C₁D₁</text></svg></div>", "opts": ["параллельны", "пересекаются по BC", "пересекаются по AD"], "ans": 0, "why": "Противоположные боковые грани."}, {"q": "По какой прямой пересекаются плоскости ABC и SBC пирамиды SABCD?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 310 260\"><rect x=\"0\" y=\"0\" width=\"310\" height=\"260\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"150.0,48.0 56.0,200.0 196.0,200.0\" fill=\"#dbe6f8\" stroke=\"none\"/><polygon points=\"150.0,48.0 196.0,200.0 250.0,166.0\" fill=\"#dbe6f8\" stroke=\"none\"/><line x1=\"110.0\" y1=\"166.0\" x2=\"56.0\" y2=\"200.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"250.0\" y1=\"166.0\" x2=\"110.0\" y2=\"166.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"150.0\" y1=\"48.0\" x2=\"110.0\" y2=\"166.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"56.0\" y1=\"200.0\" x2=\"196.0\" y2=\"200.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"196.0\" y1=\"200.0\" x2=\"250.0\" y2=\"166.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"150.0\" y1=\"48.0\" x2=\"56.0\" y2=\"200.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"150.0\" y1=\"48.0\" x2=\"196.0\" y2=\"200.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"150.0\" y1=\"48.0\" x2=\"250.0\" y2=\"166.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"36\" y=\"216\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A</text><text x=\"206\" y=\"216\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B</text><text x=\"260\" y=\"172\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C</text><text x=\"88\" y=\"168\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D</text><text x=\"150\" y=\"39\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">S</text><text x=\"155\" y=\"250\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">пирамида SABCD</text></svg></div>", "opts": ["BC", "AB", "SB", "SC"], "ans": 0, "why": "Точки B и C принадлежат и основанию, и боковой грани."}, {"q": "По какой прямой пересекаются плоскости SAB и SBC?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 310 260\"><rect x=\"0\" y=\"0\" width=\"310\" height=\"260\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"150.0,48.0 56.0,200.0 196.0,200.0\" fill=\"#dbe6f8\" stroke=\"none\"/><polygon points=\"150.0,48.0 196.0,200.0 250.0,166.0\" fill=\"#dbe6f8\" stroke=\"none\"/><line x1=\"110.0\" y1=\"166.0\" x2=\"56.0\" y2=\"200.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"250.0\" y1=\"166.0\" x2=\"110.0\" y2=\"166.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"150.0\" y1=\"48.0\" x2=\"110.0\" y2=\"166.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"56.0\" y1=\"200.0\" x2=\"196.0\" y2=\"200.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"196.0\" y1=\"200.0\" x2=\"250.0\" y2=\"166.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"150.0\" y1=\"48.0\" x2=\"56.0\" y2=\"200.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"150.0\" y1=\"48.0\" x2=\"196.0\" y2=\"200.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"150.0\" y1=\"48.0\" x2=\"250.0\" y2=\"166.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"36\" y=\"216\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A</text><text x=\"206\" y=\"216\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B</text><text x=\"260\" y=\"172\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C</text><text x=\"88\" y=\"168\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D</text><text x=\"150\" y=\"39\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">S</text><text x=\"155\" y=\"250\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">пирамида SABCD</text></svg></div>", "opts": ["SB", "AB", "BC", "AC"], "ans": 0, "why": "Общие точки — вершина S и вершина B."}, {"q": "По какой прямой пересекаются плоскости SAC и ABC?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 310 260\"><rect x=\"0\" y=\"0\" width=\"310\" height=\"260\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"150.0,48.0 56.0,200.0 196.0,200.0\" fill=\"#dbe6f8\" stroke=\"none\"/><polygon points=\"150.0,48.0 196.0,200.0 250.0,166.0\" fill=\"#dbe6f8\" stroke=\"none\"/><line x1=\"110.0\" y1=\"166.0\" x2=\"56.0\" y2=\"200.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"250.0\" y1=\"166.0\" x2=\"110.0\" y2=\"166.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"150.0\" y1=\"48.0\" x2=\"110.0\" y2=\"166.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"56.0\" y1=\"200.0\" x2=\"196.0\" y2=\"200.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"196.0\" y1=\"200.0\" x2=\"250.0\" y2=\"166.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"150.0\" y1=\"48.0\" x2=\"56.0\" y2=\"200.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"150.0\" y1=\"48.0\" x2=\"196.0\" y2=\"200.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"150.0\" y1=\"48.0\" x2=\"250.0\" y2=\"166.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"36\" y=\"216\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A</text><text x=\"206\" y=\"216\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B</text><text x=\"260\" y=\"172\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C</text><text x=\"88\" y=\"168\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D</text><text x=\"150\" y=\"39\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">S</text><text x=\"155\" y=\"250\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">пирамида SABCD</text></svg></div>", "opts": ["AC", "SA", "SC", "BD"], "ans": 0, "why": "Точки A и C лежат в основании и в плоскости SAC."}, {"q": "По какой прямой пересекаются плоскости SAC и SBD?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 310 260\"><rect x=\"0\" y=\"0\" width=\"310\" height=\"260\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"150.0,48.0 56.0,200.0 196.0,200.0\" fill=\"#dbe6f8\" stroke=\"none\"/><polygon points=\"150.0,48.0 196.0,200.0 250.0,166.0\" fill=\"#dbe6f8\" stroke=\"none\"/><line x1=\"110.0\" y1=\"166.0\" x2=\"56.0\" y2=\"200.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"250.0\" y1=\"166.0\" x2=\"110.0\" y2=\"166.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"150.0\" y1=\"48.0\" x2=\"110.0\" y2=\"166.0\" stroke=\"#15181e\" stroke-width=\"2.4\" stroke-dasharray=\"7 6\"/><line x1=\"56.0\" y1=\"200.0\" x2=\"196.0\" y2=\"200.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"196.0\" y1=\"200.0\" x2=\"250.0\" y2=\"166.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"150.0\" y1=\"48.0\" x2=\"56.0\" y2=\"200.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"150.0\" y1=\"48.0\" x2=\"196.0\" y2=\"200.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><line x1=\"150.0\" y1=\"48.0\" x2=\"250.0\" y2=\"166.0\" stroke=\"#15181e\" stroke-width=\"2.4\"/><text x=\"36\" y=\"216\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">A</text><text x=\"206\" y=\"216\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">B</text><text x=\"260\" y=\"172\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">C</text><text x=\"88\" y=\"168\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">D</text><text x=\"150\" y=\"39\" font-size=\"17\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">S</text><text x=\"155\" y=\"250\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">пирамида SABCD</text></svg></div>", "opts": ["SO, где O — точка пересечения диагоналей", "AC", "BD", "они не пересекаются"], "ans": 0, "why": "Общие точки: вершина S и точка пересечения диагоналей основания."}]);
 
 </script>
 </body>
