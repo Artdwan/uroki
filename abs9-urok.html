@@ -1,0 +1,719 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Урок: графики y = f(|x|) и y = |f(x)| — алгебра</title>
+<style>
+:root{
+  --bg:#f4f6f9; --card:#fff; --ink:#15181e; --muted:#5c6472; --line:#d8dde6;
+  --acc:#2f6bd8; --acc2:#e8f0ff; --acc3:#bcd2f7;
+  --ok:#137a45; --ok-bg:#e2f6ec; --bad:#b3261e; --bad-bg:#fdeceb; --warn:#fff4d8; --warn-line:#f0dca6;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:20px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.bar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.95);
+  border-bottom:2px solid var(--line);backdrop-filter:blur(6px)}
+.bar .in{max-width:1100px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;
+  align-items:center;flex-wrap:wrap}
+.bar b{font-size:19px}
+.bar .m{color:var(--muted);font-size:17px}
+.bar a{color:var(--acc);text-decoration:none;font-size:17px;border:2px solid var(--line);
+  border-radius:20px;padding:4px 12px}
+.bar a:hover{border-color:var(--acc)}
+.spacer{flex:1}
+main{max-width:1100px;margin:0 auto;padding:0 20px 100px}
+section{background:var(--card);border:2px solid var(--line);border-radius:20px;
+  padding:34px 36px;margin:26px 0;scroll-margin-top:70px}
+section.hero{border:none;background:none;padding:40px 0 6px}
+h1{font-size:46px;line-height:1.12;margin:6px 0 12px}
+h2{font-size:32px;line-height:1.2;margin:0 0 18px}
+h3{font-size:24px;margin:26px 0 8px}
+p,li{font-size:21px;margin:12px 0}
+.kicker{color:var(--muted);font-size:20px;letter-spacing:.02em}
+.lead{font-size:24px}
+.f{font-size:26px}
+.cols{display:flex;gap:34px;flex-wrap:wrap;align-items:center}
+.col{flex:1 1 340px;min-width:0}
+.box{border:2px solid var(--line);border-radius:16px;padding:18px 22px;margin:16px 0}
+.box.acc{background:var(--acc2);border-color:var(--acc3)}
+.box.warn{background:var(--warn);border-color:var(--warn-line)}
+.box.ok{background:var(--ok-bg);border-color:#a9dcc2}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:14px 0}
+table{border-collapse:collapse;width:100%;font-size:20px}
+th,td{border:2px solid var(--line);padding:9px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc2)}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.12;margin:0 8px}
+.frac>span{display:block;padding:0 6px}
+.frac>span:first-child{border-bottom:3px solid currentColor}
+svg{width:100%;height:auto;display:block}
+button{font:inherit;font-size:19px;cursor:pointer;border:2px solid var(--line);background:#fff;
+  color:var(--ink);border-radius:12px;padding:9px 16px;min-height:48px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{font-size:17px;min-height:42px;padding:6px 12px}
+button:active{transform:translateY(1px)}
+.step{font-size:22px;margin:14px 0;padding-left:16px;border-left:4px solid var(--acc3);
+  display:none}
+.step.show{display:block}
+.switch{display:inline-flex;border:2px solid var(--line);border-radius:12px;overflow:hidden;
+  margin-left:auto}
+.switch button{border:none;border-radius:0;font-size:18px;min-height:44px;padding:6px 16px}
+.switch button.act{background:var(--acc);color:#fff;font-weight:600}
+.taskhead{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+.tnum{font-weight:700;font-size:24px}
+.lvl{font-size:16px;color:var(--muted);border:2px solid var(--line);border-radius:20px;padding:2px 12px}
+.fig{margin:14px 0}
+.fig svg{width:100%;max-width:250px;height:auto}
+.task{border-top:2px solid var(--line);padding-top:24px;margin-top:24px}
+.task:first-of-type{border-top:none;padding-top:0;margin-top:0}
+input[type=text]{font:inherit;font-size:21px;padding:10px 14px;border:3px solid var(--line);
+  border-radius:12px;width:220px;background:#fff;color:var(--ink)}
+input[type=text].ok{border-color:var(--ok);background:var(--ok-bg)}
+input[type=text].bad{border-color:var(--bad);background:var(--bad-bg)}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+.line{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:22px;margin:14px 0}
+.keys{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+.keys button{font-size:19px;min-height:44px;min-width:48px;padding:6px 12px}
+.msg{font-size:19px;min-height:26px}
+.msg.ok{color:var(--ok);font-weight:600}
+.msg.bad{color:var(--bad);font-weight:600}
+.hint{background:var(--acc2);border-radius:12px;padding:12px 16px;font-size:19px;margin-top:12px;display:none}
+.hint.on{display:block}
+.small{font-size:18px;color:var(--muted)}
+@media (max-width:700px){
+  body{font-size:17px}
+  h1{font-size:32px} h2{font-size:25px} h3{font-size:20px}
+  p,li{font-size:18px} .lead{font-size:19px} .f{font-size:21px}
+  section{padding:22px 18px;border-radius:16px}
+  .line{font-size:19px} input[type=text]{width:170px;font-size:19px}
+}
+
+.gl{margin:14px 0}
+.gl svg{width:100%;max-width:440px;height:auto;display:block;margin:0 auto;border-radius:12px;
+  border:1px solid var(--line);background:#fff}
+.glbar{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin:10px auto 0;max-width:460px}
+.glbar button{padding:6px 12px;min-height:40px;font-size:16px}
+.glbar button.on{border-color:var(--acc);background:var(--acc-soft,#e8f0ff);font-weight:700}
+.glbar .sep{flex-basis:100%;height:0}
+.glcap{text-align:center;margin:10px 0 0;font-size:19px;font-weight:700}
+.glnote{color:var(--muted);font-size:14.5px;text-align:center;margin-top:6px;line-height:1.45}
+
+.rt{border-top:1.7px solid currentColor;padding:0 3px 0 2px;margin-left:-1px;
+  display:inline-block;line-height:1.15}
+
+.fx{display:block;background:var(--acc2,#e8f0ff);border:2px solid var(--line);
+  border-radius:12px;padding:12px 14px;margin:14px 0;text-align:center;font-size:22px;
+  line-height:2.0;font-weight:600;overflow-x:auto}
+.def{border:2px solid var(--line);border-left:6px solid #2f6bd8;border-radius:14px;
+  padding:14px 18px;margin:14px 0;background:#eef3fb}
+.def .n{font-size:15px;color:#2f6bd8;font-weight:700;letter-spacing:.4px}
+.rule{border:2px solid var(--line);border-left:6px solid #c0397a;border-radius:14px;
+  padding:14px 18px;margin:14px 0;background:#fdf0f6}
+.rule .n{font-size:15px;color:#a02a62;font-weight:700;letter-spacing:.4px}
+.alg{border:2px solid var(--line);border-left:6px solid #137a45;border-radius:14px;
+  padding:14px 18px;margin:14px 0;background:#eef8f2}
+.alg .n{font-size:15px;color:#0f6b3c;font-weight:700;letter-spacing:.4px}
+.alg ol{margin:8px 0 0;padding-left:0;list-style:none;counter-reset:a}
+.alg li{counter-increment:a;margin:9px 0;padding-left:38px;position:relative}
+.alg li::before{content:counter(a);position:absolute;left:0;top:1px;width:27px;height:27px;
+  border-radius:50%;background:#137a45;color:#fff;font-size:15px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.ex{border:2px solid var(--line);border-radius:16px;padding:16px 20px;margin:16px 0;
+  background:var(--bg)}
+.ex h3{margin-top:0}
+.fr{display:inline-block;vertical-align:-0.58em;text-align:center;margin:0 3px}
+.fr b{display:block;border-bottom:1.7px solid currentColor;padding:0 6px;font-weight:400;
+  white-space:nowrap}
+.fr i{display:block;font-style:normal;padding:0 6px;white-space:nowrap}
+.two{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));margin:12px 0}
+.card2{border:2px solid var(--line);border-radius:14px;padding:12px 16px;background:var(--bg)}
+.card2 h4{margin:0 0 4px;font-size:16px;letter-spacing:.4px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.card2 p{margin:7px 0 0;line-height:1.5}
+.mn{color:#b3261e;font-weight:700}
+.ok2{color:#137a45;font-weight:700}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+.ex .step,details .step,.note .step{display:block !important}
+</style>
+</head>
+<body>
+
+<div class="bar"><div class="in">
+  <b>Графики с модулем</b>
+  <span class="m">алгебра · §3</span>
+  <span class="spacer"></span>
+  <a href="#zadaniya">К самостоятельной</a>
+  <span class="m" id="progress">решено 0 из 14</span>
+</div></div>
+
+<main>
+
+<section class="hero">
+  <div class="kicker">Функции · преобразования графиков</div>
+  <h1>y = f(|x|) и y = |f(x)|</h1>
+  <p class="lead">Два модуля — два разных преобразования. Модуль <b>внутри</b> работает
+  с аргументом и отражает график относительно оси ординат. Модуль <b>снаружи</b> работает
+  со значением и отражает график относительно оси абсцисс. Перепутать их легко,
+  а отличить — просто.</p>
+</section>
+
+<section>
+  <h2>Попробуй сразу</h2>
+  <p class="small">Выбери функцию и нажимай на четыре кнопки. Серым пунктиром показан
+  исходный график, синим — результат. Дальше разберём, почему получается именно так.</p>
+  <div class="gl"><svg id="gl1" viewBox="0 0 440 340" aria-label="график"></svg><div class="glcap" id="gl1c"></div><div class="glbar" id="gl1b"></div><div class="glnote" id="gl1n"></div></div>
+</section>
+
+<section>
+  <h2>1. Модуль внутри: y = f(|x|)</h2>
+  <p>Раскроем модуль по определению:</p>
+  <div class="fx">|x| = x при x ⩾ 0,&nbsp;&nbsp;&nbsp; |x| = −x при x &lt; 0</div>
+  <p>Значит и сама функция распадается на два случая:</p>
+  <div class="fx">y = f(|x|) = f(x) при x ⩾ 0,&nbsp;&nbsp;&nbsp; y = f(−x) при x &lt; 0</div>
+  <div class="def"><div class="n">ЧТО ЭТО ЗНАЧИТ</div>
+  Справа от оси ординат график <b>не меняется</b> — там |x| = x.<br>
+  Слева значение в точке −x равно значению в точке x, то есть левая часть <b>симметрична</b>
+  правой относительно оси ординат.</div>
+  <div class="alg"><div class="n">АЛГОРИТМ</div>
+  <ol>
+    <li>Построить график функции y = f(x).</li>
+    <li>Удалить часть графика левее оси ординат.</li>
+    <li>Отразить оставшуюся правую часть симметрично относительно оси ординат.</li>
+  </ol></div>
+  <div class="box acc"><p><b>Важное следствие.</b> Функция y = f(|x|) всегда <b>чётная</b>:
+  f(|−x|) = f(|x|). Поэтому её график симметричен относительно оси ординат — это готовая
+  проверка правильности построения.</p></div>
+</section>
+
+<section>
+  <h2>2. Разбор: y = x² − 2|x| − 5</h2>
+  <p>Заметим, что |x|² = x², поэтому функцию можно записать как y = f(|x|),
+  где f(x) = x² − 2x − 5. Значит строим параболу и применяем алгоритм.</p>
+  <div class="ex"><h3>Шаг 1. Строим параболу y = x² − 2x − 5</h3>
+  <div class="step">a = 1 &gt; 0 — ветви вверх.</div>
+  <div class="step">Вершина: x<sub>в</sub> = −<span class='fr'><b>−2</b><i>2 · 1</i></span> = 1, y<sub>в</sub> = 1 − 2 − 5 = −6.
+  Вершина (1; −6), ось симметрии x = 1.</div>
+  <div class="step">Нули: x² − 2x − 5 = 0, D = 4 + 20 = 24,
+  x = 1 ± √<span class='rt'>6</span>, то есть x₁ ≈ 3,4 и x₂ ≈ −1,4.</div>
+  <div class="step">С осью ординат: (0; −5).</div></div>
+  <div class="ex"><h3>Шаги 2 и 3. Убираем левую часть и отражаем правую</h3>
+  <div class="step">Левее оси ординат стираем всё. Правую часть — от точки (0; −5) через
+  вершину (1; −6) и дальше вверх — отражаем налево.</div>
+  <div class="step">Получается «двугорбая» кривая с двумя вершинами (1; −6) и (−1; −6)
+  и уголком в точке (0; −5).</div>
+  <div class="fx">нулей стало два: x = ±(1 + √<span class='rt'>6</span>) ≈ ±3,4</div>
+  <div class="step mini">Корень x ≈ −1,4 исходной параболы исчез: он лежал левее оси
+  ординат, а эту часть мы удалили.</div></div>
+  <div class="gl"><svg id="gl2" viewBox="0 0 440 340" aria-label="график"></svg><div class="glcap" id="gl2c"></div><div class="glbar" id="gl2b"></div><div class="glnote" id="gl2n"></div></div>
+</section>
+
+<section>
+  <h2>3. Модуль снаружи: y = |f(x)|</h2>
+  <p>Теперь модуль стоит на значении функции:</p>
+  <div class="fx">y = |f(x)| = f(x) при f(x) ⩾ 0,&nbsp;&nbsp;&nbsp; y = −f(x) при f(x) &lt; 0</div>
+  <div class="def"><div class="n">ЧТО ЭТО ЗНАЧИТ</div>
+  Часть графика <b>выше</b> оси абсцисс остаётся на месте, точки пересечения с осью —
+  тоже.<br>
+  Часть <b>ниже</b> оси заменяется симметричной ей относительно оси абсцисс.</div>
+  <div class="alg"><div class="n">АЛГОРИТМ</div>
+  <ol>
+    <li>Построить график функции y = f(x).</li>
+    <li>Отразить симметрично относительно оси абсцисс часть, лежащую ниже оси.</li>
+    <li>Удалить исходную часть, лежавшую ниже оси абсцисс.</li>
+  </ol></div>
+  <div class="box acc"><p><b>Важное следствие.</b> График y = |f(x)| никогда не опускается
+  ниже оси абсцисс: значение модуля неотрицательно. В точках, где f(x) = 0, появляются
+  <b>уголки</b> — там график «отскакивает» от оси.</p></div>
+</section>
+
+<section>
+  <h2>4. Разбор: y = |x² − 2x|</h2>
+  <div class="ex"><h3>Шаг 1. Строим параболу y = x² − 2x</h3>
+  <div class="step">a = 1 &gt; 0 — ветви вверх.</div>
+  <div class="step">Вершина: x<sub>в</sub> = 1, y<sub>в</sub> = 1 − 2 = −1. Вершина (1; −1).</div>
+  <div class="step">Нули: x² − 2x = 0, x(x − 2) = 0, значит x₁ = 0 и x₂ = 2.</div>
+  <div class="step">С осью ординат: (0; 0).</div></div>
+  <div class="ex"><h3>Шаги 2 и 3. Отражаем нижнюю часть вверх</h3>
+  <div class="step">Ниже оси абсцисс лежит кусок между нулями, то есть при 0 &lt; x &lt; 2.
+  Его отражаем наверх — получается «горб» с вершиной (1; 1).</div>
+  <div class="fx">наименьшее значение стало равно 0, а точек излома — две: x = 0 и x = 2</div>
+  <div class="step mini">Нули не сдвинулись: там, где f(x) = 0, и модуль равен нулю.
+  Меняется только то, что было отрицательным.</div></div>
+  <div class="gl"><svg id="gl3" viewBox="0 0 440 340" aria-label="график"></svg><div class="glcap" id="gl3c"></div><div class="glbar" id="gl3b"></div><div class="glnote" id="gl3n"></div></div>
+</section>
+
+<section>
+  <h2>5. Когда модулей два: y = |x² − 6|x| + 4|</h2>
+  <p>Здесь работают оба преобразования. Порядок такой: сначала внутренний модуль,
+  потом внешний.</p>
+  <div class="ex"><h3>Как рассуждать</h3>
+  <div class="step">1. Функция y = |x² − 6|x| + 4| чётная, значит достаточно построить
+  правую половину, а левую получить отражением.</div>
+  <div class="step">2. Строим y = |x² − 6x + 4|: парабола с вершиной (3; −5), нулями
+  x = 3 ± √<span class='rt'>5</span> ≈ 0,8 и 5,2, и нижнюю часть отражаем вверх.</div>
+  <div class="step">3. Правую часть полученного графика отражаем относительно оси ординат.</div>
+  <div class="fx">нулей у итогового графика четыре: x ≈ ±0,8 и x ≈ ±5,2</div>
+  <div class="step mini">Проверка: график обязан быть и симметричным относительно оси
+  ординат, и целиком неотрицательным. Не выполняется хоть одно — где-то ошибка.</div></div>
+  <div class="gl"><svg id="gl4" viewBox="0 0 440 340" aria-label="график"></svg><div class="glcap" id="gl4c"></div><div class="glbar" id="gl4b"></div><div class="glnote" id="gl4n"></div></div>
+</section>
+
+<section>
+  <h2>6. Как отличить графики друг от друга</h2>
+  <div class="two">
+    <div class="card2"><h4>Это y = f(|x|)?</h4>
+      <p>Смотри на <b>симметрию относительно оси ординат</b>. Если левая половина —
+      зеркало правой, преобразование могло быть таким.</p>
+      <p class="small">Такой график вполне может уходить ниже оси абсцисс — внешнего
+      модуля тут нет.</p></div>
+    <div class="card2"><h4>Это y = |f(x)|?</h4>
+      <p>Смотри, <b>не опускается ли график ниже оси абсцисс</b>. Если опускается —
+      это точно не |f(x)|.</p>
+      <p class="small">Симметрии относительно оси ординат при этом может и не быть.</p></div>
+    <div class="card2"><h4>Это y = |f(|x|)|?</h4>
+      <p>Нужны <b>оба</b> признака сразу: симметрия относительно оси ординат
+      <u>и</u> ни одной точки ниже оси абсцисс.</p>
+      <p class="small">Уголки при этом будут и на оси ординат, и в нулях функции.</p></div>
+  </div>
+  <div class="rule"><div class="n">ЧАСТАЯ ОШИБКА</div>
+  Отражать <b>всю</b> левую часть вверх, когда модуль стоит снаружи. Отражается не левая
+  часть, а <b>нижняя</b> — независимо от того, справа она или слева от оси ординат.</div>
+</section>
+
+<section id="proverka">
+  <div class="taskhead">
+    <h2 style="margin:0">Проверь себя</h2>
+    <div class="switch" id="switch">
+      <button data-m="blank">С пропусками</button>
+      <button data-m="solo" class="act">Самостоятельно</button>
+    </div>
+  </div>
+  <p class="small">Четыре быстрые задачи на понимание. Переключатель действует и здесь,
+  и в самостоятельной работе ниже.</p>
+  <div class="keys" id="keys"></div>
+  <div id="tasks" data-tasks="main"></div>
+</section>
+
+<section id="zadaniya">
+  <h2>Самостоятельная работа</h2>
+  <p class="small">Десять задач. Если график не вырисовывается — вернись к конструктору
+  выше и собери его там, а потом посчитай.</p>
+  <div id="tasks2" data-tasks="extra"></div>
+</section>
+
+<section>
+  <h2>Что забрать с урока</h2>
+  <div class="box acc">
+    <p><b>1.</b> Модуль <u>внутри</u> — стираем левое, отражаем правое относительно оси
+    ординат. Результат всегда чётный.</p>
+    <p><b>2.</b> Модуль <u>снаружи</u> — отражаем нижнее наверх относительно оси абсцисс.
+    Результат всегда неотрицателен.</p>
+    <p><b>3.</b> Нули функции при внешнем модуле остаются на местах и превращаются
+    в уголки.</p>
+    <p><b>4.</b> При внутреннем модуле корни, лежавшие левее оси ординат, пропадают,
+    а правые дублируются симметрично.</p>
+    <p><b>5.</b> Если модулей два, сначала делают внутренний, потом внешний. Проверка —
+    симметрия плюс неотрицательность.</p>
+  </div>
+  <p class="small">Домашнее задание по этой теме — отдельная страница с тренажёрами
+  и задачами с автопроверкой.</p>
+</section>
+
+</main>
+
+<script>
+"use strict";
+function e(s){return btoa(unescape(encodeURIComponent(s)));}
+function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return s;}}
+
+var TASKS = [
+ { grp:"main", lvl:"проверь себя", q:"Для функции y = x² − 2|x| − 5 найди ординату вершины правой ветви.",
+   ans:[e("-6"),e("−6")],
+   hint:"Правая ветвь совпадает с параболой y = x² − 2x − 5. Найди её вершину.",
+   steps:[{t:"Абсцисса вершины параболы y = x² − 2x − 5 равна ___", a:[e("1")]},
+          {t:"Подставляем: 1 − 2 − 5 = ___", a:[e("-6"),e("−6")]}] },
+
+ { grp:"main", lvl:"проверь себя", q:"Чему равно значение функции y = |x² − 2x| при x = 1?",
+   ans:[e("1")],
+   hint:"Сначала посчитай выражение под модулем, потом возьми модуль.",
+   steps:[{t:"Под модулем: 1 − 2 = ___", a:[e("-1"),e("−1")]},
+          {t:"Модуль этого числа равен ___", a:[e("1")]}] },
+
+ { grp:"main", lvl:"проверь себя", q:"Сколько нулей у функции y = |x² − 2x|?",
+   ans:[e("2")],
+   hint:"Модуль равен нулю там же, где равно нулю выражение под ним.",
+   steps:[{t:"Решаем x² − 2x = 0, x(x − 2) = 0. Меньший корень ___", a:[e("0")]},
+          {t:"Больший корень ___", a:[e("2")]},
+          {t:"Значит нулей ___", a:[e("2")]}] },
+
+ { grp:"main", lvl:"проверь себя", q:"Обязательно ли функция y = f(|x|) чётная? Запиши 1, если да, и 0, если нет.",
+   ans:[e("1")],
+   hint:"Подставь −x вместо x: f(|−x|) — чему это равно?",
+   steps:[{t:"|−x| равен ___ (запиши |x| как x, имея в виду модуль)", a:[e("|x|"),e("x")]},
+          {t:"Значит f(|−x|) = f(|x|), и функция чётная. Ответ ___", a:[e("1")]}] },
+
+ { grp:"extra", lvl:"база", q:"Чему равно значение функции y = x² − 4|x| + 3 при x = −1?",
+   ans:[e("0")],
+   hint:"|−1| = 1, дальше просто считай.",
+   steps:[{t:"Модуль: |−1| = ___", a:[e("1")]},
+          {t:"Тогда 1 − 4 + 3 = ___", a:[e("0")]}] },
+
+ { grp:"extra", lvl:"средний", q:"Сколько нулей у функции y = x² − 4|x| + 3?",
+   ans:[e("4")],
+   hint:"Реши уравнение для x ⩾ 0, а потом вспомни про чётность.",
+   steps:[{t:"При x ⩾ 0 получаем x² − 4x + 3 = 0. Меньший корень ___", a:[e("1")]},
+          {t:"Больший корень ___", a:[e("3")]},
+          {t:"Оба неотрицательны, и слева столько же. Всего нулей ___", a:[e("4")]}] },
+
+ { grp:"extra", lvl:"база", q:"Чему равно значение функции y = |x² − 6|x| + 4| при x = 0?",
+   ans:[e("4")],
+   hint:"При x = 0 оба первых слагаемых обращаются в ноль.",
+   steps:[{t:"Под модулем остаётся ___", a:[e("4")]},
+          {t:"Модуль этого числа равен ___", a:[e("4")]}] },
+
+ { grp:"extra", lvl:"посложнее", q:"Сколько нулей у функции y = |x² − 6|x| + 4|?",
+   ans:[e("4")],
+   hint:"Внешний модуль нулей не добавляет и не убирает. Решай x² − 6|x| + 4 = 0 при x ⩾ 0.",
+   steps:[{t:"При x ⩾ 0: x² − 6x + 4 = 0, D = 36 − 16 = ___", a:[e("20")]},
+          {t:"Корни 3 ± √<span class='rt'>5</span>, оба положительны — это ___ корня", a:[e("2")]},
+          {t:"Слева столько же по симметрии. Всего ___", a:[e("4")]}] },
+
+ { grp:"extra", lvl:"средний", q:"Чему равно значение функции y = |√<span class='rt'>x</span> − 4| при x = 4?",
+   ans:[e("2")],
+   hint:"Сначала корень, потом вычитание, потом модуль.",
+   steps:[{t:"√<span class='rt'>4</span> = ___", a:[e("2")]},
+          {t:"2 − 4 = ___", a:[e("-2"),e("−2")]},
+          {t:"Модуль равен ___", a:[e("2")]}] },
+
+ { grp:"extra", lvl:"средний", q:"Чему равно значение функции y = √<span class='rt'>|x|</span> − 4 при x = −9?",
+   ans:[e("-1"),e("−1")],
+   hint:"Здесь модуль стоит под корнем, а не снаружи всего выражения.",
+   steps:[{t:"|−9| = ___", a:[e("9")]},
+          {t:"√<span class='rt'>9</span> = ___", a:[e("3")]},
+          {t:"3 − 4 = ___", a:[e("-1"),e("−1")]}] },
+
+ { grp:"extra", lvl:"база", q:"Чему равно значение функции y = |2x − 3| при x = 0?",
+   ans:[e("3")],
+   hint:"Подставь ноль и возьми модуль.",
+   steps:[{t:"Под модулем: 0 − 3 = ___", a:[e("-3"),e("−3")]},
+          {t:"Модуль равен ___", a:[e("3")]}] },
+
+ { grp:"extra", lvl:"средний", q:"Чему равно наименьшее значение функции y = |x² − 2x|?",
+   ans:[e("0")],
+   hint:"Модуль не бывает отрицательным. А достигается ли ноль?",
+   steps:[{t:"Модуль всегда ⩾ ___", a:[e("0")]},
+          {t:"При x = 0 выражение под модулем равно ___", a:[e("0")]},
+          {t:"Значит наименьшее значение ___", a:[e("0")]}] },
+
+ { grp:"extra", lvl:"посложнее", q:"Чему равно значение функции y = |−x² − 2|x| + 8| при x = 2?",
+   ans:[e("0")],
+   hint:"|2| = 2, считай по порядку: сначала под модулем.",
+   steps:[{t:"−2² = ___", a:[e("-4"),e("−4")]},
+          {t:"−4 − 2 · 2 + 8 = ___", a:[e("0")]},
+          {t:"Модуль этого числа равен ___", a:[e("0")]}] },
+
+ { grp:"extra", lvl:"посложнее", q:"Сколько точек излома (уголков) у графика функции y = |x² − 2x|?",
+   ans:[e("2")],
+   hint:"Уголки появляются там, где выражение под модулем меняет знак.",
+   steps:[{t:"x² − 2x меняет знак в своих нулях. Меньший ___", a:[e("0")]},
+          {t:"Больший ___", a:[e("2")]},
+          {t:"Значит уголков ___", a:[e("2")]}] }
+];
+
+function norm(s){
+  return String(s).toLowerCase().replace(/\s+/g,"")
+    .replace(/[–—−]/g,"-").replace(/[×·]/g,"*")
+    .replace(/,/g,".").replace(/°/g,"")
+    .replace(/^(ответ:?|x=|y=|α=|a=)/,"");
+}
+function toNum(str){
+  var t = norm(str);
+  if(!t) return NaN;
+  t = t.replace(/√/g,"sqrt").replace(/π/g,"pi");
+  t = t.replace(/sqrt(\d+(?:\.\d+)?)/g,"sqrt($1)");
+  t = t.replace(/(\d)sqrt/g,"$1*sqrt").replace(/(\d)pi/g,"$1*pi");
+  t = t.replace(/(\d)\(/g,"$1*(").replace(/\)(\d)/g,")*$1").replace(/\)\(/g,")*(");
+  if(!/^[-+*/().0-9a-z]+$/.test(t)) return NaN;
+  if(t.replace(/sqrt|pi/g,"").match(/[a-z]/)) return NaN;
+  try{
+    var v = new Function("sqrt","pi","return ("+t+");")(Math.sqrt, Math.PI);
+    return (typeof v === "number" && isFinite(v)) ? v : NaN;
+  }catch(err){ return NaN; }
+}
+function same(a,b){
+  var x = toNum(a), y = toNum(b);
+  if(!isNaN(x) && !isNaN(y)) return Math.abs(x-y) <= Math.max(0.01, Math.abs(y)*0.01);
+  return norm(a) === norm(b);
+}
+function match(v,list){ return list.some(function(x){ return same(v, d(x)); }); }
+
+var KEYS = ["−","|","²","√","(",")"];
+var mode = "solo";
+var solved = {};
+var HOSTS = {};
+Array.prototype.forEach.call(document.querySelectorAll("[data-tasks]"), function(h){
+  HOSTS[h.getAttribute("data-tasks")] = h;
+});
+var host = HOSTS["main"] || document.getElementById("tasks");
+
+var lastInput = null;
+document.getElementById("keys").innerHTML = KEYS.map(function(k){
+  return '<button type="button" data-k="'+k+'">'+k+'</button>';}).join("");
+function keysRow(){ return ""; }
+function bindKeys(scope){
+  scope.querySelectorAll("input").forEach(function(x){
+    x.addEventListener("focus", function(){ lastInput = x; });
+  });
+  document.querySelectorAll("#keys button").forEach(function(b){
+    b.onclick = function(){
+      var inp = lastInput || document.querySelector("#tasks input");
+      if(!inp) return;
+      var k = b.dataset.k === "−" ? "-" : b.dataset.k;
+      var s = inp.selectionStart != null ? inp.selectionStart : inp.value.length;
+      inp.value = inp.value.slice(0,s) + k + inp.value.slice(inp.selectionEnd != null ? inp.selectionEnd : s);
+      inp.focus(); inp.setSelectionRange(s+k.length, s+k.length);
+    };
+  });
+}
+function progress(){
+  var n = Object.keys(solved).filter(function(k){ return solved[k]; }).length;
+  document.getElementById("progress").textContent = "решено " + n + " из " + TASKS.length;
+}
+function render(){
+  for(var _k in HOSTS){ HOSTS[_k].innerHTML = ""; }
+  TASKS.forEach(function(t, i){
+    var box = document.createElement("div");
+    box.className = "task";
+    box.innerHTML = '<div class="taskhead"><span class="tnum">'+(i+1)+'.</span>'+
+      '<span style="font-size:22px">'+t.q+'</span><span class="lvl">'+t.lvl+'</span></div>' +
+      (t.img ? '<div class="fig">'+t.img+'</div>' : '');
+    var body = document.createElement("div");
+
+    if(mode === "solo"){
+      body.innerHTML = keysRow() +
+        '<div class="line"><span>Ответ:</span>'+
+        '<input type="text" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false">'+
+        '<button class="pri chk">Проверить</button><button class="sm hnt">Подсказка</button></div>'+
+        '<div class="hint">'+t.hint+'</div><div class="msg"></div>';
+      box.appendChild(body);
+      var inp = body.querySelector("input"), msg = body.querySelector(".msg");
+      function go(){
+        var v = inp.value.trim();
+        if(!v){ msg.className="msg bad"; msg.textContent="Введи ответ."; return; }
+        var ok = match(v, t.ans);
+        inp.className = ok ? "ok" : "bad";
+        msg.className = "msg " + (ok ? "ok" : "bad");
+        msg.textContent = ok ? "Верно." : "Пока нет — открой подсказку и проверь знак.";
+        solved[i] = ok; progress();
+      }
+      body.querySelector(".chk").onclick = go;
+      body.querySelector(".hnt").onclick = function(){ body.querySelector(".hint").classList.add("on"); };
+      inp.addEventListener("keydown", function(ev){ if(ev.key==="Enter"){ ev.preventDefault(); go(); } });
+    } else {
+      body.innerHTML = keysRow();
+      box.appendChild(body);
+      t.steps.forEach(function(s){
+        var row = document.createElement("div");
+        row.className = "line";
+        var parts = s.t.split("___");
+        row.innerHTML = '<span>'+parts[0]+'</span>'+
+          '<input type="text" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false">'+
+          '<span>'+(parts[1]||"")+'</span>'+
+          '<button class="sm chk">Проверить</button>'+
+          (s.h ? '<button class="sm hnt">?</button>' : '')+
+          '<span class="msg"></span>';
+        body.appendChild(row);
+        var inp = row.querySelector("input"), msg = row.querySelector(".msg");
+        function go(){
+          var v = inp.value.trim();
+          if(!v){ msg.className="msg bad"; msg.textContent="пусто"; return; }
+          var ok = match(v, s.a);
+          inp.className = ok ? "ok" : "bad";
+          msg.className = "msg " + (ok ? "ok" : "bad");
+          msg.textContent = ok ? "верно" : "не то";
+          var all = Array.prototype.slice.call(body.querySelectorAll("input"));
+          solved[i] = all.every(function(x){ return x.classList.contains("ok"); });
+          progress();
+        }
+        row.querySelector(".chk").onclick = go;
+        if(s.h) row.querySelector(".hnt").onclick = function(){ msg.className="msg"; msg.textContent = s.h; };
+        inp.addEventListener("keydown", function(ev){ if(ev.key==="Enter"){ ev.preventDefault(); go(); } });
+      });
+      var all = document.createElement("div");
+      all.className = "line";
+      all.innerHTML = '<button class="pri allbtn">Проверить все шаги</button><span class="msg"></span>';
+      body.appendChild(all);
+      all.querySelector("button").onclick = function(){
+        var left = 0;
+        body.querySelectorAll(".line .chk").forEach(function(b){ b.click(); });
+        body.querySelectorAll("input").forEach(function(x){ if(!x.classList.contains("ok")) left++; });
+        var m = all.querySelector(".msg");
+        m.className = "msg " + (left ? "bad" : "ok");
+        m.textContent = left ? ("осталось шагов: " + left) : "все шаги верны";
+      };
+    }
+    bindKeys(body);
+    (HOSTS[t.grp || "main"] || host).appendChild(box);
+  });
+  progress();
+}
+document.querySelectorAll("#switch button").forEach(function(b){
+  b.onclick = function(){
+    mode = b.dataset.m;
+    document.querySelectorAll("#switch button").forEach(function(x){ x.classList.toggle("act", x===b); });
+    solved = {};
+    render();
+  };
+});
+render();
+
+/* пошаговые разборы */
+document.querySelectorAll("section[data-steps] .stepbtn").forEach(function(btn){
+  var sec = btn.closest("section");
+  var steps = sec.querySelectorAll(".step");
+  var n = 0;
+  btn.onclick = function(){
+    if(n < steps.length){
+      steps[n].classList.add("show"); n++;
+      btn.textContent = n < steps.length ? "Следующий шаг" : "Скрыть решение";
+    } else {
+      steps.forEach(function(s){ s.classList.remove("show"); });
+      n = 0; btn.textContent = "Показать первый шаг";
+    }
+  };
+});
+
+
+/* ============ конструктор преобразований графика ============ */
+window.GLAB = function(id, sp){
+  var svg = document.getElementById(id);
+  if(!svg) return;
+  var bar = document.getElementById(id + "b"), cap = document.getElementById(id + "c");
+  var note = document.getElementById(id + "n");
+  var W = 440, H = 340, PAD = 18;
+  var view = sp.view || [-7, 7, -7, 8];
+  var fi = 0, mode = sp.mode || "f";
+  var MUT = "#5b6270", ACC = "#2f6bd8", GHOST = "#b9c4d6";
+
+  function kx(){ return (W - 2*PAD) / (view[1] - view[0]); }
+  function ky(){ return (H - 2*PAD) / (view[3] - view[2]); }
+  function X(x){ return PAD + (x - view[0]) * kx(); }
+  function Y(y){ return H - PAD - (y - view[2]) * ky(); }
+
+  function base(x){
+    var f = sp.funcs[fi], a = f.a || 0, b = f.b || 0, c = f.c || 0, d = f.d || 0;
+    if(f.t === "quad") return a*x*x + b*x + c;
+    if(f.t === "lin")  return a*x + b;
+    if(f.t === "cub")  return a*x*x*x + b*x*x + c*x + d;
+    if(f.t === "sqrt"){ var u = x - b; return (u < 0) ? null : a*Math.sqrt(u) + c; }
+    if(f.t === "hyp"){ var v = x - b; return (Math.abs(v) < 1e-9) ? null : a/v + c; }
+    return null;
+  }
+  function val(x){
+    var inner = (mode === "fa" || mode === "afa") ? Math.abs(x) : x;
+    var y = base(inner);
+    if(y === null) return null;
+    if(mode === "af" || mode === "afa") y = Math.abs(y);
+    return y;
+  }
+
+  function path(fn){
+    var d = "", pen = false, i, x, y, N = 900;
+    for(i = 0; i <= N; i++){
+      x = view[0] + (view[1] - view[0]) * i / N;
+      y = fn(x);
+      if(y === null || !isFinite(y) || y < view[2] - 40 || y > view[3] + 40){ pen = false; continue; }
+      var px = X(x), py = Y(y);
+      if(!pen){ d += "M" + px.toFixed(1) + " " + py.toFixed(1); pen = true; }
+      else { d += "L" + px.toFixed(1) + " " + py.toFixed(1); }
+    }
+    return d;
+  }
+  function tx(x, y, t, c, anc, size){
+    return '<text x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" font-size="'+(size||13)+'" fill="'+c+
+      '" text-anchor="'+(anc||"middle")+'">'+t+'</text>';
+  }
+
+  function draw(){
+    var s = '<rect x="0" y="0" width="'+W+'" height="'+H+'" rx="12" fill="#ffffff"/>';
+    var i;
+    /* сетка */
+    for(i = Math.ceil(view[0]); i <= view[1]; i++){
+      s += '<line x1="'+X(i).toFixed(1)+'" y1="'+PAD+'" x2="'+X(i).toFixed(1)+'" y2="'+(H-PAD)+
+           '" stroke="#e6ecf5" stroke-width="1"/>';
+    }
+    for(i = Math.ceil(view[2]); i <= view[3]; i++){
+      s += '<line x1="'+PAD+'" y1="'+Y(i).toFixed(1)+'" x2="'+(W-PAD)+'" y2="'+Y(i).toFixed(1)+
+           '" stroke="#e6ecf5" stroke-width="1"/>';
+    }
+    /* оси */
+    s += '<line x1="'+PAD+'" y1="'+Y(0).toFixed(1)+'" x2="'+(W-PAD)+'" y2="'+Y(0).toFixed(1)+
+         '" stroke="#15181e" stroke-width="1.8"/>';
+    s += '<line x1="'+X(0).toFixed(1)+'" y1="'+PAD+'" x2="'+X(0).toFixed(1)+'" y2="'+(H-PAD)+
+         '" stroke="#15181e" stroke-width="1.8"/>';
+    for(i = Math.ceil(view[0]); i <= view[1]; i++){
+      if(i === 0) continue;
+      s += tx(X(i), Y(0) + 15, i, MUT, "middle", 12);
+    }
+    for(i = Math.ceil(view[2]); i <= view[3]; i++){
+      if(i === 0) continue;
+      s += tx(X(0) - 7, Y(i) + 4, i, MUT, "end", 12);
+    }
+    s += tx(W - PAD + 5, Y(0) + 5, "x", MUT, "middle", 14);
+    s += tx(X(0) - 13, PAD + 4, "y", MUT, "end", 14);
+    /* исходный график серым */
+    if(mode !== "f"){
+      s += '<path d="'+path(base)+'" fill="none" stroke="'+GHOST+'" stroke-width="2" '+
+           'stroke-dasharray="6 5"/>';
+    }
+    /* результат */
+    s += '<path d="'+path(val)+'" fill="none" stroke="'+ACC+'" stroke-width="3.2" '+
+         'stroke-linejoin="round" stroke-linecap="round"/>';
+    svg.innerHTML = s;
+
+    var f = sp.funcs[fi];
+    var na = f.nameA || f.name;
+    var names = {f: f.name, fa: na, af: "|" + f.name + "|", afa: "|" + na + "|"};
+    cap.innerHTML = "y = " + names[mode];
+    var hints = {
+      f: "Исходный график. Нажимай кнопки — увидишь, что делает каждый модуль.",
+      fa: "Модуль <b>внутри</b>: левую часть убрали, правую отразили относительно оси ординат. График стал чётным.",
+      af: "Модуль <b>снаружи</b>: часть ниже оси абсцисс отразили вверх. График не опускается ниже оси.",
+      afa: "Сначала внутренний модуль, потом внешний. Результат и чётный, и неотрицательный."
+    };
+    note.innerHTML = hints[mode];
+    var bs = bar.querySelectorAll("button");
+    for(i = 0; i < bs.length; i++){
+      var m = bs[i].getAttribute("data-m"), n = bs[i].getAttribute("data-f");
+      bs[i].className = ((m && m === mode) || (n !== null && +n === fi)) ? "on" : "";
+    }
+  }
+
+  var h = "", k;
+  for(k = 0; k < sp.funcs.length; k++){
+    h += '<button type="button" data-f="'+k+'">'+sp.funcs[k].short+'</button>';
+  }
+  h += '<div class="sep"></div>';
+  var modes = [["f", "f(x)"], ["fa", "f(|x|)"], ["af", "|f(x)|"], ["afa", "|f(|x|)|"]];
+  for(k = 0; k < modes.length; k++){
+    h += '<button type="button" data-m="'+modes[k][0]+'">'+modes[k][1]+'</button>';
+  }
+  bar.innerHTML = h;
+  bar.addEventListener("click", function(ev){
+    var el = ev.target;
+    if(el.tagName !== "BUTTON") return;
+    if(el.getAttribute("data-m")) mode = el.getAttribute("data-m");
+    else if(el.getAttribute("data-f") !== null) fi = +el.getAttribute("data-f");
+    draw();
+  });
+  draw();
+};
+
+var GL = {"gl1": {"funcs": [{"t": "quad", "a": 1, "b": -2, "c": -5, "name": "x² − 2x − 5", "nameA": "x² − 2|x| − 5", "short": "x²−2x−5"}, {"t": "quad", "a": 1, "b": -2, "c": 0, "name": "x² − 2x", "nameA": "x² − 2|x|", "short": "x²−2x"}, {"t": "quad", "a": 1, "b": -6, "c": 4, "name": "x² − 6x + 4", "nameA": "x² − 6|x| + 4", "short": "x²−6x+4"}, {"t": "sqrt", "a": 1, "b": 0, "c": -4, "name": "√x − 4", "nameA": "√|x| − 4", "short": "√x−4"}, {"t": "hyp", "a": 6, "b": 1, "c": 0, "name": "6 : (x − 1)", "nameA": "6 : (|x| − 1)", "short": "6/(x−1)"}, {"t": "lin", "a": 2, "b": -3, "name": "2x − 3", "nameA": "2|x| − 3", "short": "2x−3"}], "mode": "f", "view": [-7, 7, -7, 8]}, "gl2": {"funcs": [{"t": "quad", "a": 1, "b": -2, "c": -5, "name": "x² − 2x − 5", "nameA": "x² − 2|x| − 5", "short": "x²−2x−5"}], "mode": "fa", "view": [-7, 7, -7, 8]}, "gl3": {"funcs": [{"t": "quad", "a": 1, "b": -2, "c": 0, "name": "x² − 2x", "nameA": "x² − 2|x|", "short": "x²−2x"}], "mode": "af", "view": [-3, 5, -3, 6]}, "gl4": {"funcs": [{"t": "quad", "a": 1, "b": -6, "c": 4, "name": "x² − 6x + 4", "nameA": "x² − 6|x| + 4", "short": "x²−6x+4"}, {"t": "quad", "a": 1, "b": -4, "c": 3, "name": "x² − 4x + 3", "nameA": "x² − 4|x| + 3", "short": "x²−4x+3"}, {"t": "quad", "a": -1, "b": -2, "c": 8, "name": "−x² − 2x + 8", "nameA": "−x² − 2|x| + 8", "short": "−x²−2x+8"}], "mode": "afa", "view": [-8, 8, -2, 9]}};
+for (var _g in GL){ GLAB(_g, GL[_g]); }
+</script>
+</body>
+</html>
