@@ -126,8 +126,11 @@ details[open] summary{margin-bottom:8px}
   color:var(--acc);font-weight:700}
 .fbox p{margin:6px 0 0;line-height:1.6;font-size:16px}
 .fbox p.small{font-size:15px}
-.ff{font-size:20px;line-height:2.3;text-align:center;margin:6px 0;overflow-x:auto;
-  overflow-y:hidden;white-space:nowrap;font-weight:600}
+.ff{font-size:20px;line-height:2.3;text-align:center;margin:6px 0;font-weight:600;
+  white-space:normal;overflow-wrap:break-word}
+.fbox .ff{font-size:18px;line-height:2.1}
+.pw sub{font-size:0.68em;line-height:0;vertical-align:-0.25em;padding-left:1px}
+.nw{white-space:nowrap}
 .trnav{margin-top:12px;display:flex;gap:9px;flex-wrap:wrap}
 .trgate{margin-top:12px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;
   font-size:16px;background:var(--bg)}
@@ -216,7 +219,7 @@ details[open] summary{margin-bottom:8px}
 <div class="meta">Сюда возвращаются, когда застряли. Читать целиком сразу не нужно.</div>
 
 <h3>Четыре способа разложения</h3>
-<div class="fgrid"><div class="fbox"><h4>1 · Общий множитель</h4><div class="ff">3a − 3b = 3(a − b)</div><p>Смотрим, что есть в <b>каждом</b> слагаемом, и выносим за скобку.</p><p class="small">Проверка — раскрой скобки обратно.</p></div><div class="fbox"><h4>2 · Формулы сокращённого умножения</h4><div class="ff"><span class='pw'>a<sup>2</sup></span> − <span class='pw'>b<sup>2</sup></span> = (a − b)(a + b)</div><div class="ff"><span class='pw'>a<sup>2</sup></span> ± 2ab + <span class='pw'>b<sup>2</sup></span> = <span class='pw'>(a ± b)<sup>2</sup></span></div><p class="small">Узнаём по виду: два квадрата через минус или три слагаемых с удвоенным произведением.</p></div><div class="fbox"><h4>3 · Квадратный трёхчлен</h4><div class="ff"><span class='pw'>ax<sup>2</sup></span> + bx + c = a(x − <span class='pw'>x<sup>1</sup></span>)(x − <span class='pw'>x<sup>2</sup></span>)</div><p>Когда ФСУ не подходит — ищем корни через дискриминант.</p><p class="small"><span class='pw'>x<sup>2</sup></span> + 2x − 15 = (x − 3)(x + 5).</p></div><div class="fbox"><h4>4 · Группировка</h4><div class="ff">ab − 4b − 2a + 8 = (a − 4)(b − 2)</div><p>Четыре слагаемых разбиваем на пары так, чтобы в обеих вышла одинаковая скобка.</p><p class="small">Если скобки получились разные — поменяй разбиение.</p></div></div>
+<div class="fgrid"><div class="fbox"><h4>1 · Общий множитель</h4><div class="ff">3a − 3b = 3(a − b)</div><p>Смотрим, что есть в <b>каждом</b> слагаемом, и выносим за скобку.</p><p class="small">Проверка — раскрой скобки обратно.</p></div><div class="fbox"><h4>2 · Формулы сокращённого умножения</h4><div class="ff"><span class='pw'>a<sup>2</sup></span> − <span class='pw'>b<sup>2</sup></span> = <span class='nw'>(a − b)(a + b)</span></div><div class="ff"><span class='pw'>a<sup>2</sup></span> ± 2ab + <span class='pw'>b<sup>2</sup></span> = <span class='pw'>(a ± b)<sup>2</sup></span></div><p class="small">Узнаём по виду: два квадрата через минус или три слагаемых с удвоенным произведением.</p></div><div class="fbox"><h4>3 · Квадратный трёхчлен</h4><div class="ff"><span class='pw'>ax<sup>2</sup></span> + bx + c = <span class='nw'>a(x − <span class='pw'>x<sub>1</sub></span>)(x − <span class='pw'>x<sub>2</sub></span>)</span></div><p>Когда ФСУ не подходит — ищем корни через дискриминант.</p><p class="small"><span class='pw'>x<sup>2</sup></span> + 2x − 15 = (x − 3)(x + 5).</p></div><div class="fbox"><h4>4 · Группировка</h4><div class="ff">ab − 4b − 2a + 8 = <span class='nw'>(a − 4)(b − 2)</span></div><p>Четыре слагаемых разбиваем на пары так, чтобы в обеих вышла одинаковая скобка.</p><p class="small">Если скобки получились разные — поменяй разбиение.</p></div></div>
 
 <h3>Знаки и степени</h3>
 <div class="fgrid"><div class="fbox"><h4>Минус за скобку</h4><div class="ff">a − b = −(b − a)</div><div class="ff">−2a − 4 = −2(a + 2)</div><p>Вынося минус, <b>меняем знак каждого</b> слагаемого в скобке.</p><p class="small">Это главный приём для дробей вида (a − b) : (b − a).</p></div><div class="fbox"><h4>Чётная степень</h4><div class="ff"><span class='pw'>(a − b)<sup>2</sup></span> = <span class='pw'>(b − a)<sup>2</sup></span></div><p>Под скобкой <b>чётной</b> степени можно поменять все знаки — значение не изменится.</p><p class="small">Значит и слагаемые разности можно переставить местами.</p></div><div class="fbox"><h4>Нечётная степень</h4><div class="ff"><span class='pw'>(a − b)<sup>3</sup></span> = −<span class='pw'>(b − a)<sup>3</sup></span></div><p>У <b>нечётной</b> степени перестановка меняет знак всего выражения.</p><p class="small">Проверяй на числах: <span class='pw'>(2−5)<sup>3</sup></span> = −27, <span class='pw'>(5−2)<sup>3</sup></span> = 27.</p></div></div>
@@ -302,7 +305,7 @@ details[open] summary{margin-bottom:8px}
 <div class="def"><div class="n">КОГДА ФОРМУЛЫ НЕ ПОДХОДЯТ</div>
 Если три слагаемых, но средний не равен удвоенному произведению, ищем корни
 через дискриминант и раскладываем по формуле.</div>
-<div class="ff"><span class='pw'>ax<sup>2</sup></span> + bx + c = a(x − <span class='pw'>x<sup>1</sup></span>)(x − <span class='pw'>x<sup>2</sup></span>)</div>
+<div class="ff"><span class='pw'>ax<sup>2</sup></span> + bx + c = <span class='nw'>a(x − <span class='pw'>x<sub>1</sub></span>)(x − <span class='pw'>x<sub>2</sub></span>)</span></div>
 <div class="ex"><h3>Пример 3</h3>
 <p>Сократи <span class='fr'><b><span class='pw'>x<sup>2</sup></span> + 2x − 15</b><i><span class='pw'>x<sup>2</sup></span> − 9</i></span>.</p>
 <div class="step">1. Числитель: D = 4 + 60 = 64, корни x = 3 и x = −5.</div>
@@ -411,7 +414,7 @@ details[open] summary{margin-bottom:8px}
   <p class="f-formula"><b>Способ 2 — формулы.</b> <span class='pw'>a<sup>2</sup></span> − <span class='pw'>b<sup>2</sup></span> = (a − b)(a + b); <span class='pw'>a<sup>2</sup></span> + 2ab + <span class='pw'>b<sup>2</sup></span> = <span class='pw'>(a + b)<sup>2</sup></span>; <span class='pw'>a<sup>2</sup></span> − 2ab + <span class='pw'>b<sup>2</sup></span> = <span class='pw'>(a − b)<sup>2</sup></span>.
   Два слагаемых через минус — разность квадратов; три слагаемых с удвоенным
   произведением — квадрат суммы или разности.</p>
-  <p class="f-formula"><b>Способ 3 — квадратный трёхчлен.</b> <span class='pw'>ax<sup>2</sup></span> + bx + c = a(x − <span class='pw'>x<sup>1</sup></span>)(x − <span class='pw'>x<sup>2</sup></span>).
+  <p class="f-formula"><b>Способ 3 — квадратный трёхчлен.</b> <span class='pw'>ax<sup>2</sup></span> + bx + c = a(x − <span class='pw'>x<sub>1</sub></span>)(x − <span class='pw'>x<sub>2</sub></span>).
   Считаем дискриминант, находим корни, подставляем в формулу. Старший коэффициент
   не теряем.</p>
   <p class="f-formula"><b>Способ 4 — группировка.</b> Четыре слагаемых разбиваем на пары
