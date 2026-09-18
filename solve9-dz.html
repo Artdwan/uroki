@@ -2,8 +2,8 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Решение прямоугольных треугольников — 9 класс</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Решение прямоугольных треугольников — §2, геометрия 9 класс</title>
 <style>
 :root{
   --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
@@ -55,30 +55,174 @@ details[open] summary{margin-bottom:8px}
 .note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
 .task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
 .fig{margin:12px 0;text-align:center}
-.fig svg{width:100%;max-width:400px;height:auto;border-radius:12px}
-.small{color:var(--muted);font-size:15px}
-.hint.last{background:var(--warn-soft)}
-.sol .step{margin:7px 0}
+
+.tr{border:1px solid var(--line);border-radius:12px;padding:14px;margin:16px 0;background:var(--bg)}
+.trhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;
+  margin-bottom:8px}
+.trhead b{font-size:17px}
+.trscore{color:var(--muted);font-size:15px;white-space:nowrap}
+.trq{font-size:17px;margin:8px 0}
+.trfig{text-align:center;margin:8px 0}
+.trfig svg{width:100%;max-width:330px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.tropts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
+.tropt{border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;
+  background:var(--card);font-size:16px;text-align:left;min-height:46px}
+.tropt:hover{border-color:var(--acc)}
+.tropt.right{border-color:var(--ok);background:var(--ok-soft);font-weight:600}
+.tropt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.tropts.done .tropt{cursor:default}
+.trnum{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.trnum input{font:inherit;font-size:18px;padding:9px 11px;border-radius:9px;
+  border:1.5px solid var(--line);background:var(--card);color:var(--ink);max-width:130px}
+.trmsg{font-size:16px;margin-top:8px}
+.trmsg .v{font-weight:700}
+.trmsg .v.ok{color:var(--ok)} .trmsg .v.bad{color:var(--bad)}
+.trmsg .why{color:var(--muted);font-size:15px;margin-top:4px}
+.trbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.trbar button{font-size:15px;padding:8px 13px;min-height:42px}
+.trdone{background:var(--acc-soft);border-radius:10px;padding:12px;font-size:17px;
+  text-align:center;font-weight:600}
+
+.tfw{margin:14px 0;border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--bg)}
+.tfw .tffig{text-align:center;margin:4px 0 8px}
+.tfw .tffig svg{width:100%;max-width:330px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.tfbar{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-top:6px}
+.tfbar label{font-size:15px;color:var(--muted)}
+.tfbar input[type=range]{flex:1 1 180px;min-width:150px;accent-color:var(--acc);height:34px}
+.tfbar input[type=text]{font:inherit;font-size:18px;padding:8px 10px;border:1.5px solid var(--line);
+  border-radius:9px;width:110px;background:var(--card);color:inherit;text-align:center}
+.tfbar button{min-height:40px;font-size:15px;padding:7px 12px}
+.tfang{font-size:19px;font-weight:700;min-width:62px;text-align:center}
+.tfvals{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:8px;margin-top:10px}
+.tfv{border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--card);
+  font-size:17px;display:flex;justify-content:space-between;align-items:baseline;gap:6px}
+.tfv b{font-weight:600}
+.tfv i{font-style:normal;font-variant-numeric:tabular-nums}
+.tfv .up{color:#137a45;font-weight:700}
+.tfv .dn{color:#b3261e;font-weight:700}
+.tfid{margin-top:10px;text-align:center;font-size:18px;font-weight:600;line-height:2}
+.tfnote{color:var(--muted);font-size:15px;margin-top:8px;line-height:1.5}
+.tfbad{color:#b3261e;font-weight:700}
+.tfsteps{margin:10px 0 0;padding:0;list-style:none;counter-reset:tf}
+.tfsteps li{counter-increment:tf;margin:7px 0;padding-left:32px;position:relative;font-size:16px;
+  line-height:1.9}
+.tfsteps li::before{content:counter(tf);position:absolute;left:0;top:2px;width:23px;height:23px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:13px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.tfres{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:10px}
+.tfres div{border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:var(--card);
+  font-size:18px;text-align:center;line-height:2.4}
+.tfpick{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:8px}
+.tfpick button{min-height:40px;font-size:16px;padding:7px 14px}
+.tfpick button.on{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:700}
+.tfex{margin-top:9px;display:flex;flex-wrap:wrap;gap:7px}
+.tfex button{font-size:14px;padding:6px 10px;min-height:36px}
+
+.stw{margin:14px 0;border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--bg)}
+.stpick{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:9px}
+.stpick button{min-height:42px;font-size:15px;padding:7px 12px}
+.stpick button.on{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:700}
+.stbar{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-top:6px}
+.stbar label{font-size:15px;color:var(--muted)}
+.stbar input{font:inherit;font-size:18px;padding:8px 10px;border:1.5px solid var(--line);
+  border-radius:9px;width:104px;background:var(--card);color:inherit;text-align:center}
+.stbar button{min-height:42px;font-size:15px;padding:8px 13px}
+.stfig{text-align:center;margin:10px 0 6px}
+.stfig svg{width:100%;max-width:330px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.ststeps{margin:10px 0 0;padding:0;list-style:none;counter-reset:st}
+.ststeps li{counter-increment:st;margin:7px 0;padding-left:32px;position:relative;font-size:16px;
+  line-height:1.9}
+.ststeps li::before{content:counter(st);position:absolute;left:0;top:2px;width:23px;height:23px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:13px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.stres{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:8px;margin-top:10px}
+.stres div{border:1px solid var(--line);border-radius:10px;padding:9px 10px;background:var(--card);
+  font-size:17px;text-align:center}
+.stres b{font-weight:600}
+.stnote{color:var(--muted);font-size:15px;margin-top:9px;line-height:1.5}
+.stbad{color:#b3261e;font-weight:700}
+.stex{margin-top:9px;display:flex;flex-wrap:wrap;gap:7px}
+.stex button{font-size:14px;padding:6px 10px;min-height:36px}
+
+.pw{white-space:nowrap}
+.pw sup{font-size:0.68em;line-height:0;vertical-align:0.62em;padding-left:1px}
+.nw{white-space:nowrap}
+.fig{text-align:center;margin:10px 0}
+.fig svg{width:100%;max-width:300px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.fbox .fig svg{max-width:215px}
+.fx{display:block;background:var(--acc-soft,var(--acc2,#e8f0ff));border:1px solid var(--line);
+  border-radius:10px;padding:12px 13px;margin:12px 0;text-align:center;font-size:22px;
+  line-height:2.4;font-weight:600;white-space:normal;overflow-wrap:break-word}
+.sol .fx,.ex .fx{font-size:19px;margin:9px 0}
+.def{border:1px solid var(--line);border-left:4px solid #2f6bd8;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#eef3fb}
+.def .n{font-size:14px;color:#2f6bd8;font-weight:700;letter-spacing:.4px}
+.rule2{border:1px solid var(--line);border-left:4px solid #c0397a;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdf0f6}
+.rule2 .n{font-size:14px;color:#a02a62;font-weight:700;letter-spacing:.4px}
+.hard{border:1px solid var(--line);border-left:4px solid #7a3fbf;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#f4efff}
+.hard .n{font-size:14px;color:#5f2ea0;font-weight:700;letter-spacing:.4px}
+@media (prefers-color-scheme:dark){.rule2{background:#2a1b23}.def{background:#18212f}
+  .hard{background:#221a33}}
 .ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;background:var(--bg)}
 .ex h3{margin-top:0}
-.ex .q{font-weight:600}
-.wrap-t th,.wrap-t td{white-space:normal;text-align:left;vertical-align:top}
-.fx{display:block;background:var(--acc-soft);border:1px solid var(--line);border-radius:10px;
-  padding:11px 13px;margin:12px 0;text-align:center;font-size:21px;line-height:1.7;
-  font-weight:600;overflow-x:auto}
-.sol .fx,.ex .fx{font-size:19px;margin:9px 0}
-.fx .fi{display:inline-block;white-space:nowrap;margin:3px 14px}
-.f-formula{font-size:20px}
-.tool{border:1px solid var(--line);border-radius:12px;padding:14px;margin:14px 0;background:var(--bg)}
-.tool input[type=text]{font:inherit;font-size:18px;padding:8px 10px;border-radius:9px;
-  border:1.5px solid var(--line);background:var(--card);color:var(--ink);max-width:100px}
-.trow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;margin-bottom:10px}
-.trow label{color:var(--muted);font-size:15px}
-.tgrid{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
-.tgt{border-collapse:collapse;margin:4px auto}
-.tgt th,.tgt td{border:1px solid var(--line);padding:6px 7px;text-align:center;white-space:nowrap}
-.tgt th{background:var(--acc-soft);font-size:15px;font-weight:600}
-.tgt td{font-weight:700;font-size:18px}
+.tohw{font-weight:700;margin:18px 0 0;font-size:18px}
+.tohw span{color:var(--muted);font-weight:400;font-size:15px;display:block;margin-top:3px}
+.small,.mini{color:var(--muted);font-size:15px}
+.fr{display:inline-block;vertical-align:-0.58em;text-align:center;margin:0 3px}
+.fr b{display:block;border-bottom:1.7px solid currentColor;padding:0 6px;font-weight:400;
+  white-space:nowrap}
+.fr i{display:block;font-style:normal;padding:0 6px;white-space:nowrap}
+.opts .opt{font-size:18px;line-height:2.2}
+.task>div:first-child{line-height:2.3}
+.trq,.trmsg .why{line-height:2.2}
+.tropt{line-height:2.1}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.pam h3{font-size:18px;margin:18px 0 2px}
+.pam h3:first-of-type{margin-top:10px}
+.fgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));margin:9px 0}
+.fbox{border:1px solid var(--line);border-radius:12px;padding:9px 12px 11px;background:var(--bg)}
+.fbox h4{margin:0 0 3px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.fbox p{margin:6px 0 0;line-height:1.6;font-size:16px}
+.fbox p.small{font-size:15px}
+.ff{font-size:20px;line-height:2.3;text-align:center;margin:6px 0;font-weight:600;
+  white-space:normal;overflow-wrap:break-word}
+.fbox .ff{font-size:18px;line-height:2.1}
+.vtab{width:100%;border-collapse:collapse;font-size:16px;margin:8px 0}
+.vtab th,.vtab td{border:1px solid var(--line);padding:6px 5px;text-align:center}
+.vtab th{background:var(--acc2,#e8f0ff);font-size:15px}
+.vtab td.l{text-align:left}
+.trnav{margin-top:12px;display:flex;gap:9px;flex-wrap:wrap}
+.trgate{margin-top:12px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;
+  font-size:16px;background:var(--bg)}
+.trgate.ready{border-color:#1f8a54;background:#e9f7ef}
+.trgate ul{margin:6px 0 0;padding-left:20px}
+.trgate li{margin:3px 0}
+.trgate a{color:var(--acc);text-decoration:none;border-bottom:1px solid currentColor;cursor:pointer}
+@media (prefers-color-scheme:dark){.trgate.ready{background:#12281d}}
+.tr.need{outline:2px solid #c99a2e;outline-offset:3px}
+.savenote{margin-top:9px;color:var(--muted);font-size:14.5px;line-height:1.45}
+.savenote button{font-size:14px;padding:5px 10px;min-height:34px;margin-left:8px}
+.sheet .f-formula{margin:5px 0;font-size:14.5px;line-height:2.1}
+@media print{
+  .sheet>.meta{display:none}
+  .sheet h2{font-size:18px;margin:0 0 5px}
+  .sheet .f-formula{font-size:11.5px;line-height:1.8;margin:2px 0}
+  .sheet .fr{font-size:10.5px;vertical-align:-0.55em}
+  .sheet .vtab{font-size:10.5px}
+  .sheet .vtab th,.sheet .vtab td{padding:2px 3px}
+}
+
 .task.ok{border-color:var(--ok);background:var(--ok-soft)}
 .task.bad{border-color:var(--bad);background:var(--bad-soft)}
 .tnum{font-weight:700;margin-right:6px}
@@ -124,292 +268,291 @@ details[open] summary{margin-bottom:8px}
 
 <div class="card top">
   <h1>Решение прямоугольных треугольников</h1>
-  <div class="meta">Геометрия, 9 класс · §2 · домашнее задание · 14 задач</div>
+  <div class="meta">Геометрия · 9 класс · §2 · решатель треугольника, 7 тренажёров,
+  18 задач</div>
   <label class="f" for="name">Имя и фамилия</label>
   <input type="text" id="name" placeholder="напиши, как в журнале" autocapitalize="words" spellcheck="false">
+  <div class="savenote" id="savenote"></div>
   <div class="note" style="margin-top:14px">
-    Как работать: прочитай теорию, разбери семь примеров, реши задачи. У каждой задачи есть три
-    подсказки — они открываются по одной и ведут от идеи к вычислению; открывать их не стыдно.
-    Для углов вроде 32° внизу теории есть таблица значений. Решения записывай в тетрадь с чертежом,
-    потом сфотографируй, приложи фото внизу страницы и нажми «Отправить на проверку».
+    <b>Как работать.</b> Страница идёт по кругу: короткая порция теории — разобранный
+    пример — тренажёр ровно на этот приём — задачи. Не перепрыгивай вперёд.
+    <div style="margin-top:8px">Главный навык темы: <b>назвать стороны относительно
+    данного угла</b> и по этому выбрать формулу. Само вычисление — последний и самый
+    простой шаг.</div>
+    <div style="margin-top:8px">Если ответ получается с корнем, так и пиши: 4√3 или √5/5.
+    Знак корня есть на экранной клавиатуре под полем ответа. Где просят округлить —
+    округляй до 0,1.</div>
+    <div style="margin-top:8px"><b>Все семь тренажёров нужно пройти до конца</b> — без этого
+    работа не отправится. Ошибки не страшны: важно дойти до итога и прочитать разбор.</div>
   </div>
+</div>
+
+<div class="card pam">
+
+<h2>Памятка: всё, что понадобится</h2>
+<div class="meta">Сюда возвращаются, когда застряли. Читать целиком сразу не нужно.</div>
+
+<h3>Три пары формул</h3>
+<div class="fgrid"><div class="fbox"><h4>1 · Катет через гипотенузу</h4><div class="ff">a = c · sin α</div><div class="ff">b = c · cos α</div><div class="fig"><svg viewBox="0 0 250 160"><rect x="0" y="0" width="250" height="160" rx="12" fill="#ffffff"/><polygon points="78.0,114.0 202.0,114.0 78.0,34.0" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/><polyline points="93.0,114.0 93.0,99.0 78.0,99.0" fill="none" stroke="#15181e" stroke-width="2"/><path d="M 175.0 114.0 A 27.0 27.0 0 0 1 179.3 99.4" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="143.9" y="96.9" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">α</text><text x="140" y="140" font-size="18" fill="#15181e" text-anchor="middle" font-weight="600">b</text><text x="66" y="80" font-size="18" fill="#15181e" text-anchor="end" font-weight="600">a</text><text x="156" y="66" font-size="18" fill="#15181e" text-anchor="start" font-weight="600">c</text><text x="66" y="134" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">C</text><text x="216" y="134" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">A</text><text x="64" y="30" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">B</text></svg></div><p class="small">Катет равен гипотенузе, умноженной на синус противолежащего или на косинус прилежащего угла.</p></div><div class="fbox"><h4>2 · Гипотенуза через катет</h4><div class="ff">c = <span class='fr'><b>a</b><i>sin α</i></span></div><div class="ff">c = <span class='fr'><b>b</b><i>cos α</i></span></div><p>Гипотенуза равна катету, делённому на синус противолежащего или на косинус прилежащего угла.</p><p class="small">Делим, а не умножаем: гипотенуза — самая длинная сторона.</p></div><div class="fbox"><h4>3 · Катет через катет</h4><div class="ff">a = b · tg α</div><div class="ff">b = a · ctg α</div><p class="small">Катет равен другому катету, умноженному на тангенс противолежащего или на котангенс прилежащего к первому катету угла.</p></div></div>
+
+<h3>Углы, особые случаи, проверки</h3>
+<div class="fgrid"><div class="fbox"><h4>Второй острый угол</h4><div class="ff">β = 90° − α</div><p>Сумма острых углов прямоугольного треугольника равна 90°.</p><p class="small">Это первое, что стоит написать, когда дан угол.</p></div><div class="fbox"><h4>Особые углы</h4><div class="ff">против 30° — половина гипотенузы</div><div class="ff">b = a√3 &nbsp; при углах 30° и 60°</div><div class="ff">c = a√2 &nbsp; при угле 45°</div><p class="small">Здесь калькулятор не нужен — считается точно.</p></div><div class="fbox"><h4>Проверки</h4><p>Гипотенуза должна выйти длиннее каждого катета.</p><p>Против большего угла лежит большая сторона.</p><div class="ff"><span class='pw'>a<sup>2</sup></span> + <span class='pw'>b<sup>2</sup></span> = <span class='pw'>c<sup>2</sup></span></div><p class="small">И обязательно: теорема Пифагора должна сойтись.</p></div></div>
+
+<h3>Значения, которые стоит помнить</h3>
+<table class="vtab">
+<tr><th>α</th><th>30°</th><th>45°</th><th>60°</th></tr>
+<tr><td>sin α</td><td><span class='fr'><b>1</b><i>2</i></span></td><td><span class='fr'><b>√2</b><i>2</i></span></td><td><span class='fr'><b>√3</b><i>2</i></span></td></tr>
+<tr><td>cos α</td><td><span class='fr'><b>√3</b><i>2</i></span></td><td><span class='fr'><b>√2</b><i>2</i></span></td><td><span class='fr'><b>1</b><i>2</i></span></td></tr>
+<tr><td>tg α</td><td><span class='fr'><b>√3</b><i>3</i></span></td><td>1</td><td>√3</td></tr>
+<tr><td>ctg α</td><td>√3</td><td>1</td><td><span class='fr'><b>√3</b><i>3</i></span></td></tr>
+</table>
+
 </div>
 
 <div class="card">
-  <h2>Теория</h2>
 
-  <h3>1. Что значит «решить треугольник»</h3>
-  <p><b>Решить прямоугольный треугольник</b> — значит найти все его неизвестные стороны и углы
-  по нескольким известным элементам.</p>
-  <div class="fig"><svg viewBox="0 0 380 250"><rect x="0" y="0" width="380" height="250" rx="12" fill="#ffffff"/><polygon points="78.0,190.9 332.0,190.9 78.0,27.1" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/><polyline points="93.0,190.9 93.0,175.9 78.0,175.9" fill="none" stroke="#15181e" stroke-width="2"/><path d="M 305.0 190.9 A 27.0 27.0 0 0 1 309.3 176.3" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="273.9" y="173.8" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">α</text><path d="M 78.0 54.1 A 27.0 27.0 0 0 0 100.7 41.7" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="97.4" y="62.7" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">β</text><text x="205" y="217" font-size="18" fill="#15181e" text-anchor="middle" font-weight="600">b</text><text x="66" y="115" font-size="18" fill="#15181e" text-anchor="end" font-weight="600">a</text><text x="221" y="101" font-size="18" fill="#15181e" text-anchor="start" font-weight="600">c</text><text x="66" y="211" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">C</text><text x="346" y="211" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">A</text><text x="64" y="23" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">B</text><text x="190" y="242" font-size="15" fill="#5b6270" text-anchor="middle">a — против угла α,  b — прилежит к углу α</text></svg></div>
-  <p>Договоримся об обозначениях: ∠C = 90°, катет <b>a</b> лежит против угла α, катет <b>b</b>
-  прилежит к углу α, <b>c</b> — гипотенуза. Один элемент известен всегда: сумма острых углов
-  прямоугольного треугольника равна 90°.</p>
-  <div class="fx">α + β = 90°</div>
+<h2>1. Что значит «решить треугольник»</h2>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>
+Решить прямоугольный треугольник — значит найти все его неизвестные стороны и углы
+по тем данным, которые есть.</div>
+<p>Данных всегда хватает, если известны два элемента и хотя бы один из них — сторона.
+Прямой угол считается известным заранее.</p>
+<div class="fig"><svg viewBox="0 0 330 215"><rect x="0" y="0" width="330" height="215" rx="12" fill="#ffffff"/><polygon points="78.0,158.4 282.0,158.4 78.0,24.6" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/><polyline points="93.0,158.4 93.0,143.4 78.0,143.4" fill="none" stroke="#15181e" stroke-width="2"/><path d="M 255.0 158.4 A 27.0 27.0 0 0 1 259.4 143.6" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="225.9" y="141.7" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">α</text><path d="M 78.0 51.6 A 27.0 27.0 0 0 0 100.6 39.4" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="97.3" y="60.3" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">β</text><text x="180" y="184" font-size="18" fill="#15181e" text-anchor="middle" font-weight="600">b</text><text x="66" y="98" font-size="18" fill="#15181e" text-anchor="end" font-weight="600">a</text><text x="196" y="84" font-size="18" fill="#15181e" text-anchor="start" font-weight="600">c</text><text x="66" y="178" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">C</text><text x="296" y="178" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">A</text><text x="64" y="21" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">B</text><text x="165" y="207" font-size="15" fill="#5b6270" text-anchor="middle">∠C = 90°, a — против угла α, b — рядом с ним</text></svg></div>
+<div class="rule2"><div class="n">ЯЗЫК ЧЕРТЕЖА</div>
+Названия сторон зависят от того, про какой острый угол идёт речь. Для угла α:
+катет a — <b>противолежащий</b>, катет b — <b>прилежащий</b>, сторона c — гипотенуза.
+Для угла β всё наоборот: a становится прилежащим, а b — противолежащим.</div>
+<div class="ff">β = 90° − α</div>
+<p>Поэтому первое действие почти в любой задаче — отметить на чертеже данный угол
+и подписать стороны относительно именно него.</p>
+<div class="ex"><h3>Пример 1</h3>
+<p>В треугольнике ABC угол C прямой, ∠A = 35°. Чему равен ∠B и какой катет
+противолежит углу B?</p>
+<div class="step">1. ∠B = 90° − 35° = 55°.</div>
+<div class="step">2. Углу B противолежит катет AC — он же прилежащий к углу A.</div>
+<div class="ff">∠B = 55°, противолежащий катет — AC</div>
+<div class="step mini">Один и тот же катет называется по-разному в зависимости от угла.
+Это и есть источник большинства ошибок в теме.</div></div>
 
-  <h3>2. Четыре рабочие формулы</h3>
-  <p>Все они получаются из определений синуса, косинуса и тангенса — надо только выразить
-  из них нужную сторону.</p>
-  <div class="fx"><span class="fi">a = c · sin α</span><span class="fi">b = c · cos α</span><span class="fi">a = b · tg α</span></div>
-  <div class="fx"><span class="fi">c = a : sin α</span><span class="fi">c = b : cos α</span></div>
-  <div class="scroll"><table class="wrap-t">
-    <tr><th>правило словами</th><th>формула</th></tr>
-    <tr><td>катет = гипотенуза × синус <b>противолежащего</b> угла</td><td>a = c · sin α</td></tr>
-    <tr><td>катет = гипотенуза × косинус <b>прилежащего</b> угла</td><td>b = c · cos α</td></tr>
-    <tr><td>катет = другой катет × тангенс угла, <b>противолежащего первому</b></td><td>a = b · tg α</td></tr>
-    <tr><td>гипотенуза = катет : синус <b>противолежащего</b> угла</td><td>c = a : sin α</td></tr>
-    <tr><td>гипотенуза = катет : косинус <b>прилежащего</b> угла</td><td>c = b : cos α</td></tr>
-  </table></div>
-  <div class="note">Главный вопрос при выборе формулы всегда один: <b>как известный катет расположен
-  относительно данного угла</b> — противолежит ему или прилежит. Ответ на этот вопрос и решает,
-  что писать: синус, косинус или тангенс.</div>
-
-  <h3>3. Пять случаев — вся тема в одной таблице</h3>
-  <div class="scroll"><table class="wrap-t">
-    <tr><th>дано</th><th>что делаем</th></tr>
-    <tr><th>a и b</th><td>c = √(a² + b²); &nbsp; tg α = a : b → α по таблице; &nbsp; β = 90° − α</td></tr>
-    <tr><th>a и c</th><td>b = √(c² − a²); &nbsp; sin α = a : c → α по таблице; &nbsp; β = 90° − α</td></tr>
-    <tr><th>c и α</th><td>β = 90° − α; &nbsp; a = c · sin α; &nbsp; b = c · cos α</td></tr>
-    <tr><th>a и α</th><td>β = 90° − α; &nbsp; c = a : sin α; &nbsp; b = a · ctg α</td></tr>
-    <tr><th>a и β</th><td>α = 90° − β; &nbsp; c = a : cos β; &nbsp; b = a · tg β</td></tr>
-  </table></div>
-  <p class="small">Коротко: даны две стороны — начинай с теоремы Пифагора, потом угол.
-  Дана сторона и угол — начинай со второго угла, потом стороны.</p>
-
-  <h3>4. Два треугольника, которые надо знать наизусть</h3>
-  <div class="fig"><svg viewBox="0 0 380 250"><rect x="0" y="0" width="380" height="250" rx="12" fill="#ffffff"/><polygon points="78.0,182.3 332.0,182.3 78.0,35.7" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/><polyline points="93.0,182.3 93.0,167.3 78.0,167.3" fill="none" stroke="#15181e" stroke-width="2"/><path d="M 305.0 182.3 A 27.0 27.0 0 0 1 308.6 168.8" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="246.4" y="159.4" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">30°</text><path d="M 78.0 62.7 A 27.0 27.0 0 0 0 101.4 49.2" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="101.3" y="76.0" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">60°</text><text x="205" y="208" font-size="18" fill="#15181e" text-anchor="middle" font-weight="600">a√3</text><text x="66" y="115" font-size="18" fill="#15181e" text-anchor="end" font-weight="600">a</text><text x="221" y="101" font-size="18" fill="#15181e" text-anchor="start" font-weight="600">2a</text><text x="66" y="202" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">C</text><text x="346" y="202" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">A</text><text x="64" y="32" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">B</text><text x="190" y="242" font-size="15" fill="#5b6270" text-anchor="middle">против угла 30° лежит половина гипотенузы</text></svg></div>
-  <p><b>Углы 30° и 60°.</b> Против угла 30° лежит меньший катет, и он равен половине гипотенузы.
-  Больший катет получается из меньшего умножением на √3.</p>
-  <div class="fig"><svg viewBox="0 0 380 250"><rect x="0" y="0" width="380" height="250" rx="12" fill="#ffffff"/><polygon points="120.0,194.0 290.0,194.0 120.0,24.0" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/><polyline points="135.0,194.0 135.0,179.0 120.0,179.0" fill="none" stroke="#15181e" stroke-width="2"/><path d="M 263.0 194.0 A 27.0 27.0 0 0 1 270.9 174.9" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="230.3" y="169.3" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">45°</text><path d="M 120.0 51.0 A 27.0 27.0 0 0 0 139.1 43.1" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="144.7" y="83.7" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">45°</text><text x="205" y="220" font-size="18" fill="#15181e" text-anchor="middle" font-weight="600">a</text><text x="108" y="115" font-size="18" fill="#15181e" text-anchor="end" font-weight="600">a</text><text x="221" y="101" font-size="18" fill="#15181e" text-anchor="start" font-weight="600">a√2</text><text x="108" y="214" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">C</text><text x="304" y="214" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">A</text><text x="106" y="20" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">B</text><text x="190" y="242" font-size="15" fill="#5b6270" text-anchor="middle">катеты равны, гипотенуза больше в √2 раза</text></svg></div>
-  <p><b>Угол 45°.</b> Треугольник равнобедренный: катеты равны, а гипотенуза больше катета в √2 раза.
-  Обратно: катет равен гипотенузе, делённой на √2.</p>
-  <div class="note">В этих двух случаях таблица значений не нужна вообще — ответ получается точным,
-  с корнями, а не приближённым.</div>
-
-  <h3>5. Площадь и тригонометрия</h3>
-  <p>Площадь прямоугольного треугольника — это половина произведения катетов. А если угол между
-  сторонами не прямой, работает общая формула:</p>
-  <div class="fx"><span class="fi">S = ½ · a · b</span><span class="fi">S = ½ · a · b · sin α</span></div>
-  <p class="small">Вторая формула — это та же первая, только вместо второго катета подставлена
-  высота, найденная через синус. Именно так решаются задачи 13 и 14.</p>
-
-  <h3>6. Таблица значений</h3>
-  <p>Для углов вроде 32° или 68° значения берут из таблиц или с калькулятора.
-  Впиши угол — получишь все четыре значения сразу.</p>
-  
-<div class="tool">
-  <div class="trow">
-    <label for="tgang">Угол α =</label>
-    <input type="text" id="tgang" value="32" inputmode="decimal"> °
-    <span class="small">от 1° до 89°</span>
-  </div>
-  <div class="tgrid" id="tgout"></div>
-</div>
-
-  <div class="scroll"><table>
-    <tr><th>α</th><th>30°</th><th>45°</th><th>60°</th></tr>
-    <tr><th>sin</th><td>0,5</td><td>√2/2 ≈ 0,71</td><td>√3/2 ≈ 0,87</td></tr>
-    <tr><th>cos</th><td>√3/2 ≈ 0,87</td><td>√2/2 ≈ 0,71</td><td>0,5</td></tr>
-    <tr><th>tg</th><td>√3/3 ≈ 0,58</td><td>1</td><td>√3 ≈ 1,73</td></tr>
-  </table></div>
-
-  <div class="note"><b>Три ловушки, на которых теряют баллы:</b><br>
-  - путают противолежащий катет с прилежащим и берут синус вместо косинуса;<br>
-  - умножают там, где надо делить: гипотенуза <b>всегда больше</b> каждого катета;<br>
-  - забывают округлить так, как просят в условии (стороны до десятых, углы до градуса).</div>
 </div>
 
 <div class="card">
-  <h2>Разобранные примеры</h2>
-  <p class="meta">Семь примеров закрывают все типы задач этой домашки. Сначала попробуй решить сам,
-  потом открой решение и сверься — важно не только число, но и выбор формулы.</p>
-
-  <div class="ex">
-  <h3>Пример 1. Дана гипотенуза и угол</h3>
-  <p class="q">Гипотенуза прямоугольного треугольника равна 6, острый угол равен 32°.
-  Найти катет, прилежащий к данному углу. Ответ округлить до 0,1.</p>
-  <div class="fig"><svg viewBox="0 0 340 220"><rect x="0" y="0" width="340" height="220" rx="12" fill="#ffffff"/><polygon points="78.0,170.3 292.0,170.3 78.0,37.7" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/><polyline points="93.0,170.3 93.0,155.3 78.0,155.3" fill="none" stroke="#15181e" stroke-width="2"/><path d="M 265.0 170.3 A 27.0 27.0 0 0 1 269.1 156.1" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="210.6" y="147.2" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">32°</text><text x="185" y="196" font-size="18" fill="#15181e" text-anchor="middle" font-weight="600">x</text><text x="201" y="96" font-size="18" fill="#15181e" text-anchor="start" font-weight="600">6</text><text x="66" y="190" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">C</text><text x="306" y="190" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">A</text><text x="64" y="34" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">B</text></svg></div>
-  <details><summary>Показать решение</summary>
-    <div class="step">1. Искомый катет прилежит к данному углу, а известна гипотенуза —
-    значит работает косинус.</div>
-    <div class="step">2. Записываем формулу и подставляем: x = 6 · cos 32°.</div>
-    <div class="step">3. По таблице cos 32° ≈ 0,8480.</div>
-    <div class="fx">x = 6 · 0,8480 ≈ 5,088 ≈ 5,1</div>
-    <div class="step"><b>Ответ:</b> 5,1.</div>
-    <div class="note">Проверка смыслом: катет должен быть меньше гипотенузы. 5,1 &lt; 6 — сходится.</div>
-  </details>
-  </div>
-
-  <div class="ex">
-  <h3>Пример 2. Дан катет и прилежащий угол</h3>
-  <p class="q">Катет прямоугольного треугольника равен 2,5, прилежащий к нему острый угол равен 68°.
-  Найти другой катет. Ответ округлить до 0,1.</p>
-  <div class="fig"><svg viewBox="0 0 340 205"><rect x="0" y="0" width="340" height="205" rx="12" fill="#ffffff"/><polygon points="78.0,139.7 292.0,139.7 78.0,53.3" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/><polyline points="93.0,139.7 93.0,124.7 78.0,124.7" fill="none" stroke="#15181e" stroke-width="2"/><path d="M 78.0 80.3 A 27.0 27.0 0 0 0 103.0 63.4" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="100.7" y="86.9" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">68°</text><text x="185" y="166" font-size="18" fill="#15181e" text-anchor="middle" font-weight="600">x</text><text x="66" y="102" font-size="18" fill="#15181e" text-anchor="end" font-weight="600">2,5</text><text x="66" y="160" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">C</text><text x="306" y="160" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">A</text><text x="64" y="49" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">B</text></svg></div>
-  <details><summary>Показать решение</summary>
-    <div class="step">1. Известен катет и угол при нём, ищем второй катет. Два катета и угол
-    связывает тангенс.</div>
-    <div class="step">2. Искомый катет противолежит данному углу, значит x = 2,5 · tg 68°.</div>
-    <div class="step">3. По таблице tg 68° ≈ 2,4751.</div>
-    <div class="fx">x = 2,5 · 2,4751 ≈ 6,188 ≈ 6,2</div>
-    <div class="step"><b>Ответ:</b> 6,2.</div>
-    <div class="note">Тангенс большого угла больше единицы, поэтому противолежащий катет и получился
-    больше данного.</div>
-  </details>
-  </div>
-
-  <div class="ex">
-  <h3>Пример 3. Дан катет и противолежащий угол</h3>
-  <p class="q">Катет прямоугольного треугольника равен 4,2, противолежащий ему угол равен 29°.
-  Найти гипотенузу. Ответ округлить до 0,1.</p>
-  <div class="fig"><svg viewBox="0 0 340 220"><rect x="0" y="0" width="340" height="220" rx="12" fill="#ffffff"/><polygon points="78.0,163.3 292.0,163.3 78.0,44.7" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/><polyline points="93.0,163.3 93.0,148.3 78.0,148.3" fill="none" stroke="#15181e" stroke-width="2"/><path d="M 265.0 163.3 A 27.0 27.0 0 0 1 268.4 150.2" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="204.3" y="140.6" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">29°</text><text x="66" y="110" font-size="18" fill="#15181e" text-anchor="end" font-weight="600">4,2</text><text x="201" y="96" font-size="18" fill="#15181e" text-anchor="start" font-weight="600">x</text><text x="66" y="183" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">C</text><text x="306" y="183" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">A</text><text x="64" y="41" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">B</text></svg></div>
-  <details><summary>Показать решение</summary>
-    <div class="step">1. Катет противолежит углу, ищем гипотенузу — это синус: sin α = a : c.</div>
-    <div class="step">2. Выражаем гипотенузу: c = a : sin α, то есть x = 4,2 : sin 29°.</div>
-    <div class="step">3. По таблице sin 29° ≈ 0,4848.</div>
-    <div class="fx">x = 4,2 : 0,4848 ≈ 8,663 ≈ 8,7</div>
-    <div class="step"><b>Ответ:</b> 8,7.</div>
-    <div class="note">Здесь <b>деление</b>, а не умножение: гипотенуза больше катета. Если в ответе
-    гипотенуза вышла меньше катета — перепутано действие.</div>
-  </details>
-  </div>
-
-  <div class="ex">
-  <h3>Пример 4. Даны два катета — решаем целиком</h3>
-  <p class="q">Катеты прямоугольного треугольника равны 8 и 5. Найти гипотенузу и оба острых угла.
-  Стороны округлить до 0,1, углы — до 1°.</p>
-  <div class="fig"><svg viewBox="0 0 340 250"><rect x="0" y="0" width="340" height="250" rx="12" fill="#ffffff"/><polygon points="125.6,214.0 244.4,214.0 125.6,24.0" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/><polyline points="140.6,214.0 140.6,199.0 125.6,199.0" fill="none" stroke="#15181e" stroke-width="2"/><path d="M 217.4 214.0 A 27.0 27.0 0 0 1 230.1 191.1" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="208.9" y="194.3" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">α</text><path d="M 125.6 51.0 A 27.0 27.0 0 0 0 139.9 46.9" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="141.8" y="80.3" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">β</text><text x="185" y="240" font-size="18" fill="#15181e" text-anchor="middle" font-weight="600">5</text><text x="114" y="125" font-size="18" fill="#15181e" text-anchor="end" font-weight="600">8</text><text x="201" y="111" font-size="18" fill="#15181e" text-anchor="start" font-weight="600">c = ?</text><text x="114" y="234" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">C</text><text x="258" y="234" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">A</text><text x="112" y="20" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">B</text></svg></div>
-  <details><summary>Показать решение</summary>
-    <div class="step">1. Углы неизвестны, зато известны обе стороны — начинаем с теоремы Пифагора.</div>
-    <div class="fx">c = √(8² + 5²) = √(64 + 25) = √89 ≈ 9,4</div>
-    <div class="step">2. Теперь угол. Известны оба катета, поэтому удобен тангенс:
-    tg α = a : b = 8 : 5 = 1,6.</div>
-    <div class="step">3. По таблице значению 1,6 отвечает угол α ≈ 58°.</div>
-    <div class="step">4. Второй угол находим вычитанием: β = 90° − 58° = 32°.</div>
-    <div class="fx"><span class="fi">c ≈ 9,4</span><span class="fi">α ≈ 58°</span><span class="fi">β ≈ 32°</span></div>
-    <div class="step"><b>Ответ:</b> c ≈ 9,4; α ≈ 58°; β ≈ 32°.</div>
-  </details>
-  </div>
-
-  <div class="ex">
-  <h3>Пример 5. Особые треугольники без таблицы</h3>
-  <p class="q">а) Меньший катет равен 5 и лежит против угла 30°. Найти гипотенузу и больший катет.
-  б) Катет равен 3, прилежащий угол 45°. Найти гипотенузу.</p>
-  <details><summary>Показать решение</summary>
-    <div class="step">а) Против угла 30° лежит половина гипотенузы, поэтому c = 2 · 5 = 10.</div>
-    <div class="step">Больший катет: b = a · √3 = 5√3 ≈ 8,7. Можно и по Пифагору:
-    √(100 − 25) = √75 = 5√3 — тот же ответ.</div>
-    <div class="fx"><span class="fi">c = 10</span><span class="fi">b = 5√3 ≈ 8,7</span></div>
-    <div class="step">б) При угле 45° треугольник равнобедренный: второй катет тоже 3,
-    а гипотенуза равна катету, умноженному на √2.</div>
-    <div class="fx">c = 3√2 ≈ 4,2</div>
-    <div class="step"><b>Ответ:</b> а) 10 и 5√3 ≈ 8,7; б) 3√2 ≈ 4,2.</div>
-    <div class="note">В этих двух треугольниках ответ записывают точно, с корнями,
-    и округляют только если об этом просят.</div>
-  </details>
-  </div>
-
-  <div class="ex">
-  <h3>Пример 6. Площадь через синус</h3>
-  <p class="q">Боковая сторона равнобедренного треугольника равна 15, синус угла при вершине равен 0,8.
-  Найти площадь треугольника.</p>
-  <div class="fig"><svg viewBox="0 0 380 240"><rect x="0" y="0" width="380" height="240" rx="12" fill="#ffffff"/><polygon points="190.0,40.0 115.2,190.0 264.8,190.0" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/><path d="M 178.0 64.2 A 27.0 27.0 0 0 0 202.0 64.2" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="190.0" y="80.6" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">α</text><text x="139" y="121" font-size="18" font-weight="600" fill="#15181e" text-anchor="end">15</text><text x="241" y="121" font-size="18" font-weight="600" fill="#15181e" text-anchor="start">15</text><text x="190" y="30" font-size="16" fill="#5b6270" text-anchor="middle">B</text><text x="107" y="206" font-size="16" fill="#5b6270" text-anchor="end">A</text><text x="273" y="206" font-size="16" fill="#5b6270" text-anchor="start">C</text><text x="190" y="232" font-size="15" fill="#5b6270" text-anchor="middle">sin α = 0,8</text></svg></div>
-  <details><summary>Показать решение</summary>
-    <div class="step">1. Проведём высоту к боковой стороне. Она попадает в прямоугольный треугольник,
-    где гипотенуза — вторая боковая сторона (15), а высота противолежит углу при вершине.</div>
-    <div class="step">2. h = 15 · sin α = 15 · 0,8 = 12.</div>
-    <div class="step">3. Площадь — половина произведения стороны на высоту, проведённую к ней.</div>
-    <div class="fx">S = ½ · 15 · 12 = 90</div>
-    <div class="step"><b>Ответ:</b> 90.</div>
-    <div class="note">Та же выкладка одной строкой: S = ½ · a · b · sin α, где a и b — стороны,
-    а α — угол между ними. Эту формулу стоит запомнить.</div>
-  </details>
-  </div>
-
-  <div class="ex">
-  <h3>Пример 7. Тригонометрия внутри трапеции</h3>
-  <p class="q">В равнобедренной трапеции ABCD меньшее основание BC = 7, боковая сторона AB = 10,
-  sin A = 0,8. Найти площадь трапеции.</p>
-  <div class="fig"><svg viewBox="0 0 400 235">
-<rect x="0" y="0" width="400" height="235" rx="12" fill="#ffffff"/>
-<polygon points="60,178 340,178 265,68 135,68" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/>
-<line x1="135" y1="68" x2="135" y2="178" stroke="#2f6bd8" stroke-width="2.2" stroke-dasharray="6 5"/>
-<line x1="265" y1="68" x2="265" y2="178" stroke="#2f6bd8" stroke-width="2.2" stroke-dasharray="6 5"/>
-<polyline points="150,178 150,163 135,163" fill="none" stroke="#2f6bd8" stroke-width="2"/>
-<path d="M 87.0 178.0 A 27.0 27.0 0 0 0 75.2 155.7" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="95.9" y="159.0" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">α</text>
-<text x="200" y="199" font-size="18" font-weight="600" fill="#15181e" text-anchor="middle">AD = ?</text>
-<text x="200" y="58" font-size="18" font-weight="600" fill="#15181e" text-anchor="middle">BC = 7</text>
-<text x="82" y="115" font-size="18" font-weight="600" fill="#15181e" text-anchor="end">AB = 10</text>
-<text x="150" y="131" font-size="17" font-weight="600" fill="#2f6bd8">BH</text>
-<text x="50" y="195" font-size="16" fill="#5b6270">A</text>
-<text x="346" y="195" font-size="16" fill="#5b6270">D</text>
-<text x="128" y="59" font-size="16" fill="#5b6270">B</text>
-<text x="272" y="59" font-size="16" fill="#5b6270">C</text>
-<text x="128" y="195" font-size="16" fill="#5b6270">H</text>
-<text x="200" y="224" font-size="15" fill="#5b6270" text-anchor="middle">sin A = 0,8</text>
-</svg></div>
-  <details><summary>Показать решение</summary>
-    <div class="step">1. Площадь трапеции: S = (a + b) : 2 · h. Значит нужны большее основание
-    и высота. Проведём высоты BH и CK.</div>
-    <div class="step">2. Появился прямоугольный треугольник ABH. Высота BH противолежит углу A,
-    поэтому BH = AB · sin A = 10 · 0,8 = 8.</div>
-    <div class="step">3. Второй катет по теореме Пифагора: AH = √(10² − 8²) = √36 = 6.</div>
-    <div class="step">4. HBCK — прямоугольник, значит HK = BC = 7. Треугольники ABH и DCK равны
-    (по катету и гипотенузе), поэтому KD = AH = 6.</div>
-    <div class="step">5. Большее основание: AD = 6 + 7 + 6 = 19.</div>
-    <div class="fx">S = (7 + 19) : 2 · 8 = 13 · 8 = 104</div>
-    <div class="step"><b>Ответ:</b> 104.</div>
-    <div class="note">Приём общий для всей темы: <b>увидеть прямоугольный треугольник</b> внутри фигуры
-    и решить его. Высоты, диагонали и апофемы почти всегда такие треугольники создают.</div>
-  </details>
-  </div>
+<div class="tr" id="ts1"><div class="trhead"><b>Тренажёр 1. Кто есть кто</b><span class="trscore" id="ts1s"></span></div><div class="meta">Восемь чертежей. Называем сторону относительно отмеченного угла.</div><div class="trq" id="ts1q"></div><div class="trfig" id="ts1f"></div><div id="ts1a"></div><div class="trmsg" id="ts1m"></div><div class="trbar" id="ts1b"></div></div>
 </div>
+
+<div class="card">
+
+<h2>2. Катет через гипотенузу</h2>
+<p>Из определения синуса sin α = <span class='fr'><b>a</b><i>c</i></span> сразу получаем формулу для катета.</p>
+<div class="def"><div class="n">ПРАВИЛО</div>
+Катет равен гипотенузе, умноженной на синус противолежащего угла или на косинус
+прилежащего угла.</div>
+<div class="ff">a = c · sin α</div><div class="ff">b = c · cos α</div>
+<div class="ex"><h3>Пример 2</h3>
+<p>Гипотенуза равна 6, острый угол 32°. Найди катет, прилежащий к этому углу.
+Ответ округли до 0,1.</p>
+<div class="step">1. Прилежащий катет — значит работает косинус: b = c · cos α.</div>
+<div class="step">2. Подставляем: b = 6 · cos 32°.</div>
+<div class="step">3. По таблице cos 32° ≈ 0,8480.</div>
+<div class="ff">b ≈ 6 · 0,8480 ≈ 5,1</div>
+<div class="step mini">Проверка на здравый смысл: катет вышел меньше гипотенузы 6 — так
+и должно быть. Если получилось больше, перепутан синус с косинусом.</div></div>
+<div class="tohw">Задание 1<span>Три задачи: катет через гипотенузу.</span></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts3"><div class="trhead"><b>Тренажёр 3. Катет через гипотенузу</b><span class="trscore" id="ts3s"></span></div><div class="meta">Восемь заданий. Умножаем на синус или косинус.</div><div class="trq" id="ts3q"></div><div class="trfig" id="ts3f"></div><div id="ts3a"></div><div class="trmsg" id="ts3m"></div><div class="trbar" id="ts3b"></div></div>
+</div>
+<div id="tasks1"></div>
+
+<div class="card">
+
+<h2>3. Гипотенуза через катет</h2>
+<p>Ту же формулу можно повернуть: если катет равен произведению, то гипотенуза равна
+частному.</p>
+<div class="def"><div class="n">ПРАВИЛО</div>
+Гипотенуза равна катету, делённому на синус противолежащего угла или на косинус
+прилежащего угла.</div>
+<div class="ff">c = <span class='fr'><b>a</b><i>sin α</i></span></div><div class="ff">c = <span class='fr'><b>b</b><i>cos α</i></span></div>
+<div class="ex"><h3>Пример 3</h3>
+<p>Катет равен 4,2, противолежащий ему угол равен 29°. Найди гипотенузу.
+Ответ округли до 0,1.</p>
+<div class="step">1. Известен противолежащий катет — работает синус: sin 29° = <span class='fr'><b>4,2</b><i>c</i></span>.</div>
+<div class="step">2. Отсюда c = <span class='fr'><b>4,2</b><i>sin 29°</i></span>.</div>
+<div class="step">3. По таблице sin 29° ≈ 0,4848.</div>
+<div class="ff">c ≈ <span class='fr'><b>4,2</b><i>0,4848</i></span> ≈ 8,7</div>
+<div class="step mini">Синус острого угла меньше единицы, поэтому деление на него
+<b>увеличивает</b> число. Гипотенуза обязана выйти длиннее катета.</div></div>
+<div class="tohw">Задание 2<span>Три задачи: гипотенуза через катет.</span></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts4"><div class="trhead"><b>Тренажёр 4. Гипотенуза через катет</b><span class="trscore" id="ts4s"></span></div><div class="meta">Восемь заданий. Здесь делим — и результат растёт.</div><div class="trq" id="ts4q"></div><div class="trfig" id="ts4f"></div><div id="ts4a"></div><div class="trmsg" id="ts4m"></div><div class="trbar" id="ts4b"></div></div>
+</div>
+<div id="tasks2"></div>
+
+<div class="card">
+
+<h2>4. Катет через катет</h2>
+<p>Когда гипотенуза ни дана, ни нужна, катеты связывает тангенс: tg α = <span class='fr'><b>a</b><i>b</i></span>.</p>
+<div class="def"><div class="n">ПРАВИЛО</div>
+Катет равен другому катету, умноженному на тангенс противолежащего первому катету угла
+или на котангенс прилежащего к нему угла.</div>
+<div class="ff">a = b · tg α</div><div class="ff">b = a · ctg α</div>
+<div class="ex"><h3>Пример 4</h3>
+<p>Катет равен 2,5, прилежащий к нему угол равен 68°. Найди другой катет.
+Ответ округли до 0,1.</p>
+<div class="step">1. Искомый катет противолежит углу 68°, значит tg 68° = <span class='fr'><b>x</b><i>2,5</i></span>.</div>
+<div class="step">2. Отсюда x = 2,5 · tg 68°.</div>
+<div class="step">3. По таблице tg 68° ≈ 2,4751.</div>
+<div class="ff">x ≈ 2,5 · 2,4751 ≈ 6,2</div>
+<div class="step mini">Тангенс угла больше 45° больше единицы — катет против такого угла
+выходит длиннее второго. Это удобная проверка.</div></div>
+<div class="tohw">Задание 3<span>Три задачи: катет через катет.</span></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts5"><div class="trhead"><b>Тренажёр 5. Катет через катет</b><span class="trscore" id="ts5s"></span></div><div class="meta">Восемь заданий на тангенс и котангенс.</div><div class="trq" id="ts5q"></div><div class="trfig" id="ts5f"></div><div id="ts5a"></div><div class="trmsg" id="ts5m"></div><div class="trbar" id="ts5b"></div></div>
+</div>
+<div id="tasks3"></div>
+
+<div class="card">
+
+<h2>5. Все формулы вместе: какую выбрать</h2>
+<p>Формул шесть, но выбор всегда делается по двум вопросам: что дано и что ищем.</p>
+<div class="fgrid"><div class="fbox"><h4>гипотенуза и угол</h4><p class="small">ищем: противолежащий катет</p><div class="ff">a = c · sin α</div></div><div class="fbox"><h4>гипотенуза и угол</h4><p class="small">ищем: прилежащий катет</p><div class="ff">b = c · cos α</div></div><div class="fbox"><h4>катет и противолежащий угол</h4><p class="small">ищем: гипотенуза</p><div class="ff">c = <span class='fr'><b>a</b><i>sin α</i></span></div></div><div class="fbox"><h4>катет и прилежащий угол</h4><p class="small">ищем: гипотенуза</p><div class="ff">c = <span class='fr'><b>b</b><i>cos α</i></span></div></div><div class="fbox"><h4>катет и острый угол</h4><p class="small">ищем: второй катет</p><div class="ff">a = b · tg α</div></div><div class="fbox"><h4>два катета</h4><p class="small">ищем: гипотенуза</p><div class="ff">c = √(<span class='pw'>a<sup>2</sup></span> + <span class='pw'>b<sup>2</sup></span>)</div></div></div>
+<div class="rule2"><div class="n">ПОРЯДОК ДЕЙСТВИЙ</div>
+1. Обозначить искомую сторону за x. 2. Написать, чему равна нужная функция данного угла.
+3. Выразить x и посчитать.</div>
+<div class="ex"><h3>Пример 5</h3>
+<p>В треугольнике MPK известно: ∠M = 90°, ∠K = 60°, PK = 8. Найди MP и MK.</p>
+<div class="step">1. Прямой угол при M, значит PK — гипотенуза.</div>
+<div class="step">2. MP противолежит углу K: MP = PK · sin K = 8 · sin 60°.</div>
+<div class="step">3. MK прилежит к углу K: MK = PK · cos K = 8 · cos 60°.</div>
+<div class="ff">MP = 8 · <span class='fr'><b>√3</b><i>2</i></span> = 4√3, &nbsp; MK = 8 · <span class='fr'><b>1</b><i>2</i></span> = 4</div>
+<div class="step mini">Углы 30°, 45° и 60° считаются точно — калькулятор тут не нужен.</div></div>
+<h3>Реши треугольник сам</h3>
+<div class="meta">Выбери, что известно, впиши числа — страница покажет ход решения
+по шагам и построит чертёж ровно под твои данные. Углы в градусах, дробная часть
+через запятую.</div>
+<div class="stw" id="st1"><div class="stpick"><button type="button" data-mode="ca">гипотенуза и угол</button><button type="button" data-mode="aa">катет и противолежащий угол</button><button type="button" data-mode="ab2">катет и прилежащий угол</button><button type="button" data-mode="ab">два катета</button><button type="button" data-mode="ac">катет и гипотенуза</button></div><div class="stbar"><label id="st1l1" for="st1x1">гипотенуза c</label><input type="text" id="st1x1" autocomplete="off" inputmode="decimal" value="6"><label id="st1l2" for="st1x2">угол α, °</label><input type="text" id="st1x2" autocomplete="off" inputmode="decimal" value="32"><button type="button" class="pri" id="st1go">Решить</button></div><div class="stex"><button type="button" data-ex="ca 6 32">c = 6, α = 32°</button><button type="button" data-ex="ab2 2,5 68">a = 2,5, β = 68°</button><button type="button" data-ex="aa 4,2 29">a = 4,2, α = 29°</button><button type="button" data-ex="ab 5 8">катеты 5 и 8</button><button type="button" data-ex="ca 8 60">c = 8, α = 60°</button></div><ol class="ststeps" id="st1s"></ol><div class="stfig" id="st1f"></div><div class="stres" id="st1r"></div><div class="stnote" id="st1n"></div></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts2"><div class="trhead"><b>Тренажёр 2. Выбери выражение</b><span class="trscore" id="ts2s"></span></div><div class="meta">Восемь задач как в тесте: считать не нужно, нужно выбрать формулу.</div><div class="trq" id="ts2q"></div><div class="trfig" id="ts2f"></div><div id="ts2a"></div><div class="trmsg" id="ts2m"></div><div class="trbar" id="ts2b"></div></div>
+</div>
+
+<div class="card">
+
+<h2>6. Особые углы: 30°, 45°, 60°</h2>
+<div class="def"><div class="n">ПОЛЕЗНО ЗАПОМНИТЬ</div>
+Катет, лежащий против угла 30°, равен половине гипотенузы. Если меньший катет равен a,
+то больший равен a√3. Если дан больший катет b, то меньший равен <span class='fr'><b>b</b><i>√3</i></span>.</div>
+<div class="fig"><svg viewBox="0 0 330 205"><rect x="0" y="0" width="330" height="205" rx="12" fill="#ffffff"/><polygon points="78.0,145.4 282.0,145.4 78.0,27.6" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/><polyline points="93.0,145.4 93.0,130.4 78.0,130.4" fill="none" stroke="#15181e" stroke-width="2"/><path d="M 255.0 145.4 A 27.0 27.0 0 0 1 258.6 131.9" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="196.4" y="122.5" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">30°</text><path d="M 78.0 54.6 A 27.0 27.0 0 0 0 101.4 41.1" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="101.3" y="68.0" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">60°</text><text x="180" y="171" font-size="18" fill="#15181e" text-anchor="middle" font-weight="600">a√3</text><text x="66" y="93" font-size="18" fill="#15181e" text-anchor="end" font-weight="600">a</text><text x="196" y="79" font-size="18" fill="#15181e" text-anchor="start" font-weight="600">2a</text><text x="66" y="165" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">C</text><text x="296" y="165" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">A</text><text x="64" y="24" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">B</text><text x="165" y="197" font-size="15" fill="#5b6270" text-anchor="middle">треугольник с углами 30° и 60°</text></svg></div>
+<div class="rule2"><div class="n">УГОЛ 45°</div>
+Оба катета равны, а гипотенуза равна a√2. Обратно: если дана гипотенуза c, то каждый
+катет равен <span class='fr'><b>c</b><i>√2</i></span>.</div>
+<div class="fig"><svg viewBox="0 0 310 195"><rect x="0" y="0" width="310" height="195" rx="12" fill="#ffffff"/><polygon points="112.5,139.0 227.5,139.0 112.5,24.0" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/><polyline points="127.5,139.0 127.5,124.0 112.5,124.0" fill="none" stroke="#15181e" stroke-width="2"/><path d="M 200.5 139.0 A 27.0 27.0 0 0 1 208.4 119.9" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="167.8" y="114.3" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">45°</text><path d="M 112.5 51.0 A 27.0 27.0 0 0 0 131.6 43.1" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="137.2" y="83.7" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">45°</text><text x="170" y="165" font-size="18" fill="#15181e" text-anchor="middle" font-weight="600">a</text><text x="100" y="88" font-size="18" fill="#15181e" text-anchor="end" font-weight="600">a</text><text x="186" y="74" font-size="18" fill="#15181e" text-anchor="start" font-weight="600">a√2</text><text x="100" y="159" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">C</text><text x="242" y="159" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">A</text><text x="98" y="20" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">B</text><text x="155" y="187" font-size="15" fill="#5b6270" text-anchor="middle">оба катета равны</text></svg></div>
+<div class="ex"><h3>Пример 6</h3>
+<p>Катет, лежащий против угла 30°, равен 5. Найди гипотенузу и второй катет.</p>
+<div class="step">1. Против 30° лежит половина гипотенузы, значит c = 2 · 5 = 10.</div>
+<div class="step">2. Второй катет: b = a√3 = 5√3.</div>
+<div class="ff">c = 10, &nbsp; b = 5√3 ≈ 8,7</div>
+<div class="step mini">Проверка Пифагором: 25 + 75 = 100. Сошлось.</div></div>
+<div class="tohw">Задание 4<span>Три задачи на углы 30°, 45° и 60° — без калькулятора.</span></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts6"><div class="trhead"><b>Тренажёр 6. Углы 30°, 45° и 60°</b><span class="trscore" id="ts6s"></span></div><div class="meta">Восемь заданий без калькулятора.</div><div class="trq" id="ts6q"></div><div class="trfig" id="ts6f"></div><div id="ts6a"></div><div class="trmsg" id="ts6m"></div><div class="trbar" id="ts6b"></div></div>
+</div>
+<div id="tasks4"></div>
+
+<div class="card">
+
+<h2>7. Решаем треугольник целиком</h2>
+<div class="rule2"><div class="n">АЛГОРИТМ</div>
+1. Записать, что дано, и отметить это на чертеже.<br>
+2. Если дан угол — сразу найти второй: β = 90° − α.<br>
+3. Найти недостающие стороны по формулам из памятки.<br>
+4. Проверить теоремой Пифагора.</div>
+<p>Когда даны обе стороны, углы находят по таблице: например, из tg α = <span class='fr'><b>a</b><i>b</i></span> определяют сам угол.</p>
+<div class="def"><div class="n">ВЫСОТА К ГИПОТЕНУЗЕ</div>
+Площадь треугольника можно посчитать двумя способами: через катеты и через гипотенузу
+с высотой. Отсюда удобная формула.</div>
+<div class="ff">S = <span class='fr'><b>a · b</b><i>2</i></span> = <span class='fr'><b>c · h</b><i>2</i></span>, &nbsp; h = <span class='fr'><b>a · b</b><i>c</i></span></div>
+<div class="ex"><h3>Пример 7</h3>
+<p>Катеты прямоугольного треугольника равны 6 и 8. Найди гипотенузу, площадь, периметр
+и высоту, проведённую к гипотенузе.</p>
+<div class="step">1. Гипотенуза: c = √(36 + 64) = √100 = 10.</div>
+<div class="step">2. Площадь: S = 6 · 8 : 2 = 24.</div>
+<div class="step">3. Периметр: P = 6 + 8 + 10 = 24.</div>
+<div class="step">4. Высота: h = <span class='fr'><b>6 · 8</b><i>10</i></span> = 4,8.</div>
+<div class="ff">c = 10, S = 24, P = 24, h = 4,8</div>
+<div class="step mini">Совпадение площади и периметра здесь случайное — просто удобные
+числа. А вот высота всегда меньше каждого катета.</div></div>
+<div class="tohw">Задание 5<span>Три задачи: треугольник решается целиком.</span></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts7"><div class="trhead"><b>Тренажёр 7. Треугольник целиком</b><span class="trscore" id="ts7s"></span></div><div class="meta">Восемь заданий: гипотенуза, периметр, площадь, высота.</div><div class="trq" id="ts7q"></div><div class="trfig" id="ts7f"></div><div id="ts7a"></div><div class="trmsg" id="ts7m"></div><div class="trbar" id="ts7b"></div></div>
+</div>
+<div id="tasks5"></div>
+
+<div class="card">
+
+<h2>8. Прямоугольный треугольник внутри фигуры</h2>
+<div class="rule2"><div class="n">ГЛАВНЫЙ ПРИЁМ</div>
+В трапеции, параллелограмме или равнобедренном треугольнике проводят высоту — и сразу
+появляется прямоугольный треугольник, к которому применимы все формулы параграфа.</div>
+<div class="ex"><h3>Пример 8</h3>
+<p>В равнобедренной трапеции ABCD меньшее основание BC = 7, боковая сторона AB = 10,
+sin A = 0,8. Найди площадь трапеции.</p>
+<div class="step">1. Проведём высоты BH и CK. Тогда HK = BC = 7, а AH = KD.</div>
+<div class="step">2. Из треугольника AHB: BH = AB · sin A = 10 · 0,8 = 8.</div>
+<div class="step">3. AH = √(100 − 64) = 6 — знакомая тройка 6, 8, 10.</div>
+<div class="step">4. Большее основание: AD = 2 · 6 + 7 = 19.</div>
+<div class="ff">S = <span class='fr'><b>7 + 19</b><i>2</i></span> · 8 = 104</div>
+<div class="step mini">Тот же приём работает в параллелограмме: высота отсекает
+прямоугольный треугольник, в котором известны сторона и угол.</div></div>
+<div class="tohw">Задание 6<span>Три итоговые задачи — прямоугольный треугольник внутри фигуры.</span></div>
+</div>
+<div id="tasks6"></div>
+<div id="tasks"></div>
 
 <div class="card sheet">
   <h2>Шпаргалка</h2>
-  <p class="small">Этот блок печатается отдельно на один лист A4: Ctrl+P (⌘+P) → печать.</p>
-  <p class="f-formula"><b>Обозначения:</b> ∠C = 90°, a — катет против угла α, b — катет при угле α,
-  c — гипотенуза. Всегда α + β = 90°.</p>
-  <p class="f-formula"><b>Стороны:</b> a = c · sin α; &nbsp; b = c · cos α; &nbsp; a = b · tg α;
-  &nbsp; b = a · ctg α; &nbsp; c = a : sin α; &nbsp; c = b : cos α.</p>
-  <p class="f-formula"><b>Углы:</b> sin α = a : c; &nbsp; cos α = b : c; &nbsp; tg α = a : b;
-  &nbsp; ctg α = b : a. Значение угла — по таблице или калькулятору.</p>
-  <p class="f-formula"><b>Пять случаев:</b> даны две стороны → Пифагор, затем угол через тангенс
-  или синус. Дана сторона и угол → сначала второй угол, потом стороны.</p>
-  <p class="f-formula"><b>Особые треугольники.</b> Углы 30° и 60°: меньший катет равен половине
-  гипотенузы, а больший катет равен меньшему, умноженному на √3. Углы 45° и 45°: катеты равны,
-  гипотенуза равна катету, умноженному на √2.</p>
-  <p class="f-formula"><b>Площадь:</b> S = ½ · a · b для катетов; S = ½ · a · b · sin α — для любых
-  двух сторон и угла между ними.</p>
-  <div class="scroll"><table>
-    <tr><th>α</th><th>30°</th><th>45°</th><th>60°</th></tr>
-    <tr><th>sin</th><td>0,5</td><td>≈ 0,71</td><td>≈ 0,87</td></tr>
-    <tr><th>cos</th><td>≈ 0,87</td><td>≈ 0,71</td><td>0,5</td></tr>
-    <tr><th>tg</th><td>≈ 0,58</td><td>1</td><td>≈ 1,73</td></tr>
-  </table></div>
-  <p style="font-size:15px"><b>Пифагоровы тройки, которые стоит узнавать:</b> 3–4–5, 6–8–10,
-  9–12–15, 5–12–13, 8–15–17, 7–24–25.</p>
-  <p style="font-size:15px"><b>Порядок работы:</b> чертёж → отметить, что дано → определить,
-  противолежит катет углу или прилежит → выбрать формулу → посчитать → округлить как просят →
-  проверить смыслом (гипотенуза больше катета).</p>
-</div>
-
-<div class="card">
-  <h2>Домашнее задание</h2>
-  <p class="meta">Ответы — числа, единицы измерения писать не нужно. Запятая и точка равнозначны,
-  корень можно вставить кнопкой √ над полем. Где просят округлить — округляй, ответ засчитается
-  и в точном виде. Подсказки открываются по одной кнопкой «Подсказка».</p>
-  <div id="tasks"></div>
+  <div class="meta">Печатается на один лист A4: Ctrl+P (⌘+P) → печать.</div>
+  <p class="f-formula"><b>Катет через гипотенузу.</b> a = c · sin α, &nbsp; b = c · cos α. Катет равен гипотенузе,
+  умноженной на синус противолежащего или косинус прилежащего угла.</p>
+  <p class="f-formula"><b>Гипотенуза через катет.</b> c = <span class='fr'><b>a</b><i>sin α</i></span> = <span class='fr'><b>b</b><i>cos α</i></span>. Катет делим на синус
+  противолежащего или косинус прилежащего угла — результат всегда больше катета.</p>
+  <p class="f-formula"><b>Катет через катет.</b> a = b · tg α, &nbsp; b = a · ctg α. Тангенс — для противолежащего
+  угла, котангенс — для прилежащего.</p>
+  <p class="f-formula"><b>Углы.</b> β = 90° − α. Против большего угла лежит большая
+  сторона; гипотенуза длиннее любого катета.</p>
+  <p class="f-formula"><b>Особые углы.</b> Против 30° — половина гипотенузы;
+  при углах 30° и 60° больший катет равен a√3; при 45° гипотенуза равна a√2.</p>
+  <p class="f-formula"><b>Два катета.</b> c = √(<span class='pw'>a<sup>2</sup></span> + <span class='pw'>b<sup>2</sup></span>). Углы находят по таблице из
+  tg α = a : b.</p>
+  <p class="f-formula"><b>Площадь и высота.</b> S = <span class='fr'><b>a · b</b><i>2</i></span>, &nbsp; h = <span class='fr'><b>a · b</b><i>c</i></span>. Высота к гипотенузе всегда
+  меньше каждого катета.</p>
+  <p class="f-formula"><b>В многоугольнике.</b> Проводим высоту — получаем прямоугольный
+  треугольник. В равнобедренной трапеции высота отсекает от большего основания
+  одинаковые куски.</p>
+  <p class="f-formula"><b>Частые ошибки.</b> Перепутать синус с косинусом, умножить там,
+  где нужно делить, и забыть, что стороны называются по-разному для разных углов.
+  Всегда проверяй теоремой Пифагора.</p>
+<table class="vtab"><tr><th>α</th><th>30°</th><th>45°</th><th>60°</th></tr><tr><td>sin α</td><td><span class='fr'><b>1</b><i>2</i></span></td><td><span class='fr'><b>√2</b><i>2</i></span></td><td><span class='fr'><b>√3</b><i>2</i></span></td></tr><tr><td>cos α</td><td><span class='fr'><b>√3</b><i>2</i></span></td><td><span class='fr'><b>√2</b><i>2</i></span></td><td><span class='fr'><b>1</b><i>2</i></span></td></tr><tr><td>tg α</td><td><span class='fr'><b>√3</b><i>3</i></span></td><td>1</td><td>√3</td></tr><tr><td>ctg α</td><td>√3</td><td>1</td><td><span class='fr'><b>√3</b><i>3</i></span></td></tr></table>
 </div>
 
 <div class="card">
   <h2>Шаг 1. Фото решений — по желанию</h2>
-  <p class="meta">Ответы в полях — это только результат, а преподаватель смотрит ещё и чертёж
-  с ходом решения. Фото прикладывать не обязательно, но с ними разбор будет точнее.</p>
+  <div class="meta">В поле уходит только ответ, а я смотрю ещё и ход решения.
+  Фото прикладывать не обязательно, но с ними разбор будет точнее.</div>
   <ol class="steps-list">
-    <li>Реши задачи в тетради: чертёж, что дано, формула, вычисление.</li>
-    <li>Сфотографируй страницы: при дневном свете, чтобы текст читался и не было теней от руки.</li>
-    <li>Нажми кнопку ниже. С телефона выбирай «Камера» или «Фото», с компьютера — файл из папки.</li>
-    <li>Фото можно приложить несколько сразу и отметить у каждого, к какой задаче оно относится.</li>
+    <li>Рисуй треугольник и подписывай, какой катет противолежащий, а какой прилежащий.</li>
+    <li>Сначала записывай формулу, потом подставляй числа — так видно ход мысли.</li>
+    <li>В конце проверяй теоремой Пифагора: это ловит почти все ошибки.</li>
   </ol>
   <input type="file" id="photos" accept="image/*" multiple style="margin-top:12px">
   <div class="thumbs" id="thumbs"></div>
@@ -417,10 +560,10 @@ details[open] summary{margin-bottom:8px}
 
 <div class="card">
   <h2>Шаг 2. Отправь работу</h2>
-  <p class="meta">Проверь, что вверху страницы написано твоё имя. Фото — по желанию.
-  По кнопке ответы, результат и фотографии уходят преподавателю — пересылать ничего не нужно.
-  Вторая кнопка просто сохраняет копию тебе на устройство.</p>
-  <div class="row">
+  <div class="meta">Проверь, что вверху написано твоё имя. По кнопке ответы и результат
+  уходят преподавателю. Вторая кнопка сохраняет копию тебе.</div>
+  <div class="trgate" id="trgate"></div>
+  <div class="row" style="margin-top:12px">
     <button class="pri" id="send">Отправить на проверку</button>
     <button id="report">Скачать копию себе</button>
   </div>
@@ -431,156 +574,26 @@ details[open] summary{margin-bottom:8px}
 
 <div class="bar">
   <button class="pri" id="checkall">Проверить всё</button>
-  <span id="progress" class="meta">решено 0 из 14</span>
+  <span id="progress" class="meta">решено 0 из 18</span>
 </div>
 
-<script>var F = {"osn": "<svg viewBox=\"0 0 380 250\"><rect x=\"0\" y=\"0\" width=\"380\" height=\"250\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,190.9 332.0,190.9 78.0,27.1\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,190.9 93.0,175.9 78.0,175.9\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 305.0 190.9 A 27.0 27.0 0 0 1 309.3 176.3\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"273.9\" y=\"173.8\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">α</text><path d=\"M 78.0 54.1 A 27.0 27.0 0 0 0 100.7 41.7\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"97.4\" y=\"62.7\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">β</text><text x=\"205\" y=\"217\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">b</text><text x=\"66\" y=\"115\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">a</text><text x=\"221\" y=\"101\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">c</text><text x=\"66\" y=\"211\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"346\" y=\"211\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"23\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text><text x=\"190\" y=\"242\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">a — против угла α,  b — прилежит к углу α</text></svg>", "t30": "<svg viewBox=\"0 0 380 250\"><rect x=\"0\" y=\"0\" width=\"380\" height=\"250\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,182.3 332.0,182.3 78.0,35.7\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,182.3 93.0,167.3 78.0,167.3\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 305.0 182.3 A 27.0 27.0 0 0 1 308.6 168.8\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"246.4\" y=\"159.4\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">30°</text><path d=\"M 78.0 62.7 A 27.0 27.0 0 0 0 101.4 49.2\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"101.3\" y=\"76.0\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">60°</text><text x=\"205\" y=\"208\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">a√3</text><text x=\"66\" y=\"115\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">a</text><text x=\"221\" y=\"101\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">2a</text><text x=\"66\" y=\"202\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"346\" y=\"202\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"32\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text><text x=\"190\" y=\"242\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">против угла 30° лежит половина гипотенузы</text></svg>", "t45": "<svg viewBox=\"0 0 380 250\"><rect x=\"0\" y=\"0\" width=\"380\" height=\"250\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"120.0,194.0 290.0,194.0 120.0,24.0\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"135.0,194.0 135.0,179.0 120.0,179.0\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 263.0 194.0 A 27.0 27.0 0 0 1 270.9 174.9\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"230.3\" y=\"169.3\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">45°</text><path d=\"M 120.0 51.0 A 27.0 27.0 0 0 0 139.1 43.1\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"144.7\" y=\"83.7\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">45°</text><text x=\"205\" y=\"220\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">a</text><text x=\"108\" y=\"115\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">a</text><text x=\"221\" y=\"101\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">a√2</text><text x=\"108\" y=\"214\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"304\" y=\"214\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"106\" y=\"20\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text><text x=\"190\" y=\"242\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">катеты равны, гипотенуза больше в √2 раза</text></svg>", "e1": "<svg viewBox=\"0 0 340 220\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"220\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,170.3 292.0,170.3 78.0,37.7\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,170.3 93.0,155.3 78.0,155.3\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 265.0 170.3 A 27.0 27.0 0 0 1 269.1 156.1\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"210.6\" y=\"147.2\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">32°</text><text x=\"185\" y=\"196\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">x</text><text x=\"201\" y=\"96\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">6</text><text x=\"66\" y=\"190\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"306\" y=\"190\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"34\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "e2": "<svg viewBox=\"0 0 340 205\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"205\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,139.7 292.0,139.7 78.0,53.3\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,139.7 93.0,124.7 78.0,124.7\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 78.0 80.3 A 27.0 27.0 0 0 0 103.0 63.4\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"100.7\" y=\"86.9\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">68°</text><text x=\"185\" y=\"166\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">x</text><text x=\"66\" y=\"102\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">2,5</text><text x=\"66\" y=\"160\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"306\" y=\"160\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"49\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "e3": "<svg viewBox=\"0 0 340 220\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"220\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,163.3 292.0,163.3 78.0,44.7\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,163.3 93.0,148.3 78.0,148.3\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 265.0 163.3 A 27.0 27.0 0 0 1 268.4 150.2\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"204.3\" y=\"140.6\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">29°</text><text x=\"66\" y=\"110\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">4,2</text><text x=\"201\" y=\"96\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">x</text><text x=\"66\" y=\"183\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"306\" y=\"183\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"41\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "e4": "<svg viewBox=\"0 0 340 250\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"250\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"125.6,214.0 244.4,214.0 125.6,24.0\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"140.6,214.0 140.6,199.0 125.6,199.0\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 217.4 214.0 A 27.0 27.0 0 0 1 230.1 191.1\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"208.9\" y=\"194.3\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">α</text><path d=\"M 125.6 51.0 A 27.0 27.0 0 0 0 139.9 46.9\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"141.8\" y=\"80.3\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">β</text><text x=\"185\" y=\"240\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">5</text><text x=\"114\" y=\"125\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">8</text><text x=\"201\" y=\"111\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">c = ?</text><text x=\"114\" y=\"234\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"258\" y=\"234\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"112\" y=\"20\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "z1": "<svg viewBox=\"0 0 340 215\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"215\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,163.2 292.0,163.2 78.0,39.8\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,163.2 93.0,148.2 78.0,148.2\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 265.0 163.2 A 27.0 27.0 0 0 1 268.6 149.7\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"206.4\" y=\"140.3\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">30°</text><text x=\"66\" y=\"108\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">a = ?</text><text x=\"201\" y=\"94\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">14</text><text x=\"66\" y=\"183\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"306\" y=\"183\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"36\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "z2": "<svg viewBox=\"0 0 340 245\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"245\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"131.5,209.0 238.5,209.0 131.5,24.0\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"146.5,209.0 146.5,194.0 131.5,194.0\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 211.5 209.0 A 27.0 27.0 0 0 1 225.0 185.6\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"192.9\" y=\"182.7\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">60°</text><text x=\"185\" y=\"235\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">b = ?</text><text x=\"201\" y=\"108\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">10</text><text x=\"120\" y=\"229\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"252\" y=\"229\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"118\" y=\"20\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "z3": "<svg viewBox=\"0 0 340 235\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"235\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,191.8 292.0,191.8 78.0,31.2\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,191.8 93.0,176.8 78.0,176.8\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><text x=\"185\" y=\"218\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">12</text><text x=\"66\" y=\"118\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">9</text><text x=\"201\" y=\"104\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">c = ?</text><text x=\"66\" y=\"212\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"306\" y=\"212\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"27\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "z4": "<svg viewBox=\"0 0 340 225\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"225\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"102.5,189.0 267.5,189.0 102.5,24.0\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"117.5,189.0 117.5,174.0 102.5,174.0\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 240.5 189.0 A 27.0 27.0 0 0 1 248.4 169.9\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"207.8\" y=\"164.3\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">45°</text><text x=\"185\" y=\"215\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">7</text><text x=\"90\" y=\"112\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">a = ?</text><text x=\"90\" y=\"209\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"282\" y=\"209\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"88\" y=\"20\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "z5": "<svg viewBox=\"0 0 340 215\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"215\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,163.2 292.0,163.2 78.0,39.8\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,163.2 93.0,148.2 78.0,148.2\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 265.0 163.2 A 27.0 27.0 0 0 1 268.6 149.7\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"206.4\" y=\"140.3\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">30°</text><text x=\"66\" y=\"108\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">a = ?</text><text x=\"201\" y=\"94\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">20</text><text x=\"66\" y=\"183\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"306\" y=\"183\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"36\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "z6": "<svg viewBox=\"0 0 340 215\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"215\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,163.2 292.0,163.2 78.0,39.8\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,163.2 93.0,148.2 78.0,148.2\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 265.0 163.2 A 27.0 27.0 0 0 1 268.6 149.7\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"206.4\" y=\"140.3\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">30°</text><text x=\"66\" y=\"108\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">6</text><text x=\"201\" y=\"94\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">c = ?</text><text x=\"66\" y=\"183\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"306\" y=\"183\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"36\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "z7": "<svg viewBox=\"0 0 340 215\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"215\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,163.2 292.0,163.2 78.0,39.8\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,163.2 93.0,148.2 78.0,148.2\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 265.0 163.2 A 27.0 27.0 0 0 1 268.6 149.7\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"206.4\" y=\"140.3\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">30°</text><text x=\"185\" y=\"189\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">b = ?</text><text x=\"66\" y=\"108\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">4</text><text x=\"66\" y=\"183\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"306\" y=\"183\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"36\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "z8": "<svg viewBox=\"0 0 340 225\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"225\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"102.5,189.0 267.5,189.0 102.5,24.0\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"117.5,189.0 117.5,174.0 102.5,174.0\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 102.5 51.0 A 27.0 27.0 0 0 0 121.6 43.1\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"127.2\" y=\"83.7\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">45°</text><text x=\"90\" y=\"112\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">6</text><text x=\"201\" y=\"98\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">c = ?</text><text x=\"90\" y=\"209\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"282\" y=\"209\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"88\" y=\"20\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "z9": "<svg viewBox=\"0 0 340 205\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"205\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,127.5 292.0,127.5 78.0,65.5\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,127.5 93.0,112.5 78.0,112.5\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><text x=\"185\" y=\"154\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">24</text><text x=\"66\" y=\"102\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">7</text><text x=\"201\" y=\"88\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">c = ?</text><text x=\"66\" y=\"148\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"306\" y=\"148\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"61\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg>", "z10": "<svg viewBox=\"0 0 340 225\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"225\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"88.3,169.0 281.7,169.0 88.3,24.0\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"103.3,169.0 103.3,154.0 88.3,154.0\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 254.7 169.0 A 27.0 27.0 0 0 1 260.1 152.8\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"229.9\" y=\"151.7\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">α</text><text x=\"76\" y=\"102\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">a = ?</text><text x=\"201\" y=\"88\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">20</text><text x=\"76\" y=\"189\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"296\" y=\"189\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"74\" y=\"20\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text><text x=\"170\" y=\"217\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">sin α = 0,6</text></svg>", "z11": "<svg viewBox=\"0 0 340 215\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"215\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,134.3 292.0,134.3 78.0,48.7\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,134.3 93.0,119.3 78.0,119.3\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 78.0 75.7 A 27.0 27.0 0 0 0 103.1 58.7\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"100.8\" y=\"82.3\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">β</text><text x=\"185\" y=\"160\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">b = ?</text><text x=\"66\" y=\"98\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">4</text><text x=\"66\" y=\"154\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"306\" y=\"154\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"45\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text><text x=\"170\" y=\"207\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">tg β = 2,5</text></svg>", "z12": "<svg viewBox=\"0 0 340 230\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"230\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"85.0,174.0 285.0,174.0 85.0,24.0\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"100.0,174.0 100.0,159.0 85.0,159.0\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 258.0 174.0 A 27.0 27.0 0 0 1 263.4 157.8\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"233.2\" y=\"156.7\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">α</text><text x=\"185\" y=\"200\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">b</text><text x=\"73\" y=\"105\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">a</text><text x=\"201\" y=\"91\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">10</text><text x=\"73\" y=\"194\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"299\" y=\"194\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"71\" y=\"20\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text><text x=\"170\" y=\"222\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">sin α = 0,6, найти периметр</text></svg>", "isos": "<svg viewBox=\"0 0 380 240\"><rect x=\"0\" y=\"0\" width=\"380\" height=\"240\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"190.0,40.0 149.8,190.0 230.2,190.0\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><path d=\"M 183.0 66.1 A 27.0 27.0 0 0 0 197.0 66.1\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"190.0\" y=\"92.6\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">α</text><text x=\"156\" y=\"121\" font-size=\"18\" font-weight=\"600\" fill=\"#15181e\" text-anchor=\"end\">12</text><text x=\"224\" y=\"121\" font-size=\"18\" font-weight=\"600\" fill=\"#15181e\" text-anchor=\"start\">12</text><text x=\"190\" y=\"30\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\">B</text><text x=\"142\" y=\"206\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"end\">A</text><text x=\"238\" y=\"206\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"start\">C</text><text x=\"190\" y=\"232\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">sin α = 0,5, найти площадь</text></svg>", "isos15": "<svg viewBox=\"0 0 380 240\"><rect x=\"0\" y=\"0\" width=\"380\" height=\"240\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"190.0,40.0 115.2,190.0 264.8,190.0\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><path d=\"M 178.0 64.2 A 27.0 27.0 0 0 0 202.0 64.2\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"190.0\" y=\"80.6\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">α</text><text x=\"139\" y=\"121\" font-size=\"18\" font-weight=\"600\" fill=\"#15181e\" text-anchor=\"end\">15</text><text x=\"241\" y=\"121\" font-size=\"18\" font-weight=\"600\" fill=\"#15181e\" text-anchor=\"start\">15</text><text x=\"190\" y=\"30\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\">B</text><text x=\"107\" y=\"206\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"end\">A</text><text x=\"273\" y=\"206\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"start\">C</text><text x=\"190\" y=\"232\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">sin α = 0,8</text></svg>", "trap_ex": "<svg viewBox=\"0 0 400 235\">\n<rect x=\"0\" y=\"0\" width=\"400\" height=\"235\" rx=\"12\" fill=\"#ffffff\"/>\n<polygon points=\"60,178 340,178 265,68 135,68\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/>\n<line x1=\"135\" y1=\"68\" x2=\"135\" y2=\"178\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-dasharray=\"6 5\"/>\n<line x1=\"265\" y1=\"68\" x2=\"265\" y2=\"178\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-dasharray=\"6 5\"/>\n<polyline points=\"150,178 150,163 135,163\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2\"/>\n<path d=\"M 87.0 178.0 A 27.0 27.0 0 0 0 75.2 155.7\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"95.9\" y=\"159.0\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">α</text>\n<text x=\"200\" y=\"199\" font-size=\"18\" font-weight=\"600\" fill=\"#15181e\" text-anchor=\"middle\">AD = ?</text>\n<text x=\"200\" y=\"58\" font-size=\"18\" font-weight=\"600\" fill=\"#15181e\" text-anchor=\"middle\">BC = 7</text>\n<text x=\"82\" y=\"115\" font-size=\"18\" font-weight=\"600\" fill=\"#15181e\" text-anchor=\"end\">AB = 10</text>\n<text x=\"150\" y=\"131\" font-size=\"17\" font-weight=\"600\" fill=\"#2f6bd8\">BH</text>\n<text x=\"50\" y=\"195\" font-size=\"16\" fill=\"#5b6270\">A</text>\n<text x=\"346\" y=\"195\" font-size=\"16\" fill=\"#5b6270\">D</text>\n<text x=\"128\" y=\"59\" font-size=\"16\" fill=\"#5b6270\">B</text>\n<text x=\"272\" y=\"59\" font-size=\"16\" fill=\"#5b6270\">C</text>\n<text x=\"128\" y=\"195\" font-size=\"16\" fill=\"#5b6270\">H</text>\n<text x=\"200\" y=\"224\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">sin A = 0,8</text>\n</svg>", "trap_z": "<svg viewBox=\"0 0 400 235\">\n<rect x=\"0\" y=\"0\" width=\"400\" height=\"235\" rx=\"12\" fill=\"#ffffff\"/>\n<polygon points=\"60,178 340,178 265,68 135,68\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/>\n<line x1=\"135\" y1=\"68\" x2=\"135\" y2=\"178\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-dasharray=\"6 5\"/>\n<line x1=\"265\" y1=\"68\" x2=\"265\" y2=\"178\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-dasharray=\"6 5\"/>\n<polyline points=\"150,178 150,163 135,163\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2\"/>\n<path d=\"M 87.0 178.0 A 27.0 27.0 0 0 0 75.2 155.7\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"95.9\" y=\"159.0\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">α</text>\n<text x=\"200\" y=\"199\" font-size=\"18\" font-weight=\"600\" fill=\"#15181e\" text-anchor=\"middle\">AD = ?</text>\n<text x=\"200\" y=\"58\" font-size=\"18\" font-weight=\"600\" fill=\"#15181e\" text-anchor=\"middle\">BC = 6</text>\n<text x=\"82\" y=\"115\" font-size=\"18\" font-weight=\"600\" fill=\"#15181e\" text-anchor=\"end\">AB = 10</text>\n<text x=\"150\" y=\"131\" font-size=\"17\" font-weight=\"600\" fill=\"#2f6bd8\">BH</text>\n<text x=\"50\" y=\"195\" font-size=\"16\" fill=\"#5b6270\">A</text>\n<text x=\"346\" y=\"195\" font-size=\"16\" fill=\"#5b6270\">D</text>\n<text x=\"128\" y=\"59\" font-size=\"16\" fill=\"#5b6270\">B</text>\n<text x=\"272\" y=\"59\" font-size=\"16\" fill=\"#5b6270\">C</text>\n<text x=\"128\" y=\"195\" font-size=\"16\" fill=\"#5b6270\">H</text>\n<text x=\"200\" y=\"224\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">sin A = 0,8, найти площадь</text>\n</svg>"};
+<script>
+var CF = {};
+var STUDENT_CODE = (function(){
+  try{ var m = /[#&?]code=([^&]+)/.exec(location.hash + location.search);
+       return m ? decodeURIComponent(m[1]) : ""; }catch(e){ return ""; }
+})();
+var TOPIC = "Решение прямоугольных треугольников (§2, геометрия 9 класс)";
 
 "use strict";
 var started = Date.now();
+var spentBefore = 0;
 
 /* ---------- данные задач; ответы закодированы, чтобы не читались в исходнике ---------- */
 function e(s){return btoa(unescape(encodeURIComponent(s)));}
 function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return s;}}
 
-var TASKS = [
- {id:1,lvl:"база",type:"num",text:"Гипотенуза прямоугольного треугольника равна 14, острый угол равен 30°. Найди катет, противолежащий этому углу.",ans:[e("7")],img:F["z1"],
-  hints:["Катет равен гипотенузе, умноженной на синус противолежащего угла.",
-         "a = c · sin 30°, а sin 30° = 0,5.",
-         "14 · 0,5."],
-  sol:"<div class='step'>1. Катет противолежит данному углу, известна гипотенуза — значит синус.</div>"+
-      "<div class='step'>2. sin 30° = 0,5.</div>"+
-      "<div class='fx'>a = c · sin α = 14 · 0,5 = 7</div>"+
-      "<div class='step'><b>Ответ: 7.</b> Проверка смыслом: против угла 30° всегда лежит половина гипотенузы.</div>"},
-
- {id:2,lvl:"база",type:"num",text:"Гипотенуза равна 10, острый угол равен 60°. Найди катет, прилежащий к этому углу.",ans:[e("5")],img:F["z2"],
-  hints:["Катет прилежит к углу, известна гипотенуза — работает косинус.",
-         "b = c · cos 60°, а cos 60° = 0,5.",
-         "10 · 0,5."],
-  sol:"<div class='step'>1. Катет прилежит к данному углу, известна гипотенуза — значит косинус.</div>"+
-      "<div class='step'>2. cos 60° = 0,5.</div>"+
-      "<div class='fx'>b = c · cos α = 10 · 0,5 = 5</div>"+
-      "<div class='step'><b>Ответ: 5.</b> Тот же треугольник 30–60–90, только угол назван с другой стороны.</div>"},
-
- {id:3,lvl:"база",type:"num",text:"Катеты прямоугольного треугольника равны 9 и 12. Найди гипотенузу.",ans:[e("15")],img:F["z3"],
-  hints:["Углы здесь не нужны: даны две стороны.",
-         "По теореме Пифагора c² = 9² + 12².",
-         "81 + 144 = 225, а √225 — целое число."],
-  sol:"<div class='step'>1. Известны оба катета, поэтому третью сторону даёт теорема Пифагора.</div>"+
-      "<div class='step'>2. c² = 9² + 12² = 81 + 144 = 225.</div>"+
-      "<div class='fx'>c = √225 = 15</div>"+
-      "<div class='step'><b>Ответ: 15.</b> Это тройка 9, 12, 15 — та же 3, 4, 5, увеличенная втрое.</div>"},
-
- {id:4,lvl:"база",type:"num",text:"Катет прямоугольного треугольника равен 7, прилежащий к нему острый угол равен 45°. Найди второй катет.",ans:[e("7")],img:F["z4"],
-  hints:["Два катета и угол связывает тангенс.",
-         "a = b · tg 45°, а tg 45° = 1.",
-         "Умножение на единицу ничего не меняет."],
-  sol:"<div class='step'>1. Известен катет и угол при нём, ищем второй катет — это тангенс.</div>"+
-      "<div class='step'>2. tg 45° = 1.</div>"+
-      "<div class='fx'>a = b · tg 45° = 7 · 1 = 7</div>"+
-      "<div class='step'><b>Ответ: 7.</b> При угле 45° треугольник равнобедренный, катеты всегда равны.</div>"},
-
- {id:5,lvl:"база",type:"num",text:"Гипотенуза равна 20, один из острых углов равен 30°. Найди меньший катет.",ans:[e("10")],img:F["z5"],
-  hints:["Меньший катет лежит против меньшего угла — против 30°.",
-         "a = c · sin 30°.",
-         "20 · 0,5."],
-  sol:"<div class='step'>1. Против угла 30° лежит меньший катет.</div>"+
-      "<div class='step'>2. a = c · sin 30° = 20 · 0,5.</div>"+
-      "<div class='fx'>a = 10</div>"+
-      "<div class='step'><b>Ответ: 10.</b> Ровно половина гипотенузы.</div>"},
-
- {id:6,lvl:"база",type:"num",text:"Меньший катет прямоугольного треугольника равен 6 и лежит против угла 30°. Найди гипотенузу.",ans:[e("12")],img:F["z6"],
-  hints:["Здесь ищем гипотенузу, значит будет деление, а не умножение.",
-         "c = a : sin 30° = 6 : 0,5.",
-         "Или короче: гипотенуза вдвое больше катета, лежащего против 30°."],
-  sol:"<div class='step'>1. Катет противолежит углу, ищем гипотенузу — значит c = a : sin α.</div>"+
-      "<div class='step'>2. c = 6 : 0,5 = 12.</div>"+
-      "<div class='fx'>c = a : sin 30° = 6 : 0,5 = 12</div>"+
-      "<div class='step'><b>Ответ: 12.</b> Гипотенуза больше катета — деление на число меньше единицы "+
-      "как раз и увеличивает результат.</div>"},
-
- {id:7,lvl:"средний",type:"num",text:"Меньший катет равен 4 и лежит против угла 30°. Найди больший катет. Ответ округли до десятых.",ans:[e("6,9"),e("4√3")],img:F["z7"],
-  hints:["Больший катет прилежит к углу 30°, а меньший ему противолежит — их связывает тангенс.",
-         "b = a : tg 30° = a · √3.",
-         "4 · 1,73 ≈ 6,93 — осталось округлить."],
-  sol:"<div class='step'>1. Два катета и угол связывает тангенс: tg 30° = a : b, отсюда b = a : tg 30°.</div>"+
-      "<div class='step'>2. tg 30° = √3 : 3, поэтому деление на него равносильно умножению на √3.</div>"+
-      "<div class='fx'>b = a · √3 = 4√3 ≈ 4 · 1,73 ≈ 6,9</div>"+
-      "<div class='step'><b>Ответ: 6,9.</b> Полезно помнить: в треугольнике 30–60–90 больший катет равен "+
-      "меньшему, умноженному на √3.</div>"},
-
- {id:8,lvl:"средний",type:"num",text:"Катет равен 6, прилежащий к нему острый угол равен 45°. Найди гипотенузу. Ответ округли до десятых.",ans:[e("8,5"),e("6√2")],img:F["z8"],
-  hints:["Катет прилежит к углу, ищем гипотенузу — работает косинус.",
-         "c = b : cos 45°, а cos 45° = √2 : 2.",
-         "Деление на √2/2 равносильно умножению на √2: 6 · 1,41 ≈ 8,49."],
-  sol:"<div class='step'>1. Катет прилежит к углу, ищем гипотенузу: c = b : cos α.</div>"+
-      "<div class='step'>2. cos 45° = √2 : 2 ≈ 0,7071.</div>"+
-      "<div class='fx'>c = 6 : cos 45° = 6√2 ≈ 6 · 1,41 ≈ 8,5</div>"+
-      "<div class='step'><b>Ответ: 8,5.</b> В равнобедренном прямоугольном треугольнике гипотенуза всегда "+
-      "равна катету, умноженному на √2.</div>"},
-
- {id:9,lvl:"средний",type:"num",text:"Катеты прямоугольного треугольника равны 7 и 24. Найди гипотенузу.",ans:[e("25")],img:F["z9"],
-  hints:["Две стороны — значит теорема Пифагора.",
-         "c² = 7² + 24² = 49 + 576.",
-         "625 — точный квадрат."],
-  sol:"<div class='step'>1. c² = 7² + 24² = 49 + 576 = 625.</div>"+
-      "<div class='fx'>c = √625 = 25</div>"+
-      "<div class='step'><b>Ответ: 25.</b> Тройку 7, 24, 25 полезно запомнить — она часто встречается "+
-      "в задачах наравне с 3, 4, 5 и 5, 12, 13.</div>"},
-
- {id:10,lvl:"средний",type:"num",text:"Гипотенуза равна 20, синус острого угла α равен 0,6. Найди катет, противолежащий углу α.",ans:[e("12")],img:F["z10"],
-  hints:["Сам угол искать не нужно — его синус уже дан.",
-         "a = c · sin α.",
-         "20 · 0,6."],
-  sol:"<div class='step'>1. Катет противолежит углу, известна гипотенуза — значит синус.</div>"+
-      "<div class='fx'>a = c · sin α = 20 · 0,6 = 12</div>"+
-      "<div class='step'>2. Заодно второй катет: b = √(20² − 12²) = √256 = 16.</div>"+
-      "<div class='step'><b>Ответ: 12.</b></div>"},
-
- {id:11,lvl:"средний",type:"num",text:"Тангенс острого угла β равен 2,5, а прилежащий к этому углу катет равен 4. Найди второй катет.",ans:[e("10")],img:F["z11"],
-  hints:["Тангенс — это отношение противолежащего катета к прилежащему.",
-         "К углу β прилежит катет a = 4, а против него лежит искомый катет b.",
-         "tg β = b : a, значит b = 4 · 2,5."],
-  sol:"<div class='step'>1. По определению tg β = (противолежащий катет) : (прилежащий катет).</div>"+
-      "<div class='step'>2. К углу β прилежит катет a = 4, противолежит искомый катет b: tg β = b : a.</div>"+
-      "<div class='step'>3. Значит искомый катет равен прилежащему, умноженному на тангенс.</div>"+
-      "<div class='fx'>b = a · tg β = 4 · 2,5 = 10</div>"+
-      "<div class='step'><b>Ответ: 10.</b></div>"},
-
- {id:12,lvl:"посложнее",type:"num",text:"Гипотенуза прямоугольного треугольника равна 10, синус острого угла равен 0,6. Найди периметр треугольника.",ans:[e("24")],img:F["z12"],
-  hints:["Периметр — сумма всех трёх сторон, значит нужны оба катета.",
-         "Первый катет: a = 10 · 0,6 = 6.",
-         "Второй катет найди по теореме Пифагора: √(100 − 36)."],
-  sol:"<div class='step'>1. Первый катет через синус: a = c · sin α = 10 · 0,6 = 6.</div>"+
-      "<div class='step'>2. Второй катет по теореме Пифагора: b = √(10² − 6²) = √64 = 8.</div>"+
-      "<div class='step'>3. Периметр — сумма всех сторон.</div>"+
-      "<div class='fx'>P = 10 + 6 + 8 = 24</div>"+
-      "<div class='step'><b>Ответ: 24.</b> Это знакомая тройка 6, 8, 10.</div>"},
-
- {id:13,lvl:"посложнее",type:"num",text:"Боковая сторона равнобедренного треугольника равна 12, синус угла при вершине равен 0,5. Найди площадь треугольника.",ans:[e("36")],img:F["isos"],
-  hints:["Проведи высоту к боковой стороне — появится прямоугольный треугольник.",
-         "Высота равна второй боковой стороне, умноженной на синус угла при вершине: h = 12 · 0,5 = 6.",
-         "Дальше обычная формула площади: половина произведения стороны на высоту к ней."],
-  sol:"<div class='step'>1. Проведём высоту к боковой стороне. В получившемся прямоугольном треугольнике "+
-      "высота противолежит углу при вершине, а гипотенуза — вторая боковая сторона.</div>"+
-      "<div class='step'>2. h = 12 · sin α = 12 · 0,5 = 6.</div>"+
-      "<div class='step'>3. Площадь: половина произведения стороны на высоту, проведённую к ней.</div>"+
-      "<div class='fx'>S = ½ · 12 · 6 = 36</div>"+
-      "<div class='step'><b>Ответ: 36.</b> Короткая запись того же самого: S = ½ · a · b · sin α, "+
-      "где a и b — стороны, а α — угол между ними.</div>"},
-
- {id:14,lvl:"посложнее",type:"num",text:"В равнобедренной трапеции ABCD меньшее основание BC = 6, боковая сторона AB = 10, sin A = 0,8. Найди площадь трапеции.",ans:[e("96")],img:F["trap_z"],
-  hints:["Проведи из вершин B и C высоты BH и CK — появятся два равных прямоугольных треугольника.",
-         "Высота BH = AB · sin A = 10 · 0,8 = 8, а AH найди по теореме Пифагора.",
-         "Большее основание AD = AH + HK + KD, где HK = BC."],
-  sol:"<div class='step'>1. Проведём высоты BH и CK. Треугольник ABH прямоугольный, BH противолежит углу A.</div>"+
-      "<div class='step'>2. BH = AB · sin A = 10 · 0,8 = 8.</div>"+
-      "<div class='step'>3. AH = √(10² − 8²) = √36 = 6.</div>"+
-      "<div class='step'>4. HBCK — прямоугольник, значит HK = BC = 6. Треугольники ABH и DCK равны, "+
-      "поэтому KD = AH = 6. Тогда AD = 6 + 6 + 6 = 18.</div>"+
-      "<div class='fx'>S = (BC + AD) : 2 · BH = (6 + 18) : 2 · 8 = 96</div>"+
-      "<div class='step'><b>Ответ: 96.</b></div>"}
-];
+var TASKS = [{"id": 1, "blk": "1", "lvl": "база", "img": "", "type": "num", "text": "Гипотенуза прямоугольного треугольника равна 10, sin α = 0,6. Найди катет, противолежащий углу α.", "ans": ["Ng=="], "hints": ["Катет через гипотенузу: a = c · sin α.", "Противолежащий катет — это синус.", "10 · 0,6."], "sol": "<div class='step'>1. a = c · sin α.</div><div class='fx'>a = 10 · 0,6 = 6</div><div class='step mini'>Катет вышел меньше гипотенузы — так и должно быть.</div>"}, {"id": 2, "blk": "1", "lvl": "база", "img": "", "type": "num", "text": "Гипотенуза равна 10, cos α = 0,8. Найди катет, прилежащий к углу α.", "ans": ["OA=="], "hints": ["Прилежащий катет считается через косинус.", "b = c · cos α.", "10 · 0,8."], "sol": "<div class='step'>1. b = c · cos α.</div><div class='fx'>b = 10 · 0,8 = 8</div><div class='step mini'>Вместе с задачей 1 это знакомый треугольник 6, 8, 10.</div>"}, {"id": 3, "blk": "1", "lvl": "средний", "img": "", "type": "num", "text": "Гипотенуза равна 8, острый угол A равен 60°. Найди катет, противолежащий углу A. Ответ можно записать как 4√3.", "ans": ["NOKImjM="], "hints": ["Катет через гипотенузу: a = c · sin A.", "sin 60° = <span class='fr'><b>√3</b><i>2</i></span>.", "8 · <span class='fr'><b>√3</b><i>2</i></span> — двойка сокращается."], "sol": "<div class='step'>1. a = 8 · sin 60°.</div><div class='step'>2. sin 60° = <span class='fr'><b>√3</b><i>2</i></span>.</div><div class='fx'>a = 8 · <span class='fr'><b>√3</b><i>2</i></span> = 4√3 ≈ 6,9</div><div class='step mini'>Второй катет здесь равен 8 · cos 60° = 4 — половина гипотенузы, потому что лежит против угла 30°.</div>"}, {"id": 4, "blk": "2", "lvl": "база", "img": "", "type": "num", "text": "Катет равен 8, синус противолежащего ему угла равен 0,8. Найди гипотенузу.", "ans": ["MTA="], "hints": ["Гипотенуза равна катету, делённому на синус противолежащего угла.", "c = <span class='fr'><b>a</b><i>sin α</i></span>.", "8 : 0,8."], "sol": "<div class='step'>1. c = <span class='fr'><b>8</b><i>0,8</i></span>.</div><div class='fx'>c = 10</div><div class='step mini'>Делим, а не умножаем: гипотенуза длиннее катета.</div>"}, {"id": 5, "blk": "2", "lvl": "средний", "img": "", "type": "num", "text": "Катет равен 12, косинус прилежащего к нему угла равен 0,6. Найди гипотенузу.", "ans": ["MjA="], "hints": ["Прилежащий катет и гипотенуза связаны косинусом.", "c = <span class='fr'><b>b</b><i>cos α</i></span>.", "12 : 0,6."], "sol": "<div class='step'>1. c = <span class='fr'><b>12</b><i>0,6</i></span>.</div><div class='fx'>c = 20</div><div class='step mini'>Второй катет тогда равен 16: тройка 12, 16, 20.</div>"}, {"id": 6, "blk": "2", "lvl": "база", "img": "", "type": "num", "text": "Катеты прямоугольного треугольника равны 5 и 8. Найди гипотенузу, округлив ответ до 0,1.", "ans": ["OSw0"], "hints": ["Здесь угол не нужен — работает теорема Пифагора.", "c = √(25 + 64).", "√89 ≈ 9,43…, округляем до десятых."], "sol": "<div class='step'>1. c = √(<span class='pw'>5<sup>2</sup></span> + <span class='pw'>8<sup>2</sup></span>) = √89.</div><div class='fx'>c ≈ 9,4</div><div class='step mini'>Проверка: 9,4 больше каждого катета, но меньше их суммы 13.</div>"}, {"id": 7, "blk": "3", "lvl": "база", "img": "", "type": "num", "text": "Катет b = 4. Тангенс угла α, противолежащего катету a, равен 0,75. Найди катет a.", "ans": ["Mw=="], "hints": ["Катет через катет: a = b · tg α.", "Тангенс меньше единицы — значит a меньше b.", "4 · 0,75."], "sol": "<div class='step'>1. a = b · tg α.</div><div class='fx'>a = 4 · 0,75 = 3</div><div class='step mini'>Гипотенуза здесь равна 5 — снова тройка 3, 4, 5.</div>"}, {"id": 8, "blk": "3", "lvl": "средний", "img": "", "type": "num", "text": "Катет b = 5. Тангенс угла, противолежащего второму катету a, равен 2,4. Найди a.", "ans": ["MTI="], "hints": ["a = b · tg α.", "Тангенс больше единицы — катет a длиннее катета b.", "5 · 2,4."], "sol": "<div class='step'>1. a = 5 · 2,4.</div><div class='fx'>a = 12</div><div class='step mini'>Гипотенуза: √(25 + 144) = 13. Тройка 5, 12, 13.</div>"}, {"id": 9, "blk": "3", "lvl": "средний", "img": "", "type": "num", "text": "Катет b = 8 прилежит к углу α, причём tg α = 0,5. Найди второй катет a.", "ans": ["NA=="], "hints": ["Искомый катет противолежит углу α.", "a = b · tg α.", "8 · 0,5."], "sol": "<div class='step'>1. a = 8 · 0,5.</div><div class='fx'>a = 4</div><div class='step mini'>Если бы спрашивали гипотенузу: √(64 + 16) = √80 = 4√5 ≈ 8,9.</div>"}, {"id": 10, "blk": "4", "lvl": "база", "img": "", "type": "num", "text": "Катет, лежащий против угла 30°, равен 5. Найди гипотенузу.", "ans": ["MTA="], "hints": ["Есть правило специально для угла 30°.", "Против 30° лежит половина гипотенузы.", "Значит гипотенуза вдвое больше катета."], "sol": "<div class='step'>1. a = <span class='fr'><b>c</b><i>2</i></span>, значит c = 2a.</div><div class='fx'>c = 2 · 5 = 10</div><div class='step mini'>Через формулу вышло бы то же самое: c = 5 : sin 30° = 5 : 0,5 = 10.</div>"}, {"id": 11, "blk": "4", "lvl": "средний", "img": "", "type": "num", "text": "В прямоугольном треугольнике острые углы равны 30° и 60°, меньший катет равен 4. Найди больший катет. Ответ можно записать как 4√3.", "ans": ["NOKImjM="], "hints": ["Меньший катет лежит против угла 30°.", "Больший катет равен меньшему, умноженному на √3.", "Или через тангенс: 4 · tg 60° = 4√3."], "sol": "<div class='step'>1. b = a · tg 60° = 4 · √3.</div><div class='fx'>b = 4√3 ≈ 6,9</div><div class='step mini'>Гипотенуза при этом равна 8 — вдвое больше меньшего катета.</div>"}, {"id": 12, "blk": "4", "lvl": "средний", "img": "", "type": "num", "text": "Катет прямоугольного треугольника равен 4, а один из острых углов 45°. Найди гипотенузу. Ответ можно записать как 4√2.", "ans": ["NOKImjI="], "hints": ["При угле 45° треугольник равнобедренный.", "c = a√2.", "Или через синус: 4 : sin 45° = 4 : <span class='fr'><b>√2</b><i>2</i></span>."], "sol": "<div class='step'>1. Оба катета равны 4.</div><div class='step'>2. c = √(16 + 16) = √32.</div><div class='fx'>c = 4√2 ≈ 5,7</div><div class='step mini'>Проверка: 5,7 больше 4, но меньше 8 — годится.</div>"}, {"id": 13, "blk": "5", "lvl": "средний", "img": "", "type": "num", "text": "Катет прямоугольного треугольника равен 8, синус противолежащего ему угла равен 0,8. Найди периметр треугольника.", "ans": ["MjQ="], "hints": ["Сначала гипотенуза: c = 8 : 0,8.", "Второй катет — по теореме Пифагора.", "Периметр — сумма всех трёх сторон."], "sol": "<div class='step'>1. c = 8 : 0,8 = 10.</div><div class='step'>2. b = √(100 − 64) = 6.</div><div class='fx'>P = 8 + 6 + 10 = 24</div><div class='step mini'>Полезно помнить тройку 6, 8, 10 — она встречается постоянно.</div>"}, {"id": 14, "blk": "5", "lvl": "средний", "img": "", "type": "num", "text": "Катет прямоугольного треугольника равен 4, тангенс угла, противолежащего второму катету, равен 0,75. Найди площадь треугольника.", "ans": ["Ng=="], "hints": ["Второй катет = 4 · 0,75.", "Площадь прямоугольного треугольника — половина произведения катетов.", "4 · 3 : 2."], "sol": "<div class='step'>1. Второй катет: 4 · 0,75 = 3.</div><div class='fx'>S = <span class='fr'><b>4 · 3</b><i>2</i></span> = 6</div><div class='step mini'>Гипотенуза здесь 5, а высота к ней — 2,4.</div>"}, {"id": 15, "blk": "5", "lvl": "сложный", "img": "", "type": "num", "text": "Гипотенуза прямоугольного треугольника равна 10, sin α = 0,6. Найди высоту, проведённую к гипотенузе.", "ans": ["NCw4"], "hints": ["Сначала найди оба катета: 10 · 0,6 и 10 · 0,8.", "Площадь можно посчитать двумя способами.", "h = <span class='fr'><b>a · b</b><i>c</i></span>."], "sol": "<div class='step'>1. a = 6, b = 8.</div><div class='step'>2. S = 6 · 8 : 2 = 24, и та же S = <span class='fr'><b>10 · h</b><i>2</i></span>.</div><div class='fx'>h = <span class='fr'><b>6 · 8</b><i>10</i></span> = 4,8</div><div class='step mini'>Высота к гипотенузе всегда меньше любого из катетов.</div>"}, {"id": 16, "blk": "6", "lvl": "средний", "img": "", "type": "num", "text": "Диагональ прямоугольника равна 16 и образует с его стороной угол 60°. Найди площадь прямоугольника. Ответ можно записать как 64√3.", "ans": ["NjTiiJoz"], "hints": ["Диагональ делит прямоугольник на два прямоугольных треугольника.", "Стороны: 16 · cos 60° и 16 · sin 60°.", "Перемножь 8 и 8√3."], "sol": "<div class='step'>1. Одна сторона: 16 · cos 60° = 8.</div><div class='step'>2. Вторая: 16 · sin 60° = 8√3.</div><div class='fx'>S = 8 · 8√3 = 64√3 ≈ 110,9</div><div class='step mini'>Проверка Пифагором: 64 + 192 = 256 = 16².</div>"}, {"id": 17, "blk": "6", "lvl": "сложный", "img": "", "type": "num", "text": "В равнобедренной трапеции ABCD меньшее основание BC равно 7, боковая сторона AB равна 10, sin A = 0,8. Найди площадь трапеции.", "ans": ["MTA0"], "hints": ["Проведи высоты BH и CK — появятся прямоугольные треугольники.", "BH = AB · sin A, а AH найди по теореме Пифагора.", "Большее основание: AD = BC + 2 · AH."], "sol": "<div class='step'>1. BH = 10 · 0,8 = 8.</div><div class='step'>2. AH = √(100 − 64) = 6.</div><div class='step'>3. AD = 7 + 2 · 6 = 19.</div><div class='fx'>S = <span class='fr'><b>7 + 19</b><i>2</i></span> · 8 = 104</div><div class='step mini'>Высота трапеции — это катет, а боковая сторона — гипотенуза.</div>"}, {"id": 18, "blk": "6", "lvl": "сложный", "img": "", "type": "num", "text": "В прямоугольном треугольнике ABC угол C прямой, высота CH равна 12, медиана CM равна 15. Найди синус меньшего острого угла. Ответ можно записать как √5/5.", "ans": ["4oiaNS81"], "hints": ["Медиана из вершины прямого угла равна половине гипотенузы.", "Значит AB = 30, а площадь равна и <span class='fr'><b>a · b</b><i>2</i></span>, и <span class='fr'><b>30 · 12</b><i>2</i></span> — отсюда a · b = 360.", "Вместе с <span class='pw'>a<sup>2</sup></span> + <span class='pw'>b<sup>2</sup></span> = 900 это даёт катеты 6√5 и 12√5."], "sol": "<div class='step'>1. AB = 2 · CM = 30.</div><div class='step'>2. Из равенства площадей: a · b = 30 · 12 = 360.</div><div class='step'>3. По теореме Пифагора <span class='pw'>a<sup>2</sup></span> + <span class='pw'>b<sup>2</sup></span> = 900, откуда катеты равны 6√5 и 12√5.</div><div class='step'>4. Меньший острый угол лежит против меньшего катета 6√5.</div><div class='fx'>sin = <span class='fr'><b>6√5</b><i>30</i></span> = <span class='fr'><b>√5</b><i>5</i></span> ≈ 0,447</div><div class='step mini'>Проверка: 180 + 720 = 900, и произведение катетов 72 · 5 = 360.</div>"}];
 
 /* ---------- разбор ответа ---------- */
 function norm(s){
@@ -608,7 +621,7 @@ function toNum(str){
 function same(given, right, tol){
   var a = toNum(given), b = toNum(right);
   if(!isNaN(a) && !isNaN(b)){
-    var t = tol || 0.01;
+    var t = tol || 1e-4;
     return Math.abs(a-b) <= Math.max(t, Math.abs(b)*t);
   }
   return norm(given) === norm(right);
@@ -616,7 +629,10 @@ function same(given, right, tol){
 
 /* ---------- отрисовка ---------- */
 var state = {};
-var box = document.getElementById("tasks");
+function boxOf(t){
+  return document.getElementById("tasks" + (t.blk || "")) ||
+         document.getElementById("tasks");
+}
 
 TASKS.forEach(function(t){
   state[t.id] = {tries:0, hints:0, done:false, ok:false, given:"", sel:null};
@@ -631,7 +647,7 @@ TASKS.forEach(function(t){
     }).join("")+'</div>';
   } else {
     body += '<div class="keys">'+
-      ["√","²","°",",","−","/"].map(function(k){
+      ["√","/","−",","].map(function(k){
         return '<button class="key" data-k="'+k+'" type="button">'+k+'</button>';}).join("")+
       '</div><input type="text" id="in'+t.id+'" inputmode="text" autocapitalize="off" '+
       'autocorrect="off" autocomplete="off" spellcheck="false" placeholder="ответ">';
@@ -641,7 +657,7 @@ TASKS.forEach(function(t){
           '<button class="sm hnt">Подсказка</button></div>'+
           '<div class="hints"></div><div class="verdict"></div><div class="sol"></div>';
   el.innerHTML = body;
-  box.appendChild(el);
+  boxOf(t).appendChild(el);
 
   el.querySelectorAll(".key").forEach(function(b){
     b.addEventListener("click", function(){
@@ -681,9 +697,10 @@ function hint(id){
   }
   var h = document.createElement("div");
   h.className = "hint";
-  h.textContent = "Подсказка " + (s.hints+1) + ": " + t.hints[s.hints];
+  h.innerHTML = "Подсказка " + (s.hints+1) + ": " + t.hints[s.hints];
   host.appendChild(h);
   s.hints++;
+  saveWork();
 }
 
 function check(id){
@@ -710,6 +727,7 @@ function check(id){
     showSol(el, t);
   }
   progress();
+  saveWork();
 }
 function showSol(el, t){
   var host = el.querySelector(".sol");
@@ -783,17 +801,17 @@ function drawThumbs(){
 }
 
 /* ---------- отчёт ---------- */
-var ENDPOINT = "https://script.google.com/macros/s/AKfycbztH9c-wQuKC7pSfD8AcFfnOcGpSHxoeqovulmvLMp9W23SgFx9dDQ2JTlWcIJDMN6W/exec";
+var ENDPOINT = "https://script.google.com/macros/s/AKfycbwqIhgBtFnoUik3N1Lh_YRhNeEFAjmXWSxBNoX1a_Yxu-2dEKHFwo4Dd5Ch9UTOHH-X/exec";
 var SECRET = "artteach2026";
 function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 function buildReport(){
   var name = (document.getElementById("name").value || "").trim() || "без имени";
   var now = new Date();
-  var mins = Math.max(1, Math.round((Date.now()-started)/60000));
+  var mins = Math.max(1, Math.round(spentMs()/60000));
   var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
-  var data = {tип:"дз", предмет:"математика", тема:"Решение прямоугольных треугольников (9 класс)",
+  var data = {tип:"дз", предмет:"математика", тема:"Решение прямоугольных треугольников (§2, геометрия 9 класс)",
     ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
-    верно:okN, всего:TASKS.length, задачи:[]};
+    верно:okN, всего:TASKS.length, тренажёры:trSummary(), задачи:[]};
   var rows = TASKS.map(function(t){
     var s = state[t.id];
     data.задачи.push({n:t.id, условие:t.text.replace(/<[^>]+>/g,""), ответ_ученика:s.given,
@@ -809,7 +827,7 @@ function buildReport(){
   }).join("");
   var html = "<!doctype html><html lang='ru'><head><meta charset='utf-8'>"+
     "<meta name='viewport' content='width=device-width,initial-scale=1'>"+
-    "<title>Отчёт — "+esc(name)+" — решение прямоугольных треугольников · 9 класс</title><style>"+
+    "<title>Отчёт — "+esc(name)+" — решение треугольников · геометрия 9 класс</title><style>"+
     "body{font:16px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;padding:20px;color:#16181d;background:#fff}"+
     "h1{font-size:22px;margin:0 0 4px}.m{color:#5b6270;font-size:15px}"+
     "table{border-collapse:collapse;width:100%;margin-top:14px;font-size:15px}"+
@@ -817,12 +835,13 @@ function buildReport(){
     "figure{margin:14px 0}img{max-width:100%;border:1px solid #dfe3ea;border-radius:8px}"+
     "figcaption{color:#5b6270;font-size:14px;margin-top:4px}</style></head><body>"+
     "<h1>Отчёт по домашнему заданию</h1>"+
-    "<div class='m'>Тема: решение прямоугольных треугольников · геометрия, 9 класс</div>"+
+    "<div class='m'>Тема: решение прямоугольных треугольников · §2, геометрия 9 класс</div>"+
     "<div class='m'>Ученик: <b>"+esc(name)+"</b> · сдано: "+esc(now.toLocaleString("ru-RU"))+
     " · время работы: около "+mins+" мин</div>"+
     "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)</h2>"+
     "<table><tr><th>№</th><th>Задача</th><th>Ответ ученика</th><th>Верный ответ</th>"+
     "<th>Итог</th><th>Попыток</th><th>Подсказок</th></tr>"+rows+"</table>"+
+    trReportHtml()+
     (pics ? "<h2>Фото решений</h2>"+pics : "<p class='m'>Фото решений не прикреплены.</p>")+
     "<script type='application/json' id='result-data'>"+
     JSON.stringify(data).replace(/</g,"\\u003c")+"<\/script></body></html>";
@@ -830,9 +849,12 @@ function buildReport(){
   return {
     html: html,
     name: name,
-    file: "Отчёт_Прямоуг_треуг_"+name.replace(/\s+/g,"_")+"_"+stamp+".html",
-    caption: name+" · решение прямоугольных треугольников · 9 класс · "+okN+" из "+TASKS.length+
-             " ("+Math.round(okN/TASKS.length*100)+"%)"
+    ok: okN,
+    total: TASKS.length,
+    file: "Отчёт_Решение_треугольников_"+name.replace(/\s+/g,"_")+"_"+stamp+".html",
+    caption: name+" · решение треугольников · геометрия 9 класс · "+okN+" из "+TASKS.length+
+             " ("+Math.round(okN/TASKS.length*100)+"%)"+
+             " · тренажёры "+trSummary().ok+" из "+trSummary().total
   };
 }
 
@@ -840,13 +862,28 @@ document.getElementById("send").addEventListener("click", function(){
   var note = document.getElementById("repnote");
   var who = (document.getElementById("name").value || "").trim();
   if(!who){ note.className = "meta bad-note"; note.textContent = "Сначала впиши имя вверху страницы."; return; }
+  var left = trPending();
+  if(left.length){
+    note.className = "meta bad-note";
+    note.textContent = "Работа не отправлена: сначала пройди тренажёры. " +
+      "Осталось " + left.length + " из " + TRREQ.length + ".";
+    trStatus();
+    trJump(left[0].id);
+    return;
+  }
   note.className = "meta";
   var r = buildReport();
   note.textContent = "Отправляю…";
   var payload = {
     secret: SECRET,
+    code: STUDENT_CODE,
+    student: r.name,
+    topic: TOPIC,
+    ok: r.ok,
+    total: r.total,
     name: r.file,
     caption: r.caption,
+    trainers: trSummary().ok + " из " + trSummary().total,
     file: btoa(unescape(encodeURIComponent(r.html)))
   };
   fetch(ENDPOINT, {method:"POST", mode:"no-cors", body: JSON.stringify(payload)})
@@ -871,26 +908,744 @@ document.getElementById("report").addEventListener("click", function(){
   document.getElementById("repnote").textContent = "Файл скачан — он в папке загрузок.";
 });
 
-/* ============ таблица значений ============ */
-(function(){
-  var inp=document.getElementById("tgang");
-  if(!inp) return;
-  var out=document.getElementById("tgout");
-  function draw(){
-    var d=parseFloat(String(inp.value).replace(",","."));
-    if(!isFinite(d)||d<1||d>89){ out.innerHTML='<div class="small" style="color:var(--bad)">Впиши угол от 1 до 89.</div>'; return; }
-    var r=d*Math.PI/180;
-    var rows=[["sin "+d+"°", Math.sin(r)],["cos "+d+"°", Math.cos(r)],
-              ["tg "+d+"°", Math.tan(r)],["ctg "+d+"°", 1/Math.tan(r)]];
-    var h='<table class="tgt"><tr>', i;
-    for(i=0;i<4;i++) h+='<th>'+rows[i][0]+'</th>';
-    h+='</tr><tr>';
-    for(i=0;i<4;i++) h+='<td>'+rows[i][1].toFixed(4).replace(".", ",")+'</td>';
-    out.innerHTML=h+'</tr></table>';
+
+/* ============ общие мелочи для §3 ============ */
+function _n3(x){
+  if(!isFinite(x)) return "—";
+  return x.toFixed(3).replace(".", ",");
+}
+function _gcdi(a, b){
+  a = Math.abs(a); b = Math.abs(b);
+  while(b){ var t = a % b; a = b; b = t; }
+  return a || 1;
+}
+function _sqs(n){
+  /* √n = k·√r, где r без квадратных делителей */
+  var k = 1, d = 2;
+  while(d * d <= n){
+    while(n % (d * d) === 0){ n /= (d * d); k *= d; }
+    d++;
   }
-  inp.addEventListener("input", draw);
+  return {k: k, r: n};
+}
+function _surd(n){ var s = _sqs(n); return {k: s.k, r: s.r}; }   /* √n */
+function _sv(s){ return s.k * Math.sqrt(s.r); }
+function _stext(s){
+  if(s.r === 1) return String(s.k);
+  return (s.k === 1 ? "" : String(s.k)) + "√" + s.r;
+}
+function _ratio(a, b){
+  /* a/b, где a и b вида k√r; ответ n√r/d с рациональным знаменателем */
+  var num = a.k, den = b.k * b.r, r = a.r * b.r;
+  var s = _sqs(r);
+  num *= s.k; r = s.r;
+  var g = _gcdi(num, den);
+  return {n: num / g, d: den / g, r: r};
+}
+function _rval(x){ return x.n * Math.sqrt(x.r) / x.d; }
+function _rtext(x){
+  var top = (x.r === 1) ? String(x.n) : ((x.n === 1 ? "" : String(x.n)) + "√" + x.r);
+  if(x.d === 1) return top;
+  return "<span class='fr'><b>" + top + "</b><i>" + x.d + "</i></span>";
+}
+
+/* ---------- чертёж прямоугольного треугольника ----------
+   A — слева внизу (угол α), C — справа внизу (прямой угол), B — над C.
+   opp — катет CB (противолежащий α), adj — катет AC (прилежащий).      */
+function _clampT(x, text, size, W){
+  var half = String(text).length * size * 0.34 + 4;
+  return Math.max(half + 2, Math.min(W - half - 2, x));
+}
+function _triSvg(opp, adj, lab, opt){
+  opt = opt || {};
+  var W = opt.w || 320, H = opt.h || 210;
+  var L = opt.L || 50, R = opt.R || 70, T = 30, Bm = opt.cap ? 52 : 34;
+  var mw = W - L - R, mh = H - T - Bm;
+  var k = Math.min(mw / Math.max(adj, 1e-9), mh / Math.max(opp, 1e-9));
+  var bw = adj * k, ah = opp * k;
+  var x0 = L + (mw - bw) / 2, y0 = T + (mh + ah) / 2;
+  var Ax = x0, Ay = y0, Cx = x0 + bw, Cy = y0, Bx = x0 + bw, By = y0 - ah;
+  var s = ['<svg viewBox="0 0 ' + W + ' ' + H + '" role="img">',
+           '<rect x="0" y="0" width="' + W + '" height="' + H + '" rx="12" fill="#ffffff"/>',
+           '<polygon points="' + Ax.toFixed(1) + ',' + Ay.toFixed(1) + ' ' +
+             Cx.toFixed(1) + ',' + Cy.toFixed(1) + ' ' + Bx.toFixed(1) + ',' + By.toFixed(1) +
+             '" fill="#e8f0ff" stroke="#15181e" stroke-width="2.4"/>'];
+  /* прямой угол */
+  var m = Math.min(14, bw * 0.8, ah * 0.8);
+  if(m > 3){
+    s.push('<polyline points="' + (Cx - m).toFixed(1) + ',' + Cy.toFixed(1) + ' ' +
+           (Cx - m).toFixed(1) + ',' + (Cy - m).toFixed(1) + ' ' + Cx.toFixed(1) + ',' +
+           (Cy - m).toFixed(1) + '" fill="none" stroke="#15181e" stroke-width="1.8"/>');
+  }
+  /* дуга угла α при вершине A */
+  var hyp = Math.sqrt(bw * bw + ah * ah) || 1;
+  var rr = Math.min(26, 0.34 * Math.max(bw, 1), 0.34 * hyp);
+  if(rr > 6){
+    var ux = bw / hyp, uy = -ah / hyp;
+    s.push('<path d="M ' + (Ax + rr).toFixed(1) + ' ' + Ay.toFixed(1) + ' A ' + rr.toFixed(1) +
+           ' ' + rr.toFixed(1) + ' 0 0 0 ' + (Ax + rr * ux).toFixed(1) + ' ' +
+           (Ay + rr * uy).toFixed(1) + '" fill="none" stroke="#2f6bd8" stroke-width="2.2"/>');
+    if(lab.al){
+      var lx, ly;
+      if(Math.atan2(ah, bw) < 0.26){
+        /* угол узкий — подпись не помещается внутри, поднимаем её над стороной */
+        lx = Ax + rr + 12; ly = Ay - 14;
+      } else {
+        var bxd = (1 + ux) / 2, byd = uy / 2, bl = Math.sqrt(bxd * bxd + byd * byd) || 1;
+        var dd = rr + 16;
+        lx = Ax + dd * bxd / bl; ly = Ay + dd * byd / bl;
+      }
+      s.push('<text x="' + lx.toFixed(1) + '" y="' + ly.toFixed(1) + '" font-size="16" ' +
+             'fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">' +
+             lab.al + '</text>');
+    }
+  }
+  function t(x, y, text, col, anchor, size){
+    return '<text x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" font-size="' + size +
+           '" fill="' + col + '" text-anchor="' + anchor + '" font-weight="600">' + text + '</text>';
+  }
+  if(lab.b) s.push(t(_clampT((Ax + Cx) / 2, lab.b, 15, W), y0 + 24, lab.b, "#15181e", "middle", 15));
+  if(lab.a) s.push(t(Cx + 9, (Cy + By) / 2 + 5, lab.a, "#15181e", "start", 15));
+  if(lab.c){
+    var mx = (Ax + Bx) / 2, my = (Ay + By) / 2;
+    var nx = -ah / hyp, ny = -bw / hyp;
+    s.push(t(_clampT(mx + nx * 20, lab.c, 15, W), my + ny * 20 + 5, lab.c, "#15181e",
+             "middle", 15));
+  }
+  if(opt.letters !== false){
+    /* у очень тонкого треугольника вершины сливаются — тогда буквы только мешают */
+    if(bw > 42){
+      s.push(t(Ax - 11, Ay + 7, "A", "#5b6270", "middle", 14));
+      s.push(t(Cx + 6, Cy + 20, "C", "#5b6270", "middle", 14));
+    }
+    if(ah > 42) s.push(t(Bx + 6, By - 8, "B", "#5b6270", "middle", 14));
+  }
+  if(opt.cap) s.push(t(_clampT(W / 2, opt.cap, 13, W), H - 8, opt.cap, "#5b6270", "middle", 13));
+  s.push("</svg>");
+  return s.join("");
+}
+
+/* ============ живой треугольник: как меняются функции ============ */
+window.TRLIVE = function(id, opt){
+  opt = opt || {};
+  var host = document.getElementById(id);
+  if(!host) return null;
+  var fig = document.getElementById(id + "f"), rng = document.getElementById(id + "r"),
+      deg = document.getElementById(id + "d"), vals = document.getElementById(id + "v"),
+      idn = document.getElementById(id + "i");
+  var prev = null;
+
+  function cell(name, v, was){
+    var mark = "";
+    if(was !== null && Math.abs(v - was) > 1e-9) mark = v > was ?
+      ' <span class="up">↑</span>' : ' <span class="dn">↓</span>';
+    return '<div class="tfv"><b>' + name + '</b><i>' + _n3(v) + mark + "</i></div>";
+  }
+  function draw(){
+    var a = +rng.value, rad = a * Math.PI / 180;
+    var si = Math.sin(rad), co = Math.cos(rad);
+    var tg = si / co, ct = co / si;
+    deg.textContent = a + "°";
+    fig.innerHTML = _triSvg(si, co, {
+      a: "sin α", b: "cos α", c: "1", al: a + "°"
+    }, {w: 330, h: 214, L: 46, R: 76, cap: "гипотенуза равна 1"});
+    vals.innerHTML = cell("sin α", si, prev ? prev.si : null) +
+                     cell("cos α", co, prev ? prev.co : null) +
+                     cell("tg α", tg, prev ? prev.tg : null) +
+                     cell("ctg α", ct, prev ? prev.ct : null);
+    idn.innerHTML = "sin<sup>2</sup>α + cos<sup>2</sup>α = " + _n3(si * si) + " + " +
+                    _n3(co * co) + " = 1";
+    prev = {si: si, co: co, tg: tg, ct: ct};
+  }
+  rng.addEventListener("input", draw);
+  host.addEventListener("click", function(ev){
+    var el = ev.target;
+    var v = (el && el.getAttribute) ? el.getAttribute("data-deg") : null;
+    if(v === null) return;
+    rng.value = v;
+    draw();
+  });
+  if(opt.a) rng.value = opt.a;
   draw();
+  return {draw: draw};
+};
+
+/* ============ основная задача: дано одно значение ============ */
+window.TRSOLVE = function(id){
+  var host = document.getElementById(id);
+  if(!host) return null;
+  var inp = document.getElementById(id + "val"), go = document.getElementById(id + "go"),
+      steps = document.getElementById(id + "s"), fig = document.getElementById(id + "f"),
+      res = document.getElementById(id + "r"), note = document.getElementById(id + "n");
+  var fn = "sin";
+
+  function marks(){
+    var bs = host.querySelectorAll("[data-fn]");
+    for(var k = 0; k < bs.length; k++)
+      bs[k].className = (bs[k].getAttribute("data-fn") === fn) ? "on" : "";
+  }
+  function parseVal(s){
+    s = String(s || "").trim().replace(/\s+/g, "").replace(/−/g, "-");
+    if(!s) return null;
+    var m;
+    if((m = /^(\d+)\/(\d+)$/.exec(s))) { var p = +m[1], q = +m[2]; }
+    else if((m = /^(\d+)[.,](\d+)$/.exec(s))) { p = +(m[1] + m[2]); q = Math.pow(10, m[2].length); }
+    else if((m = /^(\d+)$/.exec(s))) { p = +m[1]; q = 1; }
+    else return null;
+    if(!q || !p) return null;
+    var g = _gcdi(p, q);
+    return {p: p / g, q: q / g};
+  }
+  function bad(msg){
+    note.innerHTML = '<span class="tfbad">' + msg + "</span>";
+    steps.innerHTML = ""; res.innerHTML = ""; fig.innerHTML = "";
+  }
+  function run(){
+    var v = parseVal(inp.value);
+    note.innerHTML = "";
+    if(!v) return bad("Впиши значение: дробью 5/13 или десятичной 0,6.");
+    if(v.p > 400 || v.q > 400) return bad("Возьми числа поменьше — до 400.");
+    var p = v.p, q = v.q, opp, adj, hyp, dan, step2;
+    var vtext = (q === 1) ? String(p) : "<span class='fr'><b>" + p + "</b><i>" + q + "</i></span>";
+    if(fn === "sin" || fn === "cos"){
+      if(p >= q) return bad("Синус и косинус острого угла меньше единицы — возьми правильную дробь.");
+      var other = _surd(q * q - p * p);
+      if(fn === "sin"){ opp = {k: p, r: 1}; hyp = {k: q, r: 1}; adj = other;
+        dan = "Синус — это противолежащий катет, делённый на гипотенузу. Возьмём катет " + p +
+              " и гипотенузу " + q + ".";
+        step2 = "Второй катет по теореме Пифагора: √(" + q + "<sup>2</sup> − " + p +
+                "<sup>2</sup>) = √" + (q * q - p * p) + " = " + _stext(other) + ".";
+      } else { adj = {k: p, r: 1}; hyp = {k: q, r: 1}; opp = other;
+        dan = "Косинус — это прилежащий катет, делённый на гипотенузу. Возьмём катет " + p +
+              " и гипотенузу " + q + ".";
+        step2 = "Второй катет по теореме Пифагора: √(" + q + "<sup>2</sup> − " + p +
+                "<sup>2</sup>) = √" + (q * q - p * p) + " = " + _stext(other) + ".";
+      }
+    } else {
+      var h = _surd(p * p + q * q);
+      if(fn === "tg"){ opp = {k: p, r: 1}; adj = {k: q, r: 1}; hyp = h;
+        dan = "Тангенс — это противолежащий катет, делённый на прилежащий. Возьмём катеты " +
+              p + " и " + q + ".";
+      } else { adj = {k: p, r: 1}; opp = {k: q, r: 1}; hyp = h;
+        dan = "Котангенс — это прилежащий катет, делённый на противолежащий. Возьмём катеты " +
+              p + " и " + q + ".";
+      }
+      step2 = "Гипотенуза по теореме Пифагора: √(" + p + "<sup>2</sup> + " + q +
+              "<sup>2</sup>) = √" + (p * p + q * q) + " = " + _stext(hyp) + ".";
+    }
+    var rs = _ratio(opp, hyp), rc = _ratio(adj, hyp),
+        rt = _ratio(opp, adj), rg = _ratio(adj, opp);
+    var names = {sin: "sin α", cos: "cos α", tg: "tg α", ctg: "ctg α"};
+    steps.innerHTML =
+      "<li>Дано: " + names[fn] + " = " + vtext + ". " + dan + "</li>" +
+      "<li>" + step2 + "</li>" +
+      "<li>Теперь известны все три стороны — остальные функции читаются прямо с чертежа.</li>";
+    res.innerHTML =
+      "<div>sin α = " + _rtext(rs) + " ≈ " + _n3(_rval(rs)) + "</div>" +
+      "<div>cos α = " + _rtext(rc) + " ≈ " + _n3(_rval(rc)) + "</div>" +
+      "<div>tg α = " + _rtext(rt) + " ≈ " + _n3(_rval(rt)) + "</div>" +
+      "<div>ctg α = " + _rtext(rg) + " ≈ " + _n3(_rval(rg)) + "</div>";
+    fig.innerHTML = _triSvg(_sv(opp), _sv(adj),
+      {a: _stext(opp), b: _stext(adj), c: _stext(hyp), al: "α"},
+      {w: 330, h: 206, L: 54, R: 62, cap: "стороны подобраны под условие"});
+    note.innerHTML = "Проверка: sin<sup>2</sup>α + cos<sup>2</sup>α = " +
+      _n3(_rval(rs) * _rval(rs)) + " + " + _n3(_rval(rc) * _rval(rc)) + " = 1, и tg α · ctg α = " +
+      _n3(_rval(rt) * _rval(rg)) + ".";
+  }
+  host.addEventListener("click", function(ev){
+    var el = ev.target, f = (el && el.getAttribute) ? el.getAttribute("data-fn") : null;
+    if(f){ fn = f; marks(); run(); return; }
+    var ex = (el && el.getAttribute) ? el.getAttribute("data-ex") : null;
+    if(ex){ var parts = ex.split(" "); fn = parts[0]; inp.value = parts[1]; marks(); run(); }
+  });
+  go.addEventListener("click", run);
+  inp.addEventListener("keydown", function(e){ if(e.key === "Enter") run(); });
+  marks();
+  run();
+  return {run: run};
+};
+
+/* ============ решение прямоугольного треугольника ============ */
+window.SOLVETRI = function(id){
+  var host = document.getElementById(id);
+  if(!host) return null;
+  var i1 = document.getElementById(id + "x1"), i2 = document.getElementById(id + "x2"),
+      l1 = document.getElementById(id + "l1"), l2 = document.getElementById(id + "l2"),
+      go = document.getElementById(id + "go"), steps = document.getElementById(id + "s"),
+      fig = document.getElementById(id + "f"), res = document.getElementById(id + "r"),
+      note = document.getElementById(id + "n");
+  var mode = "ca";
+  var MODES = {
+    ab: {l1: "катет a", l2: "катет b", v1: "6", v2: "8"},
+    ac: {l1: "катет a", l2: "гипотенуза c", v1: "6", v2: "10"},
+    ca: {l1: "гипотенуза c", l2: "угол α, °", v1: "6", v2: "32"},
+    aa: {l1: "катет a", l2: "угол α, °", v1: "4,2", v2: "29"},
+    ab2: {l1: "катет a", l2: "угол β, °", v1: "2,5", v2: "68"}
+  };
+
+  function n1(x){
+    var s = Math.abs(x - Math.round(x)) < 5e-7 ? String(Math.round(x)) : x.toFixed(1);
+    return s.replace(".", ",");
+  }
+  function n2(x){
+    var s = Math.abs(x - Math.round(x)) < 5e-7 ? String(Math.round(x)) : x.toFixed(2);
+    return s.replace(".", ",");
+  }
+  function deg(x){
+    var s = Math.abs(x - Math.round(x)) < 0.05 ? String(Math.round(x)) : x.toFixed(1);
+    return s.replace(".", ",") + "°";
+  }
+  function num(s){
+    s = String(s || "").trim().replace(/\s+/g, "").replace(/,/g, ".").replace(/−/g, "-");
+    if(!/^\d+(\.\d+)?$/.test(s)) return NaN;
+    return parseFloat(s);
+  }
+  function marks(){
+    var bs = host.querySelectorAll("[data-mode]");
+    for(var k = 0; k < bs.length; k++)
+      bs[k].className = (bs[k].getAttribute("data-mode") === mode) ? "on" : "";
+    l1.textContent = MODES[mode].l1;
+    l2.textContent = MODES[mode].l2;
+  }
+  function setMode(m, keep){
+    mode = m; marks();
+    if(!keep){ i1.value = MODES[m].v1; i2.value = MODES[m].v2; }
+  }
+  function bad(msg){
+    note.innerHTML = '<span class="stbad">' + msg + "</span>";
+    steps.innerHTML = ""; res.innerHTML = ""; fig.innerHTML = "";
+  }
+  function run(){
+    var v1 = num(i1.value), v2 = num(i2.value), a, b, c, al, be, h = [];
+    note.innerHTML = "";
+    if(!isFinite(v1) || !isFinite(v2) || v1 <= 0 || v2 <= 0)
+      return bad("Впиши два положительных числа: длины через запятую, углы в градусах.");
+    var rad = Math.PI / 180;
+    if(mode === "ab"){
+      a = v1; b = v2;
+      c = Math.sqrt(a * a + b * b);
+      al = Math.atan2(a, b) / rad; be = 90 - al;
+      h.push("Гипотенуза по теореме Пифагора: c = √(" + n1(a) + "<sup>2</sup> + " + n1(b) +
+             "<sup>2</sup>) ≈ " + n1(c) + ".");
+      h.push("Угол α находим через тангенс: tg α = a : b = " + n2(a / b) + ", отсюда α ≈ " +
+             deg(al) + ".");
+      h.push("Второй острый угол: β = 90° − α ≈ " + deg(be) + ".");
+    } else if(mode === "ac"){
+      a = v1; c = v2;
+      if(a >= c) return bad("Катет должен быть короче гипотенузы.");
+      b = Math.sqrt(c * c - a * a);
+      al = Math.asin(a / c) / rad; be = 90 - al;
+      h.push("Второй катет по теореме Пифагора: b = √(" + n1(c) + "<sup>2</sup> − " + n1(a) +
+             "<sup>2</sup>) ≈ " + n1(b) + ".");
+      h.push("Угол α находим через синус: sin α = a : c = " + n2(a / c) + ", отсюда α ≈ " +
+             deg(al) + ".");
+      h.push("Второй острый угол: β = 90° − α ≈ " + deg(be) + ".");
+    } else if(mode === "ca"){
+      c = v1; al = v2;
+      if(al >= 90) return bad("Острый угол меньше 90°.");
+      be = 90 - al;
+      a = c * Math.sin(al * rad); b = c * Math.cos(al * rad);
+      h.push("Второй острый угол: β = 90° − " + deg(al) + " = " + deg(be) + ".");
+      h.push("Катет, противолежащий углу α: a = c · sin α = " + n1(c) + " · sin " + deg(al) +
+             " ≈ " + n1(a) + ".");
+      h.push("Катет, прилежащий к углу α: b = c · cos α = " + n1(c) + " · cos " + deg(al) +
+             " ≈ " + n1(b) + ".");
+    } else if(mode === "aa"){
+      a = v1; al = v2;
+      if(al >= 90) return bad("Острый угол меньше 90°.");
+      be = 90 - al;
+      c = a / Math.sin(al * rad); b = a / Math.tan(al * rad);
+      h.push("Второй острый угол: β = 90° − " + deg(al) + " = " + deg(be) + ".");
+      h.push("Гипотенуза: c = a : sin α = " + n1(a) + " : sin " + deg(al) + " ≈ " + n1(c) + ".");
+      h.push("Второй катет: b = a · ctg α = " + n1(a) + " · ctg " + deg(al) + " ≈ " + n1(b) + ".");
+    } else {
+      a = v1; be = v2;
+      if(be >= 90) return bad("Острый угол меньше 90°.");
+      al = 90 - be;
+      c = a / Math.cos(be * rad); b = a * Math.tan(be * rad);
+      h.push("Второй острый угол: α = 90° − " + deg(be) + " = " + deg(al) + ".");
+      h.push("Гипотенуза: c = a : cos β = " + n1(a) + " : cos " + deg(be) + " ≈ " + n1(c) + ".");
+      h.push("Второй катет: b = a · tg β = " + n1(a) + " · tg " + deg(be) + " ≈ " + n1(b) + ".");
+    }
+    if(!isFinite(a) || !isFinite(b) || !isFinite(c) || a > 1e6 || b > 1e6 || c > 1e6)
+      return bad("Числа получились слишком большими — возьми угол подальше от 0° и 90°.");
+    steps.innerHTML = h.map(function(x){ return "<li>" + x + "</li>"; }).join("");
+    res.innerHTML =
+      "<div><b>a</b> = " + n1(a) + "</div>" +
+      "<div><b>b</b> = " + n1(b) + "</div>" +
+      "<div><b>c</b> = " + n1(c) + "</div>" +
+      "<div><b>α</b> = " + deg(al) + "</div>" +
+      "<div><b>β</b> = " + deg(be) + "</div>" +
+      "<div><b>S</b> = " + n1(a * b / 2) + "</div>";
+    fig.innerHTML = _triSvg(a, b,
+      {a: "a = " + n1(a), b: "b = " + n1(b), c: "c = " + n1(c), al: deg(al)},
+      {w: 330, h: 214, L: 46, R: 96, cap: "чертёж построен по твоим числам"});
+    note.innerHTML = "Катет a лежит против угла α, катет b — рядом с ним. Проверка: " +
+      n1(a) + "<sup>2</sup> + " + n1(b) + "<sup>2</sup> ≈ " + n1(c) + "<sup>2</sup>.";
+  }
+  host.addEventListener("click", function(ev){
+    var el = ev.target, m = (el && el.getAttribute) ? el.getAttribute("data-mode") : null;
+    if(m){ setMode(m); run(); return; }
+    var ex = (el && el.getAttribute) ? el.getAttribute("data-ex") : null;
+    if(ex){
+      var parts = ex.split(" ");
+      setMode(parts[0], true);
+      i1.value = parts[1]; i2.value = parts[2];
+      run();
+    }
+  });
+  go.addEventListener("click", run);
+  i1.addEventListener("keydown", function(e){ if(e.key === "Enter") run(); });
+  i2.addEventListener("keydown", function(e){ if(e.key === "Enter") run(); });
+  setMode(mode);
+  run();
+  return {run: run};
+};
+
+var STS = ["st1"];
+for (var _s = 0; _s < STS.length; _s++){ SOLVETRI(STS[_s]); }
+
+
+/* ---------- движок тренажёров ---------- */
+function makeTrainer(id, items){
+  var q=document.getElementById(id+"q"), f=document.getElementById(id+"f"),
+      a=document.getElementById(id+"a"), m=document.getElementById(id+"m"),
+      b=document.getElementById(id+"b"), sc=document.getElementById(id+"s");
+  var order=[], perm=[], i=0, ok=0, answered=false;
+
+  function shuffle(n){
+    var arr=[], k, j, t;
+    for(k=0;k<n;k++) arr.push(k);
+    for(k=arr.length-1;k>0;k--){ j=Math.floor(Math.random()*(k+1)); t=arr[k]; arr[k]=arr[j]; arr[j]=t; }
+    return arr;
+  }
+  function norm(s){
+    return String(s).trim().toLowerCase().replace(/\s+/g,"").replace(/−/g,"-").replace(/,/g,".");
+  }
+  function same(x, y){
+    var p=parseFloat(norm(x)), r=parseFloat(norm(y));
+    if(isFinite(p) && isFinite(r)) return Math.abs(p-r) < 1e-9;
+    return norm(x) === norm(y);
+  }
+  function score(){
+    sc.textContent = "вопрос " + Math.min(i + 1, items.length) + " из " + items.length +
+                     " · верно " + ok;
+  }
+
+  function finish(){
+    q.innerHTML=""; f.innerHTML=""; a.innerHTML=""; m.innerHTML="";
+    var pct=Math.round(ok/items.length*100);
+    var word = pct===100 ? "Всё верно — тема закрыта." :
+               pct>=70 ? "Хорошо, но пару мест стоит перечитать." :
+               "Стоит вернуться к теории и пройти ещё раз.";
+    b.innerHTML='<div class="trdone" style="flex:1 1 100%">'+ok+" из "+items.length+
+      " ("+pct+" %) · "+word+'</div><button type="button" class="pri" data-go="1">Пройти заново</button>';
+    sc.textContent="готово";
+    if(window.trFinished) window.trFinished(id, ok, items.length);
+  }
+
+  function show(){
+    answered=false;
+    m.innerHTML=""; b.innerHTML="";
+    var t=items[order[i]];
+    q.innerHTML="<b>"+(i+1)+".</b> "+t.q;
+    f.innerHTML=t.fig || "";
+    f.style.display = t.fig ? "" : "none";
+    if(t.opts){
+      perm = shuffle(t.opts.length);          /* perm[позиция] = номер варианта в банке */
+      var html='<div class="tropts" id="'+id+'o">';
+      for(var k=0;k<perm.length;k++)
+        html+='<button type="button" class="tropt" data-k="'+perm[k]+'">'+t.opts[perm[k]]+'</button>';
+      a.innerHTML = html+"</div>";
+      var box=document.getElementById(id+"o");
+      box.addEventListener("click", function(ev){
+        var el=ev.target; while(el && el!==box && el.className.indexOf("tropt")<0) el=el.parentNode;
+        if(!el || el===box || answered) return;
+        pick(parseInt(el.getAttribute("data-k"),10), box);
+      });
+    } else {
+      a.innerHTML='<div class="trnum"><span>Ответ:</span>'+
+        '<input type="text" id="'+id+'i" inputmode="text" autocomplete="off" '+
+        'autocorrect="off" spellcheck="false" placeholder="число">'+
+        '<button type="button" class="pri" data-check="1">Проверить</button></div>';
+      var inp=document.getElementById(id+"i");
+      inp.addEventListener("keydown", function(ev){ if(ev.key==="Enter") check(); });
+    }
+    score();
+  }
+
+  function verdict(good, t){
+    answered=true;
+    if(good) ok++;
+    i++;
+    m.innerHTML='<div class="v '+(good?"ok":"bad")+'">'+(good?"Верно.":"Неверно.")+"</div>"+
+                '<div class="why">'+t.why+"</div>";
+    b.innerHTML = (i<items.length)
+      ? '<button type="button" class="pri" data-next="1">Дальше</button>'
+      : '<button type="button" class="pri" data-next="1">Показать итог</button>';
+    score();
+  }
+  function pick(k, box){
+    var t=items[order[i]], good = (k === t.ans);
+    var bs=box.querySelectorAll(".tropt");
+    for(var j=0;j<bs.length;j++){
+      var n=parseInt(bs[j].getAttribute("data-k"),10);
+      if(n===t.ans) bs[j].className="tropt right";
+      else if(n===k) bs[j].className="tropt wrong";
+    }
+    box.className="tropts done";
+    verdict(good, t);
+  }
+  function check(){
+    if(answered) return;
+    var t=items[order[i]], inp=document.getElementById(id+"i");
+    var v=(inp.value||"").trim();
+    if(!v){ m.innerHTML='<div class="why">Впиши ответ.</div>'; return; }
+    var good = t.ans.some(function(x){ return same(v, x); });
+    inp.disabled=true;
+    if(!good) m.innerHTML="";
+    verdict(good, t);
+    if(!good) m.innerHTML='<div class="v bad">Неверно. Правильный ответ: '+t.ans[0]+".</div>"+
+                          '<div class="why">'+t.why+"</div>";
+  }
+
+  b.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-next")){ if(i<items.length) show(); else finish(); }
+    if(el.getAttribute && el.getAttribute("data-go")){ start(); }
+  });
+  a.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-check")) check();
+  });
+
+  function start(){ order=shuffle(items.length); i=0; ok=0; show(); }
+  start();
+}
+
+makeTrainer("ts1", [{"q": "Как называется сторона CB относительно угла α?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 185\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"185\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"83.6,129.0 246.4,129.0 83.6,24.0\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"98.6,129.0 98.6,114.0 83.6,114.0\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 219.4 129.0 A 27.0 27.0 0 0 1 223.7 114.4\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"188.2\" y=\"111.9\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">α</text><text x=\"72\" y=\"149\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"260\" y=\"149\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"70\" y=\"20\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text><text x=\"150\" y=\"177\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">∠C = 90°, отмечен угол α</text></svg></div>", "opts": ["противолежащий катет", "прилежащий катет", "гипотенуза"], "ans": 0, "why": "Угол α отмечен при вершине A. Сторона CB лежит напротив него и не является гипотенузой — это противолежащий катет."}, {"q": "Как называется сторона CA относительно угла α?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 185\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"185\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"83.6,129.0 246.4,129.0 83.6,24.0\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"98.6,129.0 98.6,114.0 83.6,114.0\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 219.4 129.0 A 27.0 27.0 0 0 1 223.7 114.4\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"188.2\" y=\"111.9\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">α</text><text x=\"72\" y=\"149\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"260\" y=\"149\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"70\" y=\"20\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text><text x=\"150\" y=\"177\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">∠C = 90°, отмечен угол α</text></svg></div>", "opts": ["противолежащий катет", "прилежащий катет", "гипотенуза"], "ans": 1, "why": "Сторона CA выходит из вершины A и не является гипотенузой — значит это прилежащий катет."}, {"q": "Как называется сторона AB относительно угла α?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 185\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"185\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"83.6,129.0 246.4,129.0 83.6,24.0\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"98.6,129.0 98.6,114.0 83.6,114.0\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 219.4 129.0 A 27.0 27.0 0 0 1 223.7 114.4\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"188.2\" y=\"111.9\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">α</text><text x=\"72\" y=\"149\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"260\" y=\"149\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"70\" y=\"20\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text><text x=\"150\" y=\"177\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">∠C = 90°, отмечен угол α</text></svg></div>", "opts": ["противолежащий катет", "прилежащий катет", "гипотенуза"], "ans": 2, "why": "AB лежит против прямого угла C — это гипотенуза, и она называется так при любом остром угле."}, {"q": "Как называется сторона CB относительно угла β?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 185\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"185\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"83.6,129.0 246.4,129.0 83.6,24.0\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"98.6,129.0 98.6,114.0 83.6,114.0\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 83.6 51.0 A 27.0 27.0 0 0 0 106.3 38.6\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"103.1\" y=\"59.7\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">β</text><text x=\"72\" y=\"149\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"260\" y=\"149\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"70\" y=\"20\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text><text x=\"150\" y=\"177\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">∠C = 90°, отмечен угол β</text></svg></div>", "opts": ["противолежащий катет", "прилежащий катет", "гипотенуза"], "ans": 1, "why": "Угол β отмечен при вершине B, и сторона CB выходит из этой вершины — для угла β она прилежащая."}, {"q": "Как называется сторона CA относительно угла β?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 185\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"185\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"83.6,129.0 246.4,129.0 83.6,24.0\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"98.6,129.0 98.6,114.0 83.6,114.0\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 83.6 51.0 A 27.0 27.0 0 0 0 106.3 38.6\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"103.1\" y=\"59.7\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">β</text><text x=\"72\" y=\"149\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"260\" y=\"149\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"70\" y=\"20\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text><text x=\"150\" y=\"177\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">∠C = 90°, отмечен угол β</text></svg></div>", "opts": ["противолежащий катет", "прилежащий катет", "гипотенуза"], "ans": 0, "why": "Для угла β противолежащей будет нижняя сторона CA — она не касается вершины B."}, {"q": "Как называется сторона AB относительно угла β?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 185\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"185\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"83.6,129.0 246.4,129.0 83.6,24.0\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"98.6,129.0 98.6,114.0 83.6,114.0\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 83.6 51.0 A 27.0 27.0 0 0 0 106.3 38.6\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"103.1\" y=\"59.7\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">β</text><text x=\"72\" y=\"149\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"260\" y=\"149\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"70\" y=\"20\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text><text x=\"150\" y=\"177\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">∠C = 90°, отмечен угол β</text></svg></div>", "opts": ["противолежащий катет", "прилежащий катет", "гипотенуза"], "ans": 2, "why": "Гипотенуза не зависит от выбора острого угла: она всегда лежит против прямого."}, {"q": "Какая сторона лежит против угла β?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 185\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"185\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"83.6,129.0 246.4,129.0 83.6,24.0\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"98.6,129.0 98.6,114.0 83.6,114.0\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 83.6 51.0 A 27.0 27.0 0 0 0 106.3 38.6\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"103.1\" y=\"59.7\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">β</text><text x=\"72\" y=\"149\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"260\" y=\"149\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"70\" y=\"20\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text><text x=\"150\" y=\"177\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">∠C = 90°, отмечен угол β</text></svg></div>", "opts": ["CB", "CA", "AB"], "ans": 1, "why": "Угол β при вершине B, значит против него лежит сторона CA."}, {"q": "Какая сторона треугольника является гипотенузой?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 185\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"185\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"83.6,129.0 246.4,129.0 83.6,24.0\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"98.6,129.0 98.6,114.0 83.6,114.0\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 219.4 129.0 A 27.0 27.0 0 0 1 223.7 114.4\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"188.2\" y=\"111.9\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">α</text><text x=\"72\" y=\"149\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"260\" y=\"149\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"70\" y=\"20\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text><text x=\"150\" y=\"177\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\">∠C = 90°, отмечен угол α</text></svg></div>", "opts": ["CB", "CA", "AB"], "ans": 2, "why": "Гипотенуза лежит против прямого угла C — это сторона AB."}]);
+makeTrainer("ts2", [{"q": "Гипотенуза равна 10, острый угол 35°, x — прилежащий к нему катет. Чему равен x?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 185\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"185\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,142.6 252.0,142.6 78.0,30.4\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,142.6 93.0,127.6 78.0,127.6\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 225.0 142.6 A 27.0 27.0 0 0 1 229.3 128.0\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"172.8\" y=\"119.3\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">35°</text><text x=\"165\" y=\"169\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">x</text><text x=\"66\" y=\"92\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">a</text><text x=\"181\" y=\"78\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">10</text><text x=\"66\" y=\"163\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"266\" y=\"163\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"26\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg></div>", "opts": ["10 · cos 35°", "10 · sin 35°", "10 : cos 35°", "10 · tg 35°"], "ans": 0, "why": "Катет через гипотенузу: прилежащий — значит косинус."}, {"q": "Гипотенуза равна 10, острый угол 35°, x — противолежащий катет. Чему равен x?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 185\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"185\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,142.6 252.0,142.6 78.0,30.4\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,142.6 93.0,127.6 78.0,127.6\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 225.0 142.6 A 27.0 27.0 0 0 1 229.3 128.0\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"172.8\" y=\"119.3\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">35°</text><text x=\"165\" y=\"169\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">b</text><text x=\"66\" y=\"92\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">x</text><text x=\"181\" y=\"78\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">10</text><text x=\"66\" y=\"163\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"266\" y=\"163\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"26\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg></div>", "opts": ["10 · sin 35°", "10 · cos 35°", "10 : sin 35°", "10 · ctg 35°"], "ans": 0, "why": "Катет через гипотенузу: противолежащий — значит синус."}, {"q": "Катет 8 прилежит к углу 40°, x — второй катет. Чему равен x?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 185\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"185\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,142.6 252.0,142.6 78.0,30.4\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,142.6 93.0,127.6 78.0,127.6\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 225.0 142.6 A 27.0 27.0 0 0 1 229.3 128.0\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"172.8\" y=\"119.3\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">40°</text><text x=\"165\" y=\"169\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">8</text><text x=\"66\" y=\"92\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">x</text><text x=\"181\" y=\"78\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">c</text><text x=\"66\" y=\"163\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"266\" y=\"163\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"26\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg></div>", "opts": ["8 · tg 40°", "8 · sin 40°", "8 : tg 40°", "8 · cos 40°"], "ans": 0, "why": "Гипотенуза не нужна — катет через катет: умножаем на тангенс противолежащего угла."}, {"q": "Катет 8 противолежит углу 40°, x — гипотенуза. Чему равен x?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 185\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"185\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,142.6 252.0,142.6 78.0,30.4\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,142.6 93.0,127.6 78.0,127.6\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 225.0 142.6 A 27.0 27.0 0 0 1 229.3 128.0\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"172.8\" y=\"119.3\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">40°</text><text x=\"165\" y=\"169\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">b</text><text x=\"66\" y=\"92\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">8</text><text x=\"181\" y=\"78\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">x</text><text x=\"66\" y=\"163\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"266\" y=\"163\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"26\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg></div>", "opts": ["8 : sin 40°", "8 · sin 40°", "8 : cos 40°", "8 · tg 40°"], "ans": 0, "why": "Гипотенуза равна катету, делённому на синус противолежащего угла."}, {"q": "Катет 6 прилежит к углу 25°, x — гипотенуза. Чему равен x?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 185\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"185\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,142.6 252.0,142.6 78.0,30.4\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,142.6 93.0,127.6 78.0,127.6\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 225.0 142.6 A 27.0 27.0 0 0 1 229.3 128.0\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"172.8\" y=\"119.3\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">25°</text><text x=\"165\" y=\"169\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">6</text><text x=\"66\" y=\"92\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">a</text><text x=\"181\" y=\"78\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">x</text><text x=\"66\" y=\"163\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"266\" y=\"163\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"26\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg></div>", "opts": ["6 : cos 25°", "6 · cos 25°", "6 : sin 25°", "6 · ctg 25°"], "ans": 0, "why": "Прилежащий катет и гипотенуза связаны косинусом, а гипотенуза больше — значит делим."}, {"q": "Катет 6 противолежит углу 25°, x — второй катет. Чему равен x?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 185\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"185\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,142.6 252.0,142.6 78.0,30.4\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,142.6 93.0,127.6 78.0,127.6\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 225.0 142.6 A 27.0 27.0 0 0 1 229.3 128.0\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"172.8\" y=\"119.3\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">25°</text><text x=\"165\" y=\"169\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">x</text><text x=\"66\" y=\"92\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">6</text><text x=\"181\" y=\"78\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">c</text><text x=\"66\" y=\"163\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"266\" y=\"163\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"26\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg></div>", "opts": ["6 · ctg 25°", "6 · tg 25°", "6 : sin 25°", "6 · cos 25°"], "ans": 0, "why": "Второй катет прилежит к углу 25°, поэтому умножаем на котангенс."}, {"q": "Гипотенуза равна 12, острый угол 62°, x — противолежащий катет. Чему равен x?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 185\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"185\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,142.6 252.0,142.6 78.0,30.4\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,142.6 93.0,127.6 78.0,127.6\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 225.0 142.6 A 27.0 27.0 0 0 1 229.3 128.0\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"172.8\" y=\"119.3\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">62°</text><text x=\"165\" y=\"169\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">b</text><text x=\"66\" y=\"92\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">x</text><text x=\"181\" y=\"78\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">12</text><text x=\"66\" y=\"163\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"266\" y=\"163\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"26\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg></div>", "opts": ["12 · sin 62°", "12 · cos 62°", "12 : sin 62°", "12 · tg 62°"], "ans": 0, "why": "Снова катет через гипотенузу и синус противолежащего угла."}, {"q": "Катет 5 прилежит к углу 50°, x — противолежащий этому углу катет. Чему равен x?", "fig": "<div class=\"trfig\"><svg viewBox=\"0 0 300 185\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"185\" rx=\"12\" fill=\"#ffffff\"/><polygon points=\"78.0,142.6 252.0,142.6 78.0,30.4\" fill=\"#e8f0ff\" stroke=\"#15181e\" stroke-width=\"2.6\"/><polyline points=\"93.0,142.6 93.0,127.6 78.0,127.6\" fill=\"none\" stroke=\"#15181e\" stroke-width=\"2\"/><path d=\"M 225.0 142.6 A 27.0 27.0 0 0 1 229.3 128.0\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><text x=\"172.8\" y=\"119.3\" font-size=\"17\" fill=\"#2f6bd8\" text-anchor=\"middle\" dy=\".35em\" font-weight=\"600\">50°</text><text x=\"165\" y=\"169\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">5</text><text x=\"66\" y=\"92\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"end\" font-weight=\"600\">x</text><text x=\"181\" y=\"78\" font-size=\"18\" fill=\"#15181e\" text-anchor=\"start\" font-weight=\"600\">c</text><text x=\"66\" y=\"163\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">C</text><text x=\"266\" y=\"163\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><text x=\"64\" y=\"26\" font-size=\"16\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text></svg></div>", "opts": ["5 · tg 50°", "5 : tg 50°", "5 · sin 50°", "5 : cos 50°"], "ans": 0, "why": "Катет через катет: тангенс угла, противолежащего искомому катету."}]);
+makeTrainer("ts3", [{"q": "Гипотенуза равна 10, sin α = 0,6. Найди катет, противолежащий углу α.", "ans": ["6"], "why": "a = c · sin α = 10 · 0,6 = 6."}, {"q": "Гипотенуза равна 20, cos α = 0,8. Найди катет, прилежащий к углу α.", "ans": ["16"], "why": "b = c · cos α = 20 · 0,8 = 16."}, {"q": "Гипотенуза равна 15, sin α = 0,4. Найди противолежащий катет.", "ans": ["6"], "why": "a = 15 · 0,4 = 6."}, {"q": "Гипотенуза равна 25, cos α = 0,28. Найди прилежащий катет.", "ans": ["7"], "why": "b = 25 · 0,28 = 7."}, {"q": "Гипотенуза равна 12, острый угол 30°. Найди катет, лежащий против него.", "ans": ["6"], "why": "sin 30° = 0,5, поэтому a = 12 · 0,5 = 6 — половина гипотенузы."}, {"q": "Гипотенуза равна 9, cos α = 0,3. Найди прилежащий катет.", "ans": ["2,7"], "why": "b = 9 · 0,3 = 2,7."}, {"q": "Гипотенуза равна 40, sin α = 0,75. Найди противолежащий катет.", "ans": ["30"], "why": "a = 40 · 0,75 = 30."}, {"q": "Гипотенуза равна 6, острый угол 60°. Найди катет, прилежащий к этому углу.", "ans": ["3"], "why": "cos 60° = 0,5, значит b = 6 · 0,5 = 3."}]);
+makeTrainer("ts4", [{"q": "Катет равен 6, sin α = 0,6, где α — противолежащий ему угол. Найди гипотенузу.", "ans": ["10"], "why": "c = a : sin α = 6 : 0,6 = 10."}, {"q": "Катет равен 16, cos α = 0,8, где α — прилежащий к нему угол. Найди гипотенузу.", "ans": ["20"], "why": "c = b : cos α = 16 : 0,8 = 20."}, {"q": "Катет равен 3, противолежащий ему угол 30°. Найди гипотенузу.", "ans": ["6"], "why": "sin 30° = 0,5, значит c = 3 : 0,5 = 6 — вдвое больше катета."}, {"q": "Катет равен 9, прилежащий к нему угол имеет cos α = 0,75. Найди гипотенузу.", "ans": ["12"], "why": "c = 9 : 0,75 = 12."}, {"q": "Катет равен 7, sin α = 0,28 для противолежащего угла. Найди гипотенузу.", "ans": ["25"], "why": "c = 7 : 0,28 = 25."}, {"q": "Катет равен 12, sin α = 0,96 для противолежащего угла. Найди гипотенузу.", "ans": ["12,5"], "why": "c = 12 : 0,96 = 12,5."}, {"q": "Катет равен 5, cos α = 0,2 для прилежащего угла. Найди гипотенузу.", "ans": ["25"], "why": "c = 5 : 0,2 = 25."}, {"q": "Катет равен 4,8, sin α = 0,6 для противолежащего угла. Найди гипотенузу.", "ans": ["8"], "why": "c = 4,8 : 0,6 = 8."}]);
+makeTrainer("ts5", [{"q": "Катет b = 4, tg α = 0,75, где α противолежит катету a. Найди a.", "ans": ["3"], "why": "a = b · tg α = 4 · 0,75 = 3."}, {"q": "Катет b = 8, tg α = 1,5, где α противолежит катету a. Найди a.", "ans": ["12"], "why": "a = 8 · 1,5 = 12."}, {"q": "Катет a = 12, ctg α = 0,5. Найди второй катет b.", "ans": ["6"], "why": "b = a · ctg α = 12 · 0,5 = 6."}, {"q": "Катет b = 5, tg α = 2,4, где α противолежит катету a. Найди a.", "ans": ["12"], "why": "a = 5 · 2,4 = 12. Это знакомая тройка 5, 12, 13."}, {"q": "Катет a = 9, ctg α = 1,25. Найди второй катет b.", "ans": ["11,25"], "why": "b = 9 · 1,25 = 11,25."}, {"q": "Катет b = 10, tg α = 0,7, где α противолежит катету a. Найди a.", "ans": ["7"], "why": "a = 10 · 0,7 = 7."}, {"q": "Катет a = 15, ctg α = 0,8. Найди второй катет b.", "ans": ["12"], "why": "b = 15 · 0,8 = 12."}, {"q": "Катет b = 2,5, tg α = 2, где α противолежит катету a. Найди a.", "ans": ["5"], "why": "a = 2,5 · 2 = 5."}]);
+makeTrainer("ts6", [{"q": "Катет, лежащий против угла 30°, равен 7. Найди гипотенузу.", "ans": ["14"], "why": "Против 30° лежит половина гипотенузы, значит c = 2 · 7 = 14."}, {"q": "Гипотенуза равна 18, один из острых углов 30°. Найди меньший катет.", "ans": ["9"], "why": "Меньший катет лежит против угла 30° и равен половине гипотенузы: 9."}, {"q": "Меньший катет равен 5, углы треугольника 30° и 60°. Чему равен больший катет?", "opts": ["5√3", "<span class='fr'><b>5</b><i>√3</i></span>", "10", "5√2"], "ans": 0, "why": "При углах 30° и 60° больший катет равен меньшему, умноженному на √3."}, {"q": "Больший катет равен 9, угол против меньшего катета равен 30°. Чему равен меньший катет?", "opts": ["3√3", "9√3", "4,5", "9√2"], "ans": 0, "why": "<span class='fr'><b>9</b><i>√3</i></span> = <span class='fr'><b>9√3</b><i>3</i></span> = 3√3 ≈ 5,2 — меньше девяти, как и должно быть."}, {"q": "Катет равен 6, острый угол 45°. Чему равна гипотенуза?", "opts": ["6√2", "6√3", "12", "3√2"], "ans": 0, "why": "При угле 45° треугольник равнобедренный, гипотенуза равна катету на √2."}, {"q": "Гипотенуза равна 10, острый угол 45°. Чему равен катет?", "opts": ["5√2", "10√2", "5", "5√3"], "ans": 0, "why": "<span class='fr'><b>10</b><i>√2</i></span> = <span class='fr'><b>10√2</b><i>2</i></span> = 5√2 ≈ 7,1."}, {"q": "Катет, лежащий против угла 60°, равен 6√3. Найди второй катет.", "ans": ["6"], "why": "Второй катет = 6√3 : tg 60° = 6√3 : √3 = 6."}, {"q": "Гипотенуза равна 24, один из острых углов 30°. Чему равен больший катет?", "opts": ["12√3", "12", "24√3", "8√3"], "ans": 0, "why": "Меньший катет равен 12, больший — 12√3 ≈ 20,8."}]);
+makeTrainer("ts7", [{"q": "Катеты равны 9 и 12. Найди гипотенузу.", "ans": ["15"], "why": "c = √(81 + 144) = √225 = 15. Это тройка 3, 4, 5, умноженная на 3."}, {"q": "Гипотенуза равна 25, один катет 7. Найди второй катет.", "ans": ["24"], "why": "b = √(625 − 49) = √576 = 24."}, {"q": "Один острый угол прямоугольного треугольника равен 28°. Чему равен второй в градусах?", "ans": ["62"], "why": "β = 90° − 28° = 62°."}, {"q": "Катеты равны 5 и 12. Найди периметр.", "ans": ["30"], "why": "Гипотенуза равна 13, периметр 5 + 12 + 13 = 30."}, {"q": "Гипотенуза равна 17, один катет 8. Найди площадь.", "ans": ["60"], "why": "Второй катет √(289 − 64) = 15, площадь 8 · 15 : 2 = 60."}, {"q": "Катет равен 6, синус противолежащего ему угла равен 0,6. Найди периметр.", "ans": ["24"], "why": "c = 6 : 0,6 = 10, второй катет √(100 − 36) = 8, периметр 6 + 8 + 10 = 24."}, {"q": "Гипотенуза равна 20, sin α = 0,8. Найди площадь треугольника.", "ans": ["96"], "why": "a = 20 · 0,8 = 16, b = 20 · 0,6 = 12, площадь 16 · 12 : 2 = 96."}, {"q": "Катеты равны 3 и 4. Найди высоту, проведённую к гипотенузе.", "ans": ["2,4"], "why": "Гипотенуза 5, высота h = 3 · 4 : 5 = 2,4."}]);
+
+/* ---------- тренажёры обязательны для отправки ---------- */
+var TRREQ = [
+  {id:"ts1", name:"Тренажёр 1. Кто есть кто"},
+  {id:"ts2", name:"Тренажёр 2. Выбери выражение"},
+  {id:"ts3", name:"Тренажёр 3. Катет через гипотенузу"},
+  {id:"ts4", name:"Тренажёр 4. Гипотенуза через катет"},
+  {id:"ts5", name:"Тренажёр 5. Катет через катет"},
+  {id:"ts6", name:"Тренажёр 6. Углы 30°, 45° и 60°"},
+  {id:"ts7", name:"Тренажёр 7. Треугольник целиком"}
+];
+var TRDONE = {};
+window.trFinished = function(id, ok, total){
+  var prev = TRDONE[id];
+  if(!prev || ok > prev.ok) TRDONE[id] = {ok: ok, total: total};
+  trStatus();
+  if(window.saveWork) saveWork();
+};
+function trPending(){
+  var out = [], k;
+  for(k = 0; k < TRREQ.length; k++){ if(!TRDONE[TRREQ[k].id]) out.push(TRREQ[k]); }
+  return out;
+}
+function trSummary(){
+  var ok = 0, total = 0, parts = [], k, d;
+  for(k = 0; k < TRREQ.length; k++){
+    d = TRDONE[TRREQ[k].id];
+    parts.push({name: TRREQ[k].name, ok: d ? d.ok : null, total: d ? d.total : null});
+    if(d){ ok += d.ok; total += d.total; }
+  }
+  return {ok: ok, total: total, parts: parts, done: TRREQ.length - trPending().length};
+}
+function trReportHtml(){
+  var s = trSummary(), k, pt, h;
+  h = "<h2>Тренажёры: " + s.done + " из " + TRREQ.length + " пройдено" +
+      (s.total ? " · верных ответов " + s.ok + " из " + s.total : "") + "</h2><table><tr>" +
+      "<th>Тренажёр</th><th>Результат</th></tr>";
+  for(k = 0; k < s.parts.length; k++){
+    pt = s.parts[k];
+    h += "<tr><td style='text-align:left'>" + pt.name + "</td><td>" +
+         (pt.ok === null ? "не пройден" : pt.ok + " из " + pt.total) + "</td></tr>";
+  }
+  return h + "</table>";
+}
+function trJump(id){
+  var el = document.getElementById(id);
+  if(!el) return;
+  try{ el.scrollIntoView({behavior: "smooth", block: "center"}); }
+  catch(e){ el.scrollIntoView(); }
+  el.className = "tr need";
+  setTimeout(function(){ el.className = "tr"; }, 2600);
+}
+function trStatus(){
+  var g = document.getElementById("trgate");
+  if(!g) return;
+  var left = trPending(), s = trSummary(), h, k;
+  if(!left.length){
+    g.className = "trgate ready";
+    g.innerHTML = "<b>Все семь тренажёров пройдены.</b> Верных ответов: " + s.ok +
+                  " из " + s.total + ". Работу можно отправлять.";
+    return;
+  }
+  g.className = "trgate";
+  h = "<b>Пройдено тренажёров: " + s.done + " из " + TRREQ.length + ".</b> " +
+      "Работа отправится, когда пройдёшь все. Осталось:<ul>";
+  for(k = 0; k < left.length; k++){
+    h += '<li><a data-jump="' + left[k].id + '">' + left[k].name + "</a></li>";
+  }
+  g.innerHTML = h + "</ul>";
+}
+document.addEventListener("click", function(ev){
+  var el = ev.target;
+  var id = (el && el.getAttribute) ? el.getAttribute("data-jump") : null;
+  if(id) trJump(id);
+});
+trStatus();
+
+/* ---------- память страницы ---------- */
+var SAVE_V = 1;
+var SKEY = "arttich:solve9:" + (STUDENT_CODE || "-");
+
+function spentMs(){ return spentBefore + (Date.now() - started); }
+
+var CAN_STORE = (function(){
+  try{
+    localStorage.setItem("arttich:probe", "1");
+    localStorage.removeItem("arttich:probe");
+    return true;
+  }catch(e){ return false; }
 })();
+
+var wiping = false;
+function saveWork(){
+  if(wiping) return;
+  try{
+    var box = {v: SAVE_V, at: Date.now(), spent: spentMs(), tr: TRDONE, tasks: {},
+               name: (document.getElementById("name").value || "")};
+    TASKS.forEach(function(t){
+      var x = state[t.id];
+      if(x.tries || x.hints || x.given || x.sel){
+        box.tasks[t.id] = {tries: x.tries, hints: x.hints, done: x.done,
+                           ok: x.ok, given: x.given, sel: x.sel};
+      }
+    });
+    localStorage.setItem(SKEY, JSON.stringify(box));
+    saveNote(box.at);
+  }catch(e){}
+}
+function loadWork(){
+  try{
+    var raw = localStorage.getItem(SKEY);
+    if(!raw) return null;
+    var box = JSON.parse(raw);
+    return (box && box.v === SAVE_V) ? box : null;
+  }catch(e){ return null; }
+}
+function clearWork(){
+  try{ localStorage.removeItem(SKEY); }catch(e){}
+}
+
+function saveNote(at){
+  var n = document.getElementById("savenote");
+  if(!n) return;
+  if(!CAN_STORE){
+    n.textContent = "Этот браузер не разрешает страницам ничего запоминать, поэтому " +
+      "при перезагрузке ответы пропадут. Решай за один заход или отправь работу до того, " +
+      "как закроешь вкладку.";
+    return;
+  }
+  var when = "";
+  if(at){
+    var d = new Date(at);
+    var two = function(x){ return (x < 10 ? "0" : "") + x; };
+    when = " Последнее сохранение: " + two(d.getDate()) + "." + two(d.getMonth() + 1) +
+           ", " + two(d.getHours()) + ":" + two(d.getMinutes()) + ".";
+  }
+  n.innerHTML = "Ответы и пройденные тренажёры хранятся в этом браузере: можно закрыть " +
+    "страницу и вернуться позже." + when +
+    " Фото не сохраняются." +
+    (at ? ' <button type="button" id="wipe">Начать заново</button>' : "");
+  var w = document.getElementById("wipe");
+  if(w){
+    w.addEventListener("click", function(){
+      wiping = true;
+      clearWork();
+      location.reload();
+    });
+  }
+}
+
+function restoreTask(t, s){
+  var el = document.getElementById("t" + t.id);
+  if(!el) return;
+  if(t.type === "choice"){
+    if(s.sel){
+      el.querySelectorAll(".opt").forEach(function(l){
+        if(l.dataset.v === s.sel){
+          l.classList.add("sel");
+          var r = l.querySelector("input");
+          if(r) r.checked = true;
+        }
+      });
+    }
+  } else if(s.given){
+    var inp = document.getElementById("in" + t.id);
+    if(inp) inp.value = s.given;
+  }
+  var host = el.querySelector(".hints"), k, h;
+  for(k = 0; k < s.hints && k < t.hints.length; k++){
+    h = document.createElement("div");
+    h.className = "hint";
+    h.innerHTML = "Подсказка " + (k + 1) + ": " + t.hints[k];
+    host.appendChild(h);
+  }
+  if(s.tries > 0){
+    var v = el.querySelector(".verdict");
+    el.classList.add(s.ok ? "ok" : "bad");
+    v.className = "verdict " + (s.ok ? "ok" : "bad");
+    if(s.ok){
+      v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    } else if(s.tries === 1){
+      v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+    } else {
+      v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    }
+    if(s.done) showSol(el, t);
+  }
+}
+
+(function(){
+  var saved = loadWork(), k;
+  if(saved){
+    spentBefore = saved.spent || 0;
+    if(saved.name){
+      var nm = document.getElementById("name");
+      if(nm && !nm.value) nm.value = saved.name;
+    }
+    TASKS.forEach(function(t){
+      var s = saved.tasks && saved.tasks[t.id];
+      if(!s) return;
+      var cur = state[t.id];
+      cur.tries = s.tries || 0; cur.hints = s.hints || 0;
+      cur.done = !!s.done; cur.ok = !!s.ok;
+      cur.given = s.given || ""; cur.sel = s.sel || null;
+      restoreTask(t, cur);
+    });
+    if(saved.tr){ for(k in saved.tr){ TRDONE[k] = saved.tr[k]; } }
+    progress();
+    trStatus();
+  }
+  saveNote(saved ? saved.at : 0);
+  var nm = document.getElementById("name");
+  if(nm) nm.addEventListener("change", saveWork);
+  window.addEventListener("beforeunload", saveWork);
+})();
+
 </script>
 </body>
 </html>
