@@ -155,6 +155,16 @@ details[open] summary{margin-bottom:8px}
   overflow-y:hidden;white-space:nowrap;font-weight:600}
 .mn{color:#b3261e;font-weight:700}
 .trnav{margin-top:12px;display:flex;gap:9px;flex-wrap:wrap}
+.trgate{margin-top:12px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;
+  font-size:16px;background:var(--bg)}
+.trgate.ready{border-color:#1f8a54;background:#e9f7ef}
+.trgate b{font-weight:700}
+.trgate ul{margin:6px 0 0;padding-left:20px}
+.trgate li{margin:3px 0}
+.trgate a{color:var(--acc);text-decoration:none;border-bottom:1px solid currentColor;
+  cursor:pointer}
+@media (prefers-color-scheme:dark){.trgate.ready{background:#12281d}}
+.tr.need{outline:2px solid #c99a2e;outline-offset:3px}
 .sheet .f-formula{margin:5px 0;font-size:14.5px;line-height:1.7}
 @media print{
   .sheet>.meta{display:none}
@@ -219,8 +229,10 @@ details[open] summary{margin-bottom:8px}
     на 10 частей</b>. Нужен разряд помельче — берём два соседних числа и снова делим
     промежуток на 10.</div>
     <div style="margin-top:8px">Луч на странице живой: тяни точку пальцем или мышкой,
-    она прилипает к делениям. Последние четыре задачи — повышенной сложности.
-    Тренажёры в отчёт не идут.</div>
+    она прилипает к делениям. Последние четыре задачи — повышенной сложности.</div>
+    <div style="margin-top:8px"><b>Все четыре тренажёра нужно пройти до конца</b> —
+    без этого работа не отправится. Ошибки в тренажёре не страшны: важно дойти
+    до итога и прочитать разбор.</div>
   </div>
 </div>
 
@@ -482,6 +494,7 @@ details[open] summary{margin-bottom:8px}
   <h2>Шаг 2. Отправь работу</h2>
   <div class="meta">Проверь, что вверху написано твоё имя. По кнопке ответы и результат
   уходят преподавателю. Вторая кнопка сохраняет копию тебе.</div>
+  <div class="trgate" id="trgate"></div>
   <div class="row" style="margin-top:12px">
     <button class="pri" id="send">Отправить на проверку</button>
     <button id="report">Скачать копию себе</button>
@@ -904,7 +917,7 @@ function buildReport(){
   var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
   var data = {tип:"дз", предмет:"математика", тема:"Десятичные дроби на координатном луче (§3, математика 6 класс)",
     ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
-    верно:okN, всего:TASKS.length, задачи:[]};
+    верно:okN, всего:TASKS.length, тренажёры:trSummary(), задачи:[]};
   var rows = TASKS.map(function(t){
     var s = state[t.id];
     data.задачи.push({n:t.id, условие:t.text.replace(/<[^>]+>/g,""), ответ_ученика:s.given,
@@ -934,6 +947,7 @@ function buildReport(){
     "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)</h2>"+
     "<table><tr><th>№</th><th>Задача</th><th>Ответ ученика</th><th>Верный ответ</th>"+
     "<th>Итог</th><th>Попыток</th><th>Подсказок</th></tr>"+rows+"</table>"+
+    trReportHtml()+
     (pics ? "<h2>Фото решений</h2>"+pics : "<p class='m'>Фото решений не прикреплены.</p>")+
     "<script type='application/json' id='result-data'>"+
     JSON.stringify(data).replace(/</g,"\\u003c")+"<\/script></body></html>";
@@ -945,7 +959,8 @@ function buildReport(){
     total: TASKS.length,
     file: "Отчёт_Координатный_луч_"+name.replace(/\s+/g,"_")+"_"+stamp+".html",
     caption: name+" · координатный луч · математика 6 класс · "+okN+" из "+TASKS.length+
-             " ("+Math.round(okN/TASKS.length*100)+"%)"
+             " ("+Math.round(okN/TASKS.length*100)+"%)"+
+             " · тренажёры "+trSummary().ok+" из "+trSummary().total
   };
 }
 
@@ -953,6 +968,15 @@ document.getElementById("send").addEventListener("click", function(){
   var note = document.getElementById("repnote");
   var who = (document.getElementById("name").value || "").trim();
   if(!who){ note.className = "meta bad-note"; note.textContent = "Сначала впиши имя вверху страницы."; return; }
+  var left = trPending();
+  if(left.length){
+    note.className = "meta bad-note";
+    note.textContent = "Работа не отправлена: сначала пройди тренажёры. " +
+      "Осталось " + left.length + " из " + TRREQ.length + ".";
+    trStatus();
+    trJump(left[0].id);
+    return;
+  }
   note.className = "meta";
   var r = buildReport();
   note.textContent = "Отправляю…";
@@ -965,6 +989,7 @@ document.getElementById("send").addEventListener("click", function(){
     total: r.total,
     name: r.file,
     caption: r.caption,
+    trainers: trSummary().ok + " из " + trSummary().total,
     file: btoa(unescape(encodeURIComponent(r.html)))
   };
   fetch(ENDPOINT, {method:"POST", mode:"no-cors", body: JSON.stringify(payload)})
@@ -1025,6 +1050,7 @@ function makeTrainer(id, items){
     b.innerHTML='<div class="trdone" style="flex:1 1 100%">'+ok+" из "+items.length+
       " ("+pct+" %) · "+word+'</div><button type="button" class="pri" data-go="1">Пройти заново</button>';
     sc.textContent="готово";
+    if(window.trFinished) window.trFinished(id, ok, items.length);
   }
 
   function show(){
@@ -1258,6 +1284,7 @@ window.NLTRAIN = function(id, items){
       " (" + pct + " %) · " + word + '</div>' +
       '<button type="button" class="pri" data-go="1">Пройти заново</button>';
     sc.textContent = "готово";
+    if(window.trFinished) window.trFinished(id, ok, items.length);
   }
   function show(){
     answered = false;
@@ -1323,6 +1350,79 @@ window.NLTRAIN = function(id, items){
 
 var NL = {"nl1": {"lo": 0, "hi": 2, "step": 0.1, "label": "A", "start": 0.7, "range": 0, "ranges": [{"name": "0 … 2", "lo": 0, "hi": 2, "step": 0.1}, {"name": "0 … 1", "lo": 0, "hi": 1, "step": 0.1}, {"name": "1,4 … 1,5", "lo": 1.4, "hi": 1.5, "step": 0.01}, {"name": "4,01 … 4,02", "lo": 4.01, "hi": 4.02, "step": 0.001}]}, "nl2": {"lo": 0, "hi": 1, "step": 0.1, "label": "A", "start": 0.3, "range": 0}, "nl3": {"lo": 1.4, "hi": 1.5, "step": 0.01, "label": "A", "start": 1.46, "range": 0}, "nl4": {"lo": 4.01, "hi": 4.02, "step": 0.001, "label": "A", "start": 4.014, "range": 0}};
 for (var _n in NL){ NLINE(_n, NL[_n]); }
+
+
+/* ---------- тренажёры обязательны для отправки ---------- */
+var TRREQ = [
+  {id:"nt1", name:"Тренажёр 1. Десятые на луче"},
+  {id:"nt2", name:"Тренажёр 2. Сотые и тысячные"},
+  {id:"ts3", name:"Тренажёр 3. Между какими натуральными"},
+  {id:"ts4", name:"Тренажёр 4. Сравнение и промежутки"}
+];
+var TRDONE = {};
+window.trFinished = function(id, ok, total){
+  var prev = TRDONE[id];
+  if(!prev || ok > prev.ok) TRDONE[id] = {ok: ok, total: total};
+  trStatus();
+};
+function trPending(){
+  var out = [], k;
+  for(k = 0; k < TRREQ.length; k++){ if(!TRDONE[TRREQ[k].id]) out.push(TRREQ[k]); }
+  return out;
+}
+function trSummary(){
+  var ok = 0, total = 0, parts = [], k, d;
+  for(k = 0; k < TRREQ.length; k++){
+    d = TRDONE[TRREQ[k].id];
+    parts.push({name: TRREQ[k].name, ok: d ? d.ok : null, total: d ? d.total : null});
+    if(d){ ok += d.ok; total += d.total; }
+  }
+  return {ok: ok, total: total, parts: parts, done: TRREQ.length - trPending().length};
+}
+function trReportHtml(){
+  var s = trSummary(), k, pt, h;
+  h = "<h2>Тренажёры: " + s.done + " из " + TRREQ.length + " пройдено" +
+      (s.total ? " · верных ответов " + s.ok + " из " + s.total : "") + "</h2><table><tr>" +
+      "<th>Тренажёр</th><th>Результат</th></tr>";
+  for(k = 0; k < s.parts.length; k++){
+    pt = s.parts[k];
+    h += "<tr><td style='text-align:left'>" + pt.name + "</td><td>" +
+         (pt.ok === null ? "не пройден" : pt.ok + " из " + pt.total) + "</td></tr>";
+  }
+  return h + "</table>";
+}
+function trJump(id){
+  var el = document.getElementById(id);
+  if(!el) return;
+  try{ el.scrollIntoView({behavior: "smooth", block: "center"}); }
+  catch(e){ el.scrollIntoView(); }
+  el.className = "tr need";
+  setTimeout(function(){ el.className = "tr"; }, 2600);
+}
+function trStatus(){
+  var g = document.getElementById("trgate");
+  if(!g) return;
+  var left = trPending(), s = trSummary(), h, k;
+  if(!left.length){
+    g.className = "trgate ready";
+    g.innerHTML = "<b>Все четыре тренажёра пройдены.</b> Верных ответов: " + s.ok +
+                  " из " + s.total + ". Работу можно отправлять.";
+    return;
+  }
+  g.className = "trgate";
+  h = "<b>Пройдено тренажёров: " + s.done + " из " + TRREQ.length + ".</b> " +
+      "Работа отправится, когда пройдёшь все. Осталось:<ul>";
+  for(k = 0; k < left.length; k++){
+    h += '<li><a data-jump="' + left[k].id + '">' + left[k].name + "</a></li>";
+  }
+  g.innerHTML = h + "</ul>";
+}
+document.addEventListener("click", function(ev){
+  var el = ev.target;
+  var id = (el && el.getAttribute) ? el.getAttribute("data-jump") : null;
+  if(id) trJump(id);
+});
+trStatus();
 
 NLTRAIN("nt1", [{"type": "read", "lo": 0, "hi": 1, "step": 0.1, "value": 0.3, "q": "Какое число соответствует точке A?", "why": "Единичный отрезок разбит на 10 частей, точка на третьем делении: 0,3 = 3/10."}, {"type": "read", "lo": 0, "hi": 1, "step": 0.1, "value": 0.9, "q": "Какое число соответствует точке A?", "why": "Девятое деление из десяти — это 0,9, почти единица."}, {"type": "read", "lo": 0, "hi": 2, "step": 0.1, "value": 1.4, "q": "Какое число соответствует точке A?", "why": "Прошли всю единицу и ещё 4 деления: 1,4."}, {"type": "read", "lo": 6, "hi": 8, "step": 0.1, "value": 7.2, "q": "Какое число соответствует точке A?", "why": "От 7 отсчитали два деления вправо."}, {"type": "read", "lo": 0, "hi": 2, "step": 0.1, "value": 1.7, "q": "Какое число соответствует точке A?", "why": "Единица и семь десятых."}, {"type": "place", "lo": 0, "hi": 1, "step": 0.1, "value": 0.6, "q": "Отметь точку с координатой <b>0,6</b>.", "why": "Шесть делений от нуля."}, {"type": "place", "lo": 0, "hi": 2, "step": 0.1, "value": 1.2, "q": "Отметь точку с координатой <b>1,2</b>.", "why": "Единица и ещё два деления."}, {"type": "place", "lo": 0, "hi": 2, "step": 0.1, "value": 0.5, "q": "Отметь точку с координатой <b>0,5</b>.", "why": "Половина единичного отрезка — пятое деление."}, {"type": "place", "lo": 6, "hi": 8, "step": 0.1, "value": 6.8, "q": "Отметь точку с координатой <b>6,8</b>.", "why": "От шести отсчитай восемь делений."}, {"type": "place", "lo": 0, "hi": 2, "step": 0.1, "value": 2.0, "q": "Отметь точку с координатой <b>2,0</b>.", "why": "Ровно две единицы — самый конец луча."}]);
 NLTRAIN("nt2", [{"type": "read", "lo": 1.4, "hi": 1.5, "step": 0.01, "value": 1.46, "q": "Какое число соответствует точке A?", "why": "Цена деления 0,01, отсчитано 6 делений от 1,4."}, {"type": "read", "lo": 2.2, "hi": 2.3, "step": 0.01, "value": 2.25, "q": "Какое число соответствует точке A?", "why": "Ровно середина между 2,2 и 2,3."}, {"type": "read", "lo": 0.1, "hi": 0.2, "step": 0.01, "value": 0.13, "q": "Какое число соответствует точке A?", "why": "Три сотых после 0,1."}, {"type": "read", "lo": 3.1, "hi": 3.3, "step": 0.01, "value": 3.24, "q": "Какое число соответствует точке A?", "why": "Прошли 3,2 и ещё 4 сотых."}, {"type": "read", "lo": 4.01, "hi": 4.02, "step": 0.001, "value": 4.014, "q": "Какое число соответствует точке A?", "why": "Цена деления 0,001 — четвёртое деление после 4,01."}, {"type": "place", "lo": 1.4, "hi": 1.5, "step": 0.01, "value": 1.43, "q": "Отметь точку с координатой <b>1,43</b>.", "why": "Три сотых после 1,4."}, {"type": "place", "lo": 2.2, "hi": 2.3, "step": 0.01, "value": 2.27, "q": "Отметь точку с координатой <b>2,27</b>.", "why": "Семь делений от 2,2."}, {"type": "place", "lo": 0.5, "hi": 0.6, "step": 0.01, "value": 0.58, "q": "Отметь точку с координатой <b>0,58</b>.", "why": "Восемь сотых после 0,5."}, {"type": "place", "lo": 4.01, "hi": 4.02, "step": 0.001, "value": 4.017, "q": "Отметь точку с координатой <b>4,017</b>.", "why": "Семь тысячных после 4,01."}, {"type": "place", "lo": 8, "hi": 10, "step": 0.1, "value": 9.3, "q": "Отметь точку с координатой <b>9,3</b>.", "why": "Девятка и три десятых."}]);
