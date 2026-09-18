@@ -1,0 +1,1733 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Сложение и вычитание десятичных дробей — §4, 6 класс</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:800px;margin:0 auto;padding:16px 14px 60px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+.f-formula{font-size:19px}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.step{margin:6px 0}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.fig{margin:12px 0;text-align:center}
+
+.tr{border:1px solid var(--line);border-radius:12px;padding:14px;margin:16px 0;background:var(--bg)}
+.trhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;
+  margin-bottom:8px}
+.trhead b{font-size:17px}
+.trscore{color:var(--muted);font-size:15px;white-space:nowrap}
+.trq{font-size:17px;margin:8px 0}
+.trfig{text-align:center;margin:8px 0}
+.trfig svg{width:100%;max-width:330px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.tropts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
+.tropt{border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;
+  background:var(--card);font-size:16px;text-align:left;min-height:46px}
+.tropt:hover{border-color:var(--acc)}
+.tropt.right{border-color:var(--ok);background:var(--ok-soft);font-weight:600}
+.tropt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.tropts.done .tropt{cursor:default}
+.trnum{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.trnum input{font:inherit;font-size:18px;padding:9px 11px;border-radius:9px;
+  border:1.5px solid var(--line);background:var(--card);color:var(--ink);max-width:130px}
+.trmsg{font-size:16px;margin-top:8px}
+.trmsg .v{font-weight:700}
+.trmsg .v.ok{color:var(--ok)} .trmsg .v.bad{color:var(--bad)}
+.trmsg .why{color:var(--muted);font-size:15px;margin-top:4px}
+.trbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.trbar button{font-size:15px;padding:8px 13px;min-height:42px}
+.trdone{background:var(--acc-soft);border-radius:10px;padding:12px;font-size:17px;
+  text-align:center;font-weight:600}
+
+.col{margin:14px 0;border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--bg)}
+.colbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+.colbar input{font:inherit;font-size:18px;padding:8px 10px;border:1.5px solid var(--line);
+  border-radius:9px;width:120px;background:var(--card);color:inherit;text-align:center}
+.colbar .ops{display:flex;gap:5px}
+.colbar .ops button{min-width:44px;min-height:42px;font-size:20px;font-weight:700;padding:6px}
+.colbar .ops button.on{border-color:var(--acc);background:var(--acc-soft,#e8f0ff)}
+.colwrap{overflow-x:auto;padding:2px 0}
+.colgrid{--cw:34px;display:grid;justify-content:center;gap:2px 0;font-size:21px;
+  font-variant-numeric:tabular-nums;margin:6px auto}
+.colgrid .cd{display:flex;align-items:center;justify-content:center;height:34px;font-weight:600}
+.colgrid .cd.pad{color:#9aa3b2}
+.colgrid .cd.sign{font-weight:700}
+.colgrid .cm{display:flex;align-items:flex-end;justify-content:center;height:34px;font-weight:700}
+.colgrid .rule{height:3px;background:var(--ink,#15181e);border-radius:2px;margin:3px 0}
+.colgrid input{font:inherit;font-size:20px;font-weight:600;text-align:center;padding:0;
+  height:34px;border:1.5px solid var(--line);border-radius:7px;background:var(--card);
+  color:inherit;width:100%;min-width:0}
+.colgrid input.carry{height:24px;font-size:14px;color:#b3261e;border-style:dashed;
+  border-color:#e2c7c2;background:transparent}
+.colgrid input.ans.ok{border-color:#1f8a54;background:#e9f7ef;color:#137a45}
+.colgrid input.ans.bad{border-color:#b3261e;background:#fdecea;color:#b3261e}
+.colgrid input.ans.shown{border-color:#8d98a8;background:#eef1f5}
+.colbtn{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.colbtn button{font-size:15px;padding:8px 13px;min-height:42px}
+.colmsg{margin-top:9px;font-size:16px}
+.colmsg .v{font-weight:700}
+.colmsg .v.ok{color:#137a45}
+.colmsg .v.bad{color:#b3261e}
+.colmsg .why{color:var(--muted);font-size:15px;margin-top:3px;line-height:1.45}
+.colhint{color:var(--muted);font-size:14px;text-align:center;margin-top:8px}
+.colcap{font-weight:700;margin-bottom:4px}
+@media (prefers-color-scheme:dark){
+  .colgrid input.ans.ok{background:#12281d}
+  .colgrid input.ans.bad{background:#2a1714}
+  .colgrid input.ans.shown{background:#232833}
+  .colgrid .rule{background:#eceef2}
+}
+@media (max-width:430px){
+  .colgrid{--cw:29px;font-size:19px}
+  .colgrid input{font-size:18px}
+}
+.colopen{margin-top:10px}
+.colopen button{font-size:15px;padding:8px 13px;min-height:42px}
+
+.colst{display:grid;justify-content:center;gap:2px 0;margin:10px auto;font-size:21px;
+  font-variant-numeric:tabular-nums;background:#fff;border:1px solid var(--line);
+  border-radius:10px;padding:10px 8px;width:max-content;max-width:100%}
+.colst div{display:flex;align-items:center;justify-content:center;height:32px;font-weight:600;
+  color:#15181e}
+.colst div.pad{color:#9aa3b2}
+.colst div.hot{color:#b3261e}
+.colst .rule{height:3px;background:#15181e;border-radius:2px;margin:3px 0;align-self:center}
+
+.rt{border-top:1.7px solid currentColor;padding:0 3px 0 2px;margin-left:-1px;
+  display:inline-block;line-height:1.15}
+
+.fx{display:block;background:var(--acc-soft,var(--acc2,#e8f0ff));border:1px solid var(--line);
+  border-radius:10px;padding:11px 13px;margin:12px 0;text-align:center;font-size:22px;
+  line-height:2.0;font-weight:600;overflow-x:auto}
+.sol .fx,.ex .fx{font-size:19px;margin:9px 0}
+.def{border:1px solid var(--line);border-left:4px solid #2f6bd8;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#eef3fb}
+.def .n{font-size:14px;color:#2f6bd8;font-weight:700;letter-spacing:.4px}
+.rule2{border:1px solid var(--line);border-left:4px solid #c0397a;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdf0f6}
+.rule2 .n{font-size:14px;color:#a02a62;font-weight:700;letter-spacing:.4px}
+.hard{border:1px solid var(--line);border-left:4px solid #7a3fbf;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#f4efff}
+.hard .n{font-size:14px;color:#5f2ea0;font-weight:700;letter-spacing:.4px}
+@media (prefers-color-scheme:dark){.rule2{background:#2a1b23}.def{background:#18212f}
+  .hard{background:#221a33}.colst{background:#1c1f25}
+  .colst div{color:#eceef2}.colst .rule{background:#eceef2}}
+.ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;background:var(--bg)}
+.ex h3{margin-top:0}
+.tohw{font-weight:700;margin:18px 0 0;font-size:18px}
+.tohw span{color:var(--muted);font-weight:400;font-size:15px;display:block;margin-top:3px}
+.small,.mini{color:var(--muted);font-size:15px}
+.fr{display:inline-block;vertical-align:-0.58em;text-align:center;margin:0 3px}
+.fr b{display:block;border-bottom:1.7px solid currentColor;padding:0 6px;font-weight:400;
+  white-space:nowrap}
+.fr i{display:block;font-style:normal;padding:0 6px;white-space:nowrap}
+.opts .opt{font-size:17px}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.pam h3{font-size:18px;margin:18px 0 2px}
+.pam h3:first-of-type{margin-top:10px}
+.fgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));margin:9px 0}
+.fbox{border:1px solid var(--line);border-radius:12px;padding:9px 12px 11px;background:var(--bg)}
+.fbox h4{margin:0 0 3px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.fbox p{margin:6px 0 0;line-height:1.45;font-size:16px}
+.fbox p.small{font-size:15px}
+.ff{font-size:20px;line-height:1.9;text-align:center;margin:4px 0;overflow-x:auto;
+  overflow-y:hidden;white-space:nowrap;font-weight:600}
+.mn{color:#b3261e;font-weight:700}
+.trnav{margin-top:12px;display:flex;gap:9px;flex-wrap:wrap}
+.trgate{margin-top:12px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;
+  font-size:16px;background:var(--bg)}
+.trgate.ready{border-color:#1f8a54;background:#e9f7ef}
+.trgate ul{margin:6px 0 0;padding-left:20px}
+.trgate li{margin:3px 0}
+.trgate a{color:var(--acc);text-decoration:none;border-bottom:1px solid currentColor;cursor:pointer}
+@media (prefers-color-scheme:dark){.trgate.ready{background:#12281d}}
+.tr.need{outline:2px solid #c99a2e;outline-offset:3px}
+.savenote{margin-top:9px;color:var(--muted);font-size:14.5px;line-height:1.45}
+.savenote button{font-size:14px;padding:5px 10px;min-height:34px;margin-left:8px}
+.task .colopen{margin-top:10px}
+.task .colhost{margin-top:2px}
+.sheet .f-formula{margin:5px 0;font-size:14.5px;line-height:1.7}
+@media print{
+  .sheet>.meta{display:none}
+  .sheet h2{font-size:18px;margin:0 0 5px}
+  .sheet .f-formula{font-size:12px;line-height:1.55;margin:2px 0}
+  .sheet .fr{font-size:11px;vertical-align:-0.55em}
+}
+
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+@media print{
+  body{background:#fff}
+  .bar{display:none !important}
+  .wrap>*{display:none !important}
+  .wrap>.sheet{display:block !important;border:none;margin:0;padding:0}
+  .sheet{font-size:13px}
+  .sheet h2{font-size:18px}
+  .sheet th,.sheet td{padding:4px 5px;font-size:12px}
+  @page{size:A4;margin:12mm}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card top">
+  <h1>Сложение и вычитание десятичных дробей</h1>
+  <div class="meta">Математика · 6 класс · §4 · теория порциями, живой столбик,
+  4 тренажёра, 18 задач</div>
+  <label class="f" for="name">Имя и фамилия</label>
+  <input type="text" id="name" placeholder="напиши, как в журнале" autocapitalize="words" spellcheck="false">
+  <div class="savenote" id="savenote"></div>
+  <div class="note" style="margin-top:14px">
+    <b>Как работать.</b> Страница идёт по кругу: короткая порция теории — разобранный
+    пример — тренажёр или задачи ровно на эту порцию. Не перепрыгивай вперёд.
+    <div style="margin-top:8px">Главная мысль всей темы: <b>запятая под запятой</b>,
+    а недостающие знаки после запятой дополняем нулями справа.</div>
+    <div style="margin-top:8px">У каждой задачи есть кнопка <b>«Столбик»</b>: она открывает
+    живой столбик прямо в задаче. Страница сама допишет нули, а ты вписываешь ответ
+    по разрядам и сразу видишь, где ошибся.</div>
+    <div style="margin-top:8px"><b>Все четыре тренажёра нужно пройти до конца</b> —
+    без этого работа не отправится. Ошибки в тренажёре не страшны: важно дойти
+    до итога и прочитать разбор.</div>
+  </div>
+</div>
+
+<div class="card pam">
+
+<h2>Памятка: всё, что понадобится</h2>
+<div class="meta">Сюда возвращаются, когда застряли. Читать целиком сразу не нужно.</div>
+
+<h3>Как записывать столбик</h3>
+<div class="fgrid"><div class="fbox"><h4>Запятая под запятой</h4><div class="colst" style="grid-template-columns:22px repeat(7,26px)"><div></div><div class="">1</div><div class="">5</div><div class="">,</div><div class="">2</div><div class="">2</div><div class="">5</div><div class=""></div><div>−</div><div class=""></div><div class="">3</div><div class="">,</div><div class="">1</div><div class="">2</div><div class="">2</div><div class=""></div><div class="rule" style="grid-column:1/9"></div><div></div><div class="">1</div><div class="">2</div><div class="">,</div><div class="">1</div><div class="">0</div><div class="">3</div><div class=""></div></div><p>Числа пишем друг под другом так, чтобы <b>запятые оказались в одном столбце</b>.</p><p class="small">Тогда единицы стоят под единицами, десятые под десятыми.</p></div><div class="fbox"><h4>Приписать нули</h4><div class="colst" style="grid-template-columns:22px repeat(6,26px)"><div></div><div class="">1</div><div class="">,</div><div class="">4</div><div class="">0</div><div class="">0</div><div class=""></div><div>+</div><div class="">5</div><div class="">,</div><div class="">2</div><div class="">4</div><div class="">3</div><div class=""></div><div class="rule" style="grid-column:1/8"></div><div></div><div class="">6</div><div class="">,</div><div class="">6</div><div class="">4</div><div class="">3</div><div class=""></div></div><p>Знаков после запятой должно быть поровну — недостающие нули дописываем <b>справа</b>.</p><p class="small">1,4 = 1,400. От этого число не меняется.</p></div><div class="fbox"><h4>Целое число тоже дробь</h4><div class="colst" style="grid-template-columns:22px repeat(6,26px)"><div></div><div class="">1</div><div class="">4</div><div class="">,</div><div class="">0</div><div class="">0</div><div class=""></div><div>+</div><div class=""></div><div class="">0</div><div class="">,</div><div class="">1</div><div class="">3</div><div class=""></div><div class="rule" style="grid-column:1/8"></div><div></div><div class="">1</div><div class="">4</div><div class="">,</div><div class="">1</div><div class="">3</div><div class=""></div></div><p>У целого числа запятая стоит сразу после него: 14 = 14,00.</p><p class="small">Дальше всё как обычно: считаем по разрядам справа налево.</p></div></div>
+
+<h3>Что спрашивают чаще всего</h3>
+<div class="fgrid"><div class="fbox"><h4>Законы сложения работают</h4><div class="ff">a + b = b + a</div><div class="ff">(a + b) + c = a + (b + c)</div><p>Слагаемые можно менять местами и группировать — этим пользуются, чтобы получались круглые числа.</p><p class="small">0,23 + (2,38 + 14,77) = (0,23 + 14,77) + 2,38 = 15 + 2,38 = 17,38.</p></div><div class="fbox"><h4>Скобки вперёд</h4><div class="ff">4,2 − (0,98 + 1,75)</div><p>Сначала считаем в скобках, потом всё остальное. В скобках 2,73, дальше 4,2 − 2,73 = <b>1,47</b>.</p><p class="small">Если скобок нет, идём слева направо.</p></div><div class="fbox"><h4>Уравнение</h4><div class="ff">45 − x = 38,783</div><p>Неизвестное вычитаемое: <b>x = 45 − 38,783 = 6,217</b>.</p><p class="small">Неизвестное слагаемое ищут вычитанием, уменьшаемое — сложением.</p></div></div>
+
+<h3>Рабочий столбик</h3>
+<p class="small">Впиши любые два числа, выбери знак — и посчитай по разрядам.
+Этот столбик никуда не отправляется, считай в нём сколько угодно.</p>
+<div class="col" id="cw0"><div class="colbar" id="cw0bar"><input id="cw0a" inputmode="decimal" autocomplete="off" placeholder="число" value=""><span class="ops"><button type="button" data-op="+">+</button><button type="button" data-op="−">−</button></span><input id="cw0b" inputmode="decimal" autocomplete="off" placeholder="число" value=""><button type="button" class="pri" data-build="1">Записать в столбик</button></div><div class="colwrap"><div class="colgrid" id="cw0g"></div></div><div class="colbtn" id="cw0n"></div><div class="colmsg" id="cw0m"></div><div class="colhint">Серые нули страница дописывает сама — именно так и делают в тетради.</div></div>
+</div>
+
+<div class="card">
+
+<h2>1. Правило столбика</h2>
+<p>Петя купил тетради за 2,3 р. и ручки за 4,6 р. Чтобы узнать всю покупку, надо сложить
+две десятичные дроби.</p>
+<p>Можно перевести в обыкновенные: 2,3 = 2<span class='fr'><b>3</b><i>10</i></span>, 4,6 = 4<span class='fr'><b>6</b><i>10</i></span>, вместе 6<span class='fr'><b>9</b><i>10</i></span> = 6,9.
+Но быстрее записать столбиком.</p>
+<div class="colst" style="grid-template-columns:22px repeat(4,26px)"><div></div><div class="">2</div><div class="">,</div><div class="">3</div><div class=""></div><div>+</div><div class="">4</div><div class="">,</div><div class="">6</div><div class=""></div><div class="rule" style="grid-column:1/6"></div><div></div><div class="">6</div><div class="">,</div><div class="">9</div><div class=""></div></div>
+<div class="rule2"><div class="n">ГЛАВНОЕ ПРАВИЛО</div>
+Запятая пишется <b>строго под запятой</b>. Тогда одноимённые разряды встают друг под друга,
+и дальше складываем как обычные числа. В ответе запятая — в том же столбце.</div>
+<div class="ex"><h3>Пример 1</h3>
+<p>Найди значение выражения 5,2 + 1,46.</p>
+<div class="step">1. Пишем запятую под запятой.</div>
+<div class="step">2. У 5,2 не хватает сотых — дописываем нуль: 5,20.</div>
+<div class="step">3. Складываем справа налево: 0 + 6 = 6, 2 + 4 = 6, 5 + 1 = 6.</div>
+<div class="fx">5,2 + 1,46 = 6,66</div>
+<div class="step mini">Проверка на глаз: 5,2 чуть больше пяти, 1,46 чуть меньше полутора —
+ответ должен быть около 6,7. Сошлось.</div></div>
+<p class="small">Попробуй сам: впиши числа и заполни ответ по разрядам.</p>
+<div class="col" id="cw1"><div class="colbar" id="cw1bar"><input id="cw1a" inputmode="decimal" autocomplete="off" placeholder="число" value="5,2"><span class="ops"><button type="button" data-op="+">+</button><button type="button" data-op="−">−</button></span><input id="cw1b" inputmode="decimal" autocomplete="off" placeholder="число" value="1,46"><button type="button" class="pri" data-build="1">Записать в столбик</button></div><div class="colwrap"><div class="colgrid" id="cw1g"></div></div><div class="colbtn" id="cw1n"></div><div class="colmsg" id="cw1m"></div><div class="colhint">Нажми «Записать в столбик» и вписывай цифры справа налево — курсор сам перескочит в следующую клетку.</div></div><div class="tohw">Задание 1<span>Две задачи: запятая под запятой.</span></div>
+</div>
+<div id="tasks1"></div>
+
+<div class="card">
+
+<h2>2. Приписываем нули</h2>
+<div class="def"><div class="n">ЗАЧЕМ ЭТО НУЖНО</div>
+Знаков после запятой у двух чисел должно быть <b>поровну</b>. Недостающие нули дописывают
+справа: 1,4 = 1,400. Число от этого не меняется, а столбик становится ровным.</div>
+<div class="colst" style="grid-template-columns:22px repeat(6,26px)"><div></div><div class="">1</div><div class="">,</div><div class="">4</div><div class="">0</div><div class="">0</div><div class=""></div><div>+</div><div class="">5</div><div class="">,</div><div class="">2</div><div class="">4</div><div class="">3</div><div class=""></div><div class="rule" style="grid-column:1/8"></div><div></div><div class="">6</div><div class="">,</div><div class="">6</div><div class="">4</div><div class="">3</div><div class=""></div></div>
+<p>У целого числа запятая стоит сразу за ним: 14 = 14,00, а 30 = 30,000.</p>
+<div class="colst" style="grid-template-columns:22px repeat(7,26px)"><div></div><div class="">3</div><div class="">0</div><div class="">,</div><div class="">0</div><div class="">0</div><div class="">0</div><div class=""></div><div>−</div><div class=""></div><div class="">3</div><div class="">,</div><div class="">3</div><div class="">3</div><div class="">3</div><div class=""></div><div class="rule" style="grid-column:1/9"></div><div></div><div class="">2</div><div class="">6</div><div class="">,</div><div class="">6</div><div class="">6</div><div class="">7</div><div class=""></div></div>
+<div class="ex"><h3>Пример 2</h3>
+<p>Найди значение выражения 2,8 − 0,009.</p>
+<div class="step">1. У 2,8 одна цифра после запятой, у 0,009 — три. Дописываем: 2,800.</div>
+<div class="step">2. Вычитаем справа налево. 0 − 9 не получается, занимаем десяток у соседа.</div>
+<div class="fx">2,8 − 0,009 = 2,791</div>
+<div class="step mini">Типичная ошибка — записать 2,8 и 0,009 «по правому краю», тогда
+девятка окажется под восьмёркой. Запятая под запятой, и всё встанет на место.</div></div>
+<div class="col" id="cw2"><div class="colbar" id="cw2bar"><input id="cw2a" inputmode="decimal" autocomplete="off" placeholder="число" value="2,8"><span class="ops"><button type="button" data-op="+">+</button><button type="button" data-op="−">−</button></span><input id="cw2b" inputmode="decimal" autocomplete="off" placeholder="число" value="0,009"><button type="button" class="pri" data-build="1">Записать в столбик</button></div><div class="colwrap"><div class="colgrid" id="cw2g"></div></div><div class="colbtn" id="cw2n"></div><div class="colmsg" id="cw2m"></div><div class="colhint">Серые нули страница дописывает сама — в тетради их пишут карандашом.</div></div><div class="tohw">Задание 2<span>Две задачи: не забудь приписать нули.</span></div>
+</div>
+<div id="tasks2"></div>
+
+<div class="card">
+  <h2>Тренажёр: сложение в столбик</h2>
+  <div class="meta">Восемь примеров. Засчитывается тот, что сошёлся с первого раза,
+  но поправить цифру и проверить снова можно всегда.</div>
+<div class="tr" id="ts1"><div class="trhead"><b>Тренажёр 1. Сложение в столбик</b><span class="trscore" id="ts1s"></span></div><div class="meta">Восемь примеров из учебника.</div><div class="trq ntq" id="ts1q"></div><div id="ts1box"><div class="col" id="ts1c"><div class="colwrap"><div class="colgrid" id="ts1cg"></div></div><div class="colbtn" id="ts1cn"></div><div class="colmsg" id="ts1cm"></div></div></div><div class="trmsg" id="ts1m2"></div><div class="trnav" id="ts1n2"></div></div>
+</div>
+
+<div class="card">
+
+<h2>3. Разрядные слагаемые</h2>
+<p>Любую десятичную дробь можно разложить по разрядам — это помогает не путать,
+где десятые, а где сотые.</p>
+<div class="fx">57,1083 = 50 + 7 + 0,1 + 0,008 + 0,0003</div>
+<div class="def"><div class="n">КАК ЧИТАТЬ</div>
+Каждая цифра отвечает за свой разряд: десятки, единицы, десятые, сотые, тысячные,
+десятитысячные. <b>Нулевые разряды в сумму не пишут</b>, но место за собой держат.</div>
+<div class="ex"><h3>Пример 3</h3>
+<p>Разложи по разрядам число 0,567.</p>
+<div class="step">5 — это десятые, 6 — сотые, 7 — тысячные.</div>
+<div class="fx">0,567 = 0,5 + 0,06 + 0,007</div>
+<div class="step mini">Обрати внимание: у 57,1083 нет сотых, поэтому в сумме между 0,1
+и 0,008 ничего не стоит. Цифра 0 разряд не отменяет — она его занимает.</div></div>
+<div class="tohw">Задание 3<span>Две задачи про разрядные слагаемые.</span></div>
+</div>
+<div id="tasks3"></div>
+
+<div class="card">
+
+<h2>4. Законы сложения</h2>
+<div class="rule2"><div class="n">ПРИЁМ</div>
+Слагаемые можно <b>переставлять и группировать</b>. Ищи пары, которые дают круглое число —
+считать станет вдвое быстрее.</div>
+<div class="fx">a + b = b + a</div>
+<div class="fx">(a + b) + c = a + (b + c)</div>
+<div class="ex"><h3>Пример 4</h3>
+<p>Найди значение выражения 0,23 + (2,38 + 14,77).</p>
+<div class="step">1. Замечаем пару: 0,23 и 14,77 дают ровно 15.</div>
+<div class="step">2. Переставляем: (0,23 + 14,77) + 2,38.</div>
+<div class="fx">15 + 2,38 = 17,38</div>
+<div class="step mini">Если считать подряд, ответ тот же, но столбиков будет два
+и оба «некрасивые». Ищи круглые пары — это и есть смысл законов сложения.</div></div>
+<div class="col" id="cw4"><div class="colbar" id="cw4bar"><input id="cw4a" inputmode="decimal" autocomplete="off" placeholder="число" value=""><span class="ops"><button type="button" data-op="+">+</button><button type="button" data-op="−">−</button></span><input id="cw4b" inputmode="decimal" autocomplete="off" placeholder="число" value=""><button type="button" class="pri" data-build="1">Записать в столбик</button></div><div class="colwrap"><div class="colgrid" id="cw4g"></div></div><div class="colbtn" id="cw4n"></div><div class="colmsg" id="cw4m"></div><div class="colhint">Проверь сам: сложи 0,23 и 14,77 — должно выйти ровное 15.</div></div><div class="tohw">Задание 4<span>Две задачи: группируй слагаемые удобно.</span></div>
+</div>
+<div id="tasks4"></div>
+
+<div class="card">
+  <h2>Тренажёр: вычитание в столбик</h2>
+  <div class="meta">Восемь примеров. Здесь всё время приходится занимать десяток
+  у соседа слева.</div>
+<div class="tr" id="ts2"><div class="trhead"><b>Тренажёр 2. Вычитание в столбик</b><span class="trscore" id="ts2s"></span></div><div class="meta">Восемь примеров: не забывай приписывать нули.</div><div class="trq ntq" id="ts2q"></div><div id="ts2box"><div class="col" id="ts2c"><div class="colwrap"><div class="colgrid" id="ts2cg"></div></div><div class="colbtn" id="ts2cn"></div><div class="colmsg" id="ts2cm"></div></div></div><div class="trmsg" id="ts2m2"></div><div class="trnav" id="ts2n2"></div></div>
+</div>
+
+<div class="card">
+
+<h2>5. Выражения со скобками</h2>
+<div class="def"><div class="n">ПОРЯДОК ДЕЙСТВИЙ</div>
+Сначала считаем <b>в скобках</b>, потом всё остальное. Если скобок нет — слева направо.
+Каждое действие записывают отдельным столбиком.</div>
+<div class="ex"><h3>Пример 5</h3>
+<p>Найди значение выражения 4,2 − (0,98 + 1,75).</p>
+<div class="step">1. В скобках: 0,98 + 1,75 = 2,73.</div>
+<div class="step">2. Теперь вычитаем: 4,2 − 2,73. Дописываем нуль: 4,20.</div>
+<div class="fx">4,20 − 2,73 = 1,47</div>
+<div class="step mini">Не пытайся вычитать «по частям»: 4,2 − 0,98 − 1,75 тоже даёт 1,47,
+но только если вычитать оба числа. Минус перед скобкой относится ко всей сумме.</div></div>
+<p class="small">Посчитай оба действия здесь: сначала 0,98 + 1,75, потом 4,2 − то, что вышло.</p>
+<div class="col" id="cw5"><div class="colbar" id="cw5bar"><input id="cw5a" inputmode="decimal" autocomplete="off" placeholder="число" value=""><span class="ops"><button type="button" data-op="+">+</button><button type="button" data-op="−">−</button></span><input id="cw5b" inputmode="decimal" autocomplete="off" placeholder="число" value=""><button type="button" class="pri" data-build="1">Записать в столбик</button></div><div class="colwrap"><div class="colgrid" id="cw5g"></div></div><div class="colbtn" id="cw5n"></div><div class="colmsg" id="cw5m"></div><div class="colhint">После первого действия нажми «Другие числа» и посчитай второе.</div></div><div class="tohw">Задание 5<span>Три задачи со скобками.</span></div>
+</div>
+<div id="tasks5"></div>
+
+<div class="card">
+  <h2>Проверь себя</h2>
+  <div class="meta">Восемь записей столбиком: найди, где ошибка.</div>
+<div class="tr" id="ts3"><div class="trhead"><b>Тренажёр 3. Найди ошибку в записи</b><span class="trscore" id="ts3s"></span></div><div class="meta">Восемь записей столбиком. Где-то всё верно, где-то запятая не на месте.</div><div class="trq" id="ts3q"></div><div class="trfig" id="ts3f"></div><div id="ts3a"></div><div class="trmsg" id="ts3m"></div><div class="trbar" id="ts3b"></div></div>
+</div>
+
+<div class="card">
+
+<h2>6. Уравнения</h2>
+<div class="rule2"><div class="n">ЧТО ИЩЕМ</div>
+Неизвестное <b>слагаемое</b> — из суммы вычитаем известное слагаемое.<br>
+Неизвестное <b>уменьшаемое</b> — к разности прибавляем вычитаемое.<br>
+Неизвестное <b>вычитаемое</b> — из уменьшаемого вычитаем разность.</div>
+<div class="ex"><h3>Пример 6</h3>
+<p>Реши уравнение 45 − x = 38,783.</p>
+<div class="step">1. Здесь x — вычитаемое, значит x = 45 − 38,783.</div>
+<div class="step">2. Дописываем нули: 45,000 − 38,783.</div>
+<div class="fx">x = 6,217</div>
+<div class="step mini">Проверка обязательна: 45 − 6,217 = 38,783. Сошлось.</div></div>
+<div class="ex"><h3>Пример 7</h3>
+<p>Реши уравнение (x + 93,4) − 17,4 = 112,72.</p>
+<div class="step">1. Сначала считаем скобку как одно число: x + 93,4 = 112,72 + 17,4 = 130,12.</div>
+<div class="step">2. Теперь x = 130,12 − 93,4.</div>
+<div class="fx">x = 36,72</div>
+<div class="step mini">Двигайся снаружи внутрь: сперва убираем то действие, которое
+выполняется последним.</div></div>
+<div class="col" id="cw6"><div class="colbar" id="cw6bar"><input id="cw6a" inputmode="decimal" autocomplete="off" placeholder="число" value=""><span class="ops"><button type="button" data-op="+">+</button><button type="button" data-op="−">−</button></span><input id="cw6b" inputmode="decimal" autocomplete="off" placeholder="число" value=""><button type="button" class="pri" data-build="1">Записать в столбик</button></div><div class="colwrap"><div class="colgrid" id="cw6g"></div></div><div class="colbtn" id="cw6n"></div><div class="colmsg" id="cw6m"></div><div class="colhint">Столбик под рукой: посчитай 45 − 38,783 и проверь себя.</div></div><div class="tohw">Задание 6<span>Три уравнения.</span></div>
+</div>
+<div id="tasks6"></div>
+
+<div class="card">
+  <h2>Проверь себя</h2>
+  <div class="meta">Десять коротких вопросов на прикидку и разряды.</div>
+<div class="tr" id="ts4"><div class="trhead"><b>Тренажёр 4. Прикидка и разряды</b><span class="trscore" id="ts4s"></span></div><div class="meta">Десять коротких вопросов: без длинных вычислений.</div><div class="trq" id="ts4q"></div><div class="trfig" id="ts4f"></div><div id="ts4a"></div><div class="trmsg" id="ts4m"></div><div class="trbar" id="ts4b"></div></div>
+</div>
+
+<div class="card">
+
+<h2>7. Задачи посложнее</h2>
+<div class="hard"><div class="n">ВОССТАНОВИТЬ ЦИФРУ</div>
+Если в примере потеряна цифра, её находят обратным действием: из суммы вычитают
+известное слагаемое.</div>
+<div class="ex"><h3>Пример 8</h3>
+<p>Восстанови цифру: 4,2? + 1,38 = 5,65.</p>
+<div class="step">1. Находим первое слагаемое: 5,65 − 1,38 = 4,27.</div>
+<div class="fx">на месте вопроса стоит 7</div>
+<div class="step mini">Проверяем: 4,27 + 1,38 = 5,65. Сошлось.</div></div>
+<div class="hard"><div class="n">РАССТАВИТЬ ЗАПЯТЫЕ</div>
+Запятые ставят так, чтобы равенство стало верным. Помогает прикидка: примерно каким
+должен быть ответ.</div>
+<div class="ex"><h3>Пример 9</h3>
+<p>Расставь запятые: 57 + 23 = 8.</p>
+<div class="step">Ответ однозначный, значит слагаемые — единицы с десятыми.</div>
+<div class="fx">5,7 + 2,3 = 8</div>
+<div class="step mini">Приём один: смотри на ответ. Он подсказывает, какого размера
+должны быть слагаемые.</div></div>
+<div class="hard"><div class="n">ЦЕПОЧКА ДЕЙСТВИЙ</div>
+Когда число несколько раз увеличивали и уменьшали, все прибавки и убавки можно
+собрать вместе, а потом пойти в обратную сторону.</div>
+<div class="col" id="cw7"><div class="colbar" id="cw7bar"><input id="cw7a" inputmode="decimal" autocomplete="off" placeholder="число" value=""><span class="ops"><button type="button" data-op="+">+</button><button type="button" data-op="−">−</button></span><input id="cw7b" inputmode="decimal" autocomplete="off" placeholder="число" value=""><button type="button" class="pri" data-build="1">Записать в столбик</button></div><div class="colwrap"><div class="colgrid" id="cw7g"></div></div><div class="colbtn" id="cw7n"></div><div class="colmsg" id="cw7m"></div><div class="colhint">Здесь без столбика не обойтись: считай по шагам.</div></div><div class="tohw">Задание 7<span>Четыре задачи повышенной сложности.</span></div>
+</div>
+<div id="tasks7"></div>
+<div id="tasks"></div>
+
+<div class="card sheet">
+  <h2>Шпаргалка</h2>
+  <div class="meta">Печатается на один лист A4: Ctrl+P (⌘+P) → печать.</div>
+  <p class="f-formula"><b>Правило столбика.</b> 1) Запятая под запятой. 2) Уравнять число
+  знаков после запятой, дописывая справа нули. 3) Считать как натуральные числа.
+  4) В ответе поставить запятую под запятыми.</p>
+  <p class="f-formula"><b>Приписать нули.</b> 1,4 = 1,400; 14 = 14,00; 30 = 30,000.
+  Величина не меняется, а разряды встают на место.</p>
+  <p class="f-formula"><b>Законы сложения.</b> a + b = b + a и (a + b) + c = a + (b + c).
+  Ищи пары с круглой суммой: 0,23 + 14,77 = 15; 4,5 + 2,5 = 7.</p>
+  <p class="f-formula"><b>Скобки.</b> Сначала скобки, потом остальное:
+  4,2 − (0,98 + 1,75) = 4,2 − 2,73 = 1,47.</p>
+  <p class="f-formula"><b>Разрядные слагаемые.</b> 57,1083 = 50 + 7 + 0,1 + 0,008 + 0,0003.
+  Нулевые разряды не пишут, но место за собой держат.</p>
+  <p class="f-formula"><b>Уравнения.</b> Слагаемое = сумма − второе слагаемое.
+  Уменьшаемое = разность + вычитаемое. Вычитаемое = уменьшаемое − разность.</p>
+  <p class="f-formula"><b>Скорость по реке.</b> По течению складываем, против течения
+  вычитаем: 37,5 + 2,8 = 40,3 и 37,5 − 2,8 = 34,7.</p>
+  <p class="f-formula"><b>Расставить запятые.</b> Смотри на ответ — он задаёт размер
+  слагаемых: 57 + 23 = 8 превращается в 5,7 + 2,3 = 8.</p>
+  <p class="f-formula"><b>Проверка.</b> Сложение проверяют вычитанием, вычитание —
+  сложением. И всегда полезна прикидка: примерно каким должен быть ответ.</p>
+</div>
+
+<div class="card">
+  <h2>Шаг 1. Фото решений — по желанию</h2>
+  <div class="meta">В поле уходит только ответ, а я смотрю ещё и ход решения.
+  Фото прикладывать не обязательно, но с ними разбор будет точнее.</div>
+  <ol class="steps-list">
+    <li>Пиши столбики в тетради, а не в уме — на них и смотрят при разборе.</li>
+    <li>Приписанные нули пиши карандашом: сразу видно, что разряды уравнены.</li>
+    <li>Для уравнений записывай проверку — это половина решения.</li>
+  </ol>
+  <input type="file" id="photos" accept="image/*" multiple style="margin-top:12px">
+  <div class="thumbs" id="thumbs"></div>
+</div>
+
+<div class="card">
+  <h2>Шаг 2. Отправь работу</h2>
+  <div class="meta">Проверь, что вверху написано твоё имя. По кнопке ответы и результат
+  уходят преподавателю. Вторая кнопка сохраняет копию тебе.</div>
+  <div class="trgate" id="trgate"></div>
+  <div class="row" style="margin-top:12px">
+    <button class="pri" id="send">Отправить на проверку</button>
+    <button id="report">Скачать копию себе</button>
+  </div>
+  <div id="repnote" class="meta" style="margin-top:8px"></div>
+</div>
+
+</div>
+
+<div class="bar">
+  <button class="pri" id="checkall">Проверить всё</button>
+  <span id="progress" class="meta">решено 0 из 18</span>
+</div>
+
+<script>
+var CF = {};
+var COLTPL = "<div class=\"col\" id=\"__ID__\"><div class=\"colbar\" id=\"__ID__bar\"><input id=\"__ID__a\" inputmode=\"decimal\" autocomplete=\"off\" placeholder=\"число\" value=\"\"><span class=\"ops\"><button type=\"button\" data-op=\"+\">+</button><button type=\"button\" data-op=\"−\">−</button></span><input id=\"__ID__b\" inputmode=\"decimal\" autocomplete=\"off\" placeholder=\"число\" value=\"\"><button type=\"button\" class=\"pri\" data-build=\"1\">Записать в столбик</button></div><div class=\"colwrap\"><div class=\"colgrid\" id=\"__ID__g\"></div></div><div class=\"colbtn\" id=\"__ID__n\"></div><div class=\"colmsg\" id=\"__ID__m\"></div><div class=\"colhint\">Запиши числа, нажми «Записать в столбик» и заполни ответ по разрядам.</div></div>";
+
+/* ============ столбик: сложение и вычитание десятичных дробей ============ */
+window.COLUMN = function(id, opt){
+  opt = opt || {};
+  var host = document.getElementById(id);
+  if(!host) return null;
+  var grid = document.getElementById(id + "g"), msg = document.getElementById(id + "m");
+  var btn = document.getElementById(id + "n"), bar = document.getElementById(id + "bar");
+  var op = opt.op || "+", layout = null, shown = false;
+
+  /* ---------- точная арифметика на строках ---------- */
+  function parseNum(s){
+    s = String(s == null ? "" : s).trim().replace(",", ".").replace(/\s+/g, "");
+    if(!/^\d+(\.\d+)?$/.test(s)) return null;
+    var p = s.split(".");
+    var i = p[0].replace(/^0+(?=\d)/, "");
+    return {i: i, f: p[1] || ""};
+  }
+  function digitsOf(n, W, D){
+    /* строка цифр без запятой, выровненная: W целых + D дробных */
+    var i = n.i, f = n.f;
+    while(i.length < W) i = "0" + i;
+    while(f.length < D) f = f + "0";
+    return i + f;
+  }
+  function addDigits(x, y){
+    var out = "", c = 0, k, s;
+    for(k = x.length - 1; k >= 0; k--){
+      s = (+x.charAt(k)) + (+y.charAt(k)) + c;
+      c = s > 9 ? 1 : 0;
+      out = (s % 10) + out;
+    }
+    return (c ? "1" : "") + out;
+  }
+  function cmpDigits(x, y){
+    var k;
+    for(k = 0; k < x.length; k++){
+      if(x.charAt(k) !== y.charAt(k)) return x.charAt(k) > y.charAt(k) ? 1 : -1;
+    }
+    return 0;
+  }
+  function subDigits(x, y){
+    var out = "", b = 0, k, s;
+    for(k = x.length - 1; k >= 0; k--){
+      s = (+x.charAt(k)) - (+y.charAt(k)) - b;
+      b = s < 0 ? 1 : 0;
+      if(s < 0) s += 10;
+      out = s + out;
+    }
+    return out;
+  }
+
+  /* ---------- раскладка ---------- */
+  function build(as, bs, quiet){
+    var a = parseNum(as), b = parseNum(bs);
+    if(!a || !b){
+      say("bad", "Впиши два числа.", "Только цифры и запятая, например 2,8 и 0,009.");
+      return false;
+    }
+    var W = Math.max(a.i.length, b.i.length);
+    var D = Math.max(a.f.length, b.f.length);
+    var x = digitsOf(a, W, D), y = digitsOf(b, W, D);
+    var res;
+    if(op === "+"){
+      res = addDigits(x, y);
+    } else {
+      if(cmpDigits(x, y) < 0){
+        say("bad", "В столбик так не вычитают.",
+            "Сверху должно стоять большее число: из меньшего большее не вычесть.");
+        return false;
+      }
+      res = subDigits(x, y);
+    }
+    /* итоговая строка цифр по разрядам: IW целых + D дробных */
+    var IW = W + (op === "+" ? 1 : 0);
+    while(res.length < IW + D) res = "0" + res;
+    /* ведущие нули целой части показываем как пустые клетки */
+    var head = res.slice(0, IW), tail = res.slice(IW);
+    var keep = head.replace(/^0+(?=\d)/, "");
+    var lead = head.length - keep.length;
+    var exp = [], k;
+    for(k = 0; k < IW; k++) exp.push(k < lead ? "" : res.charAt(k));
+    for(k = 0; k < D; k++) exp.push(tail.charAt(k));
+    var val = (keep || "0") + (D ? "," + tail : "");
+    var short = val.indexOf(",") < 0 ? val
+              : val.replace(/0+$/, "").replace(/,$/, "");
+    layout = {W: W, D: D, IW: IW, a: a, b: b, x: x, y: y, exp: exp,
+              value: val, short: short};
+    render();
+    if(!quiet) say("", "", "");
+    return true;
+  }
+
+  function padMark(orig, W, D, IW, sign){
+    /* цифры числа + серые дописанные нули в дробной части */
+    var i = orig.i, f = orig.f, h = "", k, pos;
+    h += '<div class="cd sign">' + (sign || "") + "</div>";
+    for(k = 0; k < IW; k++){
+      pos = k - (IW - i.length);
+      h += '<div class="cd">' + (pos < 0 ? "" : i.charAt(pos)) + "</div>";
+    }
+    h += '<div class="cm">' + (D ? "," : "") + "</div>";
+    for(k = 0; k < D; k++){
+      h += '<div class="cd' + (k >= f.length ? " pad" : "") + '">' +
+           (k < f.length ? f.charAt(k) : "0") + "</div>";
+    }
+    return h;
+  }
+
+  function render(){
+    var L = layout, n = 1 + L.IW + 1 + L.D, k, h = "";
+    grid.style.gridTemplateColumns = "26px repeat(" + L.IW + ",var(--cw)) 14px repeat(" +
+      L.D + ",var(--cw))";
+    /* строка переносов */
+    h += '<div class="cd"></div>';
+    for(k = 0; k < L.IW; k++) h += '<input class="carry" inputmode="numeric" maxlength="1">';
+    h += '<div class="cd"></div>';
+    for(k = 0; k < L.D; k++) h += '<input class="carry" inputmode="numeric" maxlength="1">';
+    /* числа */
+    h += padMark(L.a, L.W, L.D, L.IW, "");
+    h += padMark(L.b, L.W, L.D, L.IW, op);
+    /* черта */
+    h += '<div class="rule" style="grid-column:1/' + (n + 1) + '"></div>';
+    /* ответ */
+    h += '<div class="cd"></div>';
+    for(k = 0; k < L.IW; k++)
+      h += '<input class="ans" inputmode="numeric" maxlength="1" data-i="' + k + '">';
+    h += '<div class="cm">' + (L.D ? "," : "") + "</div>";
+    for(k = 0; k < L.D; k++)
+      h += '<input class="ans" inputmode="numeric" maxlength="1" data-i="' + (L.IW + k) + '">';
+    grid.innerHTML = h;
+    shown = false;
+    btn.innerHTML = '<button type="button" class="pri" data-act="check">Проверить</button>' +
+      '<button type="button" data-act="show">Показать ответ</button>' +
+      (opt.lock ? "" : '<button type="button" data-act="clear">Другие числа</button>');
+    var ins = grid.querySelectorAll("input.ans");
+    for(k = 0; k < ins.length; k++){
+      ins[k].addEventListener("input", onType);
+      ins[k].addEventListener("keydown", onKey);
+    }
+    if(ins.length) ins[ins.length - 1].focus();
+  }
+
+  function onType(ev){
+    var el = ev.target;
+    el.value = (el.value || "").replace(/[^0-9]/g, "").slice(-1);
+    el.className = "ans";
+    if(el.value){
+      var i = +el.getAttribute("data-i");
+      var prev = grid.querySelector('input.ans[data-i="' + (i - 1) + '"]');
+      if(prev) prev.focus();
+    }
+  }
+  function onKey(ev){
+    var el = ev.target, i = +el.getAttribute("data-i"), t;
+    if(ev.key === "Enter"){ check(); return; }
+    if(ev.key === "Backspace" && !el.value){
+      t = grid.querySelector('input.ans[data-i="' + (i + 1) + '"]');
+      if(t){ t.focus(); ev.preventDefault(); }
+    }
+    if(ev.key === "ArrowLeft"){
+      t = grid.querySelector('input.ans[data-i="' + (i - 1) + '"]');
+      if(t){ t.focus(); ev.preventDefault(); }
+    }
+    if(ev.key === "ArrowRight"){
+      t = grid.querySelector('input.ans[data-i="' + (i + 1) + '"]');
+      if(t){ t.focus(); ev.preventDefault(); }
+    }
+  }
+
+  function say(kind, head, why){
+    if(!head && !why){ msg.innerHTML = ""; return; }
+    msg.innerHTML = (head ? '<div class="v ' + kind + '">' + head + "</div>" : "") +
+                    (why ? '<div class="why">' + why + "</div>" : "");
+  }
+
+  function check(){
+    if(!layout){ say("bad", "Сначала запиши числа в столбик.", ""); return; }
+    var ins = grid.querySelectorAll("input.ans"), k, v, e, wrong = 0, empty = 0;
+    for(k = 0; k < ins.length; k++){
+      v = (ins[k].value || "").trim();
+      e = layout.exp[k];
+      if(!v && e !== ""){ empty++; }
+      var good = (e === "" && (v === "" || v === "0")) || v === e;
+      ins[k].className = "ans " + (good ? "ok" : "bad");
+      if(!good) wrong++;
+    }
+    if(empty && wrong === empty){
+      say("bad", "Заполни все разряды.", "Пустых клеток осталось: " + empty + ".");
+    } else if(wrong){
+      say("bad", "Не сходится в " + wrong + " разряд" + tail(wrong) + ".",
+          op === "+" ? "Красные клетки перепроверь: не забыл ли перенос в следующий разряд?"
+                     : "Красные клетки перепроверь: там, где верхняя цифра меньше нижней, " +
+                       "занимают десяток у соседа слева.");
+    } else {
+      say("ok", "Верно: " + layout.value +
+          (layout.short !== layout.value ? " — то есть " + layout.short : "") + ".",
+          layout.short !== layout.value
+            ? "Нули в конце дробной части на величину не влияют: их можно отбросить."
+            : "Запятая в ответе стоит ровно под запятыми слагаемых.");
+    }
+    if(opt.onCheck) opt.onCheck(!wrong, layout.value);
+    return !wrong;
+  }
+  function showAns(){
+    if(!layout) return;
+    var ins = grid.querySelectorAll("input.ans"), k;
+    for(k = 0; k < ins.length; k++){
+      ins[k].value = layout.exp[k];
+      ins[k].className = "ans shown";
+    }
+    shown = true;
+    say("", "Ответ: " + layout.value +
+        (layout.short !== layout.value ? " — то есть " + layout.short : "") + ".",
+        "Разбери по разрядам справа налево и попробуй такой же пример сам.");
+  }
+  function tail(n){
+    var d = n % 10, dd = n % 100;
+    if(dd > 10 && dd < 20) return "ах";
+    if(d === 1) return "е";
+    if(d > 1 && d < 5) return "ах";
+    return "ах";
+  }
+
+  btn.addEventListener("click", function(ev){
+    var a = ev.target.getAttribute && ev.target.getAttribute("data-act");
+    if(a === "check") check();
+    if(a === "show") showAns();
+    if(a === "clear"){
+      layout = null; grid.innerHTML = ""; btn.innerHTML = ""; say("", "", "");
+      if(bar){ bar.style.display = ""; var f = document.getElementById(id + "a"); if(f) f.focus(); }
+    }
+  });
+
+  if(bar){
+    bar.addEventListener("click", function(ev){
+      var el = ev.target, o = el.getAttribute && el.getAttribute("data-op");
+      if(o){
+        op = o;
+        var bs = bar.querySelectorAll(".ops button"), k;
+        for(k = 0; k < bs.length; k++){
+          bs[k].className = bs[k].getAttribute("data-op") === op ? "on" : "";
+        }
+        return;
+      }
+      if(el.getAttribute && el.getAttribute("data-build")){
+        if(build(document.getElementById(id + "a").value,
+                 document.getElementById(id + "b").value)){
+          bar.style.display = "none";
+        }
+      }
+    });
+    var ent = function(ev){
+      if(ev.key === "Enter"){
+        if(build(document.getElementById(id + "a").value,
+                 document.getElementById(id + "b").value)) bar.style.display = "none";
+      }
+    };
+    document.getElementById(id + "a").addEventListener("keydown", ent);
+    document.getElementById(id + "b").addEventListener("keydown", ent);
+    var bs0 = bar.querySelectorAll(".ops button"), k0;
+    for(k0 = 0; k0 < bs0.length; k0++){
+      bs0[k0].className = bs0[k0].getAttribute("data-op") === op ? "on" : "";
+    }
+  }
+
+  if(opt.a !== undefined && opt.b !== undefined){
+    build(opt.a, opt.b, true);
+    if(bar) bar.style.display = "none";
+  }
+  return {build: build, check: check, show: showAns,
+          setOp: function(o){ op = o; },
+          set: function(a, b, o){ if(o) op = o; return build(a, b, true); }};
+};
+
+/* ============ тренажёр: посчитай в столбик ============ */
+window.COLTRAIN = function(id, items){
+  var sc = document.getElementById(id + "s"), q = document.getElementById(id + "q");
+  var nav = document.getElementById(id + "n2"), msg = document.getElementById(id + "m2");
+  var view = null, order = [], i = 0, ok = 0, answered = false, missed = false;
+
+  function shuffle(n){
+    var a = [], k, j, t;
+    for(k = 0; k < n; k++) a.push(k);
+    for(k = a.length - 1; k > 0; k--){ j = Math.floor(Math.random()*(k+1)); t=a[k]; a[k]=a[j]; a[j]=t; }
+    return a;
+  }
+  function score(){
+    sc.textContent = "пример " + Math.min(i + 1, items.length) + " из " + items.length +
+                     " · верно " + ok;
+  }
+  function finish(){
+    q.innerHTML = ""; msg.innerHTML = "";
+    document.getElementById(id + "box").style.display = "none";
+    var pct = Math.round(ok / items.length * 100);
+    var word = pct === 100 ? "Столбик освоен." :
+               pct >= 70 ? "Хорошо, но пару примеров стоит перерешать." :
+               "Вернись к правилу и пройди ещё раз.";
+    nav.innerHTML = '<div class="trdone" style="flex:1 1 100%">' + ok + " из " + items.length +
+      " (" + pct + " %) · " + word + '</div>' +
+      '<button type="button" class="pri" data-go="1">Пройти заново</button>';
+    sc.textContent = "готово";
+    if(window.trFinished) window.trFinished(id, ok, items.length);
+    if(window.saveWork) saveWork();
+  }
+  function show(){
+    answered = false; missed = false;
+    msg.innerHTML = ""; nav.innerHTML = "";
+    document.getElementById(id + "box").style.display = "";
+    var t = items[order[i]];
+    q.innerHTML = "<b>" + (i + 1) + ".</b> Посчитай в столбик: <b>" +
+                  t.a + " " + t.op + " " + t.b + "</b>";
+    if(!view) view = COLUMN(id + "c", {lock: true, op: t.op, a: t.a, b: t.b, onCheck: done});
+    else view.set(t.a, t.b, t.op);
+    score();
+  }
+  /* неверная проверка пример не закрывает: цифру можно поправить и проверить снова,
+     но засчитан он будет только если сошлось с первого раза */
+  function done(good){
+    if(answered) return;
+    if(!good){ missed = true; return; }
+    answered = true;
+    if(!missed) ok++;
+    i++;
+    msg.innerHTML = '<div class="v ' + (missed ? "bad" : "ok") + '">' +
+      (missed ? "Сошлось, но не с первого раза — этот пример не засчитан."
+              : "Верно, с первого раза.") + "</div>";
+    nav.innerHTML = (i < items.length)
+      ? '<button type="button" class="pri" data-next="1">Следующий пример</button>'
+      : '<button type="button" class="pri" data-next="1">Показать итог</button>';
+    score();
+  }
+
+  nav.addEventListener("click", function(ev){
+    var el = ev.target;
+    if(!el || el.tagName !== "BUTTON") return;
+    if(el.getAttribute("data-go")){ order = shuffle(items.length); i = 0; ok = 0; show(); return; }
+    if(el.getAttribute("data-next")){ if(i < items.length) show(); else finish(); }
+  });
+  order = shuffle(items.length);
+  show();
+};
+
+/* ---------- столбик внутри задачи ---------- */
+function openCol(id, host, btn){
+  if(!host.getAttribute("data-on")){
+    host.innerHTML = COLTPL.replace(/__ID__/g, "cw_t" + id);
+    COLUMN("cw_t" + id, {});
+    host.setAttribute("data-on", "1");
+    host.style.display = "";
+    btn.textContent = "Убрать столбик";
+    return;
+  }
+  var hidden = host.style.display === "none";
+  host.style.display = hidden ? "" : "none";
+  btn.textContent = hidden ? "Убрать столбик" : "Столбик";
+}
+var STUDENT_CODE = (function(){
+  try{ var m = /[#&?]code=([^&]+)/.exec(location.hash + location.search);
+       return m ? decodeURIComponent(m[1]) : ""; }catch(e){ return ""; }
+})();
+var TOPIC = "Сложение и вычитание десятичных дробей (§4, математика 6 класс)";
+
+"use strict";
+var started = Date.now();
+var spentBefore = 0;
+
+/* ---------- данные задач; ответы закодированы, чтобы не читались в исходнике ---------- */
+function e(s){return btoa(unescape(encodeURIComponent(s)));}
+function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return s;}}
+
+var TASKS = [
+ {id:1,blk:"1",lvl:"база",type:"num",text:"Выполни действие: 0,76 + 42,38.",ans:[e("43,14")],img:"",
+  hints:["Запиши столбиком: запятая под запятой.",
+         "Знаков после запятой поровну — по два, дописывать ничего не надо.",
+         "Складывай справа налево: 6 + 8 = 14, пишем 4, один в уме."],
+  sol:"<div class='step'>1. Запятая под запятой, знаков после запятой поровну.</div>"+
+      "<div class='step'>2. Сотые: 6 + 8 = 14 — пишем 4, переносим 1.</div>"+
+      "<div class='fx'>0,76 + 42,38 = 43,14</div>"+
+      "<div class='step mini'>Прикидка: почти 0,8 плюс почти 42,4 — около 43,2. Сошлось.</div>"},
+
+ {id:2,blk:"1",lvl:"база",type:"num",text:"Выполни действие: 16,78 − 5,48.",ans:[e("11,3")],img:"",
+  hints:["Столбик: 16,78 сверху, 5,48 снизу, запятая под запятой.",
+         "Сотые: 8 − 8 = 0. Десятые: 7 − 4 = 3.",
+         "Ноль в конце дробной части не пишут: 11,30 = 11,3."],
+  sol:"<div class='step'>1. Вычитаем по разрядам: сотые 8 − 8 = 0, десятые 7 − 4 = 3.</div>"+
+      "<div class='step'>2. Целые: 16 − 5 = 11.</div>"+
+      "<div class='fx'>16,78 − 5,48 = 11,30 = 11,3</div>"+
+      "<div class='step mini'>Последний нуль в дробной части можно отбросить — величина "+
+      "не меняется.</div>"},
+
+ {id:3,blk:"2",lvl:"база",type:"num",text:"Выполни действие: 5,8 + 2,191.",ans:[e("7,991")],img:"",
+  hints:["У 5,8 одна цифра после запятой, у 2,191 — три.",
+         "Допиши нули: 5,800.",
+         "Складывай: 0 + 1, 0 + 9, 8 + 1."],
+  sol:"<div class='step'>1. Уравниваем знаки: 5,8 = 5,800.</div>"+
+      "<div class='step'>2. Тысячные: 0 + 1 = 1, сотые: 0 + 9 = 9, десятые: 8 + 1 = 9.</div>"+
+      "<div class='fx'>5,800 + 2,191 = 7,991</div>"+
+      "<div class='step mini'>Без приписанных нулей легко сдвинуть разряды и получить "+
+      "неверный ответ.</div>"},
+
+ {id:4,blk:"2",lvl:"база",type:"num",text:"Выполни действие: 2,8 − 0,009.",ans:[e("2,791")],img:"",
+  hints:["Допиши нули сверху: 2,800.",
+         "Тысячные: 0 − 9 не выходит, занимаем десяток у соседа слева.",
+         "После занимания получится 10 − 9 = 1."],
+  sol:"<div class='step'>1. Уравниваем знаки: 2,8 = 2,800.</div>"+
+      "<div class='step'>2. Занимаем: тысячные 10 − 9 = 1, сотые 9 − 0 = 9, десятые 7.</div>"+
+      "<div class='fx'>2,800 − 0,009 = 2,791</div>"+
+      "<div class='step mini'>Ответ чуть меньше 2,8 — так и должно быть: вычли совсем "+
+      "немного.</div>"},
+
+ {id:5,blk:"3",lvl:"база",type:"num",text:"Число 76,98 разложили по разрядам: 70 + 6 + 0,9 + … Какое число стоит на месте многоточия?",ans:[e("0,08")],img:"",
+  hints:["Последняя цифра числа — 8. В каком она разряде?",
+         "Два знака после запятой — это сотые.",
+         "Восемь сотых записывают как 0,08."],
+  sol:"<div class='step'>1. 7 — десятки, 6 — единицы, 9 — десятые, 8 — сотые.</div>"+
+      "<div class='fx'>76,98 = 70 + 6 + 0,9 + 0,08</div>"+
+      "<div class='step'><b>Ответ: 0,08.</b></div>"+
+      "<div class='step mini'>Частая ошибка — написать 0,8. Это десятые, а нужны сотые.</div>"},
+
+ {id:6,blk:"3",lvl:"средний",type:"num",text:"Сколько ненулевых разрядных слагаемых у числа 342,406?",ans:[e("5")],img:"",
+  hints:["Выпиши разряды: сотни, десятки, единицы, десятые, сотые, тысячные.",
+         "342,406 = 300 + 40 + 2 + 0,4 + 0 + 0,006.",
+         "Слагаемые с нулём не пишут — посчитай остальные."],
+  sol:"<div class='step'>1. Раскладываем: 300 + 40 + 2 + 0,4 + 0,006.</div>"+
+      "<div class='step'>2. Сотых в числе нет — цифра 0, такое слагаемое не пишут.</div>"+
+      "<div class='fx'>всего 5 слагаемых</div>"+
+      "<div class='step mini'>Цифра 0 разряд не отменяет: без неё 0,006 превратилось бы "+
+      "в 0,06.</div>"},
+
+ {id:7,blk:"4",lvl:"средний",type:"num",text:"Найди значение выражения, применив законы сложения: 4,5 + 7,08 + 2,5 + 1,92.",ans:[e("16")],img:"",
+  hints:["Поищи пары, дающие круглое число.",
+         "4,5 + 2,5 = 7, а 7,08 + 1,92 = 9.",
+         "Осталось сложить две круглые суммы."],
+  sol:"<div class='step'>1. Первая пара: 4,5 + 2,5 = 7.</div>"+
+      "<div class='step'>2. Вторая пара: 7,08 + 1,92 = 9.</div>"+
+      "<div class='fx'>7 + 9 = 16</div>"+
+      "<div class='step mini'>Если складывать подряд, ответ тот же, но три столбика "+
+      "вместо двух устных действий.</div>"},
+
+ {id:8,blk:"4",lvl:"средний",type:"num",text:"Найди значение выражения: 64,21 + 15,4 + 22,79 + 8,6.",ans:[e("111")],img:"",
+  hints:["Сотые есть только у 64,21 и 22,79 — сложи их первыми.",
+         "64,21 + 22,79 = 87.",
+         "15,4 + 8,6 = 24, осталось сложить 87 и 24."],
+  sol:"<div class='step'>1. 64,21 + 22,79 = 87 — сотые дают ровно единицу.</div>"+
+      "<div class='step'>2. 15,4 + 8,6 = 24.</div>"+
+      "<div class='fx'>87 + 24 = 111</div>"+
+      "<div class='step mini'>Сигнал к перестановке — одинаковые «хвосты»: 21 и 79, 4 и 6.</div>"},
+
+ {id:9,blk:"5",lvl:"средний",type:"num",text:"Найди значение выражения: 4,2 − (0,98 + 1,75).",ans:[e("1,47")],img:"",
+  hints:["Сначала скобки.",
+         "0,98 + 1,75 = 2,73.",
+         "Теперь 4,20 − 2,73."],
+  sol:"<div class='step'>1. В скобках: 0,98 + 1,75 = 2,73.</div>"+
+      "<div class='step'>2. Дописываем нуль: 4,2 = 4,20.</div>"+
+      "<div class='fx'>4,20 − 2,73 = 1,47</div>"+
+      "<div class='step mini'>Минус стоит перед скобкой, значит вычитается вся сумма "+
+      "целиком.</div>"},
+
+ {id:10,blk:"5",lvl:"средний",type:"num",text:"Найди значение выражения: 25 − (19,5 − 11,8).",ans:[e("17,3")],img:"",
+  hints:["Внутри скобок тоже вычитание — его и делай первым.",
+         "19,5 − 11,8 = 7,7.",
+         "Теперь 25,0 − 7,7."],
+  sol:"<div class='step'>1. В скобках: 19,5 − 11,8 = 7,7.</div>"+
+      "<div class='step'>2. Записываем 25 как 25,0.</div>"+
+      "<div class='fx'>25,0 − 7,7 = 17,3</div>"+
+      "<div class='step mini'>Проверка: 17,3 + 7,7 = 25. Сошлось.</div>"},
+
+ {id:11,blk:"5",lvl:"база",type:"num",text:"Собственная скорость катера 37,5 км/ч, скорость течения 2,8 км/ч. Найди скорость катера по течению (в км/ч).",ans:[e("40,3")],img:"",
+  hints:["По течению река помогает.",
+         "Значит скорости складывают.",
+         "37,5 + 2,8 — не забудь про разряды."],
+  sol:"<div class='step'>1. По течению скорости складываются.</div>"+
+      "<div class='fx'>37,5 + 2,8 = 40,3</div>"+
+      "<div class='step'><b>Ответ: 40,3 км/ч.</b></div>"+
+      "<div class='step mini'>Против течения было бы 37,5 − 2,8 = 34,7 км/ч — разница "+
+      "как раз два течения, 5,6 км/ч.</div>"},
+
+ {id:12,blk:"6",lvl:"средний",type:"num",text:"Реши уравнение: 45 − x = 38,783. Запиши значение x.",ans:[e("6,217")],img:"",
+  hints:["x здесь — вычитаемое.",
+         "Вычитаемое = уменьшаемое − разность.",
+         "45,000 − 38,783."],
+  sol:"<div class='step'>1. x = 45 − 38,783.</div>"+
+      "<div class='step'>2. Записываем 45 как 45,000 и вычитаем столбиком.</div>"+
+      "<div class='fx'>x = 6,217</div>"+
+      "<div class='step mini'>Проверка: 45 − 6,217 = 38,783. Сошлось.</div>"},
+
+ {id:13,blk:"6",lvl:"средний",type:"num",text:"Реши уравнение: x + 27,621 = 38. Запиши значение x.",ans:[e("10,379")],img:"",
+  hints:["x — неизвестное слагаемое.",
+         "Слагаемое = сумма − второе слагаемое.",
+         "38,000 − 27,621."],
+  sol:"<div class='step'>1. x = 38 − 27,621.</div>"+
+      "<div class='step'>2. Дописываем нули: 38,000.</div>"+
+      "<div class='fx'>x = 10,379</div>"+
+      "<div class='step mini'>Проверка: 10,379 + 27,621 = 38. Тысячные дают ровно "+
+      "единицу.</div>"},
+
+ {id:14,blk:"6",lvl:"сложный",type:"num",text:"Реши уравнение: (x + 93,4) − 17,4 = 112,72. Запиши значение x.",ans:[e("36,72")],img:"",
+  hints:["Скобку считай как одно число.",
+         "x + 93,4 = 112,72 + 17,4.",
+         "Дальше вычти 93,4 из того, что получилось."],
+  sol:"<div class='step'>1. Скобка — уменьшаемое: x + 93,4 = 112,72 + 17,4 = 130,12.</div>"+
+      "<div class='step'>2. Теперь x — слагаемое: x = 130,12 − 93,4.</div>"+
+      "<div class='fx'>x = 36,72</div>"+
+      "<div class='step mini'>Проверка: (36,72 + 93,4) − 17,4 = 130,12 − 17,4 = 112,72.</div>"},
+
+ {id:15,blk:"7",lvl:"средний",type:"num",text:"Восстанови пропущенную цифру: 4,2? + 1,38 = 5,65. Какая цифра стоит на месте вопроса?",ans:[e("7")],img:"",
+  hints:["Неизвестно первое слагаемое целиком.",
+         "Найди его: 5,65 − 1,38.",
+         "Получится 4,27 — смотри на последнюю цифру."],
+  sol:"<div class='step'>1. Первое слагаемое: 5,65 − 1,38 = 4,27.</div>"+
+      "<div class='step'>2. Значит на месте вопроса стоит 7.</div>"+
+      "<div class='fx'>4,27 + 1,38 = 5,65</div>"+
+      "<div class='step mini'>Можно и по разрядам: ? + 8 должно дать 5 в сотых, "+
+      "то есть 15 — значит ? = 7 и единица уходит в перенос.</div>"},
+
+ {id:16,blk:"7",lvl:"сложный",type:"num",text:"В записи 34 + 28 = 314 расставили запятые так, чтобы равенство стало верным. Чему равно первое слагаемое?",ans:[e("3,4")],img:"",
+  hints:["Второе слагаемое 28 трогать не обязательно.",
+         "Ответ 31,4 — это примерно 28 с небольшой добавкой.",
+         "Какая добавка превращает 28 в 31,4?"],
+  sol:"<div class='step'>1. Прикидка: ответ должен быть чуть больше 28.</div>"+
+      "<div class='step'>2. Пробуем 3,4 + 28 = 31,4 — верно.</div>"+
+      "<div class='fx'>первое слагаемое равно 3,4</div>"+
+      "<div class='step mini'>Приём всегда один: смотри на ответ, он задаёт размер "+
+      "слагаемых.</div>"},
+
+ {id:17,blk:"7",lvl:"сложный",type:"num",text:"Число увеличили на 0,9, результат уменьшили на 0,43, затем увеличили на 6,375 и уменьшили на 12,87. Получилось 27,333. Какое число было вначале?",ans:[e("33,358")],img:"",
+  hints:["Собери все прибавки и все убавки отдельно.",
+         "Прибавили 0,9 + 6,375 = 7,275, убавили 0,43 + 12,87 = 13,3.",
+         "Значит число уменьшилось на 13,3 − 7,275 = 6,025. Иди обратно."],
+  sol:"<div class='step'>1. Всего прибавили: 0,9 + 6,375 = 7,275.</div>"+
+      "<div class='step'>2. Всего убавили: 0,43 + 12,87 = 13,3.</div>"+
+      "<div class='step'>3. Итого число стало меньше на 13,3 − 7,275 = 6,025.</div>"+
+      "<div class='fx'>27,333 + 6,025 = 33,358</div>"+
+      "<div class='step mini'>Проверка по шагам: 33,358 + 0,9 = 34,258; −0,43 = 33,828; "+
+      "+6,375 = 40,203; −12,87 = 27,333. Сошлось.</div>"},
+
+ {id:18,blk:"7",lvl:"сложный",type:"num",text:"В натуральном числе справа отделили запятой два знака и полученное число сложили с первоначальным. Сумма оказалась равна 357,54. Найди исходное число.",ans:[e("354")],img:"",
+  hints:["Отделить два знака запятой — значит уменьшить число в 100 раз.",
+         "Сумма равна числу плюс его сотая часть.",
+         "Целая часть суммы — 357, значит искомое число чуть меньше."],
+  sol:"<div class='step'>1. Пусть число n. Тогда n + n : 100 = 357,54.</div>"+
+      "<div class='step'>2. Дробная часть суммы 0,54 — это часть от n : 100, "+
+      "значит n оканчивается на 54 сотых, то есть n : 100 = 3,54.</div>"+
+      "<div class='step'>3. Отсюда n = 354, проверяем: 354 + 3,54 = 357,54.</div>"+
+      "<div class='fx'>n = 354</div>"+
+      "<div class='step mini'>Коротко: сумма в 1,01 раза больше числа, 357,54 : 1,01 = 354.</div>"}
+];
+
+/* ---------- разбор ответа ---------- */
+function norm(s){
+  return String(s).toLowerCase().replace(/\s+/g,"")
+    .replace(/[\u2013\u2014\u2212]/g,"-")
+    .replace(/[\u00d7\u00b7]/g,"*")
+    .replace(/,/g,".")
+    .replace(/^(ответ:?|x=|y=|α=|a=)/,"");
+}
+function toNum(str){
+  var t = norm(str);
+  if(!t) return NaN;
+  t = t.replace(/\u221a/g,"sqrt").replace(/\u03c0/g,"pi");
+  t = t.replace(/sqrt(\d+(?:\.\d+)?)/g,"sqrt($1)");
+  t = t.replace(/(\d)sqrt/g,"$1*sqrt");
+  t = t.replace(/(\d)pi/g,"$1*pi");
+  t = t.replace(/(\d)\(/g,"$1*(").replace(/\)(\d)/g,")*$1").replace(/\)\(/g,")*(");
+  if(!/^[-+*/().0-9a-z]+$/.test(t)) return NaN;
+  if(t.replace(/sqrt|pi/g,"").match(/[a-z]/)) return NaN;
+  try{
+    var v = new Function("sqrt","pi","return ("+t+");")(Math.sqrt, Math.PI);
+    return (typeof v === "number" && isFinite(v)) ? v : NaN;
+  }catch(err){ return NaN; }
+}
+function same(given, right, tol){
+  var a = toNum(given), b = toNum(right);
+  if(!isNaN(a) && !isNaN(b)){
+    var t = tol || 1e-9;
+    return Math.abs(a-b) <= Math.max(t, Math.abs(b)*t);
+  }
+  return norm(given) === norm(right);
+}
+
+/* ---------- отрисовка ---------- */
+var state = {};
+function boxOf(t){
+  return document.getElementById("tasks" + (t.blk || "")) ||
+         document.getElementById("tasks");
+}
+
+TASKS.forEach(function(t){
+  state[t.id] = {tries:0, hints:0, done:false, ok:false, given:"", sel:null};
+  var el = document.createElement("div");
+  el.className = "task"; el.id = "t"+t.id;
+  var body = '<div><span class="tnum">'+t.id+'.</span>'+t.text+
+             '<span class="lvl">'+t.lvl+'</span></div>';
+  if(t.img){ body += '<div class="fig">'+t.img+'</div>'; }
+  if(t.type === "choice"){
+    body += '<div class="opts">'+t.options.map(function(o,i){
+      return '<label class="opt" data-v="'+o+'"><input type="radio" name="q'+t.id+'" value="'+o+'"> '+o+'</label>';
+    }).join("")+'</div>';
+  } else {
+    body += '<div class="keys">'+
+      [",","−"].map(function(k){
+        return '<button class="key" data-k="'+k+'" type="button">'+k+'</button>';}).join("")+
+      '</div><input type="text" id="in'+t.id+'" inputmode="text" autocapitalize="off" '+
+      'autocorrect="off" autocomplete="off" spellcheck="false" placeholder="ответ">';
+  }
+  body += '<div class="row" style="margin-top:10px">'+
+          '<button class="pri sm chk">Проверить</button>'+
+          '<button class="sm hnt">Подсказка</button>'+
+          '<button class="sm col">Столбик</button></div>'+
+          '<div class="colhost" style="display:none"></div>'+
+          '<div class="hints"></div><div class="verdict"></div><div class="sol"></div>';
+  el.innerHTML = body;
+  boxOf(t).appendChild(el);
+
+  el.querySelectorAll(".key").forEach(function(b){
+    b.addEventListener("click", function(){
+      var inp = document.getElementById("in"+t.id);
+      var k = b.dataset.k === "−" ? "-" : b.dataset.k;
+      var s = inp.selectionStart || inp.value.length;
+      inp.value = inp.value.slice(0,s) + k + inp.value.slice(inp.selectionEnd || s);
+      inp.focus(); inp.setSelectionRange(s+k.length, s+k.length);
+    });
+  });
+  if(t.type === "choice"){
+    el.querySelectorAll(".opt").forEach(function(l){
+      l.addEventListener("click", function(){
+        el.querySelectorAll(".opt").forEach(function(x){x.classList.remove("sel");});
+        l.classList.add("sel"); state[t.id].sel = l.dataset.v;
+      });
+    });
+  } else {
+    el.querySelector("#in"+t.id).addEventListener("keydown", function(ev){
+      if(ev.key === "Enter"){ ev.preventDefault(); check(t.id); }
+    });
+  }
+  el.querySelector(".chk").addEventListener("click", function(){ check(t.id); });
+  el.querySelector(".col").addEventListener("click", function(){
+    openCol(t.id, el.querySelector(".colhost"), this);
+  });
+  el.querySelector(".hnt").addEventListener("click", function(){ hint(t.id); });
+});
+
+function hint(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var host = document.querySelector("#t"+id+" .hints");
+  if(s.hints >= t.hints.length){
+    if(!host.querySelector(".last")){
+      var w = document.createElement("div");
+      w.className = "hint last"; w.textContent = "Подсказки закончились — нажми «Проверить», решение откроется после второй попытки.";
+      host.appendChild(w);
+    }
+    return;
+  }
+  var h = document.createElement("div");
+  h.className = "hint";
+  h.innerHTML = "Подсказка " + (s.hints+1) + ": " + t.hints[s.hints];
+  host.appendChild(h);
+  s.hints++;
+  saveWork();
+}
+
+function check(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var el = document.getElementById("t"+id);
+  var v = document.querySelector(".verdict");
+  v = el.querySelector(".verdict");
+  var given = (t.type === "choice") ? (s.sel || "") :
+              (document.getElementById("in"+id).value || "");
+  if(!given.trim()){ v.className = "verdict bad"; v.textContent = "Введи ответ."; return; }
+  s.given = given; s.tries++;
+  var ok = t.ans.some(function(a){ return same(given, d(a), t.tol); });
+  s.ok = ok; s.done = ok || s.tries >= 2;
+  el.classList.remove("ok","bad");
+  el.classList.add(ok ? "ok" : "bad");
+  v.className = "verdict " + (ok ? "ok" : "bad");
+  if(ok){
+    v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    showSol(el, t);
+  } else if(s.tries === 1){
+    v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+  } else {
+    v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    showSol(el, t);
+  }
+  progress();
+  saveWork();
+}
+function showSol(el, t){
+  var host = el.querySelector(".sol");
+  if(host.dataset.on) return;
+  host.dataset.on = "1";
+  var det = document.createElement("details");
+  det.open = true;
+  det.innerHTML = "<summary>Решение</summary><div class='step'>"+t.sol+"</div>";
+  host.appendChild(det);
+}
+function progress(){
+  var done = TASKS.filter(function(t){return state[t.id].done;}).length;
+  var ok = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  document.getElementById("progress").textContent =
+    "решено " + done + " из " + TASKS.length + " · верно " + ok;
+}
+document.getElementById("checkall").addEventListener("click", function(){
+  TASKS.forEach(function(t){
+    var s = state[t.id];
+    var given = (t.type === "choice") ? (s.sel || "") : (document.getElementById("in"+t.id).value || "");
+    if(given.trim() && !s.done) check(t.id);
+  });
+  var first = TASKS.find(function(t){ return !state[t.id].done; });
+  var note = first ? "Осталась задача " + first.id + "." : "Все задачи закрыты.";
+  document.getElementById("progress").textContent += " · " + note;
+});
+progress();
+
+/* ---------- фото ---------- */
+var photos = [];
+document.getElementById("photos").addEventListener("change", function(ev){
+  var files = Array.prototype.slice.call(ev.target.files || []);
+  files.forEach(function(f){
+    var r = new FileReader();
+    r.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var m = 1400, w = img.width, h = img.height;
+        if(Math.max(w,h) > m){ var k = m/Math.max(w,h); w = Math.round(w*k); h = Math.round(h*k); }
+        var c = document.createElement("canvas"); c.width = w; c.height = h;
+        c.getContext("2d").drawImage(img, 0, 0, w, h);
+        photos.push({url: c.toDataURL("image/jpeg", 0.7), task: ""});
+        drawThumbs();
+      };
+      img.src = r.result;
+    };
+    r.readAsDataURL(f);
+  });
+  ev.target.value = "";
+});
+function drawThumbs(){
+  var host = document.getElementById("thumbs");
+  host.innerHTML = "";
+  var total = 0;
+  photos.forEach(function(p, i){
+    total += p.url.length * 0.75;
+    var d0 = document.createElement("div"); d0.className = "thumb";
+    var opts = '<option value="">задача…</option>' + TASKS.map(function(t){
+      return '<option value="'+t.id+'"'+(p.task==String(t.id)?" selected":"")+'>№'+t.id+'</option>';
+    }).join("");
+    d0.innerHTML = '<img src="'+p.url+'" alt="фото решения"><button type="button">×</button>'+
+                   '<select>'+opts+'</select>';
+    d0.querySelector("button").addEventListener("click", function(){ photos.splice(i,1); drawThumbs(); });
+    d0.querySelector("select").addEventListener("change", function(ev){ p.task = ev.target.value; });
+    host.appendChild(d0);
+  });
+  var note = document.getElementById("repnote");
+  if(total > 15e6){ note.textContent = "Фото уже больше 15 МБ — отчёт может отправляться долго, лишние лучше удалить."; }
+  else if(photos.length){ note.textContent = "Фото в отчёте: " + photos.length + "."; }
+  else { note.textContent = ""; }
+}
+
+/* ---------- отчёт ---------- */
+var ENDPOINT = "https://script.google.com/macros/s/AKfycbwqIhgBtFnoUik3N1Lh_YRhNeEFAjmXWSxBNoX1a_Yxu-2dEKHFwo4Dd5Ch9UTOHH-X/exec";
+var SECRET = "artteach2026";
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function buildReport(){
+  var name = (document.getElementById("name").value || "").trim() || "без имени";
+  var now = new Date();
+  var mins = Math.max(1, Math.round(spentMs()/60000));
+  var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  var data = {tип:"дз", предмет:"математика", тема:"Сложение и вычитание десятичных дробей (§4, математика 6 класс)",
+    ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
+    верно:okN, всего:TASKS.length, тренажёры:trSummary(), задачи:[]};
+  var rows = TASKS.map(function(t){
+    var s = state[t.id];
+    data.задачи.push({n:t.id, условие:t.text.replace(/<[^>]+>/g,""), ответ_ученика:s.given,
+      верный_ответ:t.ans.map(d).join(" или "), верно:s.ok, попыток:s.tries, подсказок:s.hints,
+      уровень:t.lvl});
+    return "<tr><td>"+t.id+"</td><td style='text-align:left'>"+esc(t.text.replace(/<[^>]+>/g,""))+
+      "</td><td>"+esc(s.given||"—")+"</td><td>"+esc(t.ans.map(d).join(" / "))+"</td><td>"+
+      (s.ok?"верно":(s.given?"неверно":"не решал"))+"</td><td>"+s.tries+"</td><td>"+s.hints+"</td></tr>";
+  }).join("");
+  var pics = photos.map(function(p,i){
+    return "<figure><img src='"+p.url+"'><figcaption>Фото "+(i+1)+
+      (p.task?" — к задаче №"+p.task:"")+"</figcaption></figure>";
+  }).join("");
+  var html = "<!doctype html><html lang='ru'><head><meta charset='utf-8'>"+
+    "<meta name='viewport' content='width=device-width,initial-scale=1'>"+
+    "<title>Отчёт — "+esc(name)+" — сложение и вычитание дробей · математика 6 класс</title><style>"+
+    "body{font:16px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;padding:20px;color:#16181d;background:#fff}"+
+    "h1{font-size:22px;margin:0 0 4px}.m{color:#5b6270;font-size:15px}"+
+    "table{border-collapse:collapse;width:100%;margin-top:14px;font-size:15px}"+
+    "th,td{border:1px solid #dfe3ea;padding:6px 8px;text-align:center}th{background:#eef3fb}"+
+    "figure{margin:14px 0}img{max-width:100%;border:1px solid #dfe3ea;border-radius:8px}"+
+    "figcaption{color:#5b6270;font-size:14px;margin-top:4px}</style></head><body>"+
+    "<h1>Отчёт по домашнему заданию</h1>"+
+    "<div class='m'>Тема: сложение и вычитание десятичных дробей · §4, математика 6 класс</div>"+
+    "<div class='m'>Ученик: <b>"+esc(name)+"</b> · сдано: "+esc(now.toLocaleString("ru-RU"))+
+    " · время работы: около "+mins+" мин</div>"+
+    "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)</h2>"+
+    "<table><tr><th>№</th><th>Задача</th><th>Ответ ученика</th><th>Верный ответ</th>"+
+    "<th>Итог</th><th>Попыток</th><th>Подсказок</th></tr>"+rows+"</table>"+
+    trReportHtml()+
+    (pics ? "<h2>Фото решений</h2>"+pics : "<p class='m'>Фото решений не прикреплены.</p>")+
+    "<script type='application/json' id='result-data'>"+
+    JSON.stringify(data).replace(/</g,"\\u003c")+"<\/script></body></html>";
+  var stamp = now.getDate()+"-"+(now.getMonth()+1);
+  return {
+    html: html,
+    name: name,
+    ok: okN,
+    total: TASKS.length,
+    file: "Отчёт_Сложение_дробей_"+name.replace(/\s+/g,"_")+"_"+stamp+".html",
+    caption: name+" · сложение и вычитание дробей · математика 6 класс · "+okN+" из "+TASKS.length+
+             " ("+Math.round(okN/TASKS.length*100)+"%)"+
+             " · тренажёры "+trSummary().ok+" из "+trSummary().total
+  };
+}
+
+document.getElementById("send").addEventListener("click", function(){
+  var note = document.getElementById("repnote");
+  var who = (document.getElementById("name").value || "").trim();
+  if(!who){ note.className = "meta bad-note"; note.textContent = "Сначала впиши имя вверху страницы."; return; }
+  var left = trPending();
+  if(left.length){
+    note.className = "meta bad-note";
+    note.textContent = "Работа не отправлена: сначала пройди тренажёры. " +
+      "Осталось " + left.length + " из " + TRREQ.length + ".";
+    trStatus();
+    trJump(left[0].id);
+    return;
+  }
+  note.className = "meta";
+  var r = buildReport();
+  note.textContent = "Отправляю…";
+  var payload = {
+    secret: SECRET,
+    code: STUDENT_CODE,
+    student: r.name,
+    topic: TOPIC,
+    ok: r.ok,
+    total: r.total,
+    name: r.file,
+    caption: r.caption,
+    trainers: trSummary().ok + " из " + trSummary().total,
+    file: btoa(unescape(encodeURIComponent(r.html)))
+  };
+  fetch(ENDPOINT, {method:"POST", mode:"no-cors", body: JSON.stringify(payload)})
+    .then(function(){
+      note.textContent = "Отправлено преподавателю." +
+        (photos.length ? "" : " Фото решений не приложены — если решал в тетради, приложи их и отправь ещё раз.") +
+        " Если хочешь, сохрани копию себе кнопкой ниже.";
+    })
+    .catch(function(){
+      note.textContent = "Не получилось отправить. Скачай файл кнопкой ниже и пришли его вручную.";
+    });
+});
+
+document.getElementById("report").addEventListener("click", function(){
+  var r = buildReport();
+  var blob = new Blob([r.html], {type:"text/html;charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = r.file;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  document.getElementById("repnote").textContent = "Файл скачан — он в папке загрузок.";
+});
+
+
+/* ---------- движок тренажёров ---------- */
+function makeTrainer(id, items){
+  var q=document.getElementById(id+"q"), f=document.getElementById(id+"f"),
+      a=document.getElementById(id+"a"), m=document.getElementById(id+"m"),
+      b=document.getElementById(id+"b"), sc=document.getElementById(id+"s");
+  var order=[], perm=[], i=0, ok=0, answered=false;
+
+  function shuffle(n){
+    var arr=[], k, j, t;
+    for(k=0;k<n;k++) arr.push(k);
+    for(k=arr.length-1;k>0;k--){ j=Math.floor(Math.random()*(k+1)); t=arr[k]; arr[k]=arr[j]; arr[j]=t; }
+    return arr;
+  }
+  function norm(s){
+    return String(s).trim().toLowerCase().replace(/\s+/g,"").replace(/−/g,"-").replace(/,/g,".");
+  }
+  function same(x, y){
+    var p=parseFloat(norm(x)), r=parseFloat(norm(y));
+    if(isFinite(p) && isFinite(r)) return Math.abs(p-r) < 1e-9;
+    return norm(x) === norm(y);
+  }
+  function score(){
+    sc.textContent = "вопрос " + Math.min(i + 1, items.length) + " из " + items.length +
+                     " · верно " + ok;
+  }
+
+  function finish(){
+    q.innerHTML=""; f.innerHTML=""; a.innerHTML=""; m.innerHTML="";
+    var pct=Math.round(ok/items.length*100);
+    var word = pct===100 ? "Всё верно — тема закрыта." :
+               pct>=70 ? "Хорошо, но пару мест стоит перечитать." :
+               "Стоит вернуться к теории и пройти ещё раз.";
+    b.innerHTML='<div class="trdone" style="flex:1 1 100%">'+ok+" из "+items.length+
+      " ("+pct+" %) · "+word+'</div><button type="button" class="pri" data-go="1">Пройти заново</button>';
+    sc.textContent="готово";
+    if(window.trFinished) window.trFinished(id, ok, items.length);
+  }
+
+  function show(){
+    answered=false;
+    m.innerHTML=""; b.innerHTML="";
+    var t=items[order[i]];
+    q.innerHTML="<b>"+(i+1)+".</b> "+t.q;
+    f.innerHTML=t.fig || "";
+    f.style.display = t.fig ? "" : "none";
+    if(t.opts){
+      perm = shuffle(t.opts.length);          /* perm[позиция] = номер варианта в банке */
+      var html='<div class="tropts" id="'+id+'o">';
+      for(var k=0;k<perm.length;k++)
+        html+='<button type="button" class="tropt" data-k="'+perm[k]+'">'+t.opts[perm[k]]+'</button>';
+      a.innerHTML = html+"</div>";
+      var box=document.getElementById(id+"o");
+      box.addEventListener("click", function(ev){
+        var el=ev.target; while(el && el!==box && el.className.indexOf("tropt")<0) el=el.parentNode;
+        if(!el || el===box || answered) return;
+        pick(parseInt(el.getAttribute("data-k"),10), box);
+      });
+    } else {
+      a.innerHTML='<div class="trnum"><span>Ответ:</span>'+
+        '<input type="text" id="'+id+'i" inputmode="text" autocomplete="off" '+
+        'autocorrect="off" spellcheck="false" placeholder="число">'+
+        '<button type="button" class="pri" data-check="1">Проверить</button></div>';
+      var inp=document.getElementById(id+"i");
+      inp.addEventListener("keydown", function(ev){ if(ev.key==="Enter") check(); });
+    }
+    score();
+  }
+
+  function verdict(good, t){
+    answered=true;
+    if(good) ok++;
+    i++;
+    m.innerHTML='<div class="v '+(good?"ok":"bad")+'">'+(good?"Верно.":"Неверно.")+"</div>"+
+                '<div class="why">'+t.why+"</div>";
+    b.innerHTML = (i<items.length)
+      ? '<button type="button" class="pri" data-next="1">Дальше</button>'
+      : '<button type="button" class="pri" data-next="1">Показать итог</button>';
+    score();
+  }
+  function pick(k, box){
+    var t=items[order[i]], good = (k === t.ans);
+    var bs=box.querySelectorAll(".tropt");
+    for(var j=0;j<bs.length;j++){
+      var n=parseInt(bs[j].getAttribute("data-k"),10);
+      if(n===t.ans) bs[j].className="tropt right";
+      else if(n===k) bs[j].className="tropt wrong";
+    }
+    box.className="tropts done";
+    verdict(good, t);
+  }
+  function check(){
+    if(answered) return;
+    var t=items[order[i]], inp=document.getElementById(id+"i");
+    var v=(inp.value||"").trim();
+    if(!v){ m.innerHTML='<div class="why">Впиши ответ.</div>'; return; }
+    var good = t.ans.some(function(x){ return same(v, x); });
+    inp.disabled=true;
+    if(!good) m.innerHTML="";
+    verdict(good, t);
+    if(!good) m.innerHTML='<div class="v bad">Неверно. Правильный ответ: '+t.ans[0]+".</div>"+
+                          '<div class="why">'+t.why+"</div>";
+  }
+
+  b.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-next")){ if(i<items.length) show(); else finish(); }
+    if(el.getAttribute && el.getAttribute("data-go")){ start(); }
+  });
+  a.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-check")) check();
+  });
+
+  function start(){ order=shuffle(items.length); i=0; ok=0; show(); }
+  start();
+}
+
+makeTrainer("ts3", [{"q": "Складывают 4,21 и 5,8. Что не так в записи?", "fig": "<div class=\"colst\" style=\"grid-template-columns:22px repeat(5,26px)\"><div></div><div class=\"\">4</div><div class=\"\">,</div><div class=\"\">2</div><div class=\"\">1</div><div class=\"\"></div><div>+</div><div class=\"hot\"></div><div class=\"hot\">5</div><div class=\"hot\">,</div><div class=\"hot\">8</div><div class=\"hot\"></div><div class=\"rule\" style=\"grid-column:1/7\"></div></div>", "opts": ["запятая не под запятой", "ошибки нет", "не уравнены знаки после запятой", "ошибка в самом счёте"], "ans": 0, "why": "Числа выровняли по правому краю, и восьмёрка встала под единицу. Надо 4,21 и 5,80 — запятая под запятой."}, {"q": "Складывают 9,65 и 3,2. Что не так в записи?", "fig": "<div class=\"colst\" style=\"grid-template-columns:22px repeat(6,26px)\"><div></div><div class=\"\"></div><div class=\"\">9</div><div class=\"\">,</div><div class=\"\">6</div><div class=\"\">5</div><div class=\"\"></div><div>+</div><div class=\"\"></div><div class=\"\">3</div><div class=\"\">,</div><div class=\"\">2</div><div class=\"\">0</div><div class=\"\"></div><div class=\"rule\" style=\"grid-column:1/8\"></div><div></div><div class=\"\">1</div><div class=\"\">2</div><div class=\"\">,</div><div class=\"\">8</div><div class=\"\">5</div><div class=\"\"></div></div>", "opts": ["ошибки нет", "запятая не под запятой", "не уравнены знаки после запятой", "ошибка в самом счёте"], "ans": 0, "why": "Запятые в одном столбце, нуль дописан, счёт верный: 9,65 + 3,20 = 12,85."}, {"q": "Вычитают 2,1 из 6,302. Что не так в записи?", "fig": "<div class=\"colst\" style=\"grid-template-columns:22px repeat(6,26px)\"><div></div><div class=\"\">6</div><div class=\"\">,</div><div class=\"\">3</div><div class=\"\">0</div><div class=\"\">2</div><div class=\"\"></div><div>−</div><div class=\"hot\"></div><div class=\"hot\"></div><div class=\"hot\">2</div><div class=\"hot\">,</div><div class=\"hot\">1</div><div class=\"hot\"></div><div class=\"rule\" style=\"grid-column:1/8\"></div></div>", "opts": ["запятая не под запятой", "ошибки нет", "ошибка в самом счёте", "сверху должно стоять большее число"], "ans": 0, "why": "2,1 подписали по правому краю. Нужно 6,302 и 2,100 — запятая под запятой."}, {"q": "Вычитают 3,122 из 15,225. Что не так в записи?", "fig": "<div class=\"colst\" style=\"grid-template-columns:22px repeat(7,26px)\"><div></div><div class=\"\">1</div><div class=\"\">5</div><div class=\"\">,</div><div class=\"\">2</div><div class=\"\">2</div><div class=\"\">5</div><div class=\"\"></div><div>−</div><div class=\"\"></div><div class=\"\">3</div><div class=\"\">,</div><div class=\"\">1</div><div class=\"\">2</div><div class=\"\">2</div><div class=\"\"></div><div class=\"rule\" style=\"grid-column:1/9\"></div><div></div><div class=\"\">1</div><div class=\"\">2</div><div class=\"\">,</div><div class=\"\">1</div><div class=\"\">0</div><div class=\"\">3</div><div class=\"\"></div></div>", "opts": ["ошибки нет", "запятая не под запятой", "не уравнены знаки после запятой", "ошибка в самом счёте"], "ans": 0, "why": "Запятые в одном столбце, знаков после запятой поровну, и 15,225 − 3,122 действительно равно 12,103."}, {"q": "Вычитают 0,009 из 2,8. Что не так в записи?", "fig": "<div class=\"colst\" style=\"grid-template-columns:22px repeat(6,26px)\"><div></div><div class=\"\">2</div><div class=\"\">,</div><div class=\"\">8</div><div class=\"\"></div><div class=\"\"></div><div class=\"\"></div><div>−</div><div class=\"hot\">0</div><div class=\"hot\">,</div><div class=\"hot\">0</div><div class=\"hot\">0</div><div class=\"hot\">9</div><div class=\"hot\"></div><div class=\"rule\" style=\"grid-column:1/8\"></div></div>", "opts": ["не уравнены знаки после запятой", "ошибки нет", "сверху должно стоять большее число", "запятая не под запятой"], "ans": 0, "why": "У 2,8 одна цифра после запятой, у 0,009 — три. Сверху надо записать 2,800."}, {"q": "Складывают 1,4 и 5,243. Что не так в записи?", "fig": "<div class=\"colst\" style=\"grid-template-columns:22px repeat(6,26px)\"><div></div><div class=\"\">1</div><div class=\"\">,</div><div class=\"\">4</div><div class=\"\">0</div><div class=\"\">0</div><div class=\"\"></div><div>+</div><div class=\"\">5</div><div class=\"\">,</div><div class=\"\">2</div><div class=\"\">4</div><div class=\"\">3</div><div class=\"\"></div><div class=\"rule\" style=\"grid-column:1/8\"></div><div></div><div class=\"hot\">6</div><div class=\"hot\">,</div><div class=\"hot\">5</div><div class=\"hot\">4</div><div class=\"hot\">3</div><div class=\"hot\"></div></div>", "opts": ["ошибка в самом счёте", "ошибки нет", "запятая не под запятой", "не уравнены знаки после запятой"], "ans": 0, "why": "Записано всё верно, а сложено нет: 4 + 2 = 6, значит в сотых должна стоять шестёрка. Правильный ответ 6,643."}, {"q": "Складывают 0,13 и 14. Что не так в записи?", "fig": "<div class=\"colst\" style=\"grid-template-columns:22px repeat(6,26px)\"><div></div><div class=\"\"></div><div class=\"\">0</div><div class=\"\">,</div><div class=\"\">1</div><div class=\"\">3</div><div class=\"\"></div><div>+</div><div class=\"\">1</div><div class=\"\">4</div><div class=\"\">,</div><div class=\"\">0</div><div class=\"\">0</div><div class=\"\"></div><div class=\"rule\" style=\"grid-column:1/8\"></div><div></div><div class=\"\">1</div><div class=\"\">4</div><div class=\"\">,</div><div class=\"\">1</div><div class=\"\">3</div><div class=\"\"></div></div>", "opts": ["ошибки нет", "запятая не под запятой", "у целого числа запятой не бывает", "ошибка в самом счёте"], "ans": 0, "why": "У целого числа запятая стоит сразу после него: 14 = 14,00. Сумма верна."}, {"q": "Вычитают 12,47 из 3,5. Что не так в записи?", "fig": "<div class=\"colst\" style=\"grid-template-columns:22px repeat(6,26px)\"><div></div><div class=\"\"></div><div class=\"\">3</div><div class=\"\">,</div><div class=\"\">5</div><div class=\"\"></div><div class=\"\"></div><div>−</div><div class=\"hot\">1</div><div class=\"hot\">2</div><div class=\"hot\">,</div><div class=\"hot\">4</div><div class=\"hot\">7</div><div class=\"hot\"></div><div class=\"rule\" style=\"grid-column:1/8\"></div></div>", "opts": ["сверху должно стоять большее число", "ошибки нет", "запятая не под запятой", "ошибка в самом счёте"], "ans": 0, "why": "Из 3,5 вычесть 12,47 в столбик нельзя: уменьшаемое должно быть больше вычитаемого."}]);
+makeTrainer("ts4", [{"q": "Сколько знаков после запятой будет в сумме <b>1,4 + 5,243</b>?", "fig": "", "opts": ["три", "один", "четыре", "два"], "ans": 0, "why": "Уравниваем: 1,400 + 5,243. Знаков после запятой столько же, сколько у самого «длинного» слагаемого."}, {"q": "Чему равно <b>0,23 + 14,77</b>?", "fig": "", "opts": ["15", "14,9", "15,1", "14,1"], "ans": 0, "why": "Сотые: 23 + 77 = 100, то есть ровно одна целая. Это и есть «круглая пара»."}, {"q": "Как записать <b>8</b> перед вычитанием <b>8 − 0,0052</b>?", "fig": "", "opts": ["8,0000", "8,52", "0,8", "8,0"], "ans": 0, "why": "Знаков после запятой должно стать четыре — как у 0,0052."}, {"q": "Какое действие в выражении <b>25 − (19,5 − 11,8)</b> выполняют первым?", "fig": "", "opts": ["19,5 − 11,8", "25 − 19,5", "25 − 11,8", "любое"], "ans": 0, "why": "Сначала скобки. В них 7,7, и только потом 25 − 7,7 = 17,3."}, {"q": "В уравнении <b>x + 27,621 = 38</b> число x — это…", "fig": "", "opts": ["неизвестное слагаемое", "уменьшаемое", "вычитаемое", "разность"], "ans": 0, "why": "Слева сумма, значит x — слагаемое: x = 38 − 27,621 = 10,379."}, {"q": "В уравнении <b>45 − x = 38,783</b> число x — это…", "fig": "", "opts": ["вычитаемое", "слагаемое", "уменьшаемое", "разность"], "ans": 0, "why": "45 — уменьшаемое, 38,783 — разность, x = 45 − 38,783 = 6,217."}, {"q": "Сколько ненулевых разрядных слагаемых у числа <b>7016,7016</b>?", "fig": "", "opts": ["шесть", "восемь", "четыре", "семь"], "ans": 0, "why": "7000 + 10 + 6 + 0,7 + 0,001 + 0,0006 — шесть штук: нулевые разряды не пишут."}, {"q": "Расставь запятые: <b>8 + 103 = 903</b>. Что получится?", "fig": "", "opts": ["8 + 1,03 = 9,03", "0,8 + 10,3 = 9,03", "8 + 10,3 = 90,3", "0,8 + 1,03 = 9,03"], "ans": 0, "why": "Ответ чуть больше девяти, значит к восьми прибавили примерно единицу: 8 + 1,03 = 9,03."}, {"q": "Что больше: <b>0,5 + 0,5</b> или <b>0,45 + 0,55</b>?", "fig": "", "opts": ["они равны", "первое", "второе", "сравнить нельзя"], "ans": 0, "why": "Обе суммы дают ровно 1. Длина записи на величину не влияет."}, {"q": "Скорость катера 37,5 км/ч, течение 2,8 км/ч. Скорость <u>против</u> течения:", "fig": "", "opts": ["34,7 км/ч", "40,3 км/ч", "35,3 км/ч", "39,7 км/ч"], "ans": 0, "why": "Против течения река мешает, поэтому вычитаем: 37,5 − 2,8 = 34,7."}]);
+
+var COLS = {"cw0": {}, "cw1": {"a": "5,2", "b": "1,46"}, "cw2": {"a": "2,8", "b": "0,009", "op": "−"}, "cw4": {}, "cw5": {}, "cw6": {}, "cw7": {}};
+for (var _c in COLS){ COLUMN(_c, COLS[_c]); }
+
+COLTRAIN("ts1", [{"a": "5,2", "op": "+", "b": "1,46"}, {"a": "3,25", "op": "+", "b": "4,4"}, {"a": "0,314", "op": "+", "b": "5,6"}, {"a": "6,734", "op": "+", "b": "27,8"}, {"a": "15", "op": "+", "b": "9,49"}, {"a": "12,8", "op": "+", "b": "7,539"}, {"a": "0,348", "op": "+", "b": "19,1"}, {"a": "196,1", "op": "+", "b": "0,009"}]);
+COLTRAIN("ts2", [{"a": "10,78", "op": "−", "b": "2,1"}, {"a": "12,5", "op": "−", "b": "3,18"}, {"a": "24,2", "op": "−", "b": "1,01"}, {"a": "7,6", "op": "−", "b": "1,039"}, {"a": "30", "op": "−", "b": "3,333"}, {"a": "141,2", "op": "−", "b": "5,43"}, {"a": "24", "op": "−", "b": "8,707"}, {"a": "1", "op": "−", "b": "0,0052"}]);
+
+/* ---------- тренажёры обязательны для отправки ---------- */
+var TRREQ = [
+  {id:"ts1", name:"Тренажёр 1. Сложение в столбик"},
+  {id:"ts2", name:"Тренажёр 2. Вычитание в столбик"},
+  {id:"ts3", name:"Тренажёр 3. Найди ошибку в записи"},
+  {id:"ts4", name:"Тренажёр 4. Прикидка и разряды"}
+];
+var TRDONE = {};
+window.trFinished = function(id, ok, total){
+  var prev = TRDONE[id];
+  if(!prev || ok > prev.ok) TRDONE[id] = {ok: ok, total: total};
+  trStatus();
+  if(window.saveWork) saveWork();
+};
+function trPending(){
+  var out = [], k;
+  for(k = 0; k < TRREQ.length; k++){ if(!TRDONE[TRREQ[k].id]) out.push(TRREQ[k]); }
+  return out;
+}
+function trSummary(){
+  var ok = 0, total = 0, parts = [], k, d;
+  for(k = 0; k < TRREQ.length; k++){
+    d = TRDONE[TRREQ[k].id];
+    parts.push({name: TRREQ[k].name, ok: d ? d.ok : null, total: d ? d.total : null});
+    if(d){ ok += d.ok; total += d.total; }
+  }
+  return {ok: ok, total: total, parts: parts, done: TRREQ.length - trPending().length};
+}
+function trReportHtml(){
+  var s = trSummary(), k, pt, h;
+  h = "<h2>Тренажёры: " + s.done + " из " + TRREQ.length + " пройдено" +
+      (s.total ? " · верных ответов " + s.ok + " из " + s.total : "") + "</h2><table><tr>" +
+      "<th>Тренажёр</th><th>Результат</th></tr>";
+  for(k = 0; k < s.parts.length; k++){
+    pt = s.parts[k];
+    h += "<tr><td style='text-align:left'>" + pt.name + "</td><td>" +
+         (pt.ok === null ? "не пройден" : pt.ok + " из " + pt.total) + "</td></tr>";
+  }
+  return h + "</table>";
+}
+function trJump(id){
+  var el = document.getElementById(id);
+  if(!el) return;
+  try{ el.scrollIntoView({behavior: "smooth", block: "center"}); }
+  catch(e){ el.scrollIntoView(); }
+  el.className = "tr need";
+  setTimeout(function(){ el.className = "tr"; }, 2600);
+}
+function trStatus(){
+  var g = document.getElementById("trgate");
+  if(!g) return;
+  var left = trPending(), s = trSummary(), h, k;
+  if(!left.length){
+    g.className = "trgate ready";
+    g.innerHTML = "<b>Все четыре тренажёра пройдены.</b> Верных ответов: " + s.ok +
+                  " из " + s.total + ". Работу можно отправлять.";
+    return;
+  }
+  g.className = "trgate";
+  h = "<b>Пройдено тренажёров: " + s.done + " из " + TRREQ.length + ".</b> " +
+      "Работа отправится, когда пройдёшь все. Осталось:<ul>";
+  for(k = 0; k < left.length; k++){
+    h += '<li><a data-jump="' + left[k].id + '">' + left[k].name + "</a></li>";
+  }
+  g.innerHTML = h + "</ul>";
+}
+document.addEventListener("click", function(ev){
+  var el = ev.target;
+  var id = (el && el.getAttribute) ? el.getAttribute("data-jump") : null;
+  if(id) trJump(id);
+});
+trStatus();
+
+/* ---------- память страницы ---------- */
+var SAVE_V = 1;
+var SKEY = "arttich:slozh6:" + (STUDENT_CODE || "-");
+
+function spentMs(){ return spentBefore + (Date.now() - started); }
+
+var CAN_STORE = (function(){
+  try{
+    localStorage.setItem("arttich:probe", "1");
+    localStorage.removeItem("arttich:probe");
+    return true;
+  }catch(e){ return false; }
+})();
+
+var wiping = false;
+function saveWork(){
+  if(wiping) return;
+  try{
+    var box = {v: SAVE_V, at: Date.now(), spent: spentMs(), tr: TRDONE, tasks: {},
+               name: (document.getElementById("name").value || "")};
+    TASKS.forEach(function(t){
+      var x = state[t.id];
+      if(x.tries || x.hints || x.given || x.sel){
+        box.tasks[t.id] = {tries: x.tries, hints: x.hints, done: x.done,
+                           ok: x.ok, given: x.given, sel: x.sel};
+      }
+    });
+    localStorage.setItem(SKEY, JSON.stringify(box));
+    saveNote(box.at);
+  }catch(e){}
+}
+function loadWork(){
+  try{
+    var raw = localStorage.getItem(SKEY);
+    if(!raw) return null;
+    var box = JSON.parse(raw);
+    return (box && box.v === SAVE_V) ? box : null;
+  }catch(e){ return null; }
+}
+function clearWork(){
+  try{ localStorage.removeItem(SKEY); }catch(e){}
+}
+
+function saveNote(at){
+  var n = document.getElementById("savenote");
+  if(!n) return;
+  if(!CAN_STORE){
+    n.textContent = "Этот браузер не разрешает страницам ничего запоминать, поэтому " +
+      "при перезагрузке ответы пропадут. Решай за один заход или отправь работу до того, " +
+      "как закроешь вкладку.";
+    return;
+  }
+  var when = "";
+  if(at){
+    var d = new Date(at);
+    var two = function(x){ return (x < 10 ? "0" : "") + x; };
+    when = " Последнее сохранение: " + two(d.getDate()) + "." + two(d.getMonth() + 1) +
+           ", " + two(d.getHours()) + ":" + two(d.getMinutes()) + ".";
+  }
+  n.innerHTML = "Ответы и пройденные тренажёры хранятся в этом браузере: можно закрыть " +
+    "страницу и вернуться позже." + when +
+    " Фото не сохраняются." +
+    (at ? ' <button type="button" id="wipe">Начать заново</button>' : "");
+  var w = document.getElementById("wipe");
+  if(w){
+    w.addEventListener("click", function(){
+      wiping = true;
+      clearWork();
+      location.reload();
+    });
+  }
+}
+
+function restoreTask(t, s){
+  var el = document.getElementById("t" + t.id);
+  if(!el) return;
+  if(t.type === "choice"){
+    if(s.sel){
+      el.querySelectorAll(".opt").forEach(function(l){
+        if(l.dataset.v === s.sel){
+          l.classList.add("sel");
+          var r = l.querySelector("input");
+          if(r) r.checked = true;
+        }
+      });
+    }
+  } else if(s.given){
+    var inp = document.getElementById("in" + t.id);
+    if(inp) inp.value = s.given;
+  }
+  var host = el.querySelector(".hints"), k, h;
+  for(k = 0; k < s.hints && k < t.hints.length; k++){
+    h = document.createElement("div");
+    h.className = "hint";
+    h.innerHTML = "Подсказка " + (k + 1) + ": " + t.hints[k];
+    host.appendChild(h);
+  }
+  if(s.tries > 0){
+    var v = el.querySelector(".verdict");
+    el.classList.add(s.ok ? "ok" : "bad");
+    v.className = "verdict " + (s.ok ? "ok" : "bad");
+    if(s.ok){
+      v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    } else if(s.tries === 1){
+      v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+    } else {
+      v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    }
+    if(s.done) showSol(el, t);
+  }
+}
+
+(function(){
+  var saved = loadWork(), k;
+  if(saved){
+    spentBefore = saved.spent || 0;
+    if(saved.name){
+      var nm = document.getElementById("name");
+      if(nm && !nm.value) nm.value = saved.name;
+    }
+    TASKS.forEach(function(t){
+      var s = saved.tasks && saved.tasks[t.id];
+      if(!s) return;
+      var cur = state[t.id];
+      cur.tries = s.tries || 0; cur.hints = s.hints || 0;
+      cur.done = !!s.done; cur.ok = !!s.ok;
+      cur.given = s.given || ""; cur.sel = s.sel || null;
+      restoreTask(t, cur);
+    });
+    if(saved.tr){ for(k in saved.tr){ TRDONE[k] = saved.tr[k]; } }
+    progress();
+    trStatus();
+  }
+  saveNote(saved ? saved.at : 0);
+  var nm = document.getElementById("name");
+  if(nm) nm.addEventListener("change", saveWork);
+  window.addEventListener("beforeunload", saveWork);
+})();
+
+</script>
+</body>
+</html>
