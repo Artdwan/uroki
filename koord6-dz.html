@@ -1,0 +1,1320 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Десятичные дроби на координатном луче — §3, 6 класс</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:800px;margin:0 auto;padding:16px 14px 60px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+.f-formula{font-size:19px}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.step{margin:6px 0}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.fig{margin:12px 0;text-align:center}
+
+.tr{border:1px solid var(--line);border-radius:12px;padding:14px;margin:16px 0;background:var(--bg)}
+.trhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;
+  margin-bottom:8px}
+.trhead b{font-size:17px}
+.trscore{color:var(--muted);font-size:15px;white-space:nowrap}
+.trq{font-size:17px;margin:8px 0}
+.trfig{text-align:center;margin:8px 0}
+.trfig svg{width:100%;max-width:330px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.tropts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
+.tropt{border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;
+  background:var(--card);font-size:16px;text-align:left;min-height:46px}
+.tropt:hover{border-color:var(--acc)}
+.tropt.right{border-color:var(--ok);background:var(--ok-soft);font-weight:600}
+.tropt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.tropts.done .tropt{cursor:default}
+.trnum{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.trnum input{font:inherit;font-size:18px;padding:9px 11px;border-radius:9px;
+  border:1.5px solid var(--line);background:var(--card);color:var(--ink);max-width:130px}
+.trmsg{font-size:16px;margin-top:8px}
+.trmsg .v{font-weight:700}
+.trmsg .v.ok{color:var(--ok)} .trmsg .v.bad{color:var(--bad)}
+.trmsg .why{color:var(--muted);font-size:15px;margin-top:4px}
+.trbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.trbar button{font-size:15px;padding:8px 13px;min-height:42px}
+.trdone{background:var(--acc-soft);border-radius:10px;padding:12px;font-size:17px;
+  text-align:center;font-weight:600}
+
+.nl{margin:14px 0}
+.nl svg{width:100%;max-width:460px;height:auto;display:block;margin:0 auto;border-radius:12px;
+  border:1px solid var(--line);background:#fff;touch-action:none;cursor:grab;
+  -webkit-user-select:none;user-select:none}
+.nl svg:active{cursor:grabbing}
+.nlval{text-align:center;margin:10px 0 0;font-size:24px;font-weight:700}
+.nlval span{color:var(--acc)}
+.nlbar{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px auto 0;max-width:460px}
+.nlbar button{padding:6px 11px;min-height:38px;font-size:15px}
+.nlbar button.on{border-color:var(--acc);background:var(--acc-soft,#e8f0ff);font-weight:700}
+.nlhint{color:var(--muted);font-size:13.5px;text-align:center;margin-top:7px}
+.nt{margin:10px 0 0}
+.ntq{font-size:18px;margin:10px 0 0;line-height:1.5}
+.ntrow{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:11px 0 0}
+.ntrow input{font:inherit;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;
+  width:130px;background:var(--card,#fff);color:inherit}
+.ntmsg{margin:10px 0 0}
+.ntmsg .v{font-weight:700;padding:3px 0}
+.ntmsg .v.ok{color:#137a45}
+.ntmsg .v.bad{color:#b3261e}
+.ntmsg .why{color:var(--muted);font-size:15.5px;margin-top:3px;line-height:1.5}
+.ntdone{font-weight:600}
+
+.rt{border-top:1.7px solid currentColor;padding:0 3px 0 2px;margin-left:-1px;
+  display:inline-block;line-height:1.15}
+
+.fx{display:block;background:var(--acc-soft,var(--acc2,#e8f0ff));border:1px solid var(--line);
+  border-radius:10px;padding:11px 13px;margin:12px 0;text-align:center;font-size:22px;
+  line-height:2.0;font-weight:600;overflow-x:auto}
+.sol .fx,.ex .fx{font-size:19px;margin:9px 0}
+.def{border:1px solid var(--line);border-left:4px solid #2f6bd8;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#eef3fb}
+.def .n{font-size:14px;color:#2f6bd8;font-weight:700;letter-spacing:.4px}
+.rule{border:1px solid var(--line);border-left:4px solid #c0397a;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdf0f6}
+.rule .n{font-size:14px;color:#a02a62;font-weight:700;letter-spacing:.4px}
+.hard{border:1px solid var(--line);border-left:4px solid #7a3fbf;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#f4efff}
+.hard .n{font-size:14px;color:#5f2ea0;font-weight:700;letter-spacing:.4px}
+@media (prefers-color-scheme:dark){.rule{background:#2a1b23}.def{background:#18212f}
+  .hard{background:#221a33}}
+.ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;background:var(--bg)}
+.ex h3{margin-top:0}
+.tohw{font-weight:700;margin:18px 0 0;font-size:18px}
+.tohw span{color:var(--muted);font-weight:400;font-size:15px;display:block;margin-top:3px}
+.small,.mini{color:var(--muted);font-size:15px}
+.fr{display:inline-block;vertical-align:-0.58em;text-align:center;margin:0 3px}
+.fr b{display:block;border-bottom:1.7px solid currentColor;padding:0 6px;font-weight:400;
+  white-space:nowrap}
+.fr i{display:block;font-style:normal;padding:0 6px;white-space:nowrap}
+.opts .opt{font-size:17px}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.pam h3{font-size:18px;margin:18px 0 2px}
+.pam h3:first-of-type{margin-top:10px}
+.fgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));margin:9px 0}
+.fbox{border:1px solid var(--line);border-radius:12px;padding:9px 12px 11px;background:var(--bg)}
+.fbox h4{margin:0 0 3px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.fbox p{margin:6px 0 0;line-height:1.45;font-size:16px}
+.fbox p.small{font-size:15px}
+.ff{font-size:20px;line-height:1.9;text-align:center;margin:4px 0;overflow-x:auto;
+  overflow-y:hidden;white-space:nowrap;font-weight:600}
+.mn{color:#b3261e;font-weight:700}
+.trnav{margin-top:12px;display:flex;gap:9px;flex-wrap:wrap}
+.sheet .f-formula{margin:5px 0;font-size:14.5px;line-height:1.7}
+@media print{
+  .sheet>.meta{display:none}
+  .sheet h2{font-size:18px;margin:0 0 5px}
+  .sheet .f-formula{font-size:12px;line-height:1.55;margin:2px 0}
+  .sheet .fr{font-size:11px;vertical-align:-0.55em}
+}
+
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+@media print{
+  body{background:#fff}
+  .bar{display:none !important}
+  .wrap>*{display:none !important}
+  .wrap>.sheet{display:block !important;border:none;margin:0;padding:0}
+  .sheet{font-size:13px}
+  .sheet h2{font-size:18px}
+  .sheet th,.sheet td{padding:4px 5px;font-size:12px}
+  @page{size:A4;margin:12mm}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card top">
+  <h1>Десятичные дроби на координатном луче</h1>
+  <div class="meta">Математика · 6 класс · §3 · теория порциями, живой луч,
+  4 тренажёра, 18 задач</div>
+  <label class="f" for="name">Имя и фамилия</label>
+  <input type="text" id="name" placeholder="напиши, как в журнале" autocapitalize="words" spellcheck="false">
+  <div class="note" style="margin-top:14px">
+    <b>Как работать.</b> Страница идёт по кругу: короткая порция теории — разобранный
+    пример — тренажёр или задачи ровно на эту порцию. Не перепрыгивай вперёд.
+    <div style="margin-top:8px">Главная мысль всей темы: <b>единичный отрезок делим
+    на 10 частей</b>. Нужен разряд помельче — берём два соседних числа и снова делим
+    промежуток на 10.</div>
+    <div style="margin-top:8px">Луч на странице живой: тяни точку пальцем или мышкой,
+    она прилипает к делениям. Последние четыре задачи — повышенной сложности.
+    Тренажёры в отчёт не идут.</div>
+  </div>
+</div>
+
+<div class="card pam">
+
+<h2>Памятка: всё, что понадобится</h2>
+<div class="meta">Сюда возвращаются, когда застряли. Читать целиком сразу не нужно.</div>
+
+<h3>Как отмечают дроби</h3>
+<div class="fgrid"><div class="fbox"><h4>Десятые</h4><div class="ff">0,3 = <span class='fr'><b>3</b><i>10</i></span></div><p>Единичный отрезок делим на <b>10</b> равных частей и отсчитываем нужное число.</p><p class="small">Удобно брать единичный отрезок в 10 клеток: тогда одна клетка — это 0,1.</p></div><div class="fbox"><h4>Сотые</h4><div class="ff">1,46</div><p>Находим соседние десятые — 1,4 и 1,5. Отрезок между ними делим на 10 частей и отсчитываем 6.</p><p class="small">Цена деления стала 0,01.</p></div><div class="fbox"><h4>Тысячные</h4><div class="ff">4,014</div><p>Берём соседние сотые — 4,01 и 4,02 — и снова делим на 10 частей.</p><p class="small">Каждый новый разряд — это новое увеличение в 10 раз.</p></div></div>
+
+<h3>Что спрашивают чаще всего</h3>
+<div class="fgrid"><div class="fbox"><h4>Между какими натуральными</h4><p>Смотрим на целую часть. Число 67,2 лежит между <b>67 и 68</b>.</p><p class="small">Если дробная часть нулевая, число само натуральное и ни между чем не лежит.</p></div><div class="fbox"><h4>Сколько натуральных между двумя дробями</h4><p>Между 3,7 и 7,6 это 4, 5, 6 и 7 — <b>четыре</b> числа.</p><p class="small">Считай по границам: первое целое после меньшего и последнее перед большим.</p></div><div class="fbox"><h4>Дробей между двумя числами — сколько угодно</h4><p>Между 0,56 и 0,565 есть 0,561, 0,562, 0,5601 и так далее.</p><p class="small">Всегда можно взять разряд помельче, поэтому дробей между любыми двумя числами бесконечно много.</p></div></div>
+
+<h3>Рабочий луч</h3>
+<p class="small">Тяни точку и переключай отрезок — увидишь, как с каждым увеличением
+появляется новый разряд.</p>
+<div class="nl"><svg id="nl1" viewBox="0 0 460 140" aria-label="координатный луч"></svg><div class="nlval" id="nl1v"></div><div class="nlbar" id="nl1b"></div><div class="nlhint">Тяни точку по лучу — она прилипает к делениям</div></div>
+</div>
+
+<div class="card">
+
+<h2>1. Десятые доли</h2>
+<p>На линейке большие деления — сантиметры, маленькие — миллиметры. Если отмечено
+6 см и 3 мм, то записывают 6,3 см, потому что 3 мм = <span class='fr'><b>3</b><i>10</i></span> см = 0,3 см.</p>
+<p>На координатном луче делают так же.</p>
+<div class="rule"><div class="n">КАК ОТМЕТИТЬ 0,3</div>
+1. Выбрать единичный отрезок — удобно взять 10 клеток.<br>
+2. Разделить его на 10 равных частей.<br>
+3. Отсчитать 3 такие части и в конце последней поставить число 0,3.</div>
+<div class="fx">0,3 = <span class='fr'><b>3</b><i>10</i></span></div>
+<p class="small">Координату записывают как у натуральных чисел: A(0,3) — читается
+«точка A с координатой ноль целых три десятых».</p>
+<div class="nl"><svg id="nl2" viewBox="0 0 460 140" aria-label="координатный луч"></svg><div class="nlval" id="nl2v"></div><div class="nlhint">Попробуй сам: поставь точку в 0,3, потом в 0,9</div></div>
+<div class="ex"><h3>Пример 1</h3>
+<p>Единичный отрезок разделили на 10 частей и отсчитали 7 частей. Какое число получилось?</p>
+<div class="step">Одна часть — это одна десятая, то есть 0,1.</div>
+<div class="fx">7 · 0,1 = 0,7 = <span class='fr'><b>7</b><i>10</i></span></div>
+<div class="step mini">Проверка: 0,7 меньше единицы, значит точка обязана стоять левее 1.</div></div>
+<div class="tohw">Задание 1<span>Две задачи на десятые.</span></div>
+</div>
+<div id="tasks1"></div>
+
+<div class="card">
+
+<h2>2. Считаем клетки</h2>
+<div class="rule"><div class="n">ГЛАВНОЕ ПРАВИЛО</div>
+Сначала смотрим, <b>сколько клеток в единичном отрезке</b>. Потом делим это число
+на 10 — получаем цену одного деления.</div>
+<div class="fgrid">
+  <div class="fbox"><h4>10 клеток</h4><p>Одна десятая — это ровно 1 клетка.</p>
+  <p class="small">Самый удобный случай, его и просят чаще всего.</p></div>
+  <div class="fbox"><h4>5 клеток</h4><p>Одна десятая — это половина клетки.</p>
+  <p class="small">Тогда 0,4 — это 2 клетки, а 1,6 — это 8 клеток.</p></div>
+  <div class="fbox"><h4>8 клеток</h4><p>Тут удобны не десятые, а восьмые доли.</p>
+  <p class="small">Например, 0,125 = <span class='fr'><b>1</b><i>8</i></span> — ровно одна клетка.</p></div>
+</div>
+<div class="ex"><h3>Пример 2</h3>
+<p>Единичный отрезок равен пяти клеткам. Сколько клеток от нуля до точки C(1,6)?</p>
+<div class="step">1. В единице 5 клеток, значит в одной десятой 5 : 10 = 0,5 клетки.</div>
+<div class="step">2. В числе 1,6 всего 16 десятых.</div>
+<div class="fx">16 · 0,5 = 8 клеток</div>
+<div class="step mini">Проверка иначе: 1 — это 5 клеток, 0,6 — это 3 клетки, вместе 8.
+Сошлось.</div></div>
+<div class="tohw">Задание 2<span>Две задачи: считаем клетки.</span></div>
+</div>
+<div id="tasks2"></div>
+
+<div class="card">
+  <h2>Тренажёр на луче</h2>
+  <div class="meta">Десять заданий: где-то нужно прочитать координату точки,
+  где-то — поставить точку самому.</div>
+<div class="tr" id="nt1"><h3 style="margin:16px 0 2px">Тренажёр 1. Десятые на луче</h3><div class="meta" id="nt1s">задание 1</div><div class="meta" style="margin-top:2px">Десять заданий: прочитать координату или поставить точку.</div><div class="nl"><svg id="nt1f" viewBox="0 0 460 140"></svg><div class="nlval" id="nt1fv"></div></div><div class="ntq" id="nt1q"></div><div class="ntrow" id="nt1r"></div><div class="ntmsg" id="nt1m"></div><div class="trnav" id="nt1n"></div></div>
+</div>
+
+<div class="card">
+
+<h2>3. Сотые и тысячные: увеличиваем масштаб</h2>
+<p>Чтобы отметить 1,46, сначала находят соседние десятые — 1,4 и 1,5, — а потом отрезок
+между ними делят на 10 частей и отсчитывают 6.</p>
+<div class="nl"><svg id="nl3" viewBox="0 0 460 140" aria-label="координатный луч"></svg><div class="nlval" id="nl3v"></div><div class="nlhint">Цена деления здесь 0,01 — попробуй поставить 1,43</div></div>
+<div class="def"><div class="n">ПРАВИЛО УВЕЛИЧЕНИЯ</div>
+Каждый следующий разряд получают одинаково: берут два соседних числа предыдущего
+разряда и делят промежуток между ними на 10 частей.</div>
+<p>Для тысячных рисуют уже не весь луч, а только кусочек между соседними сотыми.</p>
+<div class="nl"><svg id="nl4" viewBox="0 0 460 140" aria-label="координатный луч"></svg><div class="nlval" id="nl4v"></div><div class="nlhint">Цена деления 0,001 — найди 4,017</div></div>
+<div class="ex"><h3>Пример 3</h3>
+<p>Между какими соседними сотыми лежит число 4,014? На каком делении оно стоит?</p>
+<div class="step">1. Соседние сотые: 4,01 и 4,02.</div>
+<div class="step">2. Промежуток делим на 10 частей, цена деления 0,001.</div>
+<div class="fx">4,014 — четвёртое деление после 4,01</div>
+<div class="step mini">Если разрядов много, всегда смотри на две последние цифры: они
+и показывают, сколько делений отсчитать.</div></div>
+<div class="tohw">Задание 3<span>Две задачи на сотые и тысячные.</span></div>
+</div>
+<div id="tasks3"></div>
+
+<div class="card">
+  <h2>Тренажёр на луче: сотые и тысячные</h2>
+  <div class="meta">Здесь цена деления уже 0,01 и 0,001 — смотри на подписи концов.</div>
+<div class="tr" id="nt2"><h3 style="margin:16px 0 2px">Тренажёр 2. Сотые и тысячные</h3><div class="meta" id="nt2s">задание 1</div><div class="meta" style="margin-top:2px">Десять заданий с ценой деления 0,01 и 0,001.</div><div class="nl"><svg id="nt2f" viewBox="0 0 460 140"></svg><div class="nlval" id="nt2fv"></div></div><div class="ntq" id="nt2q"></div><div class="ntrow" id="nt2r"></div><div class="ntmsg" id="nt2m"></div><div class="trnav" id="nt2n"></div></div>
+</div>
+
+<div class="card">
+
+<h2>4. Между какими натуральными числами</h2>
+<div class="rule"><div class="n">ПРИЁМ</div>
+Смотрим только на <b>целую часть</b>. Число лежит между ней и следующим натуральным числом.</div>
+<div class="fgrid">
+  <div class="fbox"><h4>6,9</h4><p>между <b>6 и 7</b></p></div>
+  <div class="fbox"><h4>9,34</h4><p>между <b>9 и 10</b></p></div>
+  <div class="fbox"><h4>175,91</h4><p>между <b>175 и 176</b></p></div>
+</div>
+<p class="small">Дробная часть на ответ не влияет: и у 6,1, и у 6,99 целая часть равна 6.</p>
+<div class="ex"><h3>Пример 4</h3>
+<p>Между какими соседними натуральными числами находится 67,2?</p>
+<div class="step">Целая часть равна 67, дробная — две десятых, то есть число чуть больше 67,
+но до 68 не дотягивает.</div>
+<div class="fx">67 &lt; 67,2 &lt; 68</div>
+<div class="step mini">На луче это видно сразу: точка стоит в начале промежутка
+между 67 и 68.</div></div>
+<div class="tohw">Задание 4<span>Две задачи: между какими натуральными числами лежит дробь.</span></div>
+</div>
+<div id="tasks4"></div>
+
+<div class="card">
+
+<h2>5. Сколько натуральных чисел между дробями</h2>
+<div class="rule"><div class="n">КАК СЧИТАТЬ</div>
+Находим первое натуральное число <b>после меньшей</b> дроби и последнее <b>перед большей</b>.
+Дальше считаем, сколько чисел между ними включительно.</div>
+<div class="ex"><h3>Пример 5</h3>
+<p>Какие натуральные числа заключены между 3,7 и 7,6?</p>
+<div class="step">1. Первое натуральное после 3,7 — это 4.</div>
+<div class="step">2. Последнее натуральное перед 7,6 — это 7.</div>
+<div class="fx">4, 5, 6, 7 — всего 4 числа</div>
+<div class="step mini">Считать по формуле 7 − 4 = 3 — ошибка: так теряется одно число.
+Нужно 7 − 4 + 1 = 4.</div></div>
+<div class="ex"><h3>Пример 6</h3>
+<p>Сколько натуральных чисел между 80,01 и 90,001?</p>
+<div class="step">1. Первое после 80,01 — это 81. Число 80 не годится: оно меньше.</div>
+<div class="step">2. Последнее перед 90,001 — это 90. Оно подходит: 90 &lt; 90,001.</div>
+<div class="fx">90 − 81 + 1 = 10</div>
+<div class="step mini">Вот тут и ловушка: 90,001 больше девяноста, поэтому 90 попадает
+в промежуток. Разница всего в тысячной, а ответ меняется.</div></div>
+<div class="tohw">Задание 5<span>Три задачи: сколько натуральных чисел между дробями.</span></div>
+</div>
+<div id="tasks5"></div>
+
+<div class="card">
+  <h2>Проверь себя</h2>
+  <div class="meta">Десять дробей — между какими натуральными числами они лежат.</div>
+<div class="tr" id="ts3"><div class="trhead"><b>Тренажёр 3. Между какими натуральными</b><span class="trscore" id="ts3s"></span></div><div class="meta">Десять дробей. Смотри только на целую часть.</div><div class="trq" id="ts3q"></div><div class="trfig" id="ts3f"></div><div id="ts3a"></div><div class="trmsg" id="ts3m"></div><div class="trbar" id="ts3b"></div></div>
+</div>
+
+<div class="card">
+
+<h2>6. Сколько дробей помещается между числами</h2>
+<div class="def"><div class="n">ГЛАВНАЯ МЫСЛЬ</div>
+Между любыми двумя разными числами есть <b>бесконечно много</b> десятичных дробей.
+Всегда можно взять разряд помельче.</div>
+<div class="ex"><h3>Пример 7</h3>
+<p>Запиши две десятичные дроби между 0,56 и 0,565.</p>
+<div class="step">Десятых и сотых уже не хватает: между ними нет «круглой» сотой.
+Переходим к тысячным.</div>
+<div class="fx">0,561 и 0,562</div>
+<div class="step mini">Годятся и 0,5601, и 0,5649 — вариантов бесконечно много.</div></div>
+<div class="ex"><h3>Пример 8</h3>
+<p>Сколько дробей <u>с одной цифрой после запятой</u> помещается между 5 и 6?</p>
+<div class="step">Перечисляем: 5,1; 5,2; …; 5,9.</div>
+<div class="fx">всего 9 дробей</div>
+<div class="step mini">Обрати внимание на разницу: дробей вообще — бесконечно много,
+а с одной цифрой после запятой — ровно девять.</div></div>
+<div class="tohw">Задание 6<span>Три задачи: сколько дробей помещается между числами.</span></div>
+</div>
+<div id="tasks6"></div>
+
+<div class="card">
+  <h2>Проверь себя</h2>
+  <div class="meta">Десять вопросов на сравнение и на то, что помещается между числами.</div>
+<div class="tr" id="ts4"><div class="trhead"><b>Тренажёр 4. Сравнение и промежутки</b><span class="trscore" id="ts4s"></span></div><div class="meta">Десять вопросов: что больше и что помещается между числами.</div><div class="trq" id="ts4q"></div><div class="trfig" id="ts4f"></div><div id="ts4a"></div><div class="trmsg" id="ts4m"></div><div class="trbar" id="ts4b"></div></div>
+</div>
+
+<div class="card">
+
+<h2>7. Задачи посложнее</h2>
+<div class="hard"><div class="n">СЕРЕДИНА ОТРЕЗКА</div>
+Координата середины — это <b>полусумма</b> координат концов.</div>
+<div class="fx">C = <span class='fr'><b>A + B</b><i>2</i></span></div>
+<div class="ex"><h3>Пример 9</h3>
+<p>Точки A(9,15) и B(9,16). Найти координату середины отрезка AB.</p>
+<div class="step">1. Складываем: 9,15 + 9,16 = 18,31.</div>
+<div class="step">2. Делим пополам:</div>
+<div class="fx">18,31 : 2 = 9,155</div>
+<div class="step mini">Понадобился новый разряд — тысячные. Это нормально: середина
+часто выходит «мельче» самих концов.</div></div>
+<div class="hard"><div class="n">ДЕЛЕНИЕ В ОТНОШЕНИИ</div>
+Если точка C лежит между A и B и AC вдвое больше CB, то от A до C нужно пройти
+<b>две трети</b> всего пути.</div>
+<div class="ex"><h3>Пример 10</h3>
+<p>A(1,2), B(2,7), точка C лежит между ними, причём AC = 2 · CB. Найти координату C.</p>
+<div class="step">1. Длина AB = 2,7 − 1,2 = 1,5.</div>
+<div class="step">2. Весь отрезок — это 3 равные части, AC — две из них.</div>
+<div class="step">3. Одна часть: 1,5 : 3 = 0,5, значит AC = 1.</div>
+<div class="fx">C = 1,2 + 1 = 2,2</div>
+<div class="step mini">Проверка: CB = 2,7 − 2,2 = 0,5, и правда AC вдвое больше.</div></div>
+<div class="tohw">Задание 7<span>Четыре задачи повышенной сложности.</span></div>
+</div>
+<div id="tasks7"></div>
+<div id="tasks"></div>
+
+<div class="card sheet">
+  <h2>Шпаргалка</h2>
+  <div class="meta">Печатается на один лист A4: Ctrl+P (⌘+P) → печать.</div>
+  <p class="f-formula"><b>Десятые.</b> Единичный отрезок делим на 10 частей.
+  0,3 = <span class='fr'><b>3</b><i>10</i></span>. Удобный единичный отрезок — 10 клеток: тогда одна клетка равна 0,1.</p>
+  <p class="f-formula"><b>Другой единичный отрезок.</b> Цена деления = число клеток : 10.
+  При 5 клетках одна десятая — это полклетки, поэтому 1,6 — это 8 клеток.</p>
+  <p class="f-formula"><b>Сотые.</b> Берём соседние десятые (для 1,46 это 1,4 и 1,5),
+  промежуток делим на 10 частей, цена деления 0,01, отсчитываем 6.</p>
+  <p class="f-formula"><b>Тысячные.</b> Берём соседние сотые (для 4,014 это 4,01 и 4,02)
+  и снова делим на 10. Каждый новый разряд — новое увеличение в 10 раз.</p>
+  <p class="f-formula"><b>Между какими натуральными.</b> Смотрим на целую часть:
+  67,2 лежит между 67 и 68; 175,91 — между 175 и 176.</p>
+  <p class="f-formula"><b>Сколько натуральных между дробями.</b> Первое целое после
+  меньшей, последнее перед большей, и считаем по формуле «последнее − первое + 1».
+  Между 3,7 и 7,6 это 4, 5, 6, 7 — четыре числа.</p>
+  <p class="f-formula"><b>Сравнение.</b> Уравниваем число знаков нулями: 0,5 = 0,500,
+  и тогда 0,5 больше 0,125. Длинная запись не значит большое число.</p>
+  <p class="f-formula"><b>Сколько дробей между числами.</b> Вообще — бесконечно много.
+  А с одной цифрой после запятой между 5 и 6 ровно девять: 5,1 … 5,9.</p>
+  <p class="f-formula"><b>Середина отрезка.</b> Координата середины — полусумма координат
+  концов: для A(9,15) и B(9,16) середина равна 18,31 : 2 = 9,155.</p>
+</div>
+
+<div class="card">
+  <h2>Шаг 1. Фото решений — по желанию</h2>
+  <div class="meta">В поле уходит только ответ, а я смотрю ещё и ход решения.
+  Фото прикладывать не обязательно, но с ними разбор будет точнее.</div>
+  <ol class="steps-list">
+    <li>Рисуй луч с делениями — в этой теме чертёж экономит половину ошибок.</li>
+    <li>Подписывай, чему равно одно деление: 0,1 или 0,01.</li>
+    <li>В задачах про «сколько чисел» выписывай их все подряд, а не считай в уме.</li>
+  </ol>
+  <input type="file" id="photos" accept="image/*" multiple style="margin-top:12px">
+  <div class="thumbs" id="thumbs"></div>
+</div>
+
+<div class="card">
+  <h2>Шаг 2. Отправь работу</h2>
+  <div class="meta">Проверь, что вверху написано твоё имя. По кнопке ответы и результат
+  уходят преподавателю. Вторая кнопка сохраняет копию тебе.</div>
+  <div class="row" style="margin-top:12px">
+    <button class="pri" id="send">Отправить на проверку</button>
+    <button id="report">Скачать копию себе</button>
+  </div>
+  <div id="repnote" class="meta" style="margin-top:8px"></div>
+</div>
+
+</div>
+
+<div class="bar">
+  <button class="pri" id="checkall">Проверить всё</button>
+  <span id="progress" class="meta">решено 0 из 18</span>
+</div>
+
+<script>
+var CF = {};
+var STUDENT_CODE = (function(){
+  try{ var m = /[#&?]code=([^&]+)/.exec(location.hash + location.search);
+       return m ? decodeURIComponent(m[1]) : ""; }catch(e){ return ""; }
+})();
+var TOPIC = "Десятичные дроби на координатном луче (§3, математика 6 класс)";
+
+"use strict";
+var started = Date.now();
+
+/* ---------- данные задач; ответы закодированы, чтобы не читались в исходнике ---------- */
+function e(s){return btoa(unescape(encodeURIComponent(s)));}
+function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return s;}}
+
+var TASKS = [
+ {id:1,blk:"1",lvl:"база",type:"num",text:"Единичный отрезок разделили на 10 равных частей и отсчитали 7 частей. Какое число получилось?",ans:[e("0,7")],img:"",
+  hints:["Одна десятая часть — это 0,1.",
+         "Семь таких частей — это 7 · 0,1.",
+         "Запиши десятичной дробью."],
+  sol:"<div class='step'>1. Одна часть из десяти — это <span class='fr'><b>1</b><i>10</i></span> = 0,1.</div>"+
+      "<div class='fx'>7 · 0,1 = 0,7 = <span class='fr'><b>7</b><i>10</i></span></div>"+
+      "<div class='step'><b>Ответ: 0,7.</b></div>"+
+      "<div class='step mini'>Число меньше единицы, значит точка стоит левее 1 — так и должно быть.</div>"},
+
+ {id:2,blk:"1",lvl:"база",type:"num",text:"На координатном луче от числа 6 отсчитали вправо 4 деления, каждое из которых равно одной десятой. Какое число получилось?",ans:[e("6,4")],img:"",
+  hints:["Четыре десятых — это 0,4.",
+         "К шести прибавь 0,4.",
+         "Целая часть остаётся 6."],
+  sol:"<div class='step'>1. Четыре деления по 0,1 дают 0,4.</div>"+
+      "<div class='fx'>6 + 0,4 = 6,4</div>"+
+      "<div class='step'><b>Ответ: 6,4.</b></div>"+
+      "<div class='step mini'>Целая часть подсказывает, где искать точку: между 6 и 7.</div>"},
+
+ {id:3,blk:"2",lvl:"база",type:"num",text:"Единичный отрезок равен десяти клеткам. Сколько клеток от нуля до точки B(0,3)?",ans:[e("3")],img:"",
+  hints:["Если в единице 10 клеток, то в одной десятой ровно одна клетка.",
+         "Сколько десятых в числе 0,3?",
+         "Три десятых — три клетки."],
+  sol:"<div class='step'>1. Одна десятая: 10 : 10 = 1 клетка.</div>"+
+      "<div class='fx'>0,3 — это 3 десятых, значит 3 клетки</div>"+
+      "<div class='step'><b>Ответ: 3.</b></div>"+
+      "<div class='step mini'>Единичный отрезок в 10 клеток берут как раз потому, что десятые считаются устно.</div>"},
+
+ {id:4,blk:"2",lvl:"база",type:"num",text:"Единичный отрезок равен пяти клеткам. Сколько клеток от нуля до точки C(1,6)?",ans:[e("8")],img:"",
+  hints:["Сначала найди, сколько клеток в одной десятой: 5 : 10.",
+         "Получится 0,5 клетки. А сколько всего десятых в числе 1,6?",
+         "Шестнадцать десятых по полклетки."],
+  sol:"<div class='step'>1. Одна десятая: 5 : 10 = 0,5 клетки.</div>"+
+      "<div class='step'>2. В числе 1,6 всего 16 десятых.</div>"+
+      "<div class='fx'>16 · 0,5 = 8 клеток</div>"+
+      "<div class='step'><b>Ответ: 8.</b></div>"+
+      "<div class='step mini'>Проверка по-другому: единица — 5 клеток, 0,6 — 3 клетки, вместе 8.</div>"},
+
+ {id:5,blk:"3",lvl:"средний",type:"num",text:"Число 1,46 отмечают между соседними десятыми. Сколько делений нужно отсчитать от левого конца, если промежуток разделён на 10 частей?",ans:[e("6")],img:"",
+  hints:["Соседние десятые для 1,46 — это 1,4 и 1,5.",
+         "Цена одного деления равна 0,01.",
+         "1,46 − 1,4 = 0,06, а это сколько делений?"],
+  sol:"<div class='step'>1. Соседние десятые: 1,4 и 1,5.</div>"+
+      "<div class='step'>2. Промежуток делим на 10 частей, цена деления 0,01.</div>"+
+      "<div class='fx'>1,46 − 1,4 = 0,06 = 6 делений</div>"+
+      "<div class='step'><b>Ответ: 6.</b></div>"+
+      "<div class='step mini'>Подсказка на будущее: число делений всегда показывает последняя цифра.</div>"},
+
+ {id:6,blk:"3",lvl:"средний",type:"choice",text:"Между какими соседними сотыми лежит число 4,014?",
+  options:["4,01 и 4,02","4,1 и 4,2","4,014 и 4,015","4 и 5"],
+  ans:[e("4,01 и 4,02")],img:"",
+  hints:["Сотые — это два знака после запятой.",
+         "Отбрось тысячные: останется 4,01.",
+         "Следующая сотая — 4,02."],
+  sol:"<div class='step'>1. Две цифры после запятой дают 4,01 — это ближайшая сотая слева.</div>"+
+      "<div class='step'>2. Следующая сотая справа — 4,02.</div>"+
+      "<div class='fx'>4,01 &lt; 4,014 &lt; 4,02</div>"+
+      "<div class='step'><b>Ответ: 4,01 и 4,02.</b></div>"+
+      "<div class='step mini'>Вариант «4,1 и 4,2» — это соседние десятые, а спрашивали про сотые.</div>"},
+
+ {id:7,blk:"4",lvl:"средний",type:"num",text:"Между какими соседними натуральными числами находится 67,2? Запиши меньшее из них.",ans:[e("67")],img:"",
+  hints:["Смотри на целую часть числа.",
+         "Целая часть равна 67.",
+         "Значит число лежит между 67 и 68."],
+  sol:"<div class='step'>Целая часть числа 67,2 равна 67, а дробная часть положительна.</div>"+
+      "<div class='fx'>67 &lt; 67,2 &lt; 68</div>"+
+      "<div class='step'><b>Ответ: 67.</b></div>"+
+      "<div class='step mini'>Дробная часть на ответ не влияет: у 67,01 и у 67,99 целая часть одна и та же.</div>"},
+
+ {id:8,blk:"4",lvl:"база",type:"num",text:"Какое наименьшее натуральное число больше, чем 175,91?",ans:[e("176")],img:"",
+  hints:["Целая часть равна 175.",
+         "Само 175 меньше данного числа, значит не подходит.",
+         "Берём следующее натуральное."],
+  sol:"<div class='step'>1. 175 &lt; 175,91, поэтому 175 не годится.</div>"+
+      "<div class='step'>2. Следующее натуральное — 176, и 176 &gt; 175,91.</div>"+
+      "<div class='fx'>Ответ: 176</div>"+
+      "<div class='step mini'>Это и есть округление с избытком — оно пригодится в следующих параграфах.</div>"},
+
+ {id:9,blk:"5",lvl:"средний",type:"num",text:"Сколько натуральных чисел заключено между 3,7 и 7,6?",ans:[e("4")],img:"",
+  hints:["Первое натуральное после 3,7 — это 4.",
+         "Последнее натуральное перед 7,6 — это 7.",
+         "Посчитай числа от 4 до 7 включительно."],
+  sol:"<div class='step'>1. Подходят 4, 5, 6 и 7.</div>"+
+      "<div class='fx'>7 − 4 + 1 = 4 числа</div>"+
+      "<div class='step'><b>Ответ: 4.</b></div>"+
+      "<div class='step mini'>Про единицу забывают чаще всего: 7 − 4 = 3 — это на одно число меньше правильного.</div>"},
+
+ {id:10,blk:"5",lvl:"сложный",type:"num",text:"Сколько натуральных чисел заключено между 80,01 и 90,001?",ans:[e("10")],img:"",
+  hints:["Первое натуральное после 80,01 — это 81, ведь 80 меньше.",
+         "А вот 90 меньше, чем 90,001, поэтому 90 подходит.",
+         "Считай от 81 до 90 включительно."],
+  sol:"<div class='step'>1. 80 &lt; 80,01, значит 80 не входит. Первое подходящее — 81.</div>"+
+      "<div class='step'>2. 90 &lt; 90,001, значит 90 входит. Оно и последнее.</div>"+
+      "<div class='fx'>90 − 81 + 1 = 10</div>"+
+      "<div class='step'><b>Ответ: 10.</b></div>"+
+      "<div class='step mini'>Здесь вся соль в одной тысячной: будь справа ровно 90, ответ был бы 9.</div>"},
+
+ {id:11,blk:"5",lvl:"средний",type:"num",text:"Сколько натуральных чисел заключено между 53 и 55,42?",ans:[e("2")],img:"",
+  hints:["Число 53 в промежуток не входит: оно не больше самого себя.",
+         "Подходят 54 и 55.",
+         "56 уже больше, чем 55,42."],
+  sol:"<div class='step'>1. Строго между: первое подходящее 54.</div>"+
+      "<div class='step'>2. Последнее — 55, потому что 55 &lt; 55,42.</div>"+
+      "<div class='fx'>54 и 55 — всего 2 числа</div>"+
+      "<div class='step'><b>Ответ: 2.</b></div>"+
+      "<div class='step mini'>Границу 53 не берём: слово «между» означает строго внутри.</div>"},
+
+ {id:12,blk:"6",lvl:"средний",type:"num",text:"Сколько десятичных дробей с одной цифрой после запятой можно отметить между числами 5 и 6?",ans:[e("9")],img:"",
+  hints:["Перечисли их: 5,1; 5,2; и так далее.",
+         "Последняя такая дробь — 5,9.",
+         "Посчитай, сколько их получилось."],
+  sol:"<div class='step'>Подходят 5,1; 5,2; 5,3; 5,4; 5,5; 5,6; 5,7; 5,8; 5,9.</div>"+
+      "<div class='fx'>всего 9 дробей</div>"+
+      "<div class='step'><b>Ответ: 9.</b></div>"+
+      "<div class='step mini'>Сами числа 5 и 6 не считаем: они не между, а на границах.</div>"},
+
+ {id:13,blk:"6",lvl:"средний",type:"num",text:"Сколько десятичных дробей с двумя цифрами после запятой можно отметить между числами 5,4 и 5,5?",ans:[e("9")],img:"",
+  hints:["Это дроби вида 5,4? — где на месте вопроса стоит цифра.",
+         "Первая из них 5,41, последняя 5,49.",
+         "Сколько цифр от 1 до 9?"],
+  sol:"<div class='step'>Подходят 5,41; 5,42; …; 5,49.</div>"+
+      "<div class='fx'>всего 9 дробей</div>"+
+      "<div class='step'><b>Ответ: 9.</b></div>"+
+      "<div class='step mini'>Заметь: ответ тот же, что и в прошлой задаче. Между соседними числами любого разряда всегда помещается 9 дробей следующего разряда.</div>"},
+
+ {id:14,blk:"6",lvl:"средний",type:"choice",text:"Какое из чисел лежит между 0,56 и 0,565?",
+  options:["0,562","0,57","0,555","0,566"],
+  ans:[e("0,562")],img:"",
+  hints:["Допиши нули, чтобы знаков после запятой стало поровну: 0,560 и 0,565.",
+         "Нужно число между 560 и 565 тысячными.",
+         "Проверь каждый вариант."],
+  sol:"<div class='step'>1. Уравняем разряды: 0,560 и 0,565.</div>"+
+      "<div class='step'>2. Между ними: 0,561; 0,562; 0,563; 0,564.</div>"+
+      "<div class='fx'>0,560 &lt; 0,562 &lt; 0,565</div>"+
+      "<div class='step'><b>Ответ: 0,562.</b></div>"+
+      "<div class='step mini'>0,57 и 0,566 больше правой границы, а 0,555 меньше левой.</div>"},
+
+ {id:15,blk:"7",lvl:"сложный",type:"num",text:"На координатном луче отмечены точки A(0,5) и B(0,7). Найди координату точки C — середины отрезка AB.",ans:[e("0,6")],img:"",
+  hints:["Координата середины — это полусумма координат концов.",
+         "Сложи 0,5 и 0,7.",
+         "Раздели сумму на 2."],
+  sol:"<div class='step'>1. Складываем: 0,5 + 0,7 = 1,2.</div>"+
+      "<div class='fx'>C = <span class='fr'><b>1,2</b><i>2</i></span> = 0,6</div>"+
+      "<div class='step'><b>Ответ: 0,6.</b></div>"+
+      "<div class='step mini'>Проверка: от 0,5 до 0,6 расстояние 0,1, и от 0,6 до 0,7 тоже 0,1.</div>"},
+
+ {id:16,blk:"7",lvl:"сложный",type:"num",text:"Точки A(9,15) и B(9,16). Найди координату середины отрезка AB.",ans:[e("9,155")],img:"",
+  hints:["Снова полусумма.",
+         "9,15 + 9,16 = 18,31.",
+         "Раздели 18,31 на 2 — понадобится новый разряд."],
+  sol:"<div class='step'>1. Складываем: 9,15 + 9,16 = 18,31.</div>"+
+      "<div class='fx'>C = 18,31 : 2 = 9,155</div>"+
+      "<div class='step'><b>Ответ: 9,155.</b></div>"+
+      "<div class='step mini'>В ответе появились тысячные, хотя у концов были только сотые. Так и должно быть: середина часто «мельче» самих концов.</div>"},
+
+ {id:17,blk:"7",lvl:"сложный",type:"num",text:"Сколько различных десятичных дробей можно составить из цифр 1, 2 и 3, если каждая цифра используется в записи числа ровно один раз?",ans:[e("12")],img:"",
+  hints:["Сначала посчитай, сколькими способами можно расставить три цифры подряд.",
+         "Способов 3 · 2 · 1 = 6. Теперь ставим запятую.",
+         "Запятая может стоять после первой или после второй цифры — два варианта на каждую расстановку."],
+  sol:"<div class='step'>1. Три цифры можно расставить 3 · 2 · 1 = 6 способами.</div>"+
+      "<div class='step'>2. В каждой расстановке запятую ставим либо после первой цифры, либо после второй — это 2 варианта. После третьей нельзя: дробной части не останется.</div>"+
+      "<div class='fx'>6 · 2 = 12 дробей</div>"+
+      "<div class='step'>Например: 1,23; 12,3; 1,32; 13,2; 2,13; 21,3; 2,31; 23,1; 3,12; 31,2; 3,21; 32,1.</div>"+
+      "<div class='step'><b>Ответ: 12.</b></div>"+
+      "<div class='step mini'>Самая большая из них — 32,1, самая маленькая — 1,23.</div>"},
+
+ {id:18,blk:"7",lvl:"сложный",type:"num",text:"Точки A(1,2) и B(2,7). Точка C лежит между ними, причём AC вдвое больше CB. Найди координату точки C.",ans:[e("2,2")],img:"",
+  hints:["Найди длину всего отрезка AB.",
+         "Раздели AB на три равные части: AC — две из них, CB — одна.",
+         "К координате точки A прибавь длину AC."],
+  sol:"<div class='step'>1. AB = 2,7 − 1,2 = 1,5.</div>"+
+      "<div class='step'>2. AC : CB = 2 : 1, значит весь отрезок состоит из 3 равных частей.</div>"+
+      "<div class='fx'>1,5 : 3 = 0,5&nbsp;&nbsp;→&nbsp;&nbsp;AC = 2 · 0,5 = 1</div>"+
+      "<div class='step'>3. Идём от A вправо на 1:</div>"+
+      "<div class='fx'>C = 1,2 + 1 = 2,2</div>"+
+      "<div class='step'><b>Ответ: 2,2.</b></div>"+
+      "<div class='step mini'>Проверка: CB = 2,7 − 2,2 = 0,5, и AC = 1 действительно вдвое больше.</div>"}
+];
+
+/* ---------- разбор ответа ---------- */
+function norm(s){
+  return String(s).toLowerCase().replace(/\s+/g,"")
+    .replace(/[\u2013\u2014\u2212]/g,"-")
+    .replace(/[\u00d7\u00b7]/g,"*")
+    .replace(/,/g,".")
+    .replace(/^(ответ:?|x=|y=|α=|a=)/,"");
+}
+function toNum(str){
+  var t = norm(str);
+  if(!t) return NaN;
+  t = t.replace(/\u221a/g,"sqrt").replace(/\u03c0/g,"pi");
+  t = t.replace(/sqrt(\d+(?:\.\d+)?)/g,"sqrt($1)");
+  t = t.replace(/(\d)sqrt/g,"$1*sqrt");
+  t = t.replace(/(\d)pi/g,"$1*pi");
+  t = t.replace(/(\d)\(/g,"$1*(").replace(/\)(\d)/g,")*$1").replace(/\)\(/g,")*(");
+  if(!/^[-+*/().0-9a-z]+$/.test(t)) return NaN;
+  if(t.replace(/sqrt|pi/g,"").match(/[a-z]/)) return NaN;
+  try{
+    var v = new Function("sqrt","pi","return ("+t+");")(Math.sqrt, Math.PI);
+    return (typeof v === "number" && isFinite(v)) ? v : NaN;
+  }catch(err){ return NaN; }
+}
+function same(given, right, tol){
+  var a = toNum(given), b = toNum(right);
+  if(!isNaN(a) && !isNaN(b)){
+    var t = tol || 1e-9;
+    return Math.abs(a-b) <= Math.max(t, Math.abs(b)*t);
+  }
+  return norm(given) === norm(right);
+}
+
+/* ---------- отрисовка ---------- */
+var state = {};
+function boxOf(t){
+  return document.getElementById("tasks" + (t.blk || "")) ||
+         document.getElementById("tasks");
+}
+
+TASKS.forEach(function(t){
+  state[t.id] = {tries:0, hints:0, done:false, ok:false, given:"", sel:null};
+  var el = document.createElement("div");
+  el.className = "task"; el.id = "t"+t.id;
+  var body = '<div><span class="tnum">'+t.id+'.</span>'+t.text+
+             '<span class="lvl">'+t.lvl+'</span></div>';
+  if(t.img){ body += '<div class="fig">'+t.img+'</div>'; }
+  if(t.type === "choice"){
+    body += '<div class="opts">'+t.options.map(function(o,i){
+      return '<label class="opt" data-v="'+o+'"><input type="radio" name="q'+t.id+'" value="'+o+'"> '+((t.optionsHtml && t.optionsHtml[i]) || o)+'</label>';
+    }).join("")+'</div>';
+  } else {
+    body += '<div class="keys">'+
+      [",","−"].map(function(k){
+        return '<button class="key" data-k="'+k+'" type="button">'+k+'</button>';}).join("")+
+      '</div><input type="text" id="in'+t.id+'" inputmode="text" autocapitalize="off" '+
+      'autocorrect="off" autocomplete="off" spellcheck="false" placeholder="ответ">';
+  }
+  body += '<div class="row" style="margin-top:10px">'+
+          '<button class="pri sm chk">Проверить</button>'+
+          '<button class="sm hnt">Подсказка</button></div>'+
+          '<div class="hints"></div><div class="verdict"></div><div class="sol"></div>';
+  el.innerHTML = body;
+  boxOf(t).appendChild(el);
+
+  el.querySelectorAll(".key").forEach(function(b){
+    b.addEventListener("click", function(){
+      var inp = document.getElementById("in"+t.id);
+      var k = b.dataset.k === "−" ? "-" : b.dataset.k;
+      var s = inp.selectionStart || inp.value.length;
+      inp.value = inp.value.slice(0,s) + k + inp.value.slice(inp.selectionEnd || s);
+      inp.focus(); inp.setSelectionRange(s+k.length, s+k.length);
+    });
+  });
+  if(t.type === "choice"){
+    el.querySelectorAll(".opt").forEach(function(l){
+      l.addEventListener("click", function(){
+        el.querySelectorAll(".opt").forEach(function(x){x.classList.remove("sel");});
+        l.classList.add("sel"); state[t.id].sel = l.dataset.v;
+      });
+    });
+  } else {
+    el.querySelector("#in"+t.id).addEventListener("keydown", function(ev){
+      if(ev.key === "Enter"){ ev.preventDefault(); check(t.id); }
+    });
+  }
+  el.querySelector(".chk").addEventListener("click", function(){ check(t.id); });
+  el.querySelector(".hnt").addEventListener("click", function(){ hint(t.id); });
+});
+
+function hint(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var host = document.querySelector("#t"+id+" .hints");
+  if(s.hints >= t.hints.length){
+    if(!host.querySelector(".last")){
+      var w = document.createElement("div");
+      w.className = "hint last"; w.textContent = "Подсказки закончились — нажми «Проверить», решение откроется после второй попытки.";
+      host.appendChild(w);
+    }
+    return;
+  }
+  var h = document.createElement("div");
+  h.className = "hint";
+  h.innerHTML = "Подсказка " + (s.hints+1) + ": " + t.hints[s.hints];
+  host.appendChild(h);
+  s.hints++;
+}
+
+function check(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var el = document.getElementById("t"+id);
+  var v = document.querySelector(".verdict");
+  v = el.querySelector(".verdict");
+  var given = (t.type === "choice") ? (s.sel || "") :
+              (document.getElementById("in"+id).value || "");
+  if(!given.trim()){ v.className = "verdict bad"; v.textContent = "Введи ответ."; return; }
+  s.given = given; s.tries++;
+  var ok = t.ans.some(function(a){ return same(given, d(a), t.tol); });
+  s.ok = ok; s.done = ok || s.tries >= 2;
+  el.classList.remove("ok","bad");
+  el.classList.add(ok ? "ok" : "bad");
+  v.className = "verdict " + (ok ? "ok" : "bad");
+  if(ok){
+    v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    showSol(el, t);
+  } else if(s.tries === 1){
+    v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+  } else {
+    v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    showSol(el, t);
+  }
+  progress();
+}
+function showSol(el, t){
+  var host = el.querySelector(".sol");
+  if(host.dataset.on) return;
+  host.dataset.on = "1";
+  var det = document.createElement("details");
+  det.open = true;
+  det.innerHTML = "<summary>Решение</summary><div class='step'>"+t.sol+"</div>";
+  host.appendChild(det);
+}
+function progress(){
+  var done = TASKS.filter(function(t){return state[t.id].done;}).length;
+  var ok = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  document.getElementById("progress").textContent =
+    "решено " + done + " из " + TASKS.length + " · верно " + ok;
+}
+document.getElementById("checkall").addEventListener("click", function(){
+  TASKS.forEach(function(t){
+    var s = state[t.id];
+    var given = (t.type === "choice") ? (s.sel || "") : (document.getElementById("in"+t.id).value || "");
+    if(given.trim() && !s.done) check(t.id);
+  });
+  var first = TASKS.find(function(t){ return !state[t.id].done; });
+  var note = first ? "Осталась задача " + first.id + "." : "Все задачи закрыты.";
+  document.getElementById("progress").textContent += " · " + note;
+});
+progress();
+
+/* ---------- фото ---------- */
+var photos = [];
+document.getElementById("photos").addEventListener("change", function(ev){
+  var files = Array.prototype.slice.call(ev.target.files || []);
+  files.forEach(function(f){
+    var r = new FileReader();
+    r.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var m = 1400, w = img.width, h = img.height;
+        if(Math.max(w,h) > m){ var k = m/Math.max(w,h); w = Math.round(w*k); h = Math.round(h*k); }
+        var c = document.createElement("canvas"); c.width = w; c.height = h;
+        c.getContext("2d").drawImage(img, 0, 0, w, h);
+        photos.push({url: c.toDataURL("image/jpeg", 0.7), task: ""});
+        drawThumbs();
+      };
+      img.src = r.result;
+    };
+    r.readAsDataURL(f);
+  });
+  ev.target.value = "";
+});
+function drawThumbs(){
+  var host = document.getElementById("thumbs");
+  host.innerHTML = "";
+  var total = 0;
+  photos.forEach(function(p, i){
+    total += p.url.length * 0.75;
+    var d0 = document.createElement("div"); d0.className = "thumb";
+    var opts = '<option value="">задача…</option>' + TASKS.map(function(t){
+      return '<option value="'+t.id+'"'+(p.task==String(t.id)?" selected":"")+'>№'+t.id+'</option>';
+    }).join("");
+    d0.innerHTML = '<img src="'+p.url+'" alt="фото решения"><button type="button">×</button>'+
+                   '<select>'+opts+'</select>';
+    d0.querySelector("button").addEventListener("click", function(){ photos.splice(i,1); drawThumbs(); });
+    d0.querySelector("select").addEventListener("change", function(ev){ p.task = ev.target.value; });
+    host.appendChild(d0);
+  });
+  var note = document.getElementById("repnote");
+  if(total > 15e6){ note.textContent = "Фото уже больше 15 МБ — отчёт может отправляться долго, лишние лучше удалить."; }
+  else if(photos.length){ note.textContent = "Фото в отчёте: " + photos.length + "."; }
+  else { note.textContent = ""; }
+}
+
+/* ---------- отчёт ---------- */
+var ENDPOINT = "https://script.google.com/macros/s/AKfycbwqIhgBtFnoUik3N1Lh_YRhNeEFAjmXWSxBNoX1a_Yxu-2dEKHFwo4Dd5Ch9UTOHH-X/exec";
+var SECRET = "artteach2026";
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function buildReport(){
+  var name = (document.getElementById("name").value || "").trim() || "без имени";
+  var now = new Date();
+  var mins = Math.max(1, Math.round((Date.now()-started)/60000));
+  var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  var data = {tип:"дз", предмет:"математика", тема:"Десятичные дроби на координатном луче (§3, математика 6 класс)",
+    ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
+    верно:okN, всего:TASKS.length, задачи:[]};
+  var rows = TASKS.map(function(t){
+    var s = state[t.id];
+    data.задачи.push({n:t.id, условие:t.text.replace(/<[^>]+>/g,""), ответ_ученика:s.given,
+      верный_ответ:t.ans.map(d).join(" или "), верно:s.ok, попыток:s.tries, подсказок:s.hints,
+      уровень:t.lvl});
+    return "<tr><td>"+t.id+"</td><td style='text-align:left'>"+esc(t.text.replace(/<[^>]+>/g,""))+
+      "</td><td>"+esc(s.given||"—")+"</td><td>"+esc(t.ans.map(d).join(" / "))+"</td><td>"+
+      (s.ok?"верно":(s.given?"неверно":"не решал"))+"</td><td>"+s.tries+"</td><td>"+s.hints+"</td></tr>";
+  }).join("");
+  var pics = photos.map(function(p,i){
+    return "<figure><img src='"+p.url+"'><figcaption>Фото "+(i+1)+
+      (p.task?" — к задаче №"+p.task:"")+"</figcaption></figure>";
+  }).join("");
+  var html = "<!doctype html><html lang='ru'><head><meta charset='utf-8'>"+
+    "<meta name='viewport' content='width=device-width,initial-scale=1'>"+
+    "<title>Отчёт — "+esc(name)+" — координатный луч · математика 6 класс</title><style>"+
+    "body{font:16px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;padding:20px;color:#16181d;background:#fff}"+
+    "h1{font-size:22px;margin:0 0 4px}.m{color:#5b6270;font-size:15px}"+
+    "table{border-collapse:collapse;width:100%;margin-top:14px;font-size:15px}"+
+    "th,td{border:1px solid #dfe3ea;padding:6px 8px;text-align:center}th{background:#eef3fb}"+
+    "figure{margin:14px 0}img{max-width:100%;border:1px solid #dfe3ea;border-radius:8px}"+
+    "figcaption{color:#5b6270;font-size:14px;margin-top:4px}</style></head><body>"+
+    "<h1>Отчёт по домашнему заданию</h1>"+
+    "<div class='m'>Тема: изображение десятичных дробей на координатном луче · §3, математика 6 класс</div>"+
+    "<div class='m'>Ученик: <b>"+esc(name)+"</b> · сдано: "+esc(now.toLocaleString("ru-RU"))+
+    " · время работы: около "+mins+" мин</div>"+
+    "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)</h2>"+
+    "<table><tr><th>№</th><th>Задача</th><th>Ответ ученика</th><th>Верный ответ</th>"+
+    "<th>Итог</th><th>Попыток</th><th>Подсказок</th></tr>"+rows+"</table>"+
+    (pics ? "<h2>Фото решений</h2>"+pics : "<p class='m'>Фото решений не прикреплены.</p>")+
+    "<script type='application/json' id='result-data'>"+
+    JSON.stringify(data).replace(/</g,"\\u003c")+"<\/script></body></html>";
+  var stamp = now.getDate()+"-"+(now.getMonth()+1);
+  return {
+    html: html,
+    name: name,
+    ok: okN,
+    total: TASKS.length,
+    file: "Отчёт_Координатный_луч_"+name.replace(/\s+/g,"_")+"_"+stamp+".html",
+    caption: name+" · координатный луч · математика 6 класс · "+okN+" из "+TASKS.length+
+             " ("+Math.round(okN/TASKS.length*100)+"%)"
+  };
+}
+
+document.getElementById("send").addEventListener("click", function(){
+  var note = document.getElementById("repnote");
+  var who = (document.getElementById("name").value || "").trim();
+  if(!who){ note.className = "meta bad-note"; note.textContent = "Сначала впиши имя вверху страницы."; return; }
+  note.className = "meta";
+  var r = buildReport();
+  note.textContent = "Отправляю…";
+  var payload = {
+    secret: SECRET,
+    code: STUDENT_CODE,
+    student: r.name,
+    topic: TOPIC,
+    ok: r.ok,
+    total: r.total,
+    name: r.file,
+    caption: r.caption,
+    file: btoa(unescape(encodeURIComponent(r.html)))
+  };
+  fetch(ENDPOINT, {method:"POST", mode:"no-cors", body: JSON.stringify(payload)})
+    .then(function(){
+      note.textContent = "Отправлено преподавателю." +
+        (photos.length ? "" : " Фото решений не приложены — если решал в тетради, приложи их и отправь ещё раз.") +
+        " Если хочешь, сохрани копию себе кнопкой ниже.";
+    })
+    .catch(function(){
+      note.textContent = "Не получилось отправить. Скачай файл кнопкой ниже и пришли его вручную.";
+    });
+});
+
+document.getElementById("report").addEventListener("click", function(){
+  var r = buildReport();
+  var blob = new Blob([r.html], {type:"text/html;charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = r.file;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  document.getElementById("repnote").textContent = "Файл скачан — он в папке загрузок.";
+});
+
+
+/* ---------- движок тренажёров ---------- */
+function makeTrainer(id, items){
+  var q=document.getElementById(id+"q"), f=document.getElementById(id+"f"),
+      a=document.getElementById(id+"a"), m=document.getElementById(id+"m"),
+      b=document.getElementById(id+"b"), sc=document.getElementById(id+"s");
+  var order=[], perm=[], i=0, ok=0, answered=false;
+
+  function shuffle(n){
+    var arr=[], k, j, t;
+    for(k=0;k<n;k++) arr.push(k);
+    for(k=arr.length-1;k>0;k--){ j=Math.floor(Math.random()*(k+1)); t=arr[k]; arr[k]=arr[j]; arr[j]=t; }
+    return arr;
+  }
+  function norm(s){
+    return String(s).trim().toLowerCase().replace(/\s+/g,"").replace(/−/g,"-").replace(/,/g,".");
+  }
+  function same(x, y){
+    var p=parseFloat(norm(x)), r=parseFloat(norm(y));
+    if(isFinite(p) && isFinite(r)) return Math.abs(p-r) < 1e-9;
+    return norm(x) === norm(y);
+  }
+  function score(){
+    sc.textContent = "вопрос " + Math.min(i + 1, items.length) + " из " + items.length +
+                     " · верно " + ok;
+  }
+
+  function finish(){
+    q.innerHTML=""; f.innerHTML=""; a.innerHTML=""; m.innerHTML="";
+    var pct=Math.round(ok/items.length*100);
+    var word = pct===100 ? "Всё верно — тема закрыта." :
+               pct>=70 ? "Хорошо, но пару мест стоит перечитать." :
+               "Стоит вернуться к теории и пройти ещё раз.";
+    b.innerHTML='<div class="trdone" style="flex:1 1 100%">'+ok+" из "+items.length+
+      " ("+pct+" %) · "+word+'</div><button type="button" class="pri" data-go="1">Пройти заново</button>';
+    sc.textContent="готово";
+  }
+
+  function show(){
+    answered=false;
+    m.innerHTML=""; b.innerHTML="";
+    var t=items[order[i]];
+    q.innerHTML="<b>"+(i+1)+".</b> "+t.q;
+    f.innerHTML=t.fig || "";
+    f.style.display = t.fig ? "" : "none";
+    if(t.opts){
+      perm = shuffle(t.opts.length);          /* perm[позиция] = номер варианта в банке */
+      var html='<div class="tropts" id="'+id+'o">';
+      for(var k=0;k<perm.length;k++)
+        html+='<button type="button" class="tropt" data-k="'+perm[k]+'">'+t.opts[perm[k]]+'</button>';
+      a.innerHTML = html+"</div>";
+      var box=document.getElementById(id+"o");
+      box.addEventListener("click", function(ev){
+        var el=ev.target; while(el && el!==box && el.className.indexOf("tropt")<0) el=el.parentNode;
+        if(!el || el===box || answered) return;
+        pick(parseInt(el.getAttribute("data-k"),10), box);
+      });
+    } else {
+      a.innerHTML='<div class="trnum"><span>Ответ:</span>'+
+        '<input type="text" id="'+id+'i" inputmode="text" autocomplete="off" '+
+        'autocorrect="off" spellcheck="false" placeholder="число">'+
+        '<button type="button" class="pri" data-check="1">Проверить</button></div>';
+      var inp=document.getElementById(id+"i");
+      inp.addEventListener("keydown", function(ev){ if(ev.key==="Enter") check(); });
+    }
+    score();
+  }
+
+  function verdict(good, t){
+    answered=true;
+    if(good) ok++;
+    i++;
+    m.innerHTML='<div class="v '+(good?"ok":"bad")+'">'+(good?"Верно.":"Неверно.")+"</div>"+
+                '<div class="why">'+t.why+"</div>";
+    b.innerHTML = (i<items.length)
+      ? '<button type="button" class="pri" data-next="1">Дальше</button>'
+      : '<button type="button" class="pri" data-next="1">Показать итог</button>';
+    score();
+  }
+  function pick(k, box){
+    var t=items[order[i]], good = (k === t.ans);
+    var bs=box.querySelectorAll(".tropt");
+    for(var j=0;j<bs.length;j++){
+      var n=parseInt(bs[j].getAttribute("data-k"),10);
+      if(n===t.ans) bs[j].className="tropt right";
+      else if(n===k) bs[j].className="tropt wrong";
+    }
+    box.className="tropts done";
+    verdict(good, t);
+  }
+  function check(){
+    if(answered) return;
+    var t=items[order[i]], inp=document.getElementById(id+"i");
+    var v=(inp.value||"").trim();
+    if(!v){ m.innerHTML='<div class="why">Впиши ответ.</div>'; return; }
+    var good = t.ans.some(function(x){ return same(v, x); });
+    inp.disabled=true;
+    if(!good) m.innerHTML="";
+    verdict(good, t);
+    if(!good) m.innerHTML='<div class="v bad">Неверно. Правильный ответ: '+t.ans[0]+".</div>"+
+                          '<div class="why">'+t.why+"</div>";
+  }
+
+  b.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-next")){ if(i<items.length) show(); else finish(); }
+    if(el.getAttribute && el.getAttribute("data-go")){ start(); }
+  });
+  a.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-check")) check();
+  });
+
+  function start(){ order=shuffle(items.length); i=0; ok=0; show(); }
+  start();
+}
+
+makeTrainer("ts3", [{"q": "Между какими соседними натуральными числами лежит <b>2,1</b>?", "fig": "", "opts": ["2 и 3", "1 и 2", "3 и 4", "2 и 4"], "ans": 0, "why": "Целая часть 2, значит число между 2 и 3."}, {"q": "Между какими соседними натуральными числами лежит <b>8,6</b>?", "fig": "", "opts": ["8 и 9", "7 и 8", "9 и 10", "8 и 10"], "ans": 0, "why": "Целая часть 8."}, {"q": "Между какими соседними натуральными числами лежит <b>12,64</b>?", "fig": "", "opts": ["12 и 13", "11 и 12", "13 и 14", "12 и 14"], "ans": 0, "why": "Дробная часть на ответ не влияет."}, {"q": "Между какими соседними натуральными числами лежит <b>16,267</b>?", "fig": "", "opts": ["16 и 17", "15 и 16", "17 и 18", "16 и 18"], "ans": 0, "why": "Смотрим только на целую часть — 16."}, {"q": "Между какими соседними натуральными числами лежит <b>99,8</b>?", "fig": "", "opts": ["99 и 100", "98 и 99", "100 и 101", "99 и 101"], "ans": 0, "why": "Следующее натуральное после 99 — это 100."}, {"q": "Между какими соседними натуральными числами лежит <b>100,01</b>?", "fig": "", "opts": ["100 и 101", "99 и 100", "101 и 102", "100 и 102"], "ans": 0, "why": "Даже одна сотая делает число больше сотни."}, {"q": "Между какими соседними натуральными числами лежит <b>222,375</b>?", "fig": "", "opts": ["222 и 223", "221 и 222", "223 и 224", "222 и 224"], "ans": 0, "why": "Целая часть 222."}, {"q": "Между какими соседними натуральными числами лежит <b>509,99</b>?", "fig": "", "opts": ["509 и 510", "508 и 509", "510 и 511", "509 и 511"], "ans": 0, "why": "До 510 не хватает одной сотой, но число всё равно меньше."}, {"q": "Между какими соседними натуральными числами лежит <b>6,9</b>?", "fig": "", "opts": ["6 и 7", "5 и 6", "7 и 8", "6 и 8"], "ans": 0, "why": "Целая часть 6, хотя число почти дотягивает до семи."}, {"q": "Между какими соседними натуральными числами лежит <b>175,91</b>?", "fig": "", "opts": ["175 и 176", "174 и 175", "176 и 177", "175 и 177"], "ans": 0, "why": "Целая часть 175."}]);
+makeTrainer("ts4", [{"q": "Что больше: <b>0,24</b> или <b>0,31</b>?", "fig": "", "opts": ["0,31", "0,24", "они равны"], "ans": 0, "why": "Сравниваем десятые: 2 меньше 3."}, {"q": "Что больше: <b>1,367</b> или <b>1,425</b>?", "fig": "", "opts": ["1,425", "1,367", "они равны"], "ans": 0, "why": "Целые части равны, а десятых у второго числа больше."}, {"q": "Что больше: <b>0,5</b> или <b>0,125</b>?", "fig": "", "opts": ["0,5", "0,125", "они равны"], "ans": 0, "why": "Длина записи не делает число больше: 0,5 = 0,500."}, {"q": "Что больше: <b>2,17</b> или <b>2,7</b>?", "fig": "", "opts": ["2,7", "2,17", "они равны"], "ans": 0, "why": "2,7 = 2,70, а 70 сотых больше 17 сотых."}, {"q": "Что больше: <b>0,34</b> или <b>0,325</b>?", "fig": "", "opts": ["0,34", "0,325", "они равны"], "ans": 0, "why": "0,34 = 0,340, а 340 тысячных больше 325."}, {"q": "Какое число лежит между <b>0,56</b> и <b>0,565</b>?", "fig": "", "opts": ["0,562", "0,57", "0,555", "0,566"], "ans": 0, "why": "Нужны тысячные: 0,562 больше 0,560 и меньше 0,565."}, {"q": "Какое число лежит между <b>15,34</b> и <b>15,341</b>?", "fig": "", "opts": ["15,3405", "15,35", "15,342", "15,34"], "ans": 0, "why": "Между ними помещаются только десятитысячные."}, {"q": "Какое число лежит между <b>10</b> и <b>10,6</b>?", "fig": "", "opts": ["10,3", "9,8", "10,7", "11"], "ans": 0, "why": "Любая дробь от 10,1 до 10,5 подойдёт."}, {"q": "Сколько дробей помещается между <b>2,22</b> и <b>2,23</b>?", "fig": "", "opts": ["бесконечно много", "ни одной", "девять", "одна"], "ans": 0, "why": "Всегда можно взять разряд помельче: 2,221; 2,2211 и так далее."}, {"q": "Сколько дробей <u>с одной цифрой после запятой</u> между <b>7</b> и <b>8</b>?", "fig": "", "opts": ["девять", "бесконечно много", "десять", "восемь"], "ans": 0, "why": "Это 7,1; 7,2; …; 7,9 — ровно девять штук."}]);
+
+
+/* ============ координатный луч ============ */
+window.NLINE = function(id, opt){
+  var svg = document.getElementById(id);
+  if(!svg) return null;
+  var val = document.getElementById(id + "v"), bar = document.getElementById(id + "b");
+  var W = 460, H = 140, Y0 = 78, L = 40, R = W - 30;
+  var lo = opt.lo, hi = opt.hi, step = opt.step;   /* step — цена мелкого деления */
+  var pos = (opt.start === undefined) ? lo + (hi - lo) / 2 : opt.start;
+  var show = opt.show !== false, drag = false, locked = false;
+  var INK = "#15181e", MUT = "#5b6270", ACC = "#2f6bd8", RED = "#b3261e";
+
+  function X(t){ return L + (t - lo) / (hi - lo) * (R - L); }
+  function fmt(t){
+    var d = Math.max(0, Math.round(-Math.log(step) / Math.LN10) + 0);
+    var s = t.toFixed(d);
+    if(s.indexOf(".") > -1) s = s.replace(/0+$/, "").replace(/\.$/, "");
+    return s.replace(".", ",");
+  }
+  function snap(t){
+    var k = Math.round((t - lo) / step);
+    return Math.min(hi, Math.max(lo, lo + k * step));
+  }
+  function tx(x, y, t, c, anc, size, bold){
+    return '<text x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" font-size="'+(size||15)+'" fill="'+c+
+      '" text-anchor="'+(anc||"middle")+'"'+(bold?' font-weight="700"':'')+'>'+t+'</text>';
+  }
+
+  function draw(){
+    var s = '<rect x="0" y="0" width="'+W+'" height="'+H+'" rx="12" fill="#ffffff"/>';
+    /* сам луч со стрелкой */
+    s += '<line x1="'+L+'" y1="'+Y0+'" x2="'+(R+16)+'" y2="'+Y0+
+         '" stroke="'+INK+'" stroke-width="2.4"/>';
+    s += '<path d="M '+(R+26)+' '+Y0+' L '+(R+12)+' '+(Y0-5)+' L '+(R+12)+' '+(Y0+5)+
+         ' Z" fill="'+INK+'"/>';
+    /* деления */
+    var n = Math.round((hi - lo) / step), i, t, x, big;
+    for(i = 0; i <= n; i++){
+      t = lo + i * step;
+      x = X(t);
+      big = (Math.abs(t - Math.round(t / (step * 10)) * step * 10) < step / 100);
+      s += '<line x1="'+x.toFixed(1)+'" y1="'+(Y0 - (big ? 11 : 6))+'" x2="'+x.toFixed(1)+
+           '" y2="'+(Y0 + (big ? 11 : 6))+'" stroke="'+(big ? INK : "#8d98a8")+
+           '" stroke-width="'+(big ? 2.2 : 1.4)+'"/>';
+      if(big) s += tx(x, Y0 + 30, fmt(t), MUT, "middle", 15);
+    }
+    /* подписи концов, если они не попали на крупные деления */
+    if(Math.abs((lo / (step*10)) - Math.round(lo / (step*10))) > 1e-9)
+      s += tx(X(lo), Y0 + 30, fmt(lo), MUT, "middle", 15);
+    if(Math.abs((hi / (step*10)) - Math.round(hi / (step*10))) > 1e-9)
+      s += tx(X(hi), Y0 + 30, fmt(hi), MUT, "middle", 15);
+    s += tx(R + 26, Y0 - 14, "x", MUT, "middle", 15);
+    /* маркер */
+    if(show){
+      var px = X(pos);
+      s += '<line x1="'+px.toFixed(1)+'" y1="'+(Y0-20)+'" x2="'+px.toFixed(1)+'" y2="'+(Y0+20)+
+           '" stroke="'+RED+'" stroke-width="2"/>';
+      s += '<circle cx="'+px.toFixed(1)+'" cy="'+Y0+'" r="8" fill="'+RED+'"/>';
+      s += tx(px, Y0 - 26, opt.label || "A", RED, "middle", 17, 1);
+    }
+    svg.innerHTML = s;
+    if(val) val.innerHTML = opt.quiet ? "" : (opt.label || "A") + "(<span>" + fmt(pos) + "</span>)";
+    if(bar){
+      var bs = bar.querySelectorAll("button"), k;
+      for(k = 0; k < bs.length; k++){
+        bs[k].className = (+bs[k].getAttribute("data-i") === (opt.range || 0)) ? "on" : "";
+      }
+    }
+  }
+
+  function at(ev){
+    var t = ev.touches ? ev.touches[0] : ev;
+    var r = svg.getBoundingClientRect();
+    var x = (t.clientX - r.left) / r.width * W;
+    var v = lo + (x - L) / (R - L) * (hi - lo);
+    pos = snap(v);
+    draw();
+    if(ev.cancelable) ev.preventDefault();
+  }
+  svg.addEventListener("mousedown", function(e){ if(!locked){ drag = true; at(e); } });
+  window.addEventListener("mousemove", function(e){ if(drag && !locked) at(e); });
+  window.addEventListener("mouseup", function(){ drag = false; });
+  svg.addEventListener("touchstart", function(e){ if(!locked){ drag = true; at(e); } }, {passive:false});
+  svg.addEventListener("touchmove", function(e){ if(drag && !locked) at(e); }, {passive:false});
+  svg.addEventListener("touchend", function(){ drag = false; });
+
+  if(bar && opt.ranges){
+    var h = "", k;
+    for(k = 0; k < opt.ranges.length; k++){
+      h += '<button type="button" data-i="'+k+'">'+opt.ranges[k].name+'</button>';
+    }
+    bar.innerHTML = h;
+    bar.addEventListener("click", function(ev){
+      var el = ev.target;
+      if(el.tagName !== "BUTTON") return;
+      var r = opt.ranges[+el.getAttribute("data-i")];
+      lo = r.lo; hi = r.hi; step = r.step; opt.range = +el.getAttribute("data-i");
+      pos = snap(Math.min(hi, Math.max(lo, pos)));
+      draw();
+    });
+  }
+  draw();
+  return {
+    set: function(o){
+      if(o.lo !== undefined){ lo = o.lo; hi = o.hi; step = o.step; }
+      if(o.pos !== undefined) pos = snap(o.pos);
+      if(o.show !== undefined) show = o.show;
+      if(o.label !== undefined) opt.label = o.label;
+      if(o.quiet !== undefined) opt.quiet = o.quiet;
+      draw();
+    },
+    get: function(){ return pos; },
+    lock: function(v){ locked = v; },
+    redraw: draw
+  };
+};
+
+/* ============ тренажёр на координатном луче ============ */
+window.NLTRAIN = function(id, items){
+  var host = document.getElementById(id);
+  if(!host) return;
+  var sc = document.getElementById(id + "s"), q = document.getElementById(id + "q");
+  var row = document.getElementById(id + "r"), msg = document.getElementById(id + "m");
+  var nav = document.getElementById(id + "n");
+  var line = null, order = [], i = 0, ok = 0, answered = false;
+
+  function shuffle(n){
+    var a = [], k, j, t;
+    for(k = 0; k < n; k++) a.push(k);
+    for(k = a.length - 1; k > 0; k--){ j = Math.floor(Math.random()*(k+1)); t=a[k]; a[k]=a[j]; a[j]=t; }
+    return a;
+  }
+  function norm(s){
+    return String(s).trim().replace(/\s+/g, "").replace(",", ".").replace(/^\+/, "");
+  }
+  function score(){
+    sc.textContent = "задание " + Math.min(i + 1, items.length) + " из " + items.length +
+                     " · верно " + ok;
+  }
+  function finish(){
+    q.innerHTML = ""; row.innerHTML = ""; msg.innerHTML = "";
+    var pct = Math.round(ok / items.length * 100);
+    var word = pct === 100 ? "Отлично — координатный луч освоен." :
+               pct >= 70 ? "Хорошо, но пару заданий стоит перерешать." :
+               "Вернись к теории и пройди ещё раз.";
+    nav.innerHTML = '<div class="ntdone" style="flex:1 1 100%">' + ok + " из " + items.length +
+      " (" + pct + " %) · " + word + '</div>' +
+      '<button type="button" class="pri" data-go="1">Пройти заново</button>';
+    sc.textContent = "готово";
+  }
+  function show(){
+    answered = false;
+    msg.innerHTML = ""; nav.innerHTML = "";
+    var t = items[order[i]];
+    q.innerHTML = "<b>" + (i + 1) + ".</b> " + t.q;
+    if(!line) line = NLINE(id + "f", {lo: t.lo, hi: t.hi, step: t.step, start: t.value,
+                                      show: t.type === "read", quiet: true, label: t.label || "A"});
+    line.lock(t.type === "read");
+    line.set({lo: t.lo, hi: t.hi, step: t.step,
+              pos: (t.type === "read") ? t.value : t.lo,
+              show: true, label: t.label || "A", quiet: t.type === "read"});
+    if(t.type === "read"){
+      row.innerHTML = '<input type="text" id="' + id + 'i" inputmode="decimal" autocomplete="off" ' +
+        'placeholder="координата"><button type="button" class="pri" data-check="1">Проверить</button>';
+      document.getElementById(id + "i").addEventListener("keydown", function(ev){
+        if(ev.key === "Enter") check();
+      });
+    } else {
+      row.innerHTML = '<button type="button" class="pri" data-check="1">Проверить</button>';
+    }
+    score();
+  }
+  function check(){
+    if(answered) return;
+    var t = items[order[i]], good, given;
+    if(t.type === "read"){
+      given = norm(document.getElementById(t0id() + "i").value);
+      if(!given){ msg.innerHTML = '<div class="why">Впиши координату.</div>'; return; }
+      good = Math.abs(parseFloat(given) - t.value) < t.step / 100;
+      var inp = document.getElementById(t0id() + "i");
+      if(inp) inp.disabled = true;
+    } else {
+      given = line.get();
+      good = Math.abs(given - t.value) < t.step / 100;
+      line.lock(true);
+    }
+    answered = true;
+    if(good) ok++;
+    i++;
+    msg.innerHTML = '<div class="v ' + (good ? "ok" : "bad") + '">' +
+      (good ? "Верно." : "Неверно. Правильный ответ: " + String(t.value).replace(".", ",") + ".") +
+      "</div><div class=\"why\">" + t.why + "</div>";
+    nav.innerHTML = (i < items.length)
+      ? '<button type="button" class="pri" data-next="1">Дальше</button>'
+      : '<button type="button" class="pri" data-next="1">Показать итог</button>';
+    score();
+  }
+  function t0id(){ return id; }
+
+  row.addEventListener("click", function(ev){
+    if(ev.target.getAttribute && ev.target.getAttribute("data-check")) check();
+  });
+  nav.addEventListener("click", function(ev){
+    var el = ev.target;
+    if(!el || el.tagName !== "BUTTON") return;
+    if(el.getAttribute("data-go")){ order = shuffle(items.length); i = 0; ok = 0; show(); return; }
+    if(el.getAttribute("data-next")){ if(i < items.length) show(); else finish(); }
+  });
+  order = shuffle(items.length);
+  show();
+};
+
+var NL = {"nl1": {"lo": 0, "hi": 2, "step": 0.1, "label": "A", "start": 0.7, "range": 0, "ranges": [{"name": "0 … 2", "lo": 0, "hi": 2, "step": 0.1}, {"name": "0 … 1", "lo": 0, "hi": 1, "step": 0.1}, {"name": "1,4 … 1,5", "lo": 1.4, "hi": 1.5, "step": 0.01}, {"name": "4,01 … 4,02", "lo": 4.01, "hi": 4.02, "step": 0.001}]}, "nl2": {"lo": 0, "hi": 1, "step": 0.1, "label": "A", "start": 0.3, "range": 0}, "nl3": {"lo": 1.4, "hi": 1.5, "step": 0.01, "label": "A", "start": 1.46, "range": 0}, "nl4": {"lo": 4.01, "hi": 4.02, "step": 0.001, "label": "A", "start": 4.014, "range": 0}};
+for (var _n in NL){ NLINE(_n, NL[_n]); }
+
+NLTRAIN("nt1", [{"type": "read", "lo": 0, "hi": 1, "step": 0.1, "value": 0.3, "q": "Какое число соответствует точке A?", "why": "Единичный отрезок разбит на 10 частей, точка на третьем делении: 0,3 = 3/10."}, {"type": "read", "lo": 0, "hi": 1, "step": 0.1, "value": 0.9, "q": "Какое число соответствует точке A?", "why": "Девятое деление из десяти — это 0,9, почти единица."}, {"type": "read", "lo": 0, "hi": 2, "step": 0.1, "value": 1.4, "q": "Какое число соответствует точке A?", "why": "Прошли всю единицу и ещё 4 деления: 1,4."}, {"type": "read", "lo": 6, "hi": 8, "step": 0.1, "value": 7.2, "q": "Какое число соответствует точке A?", "why": "От 7 отсчитали два деления вправо."}, {"type": "read", "lo": 0, "hi": 2, "step": 0.1, "value": 1.7, "q": "Какое число соответствует точке A?", "why": "Единица и семь десятых."}, {"type": "place", "lo": 0, "hi": 1, "step": 0.1, "value": 0.6, "q": "Отметь точку с координатой <b>0,6</b>.", "why": "Шесть делений от нуля."}, {"type": "place", "lo": 0, "hi": 2, "step": 0.1, "value": 1.2, "q": "Отметь точку с координатой <b>1,2</b>.", "why": "Единица и ещё два деления."}, {"type": "place", "lo": 0, "hi": 2, "step": 0.1, "value": 0.5, "q": "Отметь точку с координатой <b>0,5</b>.", "why": "Половина единичного отрезка — пятое деление."}, {"type": "place", "lo": 6, "hi": 8, "step": 0.1, "value": 6.8, "q": "Отметь точку с координатой <b>6,8</b>.", "why": "От шести отсчитай восемь делений."}, {"type": "place", "lo": 0, "hi": 2, "step": 0.1, "value": 2.0, "q": "Отметь точку с координатой <b>2,0</b>.", "why": "Ровно две единицы — самый конец луча."}]);
+NLTRAIN("nt2", [{"type": "read", "lo": 1.4, "hi": 1.5, "step": 0.01, "value": 1.46, "q": "Какое число соответствует точке A?", "why": "Цена деления 0,01, отсчитано 6 делений от 1,4."}, {"type": "read", "lo": 2.2, "hi": 2.3, "step": 0.01, "value": 2.25, "q": "Какое число соответствует точке A?", "why": "Ровно середина между 2,2 и 2,3."}, {"type": "read", "lo": 0.1, "hi": 0.2, "step": 0.01, "value": 0.13, "q": "Какое число соответствует точке A?", "why": "Три сотых после 0,1."}, {"type": "read", "lo": 3.1, "hi": 3.3, "step": 0.01, "value": 3.24, "q": "Какое число соответствует точке A?", "why": "Прошли 3,2 и ещё 4 сотых."}, {"type": "read", "lo": 4.01, "hi": 4.02, "step": 0.001, "value": 4.014, "q": "Какое число соответствует точке A?", "why": "Цена деления 0,001 — четвёртое деление после 4,01."}, {"type": "place", "lo": 1.4, "hi": 1.5, "step": 0.01, "value": 1.43, "q": "Отметь точку с координатой <b>1,43</b>.", "why": "Три сотых после 1,4."}, {"type": "place", "lo": 2.2, "hi": 2.3, "step": 0.01, "value": 2.27, "q": "Отметь точку с координатой <b>2,27</b>.", "why": "Семь делений от 2,2."}, {"type": "place", "lo": 0.5, "hi": 0.6, "step": 0.01, "value": 0.58, "q": "Отметь точку с координатой <b>0,58</b>.", "why": "Восемь сотых после 0,5."}, {"type": "place", "lo": 4.01, "hi": 4.02, "step": 0.001, "value": 4.017, "q": "Отметь точку с координатой <b>4,017</b>.", "why": "Семь тысячных после 4,01."}, {"type": "place", "lo": 8, "hi": 10, "step": 0.1, "value": 9.3, "q": "Отметь точку с координатой <b>9,3</b>.", "why": "Девятка и три десятых."}]);
+
+</script>
+</body>
+</html>
