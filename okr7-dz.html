@@ -106,6 +106,11 @@ details[open] summary{margin-bottom:8px}
 @media (prefers-color-scheme:dark){.ctrow button.right{background:#12281d}
   .ctrow button.wrong{background:#2a1714}}
 
+.cfmini{width:100%;height:auto;display:block;margin:8px auto 4px;border-radius:10px;
+  border:1px solid var(--line);background:#fff}
+.cftwo{width:100%;height:auto;display:block;margin:8px auto 4px;border-radius:10px;
+  border:1px solid var(--line);background:#fff}
+
 .rt{border-top:1.7px solid currentColor;padding:0 3px 0 2px;margin-left:-1px;
   display:inline-block;line-height:1.15}
 
@@ -238,18 +243,18 @@ details[open] summary{margin-bottom:8px}
 <div class="meta">Сюда возвращаются, когда застряли. Читать целиком сразу не нужно.</div>
 
 <h3>Элементы</h3>
-<div class="fgrid"><div class="fbox"><h4>Окружность и круг</h4><p><b>Окружность</b> — линия: все точки на одинаковом расстоянии от центра.</p><p><b>Круг</b> — часть плоскости, ограниченная окружностью, то есть вся закрашенная фигура.</p><p class="small">Длина есть у окружности, площадь — у круга.</p></div><div class="fbox"><h4>Радиус, хорда, диаметр</h4><p><b>Радиус</b> — от центра до точки окружности.</p><p><b>Хорда</b> — между двумя точками окружности.</p><p class="small"><b>Диаметр</b> — хорда через центр, он же два радиуса.</p></div><div class="fbox"><h4>Дуга, сектор, сегмент</h4><p><b>Дуга</b> — часть окружности между двумя точками.</p><p><b>Сектор</b> — часть круга между двумя радиусами и дугой.</p><p class="small"><b>Сегмент</b> — часть круга между хордой и дугой.</p></div></div>
+<div class="fgrid"><div class="fbox"><h4>Окружность и круг</h4><svg id="pm1" class="cfmini" viewBox="0 0 330 330" style="max-width:210px" aria-label="чертёж"></svg><p><b>Окружность</b> — линия: все точки на одинаковом расстоянии от центра.</p><p><b>Круг</b> — часть плоскости, ограниченная окружностью, то есть вся закрашенная фигура.</p><p class="small">Длина есть у окружности, площадь — у круга.</p></div><div class="fbox"><h4>Радиус, хорда, диаметр</h4><svg id="pm2" class="cfmini" viewBox="0 0 330 330" style="max-width:210px" aria-label="чертёж"></svg><p><b>Радиус</b> — от центра до точки окружности.</p><p><b>Хорда</b> — между двумя точками окружности.</p><p class="small"><b>Диаметр</b> — хорда через центр, он же два радиуса.</p></div><div class="fbox"><h4>Дуга, сектор, сегмент</h4><svg id="pm3" class="cfmini" viewBox="0 0 330 330" style="max-width:210px" aria-label="чертёж"></svg><p><b>Дуга</b> — часть окружности между двумя точками.</p><p><b>Сектор</b> — часть круга между двумя радиусами и дугой.</p><p class="small"><b>Сегмент</b> — часть круга между хордой и дугой.</p></div></div>
 
 <h3>Формулы</h3>
-<div class="fgrid"><div class="fbox"><h4>Диаметр</h4><div class="ff">D = 2R</div><p>Диаметр вдвое больше радиуса, радиус — половина диаметра.</p><p class="small">R = D : 2.</p></div><div class="fbox"><h4>Длина окружности</h4><div class="ff">C = 2πR = πD</div><p>Длина окружности всегда в π раз больше диаметра.</p><p class="small">π ≈ 3,14 — отношение длины окружности к её диаметру.</p></div><div class="fbox"><h4>Площадь круга</h4><div class="ff">S = πR<sup>2</sup></div><p>В формуле площади стоит <b>радиус</b>, а не диаметр.</p><p class="small">Если дан диаметр, сначала найди радиус.</p></div></div>
+<div class="fgrid"><div class="fbox"><h4>Диаметр</h4><div class="ff">D = 2R</div><svg id="pm4" class="cfmini" viewBox="0 0 330 330" style="max-width:210px" aria-label="чертёж"></svg><p>Диаметр вдвое больше радиуса, радиус — половина диаметра.</p><p class="small">R = D : 2.</p></div><div class="fbox"><h4>Длина окружности</h4><div class="ff">C = 2πR = πD</div><svg id="pm5" class="cfmini" viewBox="0 0 330 330" style="max-width:210px" aria-label="чертёж"></svg><p>Длина окружности всегда в π раз больше диаметра.</p><p class="small">π ≈ 3,14 — отношение длины окружности к её диаметру.</p></div><div class="fbox"><h4>Площадь круга</h4><div class="ff">S = πR<sup>2</sup></div><svg id="pm6" class="cfmini" viewBox="0 0 330 330" style="max-width:210px" aria-label="чертёж"></svg><p>В формуле площади стоит <b>радиус</b>, а не диаметр.</p><p class="small">Если дан диаметр, сначала найди радиус.</p></div></div>
 
 <h3>Две окружности</h3>
-<div class="fgrid"><div class="fbox"><h4>Касание внешнее</h4><p>Круги касаются снаружи — расстояние между центрами равно <b>сумме</b> радиусов.</p><div class="ff">d = R + r</div><p class="small">Точка касания лежит на отрезке между центрами.</p></div><div class="fbox"><h4>Касание внутреннее</h4><p>Одна окружность внутри другой и касается её — расстояние между центрами равно <b>разности</b> радиусов.</p><div class="ff">d = R − r</div><p class="small">Отсюда R = d + r.</p></div><div class="fbox"><h4>Кольцо</h4><p>У концентрических окружностей общий центр. Часть плоскости между ними — <b>кольцо</b>.</p><div class="ff">S = πR<sup>2</sup> − πr<sup>2</sup></div><p class="small">Ширина кольца равна R − r.</p></div></div>
+<div class="fgrid"><div class="fbox"><h4>Касание внешнее</h4><svg class="cftwo" viewBox="0 0 300 190" style="max-width:230px" aria-label="две окружности"><rect x="0" y="0" width="300" height="190" rx="10" fill="#ffffff"/><circle cx="80.0" cy="95" r="58.0" fill="none" stroke="#15181e" stroke-width="2.2"/><circle cx="176.0" cy="95" r="38.0" fill="none" stroke="#15181e" stroke-width="2.2"/><circle cx="80.0" cy="95" r="3.6" fill="#15181e"/><text x="80.0" y="86" font-size="15" font-weight="700" fill="#15181e" text-anchor="middle">O₁</text><circle cx="176.0" cy="95" r="3.6" fill="#15181e"/><text x="176.0" y="86" font-size="15" font-weight="700" fill="#15181e" text-anchor="middle">O₂</text><line x1="80.0" y1="135" x2="176.0" y2="135" stroke="#2f6bd8" stroke-width="2.6"/><text x="128.0" y="128" font-size="15" font-weight="700" fill="#2f6bd8" text-anchor="middle">d = R + r</text><line x1="80.0" y1="95" x2="80.0" y2="135" stroke="#5b6270" stroke-width="1.4" stroke-dasharray="4 4"/><line x1="176.0" y1="95" x2="176.0" y2="135" stroke="#5b6270" stroke-width="1.4" stroke-dasharray="4 4"/><circle cx="138.0" cy="95" r="4" fill="#b3261e"/><text x="138.0" y="33" font-size="14" font-weight="700" fill="#b3261e" text-anchor="middle">точка касания</text></svg><p>Круги касаются снаружи — расстояние между центрами равно <b>сумме</b> радиусов.</p><div class="ff">d = R + r</div><p class="small">Точка касания лежит на отрезке между центрами.</p></div><div class="fbox"><h4>Касание внутреннее</h4><svg class="cftwo" viewBox="0 0 300 190" style="max-width:230px" aria-label="две окружности"><rect x="0" y="0" width="300" height="190" rx="10" fill="#ffffff"/><circle cx="110.0" cy="95" r="70.0" fill="none" stroke="#15181e" stroke-width="2.2"/><circle cx="146.0" cy="95" r="34.0" fill="none" stroke="#15181e" stroke-width="2.2"/><circle cx="110.0" cy="95" r="3.6" fill="#15181e"/><text x="110.0" y="86" font-size="15" font-weight="700" fill="#15181e" text-anchor="middle">O₁</text><circle cx="146.0" cy="95" r="3.6" fill="#15181e"/><text x="146.0" y="83" font-size="15" font-weight="700" fill="#15181e" text-anchor="middle">O₂</text><line x1="110.0" y1="143" x2="146.0" y2="143" stroke="#2f6bd8" stroke-width="2.6"/><text x="128.0" y="136" font-size="15" font-weight="700" fill="#2f6bd8" text-anchor="middle">d = R − r</text><circle cx="180.0" cy="95" r="4" fill="#b3261e"/><text x="150.0" y="19" font-size="14" font-weight="700" fill="#b3261e" text-anchor="middle">точка касания</text></svg><p>Одна окружность внутри другой и касается её — расстояние между центрами равно <b>разности</b> радиусов.</p><div class="ff">d = R − r</div><p class="small">Отсюда R = d + r.</p></div><div class="fbox"><h4>Кольцо</h4><svg class="cftwo" viewBox="0 0 300 190" style="max-width:230px" aria-label="две окружности"><rect x="0" y="0" width="300" height="190" rx="10" fill="#ffffff"/><circle cx="150.0" cy="95" r="72.0" fill="#e8f0ff"/><circle cx="150.0" cy="95" r="42.0" fill="#ffffff"/><circle cx="150.0" cy="95" r="72.0" fill="none" stroke="#15181e" stroke-width="2.2"/><circle cx="150.0" cy="95" r="42.0" fill="none" stroke="#15181e" stroke-width="2.2"/><circle cx="150.0" cy="95" r="3.6" fill="#15181e"/><text x="150.0" y="85" font-size="15" font-weight="700" fill="#15181e" text-anchor="middle">O</text><line x1="150.0" y1="95" x2="192.0" y2="95" stroke="#5b6270" stroke-width="2.6"/><text x="171.0" y="88" font-size="15" font-weight="700" fill="#5b6270" text-anchor="middle">r</text><line x1="192.0" y1="129" x2="222.0" y2="129" stroke="#2f6bd8" stroke-width="2.6"/><text x="207.0" y="122" font-size="15" font-weight="700" fill="#2f6bd8" text-anchor="middle">R − r</text><line x1="192.0" y1="95" x2="192.0" y2="129" stroke="#5b6270" stroke-width="1.4" stroke-dasharray="4 4"/><line x1="222.0" y1="95" x2="222.0" y2="129" stroke="#5b6270" stroke-width="1.4" stroke-dasharray="4 4"/><text x="150.0" y="15" font-size="15" font-weight="700" fill="#2f6bd8" text-anchor="middle">кольцо</text></svg><p>У концентрических окружностей общий центр. Часть плоскости между ними — <b>кольцо</b>.</p><div class="ff">S = πR<sup>2</sup> − πr<sup>2</sup></div><p class="small">Ширина кольца равна R − r.</p></div></div>
 
 <h3>Живой чертёж</h3>
-<p class="small">Нажимай названия — элемент загорается на чертеже, а снизу появляется
-определение. Это главный чертёж темы, к нему стоит возвращаться.</p>
-<div class="cf"><svg id="cl0" viewBox="0 0 330 330" aria-label="окружность"></svg><div class="cfcap" id="cl0c"></div><div class="cfbar" id="cl0b"></div><div class="cfnote" id="cl0n"></div><div class="cfnote">Нажимай кнопки — на чертеже загорается нужный элемент.</div></div>
+<p class="small">Нажми любой элемент прямо на чертеже — он загорится, подпишется
+и внизу появится определение. Можно и наоборот: выбрать название кнопкой.</p>
+<div class="cf"><svg id="cl0" viewBox="0 0 330 330" aria-label="окружность"></svg><div class="cfcap" id="cl0c"></div><div class="cfbar" id="cl0b"></div><div class="cfnote" id="cl0n"></div><div class="cfnote">Нажми элемент прямо на чертеже — страница скажет, что это.</div></div>
 </div>
 
 <div class="card">
@@ -265,7 +270,7 @@ details[open] summary{margin-bottom:8px}
 <b>Хорда</b> — отрезок между двумя точками окружности.<br>
 <b>Диаметр</b> — хорда, проходящая через центр. Он состоит из двух радиусов, поэтому D = 2R.<br>
 <b>Дуга</b> — часть окружности между двумя точками. Две точки задают сразу две дуги.</div>
-<div class="cf"><svg id="cl1" viewBox="0 0 330 330" aria-label="окружность"></svg><div class="cfcap" id="cl1c"></div><div class="cfbar" id="cl1b"></div><div class="cfnote" id="cl1n"></div><div class="cfnote">Пощёлкай кнопки: где радиус, где хорда, а где диаметр.</div></div>
+<div class="cf"><svg id="cl1" viewBox="0 0 330 330" aria-label="окружность"></svg><div class="cfcap" id="cl1c"></div><div class="cfbar" id="cl1b"></div><div class="cfnote" id="cl1n"></div><div class="cfnote">Нажимай прямо по чертежу — страница скажет, что это. Или выбирай кнопкой.</div></div>
 <div class="ex"><h3>Пример 1</h3>
 <p>Радиус окружности равен 1,9 см. Найди диаметр.</p>
 <div class="step">Диаметр вдвое больше радиуса.</div>
@@ -1121,11 +1126,13 @@ makeTrainer("ts4", [{"q": "Отрезок, соединяющий две точ�
       var m = P(a1 + d / 2);
       if(e.k === "arc") return [C + (m[0] - C) * 1.20, C + (m[1] - C) * 1.20 - 5];
       if(e.k === "sector") return [C + (m[0] - C) * 0.55, C + (m[1] - C) * 0.55];
-      return [C + (m[0] - C) * 0.86, C + (m[1] - C) * 0.86];
+      return [C + (m[0] - C) * 0.78, C + (m[1] - C) * 0.78];
     }
     var p1 = ptOf(spec, e.a), p2 = ptOf(spec, e.b);
-    /* берём не середину, а точку ближе к концу — так подписи не слипаются у центра */
-    var mx = p1[0] + (p2[0] - p1[0]) * 0.68, my = p1[1] + (p2[1] - p1[1]) * 0.68;
+    /* берём не середину, а точку ближе к концу — так подписи не слипаются у центра;
+       у диаметра уводим ещё дальше, иначе подпись ляжет на центр O */
+    var tt = (e.k === "diameter") ? 0.80 : 0.68;
+    var mx = p1[0] + (p2[0] - p1[0]) * tt, my = p1[1] + (p2[1] - p1[1]) * tt;
     var dx = p2[0] - p1[0], dy = p2[1] - p1[1];
     var L = Math.sqrt(dx*dx + dy*dy) || 1;
     var px = -dy / L, py = dx / L;
@@ -1138,8 +1145,12 @@ makeTrainer("ts4", [{"q": "Отрезок, соединяющий две точ�
   /* opt: {hl: индекс подсветки, pick: true, marks: {i: "ok"|"bad"}, show: {i: true} } */
   window.CIRCFIG = function(spec, opt){
     opt = opt || {};
+    var FS = opt.fs || 1;
     var s = '<rect x="0" y="0" width="' + W + '" height="' + W + '" rx="12" fill="#ffffff"/>';
     var k, e, m, col, wid, fill;
+    if(spec.disc){
+      s += '<circle cx="' + C + '" cy="' + C + '" r="' + R + '" fill="#e8f0ff"/>';
+    }
     /* заливки — под окружностью */
     for(k = 0; k < spec.els.length; k++){
       e = spec.els[k];
@@ -1151,8 +1162,8 @@ makeTrainer("ts4", [{"q": "Отрезок, соединяющий две точ�
       s += '<path d="' + elPath(spec, e) + '" fill="' + fill + '" stroke="none"/>';
     }
     /* сама окружность */
-    s += '<circle cx="' + C + '" cy="' + C + '" r="' + R + '" fill="none" stroke="' + INK +
-         '" stroke-width="2.2"/>';
+    s += '<circle cx="' + C + '" cy="' + C + '" r="' + R + '" fill="none" stroke="' +
+         (spec.ring ? ACC : INK) + '" stroke-width="' + (spec.ring ? 4 : 2.2) + '"/>';
     /* линии и дуги */
     for(k = 0; k < spec.els.length; k++){
       e = spec.els[k];
@@ -1170,15 +1181,17 @@ makeTrainer("ts4", [{"q": "Отрезок, соединяющий две точ�
     }
     /* точки */
     s += '<circle cx="' + C + '" cy="' + C + '" r="4.2" fill="' + INK + '"/>';
-    s += '<text x="' + (C - 11) + '" y="' + (C - 9) + '" font-size="17" font-weight="700" ' +
+    s += '<text x="' + (C - 9 - 5 * FS) + '" y="' + (C - 9) + '" font-size="' +
+         (17 * FS).toFixed(0) + '" font-weight="700" ' +
          'fill="' + INK + '" text-anchor="middle">O</text>';
     for(k = 0; k < spec.pts.length; k++){
       var p = P(spec.pts[k][1]);
       s += '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="4.2" fill="' +
            INK + '"/>';
       var lx = C + (p[0] - C) * 1.13, ly = C + (p[1] - C) * 1.13;
-      s += '<text x="' + lx.toFixed(1) + '" y="' + (ly + 6).toFixed(1) + '" font-size="17" ' +
-           'font-weight="700" fill="' + INK + '" text-anchor="middle">' + spec.pts[k][0] +
+      s += '<text x="' + lx.toFixed(1) + '" y="' + (ly + 6).toFixed(1) + '" font-size="' +
+           (17 * FS).toFixed(0) + '" font-weight="700" fill="' + INK +
+           '" text-anchor="middle">' + spec.pts[k][0] +
            "</text>";
     }
     /* подписи названий */
@@ -1189,8 +1202,20 @@ makeTrainer("ts4", [{"q": "Отрезок, соединяющий две точ�
         col = (opt.marks && opt.marks[k] === "bad") ? RED
             : (opt.marks && opt.marks[k] === "ok") ? OK : ACC;
         s += '<text x="' + m[0].toFixed(1) + '" y="' + (m[1] + 5).toFixed(1) + '" ' +
-             'font-size="15" font-weight="700" fill="' + col + '" text-anchor="middle">' +
-             NAMES[spec.els[k].k] + "</text>";
+             'font-size="' + (15 * FS).toFixed(0) +
+             '" font-weight="700" fill="' + col + '" text-anchor="middle">' +
+             (spec.els[k].lab || NAMES[spec.els[k].k]) + "</text>";
+      }
+    }
+    /* свободные подписи: {t, ang, r, c} */
+    if(spec.notes){
+      for(k = 0; k < spec.notes.length; k++){
+        var nt = spec.notes[k];
+        var np = P(nt.ang);
+        var nx = C + (np[0] - C) * nt.r, ny = C + (np[1] - C) * nt.r;
+        s += '<text x="' + nx.toFixed(1) + '" y="' + (ny + 6).toFixed(1) + '" font-size="' +
+             ((nt.s || 17) * FS).toFixed(0) + '" font-weight="700" fill="' + (nt.c || ACC) +
+             '" text-anchor="middle">' + nt.t + "</text>";
       }
     }
     /* прозрачные зоны нажатия — поверх всего */
@@ -1226,7 +1251,7 @@ window.CIRCLAB = function(id, spec){
   function draw(){
     var show = {};
     show[cur] = true;
-    svg.innerHTML = CIRCFIG(spec, {hl: cur, show: show});
+    svg.innerHTML = CIRCFIG(spec, {hl: cur, show: show, pick: true});
     cap.textContent = CIRC_NAMES[spec.els[cur].k].charAt(0).toUpperCase() +
                       CIRC_NAMES[spec.els[cur].k].slice(1);
     note.textContent = WHY[spec.els[cur].k];
@@ -1245,7 +1270,20 @@ window.CIRCLAB = function(id, spec){
     cur = +ev.target.getAttribute("data-i");
     draw();
   });
+  svg.addEventListener("click", function(ev){
+    var el = ev.target;
+    var i = (el && el.getAttribute) ? el.getAttribute("data-i") : null;
+    if(i === null) return;
+    cur = +i;
+    draw();
+  });
   draw();
+};
+
+/* ============ неподвижный чертёж в карточке ============ */
+window.CIRCSTILL = function(id, spec, opt){
+  var svg = document.getElementById(id);
+  if(svg) svg.innerHTML = CIRCFIG(spec, opt || {});
 };
 
 /* ============ тренажёр: узнай элемент ============ */
@@ -1359,6 +1397,9 @@ window.CIRCTRAIN = function(id, items){
 
 var CLABS = {"cl0": {"pts": [["A", 160], ["B", 65], ["K", 115], ["D", 20], ["E", 200], ["M", 290]], "els": [{"k": "radius", "a": "O", "b": "K"}, {"k": "chord", "a": "A", "b": "B"}, {"k": "diameter", "a": "D", "b": "E"}, {"k": "arc", "a": "B", "b": "K"}, {"k": "sector", "a": "A", "b": "E"}, {"k": "segment", "a": "M", "b": "D"}]}, "cl1": {"pts": [["A", 160], ["B", 65], ["K", 115], ["D", 20], ["E", 200], ["M", 290]], "els": [{"k": "radius", "a": "O", "b": "K"}, {"k": "chord", "a": "A", "b": "B"}, {"k": "diameter", "a": "D", "b": "E"}, {"k": "arc", "a": "B", "b": "K"}, {"k": "sector", "a": "A", "b": "E"}, {"k": "segment", "a": "M", "b": "D"}]}};
 for (var _c in CLABS){ CIRCLAB(_c, CLABS[_c]); }
+
+var MINIS = {"pm1": {"spec": {"pts": [], "els": [], "disc": true, "notes": [{"t": "круг", "ang": 265, "r": 0.42, "c": "#2f6bd8", "s": 19}, {"t": "окружность", "ang": 90, "r": 1.2, "c": "#15181e", "s": 18}]}, "opt": {"fs": 1.55}}, "pm2": {"spec": {"pts": [["K", 90], ["A", 180], ["B", 235], ["C", 320], ["D", 140]], "els": [{"k": "radius", "a": "O", "b": "K"}, {"k": "chord", "a": "A", "b": "B"}, {"k": "diameter", "a": "C", "b": "D"}]}, "opt": {"show": {"0": true, "1": true, "2": true}, "fs": 1.55}}, "pm3": {"spec": {"pts": [["P", 70], ["Q", 140], ["M", 200], ["N", 240], ["S", 300], ["T", 350]], "els": [{"k": "arc", "a": "T", "b": "P"}, {"k": "sector", "a": "Q", "b": "M"}, {"k": "segment", "a": "N", "b": "S"}]}, "opt": {"show": {"0": true, "1": true, "2": true}, "fs": 1.55}}, "pm4": {"spec": {"pts": [["A", 0], ["B", 180], ["K", 90]], "els": [{"k": "diameter", "a": "B", "b": "A", "lab": "D"}, {"k": "radius", "a": "O", "b": "K", "lab": "R"}]}, "opt": {"show": {"0": true, "1": true}, "fs": 1.55}}, "pm5": {"spec": {"pts": [["A", 0], ["B", 180]], "els": [{"k": "diameter", "a": "B", "b": "A", "lab": "D"}], "ring": true, "notes": [{"t": "C", "ang": 120, "r": 1.17, "c": "#2f6bd8", "s": 20}]}, "opt": {"show": {"0": true}, "fs": 1.55}}, "pm6": {"spec": {"pts": [["K", 55]], "els": [{"k": "radius", "a": "O", "b": "K", "lab": "R"}], "disc": true, "notes": [{"t": "S", "ang": 250, "r": 0.5, "c": "#2f6bd8", "s": 22}]}, "opt": {"show": {"0": true}, "fs": 1.55}}};
+for (var _m in MINIS){ CIRCSTILL(_m, MINIS[_m].spec, MINIS[_m].opt); }
 
 CIRCTRAIN("ts1", [{"type": "name", "spec": {"pts": [["A", 160], ["B", 65], ["K", 115], ["D", 20], ["E", 200], ["M", 290]], "els": [{"k": "radius", "a": "O", "b": "K"}, {"k": "chord", "a": "A", "b": "B"}, {"k": "diameter", "a": "D", "b": "E"}, {"k": "arc", "a": "B", "b": "K"}, {"k": "sector", "a": "A", "b": "E"}, {"k": "segment", "a": "M", "b": "D"}]}, "hl": 0, "q": "Как называется синий элемент?", "opts": ["радиус", "хорда", "диаметр", "дуга"], "ans": 0, "why": "Отрезок идёт от центра O до точки окружности — это радиус."}, {"type": "name", "spec": {"pts": [["A", 160], ["B", 65], ["K", 115], ["D", 20], ["E", 200], ["M", 290]], "els": [{"k": "radius", "a": "O", "b": "K"}, {"k": "chord", "a": "A", "b": "B"}, {"k": "diameter", "a": "D", "b": "E"}, {"k": "arc", "a": "B", "b": "K"}, {"k": "sector", "a": "A", "b": "E"}, {"k": "segment", "a": "M", "b": "D"}]}, "hl": 1, "q": "Как называется синий элемент?", "opts": ["хорда", "диаметр", "радиус", "дуга"], "ans": 0, "why": "Отрезок соединяет две точки окружности и через центр не проходит."}, {"type": "name", "spec": {"pts": [["A", 160], ["B", 65], ["K", 115], ["D", 20], ["E", 200], ["M", 290]], "els": [{"k": "radius", "a": "O", "b": "K"}, {"k": "chord", "a": "A", "b": "B"}, {"k": "diameter", "a": "D", "b": "E"}, {"k": "arc", "a": "B", "b": "K"}, {"k": "sector", "a": "A", "b": "E"}, {"k": "segment", "a": "M", "b": "D"}]}, "hl": 2, "q": "Как называется синий элемент?", "opts": ["диаметр", "хорда", "радиус", "сектор"], "ans": 0, "why": "Хорда проходит через центр O — значит это диаметр, он же два радиуса."}, {"type": "name", "spec": {"pts": [["A", 160], ["B", 65], ["K", 115], ["D", 20], ["E", 200], ["M", 290]], "els": [{"k": "radius", "a": "O", "b": "K"}, {"k": "chord", "a": "A", "b": "B"}, {"k": "diameter", "a": "D", "b": "E"}, {"k": "arc", "a": "B", "b": "K"}, {"k": "sector", "a": "A", "b": "E"}, {"k": "segment", "a": "M", "b": "D"}]}, "hl": 3, "q": "Как называется синий элемент?", "opts": ["дуга", "хорда", "сектор", "сегмент"], "ans": 0, "why": "Подсвечена часть самой окружности между двумя точками — это дуга."}, {"type": "name", "spec": {"pts": [["A", 160], ["B", 65], ["K", 115], ["D", 20], ["E", 200], ["M", 290]], "els": [{"k": "radius", "a": "O", "b": "K"}, {"k": "chord", "a": "A", "b": "B"}, {"k": "diameter", "a": "D", "b": "E"}, {"k": "arc", "a": "B", "b": "K"}, {"k": "sector", "a": "A", "b": "E"}, {"k": "segment", "a": "M", "b": "D"}]}, "hl": 4, "q": "Как называется синий элемент?", "opts": ["сектор", "сегмент", "дуга", "полукруг"], "ans": 0, "why": "Закрашена часть круга между двумя радиусами и дугой."}, {"type": "name", "spec": {"pts": [["A", 160], ["B", 65], ["K", 115], ["D", 20], ["E", 200], ["M", 290]], "els": [{"k": "radius", "a": "O", "b": "K"}, {"k": "chord", "a": "A", "b": "B"}, {"k": "diameter", "a": "D", "b": "E"}, {"k": "arc", "a": "B", "b": "K"}, {"k": "sector", "a": "A", "b": "E"}, {"k": "segment", "a": "M", "b": "D"}]}, "hl": 5, "q": "Как называется синий элемент?", "opts": ["сегмент", "сектор", "дуга", "кольцо"], "ans": 0, "why": "Закрашена часть круга между хордой и дугой."}, {"type": "name", "spec": {"pts": [["P", 120], ["Q", 35], ["S", 200], ["T", 20], ["N", 265]], "els": [{"k": "radius", "a": "O", "b": "P"}, {"k": "radius", "a": "O", "b": "N"}, {"k": "chord", "a": "P", "b": "Q"}, {"k": "diameter", "a": "S", "b": "T"}, {"k": "chord", "a": "N", "b": "T"}]}, "hl": 3, "q": "Как называется синий элемент?", "opts": ["диаметр", "хорда", "радиус", "дуга"], "ans": 0, "why": "Отрезок ST проходит через центр — диаметр."}, {"type": "name", "spec": {"pts": [["A", 70], ["B", 160], ["C", 250], ["D", 310], ["E", 340]], "els": [{"k": "radius", "a": "O", "b": "A"}, {"k": "sector", "a": "A", "b": "B"}, {"k": "segment", "a": "C", "b": "D"}, {"k": "diameter", "a": "B", "b": "E"}]}, "hl": 2, "q": "Как называется синий элемент?", "opts": ["сегмент", "сектор", "дуга", "хорда"], "ans": 0, "why": "Часть круга между хордой CD и дугой CD — сегмент."}]);
 CIRCTRAIN("ts2", [{"type": "pick", "spec": {"pts": [["A", 160], ["B", 65], ["K", 115], ["D", 20], ["E", 200], ["M", 290]], "els": [{"k": "radius", "a": "O", "b": "K"}, {"k": "chord", "a": "A", "b": "B"}, {"k": "diameter", "a": "D", "b": "E"}, {"k": "arc", "a": "B", "b": "K"}, {"k": "sector", "a": "A", "b": "E"}, {"k": "segment", "a": "M", "b": "D"}]}, "want": "radius", "q": "Нажми на <b>радиус</b>.", "why": "Радиус — единственный отрезок, который начинается в центре O."}, {"type": "pick", "spec": {"pts": [["A", 160], ["B", 65], ["K", 115], ["D", 20], ["E", 200], ["M", 290]], "els": [{"k": "radius", "a": "O", "b": "K"}, {"k": "chord", "a": "A", "b": "B"}, {"k": "diameter", "a": "D", "b": "E"}, {"k": "arc", "a": "B", "b": "K"}, {"k": "sector", "a": "A", "b": "E"}, {"k": "segment", "a": "M", "b": "D"}]}, "want": "chord", "q": "Нажми на <b>хорду</b>, которая не является диаметром.", "why": "Хорда AB соединяет две точки окружности, но через центр не проходит."}, {"type": "pick", "spec": {"pts": [["A", 160], ["B", 65], ["K", 115], ["D", 20], ["E", 200], ["M", 290]], "els": [{"k": "radius", "a": "O", "b": "K"}, {"k": "chord", "a": "A", "b": "B"}, {"k": "diameter", "a": "D", "b": "E"}, {"k": "arc", "a": "B", "b": "K"}, {"k": "sector", "a": "A", "b": "E"}, {"k": "segment", "a": "M", "b": "D"}]}, "want": "diameter", "q": "Нажми на <b>диаметр</b>.", "why": "Диаметр DE — это хорда, проходящая через центр."}, {"type": "pick", "spec": {"pts": [["A", 160], ["B", 65], ["K", 115], ["D", 20], ["E", 200], ["M", 290]], "els": [{"k": "radius", "a": "O", "b": "K"}, {"k": "chord", "a": "A", "b": "B"}, {"k": "diameter", "a": "D", "b": "E"}, {"k": "arc", "a": "B", "b": "K"}, {"k": "sector", "a": "A", "b": "E"}, {"k": "segment", "a": "M", "b": "D"}]}, "want": "arc", "q": "Нажми на <b>дугу</b>.", "why": "Дуга — часть самой окружности, а не отрезок внутри неё."}, {"type": "pick", "spec": {"pts": [["A", 160], ["B", 65], ["K", 115], ["D", 20], ["E", 200], ["M", 290]], "els": [{"k": "radius", "a": "O", "b": "K"}, {"k": "chord", "a": "A", "b": "B"}, {"k": "diameter", "a": "D", "b": "E"}, {"k": "arc", "a": "B", "b": "K"}, {"k": "sector", "a": "A", "b": "E"}, {"k": "segment", "a": "M", "b": "D"}]}, "want": "sector", "q": "Нажми на <b>сектор</b>.", "why": "Сектор ограничен двумя радиусами и дугой."}, {"type": "pick", "spec": {"pts": [["A", 160], ["B", 65], ["K", 115], ["D", 20], ["E", 200], ["M", 290]], "els": [{"k": "radius", "a": "O", "b": "K"}, {"k": "chord", "a": "A", "b": "B"}, {"k": "diameter", "a": "D", "b": "E"}, {"k": "arc", "a": "B", "b": "K"}, {"k": "sector", "a": "A", "b": "E"}, {"k": "segment", "a": "M", "b": "D"}]}, "want": "segment", "q": "Нажми на <b>сегмент</b>.", "why": "Сегмент ограничен хордой и дугой, радиусов у него нет."}, {"type": "pick", "spec": {"pts": [["P", 120], ["Q", 35], ["S", 200], ["T", 20], ["N", 265]], "els": [{"k": "radius", "a": "O", "b": "P"}, {"k": "radius", "a": "O", "b": "N"}, {"k": "chord", "a": "P", "b": "Q"}, {"k": "diameter", "a": "S", "b": "T"}, {"k": "chord", "a": "N", "b": "T"}]}, "want": "diameter", "q": "Здесь несколько отрезков между точками окружности. Нажми тот, который является <b>диаметром</b>.", "why": "Из отрезков между точками окружности через центр проходит только ST."}, {"type": "pick", "spec": {"pts": [["A", 70], ["B", 160], ["C", 250], ["D", 310], ["E", 340]], "els": [{"k": "radius", "a": "O", "b": "A"}, {"k": "sector", "a": "A", "b": "B"}, {"k": "segment", "a": "C", "b": "D"}, {"k": "diameter", "a": "B", "b": "E"}]}, "want": "sector", "q": "На этом чертеже есть и сектор, и сегмент. Нажми <b>сектор</b>.", "why": "Сектор AB ограничен двумя радиусами и дугой; сегмент CD ограничен хордой."}]);
