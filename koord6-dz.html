@@ -165,6 +165,8 @@ details[open] summary{margin-bottom:8px}
   cursor:pointer}
 @media (prefers-color-scheme:dark){.trgate.ready{background:#12281d}}
 .tr.need{outline:2px solid #c99a2e;outline-offset:3px}
+.savenote{margin-top:9px;color:var(--muted);font-size:14.5px;line-height:1.45}
+.savenote button{font-size:14px;padding:5px 10px;min-height:34px;margin-left:8px}
 .sheet .f-formula{margin:5px 0;font-size:14.5px;line-height:1.7}
 @media print{
   .sheet>.meta{display:none}
@@ -222,6 +224,7 @@ details[open] summary{margin-bottom:8px}
   4 тренажёра, 18 задач</div>
   <label class="f" for="name">Имя и фамилия</label>
   <input type="text" id="name" placeholder="напиши, как в журнале" autocapitalize="words" spellcheck="false">
+  <div class="savenote" id="savenote"></div>
   <div class="note" style="margin-top:14px">
     <b>Как работать.</b> Страница идёт по кругу: короткая порция теории — разобранный
     пример — тренажёр или задачи ровно на эту порцию. Не перепрыгивай вперёд.
@@ -519,6 +522,7 @@ var TOPIC = "Десятичные дроби на координатном лу�
 
 "use strict";
 var started = Date.now();
+var spentBefore = 0;
 
 /* ---------- данные задач; ответы закодированы, чтобы не читались в исходнике ---------- */
 function e(s){return btoa(unescape(encodeURIComponent(s)));}
@@ -808,6 +812,7 @@ function hint(id){
   h.innerHTML = "Подсказка " + (s.hints+1) + ": " + t.hints[s.hints];
   host.appendChild(h);
   s.hints++;
+  saveWork();
 }
 
 function check(id){
@@ -834,6 +839,7 @@ function check(id){
     showSol(el, t);
   }
   progress();
+  saveWork();
 }
 function showSol(el, t){
   var host = el.querySelector(".sol");
@@ -913,7 +919,7 @@ function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").rep
 function buildReport(){
   var name = (document.getElementById("name").value || "").trim() || "без имени";
   var now = new Date();
-  var mins = Math.max(1, Math.round((Date.now()-started)/60000));
+  var mins = Math.max(1, Math.round(spentMs()/60000));
   var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
   var data = {tип:"дз", предмет:"математика", тема:"Десятичные дроби на координатном луче (§3, математика 6 класс)",
     ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
@@ -1364,6 +1370,7 @@ window.trFinished = function(id, ok, total){
   var prev = TRDONE[id];
   if(!prev || ok > prev.ok) TRDONE[id] = {ok: ok, total: total};
   trStatus();
+  if(window.saveWork) saveWork();
 };
 function trPending(){
   var out = [], k;
@@ -1426,6 +1433,145 @@ trStatus();
 
 NLTRAIN("nt1", [{"type": "read", "lo": 0, "hi": 1, "step": 0.1, "value": 0.3, "q": "Какое число соответствует точке A?", "why": "Единичный отрезок разбит на 10 частей, точка на третьем делении: 0,3 = 3/10."}, {"type": "read", "lo": 0, "hi": 1, "step": 0.1, "value": 0.9, "q": "Какое число соответствует точке A?", "why": "Девятое деление из десяти — это 0,9, почти единица."}, {"type": "read", "lo": 0, "hi": 2, "step": 0.1, "value": 1.4, "q": "Какое число соответствует точке A?", "why": "Прошли всю единицу и ещё 4 деления: 1,4."}, {"type": "read", "lo": 6, "hi": 8, "step": 0.1, "value": 7.2, "q": "Какое число соответствует точке A?", "why": "От 7 отсчитали два деления вправо."}, {"type": "read", "lo": 0, "hi": 2, "step": 0.1, "value": 1.7, "q": "Какое число соответствует точке A?", "why": "Единица и семь десятых."}, {"type": "place", "lo": 0, "hi": 1, "step": 0.1, "value": 0.6, "q": "Отметь точку с координатой <b>0,6</b>.", "why": "Шесть делений от нуля."}, {"type": "place", "lo": 0, "hi": 2, "step": 0.1, "value": 1.2, "q": "Отметь точку с координатой <b>1,2</b>.", "why": "Единица и ещё два деления."}, {"type": "place", "lo": 0, "hi": 2, "step": 0.1, "value": 0.5, "q": "Отметь точку с координатой <b>0,5</b>.", "why": "Половина единичного отрезка — пятое деление."}, {"type": "place", "lo": 6, "hi": 8, "step": 0.1, "value": 6.8, "q": "Отметь точку с координатой <b>6,8</b>.", "why": "От шести отсчитай восемь делений."}, {"type": "place", "lo": 0, "hi": 2, "step": 0.1, "value": 2.0, "q": "Отметь точку с координатой <b>2,0</b>.", "why": "Ровно две единицы — самый конец луча."}]);
 NLTRAIN("nt2", [{"type": "read", "lo": 1.4, "hi": 1.5, "step": 0.01, "value": 1.46, "q": "Какое число соответствует точке A?", "why": "Цена деления 0,01, отсчитано 6 делений от 1,4."}, {"type": "read", "lo": 2.2, "hi": 2.3, "step": 0.01, "value": 2.25, "q": "Какое число соответствует точке A?", "why": "Ровно середина между 2,2 и 2,3."}, {"type": "read", "lo": 0.1, "hi": 0.2, "step": 0.01, "value": 0.13, "q": "Какое число соответствует точке A?", "why": "Три сотых после 0,1."}, {"type": "read", "lo": 3.1, "hi": 3.3, "step": 0.01, "value": 3.24, "q": "Какое число соответствует точке A?", "why": "Прошли 3,2 и ещё 4 сотых."}, {"type": "read", "lo": 4.01, "hi": 4.02, "step": 0.001, "value": 4.014, "q": "Какое число соответствует точке A?", "why": "Цена деления 0,001 — четвёртое деление после 4,01."}, {"type": "place", "lo": 1.4, "hi": 1.5, "step": 0.01, "value": 1.43, "q": "Отметь точку с координатой <b>1,43</b>.", "why": "Три сотых после 1,4."}, {"type": "place", "lo": 2.2, "hi": 2.3, "step": 0.01, "value": 2.27, "q": "Отметь точку с координатой <b>2,27</b>.", "why": "Семь делений от 2,2."}, {"type": "place", "lo": 0.5, "hi": 0.6, "step": 0.01, "value": 0.58, "q": "Отметь точку с координатой <b>0,58</b>.", "why": "Восемь сотых после 0,5."}, {"type": "place", "lo": 4.01, "hi": 4.02, "step": 0.001, "value": 4.017, "q": "Отметь точку с координатой <b>4,017</b>.", "why": "Семь тысячных после 4,01."}, {"type": "place", "lo": 8, "hi": 10, "step": 0.1, "value": 9.3, "q": "Отметь точку с координатой <b>9,3</b>.", "why": "Девятка и три десятых."}]);
+
+/* ---------- память страницы ---------- */
+var SAVE_V = 1;
+var SKEY = "arttich:koord6:" + (STUDENT_CODE || "-");
+
+function spentMs(){ return spentBefore + (Date.now() - started); }
+
+var CAN_STORE = (function(){
+  try{
+    localStorage.setItem("arttich:probe", "1");
+    localStorage.removeItem("arttich:probe");
+    return true;
+  }catch(e){ return false; }
+})();
+
+var wiping = false;
+function saveWork(){
+  if(wiping) return;
+  try{
+    var box = {v: SAVE_V, at: Date.now(), spent: spentMs(), tr: TRDONE, tasks: {},
+               name: (document.getElementById("name").value || "")};
+    TASKS.forEach(function(t){
+      var x = state[t.id];
+      if(x.tries || x.hints || x.given || x.sel){
+        box.tasks[t.id] = {tries: x.tries, hints: x.hints, done: x.done,
+                           ok: x.ok, given: x.given, sel: x.sel};
+      }
+    });
+    localStorage.setItem(SKEY, JSON.stringify(box));
+    saveNote(box.at);
+  }catch(e){}
+}
+function loadWork(){
+  try{
+    var raw = localStorage.getItem(SKEY);
+    if(!raw) return null;
+    var box = JSON.parse(raw);
+    return (box && box.v === SAVE_V) ? box : null;
+  }catch(e){ return null; }
+}
+function clearWork(){
+  try{ localStorage.removeItem(SKEY); }catch(e){}
+}
+
+function saveNote(at){
+  var n = document.getElementById("savenote");
+  if(!n) return;
+  if(!CAN_STORE){
+    n.textContent = "Этот браузер не разрешает страницам ничего запоминать, поэтому " +
+      "при перезагрузке ответы пропадут. Решай за один заход или отправь работу до того, " +
+      "как закроешь вкладку.";
+    return;
+  }
+  var when = "";
+  if(at){
+    var d = new Date(at);
+    var two = function(x){ return (x < 10 ? "0" : "") + x; };
+    when = " Последнее сохранение: " + two(d.getDate()) + "." + two(d.getMonth() + 1) +
+           ", " + two(d.getHours()) + ":" + two(d.getMinutes()) + ".";
+  }
+  n.innerHTML = "Ответы и пройденные тренажёры хранятся в этом браузере: можно закрыть " +
+    "страницу и вернуться позже." + when +
+    " Фото не сохраняются." +
+    (at ? ' <button type="button" id="wipe">Начать заново</button>' : "");
+  var w = document.getElementById("wipe");
+  if(w){
+    w.addEventListener("click", function(){
+      wiping = true;
+      clearWork();
+      location.reload();
+    });
+  }
+}
+
+function restoreTask(t, s){
+  var el = document.getElementById("t" + t.id);
+  if(!el) return;
+  if(t.type === "choice"){
+    if(s.sel){
+      el.querySelectorAll(".opt").forEach(function(l){
+        if(l.dataset.v === s.sel){
+          l.classList.add("sel");
+          var r = l.querySelector("input");
+          if(r) r.checked = true;
+        }
+      });
+    }
+  } else if(s.given){
+    var inp = document.getElementById("in" + t.id);
+    if(inp) inp.value = s.given;
+  }
+  var host = el.querySelector(".hints"), k, h;
+  for(k = 0; k < s.hints && k < t.hints.length; k++){
+    h = document.createElement("div");
+    h.className = "hint";
+    h.innerHTML = "Подсказка " + (k + 1) + ": " + t.hints[k];
+    host.appendChild(h);
+  }
+  if(s.tries > 0){
+    var v = el.querySelector(".verdict");
+    el.classList.add(s.ok ? "ok" : "bad");
+    v.className = "verdict " + (s.ok ? "ok" : "bad");
+    if(s.ok){
+      v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    } else if(s.tries === 1){
+      v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+    } else {
+      v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    }
+    if(s.done) showSol(el, t);
+  }
+}
+
+(function(){
+  var saved = loadWork(), k;
+  if(saved){
+    spentBefore = saved.spent || 0;
+    if(saved.name){
+      var nm = document.getElementById("name");
+      if(nm && !nm.value) nm.value = saved.name;
+    }
+    TASKS.forEach(function(t){
+      var s = saved.tasks && saved.tasks[t.id];
+      if(!s) return;
+      var cur = state[t.id];
+      cur.tries = s.tries || 0; cur.hints = s.hints || 0;
+      cur.done = !!s.done; cur.ok = !!s.ok;
+      cur.given = s.given || ""; cur.sel = s.sel || null;
+      restoreTask(t, cur);
+    });
+    if(saved.tr){ for(k in saved.tr){ TRDONE[k] = saved.tr[k]; } }
+    progress();
+    trStatus();
+  }
+  saveNote(saved ? saved.at : 0);
+  var nm = document.getElementById("name");
+  if(nm) nm.addEventListener("change", saveWork);
+  window.addEventListener("beforeunload", saveWork);
+})();
 
 </script>
 </body>
