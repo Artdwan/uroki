@@ -1,0 +1,1136 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Разложение на множители и сокращение дробей — §2, 8 класс</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:800px;margin:0 auto;padding:16px 14px 60px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+.f-formula{font-size:19px}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.step{margin:6px 0}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.fig{margin:12px 0;text-align:center}
+
+.tr{border:1px solid var(--line);border-radius:12px;padding:14px;margin:16px 0;background:var(--bg)}
+.trhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;
+  margin-bottom:8px}
+.trhead b{font-size:17px}
+.trscore{color:var(--muted);font-size:15px;white-space:nowrap}
+.trq{font-size:17px;margin:8px 0}
+.trfig{text-align:center;margin:8px 0}
+.trfig svg{width:100%;max-width:330px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.tropts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
+.tropt{border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;
+  background:var(--card);font-size:16px;text-align:left;min-height:46px}
+.tropt:hover{border-color:var(--acc)}
+.tropt.right{border-color:var(--ok);background:var(--ok-soft);font-weight:600}
+.tropt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.tropts.done .tropt{cursor:default}
+.trnum{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.trnum input{font:inherit;font-size:18px;padding:9px 11px;border-radius:9px;
+  border:1.5px solid var(--line);background:var(--card);color:var(--ink);max-width:130px}
+.trmsg{font-size:16px;margin-top:8px}
+.trmsg .v{font-weight:700}
+.trmsg .v.ok{color:var(--ok)} .trmsg .v.bad{color:var(--bad)}
+.trmsg .why{color:var(--muted);font-size:15px;margin-top:4px}
+.trbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.trbar button{font-size:15px;padding:8px 13px;min-height:42px}
+.trdone{background:var(--acc-soft);border-radius:10px;padding:12px;font-size:17px;
+  text-align:center;font-weight:600}
+
+.pw{white-space:nowrap}
+.pw sup{font-size:0.68em;line-height:0;vertical-align:0.62em;padding-left:1px}
+.fx{display:block;background:var(--acc-soft,var(--acc2,#e8f0ff));border:1px solid var(--line);
+  border-radius:10px;padding:12px 13px;margin:12px 0;text-align:center;font-size:22px;
+  line-height:2.4;font-weight:600;overflow-x:auto}
+.sol .fx,.ex .fx{font-size:19px;margin:9px 0}
+.def{border:1px solid var(--line);border-left:4px solid #2f6bd8;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#eef3fb}
+.def .n{font-size:14px;color:#2f6bd8;font-weight:700;letter-spacing:.4px}
+.rule2{border:1px solid var(--line);border-left:4px solid #c0397a;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdf0f6}
+.rule2 .n{font-size:14px;color:#a02a62;font-weight:700;letter-spacing:.4px}
+.hard{border:1px solid var(--line);border-left:4px solid #7a3fbf;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#f4efff}
+.hard .n{font-size:14px;color:#5f2ea0;font-weight:700;letter-spacing:.4px}
+@media (prefers-color-scheme:dark){.rule2{background:#2a1b23}.def{background:#18212f}
+  .hard{background:#221a33}}
+.ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;background:var(--bg)}
+.ex h3{margin-top:0}
+.tohw{font-weight:700;margin:18px 0 0;font-size:18px}
+.tohw span{color:var(--muted);font-weight:400;font-size:15px;display:block;margin-top:3px}
+.small,.mini{color:var(--muted);font-size:15px}
+.fr{display:inline-block;vertical-align:-0.58em;text-align:center;margin:0 3px}
+.fr b{display:block;border-bottom:1.7px solid currentColor;padding:0 6px;font-weight:400;
+  white-space:nowrap}
+.fr i{display:block;font-style:normal;padding:0 6px;white-space:nowrap}
+.opts .opt{font-size:18px;line-height:2.2}
+.task>div:first-child{line-height:2.3}
+.trq,.trmsg .why{line-height:2.2}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.pam h3{font-size:18px;margin:18px 0 2px}
+.pam h3:first-of-type{margin-top:10px}
+.fgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));margin:9px 0}
+.fbox{border:1px solid var(--line);border-radius:12px;padding:9px 12px 11px;background:var(--bg)}
+.fbox h4{margin:0 0 3px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.fbox p{margin:6px 0 0;line-height:1.6;font-size:16px}
+.fbox p.small{font-size:15px}
+.ff{font-size:20px;line-height:2.3;text-align:center;margin:6px 0;overflow-x:auto;
+  overflow-y:hidden;white-space:nowrap;font-weight:600}
+.trnav{margin-top:12px;display:flex;gap:9px;flex-wrap:wrap}
+.trgate{margin-top:12px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;
+  font-size:16px;background:var(--bg)}
+.trgate.ready{border-color:#1f8a54;background:#e9f7ef}
+.trgate ul{margin:6px 0 0;padding-left:20px}
+.trgate li{margin:3px 0}
+.trgate a{color:var(--acc);text-decoration:none;border-bottom:1px solid currentColor;cursor:pointer}
+@media (prefers-color-scheme:dark){.trgate.ready{background:#12281d}}
+.tr.need{outline:2px solid #c99a2e;outline-offset:3px}
+.savenote{margin-top:9px;color:var(--muted);font-size:14.5px;line-height:1.45}
+.savenote button{font-size:14px;padding:5px 10px;min-height:34px;margin-left:8px}
+.sheet .f-formula{margin:5px 0;font-size:14.5px;line-height:2.1}
+@media print{
+  .sheet>.meta{display:none}
+  .sheet h2{font-size:18px;margin:0 0 5px}
+  .sheet .f-formula{font-size:12px;line-height:1.9;margin:2px 0}
+  .sheet .fr{font-size:11px;vertical-align:-0.55em}
+}
+
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+@media print{
+  body{background:#fff}
+  .bar{display:none !important}
+  .wrap>*{display:none !important}
+  .wrap>.sheet{display:block !important;border:none;margin:0;padding:0}
+  .sheet{font-size:13px}
+  .sheet h2{font-size:18px}
+  .sheet th,.sheet td{padding:4px 5px;font-size:12px}
+  @page{size:A4;margin:12mm}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card top">
+  <h1>Разложение на множители и сокращение дробей</h1>
+  <div class="meta">Алгебра · 8 класс · §2 · тренажёр на каждый способ разложения,
+  7 тренажёров, 18 задач</div>
+  <label class="f" for="name">Имя и фамилия</label>
+  <input type="text" id="name" placeholder="напиши, как в журнале" autocapitalize="words" spellcheck="false">
+  <div class="savenote" id="savenote"></div>
+  <div class="note" style="margin-top:14px">
+    <b>Как работать.</b> Страница идёт по кругу: короткая порция теории — разобранный
+    пример — тренажёр ровно на этот приём — задачи. Не перепрыгивай вперёд.
+    <div style="margin-top:8px">Главная мысль всей темы: <b>сокращать можно только
+    множители</b>. Поэтому сначала раскладываем на множители, и лишь потом сокращаем.</div>
+    <div style="margin-top:8px">Способов разложения четыре: общий множитель, формулы
+    сокращённого умножения, квадратный трёхчлен и группировка. На каждый — свой тренажёр,
+    плюс отдельные на свёртку квадрата, на разность квадратов и на знаки под скобкой.</div>
+    <div style="margin-top:8px"><b>Все семь тренажёров нужно пройти до конца</b> — без этого
+    работа не отправится. Ошибки не страшны: важно дойти до итога и прочитать разбор.</div>
+  </div>
+</div>
+
+<div class="card pam">
+
+<h2>Памятка: всё, что понадобится</h2>
+<div class="meta">Сюда возвращаются, когда застряли. Читать целиком сразу не нужно.</div>
+
+<h3>Четыре способа разложения</h3>
+<div class="fgrid"><div class="fbox"><h4>1 · Общий множитель</h4><div class="ff">3a − 3b = 3(a − b)</div><p>Смотрим, что есть в <b>каждом</b> слагаемом, и выносим за скобку.</p><p class="small">Проверка — раскрой скобки обратно.</p></div><div class="fbox"><h4>2 · Формулы сокращённого умножения</h4><div class="ff"><span class='pw'>a<sup>2</sup></span> − <span class='pw'>b<sup>2</sup></span> = (a − b)(a + b)</div><div class="ff"><span class='pw'>a<sup>2</sup></span> ± 2ab + <span class='pw'>b<sup>2</sup></span> = <span class='pw'>(a ± b)<sup>2</sup></span></div><p class="small">Узнаём по виду: два квадрата через минус или три слагаемых с удвоенным произведением.</p></div><div class="fbox"><h4>3 · Квадратный трёхчлен</h4><div class="ff"><span class='pw'>ax<sup>2</sup></span> + bx + c = a(x − <span class='pw'>x<sup>1</sup></span>)(x − <span class='pw'>x<sup>2</sup></span>)</div><p>Когда ФСУ не подходит — ищем корни через дискриминант.</p><p class="small"><span class='pw'>x<sup>2</sup></span> + 2x − 15 = (x − 3)(x + 5).</p></div><div class="fbox"><h4>4 · Группировка</h4><div class="ff">ab − 4b − 2a + 8 = (a − 4)(b − 2)</div><p>Четыре слагаемых разбиваем на пары так, чтобы в обеих вышла одинаковая скобка.</p><p class="small">Если скобки получились разные — поменяй разбиение.</p></div></div>
+
+<h3>Знаки и степени</h3>
+<div class="fgrid"><div class="fbox"><h4>Минус за скобку</h4><div class="ff">a − b = −(b − a)</div><div class="ff">−2a − 4 = −2(a + 2)</div><p>Вынося минус, <b>меняем знак каждого</b> слагаемого в скобке.</p><p class="small">Это главный приём для дробей вида (a − b) : (b − a).</p></div><div class="fbox"><h4>Чётная степень</h4><div class="ff"><span class='pw'>(a − b)<sup>2</sup></span> = <span class='pw'>(b − a)<sup>2</sup></span></div><p>Под скобкой <b>чётной</b> степени можно поменять все знаки — значение не изменится.</p><p class="small">Значит и слагаемые разности можно переставить местами.</p></div><div class="fbox"><h4>Нечётная степень</h4><div class="ff"><span class='pw'>(a − b)<sup>3</sup></span> = −<span class='pw'>(b − a)<sup>3</sup></span></div><p>У <b>нечётной</b> степени перестановка меняет знак всего выражения.</p><p class="small">Проверяй на числах: <span class='pw'>(2−5)<sup>3</sup></span> = −27, <span class='pw'>(5−2)<sup>3</sup></span> = 27.</p></div></div>
+
+<h3>Работа с дробью</h3>
+<div class="fgrid"><div class="fbox"><h4>Основное свойство</h4><div class="ff"><span class='fr'><b>A</b><i>B</i></span> = <span class='fr'><b>A · C</b><i>B · C</i></span>, C ≠ 0</div><p>Числитель и знаменатель можно умножить или разделить на один и тот же ненулевой множитель.</p><p class="small">Справа налево это и есть сокращение.</p></div><div class="fbox"><h4>Знак дроби</h4><div class="ff"><span class='fr'><b>A</b><i>B</i></span> = <span class='fr'><b>−A</b><i>−B</i></span> = −<span class='fr'><b>−A</b><i>B</i></span> = −<span class='fr'><b>A</b><i>−B</i></span></div><p>Минус можно переносить: из числителя, из знаменателя или ставить перед дробью.</p><p class="small">Три минуса в записи — это на самом деле один.</p></div><div class="fbox"><h4>Алгоритм сокращения</h4><p>1. Разложить числитель и знаменатель на множители.</p><p>2. Найти общий множитель.</p><p>3. Разделить на него и числитель, и знаменатель.</p><p class="small">Сокращать можно только <b>множители</b>, а не слагаемые.</p></div></div>
+
+</div>
+
+<div class="card">
+  <h2>Проверь себя: какой способ</h2>
+  <div class="meta">Десять выражений. Ничего считать не надо — только узнать приём.
+  Это главный навык темы.</div>
+<div class="tr" id="ts1"><div class="trhead"><b>Тренажёр 1. Какой способ разложения</b><span class="trscore" id="ts1s"></span></div><div class="meta">Десять выражений. Считать ничего не надо — только выбрать приём.</div><div class="trq" id="ts1q"></div><div class="trfig" id="ts1f"></div><div id="ts1a"></div><div class="trmsg" id="ts1m"></div><div class="trbar" id="ts1b"></div></div>
+</div>
+
+<div class="card">
+
+<h2>1. Общий множитель и минус за скобку</h2>
+<div class="def"><div class="n">ОСНОВНОЕ СВОЙСТВО ДРОБИ</div>
+Числитель и знаменатель можно умножить или разделить на один и тот же <b>ненулевой</b>
+множитель — получится дробь, тождественно равная данной.</div>
+<div class="ff"><span class='fr'><b>A</b><i>B</i></span> = <span class='fr'><b>A · C</b><i>B · C</i></span>, &nbsp; B ≠ 0, C ≠ 0</div>
+<p>Справа налево это правило и есть <b>сокращение</b>: делим числитель и знаменатель
+на общий множитель. Но сокращать можно только множители — не слагаемые.</p>
+<div class="rule2"><div class="n">МИНУС ЗА СКОБКУ</div>
+Вынося минус, меняем знак <b>каждого</b> слагаемого в скобке.</div>
+<div class="ff">−2a − 4 = −2(a + 2)</div><div class="ff">a − b = −(b − a)</div>
+<div class="ex"><h3>Пример 1</h3>
+<p>Сократи <span class='fr'><b>−2a − 4</b><i>a + 2</i></span>.</p>
+<div class="step">1. В числителе выносим −2: −2a − 4 = −2(a + 2).</div>
+<div class="step">2. Скобка (a + 2) сокращается.</div>
+<div class="ff"><span class='fr'><b>−2(a + 2)</b><i>a + 2</i></span> = −2</div>
+<div class="step mini">Сравни с <span class='fr'><b>a + 2</b><i>2a + 4</i></span>: тут выносим 2 из знаменателя
+и получаем <span class='fr'><b>1</b><i>2</i></span>. Смотри, из чего выносить, — из того, где множитель общий.</div></div>
+<div class="tohw">Задание 1<span>Три задачи: общий множитель и минус за скобку.</span></div>
+</div>
+
+<div class="card">
+  <h2>Тренажёр: минус за скобку</h2>
+  <div class="meta">Восемь выражений. Помни: меняется знак каждого слагаемого.</div>
+<div class="tr" id="ts2"><div class="trhead"><b>Тренажёр 2. Минус за скобку</b><span class="trscore" id="ts2s"></span></div><div class="meta">Восемь выражений: что останется в скобке после выноса минуса.</div><div class="trq" id="ts2q"></div><div class="trfig" id="ts2f"></div><div id="ts2a"></div><div class="trmsg" id="ts2m"></div><div class="trbar" id="ts2b"></div></div>
+</div>
+<div id="tasks1"></div>
+
+<div class="card">
+
+<h2>2. Формулы сокращённого умножения</h2>
+<div class="rule2"><div class="n">ТРИ ФОРМУЛЫ</div>
+Их узнают по виду выражения, а не подбором.</div>
+<div class="ff"><span class='pw'>a<sup>2</sup></span> − <span class='pw'>b<sup>2</sup></span> = (a − b)(a + b)</div><div class="ff"><span class='pw'>a<sup>2</sup></span> + 2ab + <span class='pw'>b<sup>2</sup></span> = <span class='pw'>(a + b)<sup>2</sup></span></div><div class="ff"><span class='pw'>a<sup>2</sup></span> − 2ab + <span class='pw'>b<sup>2</sup></span> = <span class='pw'>(a − b)<sup>2</sup></span></div>
+<div class="def"><div class="n">КАК УЗНАТЬ</div>
+<b>Два</b> слагаемых и между ними минус, оба — квадраты → разность квадратов.<br>
+<b>Три</b> слагаемых, крайние — квадраты, средний — их удвоенное произведение →
+квадрат суммы или разности.</div>
+<div class="ex"><h3>Пример 2</h3>
+<p>Сократи <span class='fr'><b><span class='pw'>a<sup>2</sup></span> − 16</b><i><span class='pw'>a<sup>2</sup></span> − 8a + 16</i></span>.</p>
+<div class="step">1. Числитель — разность квадратов: (a − 4)(a + 4).</div>
+<div class="step">2. Знаменатель — квадрат разности: <span class='pw'>(a − 4)<sup>2</sup></span>.</div>
+<div class="step">3. Общий множитель (a − 4) сокращаем.</div>
+<div class="ff"><span class='fr'><b>a + 4</b><i>a − 4</i></span></div>
+<div class="step mini">Проверь себя на числах: при a = 5 исходная дробь равна
+9 : 1 = 9, и ответ (5 + 4) : (5 − 4) = 9. Сошлось.</div></div>
+<div class="tohw">Задание 2<span>Три задачи на формулы сокращённого умножения.</span></div>
+</div>
+
+<div class="card">
+  <h2>Тренажёр: свернуть квадрат</h2>
+  <div class="meta">Восемь трёхчленов: квадрат суммы или квадрат разности.</div>
+<div class="tr" id="ts3"><div class="trhead"><b>Тренажёр 3. Свернуть квадрат</b><span class="trscore" id="ts3s"></span></div><div class="meta">Восемь трёхчленов: квадрат суммы или квадрат разности.</div><div class="trq" id="ts3q"></div><div class="trfig" id="ts3f"></div><div id="ts3a"></div><div class="trmsg" id="ts3m"></div><div class="trbar" id="ts3b"></div></div>
+</div>
+
+<div class="card">
+  <h2>Тренажёр: разность квадратов</h2>
+  <div class="meta">Восемь выражений. Порядок множителей задаёт знак — следи за ним.</div>
+<div class="tr" id="ts4"><div class="trhead"><b>Тренажёр 4. Разность квадратов</b><span class="trscore" id="ts4s"></span></div><div class="meta">Восемь выражений. Следи за порядком: он задаёт знак.</div><div class="trq" id="ts4q"></div><div class="trfig" id="ts4f"></div><div id="ts4a"></div><div class="trmsg" id="ts4m"></div><div class="trbar" id="ts4b"></div></div>
+</div>
+<div id="tasks2"></div>
+
+<div class="card">
+
+<h2>3. Квадратный трёхчлен</h2>
+<div class="def"><div class="n">КОГДА ФОРМУЛЫ НЕ ПОДХОДЯТ</div>
+Если три слагаемых, но средний не равен удвоенному произведению, ищем корни
+через дискриминант и раскладываем по формуле.</div>
+<div class="ff"><span class='pw'>ax<sup>2</sup></span> + bx + c = a(x − <span class='pw'>x<sup>1</sup></span>)(x − <span class='pw'>x<sup>2</sup></span>)</div>
+<div class="ex"><h3>Пример 3</h3>
+<p>Сократи <span class='fr'><b><span class='pw'>x<sup>2</sup></span> + 2x − 15</b><i><span class='pw'>x<sup>2</sup></span> − 9</i></span>.</p>
+<div class="step">1. Числитель: D = 4 + 60 = 64, корни x = 3 и x = −5.</div>
+<div class="step">2. Значит <span class='pw'>x<sup>2</sup></span> + 2x − 15 = (x − 3)(x + 5).</div>
+<div class="step">3. Знаменатель — разность квадратов: (x − 3)(x + 3).</div>
+<div class="ff"><span class='fr'><b>x + 5</b><i>x + 3</i></span></div>
+<div class="step mini">Когда старший коэффициент не единица, его не теряют:
+2<span class='pw'>x<sup>2</sup></span> + 5x − 3 = 2(x − 0,5)(x + 3) = (2x − 1)(x + 3).</div></div>
+<div class="tohw">Задание 3<span>Три задачи на квадратный трёхчлен.</span></div>
+</div>
+
+<div class="card">
+  <h2>Тренажёр: квадратный трёхчлен</h2>
+  <div class="meta">Восемь трёхчленов. Считаем дискриминант и вписываем больший корень.</div>
+<div class="tr" id="ts5"><div class="trhead"><b>Тренажёр 5. Квадратный трёхчлен</b><span class="trscore" id="ts5s"></span></div><div class="meta">Восемь трёхчленов: считаем дискриминант и вписываем больший корень.</div><div class="trq" id="ts5q"></div><div class="trfig" id="ts5f"></div><div id="ts5a"></div><div class="trmsg" id="ts5m"></div><div class="trbar" id="ts5b"></div></div>
+</div>
+<div id="tasks3"></div>
+
+<div class="card">
+
+<h2>4. Группировка</h2>
+<div class="rule2"><div class="n">КОГДА ПРИМЕНЯТЬ</div>
+Обычно при <b>четырёх</b> слагаемых. Разбиваем их на две пары так, чтобы после вынесения
+множителя в обеих парах получилась <b>одинаковая скобка</b>.</div>
+<div class="ex"><h3>Пример 4</h3>
+<p>Разложи ab − 4b − 2a + 8.</p>
+<div class="step">1. Пары: (ab − 4b) + (−2a + 8).</div>
+<div class="step">2. Из первой выносим b, из второй −2: b(a − 4) − 2(a − 4).</div>
+<div class="step">3. Общая скобка (a − 4) выносится.</div>
+<div class="ff">(a − 4)(b − 2)</div>
+<div class="step mini">Если скобки вышли разные — попробуй другое разбиение на пары
+или вынеси минус: (3 − n) и (n − 3) отличаются только знаком.</div></div>
+<div class="def"><div class="n">ПРИЗНАК ВЕРНОГО ХОДА</div>
+После вынесения множителя из обеих пар скобки должны совпасть буква в букву.
+Если совпали с точностью до знака — вынеси минус и они совпадут.</div>
+<div class="tohw">Задание 4<span>Три задачи на группировку.</span></div>
+</div>
+
+<div class="card">
+  <h2>Тренажёр: группировка</h2>
+  <div class="meta">Восемь выражений по четыре слагаемых.</div>
+<div class="tr" id="ts6"><div class="trhead"><b>Тренажёр 6. Группировка</b><span class="trscore" id="ts6s"></span></div><div class="meta">Восемь выражений по четыре слагаемых.</div><div class="trq" id="ts6q"></div><div class="trfig" id="ts6f"></div><div id="ts6a"></div><div class="trmsg" id="ts6m"></div><div class="trbar" id="ts6b"></div></div>
+</div>
+<div id="tasks4"></div>
+
+<div class="card">
+
+<h2>5. Знаки и чётные степени</h2>
+<div class="rule2"><div class="n">ГЛАВНОЕ ПРАВИЛО ТЕМЫ</div>
+Под скобкой <b>чётной</b> степени можно поменять все знаки на противоположные —
+значение не изменится. Значит и слагаемые разности можно переставить местами.</div>
+<div class="ff"><span class='pw'>(a − b)<sup>2</sup></span> = <span class='pw'>(b − a)<sup>2</sup></span></div><div class="ff"><span class='pw'>(a − b)<sup>4</sup></span> = <span class='pw'>(b − a)<sup>4</sup></span></div>
+<div class="def"><div class="n">А ВОТ НЕЧЁТНАЯ — НЕТ</div>
+При нечётной степени перестановка меняет знак всего выражения.</div>
+<div class="ff"><span class='pw'>(a − b)<sup>3</sup></span> = −<span class='pw'>(b − a)<sup>3</sup></span></div>
+<p>Отсюда самое частое сокращение всей темы:</p>
+<div class="ff"><span class='fr'><b>a − b</b><i>b − a</i></span> = <span class='fr'><b>a − b</b><i>−(a − b)</i></span> = −1</div>
+<div class="ex"><h3>Пример 5</h3>
+<p>Сократи <span class='fr'><b>16 − <span class='pw'>x<sup>2</sup></span></b><i><span class='pw'>(x − 4)<sup>2</sup></span></i></span>.</p>
+<div class="step">1. Числитель: (4 − x)(4 + x).</div>
+<div class="step">2. Знаменатель: степень чётная, поэтому <span class='pw'>(x − 4)<sup>2</sup></span> = <span class='pw'>(4 − x)<sup>2</sup></span>.</div>
+<div class="step">3. Сокращаем на (4 − x).</div>
+<div class="ff"><span class='fr'><b>4 + x</b><i>4 − x</i></span></div>
+<div class="step mini">Проверь на числе: при x = 2 исходная дробь равна 12 : 4 = 3,
+и ответ 6 : 2 = 3. Сошлось.</div></div>
+<div class="tohw">Задание 5<span>Три задачи на знаки и чётные степени.</span></div>
+</div>
+
+<div class="card">
+  <h2>Тренажёр: знаки и чётные степени</h2>
+  <div class="meta">Восемь вопросов о том, когда перестановка слагаемых меняет знак,
+  а когда нет.</div>
+<div class="tr" id="ts7"><div class="trhead"><b>Тренажёр 7. Знаки и чётные степени</b><span class="trscore" id="ts7s"></span></div><div class="meta">Восемь вопросов про перестановку слагаемых под скобкой.</div><div class="trq" id="ts7q"></div><div class="trfig" id="ts7f"></div><div id="ts7a"></div><div class="trmsg" id="ts7m"></div><div class="trbar" id="ts7b"></div></div>
+</div>
+<div id="tasks5"></div>
+
+<div class="card">
+
+<h2>6. Как выбрать способ</h2>
+<div class="hard"><div class="n">ПОРЯДОК ДЕЙСТВИЙ</div>
+1. Сначала всегда пробуем вынести <b>общий множитель</b> — это упрощает всё остальное.<br>
+2. Смотрим на число слагаемых: два — разность квадратов, три — квадрат суммы/разности
+или трёхчлен, четыре — группировка.<br>
+3. Только потом считаем дискриминант.</div>
+<div class="ex"><h3>Пример 6</h3>
+<p>Найди значение <span class='fr'><b><span class='pw'>a<sup>2</sup></span> − 2ab + <span class='pw'>b<sup>2</sup></span></b><i>2<span class='pw'>a<sup>2</sup></span> − 2ab</i></span> при a = 1,6 и b = −4,8.</p>
+<div class="step">1. Числитель — квадрат разности: <span class='pw'>(a − b)<sup>2</sup></span>.</div>
+<div class="step">2. Знаменатель — общий множитель 2a: 2a(a − b).</div>
+<div class="step">3. Сокращаем на (a − b).</div>
+<div class="ff"><span class='fr'><b>a − b</b><i>2a</i></span> = <span class='fr'><b>1,6 + 4,8</b><i>3,2</i></span> = 2</div>
+<div class="step mini">Подставлять числа сразу — самый долгий путь. Сначала сокращаем,
+потом считаем: работы в разы меньше.</div></div>
+<div class="tohw">Задание 6<span>Три итоговые задачи.</span></div>
+</div>
+<div id="tasks6"></div>
+<div id="tasks"></div>
+
+<div class="card sheet">
+  <h2>Шпаргалка</h2>
+  <div class="meta">Печатается на один лист A4: Ctrl+P (⌘+P) → печать.</div>
+  <p class="f-formula"><b>Основное свойство.</b> <span class='fr'><b>A</b><i>B</i></span> = <span class='fr'><b>A · C</b><i>B · C</i></span>. Числитель и знаменатель можно
+  умножить или разделить на один и тот же ненулевой множитель. Сокращать можно только
+  множители, а не слагаемые.</p>
+  <p class="f-formula"><b>Способ 1 — общий множитель.</b> 3a − 3b = 3(a − b).
+  Всегда пробуй его первым: дальше работать будет проще.</p>
+  <p class="f-formula"><b>Способ 2 — формулы.</b> <span class='pw'>a<sup>2</sup></span> − <span class='pw'>b<sup>2</sup></span> = (a − b)(a + b); <span class='pw'>a<sup>2</sup></span> + 2ab + <span class='pw'>b<sup>2</sup></span> = <span class='pw'>(a + b)<sup>2</sup></span>; <span class='pw'>a<sup>2</sup></span> − 2ab + <span class='pw'>b<sup>2</sup></span> = <span class='pw'>(a − b)<sup>2</sup></span>.
+  Два слагаемых через минус — разность квадратов; три слагаемых с удвоенным
+  произведением — квадрат суммы или разности.</p>
+  <p class="f-formula"><b>Способ 3 — квадратный трёхчлен.</b> <span class='pw'>ax<sup>2</sup></span> + bx + c = a(x − <span class='pw'>x<sup>1</sup></span>)(x − <span class='pw'>x<sup>2</sup></span>).
+  Считаем дискриминант, находим корни, подставляем в формулу. Старший коэффициент
+  не теряем.</p>
+  <p class="f-formula"><b>Способ 4 — группировка.</b> Четыре слагаемых разбиваем на пары
+  так, чтобы вышла одинаковая скобка: ab − 4b − 2a + 8 = (a − 4)(b − 2).</p>
+  <p class="f-formula"><b>Минус за скобку.</b> a − b = −(b − a); −2a − 4 = −2(a + 2).
+  Меняем знак каждого слагаемого.</p>
+  <p class="f-formula"><b>Чётная степень.</b> <span class='pw'>(a − b)<sup>2</sup></span> = <span class='pw'>(b − a)<sup>2</sup></span>. Под скобкой чётной степени
+  все знаки можно поменять, а слагаемые разности — переставить.</p>
+  <p class="f-formula"><b>Нечётная степень.</b> <span class='pw'>(a − b)<sup>3</sup></span> = −<span class='pw'>(b − a)<sup>3</sup></span>. Перестановка меняет знак
+  всего выражения.</p>
+  <p class="f-formula"><b>Знак дроби.</b> <span class='fr'><b>A</b><i>B</i></span> = <span class='fr'><b>−A</b><i>−B</i></span> = −<span class='fr'><b>−A</b><i>B</i></span> = −<span class='fr'><b>A</b><i>−B</i></span>. Минус можно переносить из числителя,
+  из знаменателя или ставить перед дробью.</p>
+  <p class="f-formula"><b>Самое частое сокращение.</b> <span class='fr'><b>a − b</b><i>b − a</i></span> = −1.</p>
+</div>
+
+<div class="card">
+  <h2>Шаг 1. Фото решений — по желанию</h2>
+  <div class="meta">В поле уходит только ответ, а я смотрю ещё и ход решения.
+  Фото прикладывать не обязательно, но с ними разбор будет точнее.</div>
+  <ol class="steps-list">
+    <li>Сначала запиши разложение числителя и знаменателя — это половина решения.</li>
+    <li>Подчёркивай общий множитель, на который сокращаешь.</li>
+    <li>Числа подставляй в самом конце, уже в сокращённую дробь.</li>
+  </ol>
+  <input type="file" id="photos" accept="image/*" multiple style="margin-top:12px">
+  <div class="thumbs" id="thumbs"></div>
+</div>
+
+<div class="card">
+  <h2>Шаг 2. Отправь работу</h2>
+  <div class="meta">Проверь, что вверху написано твоё имя. По кнопке ответы и результат
+  уходят преподавателю. Вторая кнопка сохраняет копию тебе.</div>
+  <div class="trgate" id="trgate"></div>
+  <div class="row" style="margin-top:12px">
+    <button class="pri" id="send">Отправить на проверку</button>
+    <button id="report">Скачать копию себе</button>
+  </div>
+  <div id="repnote" class="meta" style="margin-top:8px"></div>
+</div>
+
+</div>
+
+<div class="bar">
+  <button class="pri" id="checkall">Проверить всё</button>
+  <span id="progress" class="meta">решено 0 из 18</span>
+</div>
+
+<script>
+var CF = {};
+var STUDENT_CODE = (function(){
+  try{ var m = /[#&?]code=([^&]+)/.exec(location.hash + location.search);
+       return m ? decodeURIComponent(m[1]) : ""; }catch(e){ return ""; }
+})();
+var TOPIC = "Разложение на множители и сокращение дробей (§2, алгебра 8 класс)";
+
+"use strict";
+var started = Date.now();
+var spentBefore = 0;
+
+/* ---------- данные задач; ответы закодированы, чтобы не читались в исходнике ---------- */
+function e(s){return btoa(unescape(encodeURIComponent(s)));}
+function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return s;}}
+
+var TASKS = [{"id": 1, "blk": "1", "lvl": "база", "img": "", "type": "choice", "text": "Сократи дробь <span class='fr'><b>6ab</b><i>8a</i></span>.", "ans": ["M2IvNA=="], "hints": ["Общий множитель числителя и знаменателя — 2a.", "6ab = 2a · 3b, 8a = 2a · 4.", "Делим и числитель, и знаменатель на 2a."], "sol": "<div class='step'>1. 6ab = 2a · 3b, 8a = 2a · 4.</div><div class='fx'><span class='fr'><b>2a · 3b</b><i>2a · 4</i></span> = <span class='fr'><b>3b</b><i>4</i></span></div><div class='step mini'>Буква a сокращается полностью — её в ответе нет.</div>", "options": ["3b/4", "3b/8", "6b/8", "3ab/4"], "optionsHtml": ["<span class='fr'><b>3b</b><i>4</i></span>", "<span class='fr'><b>3b</b><i>8</i></span>", "<span class='fr'><b>6b</b><i>8</i></span>", "<span class='fr'><b>3ab</b><i>4</i></span>"]}, {"id": 2, "blk": "1", "lvl": "средний", "img": "", "type": "num", "text": "Найди значение дроби <span class='fr'><b>2<span class='pw'>x<sup>2</sup></span>y − x<span class='pw'>y<sup>2</sup></span></b><i>2x − y</i></span> при x = 2,56 и y = 10.", "ans": ["MjUsNg=="], "hints": ["В числителе вынеси общий множитель xy.", "2x²y − xy² = xy(2x − y).", "Скобка (2x − y) сокращается, остаётся xy."], "sol": "<div class='step'>1. Числитель: xy(2x − y).</div><div class='step'>2. Сокращаем на (2x − y), остаётся xy.</div><div class='fx'>xy = 2,56 · 10 = 25,6</div><div class='step mini'>Подставлять числа сразу было бы вдвое дольше — и с большими числами.</div>"}, {"id": 3, "blk": "1", "lvl": "база", "img": "", "type": "num", "text": "Упрости выражение <span class='fr'><b>−2a − 4</b><i>a + 2</i></span>.", "ans": ["LTI="], "hints": ["В числителе вынеси −2.", "−2a − 4 = −2(a + 2).", "Скобка (a + 2) сокращается."], "sol": "<div class='step'>1. Числитель: −2(a + 2).</div><div class='fx'><span class='fr'><b>−2(a + 2)</b><i>a + 2</i></span> = −2</div><div class='step mini'>Вынося минус, меняем знак каждого слагаемого: было −4, стало +4 внутри скобки.</div>"}, {"id": 4, "blk": "2", "lvl": "средний", "img": "", "type": "choice", "text": "Сократи дробь <span class='fr'><b><span class='pw'>a<sup>2</sup></span> − 16</b><i><span class='pw'>a<sup>2</sup></span> − 8a + 16</i></span>.", "ans": ["KGErNCkvKGEtNCk="], "hints": ["Числитель — разность квадратов.", "Знаменатель — квадрат разности: <span class='pw'>(a − 4)<sup>2</sup></span>.", "Общий множитель (a − 4)."], "sol": "<div class='step'>1. Числитель: (a − 4)(a + 4).</div><div class='step'>2. Знаменатель: <span class='pw'>(a − 4)<sup>2</sup></span>.</div><div class='fx'><span class='fr'><b>a + 4</b><i>a − 4</i></span></div><div class='step mini'>Проверка при a = 5: слева 9 : 1 = 9, справа 9 : 1 = 9.</div>", "options": ["(a+4)/(a-4)", "(a-4)/(a+4)", "a+4", "1/(a-4)"], "optionsHtml": ["<span class='fr'><b>a + 4</b><i>a − 4</i></span>", "<span class='fr'><b>a − 4</b><i>a + 4</i></span>", "a + 4", "<span class='fr'><b>1</b><i>a − 4</i></span>"]}, {"id": 5, "blk": "2", "lvl": "база", "img": "", "type": "num", "text": "Найди значение дроби <span class='fr'><b><span class='pw'>x<sup>2</sup></span> − 9</b><i>3 − x</i></span> при x = 5,65.", "ans": ["LTgsNjU="], "hints": ["Числитель — разность квадратов: (x − 3)(x + 3).", "В знаменателе вынеси минус: 3 − x = −(x − 3).", "После сокращения останется −(x + 3)."], "sol": "<div class='step'>1. Числитель: (x − 3)(x + 3), знаменатель: −(x − 3).</div><div class='step'>2. Сокращаем на (x − 3).</div><div class='fx'>−(x + 3) = −(5,65 + 3) = −8,65</div><div class='step mini'>Минус в ответе появился из перестановки в знаменателе — не потеряй его.</div>"}, {"id": 6, "blk": "2", "lvl": "сложный", "img": "", "type": "num", "text": "Найди значение дроби <span class='fr'><b>a − 4</b><i>16 − <span class='pw'>a<sup>2</sup></span></i></span> при a = −4,01.", "ans": ["MTAw"], "hints": ["Знаменатель — разность квадратов: (4 − a)(4 + a).", "Числитель a − 4 = −(4 − a).", "После сокращения останется −1 : (4 + a)."], "sol": "<div class='step'>1. Знаменатель: (4 − a)(4 + a).</div><div class='step'>2. Числитель: −(4 − a), сокращаем на (4 − a).</div><div class='fx'><span class='fr'><b>−1</b><i>4 + a</i></span> = <span class='fr'><b>−1</b><i>−0,01</i></span> = 100</div><div class='step mini'>4 + (−4,01) = −0,01 — маленький знаменатель даёт большой ответ.</div>"}, {"id": 7, "blk": "3", "lvl": "средний", "img": "", "type": "choice", "text": "Сократи дробь <span class='fr'><b><span class='pw'>x<sup>2</sup></span> + 2x − 15</b><i><span class='pw'>x<sup>2</sup></span> − 9</i></span>.", "ans": ["KHgrNSkvKHgrMyk="], "hints": ["Числитель — квадратный трёхчлен, ищи корни.", "D = 4 + 60 = 64, корни 3 и −5.", "Знаменатель — разность квадратов."], "sol": "<div class='step'>1. Числитель: (x − 3)(x + 5).</div><div class='step'>2. Знаменатель: (x − 3)(x + 3).</div><div class='fx'><span class='fr'><b>x + 5</b><i>x + 3</i></span></div><div class='step mini'>Сокращается именно множитель (x − 3), а не отдельные слагаемые.</div>", "options": ["(x+5)/(x+3)", "(x-3)/(x+3)", "(x+5)/(x-3)", "x+5"], "optionsHtml": ["<span class='fr'><b>x + 5</b><i>x + 3</i></span>", "<span class='fr'><b>x − 3</b><i>x + 3</i></span>", "<span class='fr'><b>x + 5</b><i>x − 3</i></span>", "x + 5"]}, {"id": 8, "blk": "3", "lvl": "сложный", "img": "", "type": "num", "text": "Найди значение дроби <span class='fr'><b>2<span class='pw'>a<sup>2</sup></span> − 5a − 3</b><i><span class='pw'>a<sup>2</sup></span> − 6a + 9</i></span> при a = <span class='fr'><b>16</b><i>3</i></span>.", "ans": ["NQ=="], "hints": ["Числитель: D = 25 + 24 = 49, корни 3 и −0,5.", "Значит 2a² − 5a − 3 = (a − 3)(2a + 1).", "Знаменатель — квадрат разности <span class='pw'>(a − 3)<sup>2</sup></span>."], "sol": "<div class='step'>1. Числитель: (a − 3)(2a + 1).</div><div class='step'>2. Знаменатель: <span class='pw'>(a − 3)<sup>2</sup></span>, сокращаем на (a − 3).</div><div class='fx'><span class='fr'><b>2a + 1</b><i>a − 3</i></span> = <span class='fr'><b>32/3 + 1</b><i>16/3 − 3</i></span> = <span class='fr'><b>35/3</b><i>7/3</i></span> = 5</div><div class='step mini'>Дроби в числителе и знаменателе имеют общий знаменатель 3 — он уходит.</div>"}, {"id": 9, "blk": "3", "lvl": "сложный", "img": "", "type": "num", "text": "Найди значение дроби <span class='fr'><b>3<span class='pw'>a<sup>2</sup></span> − 13a + 4</b><i>3<span class='pw'>a<sup>2</sup></span> + 11a − 4</i></span> при a = −5,6.", "ans": ["Ng=="], "hints": ["Оба трёхчлена разложи через корни.", "Числитель: (3a − 1)(a − 4). Знаменатель: (3a − 1)(a + 4).", "Сокращается (3a − 1)."], "sol": "<div class='step'>1. Числитель: (3a − 1)(a − 4), знаменатель: (3a − 1)(a + 4).</div><div class='fx'><span class='fr'><b>a − 4</b><i>a + 4</i></span> = <span class='fr'><b>−9,6</b><i>−1,6</i></span> = 6</div><div class='step mini'>Два одинаковых множителя в разных трёхчленах — обычное дело, ищи их специально.</div>"}, {"id": 10, "blk": "4", "lvl": "средний", "img": "", "type": "choice", "text": "Сократи дробь <span class='fr'><b>ab − 4b − 2a + 8</b><i>20 − 5a</i></span>.", "ans": ["KDItYikvNQ=="], "hints": ["Числитель раскладывай группировкой.", "ab − 4b − 2a + 8 = (a − 4)(b − 2).", "Знаменатель: 20 − 5a = −5(a − 4)."], "sol": "<div class='step'>1. Числитель: b(a − 4) − 2(a − 4) = (a − 4)(b − 2).</div><div class='step'>2. Знаменатель: −5(a − 4).</div><div class='fx'><span class='fr'><b>b − 2</b><i>−5</i></span> = <span class='fr'><b>2 − b</b><i>5</i></span></div><div class='step mini'>Минус из знаменателя лучше перенести в числитель — так ответ выглядит аккуратнее.</div>", "options": ["(2-b)/5", "(b-2)/5", "(a-4)/5", "5(b-2)"], "optionsHtml": ["<span class='fr'><b>2 − b</b><i>5</i></span>", "<span class='fr'><b>b − 2</b><i>5</i></span>", "<span class='fr'><b>a − 4</b><i>5</i></span>", "5(b − 2)"]}, {"id": 11, "blk": "4", "lvl": "сложный", "img": "", "type": "num", "text": "Найди значение дроби <span class='fr'><b>8<span class='pw'>a<sup>2</sup></span> − 4ab − 2ax + xb</b><i>2ax + 6a − xb − 3b</i></span> при a = 1,5, b = −2,56 и x = −1,5.", "ans": ["NQ=="], "hints": ["Обе части раскладывай группировкой.", "Числитель: 4a(2a − b) − x(2a − b) = (2a − b)(4a − x).", "Знаменатель: 2a(x + 3) − b(x + 3) = (x + 3)(2a − b)."], "sol": "<div class='step'>1. Числитель: (2a − b)(4a − x).</div><div class='step'>2. Знаменатель: (x + 3)(2a − b), сокращаем на (2a − b).</div><div class='fx'><span class='fr'><b>4a − x</b><i>x + 3</i></span> = <span class='fr'><b>6 + 1,5</b><i>1,5</i></span> = 5</div><div class='step mini'>Значение b вообще не понадобилось — оно ушло при сокращении.</div>"}, {"id": 12, "blk": "4", "lvl": "сложный", "img": "", "type": "choice", "text": "Сократи дробь <span class='fr'><b>12<span class='pw'>a<sup>2</sup></span> − 9ab + 4ac − 3bc</b><i>20<span class='pw'>a<sup>2</sup></span> + 3bc − 15ab − 4ac</i></span>.", "ans": ["KDNhK2MpLyg1YS1jKQ=="], "hints": ["В числителе группируй по парам: первые две и последние две.", "Числитель: 3a(4a − 3b) + c(4a − 3b) = (4a − 3b)(3a + c).", "Знаменатель: 5a(4a − 3b) − c(4a − 3b) = (4a − 3b)(5a − c)."], "sol": "<div class='step'>1. Числитель: (4a − 3b)(3a + c).</div><div class='step'>2. Знаменатель: (4a − 3b)(5a − c).</div><div class='fx'><span class='fr'><b>3a + c</b><i>5a − c</i></span></div><div class='step mini'>В знаменателе слагаемые стоят вперемешку — сначала переставь их по парам.</div>", "options": ["(3a+c)/(5a-c)", "(3a+c)/(5a+c)", "(4a-3b)/(5a-c)", "(3a-c)/(5a-c)"], "optionsHtml": ["<span class='fr'><b>3a + c</b><i>5a − c</i></span>", "<span class='fr'><b>3a + c</b><i>5a + c</i></span>", "<span class='fr'><b>4a − 3b</b><i>5a − c</i></span>", "<span class='fr'><b>3a − c</b><i>5a − c</i></span>"]}, {"id": 13, "blk": "5", "lvl": "база", "img": "", "type": "num", "text": "Упрости выражение <span class='fr'><b>a − b</b><i>b − a</i></span>.", "ans": ["LTE="], "hints": ["В знаменателе вынеси минус.", "b − a = −(a − b).", "Одинаковые скобки сокращаются."], "sol": "<div class='step'>1. b − a = −(a − b).</div><div class='fx'><span class='fr'><b>a − b</b><i>−(a − b)</i></span> = −1</div><div class='step mini'>Это самое частое сокращение темы: переставленная разность даёт −1.</div>"}, {"id": 14, "blk": "5", "lvl": "база", "img": "", "type": "choice", "text": "Сократи дробь <span class='fr'><b><span class='pw'>x<sup>2</sup></span> − <span class='pw'>y<sup>2</sup></span></b><i>3y − 3x</i></span>.", "ans": ["LSh4K3kpLzM="], "hints": ["Числитель — разность квадратов.", "В знаменателе вынеси 3, а потом минус: 3y − 3x = −3(x − y).", "Сокращается (x − y)."], "sol": "<div class='step'>1. Числитель: (x − y)(x + y).</div><div class='step'>2. Знаменатель: −3(x − y).</div><div class='fx'><span class='fr'><b>x + y</b><i>−3</i></span> = −<span class='fr'><b>x + y</b><i>3</i></span></div><div class='step mini'>Ответ можно записать и как <span class='fr'><b>−x − y</b><i>3</i></span> — это одно и то же.</div>", "options": ["-(x+y)/3", "(x+y)/3", "(x-y)/3", "-(x-y)/3"], "optionsHtml": ["−<span class='fr'><b>x + y</b><i>3</i></span>", "<span class='fr'><b>x + y</b><i>3</i></span>", "<span class='fr'><b>x − y</b><i>3</i></span>", "−<span class='fr'><b>x − y</b><i>3</i></span>"]}, {"id": 15, "blk": "5", "lvl": "средний", "img": "", "type": "choice", "text": "Сократи дробь <span class='fr'><b>16 − <span class='pw'>x<sup>2</sup></span></b><i><span class='pw'>(x − 4)<sup>2</sup></span></i></span>.", "ans": ["KDQreCkvKDQteCk="], "hints": ["Числитель — разность квадратов: (4 − x)(4 + x).", "Степень в знаменателе чётная, значит <span class='pw'>(x − 4)<sup>2</sup></span> = <span class='pw'>(4 − x)<sup>2</sup></span>.", "Сокращается (4 − x)."], "sol": "<div class='step'>1. Числитель: (4 − x)(4 + x).</div><div class='step'>2. Знаменатель: <span class='pw'>(x − 4)<sup>2</sup></span> = <span class='pw'>(4 − x)<sup>2</sup></span>.</div><div class='fx'><span class='fr'><b>4 + x</b><i>4 − x</i></span></div><div class='step mini'>Проверка при x = 2: слева 12 : 4 = 3, справа 6 : 2 = 3.</div>", "options": ["(4+x)/(4-x)", "(4-x)/(4+x)", "-(4+x)/(4-x)", "(x+4)/(x-4)"], "optionsHtml": ["<span class='fr'><b>4 + x</b><i>4 − x</i></span>", "<span class='fr'><b>4 − x</b><i>4 + x</i></span>", "−<span class='fr'><b>4 + x</b><i>4 − x</i></span>", "<span class='fr'><b>x + 4</b><i>x − 4</i></span>"]}, {"id": 16, "blk": "6", "lvl": "средний", "img": "", "type": "num", "text": "Найди значение дроби <span class='fr'><b><span class='pw'>a<sup>2</sup></span> − 2ab + <span class='pw'>b<sup>2</sup></span></b><i>2<span class='pw'>a<sup>2</sup></span> − 2ab</i></span> при a = 1,6 и b = −4,8.", "ans": ["Mg=="], "hints": ["Числитель — квадрат разности.", "В знаменателе вынеси 2a.", "Сокращается (a − b)."], "sol": "<div class='step'>1. Числитель: <span class='pw'>(a − b)<sup>2</sup></span>, знаменатель: 2a(a − b).</div><div class='fx'><span class='fr'><b>a − b</b><i>2a</i></span> = <span class='fr'><b>1,6 + 4,8</b><i>3,2</i></span> = 2</div><div class='step mini'>Вычитание отрицательного числа даёт плюс: 1,6 − (−4,8) = 6,4.</div>"}, {"id": 17, "blk": "6", "lvl": "средний", "img": "", "type": "num", "text": "Найди значение дроби <span class='fr'><b><span class='pw'>a<sup>5</sup></span> + <span class='pw'>a<sup>10</sup></span></b><i><span class='pw'>a<sup>2</sup></span> + <span class='pw'>a<sup>7</sup></span></i></span> при a = 0,5.", "ans": ["MCwxMjU="], "hints": ["В числителе вынеси a⁵, в знаменателе a².", "Получится a⁵(1 + a⁵) и a²(1 + a⁵).", "Скобка сокращается, остаётся a³."], "sol": "<div class='step'>1. Числитель: a⁵(1 + a⁵), знаменатель: a²(1 + a⁵).</div><div class='step'>2. После сокращения остаётся a⁵ : a² = a³.</div><div class='fx'><span class='pw'>0,5<sup>3</sup></span> = 0,125</div><div class='step mini'>Считать степени по отдельности не нужно — всё сокращается заранее.</div>"}, {"id": 18, "blk": "6", "lvl": "сложный", "img": "", "type": "num", "text": "Найди значение дроби <span class='fr'><b>a<span class='pw'>(b + 1)<sup>2</sup></span> − b<span class='pw'>(a + 1)<sup>2</sup></span></b><i>a(b + 1) − b(a + 1)</i></span>, если ab = −2022.", "ans": ["MjAyMw=="], "hints": ["Раскрой скобки в числителе и приведи подобные.", "Числитель сводится к ab(b − a) − (b − a) = (b − a)(ab − 1).", "Знаменатель равен a − b, то есть −(b − a)."], "sol": "<div class='step'>1. Числитель: ab² − a²b + a − b = (b − a)(ab − 1).</div><div class='step'>2. Знаменатель: ab + a − ab − b = a − b = −(b − a).</div><div class='fx'>−(ab − 1) = 1 − ab = 1 + 2022 = 2023</div><div class='step mini'>Ответ зависит только от произведения ab — сами a и b знать не нужно.</div>"}];
+
+/* ---------- разбор ответа ---------- */
+function norm(s){
+  return String(s).toLowerCase().replace(/\s+/g,"")
+    .replace(/[\u2013\u2014\u2212]/g,"-")
+    .replace(/[\u00d7\u00b7]/g,"*")
+    .replace(/,/g,".")
+    .replace(/^(ответ:?|x=|y=|α=|a=)/,"");
+}
+function toNum(str){
+  var t = norm(str);
+  if(!t) return NaN;
+  t = t.replace(/\u221a/g,"sqrt").replace(/\u03c0/g,"pi");
+  t = t.replace(/sqrt(\d+(?:\.\d+)?)/g,"sqrt($1)");
+  t = t.replace(/(\d)sqrt/g,"$1*sqrt");
+  t = t.replace(/(\d)pi/g,"$1*pi");
+  t = t.replace(/(\d)\(/g,"$1*(").replace(/\)(\d)/g,")*$1").replace(/\)\(/g,")*(");
+  if(!/^[-+*/().0-9a-z]+$/.test(t)) return NaN;
+  if(t.replace(/sqrt|pi/g,"").match(/[a-z]/)) return NaN;
+  try{
+    var v = new Function("sqrt","pi","return ("+t+");")(Math.sqrt, Math.PI);
+    return (typeof v === "number" && isFinite(v)) ? v : NaN;
+  }catch(err){ return NaN; }
+}
+function same(given, right, tol){
+  var a = toNum(given), b = toNum(right);
+  if(!isNaN(a) && !isNaN(b)){
+    var t = tol || 1e-9;
+    return Math.abs(a-b) <= Math.max(t, Math.abs(b)*t);
+  }
+  return norm(given) === norm(right);
+}
+
+/* ---------- отрисовка ---------- */
+var state = {};
+function boxOf(t){
+  return document.getElementById("tasks" + (t.blk || "")) ||
+         document.getElementById("tasks");
+}
+
+TASKS.forEach(function(t){
+  state[t.id] = {tries:0, hints:0, done:false, ok:false, given:"", sel:null};
+  var el = document.createElement("div");
+  el.className = "task"; el.id = "t"+t.id;
+  var body = '<div><span class="tnum">'+t.id+'.</span>'+t.text+
+             '<span class="lvl">'+t.lvl+'</span></div>';
+  if(t.img){ body += '<div class="fig">'+t.img+'</div>'; }
+  if(t.type === "choice"){
+    body += '<div class="opts">'+t.options.map(function(o,i){
+      return '<label class="opt" data-v="'+o+'"><input type="radio" name="q'+t.id+'" value="'+o+'"> '+((t.optionsHtml && t.optionsHtml[i]) || o)+'</label>';
+    }).join("")+'</div>';
+  } else {
+    body += '<div class="keys">'+
+      [",","−","/"].map(function(k){
+        return '<button class="key" data-k="'+k+'" type="button">'+k+'</button>';}).join("")+
+      '</div><input type="text" id="in'+t.id+'" inputmode="text" autocapitalize="off" '+
+      'autocorrect="off" autocomplete="off" spellcheck="false" placeholder="ответ">';
+  }
+  body += '<div class="row" style="margin-top:10px">'+
+          '<button class="pri sm chk">Проверить</button>'+
+          '<button class="sm hnt">Подсказка</button></div>'+
+          '<div class="hints"></div><div class="verdict"></div><div class="sol"></div>';
+  el.innerHTML = body;
+  boxOf(t).appendChild(el);
+
+  el.querySelectorAll(".key").forEach(function(b){
+    b.addEventListener("click", function(){
+      var inp = document.getElementById("in"+t.id);
+      var k = b.dataset.k === "−" ? "-" : b.dataset.k;
+      var s = inp.selectionStart || inp.value.length;
+      inp.value = inp.value.slice(0,s) + k + inp.value.slice(inp.selectionEnd || s);
+      inp.focus(); inp.setSelectionRange(s+k.length, s+k.length);
+    });
+  });
+  if(t.type === "choice"){
+    el.querySelectorAll(".opt").forEach(function(l){
+      l.addEventListener("click", function(){
+        el.querySelectorAll(".opt").forEach(function(x){x.classList.remove("sel");});
+        l.classList.add("sel"); state[t.id].sel = l.dataset.v;
+      });
+    });
+  } else {
+    el.querySelector("#in"+t.id).addEventListener("keydown", function(ev){
+      if(ev.key === "Enter"){ ev.preventDefault(); check(t.id); }
+    });
+  }
+  el.querySelector(".chk").addEventListener("click", function(){ check(t.id); });
+  el.querySelector(".hnt").addEventListener("click", function(){ hint(t.id); });
+});
+
+function hint(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var host = document.querySelector("#t"+id+" .hints");
+  if(s.hints >= t.hints.length){
+    if(!host.querySelector(".last")){
+      var w = document.createElement("div");
+      w.className = "hint last"; w.textContent = "Подсказки закончились — нажми «Проверить», решение откроется после второй попытки.";
+      host.appendChild(w);
+    }
+    return;
+  }
+  var h = document.createElement("div");
+  h.className = "hint";
+  h.innerHTML = "Подсказка " + (s.hints+1) + ": " + t.hints[s.hints];
+  host.appendChild(h);
+  s.hints++;
+  saveWork();
+}
+
+function check(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var el = document.getElementById("t"+id);
+  var v = document.querySelector(".verdict");
+  v = el.querySelector(".verdict");
+  var given = (t.type === "choice") ? (s.sel || "") :
+              (document.getElementById("in"+id).value || "");
+  if(!given.trim()){ v.className = "verdict bad"; v.textContent = "Введи ответ."; return; }
+  s.given = given; s.tries++;
+  var ok = t.ans.some(function(a){ return same(given, d(a), t.tol); });
+  s.ok = ok; s.done = ok || s.tries >= 2;
+  el.classList.remove("ok","bad");
+  el.classList.add(ok ? "ok" : "bad");
+  v.className = "verdict " + (ok ? "ok" : "bad");
+  if(ok){
+    v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    showSol(el, t);
+  } else if(s.tries === 1){
+    v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+  } else {
+    v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    showSol(el, t);
+  }
+  progress();
+  saveWork();
+}
+function showSol(el, t){
+  var host = el.querySelector(".sol");
+  if(host.dataset.on) return;
+  host.dataset.on = "1";
+  var det = document.createElement("details");
+  det.open = true;
+  det.innerHTML = "<summary>Решение</summary><div class='step'>"+t.sol+"</div>";
+  host.appendChild(det);
+}
+function progress(){
+  var done = TASKS.filter(function(t){return state[t.id].done;}).length;
+  var ok = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  document.getElementById("progress").textContent =
+    "решено " + done + " из " + TASKS.length + " · верно " + ok;
+}
+document.getElementById("checkall").addEventListener("click", function(){
+  TASKS.forEach(function(t){
+    var s = state[t.id];
+    var given = (t.type === "choice") ? (s.sel || "") : (document.getElementById("in"+t.id).value || "");
+    if(given.trim() && !s.done) check(t.id);
+  });
+  var first = TASKS.find(function(t){ return !state[t.id].done; });
+  var note = first ? "Осталась задача " + first.id + "." : "Все задачи закрыты.";
+  document.getElementById("progress").textContent += " · " + note;
+});
+progress();
+
+/* ---------- фото ---------- */
+var photos = [];
+document.getElementById("photos").addEventListener("change", function(ev){
+  var files = Array.prototype.slice.call(ev.target.files || []);
+  files.forEach(function(f){
+    var r = new FileReader();
+    r.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var m = 1400, w = img.width, h = img.height;
+        if(Math.max(w,h) > m){ var k = m/Math.max(w,h); w = Math.round(w*k); h = Math.round(h*k); }
+        var c = document.createElement("canvas"); c.width = w; c.height = h;
+        c.getContext("2d").drawImage(img, 0, 0, w, h);
+        photos.push({url: c.toDataURL("image/jpeg", 0.7), task: ""});
+        drawThumbs();
+      };
+      img.src = r.result;
+    };
+    r.readAsDataURL(f);
+  });
+  ev.target.value = "";
+});
+function drawThumbs(){
+  var host = document.getElementById("thumbs");
+  host.innerHTML = "";
+  var total = 0;
+  photos.forEach(function(p, i){
+    total += p.url.length * 0.75;
+    var d0 = document.createElement("div"); d0.className = "thumb";
+    var opts = '<option value="">задача…</option>' + TASKS.map(function(t){
+      return '<option value="'+t.id+'"'+(p.task==String(t.id)?" selected":"")+'>№'+t.id+'</option>';
+    }).join("");
+    d0.innerHTML = '<img src="'+p.url+'" alt="фото решения"><button type="button">×</button>'+
+                   '<select>'+opts+'</select>';
+    d0.querySelector("button").addEventListener("click", function(){ photos.splice(i,1); drawThumbs(); });
+    d0.querySelector("select").addEventListener("change", function(ev){ p.task = ev.target.value; });
+    host.appendChild(d0);
+  });
+  var note = document.getElementById("repnote");
+  if(total > 15e6){ note.textContent = "Фото уже больше 15 МБ — отчёт может отправляться долго, лишние лучше удалить."; }
+  else if(photos.length){ note.textContent = "Фото в отчёте: " + photos.length + "."; }
+  else { note.textContent = ""; }
+}
+
+/* ---------- отчёт ---------- */
+var ENDPOINT = "https://script.google.com/macros/s/AKfycbwqIhgBtFnoUik3N1Lh_YRhNeEFAjmXWSxBNoX1a_Yxu-2dEKHFwo4Dd5Ch9UTOHH-X/exec";
+var SECRET = "artteach2026";
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function buildReport(){
+  var name = (document.getElementById("name").value || "").trim() || "без имени";
+  var now = new Date();
+  var mins = Math.max(1, Math.round(spentMs()/60000));
+  var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  var data = {tип:"дз", предмет:"математика", тема:"Разложение на множители и сокращение дробей (§2, алгебра 8 класс)",
+    ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
+    верно:okN, всего:TASKS.length, тренажёры:trSummary(), задачи:[]};
+  var rows = TASKS.map(function(t){
+    var s = state[t.id];
+    data.задачи.push({n:t.id, условие:t.text.replace(/<[^>]+>/g,""), ответ_ученика:s.given,
+      верный_ответ:t.ans.map(d).join(" или "), верно:s.ok, попыток:s.tries, подсказок:s.hints,
+      уровень:t.lvl});
+    return "<tr><td>"+t.id+"</td><td style='text-align:left'>"+esc(t.text.replace(/<[^>]+>/g,""))+
+      "</td><td>"+esc(s.given||"—")+"</td><td>"+esc(t.ans.map(d).join(" / "))+"</td><td>"+
+      (s.ok?"верно":(s.given?"неверно":"не решал"))+"</td><td>"+s.tries+"</td><td>"+s.hints+"</td></tr>";
+  }).join("");
+  var pics = photos.map(function(p,i){
+    return "<figure><img src='"+p.url+"'><figcaption>Фото "+(i+1)+
+      (p.task?" — к задаче №"+p.task:"")+"</figcaption></figure>";
+  }).join("");
+  var html = "<!doctype html><html lang='ru'><head><meta charset='utf-8'>"+
+    "<meta name='viewport' content='width=device-width,initial-scale=1'>"+
+    "<title>Отчёт — "+esc(name)+" — разложение и сокращение · алгебра 8 класс</title><style>"+
+    "body{font:16px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;padding:20px;color:#16181d;background:#fff}"+
+    "h1{font-size:22px;margin:0 0 4px}.m{color:#5b6270;font-size:15px}"+
+    "table{border-collapse:collapse;width:100%;margin-top:14px;font-size:15px}"+
+    "th,td{border:1px solid #dfe3ea;padding:6px 8px;text-align:center}th{background:#eef3fb}"+
+    "figure{margin:14px 0}img{max-width:100%;border:1px solid #dfe3ea;border-radius:8px}"+
+    "figcaption{color:#5b6270;font-size:14px;margin-top:4px}</style></head><body>"+
+    "<h1>Отчёт по домашнему заданию</h1>"+
+    "<div class='m'>Тема: разложение на множители и сокращение дробей · §2, алгебра 8 класс</div>"+
+    "<div class='m'>Ученик: <b>"+esc(name)+"</b> · сдано: "+esc(now.toLocaleString("ru-RU"))+
+    " · время работы: около "+mins+" мин</div>"+
+    "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)</h2>"+
+    "<table><tr><th>№</th><th>Задача</th><th>Ответ ученика</th><th>Верный ответ</th>"+
+    "<th>Итог</th><th>Попыток</th><th>Подсказок</th></tr>"+rows+"</table>"+
+    trReportHtml()+
+    (pics ? "<h2>Фото решений</h2>"+pics : "<p class='m'>Фото решений не прикреплены.</p>")+
+    "<script type='application/json' id='result-data'>"+
+    JSON.stringify(data).replace(/</g,"\\u003c")+"<\/script></body></html>";
+  var stamp = now.getDate()+"-"+(now.getMonth()+1);
+  return {
+    html: html,
+    name: name,
+    ok: okN,
+    total: TASKS.length,
+    file: "Отчёт_Разложение_дробей_"+name.replace(/\s+/g,"_")+"_"+stamp+".html",
+    caption: name+" · разложение и сокращение · алгебра 8 класс · "+okN+" из "+TASKS.length+
+             " ("+Math.round(okN/TASKS.length*100)+"%)"+
+             " · тренажёры "+trSummary().ok+" из "+trSummary().total
+  };
+}
+
+document.getElementById("send").addEventListener("click", function(){
+  var note = document.getElementById("repnote");
+  var who = (document.getElementById("name").value || "").trim();
+  if(!who){ note.className = "meta bad-note"; note.textContent = "Сначала впиши имя вверху страницы."; return; }
+  var left = trPending();
+  if(left.length){
+    note.className = "meta bad-note";
+    note.textContent = "Работа не отправлена: сначала пройди тренажёры. " +
+      "Осталось " + left.length + " из " + TRREQ.length + ".";
+    trStatus();
+    trJump(left[0].id);
+    return;
+  }
+  note.className = "meta";
+  var r = buildReport();
+  note.textContent = "Отправляю…";
+  var payload = {
+    secret: SECRET,
+    code: STUDENT_CODE,
+    student: r.name,
+    topic: TOPIC,
+    ok: r.ok,
+    total: r.total,
+    name: r.file,
+    caption: r.caption,
+    trainers: trSummary().ok + " из " + trSummary().total,
+    file: btoa(unescape(encodeURIComponent(r.html)))
+  };
+  fetch(ENDPOINT, {method:"POST", mode:"no-cors", body: JSON.stringify(payload)})
+    .then(function(){
+      note.textContent = "Отправлено преподавателю." +
+        (photos.length ? "" : " Фото решений не приложены — если решал в тетради, приложи их и отправь ещё раз.") +
+        " Если хочешь, сохрани копию себе кнопкой ниже.";
+    })
+    .catch(function(){
+      note.textContent = "Не получилось отправить. Скачай файл кнопкой ниже и пришли его вручную.";
+    });
+});
+
+document.getElementById("report").addEventListener("click", function(){
+  var r = buildReport();
+  var blob = new Blob([r.html], {type:"text/html;charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = r.file;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  document.getElementById("repnote").textContent = "Файл скачан — он в папке загрузок.";
+});
+
+
+/* ---------- движок тренажёров ---------- */
+function makeTrainer(id, items){
+  var q=document.getElementById(id+"q"), f=document.getElementById(id+"f"),
+      a=document.getElementById(id+"a"), m=document.getElementById(id+"m"),
+      b=document.getElementById(id+"b"), sc=document.getElementById(id+"s");
+  var order=[], perm=[], i=0, ok=0, answered=false;
+
+  function shuffle(n){
+    var arr=[], k, j, t;
+    for(k=0;k<n;k++) arr.push(k);
+    for(k=arr.length-1;k>0;k--){ j=Math.floor(Math.random()*(k+1)); t=arr[k]; arr[k]=arr[j]; arr[j]=t; }
+    return arr;
+  }
+  function norm(s){
+    return String(s).trim().toLowerCase().replace(/\s+/g,"").replace(/−/g,"-").replace(/,/g,".");
+  }
+  function same(x, y){
+    var p=parseFloat(norm(x)), r=parseFloat(norm(y));
+    if(isFinite(p) && isFinite(r)) return Math.abs(p-r) < 1e-9;
+    return norm(x) === norm(y);
+  }
+  function score(){
+    sc.textContent = "вопрос " + Math.min(i + 1, items.length) + " из " + items.length +
+                     " · верно " + ok;
+  }
+
+  function finish(){
+    q.innerHTML=""; f.innerHTML=""; a.innerHTML=""; m.innerHTML="";
+    var pct=Math.round(ok/items.length*100);
+    var word = pct===100 ? "Всё верно — тема закрыта." :
+               pct>=70 ? "Хорошо, но пару мест стоит перечитать." :
+               "Стоит вернуться к теории и пройти ещё раз.";
+    b.innerHTML='<div class="trdone" style="flex:1 1 100%">'+ok+" из "+items.length+
+      " ("+pct+" %) · "+word+'</div><button type="button" class="pri" data-go="1">Пройти заново</button>';
+    sc.textContent="готово";
+    if(window.trFinished) window.trFinished(id, ok, items.length);
+  }
+
+  function show(){
+    answered=false;
+    m.innerHTML=""; b.innerHTML="";
+    var t=items[order[i]];
+    q.innerHTML="<b>"+(i+1)+".</b> "+t.q;
+    f.innerHTML=t.fig || "";
+    f.style.display = t.fig ? "" : "none";
+    if(t.opts){
+      perm = shuffle(t.opts.length);          /* perm[позиция] = номер варианта в банке */
+      var html='<div class="tropts" id="'+id+'o">';
+      for(var k=0;k<perm.length;k++)
+        html+='<button type="button" class="tropt" data-k="'+perm[k]+'">'+t.opts[perm[k]]+'</button>';
+      a.innerHTML = html+"</div>";
+      var box=document.getElementById(id+"o");
+      box.addEventListener("click", function(ev){
+        var el=ev.target; while(el && el!==box && el.className.indexOf("tropt")<0) el=el.parentNode;
+        if(!el || el===box || answered) return;
+        pick(parseInt(el.getAttribute("data-k"),10), box);
+      });
+    } else {
+      a.innerHTML='<div class="trnum"><span>Ответ:</span>'+
+        '<input type="text" id="'+id+'i" inputmode="text" autocomplete="off" '+
+        'autocorrect="off" spellcheck="false" placeholder="число">'+
+        '<button type="button" class="pri" data-check="1">Проверить</button></div>';
+      var inp=document.getElementById(id+"i");
+      inp.addEventListener("keydown", function(ev){ if(ev.key==="Enter") check(); });
+    }
+    score();
+  }
+
+  function verdict(good, t){
+    answered=true;
+    if(good) ok++;
+    i++;
+    m.innerHTML='<div class="v '+(good?"ok":"bad")+'">'+(good?"Верно.":"Неверно.")+"</div>"+
+                '<div class="why">'+t.why+"</div>";
+    b.innerHTML = (i<items.length)
+      ? '<button type="button" class="pri" data-next="1">Дальше</button>'
+      : '<button type="button" class="pri" data-next="1">Показать итог</button>';
+    score();
+  }
+  function pick(k, box){
+    var t=items[order[i]], good = (k === t.ans);
+    var bs=box.querySelectorAll(".tropt");
+    for(var j=0;j<bs.length;j++){
+      var n=parseInt(bs[j].getAttribute("data-k"),10);
+      if(n===t.ans) bs[j].className="tropt right";
+      else if(n===k) bs[j].className="tropt wrong";
+    }
+    box.className="tropts done";
+    verdict(good, t);
+  }
+  function check(){
+    if(answered) return;
+    var t=items[order[i]], inp=document.getElementById(id+"i");
+    var v=(inp.value||"").trim();
+    if(!v){ m.innerHTML='<div class="why">Впиши ответ.</div>'; return; }
+    var good = t.ans.some(function(x){ return same(v, x); });
+    inp.disabled=true;
+    if(!good) m.innerHTML="";
+    verdict(good, t);
+    if(!good) m.innerHTML='<div class="v bad">Неверно. Правильный ответ: '+t.ans[0]+".</div>"+
+                          '<div class="why">'+t.why+"</div>";
+  }
+
+  b.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-next")){ if(i<items.length) show(); else finish(); }
+    if(el.getAttribute && el.getAttribute("data-go")){ start(); }
+  });
+  a.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-check")) check();
+  });
+
+  function start(){ order=shuffle(items.length); i=0; ok=0; show(); }
+  start();
+}
+
+makeTrainer("ts1", [{"q": "Каким способом разложить на множители: <b>3a − 3b</b>?", "fig": "", "opts": ["вынести общий множитель", "формула сокращённого умножения", "квадратный трёхчлен", "группировка"], "ans": 0, "why": "В обоих слагаемых есть тройка: 3a − 3b = 3(a − b)."}, {"q": "Каким способом разложить на множители: <b><span class='pw'>a<sup>2</sup></span> − 16</b>?", "fig": "", "opts": ["формула сокращённого умножения", "вынести общий множитель", "квадратный трёхчлен", "группировка"], "ans": 0, "why": "Два слагаемых, оба квадраты, между ними минус — разность квадратов: (a − 4)(a + 4)."}, {"q": "Каким способом разложить на множители: <b><span class='pw'>x<sup>2</sup></span> + 2x − 15</b>?", "fig": "", "opts": ["квадратный трёхчлен", "вынести общий множитель", "формула сокращённого умножения", "группировка"], "ans": 0, "why": "Три слагаемых, но 2x — не удвоенное произведение x и корня из 15. Ищем корни: 3 и −5."}, {"q": "Каким способом разложить на множители: <b>ab − 4b − 2a + 8</b>?", "fig": "", "opts": ["группировка", "вынести общий множитель", "формула сокращённого умножения", "квадратный трёхчлен"], "ans": 0, "why": "Четыре слагаемых — разбиваем на пары: b(a − 4) − 2(a − 4)."}, {"q": "Каким способом разложить на множители: <b>9<span class='pw'>x<sup>2</sup></span> − 6xy + <span class='pw'>y<sup>2</sup></span></b>?", "fig": "", "opts": ["формула сокращённого умножения", "вынести общий множитель", "квадратный трёхчлен", "группировка"], "ans": 0, "why": "Три слагаемых: крайние — квадраты 3x и y, средний равен удвоенному произведению. Это <span class='pw'>(3x − y)<sup>2</sup></span>."}, {"q": "Каким способом разложить на множители: <b>5m + 10n</b>?", "fig": "", "opts": ["вынести общий множитель", "формула сокращённого умножения", "квадратный трёхчлен", "группировка"], "ans": 0, "why": "Общий множитель 5: 5(m + 2n)."}, {"q": "Каким способом разложить на множители: <b>2<span class='pw'>x<sup>2</sup></span> + 5x − 3</b>?", "fig": "", "opts": ["квадратный трёхчлен", "вынести общий множитель", "формула сокращённого умножения", "группировка"], "ans": 0, "why": "Старший коэффициент не единица и ФСУ не подходит — считаем дискриминант."}, {"q": "Каким способом разложить на множители: <b><span class='pw'>x<sup>2</sup></span> + 8xy + 16<span class='pw'>y<sup>2</sup></span></b>?", "fig": "", "opts": ["формула сокращённого умножения", "вынести общий множитель", "квадратный трёхчлен", "группировка"], "ans": 0, "why": "Крайние — квадраты x и 4y, средний 8xy — их удвоенное произведение: <span class='pw'>(x + 4y)<sup>2</sup></span>."}, {"q": "Каким способом разложить на множители: <b>mn − m + n − <span class='pw'>n<sup>2</sup></span></b>?", "fig": "", "opts": ["группировка", "вынести общий множитель", "формула сокращённого умножения", "квадратный трёхчлен"], "ans": 0, "why": "Четыре слагаемых: m(n − 1) − n(n − 1) = (n − 1)(m − n)."}, {"q": "Каким способом разложить на множители: <b>12<span class='pw'>a<sup>2</sup></span> − 9ab + 4ac − 3bc</b>?", "fig": "", "opts": ["группировка", "вынести общий множитель", "формула сокращённого умножения", "квадратный трёхчлен"], "ans": 0, "why": "Четыре слагаемых: 3a(4a − 3b) + c(4a − 3b) = (4a − 3b)(3a + c)."}]);
+makeTrainer("ts2", [{"q": "Вынеси минус за скобку: <b>−2a − 4 = −(…)</b>. Что в скобке?", "fig": "", "opts": ["2a + 4", "2a − 4", "−2a + 4", "2a · 4"], "ans": 0, "why": "Меняем знак каждого слагаемого: −2a − 4 = −(2a + 4) = −2(a + 2)."}, {"q": "Вынеси минус за скобку: <b>a − b = −(…)</b>. Что в скобке?", "fig": "", "opts": ["b − a", "a + b", "−a − b", "b + a"], "ans": 0, "why": "a − b = −(b − a). Это главный приём всей темы."}, {"q": "Вынеси минус за скобку: <b>3y − 3x = −(…)</b>. Что в скобке?", "fig": "", "opts": ["3x − 3y", "3x + 3y", "−3x − 3y", "x − y"], "ans": 0, "why": "3y − 3x = −(3x − 3y) = −3(x − y)."}, {"q": "Вынеси минус за скобку: <b>−x + 5 = −(…)</b>. Что в скобке?", "fig": "", "opts": ["x − 5", "x + 5", "−x − 5", "5 − x"], "ans": 0, "why": "Оба знака меняем: −x + 5 = −(x − 5)."}, {"q": "Вынеси минус за скобку: <b>5 − a = −(…)</b>. Что в скобке?", "fig": "", "opts": ["a − 5", "a + 5", "−a − 5", "5 + a"], "ans": 0, "why": "5 − a = −(a − 5). Проверь на числе a = 7: слева −2, справа −(2) = −2."}, {"q": "Вынеси минус за скобку: <b>−a − b = −(…)</b>. Что в скобке?", "fig": "", "opts": ["a + b", "a − b", "b − a", "−a + b"], "ans": 0, "why": "Оба слагаемых отрицательные, после выноса минуса оба станут положительными."}, {"q": "Вынеси минус за скобку: <b>2 − 2<span class='pw'>x<sup>2</sup></span> = −(…)</b>. Что в скобке?", "fig": "", "opts": ["2<span class='pw'>x<sup>2</sup></span> − 2", "2<span class='pw'>x<sup>2</sup></span> + 2", "−2<span class='pw'>x<sup>2</sup></span> − 2", "<span class='pw'>x<sup>2</sup></span> − 1"], "ans": 0, "why": "2 − 2x² = −(2x² − 2) = −2(x² − 1) = −2(x − 1)(x + 1)."}, {"q": "Вынеси минус за скобку: <b>b − 7 = −(…)</b>. Что в скобке?", "fig": "", "opts": ["7 − b", "b + 7", "−b − 7", "7 + b"], "ans": 0, "why": "b − 7 = −(7 − b): переставили слагаемые и поставили минус."}]);
+makeTrainer("ts3", [{"q": "Сверни в квадрат: <b><span class='pw'>x<sup>2</sup></span> + 8x + 16</b>.", "fig": "", "opts": ["<span class='pw'>(x + 4)<sup>2</sup></span>", "<span class='pw'>(x − 4)<sup>2</sup></span>", "<span class='pw'>(x + 8)<sup>2</sup></span>", "<span class='pw'>(x + 16)<sup>2</sup></span>"], "ans": 0, "why": "Крайние — квадраты x и 4, средний 8x = 2 · x · 4. Знак плюс — квадрат суммы."}, {"q": "Сверни в квадрат: <b><span class='pw'>x<sup>2</sup></span> − 6x + 9</b>.", "fig": "", "opts": ["<span class='pw'>(x − 3)<sup>2</sup></span>", "<span class='pw'>(x + 3)<sup>2</sup></span>", "<span class='pw'>(x − 6)<sup>2</sup></span>", "<span class='pw'>(x − 9)<sup>2</sup></span>"], "ans": 0, "why": "Корень из 9 — это 3, и 6x = 2 · x · 3. Знак минус — квадрат разности."}, {"q": "Сверни в квадрат: <b>4<span class='pw'>a<sup>2</sup></span> + 12ab + 9<span class='pw'>b<sup>2</sup></span></b>.", "fig": "", "opts": ["<span class='pw'>(2a + 3b)<sup>2</sup></span>", "<span class='pw'>(2a − 3b)<sup>2</sup></span>", "<span class='pw'>(4a + 9b)<sup>2</sup></span>", "<span class='pw'>(2a + 9b)<sup>2</sup></span>"], "ans": 0, "why": "Крайние — квадраты 2a и 3b, средний 12ab = 2 · 2a · 3b."}, {"q": "Сверни в квадрат: <b><span class='pw'>m<sup>2</sup></span> − 12mn + 36<span class='pw'>n<sup>2</sup></span></b>.", "fig": "", "opts": ["<span class='pw'>(m − 6n)<sup>2</sup></span>", "<span class='pw'>(m + 6n)<sup>2</sup></span>", "<span class='pw'>(m − 12n)<sup>2</sup></span>", "<span class='pw'>(m − 36n)<sup>2</sup></span>"], "ans": 0, "why": "Корень из 36n² — это 6n, и 12mn = 2 · m · 6n."}, {"q": "Сверни в квадрат: <b>25<span class='pw'>c<sup>2</sup></span> + 10c + 1</b>.", "fig": "", "opts": ["<span class='pw'>(5c + 1)<sup>2</sup></span>", "<span class='pw'>(5c − 1)<sup>2</sup></span>", "<span class='pw'>(25c + 1)<sup>2</sup></span>", "<span class='pw'>(5c + 5)<sup>2</sup></span>"], "ans": 0, "why": "Крайние — квадраты 5c и 1, средний 10c = 2 · 5c · 1."}, {"q": "Сверни в квадрат: <b><span class='pw'>a<sup>2</sup></span> − 8a + 16</b>.", "fig": "", "opts": ["<span class='pw'>(a − 4)<sup>2</sup></span>", "<span class='pw'>(a + 4)<sup>2</sup></span>", "<span class='pw'>(a − 8)<sup>2</sup></span>", "<span class='pw'>(a − 16)<sup>2</sup></span>"], "ans": 0, "why": "Корень из 16 — это 4, и 8a = 2 · a · 4."}, {"q": "Сверни в квадрат: <b>9<span class='pw'>b<sup>2</sup></span> + 6b + 1</b>.", "fig": "", "opts": ["<span class='pw'>(3b + 1)<sup>2</sup></span>", "<span class='pw'>(3b − 1)<sup>2</sup></span>", "<span class='pw'>(9b + 1)<sup>2</sup></span>", "<span class='pw'>(3b + 3)<sup>2</sup></span>"], "ans": 0, "why": "Крайние — квадраты 3b и 1, средний 6b = 2 · 3b · 1."}, {"q": "Сверни в квадрат: <b><span class='pw'>x<sup>2</sup></span> + 4x + 4</b>.", "fig": "", "opts": ["<span class='pw'>(x + 2)<sup>2</sup></span>", "<span class='pw'>(x − 2)<sup>2</sup></span>", "<span class='pw'>(x + 4)<sup>2</sup></span>", "<span class='pw'>(2x + 2)<sup>2</sup></span>"], "ans": 0, "why": "Крайние — квадраты x и 2, средний 4x = 2 · x · 2."}]);
+makeTrainer("ts4", [{"q": "Разложи на множители: <b><span class='pw'>a<sup>2</sup></span> − 16</b>.", "fig": "", "opts": ["(a − 4)(a + 4)", "<span class='pw'>(a − 4)<sup>2</sup></span>", "(a − 16)(a + 16)", "a(a − 16)"], "ans": 0, "why": "16 = 4², поэтому a² − 16 = (a − 4)(a + 4)."}, {"q": "Разложи на множители: <b>4<span class='pw'>a<sup>2</sup></span> − <span class='pw'>b<sup>2</sup></span></b>.", "fig": "", "opts": ["(2a − b)(2a + b)", "(4a − b)(4a + b)", "<span class='pw'>(2a − b)<sup>2</sup></span>", "(2a − b)(b − 2a)"], "ans": 0, "why": "4a² = (2a)², поэтому получается (2a − b)(2a + b)."}, {"q": "Разложи на множители: <b>25 − <span class='pw'>a<sup>2</sup></span></b>.", "fig": "", "opts": ["(5 − a)(5 + a)", "(a − 5)(a + 5)", "<span class='pw'>(5 − a)<sup>2</sup></span>", "(25 − a)(25 + a)"], "ans": 0, "why": "Порядок важен для знака: 25 − a² = (5 − a)(5 + a)."}, {"q": "Разложи на множители: <b><span class='pw'>x<sup>2</sup></span> − <span class='pw'>y<sup>2</sup></span></b>.", "fig": "", "opts": ["(x − y)(x + y)", "<span class='pw'>(x − y)<sup>2</sup></span>", "(x − y)(y − x)", "x(x − y)"], "ans": 0, "why": "Самая базовая запись формулы."}, {"q": "Разложи на множители: <b>9<span class='pw'>b<sup>2</sup></span> − 4</b>.", "fig": "", "opts": ["(3b − 2)(3b + 2)", "(9b − 4)(9b + 4)", "<span class='pw'>(3b − 2)<sup>2</sup></span>", "(3b − 4)(3b + 4)"], "ans": 0, "why": "9b² = (3b)², 4 = 2²."}, {"q": "Разложи на множители: <b>16 − <span class='pw'>x<sup>2</sup></span></b>.", "fig": "", "opts": ["(4 − x)(4 + x)", "(x − 4)(x + 4)", "<span class='pw'>(4 − x)<sup>2</sup></span>", "(16 − x)(16 + x)"], "ans": 0, "why": "16 = 4². Ответ (x − 4)(x + 4) отличается знаком — это уже другое выражение."}, {"q": "Разложи на множители: <b>25<span class='pw'>c<sup>2</sup></span> − 1</b>.", "fig": "", "opts": ["(5c − 1)(5c + 1)", "(25c − 1)(25c + 1)", "<span class='pw'>(5c − 1)<sup>2</sup></span>", "(5c − 1)(1 − 5c)"], "ans": 0, "why": "25c² = (5c)², 1 = 1²."}, {"q": "Разложи на множители: <b><span class='pw'>b<sup>2</sup></span> − 25</b>.", "fig": "", "opts": ["(b − 5)(b + 5)", "(5 − b)(5 + b)", "<span class='pw'>(b − 5)<sup>2</sup></span>", "(b − 25)(b + 25)"], "ans": 0, "why": "Первым стоит b², значит и в скобках первым идёт b."}]);
+makeTrainer("ts5", [{"q": "Разложи через корни: <b><span class='pw'>x<sup>2</sup></span> + 2x − 15</b>. Чему равен <b>больший</b> корень?", "fig": "", "ans": ["3"], "why": "D = 4 + 60 = 64, корни 3 и −5. Разложение: (x − 3)(x + 5)."}, {"q": "Разложи через корни: <b><span class='pw'>x<sup>2</sup></span> − 4x − 5</b>. Чему равен <b>больший</b> корень?", "fig": "", "ans": ["5"], "why": "D = 16 + 20 = 36, корни 5 и −1. Разложение: (x − 5)(x + 1)."}, {"q": "Разложи через корни: <b><span class='pw'>x<sup>2</sup></span> − 2x − 8</b>. Чему равен <b>больший</b> корень?", "fig": "", "ans": ["4"], "why": "D = 4 + 32 = 36, корни 4 и −2. Разложение: (x − 4)(x + 2)."}, {"q": "Разложи через корни: <b><span class='pw'>x<sup>2</sup></span> − 5x + 4</b>. Чему равен <b>больший</b> корень?", "fig": "", "ans": ["4"], "why": "D = 25 − 16 = 9, корни 4 и 1. Разложение: (x − 4)(x − 1)."}, {"q": "Разложи через корни: <b>2<span class='pw'>x<sup>2</sup></span> + 5x − 3</b>. Чему равен <b>больший</b> корень?", "fig": "", "ans": ["0,5"], "why": "D = 25 + 24 = 49, корни 0,5 и −3. Разложение: 2(x − 0,5)(x + 3) = (2x − 1)(x + 3)."}, {"q": "Разложи через корни: <b>2<span class='pw'>x<sup>2</sup></span> − 7x + 3</b>. Чему равен <b>больший</b> корень?", "fig": "", "ans": ["3"], "why": "D = 49 − 24 = 25, корни 3 и 0,5. Разложение: (x − 3)(2x − 1)."}, {"q": "Разложи через корни: <b><span class='pw'>x<sup>2</sup></span> − 4x + 3</b>. Чему равен <b>больший</b> корень?", "fig": "", "ans": ["3"], "why": "D = 16 − 12 = 4, корни 3 и 1. Разложение: (x − 3)(x − 1)."}, {"q": "Разложи через корни: <b><span class='pw'>x<sup>2</sup></span> + 4x + 3</b>. Чему равен <b>больший</b> корень?", "fig": "", "ans": ["-1"], "why": "D = 16 − 12 = 4, корни −1 и −3. Больший из отрицательных — тот, что ближе к нулю."}]);
+makeTrainer("ts6", [{"q": "Разложи группировкой: <b>ab − 4b − 2a + 8</b>.", "fig": "", "opts": ["(a − 4)(b − 2)", "(a − 4)(b + 2)", "(a + 4)(b − 2)", "(a − 2)(b − 4)"], "ans": 0, "why": "b(a − 4) − 2(a − 4) = (a − 4)(b − 2)."}, {"q": "Разложи группировкой: <b>mn − m + n − <span class='pw'>n<sup>2</sup></span></b>.", "fig": "", "opts": ["(n − 1)(m − n)", "(n − 1)(m + n)", "(n + 1)(m − n)", "(m − 1)(n − m)"], "ans": 0, "why": "m(n − 1) − n(n − 1) = (n − 1)(m − n)."}, {"q": "Разложи группировкой: <b>xy + x − 3y − 3</b>.", "fig": "", "opts": ["(y + 1)(x − 3)", "(y − 1)(x − 3)", "(y + 1)(x + 3)", "(y + 3)(x − 1)"], "ans": 0, "why": "x(y + 1) − 3(y + 1) = (y + 1)(x − 3)."}, {"q": "Разложи группировкой: <b>ay − bx + by − ax</b>.", "fig": "", "opts": ["(y − x)(a + b)", "(y − x)(a − b)", "(y + x)(a + b)", "(x − y)(a + b)"], "ans": 0, "why": "a(y − x) + b(y − x) = (y − x)(a + b)."}, {"q": "Разложи группировкой: <b>2 + c − 2c − <span class='pw'>c<sup>2</sup></span></b>.", "fig": "", "opts": ["(2 + c)(1 − c)", "(2 + c)(c − 1)", "(2 − c)(1 + c)", "(2 + c)(1 + c)"], "ans": 0, "why": "(2 + c) − c(2 + c) = (2 + c)(1 − c)."}, {"q": "Разложи группировкой: <b>3a + 4 + 3ab + 4b</b>.", "fig": "", "opts": ["(1 + b)(3a + 4)", "(1 − b)(3a + 4)", "(1 + b)(3a − 4)", "(1 + b)(4a + 3)"], "ans": 0, "why": "3a(1 + b) + 4(1 + b) = (1 + b)(3a + 4)."}, {"q": "Разложи группировкой: <b>9 − <span class='pw'>n<sup>2</sup></span> + 3m − mn</b>.", "fig": "", "opts": ["(3 − n)(3 + n + m)", "(3 − n)(3 + n − m)", "(3 + n)(3 − n + m)", "(3 − n)(3 − n + m)"], "ans": 0, "why": "(3 − n)(3 + n) + m(3 − n) = (3 − n)(3 + n + m)."}, {"q": "Разложи группировкой: <b><span class='pw'>x<sup>2</sup></span> − xy + 3y − 3x</b>.", "fig": "", "opts": ["(x − 3)(x − y)", "(x − 3)(x + y)", "(x + 3)(x − y)", "(x − y)(3 − x)"], "ans": 0, "why": "x(x − y) − 3(x − y) = (x − y)(x − 3)."}]);
+makeTrainer("ts7", [{"q": "Как связаны <span class='pw'>(a − b)<sup>2</sup></span> и <span class='pw'>(b − a)<sup>2</sup></span>?", "fig": "", "opts": ["они равны", "отличаются знаком", "второе вдвое больше", "связать нельзя"], "ans": 0, "why": "Степень чётная, поэтому все знаки под скобкой можно поменять: значение то же."}, {"q": "Как связаны <span class='pw'>(a − b)<sup>3</sup></span> и <span class='pw'>(b − a)<sup>3</sup></span>?", "fig": "", "opts": ["отличаются знаком", "они равны", "второе втрое больше", "связать нельзя"], "ans": 0, "why": "Степень нечётная: (a − b)³ = −(b − a)³. Проверь на числах 2 и 5."}, {"q": "Чему равно <span class='fr'><b>x − y</b><i>y − x</i></span>?", "fig": "", "opts": ["−1", "1", "x − y", "0"], "ans": 0, "why": "y − x = −(x − y), значит дробь равна −1."}, {"q": "Чему равно <span class='fr'><b><span class='pw'>(a − b)<sup>2</sup></span></b><i><span class='pw'>(b − a)<sup>2</sup></span></i></span>?", "fig": "", "opts": ["1", "−1", "a − b", "<span class='pw'>(a − b)<sup>2</sup></span>"], "ans": 0, "why": "Числитель и знаменатель равны: степень чётная."}, {"q": "Чему равно <span class='fr'><b><span class='pw'>(a − b)<sup>3</sup></span></b><i><span class='pw'>(b − a)<sup>3</sup></span></i></span>?", "fig": "", "opts": ["−1", "1", "a − b", "0"], "ans": 0, "why": "Степень нечётная, поэтому знаменатель противоположен числителю."}, {"q": "Верно ли, что <span class='pw'>(5 − x)<sup>4</sup></span> = <span class='pw'>(x − 5)<sup>4</sup></span>?", "fig": "", "opts": ["верно", "неверно", "верно только при x > 5", "верно только при x = 5"], "ans": 0, "why": "Четвёртая степень чётная — перестановка слагаемых ничего не меняет."}, {"q": "Верно ли, что <span class='pw'>(5 − x)<sup>5</sup></span> = <span class='pw'>(x − 5)<sup>5</sup></span>?", "fig": "", "opts": ["неверно, отличаются знаком", "верно", "верно при любом x", "верно только при x < 5"], "ans": 0, "why": "Пятая степень нечётная: (5 − x)⁵ = −(x − 5)⁵."}, {"q": "Чему равно <span class='pw'>(−a − b)<sup>2</sup></span>?", "fig": "", "opts": ["<span class='pw'>(a + b)<sup>2</sup></span>", "−<span class='pw'>(a + b)<sup>2</sup></span>", "<span class='pw'>(a − b)<sup>2</sup></span>", "−<span class='pw'>(a − b)<sup>2</sup></span>"], "ans": 0, "why": "Под чётной степенью меняем оба знака: (−a − b)² = (a + b)²."}]);
+
+/* ---------- тренажёры обязательны для отправки ---------- */
+var TRREQ = [
+  {id:"ts1", name:"Тренажёр 1. Какой способ разложения"},
+  {id:"ts2", name:"Тренажёр 2. Минус за скобку"},
+  {id:"ts3", name:"Тренажёр 3. Свернуть квадрат"},
+  {id:"ts4", name:"Тренажёр 4. Разность квадратов"},
+  {id:"ts5", name:"Тренажёр 5. Квадратный трёхчлен"},
+  {id:"ts6", name:"Тренажёр 6. Группировка"},
+  {id:"ts7", name:"Тренажёр 7. Знаки и чётные степени"}
+];
+var TRDONE = {};
+window.trFinished = function(id, ok, total){
+  var prev = TRDONE[id];
+  if(!prev || ok > prev.ok) TRDONE[id] = {ok: ok, total: total};
+  trStatus();
+  if(window.saveWork) saveWork();
+};
+function trPending(){
+  var out = [], k;
+  for(k = 0; k < TRREQ.length; k++){ if(!TRDONE[TRREQ[k].id]) out.push(TRREQ[k]); }
+  return out;
+}
+function trSummary(){
+  var ok = 0, total = 0, parts = [], k, d;
+  for(k = 0; k < TRREQ.length; k++){
+    d = TRDONE[TRREQ[k].id];
+    parts.push({name: TRREQ[k].name, ok: d ? d.ok : null, total: d ? d.total : null});
+    if(d){ ok += d.ok; total += d.total; }
+  }
+  return {ok: ok, total: total, parts: parts, done: TRREQ.length - trPending().length};
+}
+function trReportHtml(){
+  var s = trSummary(), k, pt, h;
+  h = "<h2>Тренажёры: " + s.done + " из " + TRREQ.length + " пройдено" +
+      (s.total ? " · верных ответов " + s.ok + " из " + s.total : "") + "</h2><table><tr>" +
+      "<th>Тренажёр</th><th>Результат</th></tr>";
+  for(k = 0; k < s.parts.length; k++){
+    pt = s.parts[k];
+    h += "<tr><td style='text-align:left'>" + pt.name + "</td><td>" +
+         (pt.ok === null ? "не пройден" : pt.ok + " из " + pt.total) + "</td></tr>";
+  }
+  return h + "</table>";
+}
+function trJump(id){
+  var el = document.getElementById(id);
+  if(!el) return;
+  try{ el.scrollIntoView({behavior: "smooth", block: "center"}); }
+  catch(e){ el.scrollIntoView(); }
+  el.className = "tr need";
+  setTimeout(function(){ el.className = "tr"; }, 2600);
+}
+function trStatus(){
+  var g = document.getElementById("trgate");
+  if(!g) return;
+  var left = trPending(), s = trSummary(), h, k;
+  if(!left.length){
+    g.className = "trgate ready";
+    g.innerHTML = "<b>Все семь тренажёров пройдены.</b> Верных ответов: " + s.ok +
+                  " из " + s.total + ". Работу можно отправлять.";
+    return;
+  }
+  g.className = "trgate";
+  h = "<b>Пройдено тренажёров: " + s.done + " из " + TRREQ.length + ".</b> " +
+      "Работа отправится, когда пройдёшь все. Осталось:<ul>";
+  for(k = 0; k < left.length; k++){
+    h += '<li><a data-jump="' + left[k].id + '">' + left[k].name + "</a></li>";
+  }
+  g.innerHTML = h + "</ul>";
+}
+document.addEventListener("click", function(ev){
+  var el = ev.target;
+  var id = (el && el.getAttribute) ? el.getAttribute("data-jump") : null;
+  if(id) trJump(id);
+});
+trStatus();
+
+/* ---------- память страницы ---------- */
+var SAVE_V = 1;
+var SKEY = "arttich:razl8:" + (STUDENT_CODE || "-");
+
+function spentMs(){ return spentBefore + (Date.now() - started); }
+
+var CAN_STORE = (function(){
+  try{
+    localStorage.setItem("arttich:probe", "1");
+    localStorage.removeItem("arttich:probe");
+    return true;
+  }catch(e){ return false; }
+})();
+
+var wiping = false;
+function saveWork(){
+  if(wiping) return;
+  try{
+    var box = {v: SAVE_V, at: Date.now(), spent: spentMs(), tr: TRDONE, tasks: {},
+               name: (document.getElementById("name").value || "")};
+    TASKS.forEach(function(t){
+      var x = state[t.id];
+      if(x.tries || x.hints || x.given || x.sel){
+        box.tasks[t.id] = {tries: x.tries, hints: x.hints, done: x.done,
+                           ok: x.ok, given: x.given, sel: x.sel};
+      }
+    });
+    localStorage.setItem(SKEY, JSON.stringify(box));
+    saveNote(box.at);
+  }catch(e){}
+}
+function loadWork(){
+  try{
+    var raw = localStorage.getItem(SKEY);
+    if(!raw) return null;
+    var box = JSON.parse(raw);
+    return (box && box.v === SAVE_V) ? box : null;
+  }catch(e){ return null; }
+}
+function clearWork(){
+  try{ localStorage.removeItem(SKEY); }catch(e){}
+}
+
+function saveNote(at){
+  var n = document.getElementById("savenote");
+  if(!n) return;
+  if(!CAN_STORE){
+    n.textContent = "Этот браузер не разрешает страницам ничего запоминать, поэтому " +
+      "при перезагрузке ответы пропадут. Решай за один заход или отправь работу до того, " +
+      "как закроешь вкладку.";
+    return;
+  }
+  var when = "";
+  if(at){
+    var d = new Date(at);
+    var two = function(x){ return (x < 10 ? "0" : "") + x; };
+    when = " Последнее сохранение: " + two(d.getDate()) + "." + two(d.getMonth() + 1) +
+           ", " + two(d.getHours()) + ":" + two(d.getMinutes()) + ".";
+  }
+  n.innerHTML = "Ответы и пройденные тренажёры хранятся в этом браузере: можно закрыть " +
+    "страницу и вернуться позже." + when +
+    " Фото не сохраняются." +
+    (at ? ' <button type="button" id="wipe">Начать заново</button>' : "");
+  var w = document.getElementById("wipe");
+  if(w){
+    w.addEventListener("click", function(){
+      wiping = true;
+      clearWork();
+      location.reload();
+    });
+  }
+}
+
+function restoreTask(t, s){
+  var el = document.getElementById("t" + t.id);
+  if(!el) return;
+  if(t.type === "choice"){
+    if(s.sel){
+      el.querySelectorAll(".opt").forEach(function(l){
+        if(l.dataset.v === s.sel){
+          l.classList.add("sel");
+          var r = l.querySelector("input");
+          if(r) r.checked = true;
+        }
+      });
+    }
+  } else if(s.given){
+    var inp = document.getElementById("in" + t.id);
+    if(inp) inp.value = s.given;
+  }
+  var host = el.querySelector(".hints"), k, h;
+  for(k = 0; k < s.hints && k < t.hints.length; k++){
+    h = document.createElement("div");
+    h.className = "hint";
+    h.innerHTML = "Подсказка " + (k + 1) + ": " + t.hints[k];
+    host.appendChild(h);
+  }
+  if(s.tries > 0){
+    var v = el.querySelector(".verdict");
+    el.classList.add(s.ok ? "ok" : "bad");
+    v.className = "verdict " + (s.ok ? "ok" : "bad");
+    if(s.ok){
+      v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    } else if(s.tries === 1){
+      v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+    } else {
+      v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    }
+    if(s.done) showSol(el, t);
+  }
+}
+
+(function(){
+  var saved = loadWork(), k;
+  if(saved){
+    spentBefore = saved.spent || 0;
+    if(saved.name){
+      var nm = document.getElementById("name");
+      if(nm && !nm.value) nm.value = saved.name;
+    }
+    TASKS.forEach(function(t){
+      var s = saved.tasks && saved.tasks[t.id];
+      if(!s) return;
+      var cur = state[t.id];
+      cur.tries = s.tries || 0; cur.hints = s.hints || 0;
+      cur.done = !!s.done; cur.ok = !!s.ok;
+      cur.given = s.given || ""; cur.sel = s.sel || null;
+      restoreTask(t, cur);
+    });
+    if(saved.tr){ for(k in saved.tr){ TRDONE[k] = saved.tr[k]; } }
+    progress();
+    trStatus();
+  }
+  saveNote(saved ? saved.at : 0);
+  var nm = document.getElementById("name");
+  if(nm) nm.addEventListener("change", saveWork);
+  window.addEventListener("beforeunload", saveWork);
+})();
+
+</script>
+</body>
+</html>
