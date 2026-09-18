@@ -1,0 +1,1471 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Тригонометрические формулы — §3, геометрия 9 класс</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:800px;margin:0 auto;padding:16px 14px 60px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+.f-formula{font-size:19px}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.step{margin:6px 0}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.fig{margin:12px 0;text-align:center}
+
+.tr{border:1px solid var(--line);border-radius:12px;padding:14px;margin:16px 0;background:var(--bg)}
+.trhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;
+  margin-bottom:8px}
+.trhead b{font-size:17px}
+.trscore{color:var(--muted);font-size:15px;white-space:nowrap}
+.trq{font-size:17px;margin:8px 0}
+.trfig{text-align:center;margin:8px 0}
+.trfig svg{width:100%;max-width:330px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.tropts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
+.tropt{border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;
+  background:var(--card);font-size:16px;text-align:left;min-height:46px}
+.tropt:hover{border-color:var(--acc)}
+.tropt.right{border-color:var(--ok);background:var(--ok-soft);font-weight:600}
+.tropt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.tropts.done .tropt{cursor:default}
+.trnum{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.trnum input{font:inherit;font-size:18px;padding:9px 11px;border-radius:9px;
+  border:1.5px solid var(--line);background:var(--card);color:var(--ink);max-width:130px}
+.trmsg{font-size:16px;margin-top:8px}
+.trmsg .v{font-weight:700}
+.trmsg .v.ok{color:var(--ok)} .trmsg .v.bad{color:var(--bad)}
+.trmsg .why{color:var(--muted);font-size:15px;margin-top:4px}
+.trbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.trbar button{font-size:15px;padding:8px 13px;min-height:42px}
+.trdone{background:var(--acc-soft);border-radius:10px;padding:12px;font-size:17px;
+  text-align:center;font-weight:600}
+
+.tfw{margin:14px 0;border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--bg)}
+.tfw .tffig{text-align:center;margin:4px 0 8px}
+.tfw .tffig svg{width:100%;max-width:330px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.tfbar{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-top:6px}
+.tfbar label{font-size:15px;color:var(--muted)}
+.tfbar input[type=range]{flex:1 1 180px;min-width:150px;accent-color:var(--acc);height:34px}
+.tfbar input[type=text]{font:inherit;font-size:18px;padding:8px 10px;border:1.5px solid var(--line);
+  border-radius:9px;width:110px;background:var(--card);color:inherit;text-align:center}
+.tfbar button{min-height:40px;font-size:15px;padding:7px 12px}
+.tfang{font-size:19px;font-weight:700;min-width:62px;text-align:center}
+.tfvals{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:8px;margin-top:10px}
+.tfv{border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--card);
+  font-size:17px;display:flex;justify-content:space-between;align-items:baseline;gap:6px}
+.tfv b{font-weight:600}
+.tfv i{font-style:normal;font-variant-numeric:tabular-nums}
+.tfv .up{color:#137a45;font-weight:700}
+.tfv .dn{color:#b3261e;font-weight:700}
+.tfid{margin-top:10px;text-align:center;font-size:18px;font-weight:600;line-height:2}
+.tfnote{color:var(--muted);font-size:15px;margin-top:8px;line-height:1.5}
+.tfbad{color:#b3261e;font-weight:700}
+.tfsteps{margin:10px 0 0;padding:0;list-style:none;counter-reset:tf}
+.tfsteps li{counter-increment:tf;margin:7px 0;padding-left:32px;position:relative;font-size:16px;
+  line-height:1.9}
+.tfsteps li::before{content:counter(tf);position:absolute;left:0;top:2px;width:23px;height:23px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:13px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.tfres{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:10px}
+.tfres div{border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:var(--card);
+  font-size:18px;text-align:center;line-height:2.4}
+.tfpick{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:8px}
+.tfpick button{min-height:40px;font-size:16px;padding:7px 14px}
+.tfpick button.on{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:700}
+.tfex{margin-top:9px;display:flex;flex-wrap:wrap;gap:7px}
+.tfex button{font-size:14px;padding:6px 10px;min-height:36px}
+
+.pw{white-space:nowrap}
+.pw sup{font-size:0.68em;line-height:0;vertical-align:0.62em;padding-left:1px}
+.nw{white-space:nowrap}
+.fig{text-align:center;margin:10px 0}
+.fig svg{width:100%;max-width:300px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.fbox .fig svg{max-width:215px}
+.fx{display:block;background:var(--acc-soft,var(--acc2,#e8f0ff));border:1px solid var(--line);
+  border-radius:10px;padding:12px 13px;margin:12px 0;text-align:center;font-size:22px;
+  line-height:2.4;font-weight:600;white-space:normal;overflow-wrap:break-word}
+.sol .fx,.ex .fx{font-size:19px;margin:9px 0}
+.def{border:1px solid var(--line);border-left:4px solid #2f6bd8;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#eef3fb}
+.def .n{font-size:14px;color:#2f6bd8;font-weight:700;letter-spacing:.4px}
+.rule2{border:1px solid var(--line);border-left:4px solid #c0397a;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdf0f6}
+.rule2 .n{font-size:14px;color:#a02a62;font-weight:700;letter-spacing:.4px}
+.hard{border:1px solid var(--line);border-left:4px solid #7a3fbf;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#f4efff}
+.hard .n{font-size:14px;color:#5f2ea0;font-weight:700;letter-spacing:.4px}
+@media (prefers-color-scheme:dark){.rule2{background:#2a1b23}.def{background:#18212f}
+  .hard{background:#221a33}}
+.ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;background:var(--bg)}
+.ex h3{margin-top:0}
+.tohw{font-weight:700;margin:18px 0 0;font-size:18px}
+.tohw span{color:var(--muted);font-weight:400;font-size:15px;display:block;margin-top:3px}
+.small,.mini{color:var(--muted);font-size:15px}
+.fr{display:inline-block;vertical-align:-0.58em;text-align:center;margin:0 3px}
+.fr b{display:block;border-bottom:1.7px solid currentColor;padding:0 6px;font-weight:400;
+  white-space:nowrap}
+.fr i{display:block;font-style:normal;padding:0 6px;white-space:nowrap}
+.opts .opt{font-size:18px;line-height:2.2}
+.task>div:first-child{line-height:2.3}
+.trq,.trmsg .why{line-height:2.2}
+.tropt{line-height:2.2}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.pam h3{font-size:18px;margin:18px 0 2px}
+.pam h3:first-of-type{margin-top:10px}
+.fgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));margin:9px 0}
+.fbox{border:1px solid var(--line);border-radius:12px;padding:9px 12px 11px;background:var(--bg)}
+.fbox h4{margin:0 0 3px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.fbox p{margin:6px 0 0;line-height:1.6;font-size:16px}
+.fbox p.small{font-size:15px}
+.ff{font-size:20px;line-height:2.3;text-align:center;margin:6px 0;font-weight:600;
+  white-space:normal;overflow-wrap:break-word}
+.fbox .ff{font-size:18px;line-height:2.1}
+.vtab{width:100%;border-collapse:collapse;font-size:16px;margin:8px 0}
+.vtab th,.vtab td{border:1px solid var(--line);padding:6px 4px;text-align:center}
+.vtab th{background:var(--acc2,#e8f0ff);font-size:15px}
+.trnav{margin-top:12px;display:flex;gap:9px;flex-wrap:wrap}
+.trgate{margin-top:12px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;
+  font-size:16px;background:var(--bg)}
+.trgate.ready{border-color:#1f8a54;background:#e9f7ef}
+.trgate ul{margin:6px 0 0;padding-left:20px}
+.trgate li{margin:3px 0}
+.trgate a{color:var(--acc);text-decoration:none;border-bottom:1px solid currentColor;cursor:pointer}
+@media (prefers-color-scheme:dark){.trgate.ready{background:#12281d}}
+.tr.need{outline:2px solid #c99a2e;outline-offset:3px}
+.savenote{margin-top:9px;color:var(--muted);font-size:14.5px;line-height:1.45}
+.savenote button{font-size:14px;padding:5px 10px;min-height:34px;margin-left:8px}
+.sheet .f-formula{margin:5px 0;font-size:14.5px;line-height:2.1}
+@media print{
+  .sheet>.meta{display:none}
+  .sheet h2{font-size:18px;margin:0 0 5px}
+  .sheet .f-formula{font-size:11.5px;line-height:1.85;margin:2px 0}
+  .sheet .fr{font-size:10.5px;vertical-align:-0.55em}
+  .sheet .vtab{font-size:10.5px}
+  .sheet .vtab th,.sheet .vtab td{padding:2px 3px}
+}
+
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+@media print{
+  body{background:#fff}
+  .bar{display:none !important}
+  .wrap>*{display:none !important}
+  .wrap>.sheet{display:block !important;border:none;margin:0;padding:0}
+  .sheet{font-size:13px}
+  .sheet h2{font-size:18px}
+  .sheet th,.sheet td{padding:4px 5px;font-size:12px}
+  @page{size:A4;margin:12mm}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card top">
+  <h1>Тригонометрические формулы</h1>
+  <div class="meta">Геометрия · 9 класс · §3 · живой треугольник, разбор основной задачи,
+  7 тренажёров, 18 задач</div>
+  <label class="f" for="name">Имя и фамилия</label>
+  <input type="text" id="name" placeholder="напиши, как в журнале" autocapitalize="words" spellcheck="false">
+  <div class="savenote" id="savenote"></div>
+  <div class="note" style="margin-top:14px">
+    <b>Как работать.</b> Страница идёт по кругу: короткая порция теории — разобранный
+    пример — тренажёр ровно на этот приём — задачи. Не перепрыгивай вперёд.
+    <div style="margin-top:8px">Главная мысль всей темы: <b>у одного угла все четыре
+    значения связаны</b>. Знаешь одно — найдёшь остальные три, считать сам угол не нужно.</div>
+    <div style="margin-top:8px">Если ответ получается дробью, так и пиши: 12/13 или 2√2/3.
+    Знак корня есть на экранной клавиатуре под полем ответа.</div>
+    <div style="margin-top:8px"><b>Все семь тренажёров нужно пройти до конца</b> — без этого
+    работа не отправится. Ошибки не страшны: важно дойти до итога и прочитать разбор.</div>
+  </div>
+</div>
+
+<div class="card pam">
+
+<h2>Памятка: всё, что понадобится</h2>
+<div class="meta">Сюда возвращаются, когда застряли. Читать целиком сразу не нужно.</div>
+
+<h3>Три группы формул</h3>
+<div class="fgrid"><div class="fbox"><h4>1 · Главное тождество</h4><div class="ff"><span class='nw'>sin<sup>2</sup>α</span> + <span class='nw'>cos<sup>2</sup>α</span> = 1</div><div class="fig"><svg viewBox="0 0 250 160"><rect x="0" y="0" width="250" height="160" rx="12" fill="#ffffff"/><polygon points="78.0,112.8 202.0,112.8 78.0,35.2" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/><polyline points="93.0,112.8 93.0,97.8 78.0,97.8" fill="none" stroke="#15181e" stroke-width="2"/><path d="M 175.0 112.8 A 27.0 27.0 0 0 1 179.1 98.4" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="141.8" y="95.5" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">α</text><text x="140" y="139" font-size="18" fill="#15181e" text-anchor="middle" font-weight="600">b</text><text x="66" y="80" font-size="18" fill="#15181e" text-anchor="end" font-weight="600">a</text><text x="156" y="66" font-size="18" fill="#15181e" text-anchor="start" font-weight="600">c</text><text x="66" y="133" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">C</text><text x="216" y="133" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">A</text><text x="64" y="31" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">B</text></svg></div><p>Сумма квадратов синуса и косинуса одного угла всегда равна единице.</p><p class="small">Отсюда sin α = √(1 − <span class='nw'>cos<sup>2</sup>α</span>), cos α = √(1 − <span class='nw'>sin<sup>2</sup>α</span>).</p></div><div class="fbox"><h4>2 · Тангенс и котангенс</h4><div class="ff">tg α = <span class='fr'><b>sin α</b><i>cos α</i></span></div><div class="ff">ctg α = <span class='fr'><b>cos α</b><i>sin α</i></span></div><div class="ff">tg α · ctg α = 1</div><p class="small">Тангенс и котангенс одного угла — взаимно обратные числа.</p></div><div class="fbox"><h4>3 · Ещё две формулы</h4><div class="ff">1 + <span class='nw'>tg<sup>2</sup>α</span> = <span class='fr'><b>1</b><i><span class='nw'>cos<sup>2</sup>α</span></i></span></div><div class="ff">1 + <span class='nw'>ctg<sup>2</sup>α</span> = <span class='fr'><b>1</b><i><span class='nw'>sin<sup>2</sup>α</span></i></span></div><p class="small">Получаются, если главное тождество разделить на <span class='nw'>cos<sup>2</sup>α</span> или на <span class='nw'>sin<sup>2</sup>α</span>.</p></div></div>
+
+<h3>Дополнительный угол, рост, порядок решения</h3>
+<div class="fgrid"><div class="fbox"><h4>Формулы приведения</h4><div class="ff">sin(90° − α) = cos α</div><div class="ff">cos(90° − α) = sin α</div><div class="ff">tg(90° − α) = ctg α</div><div class="ff">ctg(90° − α) = tg α</div><p class="small">Два острых угла прямоугольного треугольника дают в сумме 90°: катет, противолежащий одному из них, прилежащий другому.</p></div><div class="fbox"><h4>Рост и убывание</h4><p>При росте острого угла от 0° до 90°:</p><div class="ff">sin ↑ &nbsp; tg ↑</div><div class="ff">cos ↓ &nbsp; ctg ↓</div><p class="small">sin 30° &lt; sin 45° &lt; sin 60°, а cos 30° &gt; cos 45° &gt; cos 60°.</p></div><div class="fbox"><h4>Основная задача</h4><p>1. Дано одно значение — считаем его отношением сторон.</p><p>2. Третью сторону находим по теореме Пифагора.</p><p>3. Остальные функции читаем с чертежа.</p><p class="small">Синус и косинус острого угла меньше единицы, тангенс и котангенс — любые положительные числа.</p></div></div>
+
+<h3>Значения, которые стоит помнить</h3>
+<table class="vtab">
+<tr><th>α</th><th>30°</th><th>45°</th><th>60°</th></tr>
+<tr><td>sin α</td><td><span class='fr'><b>1</b><i>2</i></span></td><td><span class='fr'><b>√2</b><i>2</i></span></td><td><span class='fr'><b>√3</b><i>2</i></span></td></tr>
+<tr><td>cos α</td><td><span class='fr'><b>√3</b><i>2</i></span></td><td><span class='fr'><b>√2</b><i>2</i></span></td><td><span class='fr'><b>1</b><i>2</i></span></td></tr>
+<tr><td>tg α</td><td><span class='fr'><b>√3</b><i>3</i></span></td><td>1</td><td>√3</td></tr>
+<tr><td>ctg α</td><td>√3</td><td>1</td><td><span class='fr'><b>√3</b><i>3</i></span></td></tr>
+</table>
+
+</div>
+
+<div class="card">
+
+<h2>1. Откуда берётся главная формула</h2>
+<p>В прямоугольном треугольнике ABC угол C прямой, ∠A = α. Катет a лежит против угла α,
+катет b — рядом с ним, c — гипотенуза.</p>
+<div class="fig"><svg viewBox="0 0 330 210"><rect x="0" y="0" width="330" height="210" rx="12" fill="#ffffff"/><polygon points="78.0,150.8 282.0,150.8 78.0,27.2" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/><polyline points="93.0,150.8 93.0,135.8 78.0,135.8" fill="none" stroke="#15181e" stroke-width="2"/><path d="M 255.0 150.8 A 27.0 27.0 0 0 1 258.9 136.8" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="221.7" y="134.0" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">α</text><text x="180" y="177" font-size="18" fill="#15181e" text-anchor="middle" font-weight="600">b</text><text x="66" y="95" font-size="18" fill="#15181e" text-anchor="end" font-weight="600">a</text><text x="196" y="81" font-size="18" fill="#15181e" text-anchor="start" font-weight="600">c</text><text x="66" y="171" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">C</text><text x="296" y="171" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">A</text><text x="64" y="23" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">B</text><text x="165" y="202" font-size="15" fill="#5b6270" text-anchor="middle">∠C = 90°, ∠A = α</text></svg></div><div class="ff">sin α = <span class='fr'><b>a</b><i>c</i></span>, &nbsp; cos α = <span class='fr'><b>b</b><i>c</i></span></div>
+<p>Возведём оба равенства в квадрат и сложим:</p>
+<div class="ff"><span class='nw'>sin<sup>2</sup>α</span> + <span class='nw'>cos<sup>2</sup>α</span> = <span class='fr'><b><span class='pw'>a<sup>2</sup></span></b><i><span class='pw'>c<sup>2</sup></span></i></span> + <span class='fr'><b><span class='pw'>b<sup>2</sup></span></b><i><span class='pw'>c<sup>2</sup></span></i></span> = <span class='fr'><b><span class='pw'>a<sup>2</sup></span> + <span class='pw'>b<sup>2</sup></span></b><i><span class='pw'>c<sup>2</sup></span></i></span></div>
+<p>По теореме Пифагора <span class='pw'>a<sup>2</sup></span> + <span class='pw'>b<sup>2</sup></span> = <span class='pw'>c<sup>2</sup></span>,
+значит дробь равна единице.</p>
+<div class="def"><div class="n">ОСНОВНОЕ ТРИГОНОМЕТРИЧЕСКОЕ ТОЖДЕСТВО</div>
+Для любого острого угла α сумма квадратов синуса и косинуса равна единице.</div>
+<div class="ff"><span class='nw'>sin<sup>2</sup>α</span> + <span class='nw'>cos<sup>2</sup>α</span> = 1</div>
+<p>Здесь <span class='nw'>sin<sup>2</sup>α</span> — это короткая запись для <span class='nw'>(sin α)<sup>2</sup></span>,
+то есть синус сначала считают, а потом возводят в квадрат.</p>
+<h3>Посмотри, как это работает</h3>
+<div class="meta">Гипотенуза равна единице — тогда катеты и есть синус и косинус.
+Двигай ползунок: числа меняются, а сумма их квадратов стоит на месте.</div>
+<div class="tfw" id="lv1"><div class="tffig" id="lv1f"></div><div class="tfbar"><label for="lv1r">угол α</label><input type="range" id="lv1r" min="1" max="89" step="1" value="40"><span class="tfang" id="lv1d"></span></div><div class="tfbar"><button type="button" data-deg="30">30°</button><button type="button" data-deg="45">45°</button><button type="button" data-deg="60">60°</button><button type="button" data-deg="10">10°</button><button type="button" data-deg="80">80°</button></div><div class="tfvals" id="lv1v"></div><div class="tfid" id="lv1i"></div><div class="tfnote">Двигай ползунок и смотри на стрелки: при росте угла синус и тангенс увеличиваются, косинус и котангенс уменьшаются. А сумма квадратов синуса и косинуса не меняется никогда.</div></div>
+<div class="ex"><h3>Пример 1</h3>
+<p>Существует ли острый угол, синус которого равен 0,6, а косинус 0,8?</p>
+<div class="step">1. Проверяем тождество: <span class='nw'>0,6<sup>2</sup></span> + <span class='nw'>0,8<sup>2</sup></span> = 0,36 + 0,64.</div>
+<div class="step">2. Получилось 1 — равенство верное.</div>
+<div class="ff">Да, такой угол существует</div>
+<div class="step mini">А вот угла с sin α = 0,5 и cos α = 0,5 не бывает: 0,25 + 0,25 = 0,5,
+а должна получиться единица.</div></div>
+<div class="tohw">Задание 1<span>Три задачи на главное тождество.</span></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts1"><div class="trhead"><b>Тренажёр 1. Существует ли такой угол</b><span class="trscore" id="ts1s"></span></div><div class="meta">Восемь пар значений. Проверяем тождеством или произведением tg · ctg.</div><div class="trq" id="ts1q"></div><div class="trfig" id="ts1f"></div><div id="ts1a"></div><div class="trmsg" id="ts1m"></div><div class="trbar" id="ts1b"></div></div>
+</div>
+<div id="tasks1"></div>
+
+<div class="card">
+
+<h2>2. Одна функция через другую</h2>
+<p>Из тождества сразу получаются два следствия. Для острого угла синус и косинус
+положительны, поэтому перед корнем стоит знак плюс.</p>
+<div class="ff">sin α = √(1 − <span class='nw'>cos<sup>2</sup>α</span>)</div><div class="ff">cos α = √(1 − <span class='nw'>sin<sup>2</sup>α</span>)</div>
+<div class="rule2"><div class="n">ПОРЯДОК ДЕЙСТВИЙ</div>
+Возвести известное значение в квадрат → вычесть из единицы → извлечь корень.
+Квадрат считаем первым, иначе получится другое число.</div>
+<div class="ex"><h3>Пример 2</h3>
+<p>cos α = <span class='fr'><b>1</b><i>3</i></span>, α — острый угол. Найди sin α.</p>
+<div class="step">1. <span class='nw'>sin<sup>2</sup>α</span> = 1 − <span class='nw'>cos<sup>2</sup>α</span> = 1 − <span class='fr'><b>1</b><i>9</i></span> = <span class='fr'><b>8</b><i>9</i></span>.</div>
+<div class="step">2. Извлекаем корень: sin α = <span class='fr'><b>√8</b><i>3</i></span>.</div>
+<div class="step">3. Выносим множитель из-под корня: √8 = 2√2.</div>
+<div class="ff">sin α = <span class='fr'><b>2√2</b><i>3</i></span></div>
+<div class="step mini">Проверка: <span class='fr'><b>8</b><i>9</i></span> + <span class='fr'><b>1</b><i>9</i></span> = 1. Сошлось.</div></div>
+<div class="tohw">Задание 2<span>Три задачи: одна функция через другую.</span></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts2"><div class="trhead"><b>Тренажёр 2. Одна функция через другую</b><span class="trscore" id="ts2s"></span></div><div class="meta">Восемь заданий на главное тождество. Не забывай извлекать корень.</div><div class="trq" id="ts2q"></div><div class="trfig" id="ts2f"></div><div id="ts2a"></div><div class="trmsg" id="ts2m"></div><div class="trbar" id="ts2b"></div></div>
+</div>
+<div id="tasks2"></div>
+
+<div class="card">
+
+<h2>3. Тангенс и котангенс через синус и косинус</h2>
+<p>Разделим синус на косинус — гипотенуза сократится:</p>
+<div class="ff"><span class='fr'><b>sin α</b><i>cos α</i></span> = <span class='fr'><b><span class='fr'><b>a</b><i>c</i></span></b><i><span class='fr'><b>b</b><i>c</i></span></i></span> = <span class='fr'><b>a</b><i>b</i></span> = tg α</div>
+<div class="def"><div class="n">ДВЕ ФОРМУЛЫ</div>
+Тангенс — это синус, делённый на косинус; котангенс — косинус, делённый на синус.</div>
+<div class="ff">tg α = <span class='fr'><b>sin α</b><i>cos α</i></span>, &nbsp; ctg α = <span class='fr'><b>cos α</b><i>sin α</i></span></div>
+<p>Перемножим их: синусы и косинусы сократятся.</p>
+<div class="ff">tg α · ctg α = 1, &nbsp; tg α = <span class='fr'><b>1</b><i>ctg α</i></span></div>
+<div class="ex"><h3>Пример 3</h3>
+<p>sin α = 0,6 и cos α = 0,8. Найди tg α и ctg α.</p>
+<div class="step">1. tg α = 0,6 : 0,8 = 0,75.</div>
+<div class="step">2. ctg α — обратное число: 1 : 0,75 = <span class='fr'><b>4</b><i>3</i></span>.</div>
+<div class="ff">tg α = 0,75, &nbsp; ctg α = <span class='fr'><b>4</b><i>3</i></span></div>
+<div class="step mini">Проверка: 0,75 · <span class='fr'><b>4</b><i>3</i></span> = 1 — как и должно быть
+у взаимно обратных чисел.</div></div>
+<div class="tohw">Задание 3<span>Три задачи на тангенс и котангенс.</span></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts3"><div class="trhead"><b>Тренажёр 3. Тангенс и котангенс</b><span class="trscore" id="ts3s"></span></div><div class="meta">Восемь заданий. Ответ — десятичная дробь.</div><div class="trq" id="ts3q"></div><div class="trfig" id="ts3f"></div><div id="ts3a"></div><div class="trmsg" id="ts3m"></div><div class="trbar" id="ts3b"></div></div>
+</div>
+<div id="tasks3"></div>
+
+<div class="card">
+
+<h2>4. Ещё две формулы</h2>
+<p>Разделим главное тождество на <span class='nw'>cos<sup>2</sup>α</span> — каждое слагаемое по отдельности:</p>
+<div class="ff"><span class='fr'><b><span class='nw'>sin<sup>2</sup>α</span></b><i><span class='nw'>cos<sup>2</sup>α</span></i></span> + <span class='fr'><b><span class='nw'>cos<sup>2</sup>α</span></b><i><span class='nw'>cos<sup>2</sup>α</span></i></span> = <span class='fr'><b>1</b><i><span class='nw'>cos<sup>2</sup>α</span></i></span></div>
+<p>Первая дробь — это <span class='nw'>tg<sup>2</sup>α</span>, вторая равна единице.</p>
+<div class="ff">1 + <span class='nw'>tg<sup>2</sup>α</span> = <span class='fr'><b>1</b><i><span class='nw'>cos<sup>2</sup>α</span></i></span></div>
+<p>Точно так же, разделив на <span class='nw'>sin<sup>2</sup>α</span>, получим вторую формулу.</p>
+<div class="ff">1 + <span class='nw'>ctg<sup>2</sup>α</span> = <span class='fr'><b>1</b><i><span class='nw'>sin<sup>2</sup>α</span></i></span></div>
+<div class="rule2"><div class="n">ЗАЧЕМ ОНИ НУЖНЫ</div>
+Они связывают тангенс прямо с косинусом, минуя синус. Удобно, когда дан тангенс,
+а спрашивают косинус.</div>
+<div class="ex"><h3>Пример 4</h3>
+<p>tg α = 2, α — острый угол. Найди cos α.</p>
+<div class="step">1. 1 + <span class='nw'>tg<sup>2</sup>α</span> = 1 + 4 = 5, значит <span class='fr'><b>1</b><i><span class='nw'>cos<sup>2</sup>α</span></i></span> = 5.</div>
+<div class="step">2. Переворачиваем: <span class='nw'>cos<sup>2</sup>α</span> = <span class='fr'><b>1</b><i>5</i></span>.</div>
+<div class="step">3. Угол острый, косинус положителен: cos α = <span class='fr'><b>1</b><i>√5</i></span>.</div>
+<div class="step">4. Избавляемся от корня в знаменателе: умножаем числитель и знаменатель
+на √5.</div>
+<div class="ff">cos α = <span class='fr'><b>√5</b><i>5</i></span> ≈ 0,447</div>
+<div class="step mini">Дальше по тождеству находится и синус: <span class='nw'>sin<sup>2</sup>α</span> = 1 − <span class='fr'><b>1</b><i>5</i></span> = <span class='fr'><b>4</b><i>5</i></span>, sin α = <span class='fr'><b>2√5</b><i>5</i></span>.</div></div>
+<div class="tohw">Задание 4<span>Три задачи на формулы с 1 + tg²α.</span></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts4"><div class="trhead"><b>Тренажёр 4. Формулы с 1 + tg²α</b><span class="trscore" id="ts4s"></span></div><div class="meta">Восемь заданий. Считаем сразу всю дробь, а не косинус.</div><div class="trq" id="ts4q"></div><div class="trfig" id="ts4f"></div><div id="ts4a"></div><div class="trmsg" id="ts4m"></div><div class="trbar" id="ts4b"></div></div>
+</div>
+<div id="tasks4"></div>
+
+<div class="card">
+
+<h2>5. Основная задача темы</h2>
+<div class="def"><div class="n">ФОРМУЛИРОВКА</div>
+Известно одно из четырёх значений для острого угла — найти три остальных.</div>
+<p>Способ первый — по формулам, как в примерах выше. Способ второй короче: подобрать
+треугольник, в котором отношение сторон даёт нужное значение.</p>
+<div class="ex"><h3>Пример 5</h3>
+<p>sin β = <span class='fr'><b>5</b><i>13</i></span>, β — острый угол. Найди cos β, tg β и ctg β.</p>
+<div class="step">1. Синус — это противолежащий катет, делённый на гипотенузу. Возьмём
+катет 5 и гипотенузу 13.</div>
+<div class="step">2. Второй катет по теореме Пифагора: √(169 − 25) = √144 = 12.</div>
+<div class="fig"><svg viewBox="0 0 330 205"><rect x="0" y="0" width="330" height="205" rx="12" fill="#ffffff"/><polygon points="78.0,129.0 282.0,129.0 78.0,44.0" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/><polyline points="93.0,129.0 93.0,114.0 78.0,114.0" fill="none" stroke="#15181e" stroke-width="2"/><path d="M 255.0 129.0 A 27.0 27.0 0 0 1 257.1 118.6" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="199.0" y="112.4" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">β</text><text x="180" y="155" font-size="18" fill="#15181e" text-anchor="middle" font-weight="600">12</text><text x="66" y="92" font-size="18" fill="#15181e" text-anchor="end" font-weight="600">5</text><text x="196" y="78" font-size="18" fill="#15181e" text-anchor="start" font-weight="600">13</text><text x="66" y="149" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">C</text><text x="296" y="149" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">A</text><text x="64" y="40" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">B</text><text x="165" y="197" font-size="15" fill="#5b6270" text-anchor="middle">катеты 5 и 12, гипотенуза 13</text></svg></div>
+<div class="step">3. Остальные функции читаются прямо с чертежа.</div>
+<div class="ff">cos β = <span class='fr'><b>12</b><i>13</i></span>, &nbsp; tg β = <span class='fr'><b>5</b><i>12</i></span>, &nbsp; ctg β = <span class='fr'><b>12</b><i>5</i></span></div>
+<div class="step mini">Тот же ответ даёт и длинный путь: <span class='nw'>cos<sup>2</sup>β</span> = 1 − <span class='fr'><b>25</b><i>169</i></span> = <span class='fr'><b>144</b><i>169</i></span>.</div></div>
+<h3>Разбор по шагам для любого условия</h3>
+<div class="meta">Выбери, что известно, впиши значение дробью (5/13) или десятичной (0,6) —
+страница построит треугольник и покажет все четыре значения точно, без округления.</div>
+<div class="tfw" id="sv1"><div class="tfpick"><button type="button" data-fn="sin">sin α</button><button type="button" data-fn="cos">cos α</button><button type="button" data-fn="tg">tg α</button><button type="button" data-fn="ctg">ctg α</button></div><div class="tfbar"><label for="sv1val">значение</label><input type="text" id="sv1val" autocomplete="off" inputmode="text" value="5/13"><button type="button" class="pri" id="sv1go">Решить</button></div><div class="tfex"><button type="button" data-ex="sin 5/13">sin α = 5/13</button><button type="button" data-ex="cos 8/17">cos α = 8/17</button><button type="button" data-ex="tg 2">tg α = 2</button><button type="button" data-ex="ctg 4">ctg α = 4</button><button type="button" data-ex="sin 1/3">sin α = 1/3</button></div><ol class="tfsteps" id="sv1s"></ol><div class="tffig" id="sv1f"></div><div class="tfres" id="sv1r"></div><div class="tfnote" id="sv1n"></div></div>
+<div class="hard"><div class="n">ЧЕГО НЕ БЫВАЕТ</div>
+Синус и косинус острого угла всегда меньше единицы: катет короче гипотенузы.
+А вот тангенс и котангенс бывают любыми положительными — хоть 0,05, хоть 40.</div>
+<div class="tohw">Задание 5<span>Три задачи на основную задачу темы.</span></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts5"><div class="trhead"><b>Тренажёр 5. Основная задача</b><span class="trscore" id="ts5s"></span></div><div class="meta">Восемь заданий: по одному значению находим другое через треугольник.</div><div class="trq" id="ts5q"></div><div class="trfig" id="ts5f"></div><div id="ts5a"></div><div class="trmsg" id="ts5m"></div><div class="trbar" id="ts5b"></div></div>
+</div>
+<div id="tasks5"></div>
+
+<div class="card">
+
+<h2>6. Формулы приведения</h2>
+<p>Острые углы прямоугольного треугольника в сумме дают 90°: если ∠A = α, то ∠B = 90° − α.</p>
+<div class="fig"><svg viewBox="0 0 330 215"><rect x="0" y="0" width="330" height="215" rx="12" fill="#ffffff"/><polygon points="86.1,159.0 273.9,159.0 86.1,24.0" fill="#e8f0ff" stroke="#15181e" stroke-width="2.6"/><polyline points="101.1,159.0 101.1,144.0 86.1,144.0" fill="none" stroke="#15181e" stroke-width="2"/><path d="M 246.9 159.0 A 27.0 27.0 0 0 1 252.0 143.2" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="220.0" y="141.6" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">α</text><path d="M 86.1 51.0 A 27.0 27.0 0 0 0 108.0 39.8" fill="none" stroke="#2f6bd8" stroke-width="2.2" stroke-linecap="round"/><text x="104.6" y="60.1" font-size="17" fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">β</text><text x="180" y="185" font-size="18" fill="#15181e" text-anchor="middle" font-weight="600">b</text><text x="74" y="98" font-size="18" fill="#15181e" text-anchor="end" font-weight="600">a</text><text x="196" y="84" font-size="18" fill="#15181e" text-anchor="start" font-weight="600">c</text><text x="74" y="179" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">C</text><text x="288" y="179" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">A</text><text x="72" y="20" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">B</text><text x="165" y="207" font-size="15" fill="#5b6270" text-anchor="middle">α + β = 90°</text></svg></div>
+<p>Катет a противолежит углу α и прилежит углу β. Поэтому sin α и cos β — это одна и та же
+дробь <span class='fr'><b>a</b><i>c</i></span>.</p>
+<div class="ff">sin(90° − α) = cos α, &nbsp; cos(90° − α) = sin α</div><div class="ff">tg(90° − α) = ctg α, &nbsp; ctg(90° − α) = tg α</div>
+<div class="rule2"><div class="n">КАК ПОЛЬЗОВАТЬСЯ</div>
+Название функции меняется на «парное» (синус ↔ косинус, тангенс ↔ котангенс),
+а угол дополняется до 90°.</div>
+<div class="ex"><h3>Пример 6</h3>
+<p>Упрости cos 85° · ctg 5°.</p>
+<div class="step">1. ctg 5° = <span class='fr'><b>cos 5°</b><i>sin 5°</i></span>.</div>
+<div class="step">2. По формуле приведения sin 5° = cos 85°.</div>
+<div class="step">3. Значит cos 85° · <span class='fr'><b>cos 5°</b><i>cos 85°</i></span> — множители
+сокращаются.</div>
+<div class="ff">cos 85° · ctg 5° = cos 5°</div>
+<div class="step mini">Проверь на калькуляторе: 0,0872 · 11,43 ≈ 0,996, и cos 5° ≈ 0,996.</div></div>
+
+</div>
+
+<div class="card">
+<div class="tr" id="ts6"><div class="trhead"><b>Тренажёр 6. Формулы приведения</b><span class="trscore" id="ts6s"></span></div><div class="meta">Восемь заданий про угол 90° − α.</div><div class="trq" id="ts6q"></div><div class="trfig" id="ts6f"></div><div id="ts6a"></div><div class="trmsg" id="ts6m"></div><div class="trbar" id="ts6b"></div></div>
+</div>
+
+<div class="card">
+
+<h2>7. Что растёт, а что убывает</h2>
+<p>Вернись к живому треугольнику в начале: при увеличении угла противолежащий катет
+растёт, а прилежащий укорачивается. Гипотенуза при этом не меняется.</p>
+<div class="def"><div class="n">ПРАВИЛО</div>
+При возрастании острого угла от 0° до 90° синус и тангенс увеличиваются,
+а косинус и котангенс уменьшаются.</div>
+<div class="ff">sin 30° &lt; sin 45° &lt; sin 60°</div><div class="ff">cos 30° &gt; cos 45° &gt; cos 60°</div>
+<p>Тангенс растёт особенно быстро: у угла 89° он уже больше 57.</p>
+<div class="ex"><h3>Пример 7</h3>
+<p>Сравни sin 40° и cos 50°.</p>
+<div class="step">1. По формуле приведения cos 50° = sin(90° − 50°) = sin 40°.</div>
+<div class="ff">sin 40° = cos 50°</div>
+<div class="step mini">Сравнивать напрямую синус с косинусом нельзя — сначала приводим
+к одному названию.</div></div>
+<div class="hard"><div class="n">УПРОЩЕНИЕ ВЫРАЖЕНИЙ</div>
+Главное тождество чаще всего используют «задом наперёд»:
+1 − <span class='nw'>cos<sup>2</sup>α</span> = <span class='nw'>sin<sup>2</sup>α</span>, &nbsp; 1 − <span class='nw'>sin<sup>2</sup>α</span> = <span class='nw'>cos<sup>2</sup>α</span>.<br>
+Произведение (1 − cos α)(1 + cos α) — это разность квадратов, то есть 1 − <span class='nw'>cos<sup>2</sup>α</span> = <span class='nw'>sin<sup>2</sup>α</span>.</div>
+<div class="tohw">Задание 6<span>Три итоговые задачи — в них тригонометрия внутри геометрии.</span></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts7"><div class="trhead"><b>Тренажёр 7. Сравнить и упростить</b><span class="trscore" id="ts7s"></span></div><div class="meta">Десять заданий: что больше и как свернуть выражение.</div><div class="trq" id="ts7q"></div><div class="trfig" id="ts7f"></div><div id="ts7a"></div><div class="trmsg" id="ts7m"></div><div class="trbar" id="ts7b"></div></div>
+</div>
+<div id="tasks6"></div>
+<div id="tasks"></div>
+
+<div class="card sheet">
+  <h2>Шпаргалка</h2>
+  <div class="meta">Печатается на один лист A4: Ctrl+P (⌘+P) → печать.</div>
+  <p class="f-formula"><b>Главное тождество.</b> <span class='nw'>sin<sup>2</sup>α</span> + <span class='nw'>cos<sup>2</sup>α</span> = 1. Верно для любого угла;
+  квадрат относится к значению функции, а не к углу.</p>
+  <p class="f-formula"><b>Следствия.</b> sin α = √(1 − <span class='nw'>cos<sup>2</sup>α</span>), cos α = √(1 − <span class='nw'>sin<sup>2</sup>α</span>). Для острого угла корень берём со знаком плюс.</p>
+  <p class="f-formula"><b>Тангенс и котангенс.</b> tg α = <span class='fr'><b>sin α</b><i>cos α</i></span>, ctg α = <span class='fr'><b>cos α</b><i>sin α</i></span>, tg α · ctg α = 1. Их произведение равно единице,
+  поэтому одно число обратно другому.</p>
+  <p class="f-formula"><b>Через косинус и синус.</b> 1 + <span class='nw'>tg<sup>2</sup>α</span> = <span class='fr'><b>1</b><i><span class='nw'>cos<sup>2</sup>α</span></i></span>, 1 + <span class='nw'>ctg<sup>2</sup>α</span> = <span class='fr'><b>1</b><i><span class='nw'>sin<sup>2</sup>α</span></i></span>. Удобно, когда дан тангенс,
+  а спрашивают косинус.</p>
+  <p class="f-formula"><b>Формулы приведения.</b> sin(90° − α) = cos α, tg(90° − α) = ctg α. Название меняется на парное,
+  угол дополняется до 90°.</p>
+  <p class="f-formula"><b>Рост и убывание.</b> При увеличении острого угла синус и тангенс
+  растут, косинус и котангенс убывают. Сравнивать можно только одинаковые функции.</p>
+  <p class="f-formula"><b>Основная задача.</b> Дано одно значение → считаем его отношением
+  сторон → третью сторону находим по теореме Пифагора → остальные функции читаем с чертежа.
+  Тройки, которые стоит помнить: 3–4–5, 5–12–13, 8–15–17, 7–24–25.</p>
+  <p class="f-formula"><b>Частые ошибки.</b> Забыть извлечь корень после того, как нашёл
+  <span class='nw'>sin<sup>2</sup>α</span>; сравнивать синус с косинусом напрямую, не приведя к одному названию;
+  оставлять корень в знаменателе — <span class='fr'><b>1</b><i>√5</i></span> нужно привести к виду <span class='fr'><b>√5</b><i>5</i></span>.</p>
+<table class="vtab"><tr><th>α</th><th>30°</th><th>45°</th><th>60°</th></tr><tr><td>sin α</td><td><span class='fr'><b>1</b><i>2</i></span></td><td><span class='fr'><b>√2</b><i>2</i></span></td><td><span class='fr'><b>√3</b><i>2</i></span></td></tr><tr><td>cos α</td><td><span class='fr'><b>√3</b><i>2</i></span></td><td><span class='fr'><b>√2</b><i>2</i></span></td><td><span class='fr'><b>1</b><i>2</i></span></td></tr><tr><td>tg α</td><td><span class='fr'><b>√3</b><i>3</i></span></td><td>1</td><td>√3</td></tr><tr><td>ctg α</td><td>√3</td><td>1</td><td><span class='fr'><b>√3</b><i>3</i></span></td></tr></table>
+</div>
+
+<div class="card">
+  <h2>Шаг 1. Фото решений — по желанию</h2>
+  <div class="meta">В поле уходит только ответ, а я смотрю ещё и ход решения.
+  Фото прикладывать не обязательно, но с ними разбор будет точнее.</div>
+  <ol class="steps-list">
+    <li>Рисуй треугольник и подписывай стороны — половина задач решается прямо на чертеже.</li>
+    <li>Показывай, из чего извлекаешь корень: там теряется больше всего баллов.</li>
+    <li>В ответе оставляй точное значение, а приближённое пиши рядом.</li>
+  </ol>
+  <input type="file" id="photos" accept="image/*" multiple style="margin-top:12px">
+  <div class="thumbs" id="thumbs"></div>
+</div>
+
+<div class="card">
+  <h2>Шаг 2. Отправь работу</h2>
+  <div class="meta">Проверь, что вверху написано твоё имя. По кнопке ответы и результат
+  уходят преподавателю. Вторая кнопка сохраняет копию тебе.</div>
+  <div class="trgate" id="trgate"></div>
+  <div class="row" style="margin-top:12px">
+    <button class="pri" id="send">Отправить на проверку</button>
+    <button id="report">Скачать копию себе</button>
+  </div>
+  <div id="repnote" class="meta" style="margin-top:8px"></div>
+</div>
+
+</div>
+
+<div class="bar">
+  <button class="pri" id="checkall">Проверить всё</button>
+  <span id="progress" class="meta">решено 0 из 18</span>
+</div>
+
+<script>
+var CF = {};
+var STUDENT_CODE = (function(){
+  try{ var m = /[#&?]code=([^&]+)/.exec(location.hash + location.search);
+       return m ? decodeURIComponent(m[1]) : ""; }catch(e){ return ""; }
+})();
+var TOPIC = "Тригонометрические формулы (§3, геометрия 9 класс)";
+
+"use strict";
+var started = Date.now();
+var spentBefore = 0;
+
+/* ---------- данные задач; ответы закодированы, чтобы не читались в исходнике ---------- */
+function e(s){return btoa(unescape(encodeURIComponent(s)));}
+function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return s;}}
+
+var TASKS = [{"id": 1, "blk": "1", "lvl": "база", "img": "", "type": "num", "text": "Острый угол α, sin α = 0,6. Найди cos α.", "ans": ["MCw4"], "hints": ["Запиши тождество: <span class='nw'>sin<sup>2</sup>α</span> + <span class='nw'>cos<sup>2</sup>α</span> = 1.", "Сначала возведи 0,6 в квадрат, потом вычти результат из единицы.", "<span class='nw'>cos<sup>2</sup>α</span> = 0,64 — осталось извлечь корень."], "sol": "<div class='step'>1. <span class='nw'>cos<sup>2</sup>α</span> = 1 − 0,36 = 0,64.</div><div class='step'>2. Угол острый, косинус положителен.</div><div class='fx'>cos α = 0,8</div><div class='step mini'>Это знакомый треугольник со сторонами 3, 4, 5.</div>"}, {"id": 2, "blk": "1", "lvl": "база", "img": "", "type": "num", "text": "Острый угол α, cos α = 0,28. Найди sin α.", "ans": ["MCw5Ng=="], "hints": ["Тождество даёт <span class='nw'>sin<sup>2</sup>α</span> = 1 − <span class='nw'>cos<sup>2</sup>α</span>.", "0,28 · 0,28 = 0,0784.", "<span class='nw'>sin<sup>2</sup>α</span> = 0,9216, а корень из этого — число вида 0,9…"], "sol": "<div class='step'>1. <span class='nw'>sin<sup>2</sup>α</span> = 1 − 0,0784 = 0,9216.</div><div class='step'>2. Извлекаем корень.</div><div class='fx'>sin α = 0,96</div><div class='step mini'>Проверка: 0,96 · 0,96 = 0,9216. Сошлось.</div>"}, {"id": 3, "blk": "1", "lvl": "база", "img": "", "type": "num", "text": "Вычисли <span class='nw'>sin<sup>2</sup>48°</span> + <span class='nw'>cos<sup>2</sup>48°</span>.", "ans": ["MQ=="], "hints": ["Считать сами синус и косинус не нужно.", "Это в точности главное тождество.", "Угол один и тот же, значит ответ не зависит от 48°."], "sol": "<div class='step'>1. Для любого угла <span class='nw'>sin<sup>2</sup>α</span> + <span class='nw'>cos<sup>2</sup>α</span> = 1.</div><div class='fx'>Ответ: 1</div><div class='step mini'>Так же равны единице <span class='nw'>sin<sup>2</sup>17°</span> + <span class='nw'>cos<sup>2</sup>17°</span> и любая такая пара с одинаковым углом.</div>"}, {"id": 4, "blk": "2", "lvl": "средний", "img": "", "type": "num", "text": "Острый угол α, sin α = <span class='fr'><b>5</b><i>13</i></span>. Найди cos α. Ответ запиши дробью, например 3/5.", "ans": ["MTIvMTM="], "hints": ["Возведи <span class='fr'><b>5</b><i>13</i></span> в квадрат: <span class='fr'><b>25</b><i>169</i></span>.", "<span class='nw'>cos<sup>2</sup>α</span> = 1 − <span class='fr'><b>25</b><i>169</i></span> = <span class='fr'><b>144</b><i>169</i></span>.", "Корень из <span class='fr'><b>144</b><i>169</i></span> — дробь с числителем 12."], "sol": "<div class='step'>1. <span class='nw'>cos<sup>2</sup>α</span> = 1 − <span class='fr'><b>25</b><i>169</i></span> = <span class='fr'><b>144</b><i>169</i></span>.</div><div class='step'>2. Извлекаем корень из числителя и знаменателя.</div><div class='fx'>cos α = <span class='fr'><b>12</b><i>13</i></span></div><div class='step mini'>Короче: катеты 5 и 12, гипотенуза 13 — известная тройка.</div>"}, {"id": 5, "blk": "2", "lvl": "средний", "img": "", "type": "num", "text": "Острый угол α, cos α = <span class='fr'><b>1</b><i>3</i></span>. Найди sin α. Ответ можно записать как 2√2/3.", "ans": ["MuKImjIvMw=="], "hints": ["<span class='nw'>sin<sup>2</sup>α</span> = 1 − <span class='fr'><b>1</b><i>9</i></span>.", "Получится <span class='fr'><b>8</b><i>9</i></span>, корень берём из числителя и знаменателя.", "√8 = 2√2 — вынеси множитель из-под корня."], "sol": "<div class='step'>1. <span class='nw'>sin<sup>2</sup>α</span> = 1 − <span class='fr'><b>1</b><i>9</i></span> = <span class='fr'><b>8</b><i>9</i></span>.</div><div class='step'>2. sin α = <span class='fr'><b>√8</b><i>3</i></span>.</div><div class='step'>3. √8 = √(4 · 2) = 2√2.</div><div class='fx'>sin α = <span class='fr'><b>2√2</b><i>3</i></span> ≈ 0,943</div><div class='step mini'>Ответ меньше единицы — как и должно быть у синуса острого угла.</div>"}, {"id": 6, "blk": "2", "lvl": "база", "img": "", "type": "num", "text": "Острый угол α, cos α = <span class='fr'><b>15</b><i>17</i></span>. Найди sin α. Ответ запиши дробью.", "ans": ["OC8xNw=="], "hints": ["<span class='nw'>sin<sup>2</sup>α</span> = 1 − <span class='fr'><b>225</b><i>289</i></span>.", "Разность равна <span class='fr'><b>64</b><i>289</i></span>.", "Корень из 64 равен 8, из 289 — 17."], "sol": "<div class='step'>1. <span class='nw'>sin<sup>2</sup>α</span> = 1 − <span class='fr'><b>225</b><i>289</i></span> = <span class='fr'><b>64</b><i>289</i></span>.</div><div class='fx'>sin α = <span class='fr'><b>8</b><i>17</i></span></div><div class='step mini'>Ещё одна тройка, которую стоит помнить: 8, 15, 17.</div>"}, {"id": 7, "blk": "3", "lvl": "база", "img": "", "type": "num", "text": "tg α = 4. Найди ctg α.", "ans": ["MCwyNQ=="], "hints": ["Тангенс и котангенс одного угла перемножаются в единицу.", "ctg α = 1 : tg α.", "1 : 4 — это 0,25."], "sol": "<div class='step'>1. tg α · ctg α = 1.</div><div class='fx'>ctg α = <span class='fr'><b>1</b><i>4</i></span> = 0,25</div><div class='step mini'>Если тангенс больше единицы, котангенс обязательно меньше.</div>"}, {"id": 8, "blk": "3", "lvl": "база", "img": "", "type": "num", "text": "sin α = 0,6 и cos α = 0,8. Найди tg α.", "ans": ["MCw3NQ=="], "hints": ["Тангенс — это синус, делённый на косинус.", "0,6 : 0,8.", "Домножь оба числа на 10: 6 : 8."], "sol": "<div class='step'>1. tg α = <span class='fr'><b>0,6</b><i>0,8</i></span> = <span class='fr'><b>6</b><i>8</i></span>.</div><div class='fx'>tg α = 0,75</div><div class='step mini'>Заодно ctg α = <span class='fr'><b>4</b><i>3</i></span> ≈ 1,333.</div>"}, {"id": 9, "blk": "3", "lvl": "средний", "img": "", "type": "num", "text": "Острый угол α, sin α = <span class='fr'><b>8</b><i>17</i></span>. Найди tg α. Ответ запиши дробью.", "ans": ["OC8xNQ=="], "hints": ["Сначала найди косинус по тождеству.", "<span class='nw'>cos<sup>2</sup>α</span> = 1 − <span class='fr'><b>64</b><i>289</i></span> = <span class='fr'><b>225</b><i>289</i></span>.", "Тангенс — это отношение катетов 8 и 15."], "sol": "<div class='step'>1. cos α = <span class='fr'><b>15</b><i>17</i></span>.</div><div class='step'>2. tg α = <span class='fr'><b>8</b><i>17</i></span> : <span class='fr'><b>15</b><i>17</i></span> — семнадцатые сокращаются.</div><div class='fx'>tg α = <span class='fr'><b>8</b><i>15</i></span></div><div class='step mini'>На чертеже это видно сразу: катеты 8 и 15, гипотенуза 17.</div>"}, {"id": 10, "blk": "4", "lvl": "средний", "img": "", "type": "num", "text": "tg α = 3. Найди <span class='fr'><b>1</b><i><span class='nw'>cos<sup>2</sup>α</span></i></span>.", "ans": ["MTA="], "hints": ["Есть готовая формула: 1 + <span class='nw'>tg<sup>2</sup>α</span> = <span class='fr'><b>1</b><i><span class='nw'>cos<sup>2</sup>α</span></i></span>.", "Подставь тангенс: 1 + 9.", "Считать сам косинус не нужно."], "sol": "<div class='step'>1. 1 + <span class='nw'>tg<sup>2</sup>α</span> = 1 + 9 = 10.</div><div class='fx'><span class='fr'><b>1</b><i><span class='nw'>cos<sup>2</sup>α</span></i></span> = 10</div><div class='step mini'>Отсюда <span class='nw'>cos<sup>2</sup>α</span> = 0,1 и cos α = <span class='fr'><b>√10</b><i>10</i></span>.</div>"}, {"id": 11, "blk": "4", "lvl": "средний", "img": "", "type": "num", "text": "ctg α = 0,5. Найди <span class='fr'><b>1</b><i><span class='nw'>sin<sup>2</sup>α</span></i></span>.", "ans": ["MSwyNQ=="], "hints": ["Вторая формула: 1 + <span class='nw'>ctg<sup>2</sup>α</span> = <span class='fr'><b>1</b><i><span class='nw'>sin<sup>2</sup>α</span></i></span>.", "0,5 в квадрате — это 0,25.", "1 + 0,25."], "sol": "<div class='step'>1. 1 + <span class='nw'>ctg<sup>2</sup>α</span> = 1 + 0,25 = 1,25.</div><div class='fx'><span class='fr'><b>1</b><i><span class='nw'>sin<sup>2</sup>α</span></i></span> = 1,25</div><div class='step mini'>Значит <span class='nw'>sin<sup>2</sup>α</span> = 0,8 и sin α = <span class='fr'><b>2√5</b><i>5</i></span> ≈ 0,894.</div>"}, {"id": 12, "blk": "4", "lvl": "сложный", "img": "", "type": "num", "text": "Острый угол α, tg α = 2. Найди cos α. Ответ можно записать как √5/5.", "ans": ["4oiaNS81"], "hints": ["1 + <span class='nw'>tg<sup>2</sup>α</span> = <span class='fr'><b>1</b><i><span class='nw'>cos<sup>2</sup>α</span></i></span>.", "Получается <span class='fr'><b>1</b><i><span class='nw'>cos<sup>2</sup>α</span></i></span> = 5, отсюда <span class='nw'>cos<sup>2</sup>α</span> = <span class='fr'><b>1</b><i>5</i></span>.", "cos α = <span class='fr'><b>1</b><i>√5</i></span>, осталось убрать корень из знаменателя."], "sol": "<div class='step'>1. 1 + 4 = 5, значит <span class='nw'>cos<sup>2</sup>α</span> = <span class='fr'><b>1</b><i>5</i></span>.</div><div class='step'>2. Угол острый, косинус положителен: cos α = <span class='fr'><b>1</b><i>√5</i></span>.</div><div class='step'>3. Умножаем числитель и знаменатель на √5.</div><div class='fx'>cos α = <span class='fr'><b>√5</b><i>5</i></span> ≈ 0,447</div><div class='step mini'>Проверка через треугольник: катеты 2 и 1, гипотенуза √5, косинус = <span class='fr'><b>1</b><i>√5</i></span>.</div>"}, {"id": 13, "blk": "5", "lvl": "средний", "img": "", "type": "num", "text": "Острый угол α, sin α = <span class='fr'><b>5</b><i>13</i></span>. Найди ctg α.", "ans": ["Miw0"], "hints": ["Построй треугольник: катет 5, гипотенуза 13.", "Второй катет равен 12.", "Котангенс — прилежащий катет к противолежащему, то есть 12 : 5."], "sol": "<div class='step'>1. Второй катет: √(169 − 25) = 12.</div><div class='step'>2. ctg α = <span class='fr'><b>12</b><i>5</i></span>.</div><div class='fx'>ctg α = 2,4</div><div class='step mini'>Заодно tg α = <span class='fr'><b>5</b><i>12</i></span> ≈ 0,417 — обратное число.</div>"}, {"id": 14, "blk": "5", "lvl": "средний", "img": "", "type": "num", "text": "Острый угол α, tg α = <span class='fr'><b>8</b><i>15</i></span>. Найди sin α. Ответ запиши дробью.", "ans": ["OC8xNw=="], "hints": ["Тангенс — отношение катетов, значит их можно взять равными 8 и 15.", "Гипотенуза: √(64 + 225).", "√289 = 17."], "sol": "<div class='step'>1. Катеты 8 и 15, гипотенуза √289 = 17.</div><div class='step'>2. Синус — противолежащий катет к гипотенузе.</div><div class='fx'>sin α = <span class='fr'><b>8</b><i>17</i></span></div><div class='step mini'>Через формулы это дольше: сначала <span class='fr'><b>1</b><i><span class='nw'>cos<sup>2</sup>α</span></i></span> = 1 + <span class='fr'><b>64</b><i>225</i></span>, потом косинус, потом синус.</div>"}, {"id": 15, "blk": "5", "lvl": "сложный", "img": "", "type": "num", "text": "Острый угол α, ctg α = <span class='fr'><b>1</b><i>√15</i></span>. Найди sin α. Ответ можно записать как √15/4.", "ans": ["4oiaMTUvNA=="], "hints": ["Сначала перейди к тангенсу: он обратен котангенсу.", "tg α = √15, значит катеты можно взять √15 и 1.", "Гипотенуза: √(15 + 1) = 4."], "sol": "<div class='step'>1. tg α = √15.</div><div class='step'>2. Катеты √15 и 1, гипотенуза √(15 + 1) = √16 = 4.</div><div class='fx'>sin α = <span class='fr'><b>√15</b><i>4</i></span> ≈ 0,968</div><div class='step mini'>Косинус здесь маленький: <span class='fr'><b>1</b><i>4</i></span>. Угол близок к 76°.</div>"}, {"id": 16, "blk": "6", "lvl": "средний", "img": "", "type": "num", "text": "Известно, что sin 70° = cos x, где x — острый угол. Найди x. Ответ в градусах, только число.", "ans": ["MjA="], "hints": ["Работает формула приведения sin α = cos(90° − α).", "Значит x = 90° − 70°.", "Ответ — двузначное число."], "sol": "<div class='step'>1. sin 70° = cos(90° − 70°).</div><div class='fx'>x = 20°</div><div class='step mini'>Проверь: sin 70° ≈ 0,940 и cos 20° ≈ 0,940.</div>"}, {"id": 17, "blk": "6", "lvl": "сложный", "img": "", "type": "num", "text": "В окружности радиуса 6 проведены диаметр AB и хорда AC. Найди длину BC, если cos ∠BAC = <span class='fr'><b>√5</b><i>3</i></span>.", "ans": ["OA=="], "hints": ["Угол, опирающийся на диаметр, прямой — значит ∠ACB = 90°.", "AB = 2 · 6 = 12 — это гипотенуза треугольника ABC.", "BC = AB · sin ∠BAC, а синус найди по тождеству."], "sol": "<div class='step'>1. ∠ACB = 90°, потому что он опирается на диаметр.</div><div class='step'>2. AB = 12.</div><div class='step'>3. <span class='nw'>sin<sup>2</sup>∠BAC</span> = 1 − <span class='fr'><b>5</b><i>9</i></span> = <span class='fr'><b>4</b><i>9</i></span>, значит sin ∠BAC = <span class='fr'><b>2</b><i>3</i></span>.</div><div class='step'>4. BC — катет, противолежащий углу A: BC = AB · sin ∠BAC.</div><div class='fx'>BC = 12 · <span class='fr'><b>2</b><i>3</i></span> = 8</div><div class='step mini'>Второй катет AC = 12 · <span class='fr'><b>√5</b><i>3</i></span> = 4√5 ≈ 8,94. Проверка: 64 + 80 = 144 = 12².</div>"}, {"id": 18, "blk": "6", "lvl": "сложный", "img": "", "type": "num", "text": "В параллелограмме ABCD сторона BC = 50 см, высота BK = 30 см, cos A = <span class='fr'><b>8</b><i>17</i></span>. Найди периметр параллелограмма (в см).", "ans": ["MTY4"], "hints": ["Высота BK образует прямоугольный треугольник ABK с прямым углом K.", "Сначала найди sin A по тождеству, а потом AB = BK : sin A.", "Периметр равен 2 · (AB + BC)."], "sol": "<div class='step'>1. <span class='nw'>sin<sup>2</sup>A</span> = 1 − <span class='fr'><b>64</b><i>289</i></span> = <span class='fr'><b>225</b><i>289</i></span>, значит sin A = <span class='fr'><b>15</b><i>17</i></span>.</div><div class='step'>2. В треугольнике ABK: sin A = <span class='fr'><b>BK</b><i>AB</i></span>, отсюда AB = <span class='fr'><b>30</b><i><span class='fr'><b>15</b><i>17</i></span></i></span> = 34 см.</div><div class='step'>3. Периметр = 2 · (AB + BC).</div><div class='fx'>P = 2 · (34 + 50) = 168 см</div><div class='step mini'>Косинус понадобился только чтобы добраться до синуса — высота связана именно с ним.</div>"}];
+
+/* ---------- разбор ответа ---------- */
+function norm(s){
+  return String(s).toLowerCase().replace(/\s+/g,"")
+    .replace(/[\u2013\u2014\u2212]/g,"-")
+    .replace(/[\u00d7\u00b7]/g,"*")
+    .replace(/,/g,".")
+    .replace(/^(ответ:?|x=|y=|α=|a=)/,"");
+}
+function toNum(str){
+  var t = norm(str);
+  if(!t) return NaN;
+  t = t.replace(/\u221a/g,"sqrt").replace(/\u03c0/g,"pi");
+  t = t.replace(/sqrt(\d+(?:\.\d+)?)/g,"sqrt($1)");
+  t = t.replace(/(\d)sqrt/g,"$1*sqrt");
+  t = t.replace(/(\d)pi/g,"$1*pi");
+  t = t.replace(/(\d)\(/g,"$1*(").replace(/\)(\d)/g,")*$1").replace(/\)\(/g,")*(");
+  if(!/^[-+*/().0-9a-z]+$/.test(t)) return NaN;
+  if(t.replace(/sqrt|pi/g,"").match(/[a-z]/)) return NaN;
+  try{
+    var v = new Function("sqrt","pi","return ("+t+");")(Math.sqrt, Math.PI);
+    return (typeof v === "number" && isFinite(v)) ? v : NaN;
+  }catch(err){ return NaN; }
+}
+function same(given, right, tol){
+  var a = toNum(given), b = toNum(right);
+  if(!isNaN(a) && !isNaN(b)){
+    var t = tol || 1e-4;
+    return Math.abs(a-b) <= Math.max(t, Math.abs(b)*t);
+  }
+  return norm(given) === norm(right);
+}
+
+/* ---------- отрисовка ---------- */
+var state = {};
+function boxOf(t){
+  return document.getElementById("tasks" + (t.blk || "")) ||
+         document.getElementById("tasks");
+}
+
+TASKS.forEach(function(t){
+  state[t.id] = {tries:0, hints:0, done:false, ok:false, given:"", sel:null};
+  var el = document.createElement("div");
+  el.className = "task"; el.id = "t"+t.id;
+  var body = '<div><span class="tnum">'+t.id+'.</span>'+t.text+
+             '<span class="lvl">'+t.lvl+'</span></div>';
+  if(t.img){ body += '<div class="fig">'+t.img+'</div>'; }
+  if(t.type === "choice"){
+    body += '<div class="opts">'+t.options.map(function(o,i){
+      return '<label class="opt" data-v="'+o+'"><input type="radio" name="q'+t.id+'" value="'+o+'"> '+((t.optionsHtml && t.optionsHtml[i]) || o)+'</label>';
+    }).join("")+'</div>';
+  } else {
+    body += '<div class="keys">'+
+      ["√","/","−",","].map(function(k){
+        return '<button class="key" data-k="'+k+'" type="button">'+k+'</button>';}).join("")+
+      '</div><input type="text" id="in'+t.id+'" inputmode="text" autocapitalize="off" '+
+      'autocorrect="off" autocomplete="off" spellcheck="false" placeholder="ответ">';
+  }
+  body += '<div class="row" style="margin-top:10px">'+
+          '<button class="pri sm chk">Проверить</button>'+
+          '<button class="sm hnt">Подсказка</button></div>'+
+          '<div class="hints"></div><div class="verdict"></div><div class="sol"></div>';
+  el.innerHTML = body;
+  boxOf(t).appendChild(el);
+
+  el.querySelectorAll(".key").forEach(function(b){
+    b.addEventListener("click", function(){
+      var inp = document.getElementById("in"+t.id);
+      var k = b.dataset.k === "−" ? "-" : b.dataset.k;
+      var s = inp.selectionStart || inp.value.length;
+      inp.value = inp.value.slice(0,s) + k + inp.value.slice(inp.selectionEnd || s);
+      inp.focus(); inp.setSelectionRange(s+k.length, s+k.length);
+    });
+  });
+  if(t.type === "choice"){
+    el.querySelectorAll(".opt").forEach(function(l){
+      l.addEventListener("click", function(){
+        el.querySelectorAll(".opt").forEach(function(x){x.classList.remove("sel");});
+        l.classList.add("sel"); state[t.id].sel = l.dataset.v;
+      });
+    });
+  } else {
+    el.querySelector("#in"+t.id).addEventListener("keydown", function(ev){
+      if(ev.key === "Enter"){ ev.preventDefault(); check(t.id); }
+    });
+  }
+  el.querySelector(".chk").addEventListener("click", function(){ check(t.id); });
+  el.querySelector(".hnt").addEventListener("click", function(){ hint(t.id); });
+});
+
+function hint(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var host = document.querySelector("#t"+id+" .hints");
+  if(s.hints >= t.hints.length){
+    if(!host.querySelector(".last")){
+      var w = document.createElement("div");
+      w.className = "hint last"; w.textContent = "Подсказки закончились — нажми «Проверить», решение откроется после второй попытки.";
+      host.appendChild(w);
+    }
+    return;
+  }
+  var h = document.createElement("div");
+  h.className = "hint";
+  h.innerHTML = "Подсказка " + (s.hints+1) + ": " + t.hints[s.hints];
+  host.appendChild(h);
+  s.hints++;
+  saveWork();
+}
+
+function check(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var el = document.getElementById("t"+id);
+  var v = document.querySelector(".verdict");
+  v = el.querySelector(".verdict");
+  var given = (t.type === "choice") ? (s.sel || "") :
+              (document.getElementById("in"+id).value || "");
+  if(!given.trim()){ v.className = "verdict bad"; v.textContent = "Введи ответ."; return; }
+  s.given = given; s.tries++;
+  var ok = t.ans.some(function(a){ return same(given, d(a), t.tol); });
+  s.ok = ok; s.done = ok || s.tries >= 2;
+  el.classList.remove("ok","bad");
+  el.classList.add(ok ? "ok" : "bad");
+  v.className = "verdict " + (ok ? "ok" : "bad");
+  if(ok){
+    v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    showSol(el, t);
+  } else if(s.tries === 1){
+    v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+  } else {
+    v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    showSol(el, t);
+  }
+  progress();
+  saveWork();
+}
+function showSol(el, t){
+  var host = el.querySelector(".sol");
+  if(host.dataset.on) return;
+  host.dataset.on = "1";
+  var det = document.createElement("details");
+  det.open = true;
+  det.innerHTML = "<summary>Решение</summary><div class='step'>"+t.sol+"</div>";
+  host.appendChild(det);
+}
+function progress(){
+  var done = TASKS.filter(function(t){return state[t.id].done;}).length;
+  var ok = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  document.getElementById("progress").textContent =
+    "решено " + done + " из " + TASKS.length + " · верно " + ok;
+}
+document.getElementById("checkall").addEventListener("click", function(){
+  TASKS.forEach(function(t){
+    var s = state[t.id];
+    var given = (t.type === "choice") ? (s.sel || "") : (document.getElementById("in"+t.id).value || "");
+    if(given.trim() && !s.done) check(t.id);
+  });
+  var first = TASKS.find(function(t){ return !state[t.id].done; });
+  var note = first ? "Осталась задача " + first.id + "." : "Все задачи закрыты.";
+  document.getElementById("progress").textContent += " · " + note;
+});
+progress();
+
+/* ---------- фото ---------- */
+var photos = [];
+document.getElementById("photos").addEventListener("change", function(ev){
+  var files = Array.prototype.slice.call(ev.target.files || []);
+  files.forEach(function(f){
+    var r = new FileReader();
+    r.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var m = 1400, w = img.width, h = img.height;
+        if(Math.max(w,h) > m){ var k = m/Math.max(w,h); w = Math.round(w*k); h = Math.round(h*k); }
+        var c = document.createElement("canvas"); c.width = w; c.height = h;
+        c.getContext("2d").drawImage(img, 0, 0, w, h);
+        photos.push({url: c.toDataURL("image/jpeg", 0.7), task: ""});
+        drawThumbs();
+      };
+      img.src = r.result;
+    };
+    r.readAsDataURL(f);
+  });
+  ev.target.value = "";
+});
+function drawThumbs(){
+  var host = document.getElementById("thumbs");
+  host.innerHTML = "";
+  var total = 0;
+  photos.forEach(function(p, i){
+    total += p.url.length * 0.75;
+    var d0 = document.createElement("div"); d0.className = "thumb";
+    var opts = '<option value="">задача…</option>' + TASKS.map(function(t){
+      return '<option value="'+t.id+'"'+(p.task==String(t.id)?" selected":"")+'>№'+t.id+'</option>';
+    }).join("");
+    d0.innerHTML = '<img src="'+p.url+'" alt="фото решения"><button type="button">×</button>'+
+                   '<select>'+opts+'</select>';
+    d0.querySelector("button").addEventListener("click", function(){ photos.splice(i,1); drawThumbs(); });
+    d0.querySelector("select").addEventListener("change", function(ev){ p.task = ev.target.value; });
+    host.appendChild(d0);
+  });
+  var note = document.getElementById("repnote");
+  if(total > 15e6){ note.textContent = "Фото уже больше 15 МБ — отчёт может отправляться долго, лишние лучше удалить."; }
+  else if(photos.length){ note.textContent = "Фото в отчёте: " + photos.length + "."; }
+  else { note.textContent = ""; }
+}
+
+/* ---------- отчёт ---------- */
+var ENDPOINT = "https://script.google.com/macros/s/AKfycbwqIhgBtFnoUik3N1Lh_YRhNeEFAjmXWSxBNoX1a_Yxu-2dEKHFwo4Dd5Ch9UTOHH-X/exec";
+var SECRET = "artteach2026";
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function buildReport(){
+  var name = (document.getElementById("name").value || "").trim() || "без имени";
+  var now = new Date();
+  var mins = Math.max(1, Math.round(spentMs()/60000));
+  var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  var data = {tип:"дз", предмет:"математика", тема:"Тригонометрические формулы (§3, геометрия 9 класс)",
+    ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
+    верно:okN, всего:TASKS.length, тренажёры:trSummary(), задачи:[]};
+  var rows = TASKS.map(function(t){
+    var s = state[t.id];
+    data.задачи.push({n:t.id, условие:t.text.replace(/<[^>]+>/g,""), ответ_ученика:s.given,
+      верный_ответ:t.ans.map(d).join(" или "), верно:s.ok, попыток:s.tries, подсказок:s.hints,
+      уровень:t.lvl});
+    return "<tr><td>"+t.id+"</td><td style='text-align:left'>"+esc(t.text.replace(/<[^>]+>/g,""))+
+      "</td><td>"+esc(s.given||"—")+"</td><td>"+esc(t.ans.map(d).join(" / "))+"</td><td>"+
+      (s.ok?"верно":(s.given?"неверно":"не решал"))+"</td><td>"+s.tries+"</td><td>"+s.hints+"</td></tr>";
+  }).join("");
+  var pics = photos.map(function(p,i){
+    return "<figure><img src='"+p.url+"'><figcaption>Фото "+(i+1)+
+      (p.task?" — к задаче №"+p.task:"")+"</figcaption></figure>";
+  }).join("");
+  var html = "<!doctype html><html lang='ru'><head><meta charset='utf-8'>"+
+    "<meta name='viewport' content='width=device-width,initial-scale=1'>"+
+    "<title>Отчёт — "+esc(name)+" — тригонометрические формулы · геометрия 9 класс</title><style>"+
+    "body{font:16px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;padding:20px;color:#16181d;background:#fff}"+
+    "h1{font-size:22px;margin:0 0 4px}.m{color:#5b6270;font-size:15px}"+
+    "table{border-collapse:collapse;width:100%;margin-top:14px;font-size:15px}"+
+    "th,td{border:1px solid #dfe3ea;padding:6px 8px;text-align:center}th{background:#eef3fb}"+
+    "figure{margin:14px 0}img{max-width:100%;border:1px solid #dfe3ea;border-radius:8px}"+
+    "figcaption{color:#5b6270;font-size:14px;margin-top:4px}</style></head><body>"+
+    "<h1>Отчёт по домашнему заданию</h1>"+
+    "<div class='m'>Тема: тригонометрические формулы · §3, геометрия 9 класс</div>"+
+    "<div class='m'>Ученик: <b>"+esc(name)+"</b> · сдано: "+esc(now.toLocaleString("ru-RU"))+
+    " · время работы: около "+mins+" мин</div>"+
+    "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)</h2>"+
+    "<table><tr><th>№</th><th>Задача</th><th>Ответ ученика</th><th>Верный ответ</th>"+
+    "<th>Итог</th><th>Попыток</th><th>Подсказок</th></tr>"+rows+"</table>"+
+    trReportHtml()+
+    (pics ? "<h2>Фото решений</h2>"+pics : "<p class='m'>Фото решений не прикреплены.</p>")+
+    "<script type='application/json' id='result-data'>"+
+    JSON.stringify(data).replace(/</g,"\\u003c")+"<\/script></body></html>";
+  var stamp = now.getDate()+"-"+(now.getMonth()+1);
+  return {
+    html: html,
+    name: name,
+    ok: okN,
+    total: TASKS.length,
+    file: "Отчёт_Тригформулы9_"+name.replace(/\s+/g,"_")+"_"+stamp+".html",
+    caption: name+" · тригонометрические формулы · геометрия 9 класс · "+okN+" из "+TASKS.length+
+             " ("+Math.round(okN/TASKS.length*100)+"%)"+
+             " · тренажёры "+trSummary().ok+" из "+trSummary().total
+  };
+}
+
+document.getElementById("send").addEventListener("click", function(){
+  var note = document.getElementById("repnote");
+  var who = (document.getElementById("name").value || "").trim();
+  if(!who){ note.className = "meta bad-note"; note.textContent = "Сначала впиши имя вверху страницы."; return; }
+  var left = trPending();
+  if(left.length){
+    note.className = "meta bad-note";
+    note.textContent = "Работа не отправлена: сначала пройди тренажёры. " +
+      "Осталось " + left.length + " из " + TRREQ.length + ".";
+    trStatus();
+    trJump(left[0].id);
+    return;
+  }
+  note.className = "meta";
+  var r = buildReport();
+  note.textContent = "Отправляю…";
+  var payload = {
+    secret: SECRET,
+    code: STUDENT_CODE,
+    student: r.name,
+    topic: TOPIC,
+    ok: r.ok,
+    total: r.total,
+    name: r.file,
+    caption: r.caption,
+    trainers: trSummary().ok + " из " + trSummary().total,
+    file: btoa(unescape(encodeURIComponent(r.html)))
+  };
+  fetch(ENDPOINT, {method:"POST", mode:"no-cors", body: JSON.stringify(payload)})
+    .then(function(){
+      note.textContent = "Отправлено преподавателю." +
+        (photos.length ? "" : " Фото решений не приложены — если решал в тетради, приложи их и отправь ещё раз.") +
+        " Если хочешь, сохрани копию себе кнопкой ниже.";
+    })
+    .catch(function(){
+      note.textContent = "Не получилось отправить. Скачай файл кнопкой ниже и пришли его вручную.";
+    });
+});
+
+document.getElementById("report").addEventListener("click", function(){
+  var r = buildReport();
+  var blob = new Blob([r.html], {type:"text/html;charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = r.file;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  document.getElementById("repnote").textContent = "Файл скачан — он в папке загрузок.";
+});
+
+
+/* ============ общие мелочи для §3 ============ */
+function _n3(x){
+  if(!isFinite(x)) return "—";
+  return x.toFixed(3).replace(".", ",");
+}
+function _gcdi(a, b){
+  a = Math.abs(a); b = Math.abs(b);
+  while(b){ var t = a % b; a = b; b = t; }
+  return a || 1;
+}
+function _sqs(n){
+  /* √n = k·√r, где r без квадратных делителей */
+  var k = 1, d = 2;
+  while(d * d <= n){
+    while(n % (d * d) === 0){ n /= (d * d); k *= d; }
+    d++;
+  }
+  return {k: k, r: n};
+}
+function _surd(n){ var s = _sqs(n); return {k: s.k, r: s.r}; }   /* √n */
+function _sv(s){ return s.k * Math.sqrt(s.r); }
+function _stext(s){
+  if(s.r === 1) return String(s.k);
+  return (s.k === 1 ? "" : String(s.k)) + "√" + s.r;
+}
+function _ratio(a, b){
+  /* a/b, где a и b вида k√r; ответ n√r/d с рациональным знаменателем */
+  var num = a.k, den = b.k * b.r, r = a.r * b.r;
+  var s = _sqs(r);
+  num *= s.k; r = s.r;
+  var g = _gcdi(num, den);
+  return {n: num / g, d: den / g, r: r};
+}
+function _rval(x){ return x.n * Math.sqrt(x.r) / x.d; }
+function _rtext(x){
+  var top = (x.r === 1) ? String(x.n) : ((x.n === 1 ? "" : String(x.n)) + "√" + x.r);
+  if(x.d === 1) return top;
+  return "<span class='fr'><b>" + top + "</b><i>" + x.d + "</i></span>";
+}
+
+/* ---------- чертёж прямоугольного треугольника ----------
+   A — слева внизу (угол α), C — справа внизу (прямой угол), B — над C.
+   opp — катет CB (противолежащий α), adj — катет AC (прилежащий).      */
+function _clampT(x, text, size, W){
+  var half = String(text).length * size * 0.34 + 4;
+  return Math.max(half + 2, Math.min(W - half - 2, x));
+}
+function _triSvg(opp, adj, lab, opt){
+  opt = opt || {};
+  var W = opt.w || 320, H = opt.h || 210;
+  var L = opt.L || 50, R = opt.R || 70, T = 30, Bm = opt.cap ? 52 : 34;
+  var mw = W - L - R, mh = H - T - Bm;
+  var k = Math.min(mw / Math.max(adj, 1e-9), mh / Math.max(opp, 1e-9));
+  var bw = adj * k, ah = opp * k;
+  var x0 = L + (mw - bw) / 2, y0 = T + (mh + ah) / 2;
+  var Ax = x0, Ay = y0, Cx = x0 + bw, Cy = y0, Bx = x0 + bw, By = y0 - ah;
+  var s = ['<svg viewBox="0 0 ' + W + ' ' + H + '" role="img">',
+           '<rect x="0" y="0" width="' + W + '" height="' + H + '" rx="12" fill="#ffffff"/>',
+           '<polygon points="' + Ax.toFixed(1) + ',' + Ay.toFixed(1) + ' ' +
+             Cx.toFixed(1) + ',' + Cy.toFixed(1) + ' ' + Bx.toFixed(1) + ',' + By.toFixed(1) +
+             '" fill="#e8f0ff" stroke="#15181e" stroke-width="2.4"/>'];
+  /* прямой угол */
+  var m = Math.min(14, bw * 0.8, ah * 0.8);
+  if(m > 3){
+    s.push('<polyline points="' + (Cx - m).toFixed(1) + ',' + Cy.toFixed(1) + ' ' +
+           (Cx - m).toFixed(1) + ',' + (Cy - m).toFixed(1) + ' ' + Cx.toFixed(1) + ',' +
+           (Cy - m).toFixed(1) + '" fill="none" stroke="#15181e" stroke-width="1.8"/>');
+  }
+  /* дуга угла α при вершине A */
+  var hyp = Math.sqrt(bw * bw + ah * ah) || 1;
+  var rr = Math.min(26, 0.34 * Math.max(bw, 1), 0.34 * hyp);
+  if(rr > 6){
+    var ux = bw / hyp, uy = -ah / hyp;
+    s.push('<path d="M ' + (Ax + rr).toFixed(1) + ' ' + Ay.toFixed(1) + ' A ' + rr.toFixed(1) +
+           ' ' + rr.toFixed(1) + ' 0 0 0 ' + (Ax + rr * ux).toFixed(1) + ' ' +
+           (Ay + rr * uy).toFixed(1) + '" fill="none" stroke="#2f6bd8" stroke-width="2.2"/>');
+    if(lab.al){
+      var lx, ly;
+      if(Math.atan2(ah, bw) < 0.26){
+        /* угол узкий — подпись не помещается внутри, поднимаем её над стороной */
+        lx = Ax + rr + 12; ly = Ay - 14;
+      } else {
+        var bxd = (1 + ux) / 2, byd = uy / 2, bl = Math.sqrt(bxd * bxd + byd * byd) || 1;
+        var dd = rr + 16;
+        lx = Ax + dd * bxd / bl; ly = Ay + dd * byd / bl;
+      }
+      s.push('<text x="' + lx.toFixed(1) + '" y="' + ly.toFixed(1) + '" font-size="16" ' +
+             'fill="#2f6bd8" text-anchor="middle" dy=".35em" font-weight="600">' +
+             lab.al + '</text>');
+    }
+  }
+  function t(x, y, text, col, anchor, size){
+    return '<text x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" font-size="' + size +
+           '" fill="' + col + '" text-anchor="' + anchor + '" font-weight="600">' + text + '</text>';
+  }
+  if(lab.b) s.push(t(_clampT((Ax + Cx) / 2, lab.b, 15, W), y0 + 24, lab.b, "#15181e", "middle", 15));
+  if(lab.a) s.push(t(Cx + 9, (Cy + By) / 2 + 5, lab.a, "#15181e", "start", 15));
+  if(lab.c){
+    var mx = (Ax + Bx) / 2, my = (Ay + By) / 2;
+    var nx = -ah / hyp, ny = -bw / hyp;
+    s.push(t(_clampT(mx + nx * 20, lab.c, 15, W), my + ny * 20 + 5, lab.c, "#15181e",
+             "middle", 15));
+  }
+  if(opt.letters !== false){
+    /* у очень тонкого треугольника вершины сливаются — тогда буквы только мешают */
+    if(bw > 42){
+      s.push(t(Ax - 11, Ay + 7, "A", "#5b6270", "middle", 14));
+      s.push(t(Cx + 6, Cy + 20, "C", "#5b6270", "middle", 14));
+    }
+    if(ah > 42) s.push(t(Bx + 6, By - 8, "B", "#5b6270", "middle", 14));
+  }
+  if(opt.cap) s.push(t(_clampT(W / 2, opt.cap, 13, W), H - 8, opt.cap, "#5b6270", "middle", 13));
+  s.push("</svg>");
+  return s.join("");
+}
+
+/* ============ живой треугольник: как меняются функции ============ */
+window.TRLIVE = function(id, opt){
+  opt = opt || {};
+  var host = document.getElementById(id);
+  if(!host) return null;
+  var fig = document.getElementById(id + "f"), rng = document.getElementById(id + "r"),
+      deg = document.getElementById(id + "d"), vals = document.getElementById(id + "v"),
+      idn = document.getElementById(id + "i");
+  var prev = null;
+
+  function cell(name, v, was){
+    var mark = "";
+    if(was !== null && Math.abs(v - was) > 1e-9) mark = v > was ?
+      ' <span class="up">↑</span>' : ' <span class="dn">↓</span>';
+    return '<div class="tfv"><b>' + name + '</b><i>' + _n3(v) + mark + "</i></div>";
+  }
+  function draw(){
+    var a = +rng.value, rad = a * Math.PI / 180;
+    var si = Math.sin(rad), co = Math.cos(rad);
+    var tg = si / co, ct = co / si;
+    deg.textContent = a + "°";
+    fig.innerHTML = _triSvg(si, co, {
+      a: "sin α", b: "cos α", c: "1", al: a + "°"
+    }, {w: 330, h: 214, L: 46, R: 76, cap: "гипотенуза равна 1"});
+    vals.innerHTML = cell("sin α", si, prev ? prev.si : null) +
+                     cell("cos α", co, prev ? prev.co : null) +
+                     cell("tg α", tg, prev ? prev.tg : null) +
+                     cell("ctg α", ct, prev ? prev.ct : null);
+    idn.innerHTML = "sin<sup>2</sup>α + cos<sup>2</sup>α = " + _n3(si * si) + " + " +
+                    _n3(co * co) + " = 1";
+    prev = {si: si, co: co, tg: tg, ct: ct};
+  }
+  rng.addEventListener("input", draw);
+  host.addEventListener("click", function(ev){
+    var el = ev.target;
+    var v = (el && el.getAttribute) ? el.getAttribute("data-deg") : null;
+    if(v === null) return;
+    rng.value = v;
+    draw();
+  });
+  if(opt.a) rng.value = opt.a;
+  draw();
+  return {draw: draw};
+};
+
+/* ============ основная задача: дано одно значение ============ */
+window.TRSOLVE = function(id){
+  var host = document.getElementById(id);
+  if(!host) return null;
+  var inp = document.getElementById(id + "val"), go = document.getElementById(id + "go"),
+      steps = document.getElementById(id + "s"), fig = document.getElementById(id + "f"),
+      res = document.getElementById(id + "r"), note = document.getElementById(id + "n");
+  var fn = "sin";
+
+  function marks(){
+    var bs = host.querySelectorAll("[data-fn]");
+    for(var k = 0; k < bs.length; k++)
+      bs[k].className = (bs[k].getAttribute("data-fn") === fn) ? "on" : "";
+  }
+  function parseVal(s){
+    s = String(s || "").trim().replace(/\s+/g, "").replace(/−/g, "-");
+    if(!s) return null;
+    var m;
+    if((m = /^(\d+)\/(\d+)$/.exec(s))) { var p = +m[1], q = +m[2]; }
+    else if((m = /^(\d+)[.,](\d+)$/.exec(s))) { p = +(m[1] + m[2]); q = Math.pow(10, m[2].length); }
+    else if((m = /^(\d+)$/.exec(s))) { p = +m[1]; q = 1; }
+    else return null;
+    if(!q || !p) return null;
+    var g = _gcdi(p, q);
+    return {p: p / g, q: q / g};
+  }
+  function bad(msg){
+    note.innerHTML = '<span class="tfbad">' + msg + "</span>";
+    steps.innerHTML = ""; res.innerHTML = ""; fig.innerHTML = "";
+  }
+  function run(){
+    var v = parseVal(inp.value);
+    note.innerHTML = "";
+    if(!v) return bad("Впиши значение: дробью 5/13 или десятичной 0,6.");
+    if(v.p > 400 || v.q > 400) return bad("Возьми числа поменьше — до 400.");
+    var p = v.p, q = v.q, opp, adj, hyp, dan, step2;
+    var vtext = (q === 1) ? String(p) : "<span class='fr'><b>" + p + "</b><i>" + q + "</i></span>";
+    if(fn === "sin" || fn === "cos"){
+      if(p >= q) return bad("Синус и косинус острого угла меньше единицы — возьми правильную дробь.");
+      var other = _surd(q * q - p * p);
+      if(fn === "sin"){ opp = {k: p, r: 1}; hyp = {k: q, r: 1}; adj = other;
+        dan = "Синус — это противолежащий катет, делённый на гипотенузу. Возьмём катет " + p +
+              " и гипотенузу " + q + ".";
+        step2 = "Второй катет по теореме Пифагора: √(" + q + "<sup>2</sup> − " + p +
+                "<sup>2</sup>) = √" + (q * q - p * p) + " = " + _stext(other) + ".";
+      } else { adj = {k: p, r: 1}; hyp = {k: q, r: 1}; opp = other;
+        dan = "Косинус — это прилежащий катет, делённый на гипотенузу. Возьмём катет " + p +
+              " и гипотенузу " + q + ".";
+        step2 = "Второй катет по теореме Пифагора: √(" + q + "<sup>2</sup> − " + p +
+                "<sup>2</sup>) = √" + (q * q - p * p) + " = " + _stext(other) + ".";
+      }
+    } else {
+      var h = _surd(p * p + q * q);
+      if(fn === "tg"){ opp = {k: p, r: 1}; adj = {k: q, r: 1}; hyp = h;
+        dan = "Тангенс — это противолежащий катет, делённый на прилежащий. Возьмём катеты " +
+              p + " и " + q + ".";
+      } else { adj = {k: p, r: 1}; opp = {k: q, r: 1}; hyp = h;
+        dan = "Котангенс — это прилежащий катет, делённый на противолежащий. Возьмём катеты " +
+              p + " и " + q + ".";
+      }
+      step2 = "Гипотенуза по теореме Пифагора: √(" + p + "<sup>2</sup> + " + q +
+              "<sup>2</sup>) = √" + (p * p + q * q) + " = " + _stext(hyp) + ".";
+    }
+    var rs = _ratio(opp, hyp), rc = _ratio(adj, hyp),
+        rt = _ratio(opp, adj), rg = _ratio(adj, opp);
+    var names = {sin: "sin α", cos: "cos α", tg: "tg α", ctg: "ctg α"};
+    steps.innerHTML =
+      "<li>Дано: " + names[fn] + " = " + vtext + ". " + dan + "</li>" +
+      "<li>" + step2 + "</li>" +
+      "<li>Теперь известны все три стороны — остальные функции читаются прямо с чертежа.</li>";
+    res.innerHTML =
+      "<div>sin α = " + _rtext(rs) + " ≈ " + _n3(_rval(rs)) + "</div>" +
+      "<div>cos α = " + _rtext(rc) + " ≈ " + _n3(_rval(rc)) + "</div>" +
+      "<div>tg α = " + _rtext(rt) + " ≈ " + _n3(_rval(rt)) + "</div>" +
+      "<div>ctg α = " + _rtext(rg) + " ≈ " + _n3(_rval(rg)) + "</div>";
+    fig.innerHTML = _triSvg(_sv(opp), _sv(adj),
+      {a: _stext(opp), b: _stext(adj), c: _stext(hyp), al: "α"},
+      {w: 330, h: 206, L: 54, R: 62, cap: "стороны подобраны под условие"});
+    note.innerHTML = "Проверка: sin<sup>2</sup>α + cos<sup>2</sup>α = " +
+      _n3(_rval(rs) * _rval(rs)) + " + " + _n3(_rval(rc) * _rval(rc)) + " = 1, и tg α · ctg α = " +
+      _n3(_rval(rt) * _rval(rg)) + ".";
+  }
+  host.addEventListener("click", function(ev){
+    var el = ev.target, f = (el && el.getAttribute) ? el.getAttribute("data-fn") : null;
+    if(f){ fn = f; marks(); run(); return; }
+    var ex = (el && el.getAttribute) ? el.getAttribute("data-ex") : null;
+    if(ex){ var parts = ex.split(" "); fn = parts[0]; inp.value = parts[1]; marks(); run(); }
+  });
+  go.addEventListener("click", run);
+  inp.addEventListener("keydown", function(e){ if(e.key === "Enter") run(); });
+  marks();
+  run();
+  return {run: run};
+};
+
+var TFL = {"lv1": 40};
+for (var _l in TFL){ TRLIVE(_l, {a: TFL[_l]}); }
+var TFS = ["sv1"];
+for (var _k = 0; _k < TFS.length; _k++){ TRSOLVE(TFS[_k]); }
+
+
+/* ---------- движок тренажёров ---------- */
+function makeTrainer(id, items){
+  var q=document.getElementById(id+"q"), f=document.getElementById(id+"f"),
+      a=document.getElementById(id+"a"), m=document.getElementById(id+"m"),
+      b=document.getElementById(id+"b"), sc=document.getElementById(id+"s");
+  var order=[], perm=[], i=0, ok=0, answered=false;
+
+  function shuffle(n){
+    var arr=[], k, j, t;
+    for(k=0;k<n;k++) arr.push(k);
+    for(k=arr.length-1;k>0;k--){ j=Math.floor(Math.random()*(k+1)); t=arr[k]; arr[k]=arr[j]; arr[j]=t; }
+    return arr;
+  }
+  function norm(s){
+    return String(s).trim().toLowerCase().replace(/\s+/g,"").replace(/−/g,"-").replace(/,/g,".");
+  }
+  function same(x, y){
+    var p=parseFloat(norm(x)), r=parseFloat(norm(y));
+    if(isFinite(p) && isFinite(r)) return Math.abs(p-r) < 1e-9;
+    return norm(x) === norm(y);
+  }
+  function score(){
+    sc.textContent = "вопрос " + Math.min(i + 1, items.length) + " из " + items.length +
+                     " · верно " + ok;
+  }
+
+  function finish(){
+    q.innerHTML=""; f.innerHTML=""; a.innerHTML=""; m.innerHTML="";
+    var pct=Math.round(ok/items.length*100);
+    var word = pct===100 ? "Всё верно — тема закрыта." :
+               pct>=70 ? "Хорошо, но пару мест стоит перечитать." :
+               "Стоит вернуться к теории и пройти ещё раз.";
+    b.innerHTML='<div class="trdone" style="flex:1 1 100%">'+ok+" из "+items.length+
+      " ("+pct+" %) · "+word+'</div><button type="button" class="pri" data-go="1">Пройти заново</button>';
+    sc.textContent="готово";
+    if(window.trFinished) window.trFinished(id, ok, items.length);
+  }
+
+  function show(){
+    answered=false;
+    m.innerHTML=""; b.innerHTML="";
+    var t=items[order[i]];
+    q.innerHTML="<b>"+(i+1)+".</b> "+t.q;
+    f.innerHTML=t.fig || "";
+    f.style.display = t.fig ? "" : "none";
+    if(t.opts){
+      perm = shuffle(t.opts.length);          /* perm[позиция] = номер варианта в банке */
+      var html='<div class="tropts" id="'+id+'o">';
+      for(var k=0;k<perm.length;k++)
+        html+='<button type="button" class="tropt" data-k="'+perm[k]+'">'+t.opts[perm[k]]+'</button>';
+      a.innerHTML = html+"</div>";
+      var box=document.getElementById(id+"o");
+      box.addEventListener("click", function(ev){
+        var el=ev.target; while(el && el!==box && el.className.indexOf("tropt")<0) el=el.parentNode;
+        if(!el || el===box || answered) return;
+        pick(parseInt(el.getAttribute("data-k"),10), box);
+      });
+    } else {
+      a.innerHTML='<div class="trnum"><span>Ответ:</span>'+
+        '<input type="text" id="'+id+'i" inputmode="text" autocomplete="off" '+
+        'autocorrect="off" spellcheck="false" placeholder="число">'+
+        '<button type="button" class="pri" data-check="1">Проверить</button></div>';
+      var inp=document.getElementById(id+"i");
+      inp.addEventListener("keydown", function(ev){ if(ev.key==="Enter") check(); });
+    }
+    score();
+  }
+
+  function verdict(good, t){
+    answered=true;
+    if(good) ok++;
+    i++;
+    m.innerHTML='<div class="v '+(good?"ok":"bad")+'">'+(good?"Верно.":"Неверно.")+"</div>"+
+                '<div class="why">'+t.why+"</div>";
+    b.innerHTML = (i<items.length)
+      ? '<button type="button" class="pri" data-next="1">Дальше</button>'
+      : '<button type="button" class="pri" data-next="1">Показать итог</button>';
+    score();
+  }
+  function pick(k, box){
+    var t=items[order[i]], good = (k === t.ans);
+    var bs=box.querySelectorAll(".tropt");
+    for(var j=0;j<bs.length;j++){
+      var n=parseInt(bs[j].getAttribute("data-k"),10);
+      if(n===t.ans) bs[j].className="tropt right";
+      else if(n===k) bs[j].className="tropt wrong";
+    }
+    box.className="tropts done";
+    verdict(good, t);
+  }
+  function check(){
+    if(answered) return;
+    var t=items[order[i]], inp=document.getElementById(id+"i");
+    var v=(inp.value||"").trim();
+    if(!v){ m.innerHTML='<div class="why">Впиши ответ.</div>'; return; }
+    var good = t.ans.some(function(x){ return same(v, x); });
+    inp.disabled=true;
+    if(!good) m.innerHTML="";
+    verdict(good, t);
+    if(!good) m.innerHTML='<div class="v bad">Неверно. Правильный ответ: '+t.ans[0]+".</div>"+
+                          '<div class="why">'+t.why+"</div>";
+  }
+
+  b.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-next")){ if(i<items.length) show(); else finish(); }
+    if(el.getAttribute && el.getAttribute("data-go")){ start(); }
+  });
+  a.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-check")) check();
+  });
+
+  function start(){ order=shuffle(items.length); i=0; ok=0; show(); }
+  start();
+}
+
+makeTrainer("ts1", [{"q": "Существует ли острый угол, синус которого равен <span class='fr'><b>1</b><i>3</i></span>, а косинус <span class='fr'><b>2</b><i>3</i></span>?", "opts": ["да", "нет"], "ans": 1, "why": "Проверяем тождество: <span class='fr'><b>1</b><i>9</i></span> + <span class='fr'><b>4</b><i>9</i></span> = <span class='fr'><b>5</b><i>9</i></span>, а должна выйти единица. Такого угла нет."}, {"q": "Существует ли острый угол, косинус которого равен <span class='fr'><b>1</b><i>√3</i></span>, а синус <span class='fr'><b>√2</b><i>√3</i></span>?", "opts": ["да", "нет"], "ans": 0, "why": "Квадраты дают <span class='fr'><b>1</b><i>3</i></span> + <span class='fr'><b>2</b><i>3</i></span> = 1 — тождество выполняется, угол существует."}, {"q": "Существует ли острый угол, тангенс которого равен 1,5, а котангенс <span class='fr'><b>2</b><i>3</i></span>?", "opts": ["да", "нет"], "ans": 0, "why": "У тангенса и котангенса произведение должно равняться единице: 1,5 · <span class='fr'><b>2</b><i>3</i></span> = 1. Всё верно."}, {"q": "Существует ли острый угол, тангенс которого равен 4, а котангенс 0,25?", "opts": ["да", "нет"], "ans": 0, "why": "4 · 0,25 = 1 — числа взаимно обратные, такой угол есть."}, {"q": "Существует ли острый угол, синус которого равен 0,6, а косинус 0,8?", "opts": ["да", "нет"], "ans": 0, "why": "0,36 + 0,64 = 1 — тождество выполняется."}, {"q": "Существует ли острый угол, синус которого равен 0,5 и косинус тоже 0,5?", "opts": ["да", "нет"], "ans": 1, "why": "0,25 + 0,25 = 0,5, а нужна единица. Если синус и косинус равны, то каждый равен <span class='fr'><b>√2</b><i>2</i></span> ≈ 0,707."}, {"q": "Существует ли острый угол, тангенс которого равен 2, а котангенс 0,4?", "opts": ["да", "нет"], "ans": 1, "why": "2 · 0,4 = 0,8, а произведение должно быть равно 1. Котангенс здесь обязан быть 0,5."}, {"q": "Существует ли острый угол, синус которого равен 0,28, а косинус 0,96?", "opts": ["да", "нет"], "ans": 0, "why": "0,0784 + 0,9216 = 1 — тождество выполняется."}]);
+makeTrainer("ts2", [{"q": "sin α = 0,6, α — острый. Чему равен cos α?", "ans": ["0,8"], "why": "<span class='nw'>cos<sup>2</sup>α</span> = 1 − 0,36 = 0,64, значит cos α = 0,8."}, {"q": "cos α = 0,8, α — острый. Чему равен sin α?", "ans": ["0,6"], "why": "<span class='nw'>sin<sup>2</sup>α</span> = 1 − 0,64 = 0,36, значит sin α = 0,6."}, {"q": "sin α = 0,96, α — острый. Чему равен cos α?", "ans": ["0,28"], "why": "<span class='nw'>cos<sup>2</sup>α</span> = 1 − 0,9216 = 0,0784, корень из этого — 0,28."}, {"q": "cos α = 0,6, α — острый. Чему равен sin α?", "ans": ["0,8"], "why": "<span class='nw'>sin<sup>2</sup>α</span> = 1 − 0,36 = 0,64, значит sin α = 0,8."}, {"q": "sin α = <span class='fr'><b>3</b><i>5</i></span>. Чему равен cos α?", "opts": ["<span class='fr'><b>4</b><i>5</i></span>", "<span class='fr'><b>5</b><i>4</i></span>", "<span class='fr'><b>2</b><i>5</i></span>", "<span class='fr'><b>16</b><i>25</i></span>"], "ans": 0, "why": "<span class='nw'>cos<sup>2</sup>α</span> = 1 − <span class='fr'><b>9</b><i>25</i></span> = <span class='fr'><b>16</b><i>25</i></span>. Корень из <span class='fr'><b>16</b><i>25</i></span> равен <span class='fr'><b>4</b><i>5</i></span> — извлекать корень обязательно."}, {"q": "cos α = <span class='fr'><b>5</b><i>13</i></span>. Чему равен sin α?", "opts": ["<span class='fr'><b>12</b><i>13</i></span>", "<span class='fr'><b>8</b><i>13</i></span>", "<span class='fr'><b>13</b><i>12</i></span>", "<span class='fr'><b>144</b><i>169</i></span>"], "ans": 0, "why": "<span class='nw'>sin<sup>2</sup>α</span> = 1 − <span class='fr'><b>25</b><i>169</i></span> = <span class='fr'><b>144</b><i>169</i></span>, а sin α = <span class='fr'><b>12</b><i>13</i></span>."}, {"q": "sin α = <span class='fr'><b>1</b><i>3</i></span>. Чему равен cos α?", "opts": ["<span class='fr'><b>2√2</b><i>3</i></span>", "<span class='fr'><b>√2</b><i>3</i></span>", "<span class='fr'><b>2</b><i>3</i></span>", "<span class='fr'><b>8</b><i>9</i></span>"], "ans": 0, "why": "<span class='nw'>cos<sup>2</sup>α</span> = 1 − <span class='fr'><b>1</b><i>9</i></span> = <span class='fr'><b>8</b><i>9</i></span>, корень равен <span class='fr'><b>√8</b><i>3</i></span> = <span class='fr'><b>2√2</b><i>3</i></span>."}, {"q": "cos α = <span class='fr'><b>√3</b><i>2</i></span>. Чему равен sin α?", "opts": ["<span class='fr'><b>1</b><i>2</i></span>", "<span class='fr'><b>√2</b><i>2</i></span>", "<span class='fr'><b>1</b><i>4</i></span>", "<span class='fr'><b>√3</b><i>3</i></span>"], "ans": 0, "why": "<span class='nw'>cos<sup>2</sup>α</span> = <span class='fr'><b>3</b><i>4</i></span>, значит <span class='nw'>sin<sup>2</sup>α</span> = <span class='fr'><b>1</b><i>4</i></span> и sin α = <span class='fr'><b>1</b><i>2</i></span>. Это угол 30°."}]);
+makeTrainer("ts3", [{"q": "tg α = 4. Чему равен ctg α?", "ans": ["0,25"], "why": "tg α · ctg α = 1, поэтому ctg α = 1 : 4 = 0,25."}, {"q": "ctg α = 5. Чему равен tg α?", "ans": ["0,2"], "why": "tg α = 1 : 5 = 0,2."}, {"q": "tg α = 0,5. Чему равен ctg α?", "ans": ["2"], "why": "ctg α = 1 : 0,5 = 2."}, {"q": "ctg α = 1,6. Чему равен tg α?", "ans": ["0,625"], "why": "tg α = 1 : 1,6 = 0,625."}, {"q": "sin α = 0,6 и cos α = 0,8. Чему равен tg α?", "ans": ["0,75"], "why": "tg α = sin α : cos α = 0,6 : 0,8 = 0,75."}, {"q": "sin α = 0,8 и cos α = 0,6. Чему равен ctg α?", "ans": ["0,75"], "why": "ctg α = cos α : sin α = 0,6 : 0,8 = 0,75."}, {"q": "tg α = 1,25. Чему равен ctg α?", "ans": ["0,8"], "why": "ctg α = 1 : 1,25 = 0,8."}, {"q": "ctg α = 0,125. Чему равен tg α?", "ans": ["8"], "why": "tg α = 1 : 0,125 = 8."}]);
+makeTrainer("ts4", [{"q": "tg α = 2. Чему равно <span class='fr'><b>1</b><i><span class='nw'>cos<sup>2</sup>α</span></i></span>?", "ans": ["5"], "why": "1 + <span class='nw'>tg<sup>2</sup>α</span> = 1 + 4 = 5."}, {"q": "tg α = 3. Чему равно <span class='fr'><b>1</b><i><span class='nw'>cos<sup>2</sup>α</span></i></span>?", "ans": ["10"], "why": "1 + 9 = 10. Заодно видно, что <span class='nw'>cos<sup>2</sup>α</span> = 0,1."}, {"q": "ctg α = 4. Чему равно <span class='fr'><b>1</b><i><span class='nw'>sin<sup>2</sup>α</span></i></span>?", "ans": ["17"], "why": "1 + <span class='nw'>ctg<sup>2</sup>α</span> = 1 + 16 = 17."}, {"q": "tg α = 0,5. Чему равно <span class='fr'><b>1</b><i><span class='nw'>cos<sup>2</sup>α</span></i></span>?", "ans": ["1,25"], "why": "1 + 0,25 = 1,25."}, {"q": "ctg α = 0,2. Чему равно <span class='fr'><b>1</b><i><span class='nw'>sin<sup>2</sup>α</span></i></span>?", "ans": ["1,04"], "why": "1 + 0,04 = 1,04."}, {"q": "tg α = 1. Чему равно <span class='fr'><b>1</b><i><span class='nw'>cos<sup>2</sup>α</span></i></span>?", "ans": ["2"], "why": "1 + 1 = 2. Это угол 45°: <span class='nw'>cos<sup>2</sup>α</span> = 0,5."}, {"q": "tg α = 4. Чему равно <span class='fr'><b>1</b><i><span class='nw'>cos<sup>2</sup>α</span></i></span>?", "ans": ["17"], "why": "1 + 16 = 17."}, {"q": "ctg α = 1,5. Чему равно <span class='fr'><b>1</b><i><span class='nw'>sin<sup>2</sup>α</span></i></span>?", "ans": ["3,25"], "why": "1 + 2,25 = 3,25."}]);
+makeTrainer("ts5", [{"q": "sin α = <span class='fr'><b>5</b><i>13</i></span>. Чему равен cos α?", "opts": ["<span class='fr'><b>12</b><i>13</i></span>", "<span class='fr'><b>5</b><i>12</i></span>", "<span class='fr'><b>13</b><i>12</i></span>", "<span class='fr'><b>8</b><i>13</i></span>"], "ans": 0, "why": "Катет 5, гипотенуза 13, второй катет √(169 − 25) = 12. Косинус — это <span class='fr'><b>12</b><i>13</i></span>."}, {"q": "sin α = <span class='fr'><b>5</b><i>13</i></span>. Чему равен tg α?", "opts": ["<span class='fr'><b>5</b><i>12</i></span>", "<span class='fr'><b>12</b><i>5</i></span>", "<span class='fr'><b>5</b><i>13</i></span>", "<span class='fr'><b>13</b><i>5</i></span>"], "ans": 0, "why": "Тангенс — отношение катетов: <span class='fr'><b>5</b><i>12</i></span>."}, {"q": "cos α = <span class='fr'><b>8</b><i>17</i></span>. Чему равен sin α?", "opts": ["<span class='fr'><b>15</b><i>17</i></span>", "<span class='fr'><b>8</b><i>15</i></span>", "<span class='fr'><b>17</b><i>15</i></span>", "<span class='fr'><b>9</b><i>17</i></span>"], "ans": 0, "why": "Прилежащий катет 8, гипотенуза 17, второй катет √(289 − 64) = 15."}, {"q": "cos α = <span class='fr'><b>8</b><i>17</i></span>. Чему равен ctg α?", "opts": ["<span class='fr'><b>8</b><i>15</i></span>", "<span class='fr'><b>15</b><i>8</i></span>", "<span class='fr'><b>8</b><i>17</i></span>", "<span class='fr'><b>17</b><i>8</i></span>"], "ans": 0, "why": "Котангенс — прилежащий катет к противолежащему: <span class='fr'><b>8</b><i>15</i></span>."}, {"q": "tg α = 2. Чему равен sin α?", "opts": ["<span class='fr'><b>2√5</b><i>5</i></span>", "<span class='fr'><b>√5</b><i>5</i></span>", "<span class='fr'><b>2</b><i>5</i></span>", "<span class='fr'><b>√5</b><i>2</i></span>"], "ans": 0, "why": "Катеты 2 и 1, гипотенуза √5. Синус = <span class='fr'><b>2</b><i>√5</i></span> = <span class='fr'><b>2√5</b><i>5</i></span> ≈ 0,894."}, {"q": "tg α = <span class='fr'><b>3</b><i>4</i></span>. Чему равен cos α?", "opts": ["<span class='fr'><b>4</b><i>5</i></span>", "<span class='fr'><b>3</b><i>5</i></span>", "<span class='fr'><b>5</b><i>4</i></span>", "<span class='fr'><b>4</b><i>3</i></span>"], "ans": 0, "why": "Катеты 3 и 4, гипотенуза 5. Косинус = <span class='fr'><b>4</b><i>5</i></span>."}, {"q": "ctg α = 4. Чему равен sin α?", "opts": ["<span class='fr'><b>√17</b><i>17</i></span>", "<span class='fr'><b>4√17</b><i>17</i></span>", "<span class='fr'><b>1</b><i>4</i></span>", "<span class='fr'><b>4</b><i>17</i></span>"], "ans": 0, "why": "Прилежащий катет 4, противолежащий 1, гипотенуза √17. Синус = <span class='fr'><b>1</b><i>√17</i></span> = <span class='fr'><b>√17</b><i>17</i></span> ≈ 0,243."}, {"q": "sin α = <span class='fr'><b>1</b><i>2</i></span>. Чему равен tg α?", "opts": ["<span class='fr'><b>√3</b><i>3</i></span>", "√3", "<span class='fr'><b>1</b><i>2</i></span>", "<span class='fr'><b>2√3</b><i>3</i></span>"], "ans": 0, "why": "Катет 1, гипотенуза 2, второй катет √3. Тангенс = <span class='fr'><b>1</b><i>√3</i></span> = <span class='fr'><b>√3</b><i>3</i></span>. Это угол 30°."}]);
+makeTrainer("ts6", [{"q": "sin 70° = cos x, где x — острый угол. Чему равен x в градусах?", "ans": ["20"], "why": "sin 70° = cos(90° − 70°) = cos 20°."}, {"q": "cos 25° = sin x, где x — острый угол. Чему равен x в градусах?", "ans": ["65"], "why": "cos 25° = sin(90° − 25°) = sin 65°."}, {"q": "tg 62° = ctg x, где x — острый угол. Чему равен x в градусах?", "ans": ["28"], "why": "tg 62° = ctg(90° − 62°) = ctg 28°."}, {"q": "ctg 10° = tg x, где x — острый угол. Чему равен x в градусах?", "ans": ["80"], "why": "ctg 10° = tg(90° − 10°) = tg 80°."}, {"q": "Чему равен sin(90° − α)?", "opts": ["cos α", "sin α", "tg α", "ctg α"], "ans": 0, "why": "Название меняется на парное: синус переходит в косинус."}, {"q": "Чему равен ctg(90° − α)?", "opts": ["tg α", "ctg α", "cos α", "sin α"], "ans": 0, "why": "Котангенс дополнительного угла — это тангенс самого угла."}, {"q": "Что верно для sin 40° и cos 50°?", "opts": ["они равны", "sin 40° больше", "cos 50° больше", "зависит от угла"], "ans": 0, "why": "cos 50° = sin(90° − 50°) = sin 40°, значит числа равны."}, {"q": "cos 85° = sin x, где x — острый угол. Чему равен x в градусах?", "ans": ["5"], "why": "cos 85° = sin(90° − 85°) = sin 5°."}]);
+makeTrainer("ts7", [{"q": "Сравни sin 30° и sin 45°.", "opts": ["sin 30° &lt; sin 45°", "sin 30° &gt; sin 45°", "sin 30° = sin 45°"], "ans": 0, "why": "Синус растёт вместе с углом: 0,5 меньше, чем <span class='fr'><b>√2</b><i>2</i></span> ≈ 0,707."}, {"q": "Сравни cos 30° и cos 45°.", "opts": ["cos 30° &gt; cos 45°", "cos 30° &lt; cos 45°", "cos 30° = cos 45°"], "ans": 0, "why": "Косинус убывает при росте угла: <span class='fr'><b>√3</b><i>2</i></span> ≈ 0,866 больше 0,707."}, {"q": "Сравни tg 15° и tg 10°.", "opts": ["tg 15° &gt; tg 10°", "tg 15° &lt; tg 10°", "tg 15° = tg 10°"], "ans": 0, "why": "Тангенс растёт вместе с углом, а 15° больше 10°."}, {"q": "Сравни ctg 50° и ctg 75°.", "opts": ["ctg 50° &gt; ctg 75°", "ctg 50° &lt; ctg 75°", "ctg 50° = ctg 75°"], "ans": 0, "why": "Котангенс убывает при росте угла, поэтому у меньшего угла он больше."}, {"q": "Чему равно 1 − <span class='nw'>cos<sup>2</sup>α</span>?", "opts": ["<span class='nw'>sin<sup>2</sup>α</span>", "<span class='nw'>cos<sup>2</sup>α</span>", "<span class='nw'>tg<sup>2</sup>α</span>", "1"], "ans": 0, "why": "Из тождества <span class='nw'>sin<sup>2</sup>α</span> + <span class='nw'>cos<sup>2</sup>α</span> = 1 сразу следует 1 − <span class='nw'>cos<sup>2</sup>α</span> = <span class='nw'>sin<sup>2</sup>α</span>."}, {"q": "Чему равно (1 − cos α)(1 + cos α)?", "opts": ["<span class='nw'>sin<sup>2</sup>α</span>", "<span class='nw'>cos<sup>2</sup>α</span>", "1 − cos α", "<span class='nw'>tg<sup>2</sup>α</span>"], "ans": 0, "why": "Это разность квадратов: 1 − <span class='nw'>cos<sup>2</sup>α</span>, а она равна <span class='nw'>sin<sup>2</sup>α</span>."}, {"q": "Чему равно sin 75° · tg 15°?", "opts": ["sin 15°", "cos 15°", "tg 75°", "1"], "ans": 0, "why": "tg 15° = <span class='fr'><b>sin 15°</b><i>cos 15°</i></span>, а cos 15° = sin 75°. После сокращения остаётся sin 15°."}, {"q": "Чему равно cos 85° · ctg 5°?", "opts": ["cos 5°", "sin 5°", "tg 5°", "1"], "ans": 0, "why": "ctg 5° = <span class='fr'><b>cos 5°</b><i>sin 5°</i></span>, а sin 5° = cos 85°. Остаётся cos 5°."}, {"q": "Чему равно <span class='nw'>sin<sup>2</sup>50°</span> + <span class='nw'>tg<sup>2</sup>40°</span> · <span class='nw'>cos<sup>2</sup>40°</span>?", "opts": ["1", "<span class='nw'>sin<sup>2</sup>50°</span>", "<span class='nw'>cos<sup>2</sup>40°</span>", "2"], "ans": 0, "why": "tg 40° · cos 40° = sin 40°, поэтому выражение равно <span class='nw'>sin<sup>2</sup>50°</span> + <span class='nw'>sin<sup>2</sup>40°</span>. А sin 40° = cos 50°, и по тождеству сумма равна 1."}, {"q": "Чему равно 1 − <span class='nw'>sin<sup>2</sup>α</span>?", "opts": ["<span class='nw'>cos<sup>2</sup>α</span>", "<span class='nw'>sin<sup>2</sup>α</span>", "<span class='nw'>ctg<sup>2</sup>α</span>", "0"], "ans": 0, "why": "Это то же тождество, только переставленное: 1 − <span class='nw'>sin<sup>2</sup>α</span> = <span class='nw'>cos<sup>2</sup>α</span>."}]);
+
+/* ---------- тренажёры обязательны для отправки ---------- */
+var TRREQ = [
+  {id:"ts1", name:"Тренажёр 1. Существует ли такой угол"},
+  {id:"ts2", name:"Тренажёр 2. Одна функция через другую"},
+  {id:"ts3", name:"Тренажёр 3. Тангенс и котангенс"},
+  {id:"ts4", name:"Тренажёр 4. Формулы с 1 + tg²α"},
+  {id:"ts5", name:"Тренажёр 5. Основная задача"},
+  {id:"ts6", name:"Тренажёр 6. Формулы приведения"},
+  {id:"ts7", name:"Тренажёр 7. Сравнить и упростить"}
+];
+var TRDONE = {};
+window.trFinished = function(id, ok, total){
+  var prev = TRDONE[id];
+  if(!prev || ok > prev.ok) TRDONE[id] = {ok: ok, total: total};
+  trStatus();
+  if(window.saveWork) saveWork();
+};
+function trPending(){
+  var out = [], k;
+  for(k = 0; k < TRREQ.length; k++){ if(!TRDONE[TRREQ[k].id]) out.push(TRREQ[k]); }
+  return out;
+}
+function trSummary(){
+  var ok = 0, total = 0, parts = [], k, d;
+  for(k = 0; k < TRREQ.length; k++){
+    d = TRDONE[TRREQ[k].id];
+    parts.push({name: TRREQ[k].name, ok: d ? d.ok : null, total: d ? d.total : null});
+    if(d){ ok += d.ok; total += d.total; }
+  }
+  return {ok: ok, total: total, parts: parts, done: TRREQ.length - trPending().length};
+}
+function trReportHtml(){
+  var s = trSummary(), k, pt, h;
+  h = "<h2>Тренажёры: " + s.done + " из " + TRREQ.length + " пройдено" +
+      (s.total ? " · верных ответов " + s.ok + " из " + s.total : "") + "</h2><table><tr>" +
+      "<th>Тренажёр</th><th>Результат</th></tr>";
+  for(k = 0; k < s.parts.length; k++){
+    pt = s.parts[k];
+    h += "<tr><td style='text-align:left'>" + pt.name + "</td><td>" +
+         (pt.ok === null ? "не пройден" : pt.ok + " из " + pt.total) + "</td></tr>";
+  }
+  return h + "</table>";
+}
+function trJump(id){
+  var el = document.getElementById(id);
+  if(!el) return;
+  try{ el.scrollIntoView({behavior: "smooth", block: "center"}); }
+  catch(e){ el.scrollIntoView(); }
+  el.className = "tr need";
+  setTimeout(function(){ el.className = "tr"; }, 2600);
+}
+function trStatus(){
+  var g = document.getElementById("trgate");
+  if(!g) return;
+  var left = trPending(), s = trSummary(), h, k;
+  if(!left.length){
+    g.className = "trgate ready";
+    g.innerHTML = "<b>Все семь тренажёров пройдены.</b> Верных ответов: " + s.ok +
+                  " из " + s.total + ". Работу можно отправлять.";
+    return;
+  }
+  g.className = "trgate";
+  h = "<b>Пройдено тренажёров: " + s.done + " из " + TRREQ.length + ".</b> " +
+      "Работа отправится, когда пройдёшь все. Осталось:<ul>";
+  for(k = 0; k < left.length; k++){
+    h += '<li><a data-jump="' + left[k].id + '">' + left[k].name + "</a></li>";
+  }
+  g.innerHTML = h + "</ul>";
+}
+document.addEventListener("click", function(ev){
+  var el = ev.target;
+  var id = (el && el.getAttribute) ? el.getAttribute("data-jump") : null;
+  if(id) trJump(id);
+});
+trStatus();
+
+/* ---------- память страницы ---------- */
+var SAVE_V = 1;
+var SKEY = "arttich:trigf9:" + (STUDENT_CODE || "-");
+
+function spentMs(){ return spentBefore + (Date.now() - started); }
+
+var CAN_STORE = (function(){
+  try{
+    localStorage.setItem("arttich:probe", "1");
+    localStorage.removeItem("arttich:probe");
+    return true;
+  }catch(e){ return false; }
+})();
+
+var wiping = false;
+function saveWork(){
+  if(wiping) return;
+  try{
+    var box = {v: SAVE_V, at: Date.now(), spent: spentMs(), tr: TRDONE, tasks: {},
+               name: (document.getElementById("name").value || "")};
+    TASKS.forEach(function(t){
+      var x = state[t.id];
+      if(x.tries || x.hints || x.given || x.sel){
+        box.tasks[t.id] = {tries: x.tries, hints: x.hints, done: x.done,
+                           ok: x.ok, given: x.given, sel: x.sel};
+      }
+    });
+    localStorage.setItem(SKEY, JSON.stringify(box));
+    saveNote(box.at);
+  }catch(e){}
+}
+function loadWork(){
+  try{
+    var raw = localStorage.getItem(SKEY);
+    if(!raw) return null;
+    var box = JSON.parse(raw);
+    return (box && box.v === SAVE_V) ? box : null;
+  }catch(e){ return null; }
+}
+function clearWork(){
+  try{ localStorage.removeItem(SKEY); }catch(e){}
+}
+
+function saveNote(at){
+  var n = document.getElementById("savenote");
+  if(!n) return;
+  if(!CAN_STORE){
+    n.textContent = "Этот браузер не разрешает страницам ничего запоминать, поэтому " +
+      "при перезагрузке ответы пропадут. Решай за один заход или отправь работу до того, " +
+      "как закроешь вкладку.";
+    return;
+  }
+  var when = "";
+  if(at){
+    var d = new Date(at);
+    var two = function(x){ return (x < 10 ? "0" : "") + x; };
+    when = " Последнее сохранение: " + two(d.getDate()) + "." + two(d.getMonth() + 1) +
+           ", " + two(d.getHours()) + ":" + two(d.getMinutes()) + ".";
+  }
+  n.innerHTML = "Ответы и пройденные тренажёры хранятся в этом браузере: можно закрыть " +
+    "страницу и вернуться позже." + when +
+    " Фото не сохраняются." +
+    (at ? ' <button type="button" id="wipe">Начать заново</button>' : "");
+  var w = document.getElementById("wipe");
+  if(w){
+    w.addEventListener("click", function(){
+      wiping = true;
+      clearWork();
+      location.reload();
+    });
+  }
+}
+
+function restoreTask(t, s){
+  var el = document.getElementById("t" + t.id);
+  if(!el) return;
+  if(t.type === "choice"){
+    if(s.sel){
+      el.querySelectorAll(".opt").forEach(function(l){
+        if(l.dataset.v === s.sel){
+          l.classList.add("sel");
+          var r = l.querySelector("input");
+          if(r) r.checked = true;
+        }
+      });
+    }
+  } else if(s.given){
+    var inp = document.getElementById("in" + t.id);
+    if(inp) inp.value = s.given;
+  }
+  var host = el.querySelector(".hints"), k, h;
+  for(k = 0; k < s.hints && k < t.hints.length; k++){
+    h = document.createElement("div");
+    h.className = "hint";
+    h.innerHTML = "Подсказка " + (k + 1) + ": " + t.hints[k];
+    host.appendChild(h);
+  }
+  if(s.tries > 0){
+    var v = el.querySelector(".verdict");
+    el.classList.add(s.ok ? "ok" : "bad");
+    v.className = "verdict " + (s.ok ? "ok" : "bad");
+    if(s.ok){
+      v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    } else if(s.tries === 1){
+      v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+    } else {
+      v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    }
+    if(s.done) showSol(el, t);
+  }
+}
+
+(function(){
+  var saved = loadWork(), k;
+  if(saved){
+    spentBefore = saved.spent || 0;
+    if(saved.name){
+      var nm = document.getElementById("name");
+      if(nm && !nm.value) nm.value = saved.name;
+    }
+    TASKS.forEach(function(t){
+      var s = saved.tasks && saved.tasks[t.id];
+      if(!s) return;
+      var cur = state[t.id];
+      cur.tries = s.tries || 0; cur.hints = s.hints || 0;
+      cur.done = !!s.done; cur.ok = !!s.ok;
+      cur.given = s.given || ""; cur.sel = s.sel || null;
+      restoreTask(t, cur);
+    });
+    if(saved.tr){ for(k in saved.tr){ TRDONE[k] = saved.tr[k]; } }
+    progress();
+    trStatus();
+  }
+  saveNote(saved ? saved.at : 0);
+  var nm = document.getElementById("name");
+  if(nm) nm.addEventListener("change", saveWork);
+  window.addEventListener("beforeunload", saveWork);
+})();
+
+</script>
+</body>
+</html>
