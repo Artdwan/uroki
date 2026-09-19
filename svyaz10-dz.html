@@ -1,0 +1,1071 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Типы химической связи. Ковалентная связь — домашнее задание, 10 класс</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:800px;margin:0 auto;padding:16px 14px 60px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+.f-formula{font-size:19px}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.step{margin:6px 0}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.fig{margin:12px 0;text-align:center}
+
+.og{display:inline-flex;align-items:flex-end;gap:10px;flex-wrap:wrap;vertical-align:middle}
+.ogpre{font-weight:700;font-size:17px;margin-right:2px;align-self:center}
+.ogg{display:inline-flex;flex-direction:column;align-items:center;gap:3px}
+.orow{display:inline-flex}
+.ocell{width:34px;height:34px;border:1.6px solid var(--ink);display:inline-flex;
+  align-items:center;justify-content:center;gap:0;background:var(--card);margin-left:-1.6px}
+.ocell:first-child{margin-left:0}
+.ar{font-style:normal;font-size:19px;line-height:1;font-weight:700}
+.ar.up{color:#15181e} .ar.dn{color:#15181e}
+@media (prefers-color-scheme:dark){.ar.up,.ar.dn{color:#eceef2}}
+.olab{font-size:13px;font-style:italic;color:var(--muted)}
+
+.tr{border:1px solid var(--line);border-radius:12px;padding:14px;margin:16px 0;background:var(--bg)}
+.trhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;
+  margin-bottom:8px}
+.trhead b{font-size:17px}
+.trscore{color:var(--muted);font-size:15px;white-space:nowrap}
+.trq{font-size:17px;margin:8px 0}
+.trfig{text-align:center;margin:8px 0}
+.trfig svg{width:100%;max-width:330px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.tropts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
+.tropt{border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;
+  background:var(--card);font-size:16px;text-align:left;min-height:46px}
+.tropt:hover{border-color:var(--acc)}
+.tropt.right{border-color:var(--ok);background:var(--ok-soft);font-weight:600}
+.tropt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.tropts.done .tropt{cursor:default}
+.trnum{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.trnum input{font:inherit;font-size:18px;padding:9px 11px;border-radius:9px;
+  border:1.5px solid var(--line);background:var(--card);color:var(--ink);max-width:130px}
+.trmsg{font-size:16px;margin-top:8px}
+.trmsg .v{font-weight:700}
+.trmsg .v.ok{color:var(--ok)} .trmsg .v.bad{color:var(--bad)}
+.trmsg .why{color:var(--muted);font-size:15px;margin-top:4px}
+.trbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.trbar button{font-size:15px;padding:8px 13px;min-height:42px}
+.trdone{background:var(--acc-soft);border-radius:10px;padding:12px;font-size:17px;
+  text-align:center;font-weight:600}
+
+.bwrap{background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:16px 14px;margin:12px 0;text-align:center;overflow-x:auto}
+.bwrap .og{justify-content:center}
+.ocell.btn{cursor:pointer;user-select:none;transition:background .12s,border-color .12s;
+  border-width:1.8px;width:40px;height:40px}
+.ocell.btn:hover{border-color:var(--acc);background:var(--acc-soft)}
+.ocell.btn:active{transform:scale(.96)}
+.ocell.btn .ar{font-size:21px;pointer-events:none}
+.bhint{color:var(--muted);font-size:14px;margin-top:10px}
+.bsol{margin-top:10px}
+.bsol .og{justify-content:center}
+.bcount{font-size:15px;color:var(--muted);margin-top:8px}
+
+.cfg{font-weight:600;white-space:nowrap}
+.cfg i{font-style:italic}
+.trfig .og{justify-content:center}
+.tropt .cfg{font-weight:600}
+.big{display:inline-block;background:var(--card);border:1px solid var(--line);
+  border-radius:10px;padding:10px 16px;font-size:24px;font-weight:600}
+
+.fig svg{width:100%;max-width:520px;height:auto}
+.fig{text-align:center;margin:14px 0}
+.pick4{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin:12px 0}
+.pk{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px}
+.pk svg{width:100%;height:auto;display:block}
+.fx{display:block;background:var(--acc-soft);border:1px solid var(--line);border-radius:10px;
+  padding:11px 13px;margin:12px 0;text-align:center;font-size:20px;line-height:1.7;
+  font-weight:600;overflow-x:auto}
+.sol .fx,.ex .fx{font-size:18px;margin:9px 0}
+.def{border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:var(--card)}
+.def .n{font-size:14px;color:var(--muted);font-weight:700;letter-spacing:.4px}
+.rule{border:1px solid var(--line);border-left:4px solid #c0397a;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdf0f6}
+.rule .n{font-size:14px;color:#a02a62;font-weight:700;letter-spacing:.4px}
+@media (prefers-color-scheme:dark){.rule{background:#2a1b23}}
+.wrap-t th,.wrap-t td{white-space:normal;text-align:left;vertical-align:top}
+.ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;background:var(--bg)}
+.ex h3{margin-top:0}
+.small,.mini{color:var(--muted);font-size:15px}
+.task .og{margin:4px 0}
+.sheet .f-formula{margin:5px 0;font-size:14.5px;line-height:1.38}
+.sheet table{font-size:12.5px}
+.sheet td,.sheet th{padding:3px 8px}
+.sheet h2{margin:0 0 6px}
+.sheet .ocell{width:24px;height:24px}
+.sheet .ar{font-size:14px}
+.sheet .olab{font-size:10px}
+.sheet .og{gap:6px}
+@media print{
+  .sheet>.meta{display:none}
+  .sheet .scroll{margin:5px 0}
+  .sheet .f-formula{font-size:13.5px;margin:4px 0;line-height:1.34}
+  .sheet table{font-size:11.5px}
+  .sheet td,.sheet th{padding:1px 6px}
+  .sheet .ocell{width:21px;height:21px;border-width:1.2px}
+  .sheet .ar{font-size:12px}
+}
+
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+@media print{
+  body{background:#fff}
+  .bar{display:none !important}
+  .wrap>*{display:none !important}
+  .wrap>.sheet{display:block !important;border:none;margin:0;padding:0}
+  .sheet{font-size:13px}
+  .sheet h2{font-size:18px}
+  .sheet th,.sheet td{padding:4px 5px;font-size:12px}
+  @page{size:A4;margin:12mm}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card top">
+  <h1>Типы химической связи. Ковалентная связь</h1>
+  <div class="meta">Химия, 10 класс · §3–§4 · введение в органическую химию · домашнее задание · 14 задач</div>
+  <label class="f" for="name">Имя и фамилия</label>
+  <input type="text" id="name" placeholder="напиши, как в журнале" autocapitalize="words" spellcheck="false">
+  <div class="note" style="margin-top:14px">
+    <b>Как работать.</b> Теория обоих параграфов здесь целиком, со всеми схемами —
+    учебник открывать не нужно. Сначала прочитай её, потом разбери семь примеров.
+    <div style="margin-top:8px">Дальше семь тренажёров. Последний — <b>конструктор
+    электронно-графических схем</b>: клетки заполняются прямо на странице, клик по клетке
+    ставит стрелку вверх, ещё клик — пару, ещё раз — очищает. Тренажёры в отчёт не идут,
+    проходи их сколько нужно.</div>
+    <div style="margin-top:8px">В самом конце — <b>14 задач</b>. У каждой три подсказки
+    и полное решение, но решение открывается только после того, как ты ответил.
+    Когда всё решишь, нажми «Отправить работу».</div>
+  </div>
+</div>
+<div class="card">
+<h2>Теория</h2>
+<h2>§ 3. Типы химической связи</h2>
+<h3>3.1. Зачем атомам связываться</h3>
+<p>При обычных условиях атомы большинства химических элементов по отдельности не существуют. Даже в простых веществах атомы соединены друг с другом. Исключение — благородные газы: гелий, неон, аргон и другие.</p>
+<p>Например, простое вещество водород состоит из молекул H₂, в которых два атома водорода связаны одной ковалентной связью: H—H.</p>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div><b>Химическая связь</b> — взаимодействие, связывающее отдельные атомы в химические соединения (молекулы или кристаллы).</div>
+<h3>3.2. Валентные электроны и электронные формулы</h3>
+<p>Участвовать в образовании связей могут только те электроны, которые слабее всего связаны с ядром, — электроны внешнего энергетического уровня. Они называются <b>валентными</b>.</p>
+<p>Валентные электроны обозначают точками вокруг символа элемента. Такая запись называется <b>электронной формулой</b>.</p>
+<div class="fig"><svg viewBox="0 0 600 230" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="600" height="230" rx="12" fill="#ffffff"/><text x="120" y="100.2" font-size="30" fill="#15181e" text-anchor="middle" font-weight="700">H</text><circle cx="112.5" cy="64.0" r="3.4" fill="#15181e"/><text x="300" y="100.2" font-size="30" fill="#15181e" text-anchor="middle" font-weight="700">C</text><circle cx="292.5" cy="64.0" r="3.4" fill="#15181e"/><circle cx="326.0" cy="82.5" r="3.4" fill="#15181e"/><circle cx="292.5" cy="116.0" r="3.4" fill="#15181e"/><circle cx="274.0" cy="82.5" r="3.4" fill="#15181e"/><text x="480" y="100.2" font-size="30" fill="#15181e" text-anchor="middle" font-weight="700">N</text><circle cx="472.5" cy="64.0" r="3.4" fill="#15181e"/><circle cx="506.0" cy="82.5" r="3.4" fill="#15181e"/><circle cx="472.5" cy="116.0" r="3.4" fill="#15181e"/><circle cx="454.0" cy="82.5" r="3.4" fill="#15181e"/><circle cx="487.5" cy="64.0" r="3.4" fill="#15181e"/><text x="300" y="202" font-size="15" fill="#5b6270" text-anchor="middle">Электронные формулы атомов водорода, углерода и</text><text x="300" y="222" font-size="15" fill="#5b6270" text-anchor="middle">азота: точек столько, сколько валентных электронов</text></svg></div>
+<div class="note"><b>Как сосчитать валентные электроны.</b> Для элементов главных подгрупп их число равно номеру группы: у водорода 1, у углерода 4, у азота 5, у кислорода 6, у фтора 7.</div>
+<h3>3.3. Правило завершённой оболочки</h3>
+<p>Атомы водорода и углерода имеют незавершённые электронные оболочки, поэтому по отдельности они не существуют. А атомы благородных газов устойчивы — их внешние оболочки завершены.</p>
+<div class="fig"><svg viewBox="0 0 570 250" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="570" height="250" rx="12" fill="#ffffff"/><circle cx="150" cy="90" r="35" fill="none" stroke="#15181e" stroke-width="1.6"/><text x="150" y="100.2" font-size="30" fill="#15181e" text-anchor="middle" font-weight="700">He</text><circle cx="142.5" cy="64.0" r="3.4" fill="#15181e"/><circle cx="176.0" cy="82.5" r="3.4" fill="#15181e"/><circle cx="420" cy="90" r="35" fill="none" stroke="#15181e" stroke-width="1.6"/><text x="420" y="100.2" font-size="30" fill="#15181e" text-anchor="middle" font-weight="700">Ne</text><circle cx="412.5" cy="64.0" r="3.4" fill="#15181e"/><circle cx="446.0" cy="82.5" r="3.4" fill="#15181e"/><circle cx="412.5" cy="116.0" r="3.4" fill="#15181e"/><circle cx="394.0" cy="82.5" r="3.4" fill="#15181e"/><circle cx="427.5" cy="64.0" r="3.4" fill="#15181e"/><circle cx="446.0" cy="97.5" r="3.4" fill="#15181e"/><circle cx="427.5" cy="116.0" r="3.4" fill="#15181e"/><circle cx="394.0" cy="97.5" r="3.4" fill="#15181e"/><text x="285" y="202" font-size="15" fill="#5b6270" text-anchor="middle">Завершённые оболочки: у гелия два электрона, у неона</text><text x="285" y="222" font-size="15" fill="#5b6270" text-anchor="middle">восемь. Окружность означает, что внешний слой</text><text x="285" y="242" font-size="15" fill="#5b6270" text-anchor="middle">завершён</text></svg></div>
+<div class="rule"><div class="n">ГЛАВНОЕ ПРАВИЛО ТЕМЫ</div>Атомы стремятся сформировать завершённую внешнюю оболочку — двухэлектронную, как у гелия, или восьмиэлектронную, как у неона. Добиться этого можно тремя способами: <b>отдать</b> электроны, <b>присоединить</b> их или <b>обобществить</b> — поделиться с соседом. При этом и возникает химическая связь.</div>
+<h3>3.4. Ионная связь</h3>
+<p>На внешнем слое атома лития один электрон, и он легко его отдаёт, приобретая оболочку гелия. На внешнем слое атома фтора семь электронов, ему проще присоединить один, чем отдать семь, — и он приобретает оболочку неона.</p>
+<div class="fig"><svg viewBox="0 0 830 255" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="830" height="255" rx="12" fill="#ffffff"/><text x="90" y="120.2" font-size="30" fill="#15181e" text-anchor="middle" font-weight="700">Li</text><circle cx="82.5" cy="84.0" r="3.4" fill="#15181e"/><text x="190" y="119" font-size="26" fill="#15181e" text-anchor="middle" font-weight="700">+</text><text x="300" y="120.2" font-size="30" fill="#15181e" text-anchor="middle" font-weight="700">F</text><circle cx="292.5" cy="84.0" r="3.4" fill="#15181e"/><circle cx="326.0" cy="102.5" r="3.4" fill="#15181e"/><circle cx="292.5" cy="136.0" r="3.4" fill="#15181e"/><circle cx="274.0" cy="102.5" r="3.4" fill="#15181e"/><circle cx="307.5" cy="84.0" r="3.4" fill="#15181e"/><circle cx="326.0" cy="117.5" r="3.4" fill="#15181e"/><circle cx="307.5" cy="136.0" r="3.4" fill="#15181e"/><line x1="390" y1="110" x2="470" y2="110" stroke="#15181e" stroke-width="2"/><polygon points="480,110 468,104 468,116" fill="#15181e"/><circle cx="570" cy="110" r="35" fill="none" stroke="#15181e" stroke-width="1.6"/><text x="570" y="120.2" font-size="30" fill="#15181e" text-anchor="middle" font-weight="700">Li</text><text x="612" y="80" font-size="17" fill="#15181e" text-anchor="middle" font-weight="700">+</text><circle cx="730" cy="110" r="35" fill="none" stroke="#15181e" stroke-width="1.6"/><text x="730" y="120.2" font-size="30" fill="#15181e" text-anchor="middle" font-weight="700">F</text><circle cx="722.5" cy="84.0" r="3.4" fill="#15181e"/><circle cx="756.0" cy="102.5" r="3.4" fill="#15181e"/><circle cx="722.5" cy="136.0" r="3.4" fill="#15181e"/><circle cx="704.0" cy="102.5" r="3.4" fill="#15181e"/><circle cx="737.5" cy="84.0" r="3.4" fill="#15181e"/><circle cx="756.0" cy="117.5" r="3.4" fill="#15181e"/><circle cx="737.5" cy="136.0" r="3.4" fill="#15181e"/><circle cx="704.0" cy="117.5" r="3.4" fill="#15181e"/><text x="772" y="80" font-size="17" fill="#15181e" text-anchor="middle" font-weight="700">−</text><text x="570" y="190" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="400">как у гелия</text><text x="730" y="190" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="400">как у неона</text><text x="415" y="227" font-size="15" fill="#5b6270" text-anchor="middle">Образование ионной связи: литий отдаёт электрон,</text><text x="415" y="247" font-size="15" fill="#5b6270" text-anchor="middle">фтор его принимает, получаются ионы Li⁺ и F⁻</text></svg></div>
+<p>Электрон переходит от лития к фтору. Образуются ионы Li⁺ и F⁻ с конфигурациями <span class="cfg">Li⁺: 1<i>s</i>²</span> и <span class="cfg">F⁻: …2<i>s</i>²2<i>p</i>⁶</span>. Разноимённо заряженные ионы притягиваются друг к другу.</p>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div><b>Ионная связь</b> — связь между разноимённо заряженными ионами. Она образуется между атомами <b>металла и неметалла</b>: в солях (NaCl, KF), оксидах металлов (Na₂O, K₂O), гидроксидах металлов (NaOH, KOH).</div>
+<h3>3.5. Ковалентная связь</h3>
+<p>Если встречаются одинаковые атомы, переходить электрону некуда: оба атома тянут одинаково. Вместо перехода неспаренные электроны двух атомов образуют <b>общую электронную пару</b>. Каждый атом водорода при этом получает оболочку гелия.</p>
+<div class="fig"><svg viewBox="0 0 760 245" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="760" height="245" rx="12" fill="#ffffff"/><text x="80" y="110.2" font-size="30" fill="#15181e" text-anchor="middle" font-weight="700">H</text><circle cx="72.5" cy="74.0" r="3.4" fill="#15181e"/><text x="170" y="109" font-size="26" fill="#15181e" text-anchor="middle" font-weight="700">+</text><text x="260" y="110.2" font-size="30" fill="#2f6bd8" text-anchor="middle" font-weight="700">H</text><circle cx="252.5" cy="74.0" r="3.4" fill="#2f6bd8"/><line x1="340" y1="100" x2="420" y2="100" stroke="#15181e" stroke-width="2"/><polygon points="430,100 418,94 418,106" fill="#15181e"/><circle cx="565.7" cy="100" r="44" fill="none" stroke="#15181e" stroke-width="1.8"/><circle cx="634.3" cy="100" r="44" fill="none" stroke="#2f6bd8" stroke-width="1.8"/><text x="551.68" y="110" font-size="27" fill="#15181e" text-anchor="middle" font-weight="700">H</text><text x="648.32" y="110" font-size="27" fill="#2f6bd8" text-anchor="middle" font-weight="700">H</text><circle cx="595.0" cy="100.0" r="3.4" fill="#15181e"/><circle cx="605.0" cy="100.0" r="3.4" fill="#2f6bd8"/><text x="600" y="178" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="400">общая электронная пара</text><text x="380" y="217" font-size="15" fill="#5b6270" text-anchor="middle">Образование ковалентной связи в молекуле водорода:</text><text x="380" y="237" font-size="15" fill="#5b6270" text-anchor="middle">каждый атом получает оболочку, как у гелия</text></svg></div>
+<p>Такая связь называется <b>ковалентной</b>. В формулах общую пару обозначают чёрточкой: H—H. Формула, которая показывает не только состав, но и строение молекулы, называется <b>структурной</b>.</p>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div><b>Ковалентная связь</b> образуется между атомами <b>неметаллов</b>: в простых веществах (H₂, Cl₂, O₂, N₂), оксидах неметаллов (CO₂, SO₂), кислотах (HCl, H₂SO₄).</div>
+<h3>3.6. Металлическая связь</h3>
+<p>При взаимодействии атомов металлов друг с другом возникает третий тип связи — <b>металлическая</b>. Она есть в простых веществах, образованных металлами (Na, K, Fe, Cu), и в сплавах.</p>
+<div class="rule"><div class="n">ТРИ ТИПА СВЯЗИ — ЗАПОМНИТЬ ТАК</div><b>неметалл + неметалл</b> → ковалентная<br><b>металл + неметалл</b> → ионная<br><b>металл + металл</b> → металлическая</div>
+<div class="scroll"><table class="wrap-t"><tr><th>Тип связи</th><th>Между кем</th><th>Примеры</th></tr><tr><td>Ковалентная</td><td>атомы неметаллов</td><td>H₂, F₂, O₂, H₂O, CO₂, HF, HCl, H₂SO₄, HNO₃</td></tr><tr><td>Ионная</td><td>атом металла и атом неметалла</td><td>NaCl, KF, K₂O, BaO, NaOH, KOH</td></tr><tr><td>Металлическая</td><td>атомы металлов</td><td>Na, K, Cu, Fe и сплавы</td></tr></table></div>
+<h2>§ 4. Ковалентная связь</h2>
+<p>Основной тип связей в органических соединениях — ковалентная. Разберём, как она возникает и чем одна такая связь отличается от другой.</p>
+<h3>4.1. Как возникает связь</h3>
+<p>Атом водорода — это положительно заряженное ядро и один неспаренный электрон на 1<i>s</i>-орбитали. При сближении двух атомов их электронные облака <b>перекрываются</b>.</p>
+<div class="fig"><svg viewBox="0 0 730 260" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="730" height="260" rx="12" fill="#ffffff"/><circle cx="120" cy="95" r="46" fill="#9aa5b8" opacity="0.8"/><circle cx="120" cy="95" r="3.6" fill="#d13b3b"/><text x="230" y="104" font-size="26" fill="#15181e" text-anchor="middle" font-weight="700">+</text><circle cx="340" cy="95" r="46" fill="#9aa5b8" opacity="0.8"/><circle cx="340" cy="95" r="3.6" fill="#d13b3b"/><line x1="420" y1="95" x2="490" y2="95" stroke="#15181e" stroke-width="2"/><polygon points="500,95 488,89 488,101" fill="#15181e"/><defs><radialGradient id="g1" cx="35%" cy="35%"><stop offset="0%" stop-color="#b9c3d6"/><stop offset="100%" stop-color="#6b7688"/></radialGradient></defs><circle cx="596.5" cy="95" r="46" fill="url(#g1)" opacity="0.85"/><circle cx="653.5" cy="95" r="46" fill="url(#g1)" opacity="0.85"/><circle cx="596.5" cy="95" r="3.6" fill="#d13b3b"/><circle cx="653.5" cy="95" r="3.6" fill="#d13b3b"/><text x="625" y="172" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="400">область перекрывания</text><text x="365" y="212" font-size="15" fill="#5b6270" text-anchor="middle">При сближении атомов водорода их электронные облака</text><text x="365" y="232" font-size="15" fill="#5b6270" text-anchor="middle">перекрываются, между ядрами растёт электронная</text><text x="365" y="252" font-size="15" fill="#5b6270" text-anchor="middle">плотность</text></svg></div>
+<p>В пространстве между ядрами растёт электронная плотность, то есть там скапливается отрицательный заряд. Он притягивает оба положительных ядра — и удерживает их вместе. Чем сильнее перекрываются облака, тем прочнее связь.</p>
+<div class="fx">H· + ·H ⟶ H : H, или H—H</div>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div><b>Ковалентная связь</b> — химическая связь, образованная посредством общих электронных пар.</div>
+<h3>4.2. Валентность: считаем неспаренные электроны</h3>
+<p>Общая пара получается из двух неспаренных электронов — по одному от каждого атома. Значит, сколько у атома неспаренных электронов, столько связей он и может образовать.</p>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div><b>Валентность</b> — число ковалентных связей, которые атом образует в соединении. В структурной формуле это число чёрточек у символа.</div>
+<div class="scroll"><table class="wrap-t"><tr><th>Атом</th><th>Схема внешнего слоя</th><th>Неспаренных</th><th>Валентность</th></tr><tr><td>H</td><td><span class="og"><span class="ogpre">H:</span><span class="ogg"><span class="orow"><span class="ocell"><i class="ar up">↑</i></span></span><span class="olab">1s</span></span></span></td><td>1</td><td>I</td></tr><tr><td>F</td><td><span class="og"><span class="ogpre">F: …</span><span class="ogg"><span class="orow"><span class="ocell"><i class="ar up">↑</i><i class="ar dn">↓</i></span></span><span class="olab">2s</span></span><span class="ogg"><span class="orow"><span class="ocell"><i class="ar up">↑</i><i class="ar dn">↓</i></span><span class="ocell"><i class="ar up">↑</i><i class="ar dn">↓</i></span><span class="ocell"><i class="ar up">↑</i></span></span><span class="olab">2p</span></span></span></td><td>1</td><td>I</td></tr><tr><td>O</td><td><span class="og"><span class="ogpre">O: …</span><span class="ogg"><span class="orow"><span class="ocell"><i class="ar up">↑</i><i class="ar dn">↓</i></span></span><span class="olab">2s</span></span><span class="ogg"><span class="orow"><span class="ocell"><i class="ar up">↑</i><i class="ar dn">↓</i></span><span class="ocell"><i class="ar up">↑</i></span><span class="ocell"><i class="ar up">↑</i></span></span><span class="olab">2p</span></span></span></td><td>2</td><td>II</td></tr><tr><td>N</td><td><span class="og"><span class="ogpre">N: …</span><span class="ogg"><span class="orow"><span class="ocell"><i class="ar up">↑</i><i class="ar dn">↓</i></span></span><span class="olab">2s</span></span><span class="ogg"><span class="orow"><span class="ocell"><i class="ar up">↑</i></span><span class="ocell"><i class="ar up">↑</i></span><span class="ocell"><i class="ar up">↑</i></span></span><span class="olab">2p</span></span></span></td><td>3</td><td>III</td></tr></table></div>
+<p>От символа F в структурных формулах рисуют одну чёрточку (F—F, H—F), от O — две (O=O, H—O—H), от N — три (N≡N, аммиак H—N(H)—H).</p>
+<h3>4.3. Особый случай — углерод</h3>
+<p>В основном состоянии на внешнем слое углерода только <b>два</b> неспаренных электрона. Но углерод легко переходит в <b>возбуждённое состояние</b>: один электрон с 2<i>s</i>-орбитали перескакивает на свободную 2<i>p</i>-орбиталь.</p>
+<div class="scroll"><table class="wrap-t"><tr><th>Состояние</th><th>Схема</th><th>Неспаренных</th></tr><tr><td>основное C</td><td><span class="og"><span class="ogpre">C: …</span><span class="ogg"><span class="orow"><span class="ocell"><i class="ar up">↑</i><i class="ar dn">↓</i></span></span><span class="olab">2s</span></span><span class="ogg"><span class="orow"><span class="ocell"><i class="ar up">↑</i></span><span class="ocell"><i class="ar up">↑</i></span><span class="ocell"></span></span><span class="olab">2p</span></span></span></td><td>2</td></tr><tr><td>возбуждённое C*</td><td><span class="og"><span class="ogpre">C*: …</span><span class="ogg"><span class="orow"><span class="ocell"><i class="ar up">↑</i></span></span><span class="olab">2s</span></span><span class="ogg"><span class="orow"><span class="ocell"><i class="ar up">↑</i></span><span class="ocell"><i class="ar up">↑</i></span><span class="ocell"><i class="ar up">↑</i></span></span><span class="olab">2p</span></span></span></td><td>4</td></tr></table></div>
+<p>Поэтому в большинстве соединений углерод <b>четырёхвалентен</b>, и от символа C рисуют четыре чёрточки. Именно четырёхвалентность углерода лежит в основе всей органической химии.</p>
+<h3>4.4. Кратность связи</h3>
+<p>Атомы могут связывать одна, две или три общие пары.</p>
+<div class="fig"><svg viewBox="0 0 800 255" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="800" height="255" rx="12" fill="#ffffff"/><text x="90" y="120.2" font-size="30" fill="#15181e" text-anchor="middle" font-weight="700">F</text><circle cx="82.5" cy="84.0" r="3.4" fill="#15181e"/><circle cx="116.0" cy="102.5" r="3.4" fill="#15181e"/><circle cx="82.5" cy="136.0" r="3.4" fill="#15181e"/><circle cx="64.0" cy="102.5" r="3.4" fill="#15181e"/><circle cx="97.5" cy="84.0" r="3.4" fill="#15181e"/><circle cx="116.0" cy="117.5" r="3.4" fill="#15181e"/><circle cx="97.5" cy="136.0" r="3.4" fill="#15181e"/><text x="190" y="119" font-size="26" fill="#15181e" text-anchor="middle" font-weight="700">+</text><text x="290" y="120.2" font-size="30" fill="#2f6bd8" text-anchor="middle" font-weight="700">F</text><circle cx="282.5" cy="84.0" r="3.4" fill="#2f6bd8"/><circle cx="316.0" cy="102.5" r="3.4" fill="#2f6bd8"/><circle cx="282.5" cy="136.0" r="3.4" fill="#2f6bd8"/><circle cx="264.0" cy="102.5" r="3.4" fill="#2f6bd8"/><circle cx="297.5" cy="84.0" r="3.4" fill="#2f6bd8"/><circle cx="316.0" cy="117.5" r="3.4" fill="#2f6bd8"/><circle cx="297.5" cy="136.0" r="3.4" fill="#2f6bd8"/><line x1="380" y1="110" x2="460" y2="110" stroke="#15181e" stroke-width="2"/><polygon points="470,110 458,104 458,116" fill="#15181e"/><circle cx="604.1" cy="110" r="46" fill="none" stroke="#15181e" stroke-width="1.8"/><circle cx="675.9" cy="110" r="46" fill="none" stroke="#2f6bd8" stroke-width="1.8"/><text x="590.12" y="120" font-size="27" fill="#15181e" text-anchor="middle" font-weight="700">F</text><text x="689.88" y="120" font-size="27" fill="#2f6bd8" text-anchor="middle" font-weight="700">F</text><circle cx="635.0" cy="110.0" r="3.4" fill="#15181e"/><circle cx="645.0" cy="110.0" r="3.4" fill="#2f6bd8"/><circle cx="584.1" cy="82.0" r="3.2" fill="#15181e"/><circle cx="596.1" cy="82.0" r="3.2" fill="#15181e"/><circle cx="584.1" cy="138.0" r="3.2" fill="#15181e"/><circle cx="596.1" cy="138.0" r="3.2" fill="#15181e"/><circle cx="560.1" cy="104.0" r="3.2" fill="#15181e"/><circle cx="560.1" cy="116.0" r="3.2" fill="#15181e"/><circle cx="683.9" cy="82.0" r="3.2" fill="#2f6bd8"/><circle cx="695.9" cy="82.0" r="3.2" fill="#2f6bd8"/><circle cx="683.9" cy="138.0" r="3.2" fill="#2f6bd8"/><circle cx="695.9" cy="138.0" r="3.2" fill="#2f6bd8"/><circle cx="719.9" cy="104.0" r="3.2" fill="#2f6bd8"/><circle cx="719.9" cy="116.0" r="3.2" fill="#2f6bd8"/><text x="400" y="227" font-size="15" fill="#5b6270" text-anchor="middle">Одинарная связь в молекуле фтора F₂: атомы связывает</text><text x="400" y="247" font-size="15" fill="#5b6270" text-anchor="middle">одна общая пара</text></svg></div>
+<div class="fig"><svg viewBox="0 0 800 255" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="800" height="255" rx="12" fill="#ffffff"/><text x="90" y="120.2" font-size="30" fill="#15181e" text-anchor="middle" font-weight="700">O</text><circle cx="82.5" cy="84.0" r="3.4" fill="#15181e"/><circle cx="116.0" cy="102.5" r="3.4" fill="#15181e"/><circle cx="82.5" cy="136.0" r="3.4" fill="#15181e"/><circle cx="64.0" cy="102.5" r="3.4" fill="#15181e"/><circle cx="97.5" cy="84.0" r="3.4" fill="#15181e"/><circle cx="116.0" cy="117.5" r="3.4" fill="#15181e"/><text x="190" y="119" font-size="26" fill="#15181e" text-anchor="middle" font-weight="700">+</text><text x="290" y="120.2" font-size="30" fill="#2f6bd8" text-anchor="middle" font-weight="700">O</text><circle cx="282.5" cy="84.0" r="3.4" fill="#2f6bd8"/><circle cx="316.0" cy="102.5" r="3.4" fill="#2f6bd8"/><circle cx="282.5" cy="136.0" r="3.4" fill="#2f6bd8"/><circle cx="264.0" cy="102.5" r="3.4" fill="#2f6bd8"/><circle cx="297.5" cy="84.0" r="3.4" fill="#2f6bd8"/><circle cx="316.0" cy="117.5" r="3.4" fill="#2f6bd8"/><line x1="380" y1="110" x2="460" y2="110" stroke="#15181e" stroke-width="2"/><polygon points="470,110 458,104 458,116" fill="#15181e"/><circle cx="604.1" cy="110" r="46" fill="none" stroke="#15181e" stroke-width="1.8"/><circle cx="675.9" cy="110" r="46" fill="none" stroke="#2f6bd8" stroke-width="1.8"/><text x="590.12" y="120" font-size="27" fill="#15181e" text-anchor="middle" font-weight="700">O</text><text x="689.88" y="120" font-size="27" fill="#2f6bd8" text-anchor="middle" font-weight="700">O</text><circle cx="635.0" cy="99.0" r="3.4" fill="#15181e"/><circle cx="645.0" cy="99.0" r="3.4" fill="#2f6bd8"/><circle cx="635.0" cy="121.0" r="3.4" fill="#15181e"/><circle cx="645.0" cy="121.0" r="3.4" fill="#2f6bd8"/><circle cx="584.1" cy="82.0" r="3.2" fill="#15181e"/><circle cx="596.1" cy="82.0" r="3.2" fill="#15181e"/><circle cx="584.1" cy="138.0" r="3.2" fill="#15181e"/><circle cx="596.1" cy="138.0" r="3.2" fill="#15181e"/><circle cx="683.9" cy="82.0" r="3.2" fill="#2f6bd8"/><circle cx="695.9" cy="82.0" r="3.2" fill="#2f6bd8"/><circle cx="683.9" cy="138.0" r="3.2" fill="#2f6bd8"/><circle cx="695.9" cy="138.0" r="3.2" fill="#2f6bd8"/><text x="400" y="227" font-size="15" fill="#5b6270" text-anchor="middle">Двойная связь в молекуле кислорода O₂: две общие</text><text x="400" y="247" font-size="15" fill="#5b6270" text-anchor="middle">пары</text></svg></div>
+<div class="fig"><svg viewBox="0 0 800 235" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="800" height="235" rx="12" fill="#ffffff"/><text x="90" y="120.2" font-size="30" fill="#15181e" text-anchor="middle" font-weight="700">N</text><circle cx="82.5" cy="84.0" r="3.4" fill="#15181e"/><circle cx="116.0" cy="102.5" r="3.4" fill="#15181e"/><circle cx="82.5" cy="136.0" r="3.4" fill="#15181e"/><circle cx="64.0" cy="102.5" r="3.4" fill="#15181e"/><circle cx="97.5" cy="84.0" r="3.4" fill="#15181e"/><text x="190" y="119" font-size="26" fill="#15181e" text-anchor="middle" font-weight="700">+</text><text x="290" y="120.2" font-size="30" fill="#2f6bd8" text-anchor="middle" font-weight="700">N</text><circle cx="282.5" cy="84.0" r="3.4" fill="#2f6bd8"/><circle cx="316.0" cy="102.5" r="3.4" fill="#2f6bd8"/><circle cx="282.5" cy="136.0" r="3.4" fill="#2f6bd8"/><circle cx="264.0" cy="102.5" r="3.4" fill="#2f6bd8"/><circle cx="297.5" cy="84.0" r="3.4" fill="#2f6bd8"/><line x1="380" y1="110" x2="460" y2="110" stroke="#15181e" stroke-width="2"/><polygon points="470,110 458,104 458,116" fill="#15181e"/><circle cx="602.6" cy="110" r="48" fill="none" stroke="#15181e" stroke-width="1.8"/><circle cx="677.4" cy="110" r="48" fill="none" stroke="#2f6bd8" stroke-width="1.8"/><text x="588.56" y="120" font-size="27" fill="#15181e" text-anchor="middle" font-weight="700">N</text><text x="691.44" y="120" font-size="27" fill="#2f6bd8" text-anchor="middle" font-weight="700">N</text><circle cx="635.0" cy="94.0" r="3.4" fill="#15181e"/><circle cx="645.0" cy="94.0" r="3.4" fill="#2f6bd8"/><circle cx="635.0" cy="110.0" r="3.4" fill="#15181e"/><circle cx="645.0" cy="110.0" r="3.4" fill="#2f6bd8"/><circle cx="635.0" cy="126.0" r="3.4" fill="#15181e"/><circle cx="645.0" cy="126.0" r="3.4" fill="#2f6bd8"/><circle cx="582.6" cy="82.0" r="3.2" fill="#15181e"/><circle cx="594.6" cy="82.0" r="3.2" fill="#15181e"/><circle cx="685.4" cy="82.0" r="3.2" fill="#2f6bd8"/><circle cx="697.4" cy="82.0" r="3.2" fill="#2f6bd8"/><text x="400" y="227" font-size="15" fill="#5b6270" text-anchor="middle">Тройная связь в молекуле азота N₂: три общие пары</text></svg></div>
+<div class="rule"><div class="n">КРАТНОСТЬ</div>одна общая пара — связь <b>одинарная</b> (F—F)<br>две пары — <b>двойная</b> (O=O)<br>три пары — <b>тройная</b> (N≡N)<br>двойные и тройные связи вместе называют <b>кратными</b></div>
+<p>Углерод связывается с углеродом и одинарной связью (этан C₂H₆), и двойной (этилен C₂H₄), и тройной (ацетилен C₂H₂):</p>
+<div class="fx">H₃C—CH₃ &nbsp;&nbsp; H₂C=CH₂ &nbsp;&nbsp; HC≡CH</div>
+<h3>4.5. Энергия и длина связи</h3>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЯ</div><b>Энергия связи</b> — энергия, которую надо затратить, чтобы связь разорвать. Измеряется в кДж/моль: чем она больше, тем связь прочнее.<br><b>Длина связи</b> — расстояние между ядрами связанных атомов. Измеряется в нм.</div>
+<div class="scroll"><table class="wrap-t"><tr><th>Вещество</th><th>Связь C—C</th><th>Энергия, кДж/моль</th><th>Длина, нм</th></tr><tr><td>этан C₂H₆</td><td>одинарная</td><td>350</td><td>0,154</td></tr><tr><td>этилен C₂H₄</td><td>двойная</td><td>612</td><td>0,134</td></tr><tr><td>ацетилен C₂H₂</td><td>тройная</td><td>833</td><td>0,120</td></tr></table></div>
+<div class="rule"><div class="n">ЗАКОНОМЕРНОСТЬ</div>Растёт кратность → растёт энергия связи и <b>уменьшается</b> её длина. Короткая связь — прочная связь.</div>
+<h3>4.6. Полярность связи</h3>
+<p>В молекуле H₂ связь образуют одинаковые атомы, поэтому общая пара стоит ровно посередине. Такая связь называется <b>ковалентной неполярной</b>. Так же связаны атомы в F—F, Cl—Cl, O=O, N≡N, а ещё атомы углерода в этане, этилене и ацетилене.</p>
+<p>Если атомы разные, общая пара смещается к тому из них, который сильнее тянет электроны, — к более <b>электроотрицательному</b>.</p>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div><b>Электроотрицательность (ЭО)</b> — способность атома в соединении притягивать к себе электроны других атомов. Самый электроотрицательный элемент — фтор (ЭО 4,1).</div>
+<div class="fig"><svg viewBox="0 0 780 255" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="780" height="255" rx="12" fill="#ffffff"/><text x="80" y="120.2" font-size="30" fill="#15181e" text-anchor="middle" font-weight="700">H</text><circle cx="72.5" cy="84.0" r="3.4" fill="#15181e"/><text x="170" y="119" font-size="26" fill="#15181e" text-anchor="middle" font-weight="700">+</text><text x="270" y="120.2" font-size="30" fill="#2f6bd8" text-anchor="middle" font-weight="700">F</text><circle cx="262.5" cy="84.0" r="3.4" fill="#2f6bd8"/><circle cx="296.0" cy="102.5" r="3.4" fill="#2f6bd8"/><circle cx="262.5" cy="136.0" r="3.4" fill="#2f6bd8"/><circle cx="244.0" cy="102.5" r="3.4" fill="#2f6bd8"/><circle cx="277.5" cy="84.0" r="3.4" fill="#2f6bd8"/><circle cx="296.0" cy="117.5" r="3.4" fill="#2f6bd8"/><circle cx="277.5" cy="136.0" r="3.4" fill="#2f6bd8"/><line x1="360" y1="110" x2="440" y2="110" stroke="#15181e" stroke-width="2"/><polygon points="450,110 438,104 438,116" fill="#15181e"/><circle cx="574.1" cy="110" r="46" fill="none" stroke="#15181e" stroke-width="1.8"/><circle cx="645.9" cy="110" r="46" fill="none" stroke="#2f6bd8" stroke-width="1.8"/><text x="560.12" y="120" font-size="27" fill="#15181e" text-anchor="middle" font-weight="700">H</text><text x="659.88" y="120" font-size="27" fill="#2f6bd8" text-anchor="middle" font-weight="700">F</text><circle cx="614.0" cy="110" r="3.6" fill="#15181e"/><circle cx="626.0" cy="110" r="3.6" fill="#2f6bd8"/><circle cx="653.9" cy="82.0" r="3.2" fill="#2f6bd8"/><circle cx="665.9" cy="82.0" r="3.2" fill="#2f6bd8"/><circle cx="653.9" cy="138.0" r="3.2" fill="#2f6bd8"/><circle cx="665.9" cy="138.0" r="3.2" fill="#2f6bd8"/><circle cx="689.9" cy="104.0" r="3.2" fill="#2f6bd8"/><circle cx="689.9" cy="116.0" r="3.2" fill="#2f6bd8"/><text x="560.12" y="52" font-size="17" fill="#c0397a" text-anchor="middle" font-weight="700">δ+</text><text x="659.88" y="52" font-size="17" fill="#c0397a" text-anchor="middle" font-weight="700">δ−</text><text x="610" y="186" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="400">общая пара смещена к фтору</text><text x="390" y="227" font-size="15" fill="#5b6270" text-anchor="middle">Ковалентная полярная связь в молекуле фтороводорода</text><text x="390" y="247" font-size="15" fill="#5b6270" text-anchor="middle">HF</text></svg></div>
+<p>Полного перехода электрона, как в ионной связи, здесь не происходит — пара только смещается. Поэтому на атомах возникают не целые, а <b>частичные заряды</b>, их обозначают буквой δ (дельта):</p>
+<div class="fx">H<sup>δ+</sup>—F<sup>δ−</sup></div>
+<div class="scroll"><table class="wrap-t"><tr><th>Вещество</th><th>ЭО атомов</th><th>Частичные заряды</th></tr><tr><td>фтороводород HF</td><td>H 2,2 &nbsp; F 4,1</td><td>+0,43 &nbsp; −0,43</td></tr><tr><td>хлороводород HCl</td><td>H 2,2 &nbsp; Cl 2,8</td><td>+0,18 &nbsp; −0,18</td></tr></table></div>
+<div class="rule"><div class="n">ПОЛЯРНОСТЬ</div>Чем сильнее различаются ЭО атомов, тем больше частичные заряды и тем <b>полярнее</b> связь. Разность ЭО в HF больше, чем в HCl, — значит, связь в HF более полярная.</div>
+<div class="note"><b>Не путай.</b> «Полярная или неполярная» — это про <b>ковалентную</b> связь, то есть про два неметалла. Между металлом и неметаллом связь не «очень полярная», а <b>ионная</b>.</div>
+</div><div class="card">
+<h2>Разбор задач</h2>
+<div class="meta">Семь примеров — по одному на каждый тип заданий, которые будут в домашке. Прочитай их до того, как начнёшь решать.</div>
+<div class="ex"><h3>Пример 1. Определить тип связи</h3>
+<div class="step"><b>Задание.</b> Определить тип химической связи в веществах: KCl, Cl₂, HCl, Fe.</div>
+<div class="step"><b>Шаг 1.</b> Смотрим, какие элементы входят в вещество, и для каждого решаем: металл или неметалл.</div>
+<div class="step"><b>Шаг 2.</b> Применяем правило трёх типов.</div>
+<div class="fx">металл + неметалл → ионная<br>неметалл + неметалл → ковалентная<br>металл + металл → металлическая</div>
+<div class="step"><b>Шаг 3.</b> Если связь ковалентная, уточняем полярность: атомы одинаковые — неполярная, разные — полярная.</div>
+<div class="scroll"><table class="wrap-t"><tr><th>Вещество</th><th>Элементы</th><th>Тип связи</th></tr><tr><td>KCl</td><td>K — металл, Cl — неметалл</td><td>ионная</td></tr><tr><td>Cl₂</td><td>два одинаковых неметалла</td><td>ковалентная неполярная</td></tr><tr><td>HCl</td><td>два разных неметалла</td><td>ковалентная полярная</td></tr><tr><td>Fe</td><td>металл</td><td>металлическая</td></tr></table></div>
+<div class="step mini"><b>Проверь себя.</b> Водород в таблице стоит над металлами, но сам он <b>неметалл</b>. Поэтому в HCl связь ковалентная, а не ионная.</div>
+</div>
+<div class="ex"><h3>Пример 2. Изобразить образование связи электронными формулами</h3>
+<div class="step"><b>Задание.</b> Изобразить образование ковалентной связи в молекуле фтора F₂.</div>
+<div class="step"><b>Шаг 1.</b> Фтор в VII группе — семь валентных электронов. Рисуем семь точек: три пары и один одиночный электрон.</div>
+<div class="step"><b>Шаг 2.</b> Одиночные электроны двух атомов сходятся в общую пару.</div>
+<div class="step"><b>Шаг 3.</b> Считаем электроны у каждого атома в молекуле: шесть своих плюс два общих — восемь, оболочка завершена, как у неона.</div>
+<div class="fig"><svg viewBox="0 0 560 150" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="560" height="150" rx="12" fill="#ffffff"/><text x="90" y="85.2" font-size="30" fill="#15181e" text-anchor="middle" font-weight="700">F</text><circle cx="82.5" cy="49.0" r="3.4" fill="#15181e"/><circle cx="116.0" cy="67.5" r="3.4" fill="#15181e"/><circle cx="82.5" cy="101.0" r="3.4" fill="#15181e"/><circle cx="64.0" cy="67.5" r="3.4" fill="#15181e"/><circle cx="97.5" cy="49.0" r="3.4" fill="#15181e"/><circle cx="116.0" cy="82.5" r="3.4" fill="#15181e"/><circle cx="97.5" cy="101.0" r="3.4" fill="#15181e"/><text x="180" y="84" font-size="26" fill="#15181e" text-anchor="middle" font-weight="700">+</text><text x="270" y="85.2" font-size="30" fill="#2f6bd8" text-anchor="middle" font-weight="700">F</text><circle cx="262.5" cy="49.0" r="3.4" fill="#2f6bd8"/><circle cx="296.0" cy="67.5" r="3.4" fill="#2f6bd8"/><circle cx="262.5" cy="101.0" r="3.4" fill="#2f6bd8"/><circle cx="244.0" cy="67.5" r="3.4" fill="#2f6bd8"/><circle cx="277.5" cy="49.0" r="3.4" fill="#2f6bd8"/><circle cx="296.0" cy="82.5" r="3.4" fill="#2f6bd8"/><circle cx="277.5" cy="101.0" r="3.4" fill="#2f6bd8"/><line x1="350" y1="75" x2="410" y2="75" stroke="#15181e" stroke-width="2"/><polygon points="420,75 408,69 408,81" fill="#15181e"/><circle cx="451.9" cy="75" r="36" fill="none" stroke="#15181e" stroke-width="1.8"/><circle cx="508.1" cy="75" r="36" fill="none" stroke="#2f6bd8" stroke-width="1.8"/><text x="437.92" y="85" font-size="27" fill="#15181e" text-anchor="middle" font-weight="700">F</text><text x="522.0799999999999" y="85" font-size="27" fill="#2f6bd8" text-anchor="middle" font-weight="700">F</text><circle cx="475.0" cy="75.0" r="3.4" fill="#15181e"/><circle cx="485.0" cy="75.0" r="3.4" fill="#2f6bd8"/><circle cx="431.9" cy="47.0" r="3.2" fill="#15181e"/><circle cx="443.9" cy="47.0" r="3.2" fill="#15181e"/><circle cx="431.9" cy="103.0" r="3.2" fill="#15181e"/><circle cx="443.9" cy="103.0" r="3.2" fill="#15181e"/><circle cx="407.9" cy="69.0" r="3.2" fill="#15181e"/><circle cx="407.9" cy="81.0" r="3.2" fill="#15181e"/><circle cx="516.1" cy="47.0" r="3.2" fill="#2f6bd8"/><circle cx="528.1" cy="47.0" r="3.2" fill="#2f6bd8"/><circle cx="516.1" cy="103.0" r="3.2" fill="#2f6bd8"/><circle cx="528.1" cy="103.0" r="3.2" fill="#2f6bd8"/><circle cx="552.1" cy="69.0" r="3.2" fill="#2f6bd8"/><circle cx="552.1" cy="81.0" r="3.2" fill="#2f6bd8"/></svg></div>
+<div class="fx">F—F, одна общая пара, связь одинарная</div>
+<div class="step mini"><b>Типичная ловушка.</b> Точек у фтора семь, а не восемь. Восемь становится только <b>после</b> образования связи, и две из них — общие.</div>
+</div>
+<div class="ex"><h3>Пример 3. Валентность по числу неспаренных электронов</h3>
+<div class="step"><b>Задание.</b> Определить валентность азота и написать структурную формулу аммиака NH₃.</div>
+<div class="step"><b>Шаг 1.</b> Рисуем внешний слой азота: <span class="og"><span class="ogpre">N: …</span><span class="ogg"><span class="orow"><span class="ocell"><i class="ar up">↑</i><i class="ar dn">↓</i></span></span><span class="olab">2s</span></span><span class="ogg"><span class="orow"><span class="ocell"><i class="ar up">↑</i></span><span class="ocell"><i class="ar up">↑</i></span><span class="ocell"><i class="ar up">↑</i></span></span><span class="olab">2p</span></span></span></div>
+<div class="step"><b>Шаг 2.</b> Считаем одиночные стрелки — их три. Значит, валентность азота III.</div>
+<div class="step"><b>Шаг 3.</b> От символа N рисуем три чёрточки, на каждую сажаем по атому водорода.</div>
+<div class="fig"><svg viewBox="0 0 740 250" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="740" height="250" rx="12" fill="#ffffff"/><text x="110" y="115.2" font-size="30" fill="#15181e" text-anchor="middle" font-weight="700">N</text><circle cx="102.5" cy="79.0" r="3.4" fill="#15181e"/><circle cx="136.0" cy="97.5" r="3.4" fill="#15181e"/><circle cx="102.5" cy="131.0" r="3.4" fill="#15181e"/><circle cx="84.0" cy="97.5" r="3.4" fill="#15181e"/><circle cx="117.5" cy="79.0" r="3.4" fill="#15181e"/><text x="200" y="114" font-size="26" fill="#15181e" text-anchor="middle" font-weight="700">+</text><text x="300" y="112" font-size="24" fill="#15181e" text-anchor="middle" font-weight="700">3 H·</text><line x1="370" y1="105" x2="440" y2="105" stroke="#15181e" stroke-width="2"/><polygon points="450,105 438,99 438,111" fill="#15181e"/><text x="600" y="114" font-size="28" fill="#15181e" text-anchor="middle" font-weight="700">N</text><text x="530" y="114" font-size="24" fill="#2f6bd8" text-anchor="middle" font-weight="700">H</text><text x="670" y="114" font-size="24" fill="#2f6bd8" text-anchor="middle" font-weight="700">H</text><text x="600" y="183" font-size="24" fill="#2f6bd8" text-anchor="middle" font-weight="700">H</text><line x1="548" y1="105" x2="580" y2="105" stroke="#15181e" stroke-width="2.2"/><line x1="620" y1="105" x2="652" y2="105" stroke="#15181e" stroke-width="2.2"/><line x1="600" y1="123" x2="600" y2="161" stroke="#15181e" stroke-width="2.2"/><circle cx="593" cy="75" r="3.4" fill="#15181e"/><circle cx="607" cy="75" r="3.4" fill="#15181e"/><text x="660" y="71" font-size="13" fill="#5b6270" text-anchor="middle" font-weight="400">неподелённая пара</text><text x="370" y="222" font-size="15" fill="#5b6270" text-anchor="middle">Аммиак NH₃: три неспаренных электрона азота дают три</text><text x="370" y="242" font-size="15" fill="#5b6270" text-anchor="middle">связи, четвёртая пара остаётся неподелённой</text></svg></div>
+<div class="step mini"><b>Проверь себя.</b> Пара на 2<i>s</i> в связи не участвует — она уже спарена. В молекуле аммиака она так и остаётся неподелённой.</div>
+</div>
+<div class="ex"><h3>Пример 4. Сколько общих пар в молекуле</h3>
+<div class="step"><b>Задание.</b> Сколько общих электронных пар в молекулах CO₂ и CH₄?</div>
+<div class="step"><b>Шаг 1.</b> Пишем структурную формулу, помня валентности: C — четыре чёрточки, O — две, H — одна.</div>
+<div class="fx">O=C=O &nbsp;&nbsp;&nbsp;&nbsp; H—C(H)(H)—H</div>
+<div class="step"><b>Шаг 2.</b> Считаем чёрточки. Каждая чёрточка — одна общая пара.</div>
+<div class="step">CO₂: две двойные связи, то есть 2 + 2 = <b>4</b> общие пары.<br>CH₄: четыре одинарные связи — <b>4</b> общие пары.</div>
+<div class="step mini"><b>Типичная ловушка.</b> В CO₂ <b>две</b> связи, но <b>четыре</b> пары: двойная связь — это сразу две пары. Вопрос «сколько связей» и «сколько общих пар» — разные вопросы.</div>
+</div>
+<div class="ex"><h3>Пример 5. Полярность и частичные заряды</h3>
+<div class="step"><b>Задание.</b> В молекулах H₂O и Cl₂ указать полярные и неполярные связи, расставить частичные заряды.</div>
+<div class="step"><b>Шаг 1.</b> Смотрим на каждую связь отдельно: одинаковые атомы или разные.</div>
+<div class="step">Cl—Cl: атомы одинаковые → связь <b>неполярная</b>, зарядов нет.<br>H—O: атомы разные → связь <b>полярная</b>.</div>
+<div class="step"><b>Шаг 2.</b> Определяем, кто электроотрицательнее. По ряду F &gt; O &gt; N &gt; Cl &gt; Br &gt; I &gt; C &gt; H кислород стоит левее водорода, значит, пара смещается к кислороду.</div>
+<div class="step"><b>Шаг 3.</b> К кому смещена пара — у того δ−, у второго δ+.</div>
+<div class="fx">H<sup>δ+</sup>—O<sup>δ−</sup>—H<sup>δ+</sup> &nbsp;&nbsp;&nbsp;&nbsp; Cl—Cl без зарядов</div>
+<div class="step mini"><b>Проверь себя.</b> Водород почти всегда оказывается δ+: электроотрицательнее его в школьном ряду все, кроме металлов.</div>
+</div>
+<div class="ex"><h3>Пример 6. Сравнить прочность и длину связи</h3>
+<div class="step"><b>Задание.</b> В какой молекуле связь между атомами углерода прочнее: в этане C₂H₆ или в ацетилене C₂H₂? На сколько отличается энергия?</div>
+<div class="step"><b>Шаг 1.</b> Определяем кратность: в этане C—C одинарная, в ацетилене C≡C тройная.</div>
+<div class="step"><b>Шаг 2.</b> Чем выше кратность, тем прочнее связь. Значит, прочнее в ацетилене.</div>
+<div class="step"><b>Шаг 3.</b> Берём числа из таблицы и вычитаем.</div>
+<div class="fx">833 − 350 = 483 кДж/моль</div>
+<div class="step">И длина ведёт себя противоположно: 0,120 нм против 0,154 нм — тройная связь короче.</div>
+<div class="step mini"><b>Проверь себя.</b> Тройная связь прочнее одинарной, но <b>не</b> втрое: 833 меньше, чем 3 · 350 = 1050.</div>
+</div>
+<div class="ex"><h3>Пример 7. Возбуждённое состояние углерода</h3>
+<div class="step"><b>Задание.</b> Почему углерод в метане четырёхвалентен, если в основном состоянии у него два неспаренных электрона?</div>
+<div class="step"><b>Шаг 1.</b> Основное состояние: <span class="og"><span class="ogpre">C: …</span><span class="ogg"><span class="orow"><span class="ocell"><i class="ar up">↑</i><i class="ar dn">↓</i></span></span><span class="olab">2s</span></span><span class="ogg"><span class="orow"><span class="ocell"><i class="ar up">↑</i></span><span class="ocell"><i class="ar up">↑</i></span><span class="ocell"></span></span><span class="olab">2p</span></span></span> — два неспаренных.</div>
+<div class="step"><b>Шаг 2.</b> На 2<i>p</i>-подуровне есть свободная орбиталь. Один электрон с 2<i>s</i> переходит на неё — это и есть возбуждение.</div>
+<div class="step"><b>Шаг 3.</b> Возбуждённое состояние: <span class="og"><span class="ogpre">C*: …</span><span class="ogg"><span class="orow"><span class="ocell"><i class="ar up">↑</i></span></span><span class="olab">2s</span></span><span class="ogg"><span class="orow"><span class="ocell"><i class="ar up">↑</i></span><span class="ocell"><i class="ar up">↑</i></span><span class="ocell"><i class="ar up">↑</i></span></span><span class="olab">2p</span></span></span> — четыре неспаренных, валентность IV.</div>
+<div class="step mini"><b>Типичная ловушка.</b> Электрон переходит <b>внутри одного уровня</b>, со 2<i>s</i> на 2<i>p</i>. Перескочить на третий уровень он не может — на это не хватит энергии, которую даёт образование связей.</div>
+</div>
+</div><div class="card">
+<h2>Тренажёры</h2>
+<div class="meta">Семь тренажёров плюс конструктор схем. Вопросы каждый раз идут в новом порядке, варианты ответов перемешиваются. После каждого ответа появляется разбор — читай его, даже когда ответил верно. В отчёт тренажёры не идут, проходи их сколько нужно.</div>
+<div class="tr" id="ta1"><div class="trhead"><b>Тренажёр 1. Какой тип связи</b><span class="trscore" id="ta1s"></span></div><div class="meta">Двенадцать веществ. Сначала реши про каждый элемент — металл он или неметалл, и только потом называй тип связи.</div><div class="trq" id="ta1q"></div>
+<div class="trfig" id="ta1f"></div><div id="ta1a"></div>
+<div class="trmsg" id="ta1m"></div><div class="trbar" id="ta1b"></div></div>
+<div class="tr" id="ta2"><div class="trhead"><b>Тренажёр 2. Валентные электроны и валентность</b><span class="trscore" id="ta2s"></span></div><div class="meta">Десять вопросов на счёт. Валентных электронов столько, каков номер группы; валентность равна числу неспаренных электронов.</div><div class="trq" id="ta2q"></div>
+<div class="trfig" id="ta2f"></div><div id="ta2a"></div>
+<div class="trmsg" id="ta2m"></div><div class="trbar" id="ta2b"></div></div>
+<div class="tr" id="ta3"><div class="trhead"><b>Тренажёр 3. Сколько общих электронных пар</b><span class="trscore" id="ta3s"></span></div><div class="meta">Десять молекул. Пиши структурную формулу и считай чёрточки: каждая чёрточка — одна общая пара.</div><div class="trq" id="ta3q"></div>
+<div class="trfig" id="ta3f"></div><div id="ta3a"></div>
+<div class="trmsg" id="ta3m"></div><div class="trbar" id="ta3b"></div></div>
+<div class="tr" id="ta4"><div class="trhead"><b>Тренажёр 4. Кратность связи</b><span class="trscore" id="ta4s"></span></div><div class="meta">Восемь вопросов: одинарная, двойная или тройная. Заодно вспоминаем, как кратность влияет на длину и прочность.</div><div class="trq" id="ta4q"></div>
+<div class="trfig" id="ta4f"></div><div id="ta4a"></div>
+<div class="trmsg" id="ta4m"></div><div class="trbar" id="ta4b"></div></div>
+<div class="tr" id="ta5"><div class="trhead"><b>Тренажёр 5. Полярность и частичные заряды</b><span class="trscore" id="ta5s"></span></div><div class="meta">Десять вопросов: полярная связь или нет, к какому атому смещена пара, у кого δ−. Ряд электроотрицательности: F > O > N > Cl > Br > I > C > H.</div><div class="trq" id="ta5q"></div>
+<div class="trfig" id="ta5f"></div><div id="ta5a"></div>
+<div class="trmsg" id="ta5m"></div><div class="trbar" id="ta5b"></div></div>
+<div class="tr" id="ta6"><div class="trhead"><b>Тренажёр 6. Верно или нет</b><span class="trscore" id="ta6s"></span></div><div class="meta">Десять утверждений. Здесь собраны самые частые ошибки по теме — те, из-за которых теряют баллы на контрольной.</div><div class="trq" id="ta6q"></div>
+<div class="trfig" id="ta6f"></div><div id="ta6a"></div>
+<div class="trmsg" id="ta6m"></div><div class="trbar" id="ta6b"></div></div>
+<div class="tr" id="bx1"><div class="trhead"><b>Тренажёр 7. Конструктор электронно-графических схем</b><span class="trscore" id="bx1s"></span></div><div class="meta">Десять схем: клетки заполняются кликом — пусто, стрелка вверх, пара, снова пусто. Собери внешний слой и посчитай, сколько получилось неспаренных электронов.</div><div class="trq" id="bx1q"></div>
+<div class="bwrap" id="bx1a"></div>
+<div class="trmsg" id="bx1m"></div><div class="trbar" id="bx1b"></div></div>
+</div><div class="card">
+  <h2>Домашнее задание</h2>
+  <div class="meta">Шесть задач базы, пять среднего уровня и три посложнее. Решай по порядку — они выстроены от простого к сложному.</div>
+</div>
+<div id="tasks"></div>
+<div class="card sheet">
+  <h2>Шпаргалка</h2>
+  <div class="meta">Помещается на один лист A4 — распечатай и держи под рукой.</div>
+
+  <div class="f-formula"><b>Три типа связи.</b>
+  неметалл + неметалл → <b>ковалентная</b> (H₂, CO₂, HCl, H₂SO₄);
+  металл + неметалл → <b>ионная</b> (NaCl, KF, K₂O, NaOH);
+  металл + металл → <b>металлическая</b> (Na, Cu, Fe, сплавы).</div>
+
+  <div class="f-formula"><b>Ковалентная: полярная или нет.</b>
+  атомы одинаковые → <b>неполярная</b> (H—H, F—F, O=O, N≡N, C—C);
+  атомы разные → <b>полярная</b> (H—Cl, H—O, C—H, C—O).</div>
+
+  <div class="f-formula"><b>Валентные электроны</b> = номер группы:
+  H — 1, C — 4, N — 5, O — 6, F и Cl — 7.</div>
+
+  <div class="f-formula"><b>Валентность</b> = число неспаренных электронов =
+  число чёрточек у символа: H — I, F и Cl — I, O и S — II, N — III, C — IV.
+  Углерод четырёхвалентен за счёт возбуждённого состояния C*: электрон с 2s уходит на 2p.</div>
+
+  <div class="f-formula"><b>Кратность.</b> одна общая пара — одинарная F—F;
+  две — двойная O=O; три — тройная N≡N. Двойные и тройные вместе — <b>кратные</b>.</div>
+
+  <div class="f-formula"><b>Считаем общие пары.</b> Пиши структурную формулу и считай
+  чёрточки. Двойная связь = 2 пары, тройная = 3. Неподелённые пары не считаются.
+  Примеры: H₂O — 2, NH₃ — 3, CH₄ — 4, CO₂ — 4, C₂H₆ — 7.</div>
+
+  <div class="scroll"><table class="wrap-t">
+  <tr><th>Связь C—C</th><th>Вещество</th><th>Энергия, кДж/моль</th><th>Длина, нм</th></tr>
+  <tr><td>одинарная</td><td>этан C₂H₆</td><td>350</td><td>0,154</td></tr>
+  <tr><td>двойная</td><td>этилен C₂H₄</td><td>612</td><td>0,134</td></tr>
+  <tr><td>тройная</td><td>ацетилен C₂H₂</td><td>833</td><td>0,120</td></tr>
+  </table></div>
+
+  <div class="f-formula"><b>Закономерность.</b> растёт кратность → энергия больше,
+  длина меньше. Короткая связь — прочная связь.</div>
+
+  <div class="f-formula"><b>Полярность.</b> Ряд электроотрицательности:
+  F &gt; O &gt; N &gt; Cl &gt; Br &gt; I &gt; C &gt; H. Общая пара смещается к тому,
+  кто левее в ряду: у него δ−, у второго δ+. Чем больше разность ЭО, тем полярнее связь.
+  В HF (0,43) полярнее, чем в HCl (0,18). В ряду HF → HCl → HBr → HI полярность падает.</div>
+
+  <div class="f-formula"><b>Главные ловушки.</b>
+  HCl — ковалентная полярная, а не ионная: оба атома неметаллы.
+  В CO₂ связей две, а общих пар четыре.
+  У фтора семь точек, восемь становится только после образования связи.
+  При полярной связи электрон не переходит полностью — заряды частичные, δ.</div>
+</div>
+<div class="card">
+  <h2>Шаг 1. Фото решений — по желанию</h2>
+  <div class="meta">В поле уходит только число, а преподаватель смотрит ещё и схемы.
+  Фото прикладывать не обязательно, но с ними разбор будет точнее.</div>
+  <ol class="steps-list">
+    <li>Для задач на строение рисуй клетки и стрелки, подписывай подуровни.</li>
+    <li>Рядом пиши формулу электронной конфигурации.</li>
+    <li>В задачах на ионы показывай, сколько электронов атом отдал или принял.</li>
+    <li>Сфотографируй страницы при дневном свете, чтобы стрелки читались.</li>
+  </ol>
+  <input type="file" id="photos" accept="image/*" multiple style="margin-top:12px">
+  <div class="thumbs" id="thumbs"></div>
+</div>
+
+<div class="card">
+  <h2>Шаг 2. Отправь работу</h2>
+  <div class="meta">Проверь, что вверху страницы написано твоё имя. Фото — по желанию.
+  По кнопке ответы, результат и фотографии уходят преподавателю. Вторая кнопка
+  просто сохраняет копию тебе на устройство.</div>
+  <div class="row" style="margin-top:12px">
+    <button class="pri" id="send">Отправить на проверку</button>
+    <button id="report">Скачать копию себе</button>
+  </div>
+  <div id="repnote" class="meta" style="margin-top:8px"></div>
+</div>
+
+</div>
+
+<div class="bar">
+  <button class="pri" id="checkall">Проверить всё</button>
+  <span id="progress" class="meta">решено 0 из 14</span>
+</div>
+
+
+<script>
+var CF = {};
+
+"use strict";
+var started = Date.now();
+
+/* ---------- данные задач; ответы закодированы, чтобы не читались в исходнике ---------- */
+function e(s){return btoa(unescape(encodeURIComponent(s)));}
+function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return s;}}
+
+var TASKS = [
+  {id:1,lvl:"база",type:"num",text:"Сколько валентных электронов в атоме <b>фосфора</b> P? В ответе напиши число.",ans:["NQ=="],
+   hints:["Валентные электроны — это электроны внешнего слоя.", "Для элементов главных подгрупп их число равно номеру группы.", "Фосфор стоит в V группе."],
+   sol:"<div class='step'>Валентные электроны — электроны внешнего энергетического уровня, именно они образуют связи.</div><div class='step'>У элементов главных подгрупп их число равно номеру группы. Фосфор — V группа.</div><div class='step'><b>Ответ: 5</b></div>"},
+  {id:2,lvl:"база",type:"num",text:"Сколько общих электронных пар в молекуле <b>HCl</b>?",ans:["MQ=="],
+   hints:["Сначала напиши структурную формулу.", "У водорода валентность I, у хлора в HCl тоже I.", "Каждая чёрточка в структурной формуле — одна общая пара."],
+   sol:"<div class='step'>У водорода один неспаренный электрон, у хлора тоже один — значит, связь одна.</div><div class='fx'>H—Cl</div><div class='step'>Одна чёрточка — одна общая электронная пара.</div><div class='step'><b>Ответ: 1</b></div>"},
+  {id:3,lvl:"база",type:"num",text:"Чему равна валентность <b>азота</b> в молекуле аммиака NH₃? Ответ напиши числом.",ans:["Mw=="],
+   hints:["Валентность равна числу неспаренных электронов.", "Нарисуй внешний слой азота: 2s² 2p³.", "На трёх 2p-орбиталях по одному электрону."],
+   sol:"<div class='step'>На внешнем слое азота: пара на 2s и три одиночных электрона на 2p.</div><div class='step'>Неспаренных электронов три, значит азот образует три связи.</div><div class='fx'>H—N(H)—H, валентность N равна III</div><div class='step'><b>Ответ: 3</b></div>"},
+  {id:4,lvl:"база",type:"num",text:"В ряду веществ I₂, H₂O, KCl, Na₂S, CO₂, O₂, CH₄, Cu сколько веществ с <b>ионной</b> связью?",ans:["Mg=="],
+   hints:["Ионная связь бывает между металлом и неметаллом.", "Найди в списке вещества, где есть атом металла и атом неметалла.", "Медь — это металл с металлом, у неё связь металлическая."],
+   sol:"<div class='step'>Ионная связь образуется между атомом металла и атомом неметалла.</div><div class='step'>KCl — калий металл, хлор неметалл. Na₂S — натрий металл, сера неметалл.</div><div class='step'>Cu — простое вещество металла, там связь металлическая. Остальные — неметалл с неметаллом, связь ковалентная.</div><div class='step'><b>Ответ: 2</b></div>"},
+  {id:5,lvl:"база",type:"num",text:"Сколько общих электронных пар в молекуле <b>H₂S</b>?",ans:["Mg=="],
+   hints:["Сера в VI группе, как и кислород: валентность II.", "Структурная формула похожа на воду.", "Считай только чёрточки, неподелённые пары серы не в счёт."],
+   sol:"<div class='step'>Сера в VI группе, у неё два неспаренных электрона — валентность II.</div><div class='fx'>H—S—H</div><div class='step'>Две чёрточки — две общие пары. Ещё две пары у серы неподелённые, но вопрос был про общие.</div><div class='step'><b>Ответ: 2</b></div>"},
+  {id:6,lvl:"база",type:"num",text:"Сколько чёрточек нужно нарисовать от символа <b>C</b> в структурной формуле органического вещества?",ans:["NA=="],
+   hints:["Число чёрточек равно валентности.", "В основном состоянии у углерода два неспаренных электрона, но он легко возбуждается.", "В возбуждённом состоянии 2s-электрон уходит на свободную 2p-орбиталь."],
+   sol:"<div class='step'>В основном состоянии у углерода два неспаренных электрона, но один 2s-электрон переходит на свободную 2p-орбиталь.</div><div class='step'>В возбуждённом состоянии неспаренных становится четыре, валентность IV.</div><div class='step'><b>Ответ: 4</b></div>"},
+  {id:7,lvl:"средний",type:"num",text:"В том же ряду I₂, H₂O, KCl, Na₂S, CO₂, O₂, CH₄, Cu сколько веществ с <b>ковалентной неполярной</b> связью?",ans:["Mg=="],
+   hints:["Неполярная связь — между одинаковыми атомами неметалла.", "Ищи простые вещества неметаллов.", "Медь — металл, она сюда не относится."],
+   sol:"<div class='step'>Ковалентная неполярная связь возникает между одинаковыми атомами неметалла: смещаться общей паре некуда.</div><div class='step'>Это I₂ и O₂. В H₂O, CO₂ и CH₄ атомы разные — связь полярная; KCl и Na₂S ионные; Cu — металлическая.</div><div class='step'><b>Ответ: 2</b></div>"},
+  {id:8,lvl:"средний",type:"num",text:"Сколько общих электронных пар в молекуле <b>этилена</b> C₂H₄?",ans:["Ng=="],
+   hints:["Напиши структурную формулу: углерод четырёхвалентен.", "Между атомами углерода двойная связь.", "Двойная связь — это сразу две общие пары."],
+   sol:"<div class='step'>Структурная формула этилена:</div><div class='fx'>H₂C=CH₂</div><div class='step'>Четыре связи C—H дают 4 пары. Двойная связь C=C — ещё 2 пары.</div><div class='fx'>4 + 2 = 6</div><div class='step'><b>Ответ: 6</b></div>"},
+  {id:9,lvl:"средний",type:"num",text:"Энергия связи углерод-углерод: в этане 350 кДж/моль, в этилене 612 кДж/моль. На сколько кДж/моль двойная связь прочнее одинарной?",ans:["MjYy"],
+   hints:["Прочнее та связь, у которой энергия больше.", "Нужна разность двух чисел.", "612 − 350."],
+   sol:"<div class='step'>Энергия связи — это то, сколько нужно затратить, чтобы связь разорвать. Чем она больше, тем связь прочнее.</div><div class='fx'>612 − 350 = 262 кДж/моль</div><div class='step'>Обрати внимание: двойная связь прочнее одинарной, но не вдвое — 612 меньше, чем 700.</div><div class='step'><b>Ответ: 262</b></div>"},
+  {id:10,lvl:"средний",type:"num",text:"Длина связи углерод-углерод в этане 0,154 нм, в ацетилене 0,120 нм. На сколько <b>пикометров</b> тройная связь короче одинарной? (1 нм = 1000 пм)",ans:["MzQ="],
+   hints:["Сначала найди разность длин в нанометрах.", "0,154 − 0,120 = 0,034 нм.", "Чтобы перевести нанометры в пикометры, умножь на 1000."],
+   sol:"<div class='step'>Считаем разность длин:</div><div class='fx'>0,154 − 0,120 = 0,034 нм</div><div class='step'>Переводим в пикометры:</div><div class='fx'>0,034 · 1000 = 34 пм</div><div class='step'>Чем выше кратность связи, тем она короче — и тем прочнее.</div><div class='step'><b>Ответ: 34</b></div>"},
+  {id:11,lvl:"средний",type:"num",text:"Гидразин N₂H₄ используют как компонент ракетного топлива. Сколько всего <b>ковалентных связей</b> в его молекуле?",ans:["NQ=="],
+   hints:["Азот трёхвалентен, водород одновалентен.", "Два атома азота соединены друг с другом.", "На каждом азоте остаётся ещё по две связи с водородом."],
+   sol:"<div class='step'>Азот трёхвалентен. Два атома азота связываются друг с другом, и у каждого остаётся ещё по две свободные связи для водорода.</div><div class='fx'>H₂N—NH₂</div><div class='step'>Связей: одна N—N и четыре N—H.</div><div class='fx'>1 + 4 = 5</div><div class='step'><b>Ответ: 5</b></div>"},
+  {id:12,lvl:"сложный",type:"num",text:"В молекуле пероксида водорода H₂O₂ (строение H—O—O—H) сколько связей <b>полярных</b>?",ans:["Mg=="],
+   hints:["Разбирай каждую связь отдельно.", "Связь полярная, если атомы разные.", "Связь O—O соединяет одинаковые атомы."],
+   sol:"<div class='step'>В молекуле три связи: две O—H и одна O—O.</div><div class='fx'>H—O—O—H</div><div class='step'>O—O соединяет одинаковые атомы — связь неполярная. Две связи O—H соединяют разные атомы, пара смещена к кислороду — полярные.</div><div class='fx'>H<sup>δ+</sup>—O<sup>δ−</sup>—O<sup>δ−</sup>—H<sup>δ+</sup></div><div class='step'><b>Ответ: 2</b></div>"},
+  {id:13,lvl:"сложный",type:"num",text:"Хлорная кислота HClO₄ имеет строение: атом хлора связан с тремя атомами кислорода двойными связями и с группой O—H одинарной. Чему равна <b>валентность хлора</b> в этой молекуле?",ans:["Nw=="],
+   hints:["Валентность — это число чёрточек у символа.", "Каждая двойная связь даёт две чёрточки.", "Три двойные связи плюс одна одинарная."],
+   sol:"<div class='step'>Считаем чёрточки у атома хлора.</div><div class='step'>Три двойные связи с кислородом: 3 · 2 = 6 чёрточек. Одна одинарная связь с группой O—H: ещё 1.</div><div class='fx'>6 + 1 = 7</div><div class='step'>Поэтому у хлора в кислородсодержащих кислотах валентность бывает I, III, V и VII.</div><div class='step'><b>Ответ: 7</b></div>"},
+  {id:14,lvl:"сложный",type:"num",text:"Сколько общих электронных пар в молекуле <b>хлорэтана</b> C₂H₅Cl (строение H₃C—CH₂—Cl)?",ans:["Nw=="],
+   hints:["Все связи в этой молекуле одинарные.", "Считай отдельно C—C, C—H и C—Cl.", "Атомов водорода пять."],
+   sol:"<div class='step'>Все связи в молекуле одинарные, значит каждая связь — одна общая пара.</div><div class='step'>Связи: одна C—C, пять C—H и одна C—Cl.</div><div class='fx'>1 + 5 + 1 = 7</div><div class='step'>Проверка по валентностям: у каждого углерода ровно четыре чёрточки — значит формула составлена верно.</div><div class='step'><b>Ответ: 7</b></div>"}
+];
+
+/* ---------- разбор ответа ---------- */
+function norm(s){
+  return String(s).toLowerCase().replace(/\s+/g,"")
+    .replace(/[\u2013\u2014\u2212]/g,"-")
+    .replace(/[\u00d7\u00b7]/g,"*")
+    .replace(/,/g,".")
+    .replace(/^(ответ:?|x=|y=|α=|a=)/,"");
+}
+function toNum(str){
+  var t = norm(str);
+  if(!t) return NaN;
+  t = t.replace(/\u221a/g,"sqrt").replace(/\u03c0/g,"pi");
+  t = t.replace(/sqrt(\d+(?:\.\d+)?)/g,"sqrt($1)");
+  t = t.replace(/(\d)sqrt/g,"$1*sqrt");
+  t = t.replace(/(\d)pi/g,"$1*pi");
+  t = t.replace(/(\d)\(/g,"$1*(").replace(/\)(\d)/g,")*$1").replace(/\)\(/g,")*(");
+  if(!/^[-+*/().0-9a-z]+$/.test(t)) return NaN;
+  if(t.replace(/sqrt|pi/g,"").match(/[a-z]/)) return NaN;
+  try{
+    var v = new Function("sqrt","pi","return ("+t+");")(Math.sqrt, Math.PI);
+    return (typeof v === "number" && isFinite(v)) ? v : NaN;
+  }catch(err){ return NaN; }
+}
+function same(given, right, tol){
+  var a = toNum(given), b = toNum(right);
+  if(!isNaN(a) && !isNaN(b)){
+    var t = tol || 1e-9;
+    return Math.abs(a-b) <= Math.max(t, Math.abs(b)*t);
+  }
+  return norm(given) === norm(right);
+}
+
+/* ---------- отрисовка ---------- */
+var state = {};
+var box = document.getElementById("tasks");
+
+TASKS.forEach(function(t){
+  state[t.id] = {tries:0, hints:0, done:false, ok:false, given:"", sel:null};
+  var el = document.createElement("div");
+  el.className = "task"; el.id = "t"+t.id;
+  var body = '<div><span class="tnum">'+t.id+'.</span>'+t.text+
+             '<span class="lvl">'+t.lvl+'</span></div>';
+  if(t.img){ body += '<div class="fig">'+t.img+'</div>'; }
+  if(t.type === "choice"){
+    body += '<div class="opts">'+t.options.map(function(o,i){
+      return '<label class="opt" data-v="'+o+'"><input type="radio" name="q'+t.id+'" value="'+o+'"> '+o+'</label>';
+    }).join("")+'</div>';
+  } else {
+    body += '<div class="keys">'+
+      [].map(function(k){
+        return '<button class="key" data-k="'+k+'" type="button">'+k+'</button>';}).join("")+
+      '</div><input type="text" id="in'+t.id+'" inputmode="text" autocapitalize="off" '+
+      'autocorrect="off" autocomplete="off" spellcheck="false" placeholder="ответ">';
+  }
+  body += '<div class="row" style="margin-top:10px">'+
+          '<button class="pri sm chk">Проверить</button>'+
+          '<button class="sm hnt">Подсказка</button></div>'+
+          '<div class="hints"></div><div class="verdict"></div><div class="sol"></div>';
+  el.innerHTML = body;
+  box.appendChild(el);
+
+  el.querySelectorAll(".key").forEach(function(b){
+    b.addEventListener("click", function(){
+      var inp = document.getElementById("in"+t.id);
+      var k = b.dataset.k === "−" ? "-" : b.dataset.k;
+      var s = inp.selectionStart || inp.value.length;
+      inp.value = inp.value.slice(0,s) + k + inp.value.slice(inp.selectionEnd || s);
+      inp.focus(); inp.setSelectionRange(s+k.length, s+k.length);
+    });
+  });
+  if(t.type === "choice"){
+    el.querySelectorAll(".opt").forEach(function(l){
+      l.addEventListener("click", function(){
+        el.querySelectorAll(".opt").forEach(function(x){x.classList.remove("sel");});
+        l.classList.add("sel"); state[t.id].sel = l.dataset.v;
+      });
+    });
+  } else {
+    el.querySelector("#in"+t.id).addEventListener("keydown", function(ev){
+      if(ev.key === "Enter"){ ev.preventDefault(); check(t.id); }
+    });
+  }
+  el.querySelector(".chk").addEventListener("click", function(){ check(t.id); });
+  el.querySelector(".hnt").addEventListener("click", function(){ hint(t.id); });
+});
+
+function hint(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var host = document.querySelector("#t"+id+" .hints");
+  if(s.hints >= t.hints.length){
+    if(!host.querySelector(".last")){
+      var w = document.createElement("div");
+      w.className = "hint last"; w.textContent = "Подсказки закончились — нажми «Проверить», решение откроется после второй попытки.";
+      host.appendChild(w);
+    }
+    return;
+  }
+  var h = document.createElement("div");
+  h.className = "hint";
+  h.textContent = "Подсказка " + (s.hints+1) + ": " + t.hints[s.hints];
+  host.appendChild(h);
+  s.hints++;
+}
+
+function check(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var el = document.getElementById("t"+id);
+  var v = document.querySelector(".verdict");
+  v = el.querySelector(".verdict");
+  var given = (t.type === "choice") ? (s.sel || "") :
+              (document.getElementById("in"+id).value || "");
+  if(!given.trim()){ v.className = "verdict bad"; v.textContent = "Введи ответ."; return; }
+  s.given = given; s.tries++;
+  var ok = t.ans.some(function(a){ return same(given, d(a), t.tol); });
+  s.ok = ok; s.done = ok || s.tries >= 2;
+  el.classList.remove("ok","bad");
+  el.classList.add(ok ? "ok" : "bad");
+  v.className = "verdict " + (ok ? "ok" : "bad");
+  if(ok){
+    v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    showSol(el, t);
+  } else if(s.tries === 1){
+    v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+  } else {
+    v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    showSol(el, t);
+  }
+  progress();
+}
+function showSol(el, t){
+  var host = el.querySelector(".sol");
+  if(host.dataset.on) return;
+  host.dataset.on = "1";
+  var det = document.createElement("details");
+  det.open = true;
+  det.innerHTML = "<summary>Решение</summary><div class='step'>"+t.sol+"</div>";
+  host.appendChild(det);
+}
+function progress(){
+  var done = TASKS.filter(function(t){return state[t.id].done;}).length;
+  var ok = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  document.getElementById("progress").textContent =
+    "решено " + done + " из " + TASKS.length + " · верно " + ok;
+}
+document.getElementById("checkall").addEventListener("click", function(){
+  TASKS.forEach(function(t){
+    var s = state[t.id];
+    var given = (t.type === "choice") ? (s.sel || "") : (document.getElementById("in"+t.id).value || "");
+    if(given.trim() && !s.done) check(t.id);
+  });
+  var first = TASKS.find(function(t){ return !state[t.id].done; });
+  var note = first ? "Осталась задача " + first.id + "." : "Все задачи закрыты.";
+  document.getElementById("progress").textContent += " · " + note;
+});
+progress();
+
+/* ---------- фото ---------- */
+var photos = [];
+document.getElementById("photos").addEventListener("change", function(ev){
+  var files = Array.prototype.slice.call(ev.target.files || []);
+  files.forEach(function(f){
+    var r = new FileReader();
+    r.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var m = 1400, w = img.width, h = img.height;
+        if(Math.max(w,h) > m){ var k = m/Math.max(w,h); w = Math.round(w*k); h = Math.round(h*k); }
+        var c = document.createElement("canvas"); c.width = w; c.height = h;
+        c.getContext("2d").drawImage(img, 0, 0, w, h);
+        photos.push({url: c.toDataURL("image/jpeg", 0.7), task: ""});
+        drawThumbs();
+      };
+      img.src = r.result;
+    };
+    r.readAsDataURL(f);
+  });
+  ev.target.value = "";
+});
+function drawThumbs(){
+  var host = document.getElementById("thumbs");
+  host.innerHTML = "";
+  var total = 0;
+  photos.forEach(function(p, i){
+    total += p.url.length * 0.75;
+    var d0 = document.createElement("div"); d0.className = "thumb";
+    var opts = '<option value="">задача…</option>' + TASKS.map(function(t){
+      return '<option value="'+t.id+'"'+(p.task==String(t.id)?" selected":"")+'>№'+t.id+'</option>';
+    }).join("");
+    d0.innerHTML = '<img src="'+p.url+'" alt="фото решения"><button type="button">×</button>'+
+                   '<select>'+opts+'</select>';
+    d0.querySelector("button").addEventListener("click", function(){ photos.splice(i,1); drawThumbs(); });
+    d0.querySelector("select").addEventListener("change", function(ev){ p.task = ev.target.value; });
+    host.appendChild(d0);
+  });
+  var note = document.getElementById("repnote");
+  if(total > 15e6){ note.textContent = "Фото уже больше 15 МБ — отчёт может отправляться долго, лишние лучше удалить."; }
+  else if(photos.length){ note.textContent = "Фото в отчёте: " + photos.length + "."; }
+  else { note.textContent = ""; }
+}
+
+/* ---------- отчёт ---------- */
+var ENDPOINT = "https://script.google.com/macros/s/AKfycbztH9c-wQuKC7pSfD8AcFfnOcGpSHxoeqovulmvLMp9W23SgFx9dDQ2JTlWcIJDMN6W/exec";
+var SECRET = "artteach2026";
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function buildReport(){
+  var name = (document.getElementById("name").value || "").trim() || "без имени";
+  var now = new Date();
+  var mins = Math.max(1, Math.round((Date.now()-started)/60000));
+  var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  var data = {tип:"дз", предмет:"математика", тема:"Типы химической связи. Ковалентная связь (химия, 10 класс)",
+    ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
+    верно:okN, всего:TASKS.length, задачи:[]};
+  var rows = TASKS.map(function(t){
+    var s = state[t.id];
+    data.задачи.push({n:t.id, условие:t.text.replace(/<[^>]+>/g,""), ответ_ученика:s.given,
+      верный_ответ:t.ans.map(d).join(" или "), верно:s.ok, попыток:s.tries, подсказок:s.hints,
+      уровень:t.lvl});
+    return "<tr><td>"+t.id+"</td><td style='text-align:left'>"+esc(t.text.replace(/<[^>]+>/g,""))+
+      "</td><td>"+esc(s.given||"—")+"</td><td>"+esc(t.ans.map(d).join(" / "))+"</td><td>"+
+      (s.ok?"верно":(s.given?"неверно":"не решал"))+"</td><td>"+s.tries+"</td><td>"+s.hints+"</td></tr>";
+  }).join("");
+  var pics = photos.map(function(p,i){
+    return "<figure><img src='"+p.url+"'><figcaption>Фото "+(i+1)+
+      (p.task?" — к задаче №"+p.task:"")+"</figcaption></figure>";
+  }).join("");
+  var html = "<!doctype html><html lang='ru'><head><meta charset='utf-8'>"+
+    "<meta name='viewport' content='width=device-width,initial-scale=1'>"+
+    "<title>Отчёт — "+esc(name)+" — строение атома · химия 10 класс</title><style>"+
+    "body{font:16px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;padding:20px;color:#16181d;background:#fff}"+
+    "h1{font-size:22px;margin:0 0 4px}.m{color:#5b6270;font-size:15px}"+
+    "table{border-collapse:collapse;width:100%;margin-top:14px;font-size:15px}"+
+    "th,td{border:1px solid #dfe3ea;padding:6px 8px;text-align:center}th{background:#eef3fb}"+
+    "figure{margin:14px 0}img{max-width:100%;border:1px solid #dfe3ea;border-radius:8px}"+
+    "figcaption{color:#5b6270;font-size:14px;margin-top:4px}</style></head><body>"+
+    "<h1>Отчёт по домашнему заданию</h1>"+
+    "<div class='m'>Тема: строение атома, электронные оболочки · химия, 10 класс</div>"+
+    "<div class='m'>Ученик: <b>"+esc(name)+"</b> · сдано: "+esc(now.toLocaleString("ru-RU"))+
+    " · время работы: около "+mins+" мин</div>"+
+    "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)</h2>"+
+    "<table><tr><th>№</th><th>Задача</th><th>Ответ ученика</th><th>Верный ответ</th>"+
+    "<th>Итог</th><th>Попыток</th><th>Подсказок</th></tr>"+rows+"</table>"+
+    (pics ? "<h2>Фото решений</h2>"+pics : "<p class='m'>Фото решений не прикреплены.</p>")+
+    "<script type='application/json' id='result-data'>"+
+    JSON.stringify(data).replace(/</g,"\\u003c")+"<\/script></body></html>";
+  var stamp = now.getDate()+"-"+(now.getMonth()+1);
+  return {
+    html: html,
+    name: name,
+    file: "Отчёт_Химия10_химическая_связь_"+name.replace(/\s+/g,"_")+"_"+stamp+".html",
+    caption: name+" · строение атома · химия 10 класс · "+okN+" из "+TASKS.length+
+             " ("+Math.round(okN/TASKS.length*100)+"%)"
+  };
+}
+
+document.getElementById("send").addEventListener("click", function(){
+  var note = document.getElementById("repnote");
+  var who = (document.getElementById("name").value || "").trim();
+  if(!who){ note.className = "meta bad-note"; note.textContent = "Сначала впиши имя вверху страницы."; return; }
+  note.className = "meta";
+  var r = buildReport();
+  note.textContent = "Отправляю…";
+  var payload = {
+    secret: SECRET,
+    name: r.file,
+    caption: r.caption,
+    file: btoa(unescape(encodeURIComponent(r.html)))
+  };
+  fetch(ENDPOINT, {method:"POST", mode:"no-cors", body: JSON.stringify(payload)})
+    .then(function(){
+      note.textContent = "Отправлено преподавателю." +
+        (photos.length ? "" : " Фото решений не приложены — если решал в тетради, приложи их и отправь ещё раз.") +
+        " Если хочешь, сохрани копию себе кнопкой ниже.";
+    })
+    .catch(function(){
+      note.textContent = "Не получилось отправить. Скачай файл кнопкой ниже и пришли его вручную.";
+    });
+});
+
+document.getElementById("report").addEventListener("click", function(){
+  var r = buildReport();
+  var blob = new Blob([r.html], {type:"text/html;charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = r.file;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  document.getElementById("repnote").textContent = "Файл скачан — он в папке загрузок.";
+});
+
+
+/* ---------- движок тренажёров ---------- */
+function makeTrainer(id, items){
+  var q=document.getElementById(id+"q"), f=document.getElementById(id+"f"),
+      a=document.getElementById(id+"a"), m=document.getElementById(id+"m"),
+      b=document.getElementById(id+"b"), sc=document.getElementById(id+"s");
+  var order=[], perm=[], i=0, ok=0, answered=false;
+
+  function shuffle(n){
+    var arr=[], k, j, t;
+    for(k=0;k<n;k++) arr.push(k);
+    for(k=arr.length-1;k>0;k--){ j=Math.floor(Math.random()*(k+1)); t=arr[k]; arr[k]=arr[j]; arr[j]=t; }
+    return arr;
+  }
+  function norm(s){
+    return String(s).trim().toLowerCase().replace(/\s+/g,"").replace(/−/g,"-").replace(/,/g,".");
+  }
+  function same(x, y){
+    var p=parseFloat(norm(x)), r=parseFloat(norm(y));
+    if(isFinite(p) && isFinite(r)) return Math.abs(p-r) < 1e-9;
+    return norm(x) === norm(y);
+  }
+  function score(){
+    sc.textContent = "вопрос " + Math.min(i + 1, items.length) + " из " + items.length +
+                     " · верно " + ok;
+  }
+
+  function finish(){
+    q.innerHTML=""; f.innerHTML=""; a.innerHTML=""; m.innerHTML="";
+    var pct=Math.round(ok/items.length*100);
+    var word = pct===100 ? "Всё верно — тема закрыта." :
+               pct>=70 ? "Хорошо, но пару мест стоит перечитать." :
+               "Стоит вернуться к теории и пройти ещё раз.";
+    b.innerHTML='<div class="trdone" style="flex:1 1 100%">'+ok+" из "+items.length+
+      " ("+pct+" %) · "+word+'</div><button type="button" class="pri" data-go="1">Пройти заново</button>';
+    sc.textContent="готово";
+  }
+
+  function show(){
+    answered=false;
+    m.innerHTML=""; b.innerHTML="";
+    var t=items[order[i]];
+    q.innerHTML="<b>"+(i+1)+".</b> "+t.q;
+    f.innerHTML=t.fig || "";
+    f.style.display = t.fig ? "" : "none";
+    if(t.opts){
+      perm = shuffle(t.opts.length);          /* perm[позиция] = номер варианта в банке */
+      var html='<div class="tropts" id="'+id+'o">';
+      for(var k=0;k<perm.length;k++)
+        html+='<button type="button" class="tropt" data-k="'+perm[k]+'">'+t.opts[perm[k]]+'</button>';
+      a.innerHTML = html+"</div>";
+      var box=document.getElementById(id+"o");
+      box.addEventListener("click", function(ev){
+        var el=ev.target; while(el && el!==box && el.className.indexOf("tropt")<0) el=el.parentNode;
+        if(!el || el===box || answered) return;
+        pick(parseInt(el.getAttribute("data-k"),10), box);
+      });
+    } else {
+      a.innerHTML='<div class="trnum"><span>Ответ:</span>'+
+        '<input type="text" id="'+id+'i" inputmode="text" autocomplete="off" '+
+        'autocorrect="off" spellcheck="false" placeholder="число">'+
+        '<button type="button" class="pri" data-check="1">Проверить</button></div>';
+      var inp=document.getElementById(id+"i");
+      inp.addEventListener("keydown", function(ev){ if(ev.key==="Enter") check(); });
+    }
+    score();
+  }
+
+  function verdict(good, t){
+    answered=true;
+    if(good) ok++;
+    i++;
+    m.innerHTML='<div class="v '+(good?"ok":"bad")+'">'+(good?"Верно.":"Неверно.")+"</div>"+
+                '<div class="why">'+t.why+"</div>";
+    b.innerHTML = (i<items.length)
+      ? '<button type="button" class="pri" data-next="1">Дальше</button>'
+      : '<button type="button" class="pri" data-next="1">Показать итог</button>';
+    score();
+  }
+  function pick(k, box){
+    var t=items[order[i]], good = (k === t.ans);
+    var bs=box.querySelectorAll(".tropt");
+    for(var j=0;j<bs.length;j++){
+      var n=parseInt(bs[j].getAttribute("data-k"),10);
+      if(n===t.ans) bs[j].className="tropt right";
+      else if(n===k) bs[j].className="tropt wrong";
+    }
+    box.className="tropts done";
+    verdict(good, t);
+  }
+  function check(){
+    if(answered) return;
+    var t=items[order[i]], inp=document.getElementById(id+"i");
+    var v=(inp.value||"").trim();
+    if(!v){ m.innerHTML='<div class="why">Впиши ответ.</div>'; return; }
+    var good = t.ans.some(function(x){ return same(v, x); });
+    inp.disabled=true;
+    if(!good) m.innerHTML="";
+    verdict(good, t);
+    if(!good) m.innerHTML='<div class="v bad">Неверно. Правильный ответ: '+t.ans[0]+".</div>"+
+                          '<div class="why">'+t.why+"</div>";
+  }
+
+  b.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-next")){ if(i<items.length) show(); else finish(); }
+    if(el.getAttribute && el.getAttribute("data-go")){ start(); }
+  });
+  a.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-check")) check();
+  });
+
+  function start(){ order=shuffle(items.length); i=0; ok=0; show(); }
+  start();
+}
+
+
+
+
+
+
+
+
+/* ---------- конструктор электронно-графических схем ---------- */
+function makeBuilder(id, items){
+  var q=document.getElementById(id+"q"), a=document.getElementById(id+"a"),
+      m=document.getElementById(id+"m"), b=document.getElementById(id+"b"),
+      sc=document.getElementById(id+"s");
+  var order=[], i=0, ok=0, state=[], answered=false;
+
+  function shuffle(n){
+    var arr=[],k,j,t;
+    for(k=0;k<n;k++) arr.push(k);
+    for(k=arr.length-1;k>0;k--){ j=Math.floor(Math.random()*(k+1)); t=arr[k]; arr[k]=arr[j]; arr[j]=t; }
+    return arr;
+  }
+  function arrows(v){
+    if(v===1) return '<i class="ar up">↑</i>';
+    if(v===2) return '<i class="ar up">↑</i><i class="ar dn">↓</i>';
+    return "";
+  }
+  function score(){
+    sc.textContent = "схема " + Math.min(i+1, items.length) + " из " + items.length +
+                     " · верно " + ok;
+  }
+  function total(){
+    var n=0,g,c;
+    for(g=0;g<state.length;g++) for(c=0;c<state[g].length;c++) n+=state[g][c];
+    return n;
+  }
+  function paint(){
+    var g,c,el;
+    for(g=0;g<state.length;g++) for(c=0;c<state[g].length;c++){
+      el=document.getElementById(id+"_"+g+"_"+c);
+      if(el) el.innerHTML=arrows(state[g][c]);
+    }
+    var t=items[order[i]];
+    var cnt=document.getElementById(id+"cnt");
+    if(cnt) cnt.textContent="Поставлено электронов: "+total()+" из "+t.n;
+  }
+  function draw(){
+    var t=items[order[i]], html='<span class="og">', g, c;
+    if(t.pre) html+='<span class="ogpre">'+t.pre+'</span>';
+    for(g=0;g<t.groups.length;g++){
+      html+='<span class="ogg"><span class="orow">';
+      for(c=0;c<t.groups[g][1];c++)
+        html+='<span class="ocell btn" id="'+id+'_'+g+'_'+c+'" data-g="'+g+'" data-c="'+c+'"></span>';
+      html+='</span><span class="olab">'+t.groups[g][0]+'</span></span>';
+    }
+    html+="</span>";
+    html+='<div class="bcount" id="'+id+'cnt"></div>';
+    html+='<div class="bhint">Клик по клетке: пусто → ↑ → ↑↓ → снова пусто.</div>';
+    a.innerHTML=html;
+    a.onclick=function(ev){
+      if(answered) return;
+      var el=ev.target;
+      while(el && el!==a && !el.getAttribute("data-g")) el=el.parentNode;
+      if(!el || el===a) return;
+      var g=+el.getAttribute("data-g"), c=+el.getAttribute("data-c");
+      state[g][c]=(state[g][c]+1)%3;
+      paint();
+    };
+  }
+  function show(){
+    answered=false; m.innerHTML="";
+    var t=items[order[i]], g, c;
+    q.innerHTML="<b>"+(i+1)+".</b> "+t.q;
+    state=[];
+    for(g=0;g<t.groups.length;g++){ state.push([]); for(c=0;c<t.groups[g][1];c++) state[g].push(0); }
+    draw(); paint();
+    b.innerHTML='<button type="button" class="pri" data-check="1">Проверить</button>'+
+                '<button type="button" data-clear="1">Очистить</button>';
+    score();
+  }
+  function same(t){
+    var g, exact=true;
+    for(g=0;g<t.ans.length;g++){
+      var mine=state[g].slice().sort(), right=t.ans[g].slice().sort(), c;
+      for(c=0;c<mine.length;c++) if(mine[c]!==right[c]) return {good:false, exact:false};
+      for(c=0;c<state[g].length;c++) if(state[g][c]!==t.ans[g][c]) exact=false;
+    }
+    return {good:true, exact:exact};
+  }
+  function check(){
+    if(answered) return;
+    var t=items[order[i]], r=same(t);
+    answered=true;
+    if(r.good) ok++;
+    i++;
+    var head = r.good ? '<div class="v ok">Верно.</div>'
+                      : '<div class="v bad">Пока не так.</div>';
+    if(r.good && !r.exact)
+      head='<div class="v ok">Верно по сути.</div>'+
+           '<div class="why">Электроны расставлены правильно, но по договорённости клетки '+
+           "заполняют слева направо — сначала по одной стрелке в каждую, потом пары.</div>";
+    m.innerHTML = head + '<div class="why">'+t.why+"</div>" +
+                  '<div class="bsol">'+t.sol+"</div>";
+    b.innerHTML = (i<items.length)
+      ? '<button type="button" class="pri" data-next="1">Дальше</button>'
+      : '<button type="button" class="pri" data-next="1">Показать итог</button>';
+    score();
+  }
+  function finish(){
+    q.innerHTML=""; a.innerHTML=""; m.innerHTML="";
+    var pct=Math.round(ok/items.length*100);
+    var word = pct===100 ? "Схемы строишь уверенно." :
+               pct>=70 ? "Почти всё, но пару мест стоит перечитать." :
+               "Вернись к правилам заполнения и пройди ещё раз.";
+    b.innerHTML='<div class="trdone" style="flex:1 1 100%">'+ok+" из "+items.length+
+      " ("+pct+" %) · "+word+'</div><button type="button" class="pri" data-go="1">Пройти заново</button>';
+    sc.textContent="готово";
+  }
+  b.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(!el.getAttribute) return;
+    if(el.getAttribute("data-check")) check();
+    if(el.getAttribute("data-clear")){
+      var g,c; for(g=0;g<state.length;g++) for(c=0;c<state[g].length;c++) state[g][c]=0;
+      paint();
+    }
+    if(el.getAttribute("data-next")){ if(i<items.length) show(); else finish(); }
+    if(el.getAttribute("data-go")) start();
+  });
+  function start(){ order=shuffle(items.length); i=0; ok=0; show(); }
+  start();
+}
+
+
+
+
+makeTrainer("ta1", [{"q": "Какой тип химической связи в веществе <b>Cl₂</b>?", "fig": "", "opts": ["ковалентная неполярная", "ковалентная полярная", "ионная", "металлическая"], "ans": 0, "why": "Два одинаковых атома неметалла. Общая пара стоит посередине — связь ковалентная неполярная."}, {"q": "Какой тип химической связи в веществе <b>HCl</b>?", "fig": "", "opts": ["ковалентная неполярная", "ковалентная полярная", "ионная", "металлическая"], "ans": 1, "why": "Водород и хлор — оба неметаллы, но разные. Пара смещена к хлору, он электроотрицательнее: связь ковалентная полярная."}, {"q": "Какой тип химической связи в веществе <b>KCl</b>?", "fig": "", "opts": ["ковалентная неполярная", "ковалентная полярная", "ионная", "металлическая"], "ans": 2, "why": "Калий — металл, хлор — неметалл. Калий отдаёт электрон, образуются ионы K⁺ и Cl⁻: связь ионная."}, {"q": "Какой тип химической связи в веществе <b>Cu</b>?", "fig": "", "opts": ["ковалентная неполярная", "ковалентная полярная", "ионная", "металлическая"], "ans": 3, "why": "Простое вещество, образованное металлом, — связь металлическая."}, {"q": "Какой тип химической связи в веществе <b>H₂O</b>?", "fig": "", "opts": ["ковалентная неполярная", "ковалентная полярная", "ионная", "металлическая"], "ans": 1, "why": "Водород и кислород — разные неметаллы, пара смещена к кислороду: ковалентная полярная."}, {"q": "Какой тип химической связи в веществе <b>Na₂S</b>?", "fig": "", "opts": ["ковалентная неполярная", "ковалентная полярная", "ионная", "металлическая"], "ans": 2, "why": "Натрий — металл, сера — неметалл: ионная связь."}, {"q": "Какой тип химической связи в веществе <b>N₂</b>?", "fig": "", "opts": ["ковалентная неполярная", "ковалентная полярная", "ионная", "металлическая"], "ans": 0, "why": "Два одинаковых атома неметалла: ковалентная неполярная, причём тройная."}, {"q": "Какой тип химической связи в веществе <b>CO₂</b>?", "fig": "", "opts": ["ковалентная неполярная", "ковалентная полярная", "ионная", "металлическая"], "ans": 1, "why": "Углерод и кислород — разные неметаллы: ковалентная полярная."}, {"q": "Какой тип химической связи в веществе <b>Fe</b>?", "fig": "", "opts": ["ковалентная неполярная", "ковалентная полярная", "ионная", "металлическая"], "ans": 3, "why": "Железо — металл, в простом веществе связь металлическая."}, {"q": "Какой тип химической связи в веществе <b>NaOH</b>?", "fig": "", "opts": ["ковалентная неполярная", "ковалентная полярная", "ионная", "металлическая"], "ans": 2, "why": "Между натрием и гидроксогруппой связь ионная — это гидроксид металла. Внутри группы O—H связь ковалентная полярная, но тип связи в веществе называют по главному: ионная."}, {"q": "Какой тип химической связи в веществе <b>I₂</b>?", "fig": "", "opts": ["ковалентная неполярная", "ковалентная полярная", "ионная", "металлическая"], "ans": 0, "why": "Два одинаковых атома неметалла: ковалентная неполярная."}, {"q": "Какой тип химической связи в веществе <b>CH₄</b>?", "fig": "", "opts": ["ковалентная неполярная", "ковалентная полярная", "ионная", "металлическая"], "ans": 1, "why": "Углерод и водород — разные неметаллы: ковалентная полярная."}]);
+
+makeTrainer("ta2", [{"q": "Сколько валентных электронов у атома <b>кислорода</b>? В ответе напиши число.", "fig": "", "ans": ["6"], "why": "Кислород в VI группе — значит, на внешнем слое шесть электронов."}, {"q": "Сколько валентных электронов у атома <b>фтора</b>?", "fig": "", "ans": ["7"], "why": "Фтор в VII группе: семь валентных электронов, из них одна одиночная точка и три пары."}, {"q": "Сколько валентных электронов у атома <b>углерода</b>?", "fig": "", "ans": ["4"], "why": "Углерод в IV группе — четыре валентных электрона."}, {"q": "Чему равна валентность <b>азота</b> в аммиаке NH₃? Ответ числом.", "fig": "<span class=\"og\"><span class=\"ogpre\">N: …</span><span class=\"ogg\"><span class=\"orow\"><span class=\"ocell\"><i class=\"ar up\">↑</i><i class=\"ar dn\">↓</i></span></span><span class=\"olab\">2s</span></span><span class=\"ogg\"><span class=\"orow\"><span class=\"ocell\"><i class=\"ar up\">↑</i></span><span class=\"ocell\"><i class=\"ar up\">↑</i></span><span class=\"ocell\"><i class=\"ar up\">↑</i></span></span><span class=\"olab\">2p</span></span></span>", "ans": ["3"], "why": "Три одиночные стрелки на 2p — три неспаренных электрона, валентность III."}, {"q": "Чему равна валентность <b>кислорода</b> в воде? Ответ числом.", "fig": "<span class=\"og\"><span class=\"ogpre\">O: …</span><span class=\"ogg\"><span class=\"orow\"><span class=\"ocell\"><i class=\"ar up\">↑</i><i class=\"ar dn\">↓</i></span></span><span class=\"olab\">2s</span></span><span class=\"ogg\"><span class=\"orow\"><span class=\"ocell\"><i class=\"ar up\">↑</i><i class=\"ar dn\">↓</i></span><span class=\"ocell\"><i class=\"ar up\">↑</i></span><span class=\"ocell\"><i class=\"ar up\">↑</i></span></span><span class=\"olab\">2p</span></span></span>", "ans": ["2"], "why": "Две одиночные стрелки — валентность II. Поэтому от O рисуют две чёрточки."}, {"q": "Сколько неспаренных электронов у атома углерода в <b>возбуждённом</b> состоянии?", "fig": "<span class=\"og\"><span class=\"ogpre\">C*: …</span><span class=\"ogg\"><span class=\"orow\"><span class=\"ocell\"><i class=\"ar up\">↑</i></span></span><span class=\"olab\">2s</span></span><span class=\"ogg\"><span class=\"orow\"><span class=\"ocell\"><i class=\"ar up\">↑</i></span><span class=\"ocell\"><i class=\"ar up\">↑</i></span><span class=\"ocell\"><i class=\"ar up\">↑</i></span></span><span class=\"olab\">2p</span></span></span>", "ans": ["4"], "why": "Электрон с 2s перешёл на свободную 2p-орбиталь: одиночных стрелок стало четыре, валентность IV."}, {"q": "Сколько неспаренных электронов у атома углерода в <b>основном</b> состоянии?", "fig": "<span class=\"og\"><span class=\"ogpre\">C: …</span><span class=\"ogg\"><span class=\"orow\"><span class=\"ocell\"><i class=\"ar up\">↑</i><i class=\"ar dn\">↓</i></span></span><span class=\"olab\">2s</span></span><span class=\"ogg\"><span class=\"orow\"><span class=\"ocell\"><i class=\"ar up\">↑</i></span><span class=\"ocell\"><i class=\"ar up\">↑</i></span><span class=\"ocell\"></span></span><span class=\"olab\">2p</span></span></span>", "ans": ["2"], "why": "Пара на 2s не считается, одиночных стрелок на 2p всего две."}, {"q": "Сколько чёрточек рисуют от символа <b>C</b> в структурной формуле метана?", "fig": "", "ans": ["4"], "why": "Валентность углерода IV — четыре чёрточки, на каждой по атому водорода."}, {"q": "Сколько валентных электронов у атома <b>водорода</b>?", "fig": "", "ans": ["1"], "why": "Один электрон на 1s-орбитали. Поэтому водород всегда одновалентен."}, {"q": "Чему равна валентность <b>фтора</b> в HF? Ответ числом.", "fig": "", "ans": ["1"], "why": "У фтора один неспаренный электрон, поэтому он образует только одну связь."}]);
+
+makeTrainer("ta3", [{"q": "Сколько общих электронных пар в молекуле <b>H₂</b>?", "fig": "", "ans": ["1"], "why": "Структурная формула H—H: одна чёрточка — одна общая пара."}, {"q": "Сколько общих электронных пар в молекуле <b>O₂</b>?", "fig": "", "ans": ["2"], "why": "O=O, связь двойная: две общие пары."}, {"q": "Сколько общих электронных пар в молекуле <b>N₂</b>?", "fig": "", "ans": ["3"], "why": "N≡N, связь тройная: три общие пары. Поэтому азот такой неактивный."}, {"q": "Сколько общих электронных пар в молекуле <b>Cl₂</b>?", "fig": "", "ans": ["1"], "why": "У хлора, как и у фтора, один неспаренный электрон: связь одинарная."}, {"q": "Сколько общих электронных пар в молекуле <b>H₂O</b>?", "fig": "", "ans": ["2"], "why": "H—O—H: две одинарные связи, значит две общие пары. Ещё две пары у кислорода неподелённые — их не считаем."}, {"q": "Сколько общих электронных пар в молекуле <b>CH₄</b>?", "fig": "", "ans": ["4"], "why": "Четыре связи C—H, каждая по одной паре."}, {"q": "Сколько общих электронных пар в молекуле <b>CO₂</b>?", "fig": "", "ans": ["4"], "why": "O=C=O: две двойные связи, каждая по две пары, всего четыре."}, {"q": "Сколько общих электронных пар в молекуле <b>NH₃</b>?", "fig": "", "ans": ["3"], "why": "Три связи N—H. Неподелённая пара азота в счёт не идёт."}, {"q": "Сколько общих электронных пар в молекуле <b>C₂H₆</b> (этан)?", "fig": "", "ans": ["7"], "why": "Шесть связей C—H и одна C—C: всего семь одинарных связей, семь пар."}, {"q": "Сколько общих электронных пар в молекуле <b>C₂H₂</b> (ацетилен)?", "fig": "", "ans": ["5"], "why": "H—C≡C—H: две связи C—H дают две пары, тройная C≡C — ещё три. Итого пять."}]);
+
+makeTrainer("ta4", [{"q": "Какая связь между атомами в молекуле <b>F₂</b>?", "fig": "", "opts": ["одинарная", "двойная", "тройная"], "ans": 0, "why": "У фтора один неспаренный электрон — одна общая пара, связь одинарная."}, {"q": "Какая связь между атомами в молекуле <b>O₂</b>?", "fig": "", "opts": ["одинарная", "двойная", "тройная"], "ans": 1, "why": "У кислорода два неспаренных электрона — две общие пары, связь двойная."}, {"q": "Какая связь между атомами в молекуле <b>N₂</b>?", "fig": "", "opts": ["одинарная", "двойная", "тройная"], "ans": 2, "why": "Три неспаренных электрона — три общие пары, связь тройная и очень прочная."}, {"q": "Какая связь между атомами углерода в <b>этилене</b> C₂H₄?", "fig": "", "opts": ["одинарная", "двойная", "тройная"], "ans": 1, "why": "H₂C=CH₂ — двойная связь, энергия 612 кДж/моль."}, {"q": "Какая связь между атомами углерода в <b>ацетилене</b> C₂H₂?", "fig": "", "opts": ["одинарная", "двойная", "тройная"], "ans": 2, "why": "HC≡CH — тройная связь, самая прочная и самая короткая из трёх: 833 кДж/моль и 0,120 нм."}, {"q": "Какая связь между атомами углерода в <b>этане</b> C₂H₆?", "fig": "", "opts": ["одинарная", "двойная", "тройная"], "ans": 0, "why": "H₃C—CH₃ — одинарная связь, 350 кДж/моль и 0,154 нм."}, {"q": "В какой молекуле связь углерод-углерод <b>самая короткая</b>?", "fig": "", "opts": ["этан C₂H₆", "этилен C₂H₄", "ацетилен C₂H₂"], "ans": 2, "why": "Чем выше кратность, тем короче связь: 0,154 → 0,134 → 0,120 нм. Самая короткая — тройная, в ацетилене."}, {"q": "В какой молекуле связь углерод-углерод <b>самая прочная</b>?", "fig": "", "opts": ["этан C₂H₆", "этилен C₂H₄", "ацетилен C₂H₂"], "ans": 2, "why": "Прочность растёт вместе с кратностью: 350 → 612 → 833 кДж/моль."}]);
+
+makeTrainer("ta5", [{"q": "Связь в молекуле <b>H₂</b> полярная или неполярная?", "fig": "", "opts": ["полярная", "неполярная"], "ans": 1, "why": "Атомы одинаковые, тянут пару одинаково — она стоит посередине."}, {"q": "Связь в молекуле <b>HCl</b> полярная или неполярная?", "fig": "", "opts": ["полярная", "неполярная"], "ans": 0, "why": "Хлор электроотрицательнее водорода, пара смещена к нему: связь полярная."}, {"q": "К какому атому смещена общая пара в молекуле <b>HF</b>?", "fig": "", "opts": ["к водороду", "к фтору", "стоит посередине"], "ans": 1, "why": "Фтор — самый электроотрицательный элемент (ЭО 4,1), пара смещена к нему."}, {"q": "На каком атоме в молекуле <b>H₂O</b> частичный заряд δ−?", "fig": "", "opts": ["на водороде", "на кислороде"], "ans": 1, "why": "Кислород электроотрицательнее, пары смещены к нему: H<sup>δ+</sup>—O<sup>δ−</sup>—H<sup>δ+</sup>."}, {"q": "В какой молекуле связь <b>более полярная</b>?", "fig": "", "opts": ["HF", "HCl"], "ans": 0, "why": "Разность ЭО в HF больше (4,1 − 2,2), поэтому и частичные заряды больше: 0,43 против 0,18."}, {"q": "Связь между атомами углерода в <b>этане</b> полярная или неполярная?", "fig": "", "opts": ["полярная", "неполярная"], "ans": 1, "why": "C—C связывает два одинаковых атома, поэтому связь неполярная. А вот связи C—H в той же молекуле полярные."}, {"q": "Связь в молекуле <b>NH₃</b> между N и H полярная или неполярная?", "fig": "", "opts": ["полярная", "неполярная"], "ans": 0, "why": "Азот электроотрицательнее водорода, пара смещена к азоту: N<sup>δ−</sup>, H<sup>δ+</sup>."}, {"q": "Между какими атомами связь <b>ионная</b>, а не просто очень полярная?", "fig": "", "opts": ["H и F", "Na и Cl", "C и O"], "ans": 1, "why": "Натрий — металл, хлор — неметалл: электрон переходит полностью, образуются ионы. В HF и CO оба атома — неметаллы."}, {"q": "У какого атома в молекуле <b>HBr</b> частичный заряд δ+?", "fig": "", "opts": ["у водорода", "у брома"], "ans": 0, "why": "Бром электроотрицательнее, пара смещена к нему; значит, у водорода недостаток электронной плотности — δ+."}, {"q": "В ряду HF → HCl → HBr → HI полярность связи…", "fig": "", "opts": ["растёт", "уменьшается", "не меняется"], "ans": 1, "why": "ЭО галогена падает от фтора к иоду, разность с водородом уменьшается — связь становится всё менее полярной."}]);
+
+makeTrainer("ta6", [{"q": "Верно ли утверждение?<br><b>«Ковалентная связь образуется между атомами неметаллов.»</b>", "fig": "", "opts": ["верно", "неверно"], "ans": 0, "why": "Да, это определение. Металл с неметаллом дают ионную связь, металл с металлом — металлическую."}, {"q": "Верно ли утверждение?<br><b>«В молекуле HCl связь ионная, потому что атомы разные.»</b>", "fig": "", "opts": ["верно", "неверно"], "ans": 1, "why": "Оба атома — неметаллы, значит связь ковалентная. Раз атомы разные, она полярная."}, {"q": "Верно ли утверждение?<br><b>«Двойная связь прочнее одинарной.»</b>", "fig": "", "opts": ["верно", "неверно"], "ans": 0, "why": "Да: 612 кДж/моль против 350 для связи углерод-углерод."}, {"q": "Верно ли утверждение?<br><b>«Чем длиннее связь, тем она прочнее.»</b>", "fig": "", "opts": ["верно", "неверно"], "ans": 1, "why": "Наоборот: короткая связь прочная. Сравни ацетилен (0,120 нм, 833 кДж/моль) и этан (0,154 нм, 350 кДж/моль)."}, {"q": "Верно ли утверждение?<br><b>«Валентность атома равна числу его неспаренных электронов.»</b>", "fig": "", "opts": ["верно", "неверно"], "ans": 0, "why": "Да, именно неспаренные электроны идут на образование общих пар."}, {"q": "Верно ли утверждение?<br><b>«В молекуле CO₂ четыре общие электронные пары.»</b>", "fig": "", "opts": ["верно", "неверно"], "ans": 0, "why": "O=C=O: две двойные связи, каждая по две пары. Связей две, а пар четыре."}, {"q": "Верно ли утверждение?<br><b>«Благородные газы при обычных условиях существуют в виде отдельных атомов.»</b>", "fig": "", "opts": ["верно", "неверно"], "ans": 0, "why": "Да, у них завершённые внешние оболочки, связываться им незачем."}, {"q": "Верно ли утверждение?<br><b>«Углерод четырёхвалентен, потому что у него четыре валентных электрона и все они неспаренные в основном состоянии.»</b>", "fig": "", "opts": ["верно", "неверно"], "ans": 1, "why": "Валентных электронов действительно четыре, но в основном состоянии неспаренных только два. Четыре получается после перехода в возбуждённое состояние."}, {"q": "Верно ли утверждение?<br><b>«В молекуле фтора F₂ связь ковалентная полярная.»</b>", "fig": "", "opts": ["верно", "неверно"], "ans": 1, "why": "Атомы одинаковые, смещаться паре некуда: связь ковалентная неполярная."}, {"q": "Верно ли утверждение?<br><b>«При образовании ковалентной полярной связи электрон полностью переходит от одного атома к другому.»</b>", "fig": "", "opts": ["верно", "неверно"], "ans": 1, "why": "Полный переход — это ионная связь. При полярной ковалентной пара только смещается, поэтому заряды частичные (δ), а не целые."}]);
+
+makeBuilder("bx1", [{"q": "Собери внешний слой атома <b>водорода</b> (1 электрон).", "pre": "H:", "groups": [["1s", 1]], "ans": [[1]], "n": 1, "why": "Один электрон на 1s — он неспаренный, поэтому водород одновалентен.", "sol": "<b>Правильная схема:</b><br><span class=\"og\"><span class=\"ogpre\">H:</span><span class=\"ogg\"><span class=\"orow\"><span class=\"ocell\"><i class=\"ar up\">↑</i></span></span><span class=\"olab\">1s</span></span></span>"}, {"q": "Собери внешний слой атома <b>гелия</b> (2 электрона).", "pre": "He:", "groups": [["1s", 1]], "ans": [[2]], "n": 2, "why": "Два электрона с противоположными спинами на одной орбитали. Слой завершён, неспаренных нет — гелий ни с кем не связывается.", "sol": "<b>Правильная схема:</b><br><span class=\"og\"><span class=\"ogpre\">He:</span><span class=\"ogg\"><span class=\"orow\"><span class=\"ocell\"><i class=\"ar up\">↑</i><i class=\"ar dn\">↓</i></span></span><span class=\"olab\">1s</span></span></span>"}, {"q": "Собери внешний слой атома <b>фтора</b>: 2s и 2p, всего 7 электронов.", "pre": "F: …", "groups": [["2s", 1], ["2p", 3]], "ans": [[2], [2, 2, 1]], "n": 7, "why": "Сначала пара на 2s, потом три электрона по одному на каждую 2p-орбиталь, а оставшиеся два спариваются. Одиночная стрелка одна — валентность I.", "sol": "<b>Правильная схема:</b><br><span class=\"og\"><span class=\"ogpre\">F: …</span><span class=\"ogg\"><span class=\"orow\"><span class=\"ocell\"><i class=\"ar up\">↑</i><i class=\"ar dn\">↓</i></span></span><span class=\"olab\">2s</span></span><span class=\"ogg\"><span class=\"orow\"><span class=\"ocell\"><i class=\"ar up\">↑</i><i class=\"ar dn\">↓</i></span><span class=\"ocell\"><i class=\"ar up\">↑</i><i class=\"ar dn\">↓</i></span><span class=\"ocell\"><i class=\"ar up\">↑</i></span></span><span class=\"olab\">2p</span></span></span>"}, {"q": "Собери внешний слой атома <b>кислорода</b>: 2s и 2p, всего 6 электронов.", "pre": "O: …", "groups": [["2s", 1], ["2p", 3]], "ans": [[2], [2, 1, 1]], "n": 6, "why": "Пара на 2s, дальше по одному на каждую 2p, шестой спаривается с первым. Остаётся два неспаренных — валентность II.", "sol": "<b>Правильная схема:</b><br><span class=\"og\"><span class=\"ogpre\">O: …</span><span class=\"ogg\"><span class=\"orow\"><span class=\"ocell\"><i class=\"ar up\">↑</i><i class=\"ar dn\">↓</i></span></span><span class=\"olab\">2s</span></span><span class=\"ogg\"><span class=\"orow\"><span class=\"ocell\"><i class=\"ar up\">↑</i><i class=\"ar dn\">↓</i></span><span class=\"ocell\"><i class=\"ar up\">↑</i></span><span class=\"ocell\"><i class=\"ar up\">↑</i></span></span><span class=\"olab\">2p</span></span></span>"}, {"q": "Собери внешний слой атома <b>азота</b>: 2s и 2p, всего 5 электронов.", "pre": "N: …", "groups": [["2s", 1], ["2p", 3]], "ans": [[2], [1, 1, 1]], "n": 5, "why": "Пара на 2s и по одному электрону на каждой из трёх 2p-орбиталей. Три неспаренных — валентность III.", "sol": "<b>Правильная схема:</b><br><span class=\"og\"><span class=\"ogpre\">N: …</span><span class=\"ogg\"><span class=\"orow\"><span class=\"ocell\"><i class=\"ar up\">↑</i><i class=\"ar dn\">↓</i></span></span><span class=\"olab\">2s</span></span><span class=\"ogg\"><span class=\"orow\"><span class=\"ocell\"><i class=\"ar up\">↑</i></span><span class=\"ocell\"><i class=\"ar up\">↑</i></span><span class=\"ocell\"><i class=\"ar up\">↑</i></span></span><span class=\"olab\">2p</span></span></span>"}, {"q": "Собери внешний слой атома <b>углерода</b> в основном состоянии: 4 электрона.", "pre": "C: …", "groups": [["2s", 1], ["2p", 3]], "ans": [[2], [1, 1, 0]], "n": 4, "why": "Пара на 2s и два одиночных электрона на 2p. Третья 2p-орбиталь остаётся пустой. Неспаренных два.", "sol": "<b>Правильная схема:</b><br><span class=\"og\"><span class=\"ogpre\">C: …</span><span class=\"ogg\"><span class=\"orow\"><span class=\"ocell\"><i class=\"ar up\">↑</i><i class=\"ar dn\">↓</i></span></span><span class=\"olab\">2s</span></span><span class=\"ogg\"><span class=\"orow\"><span class=\"ocell\"><i class=\"ar up\">↑</i></span><span class=\"ocell\"><i class=\"ar up\">↑</i></span><span class=\"ocell\"></span></span><span class=\"olab\">2p</span></span></span>"}, {"q": "Собери внешний слой <b>возбуждённого</b> атома углерода C*: те же 4 электрона, но 2s-электрон перешёл на 2p.", "pre": "C*: …", "groups": [["2s", 1], ["2p", 3]], "ans": [[1], [1, 1, 1]], "n": 4, "why": "На 2s остаётся одна стрелка, на каждой 2p — по одной. Четыре неспаренных электрона, валентность IV. Так углерод ведёт себя почти во всей органике.", "sol": "<b>Правильная схема:</b><br><span class=\"og\"><span class=\"ogpre\">C*: …</span><span class=\"ogg\"><span class=\"orow\"><span class=\"ocell\"><i class=\"ar up\">↑</i></span></span><span class=\"olab\">2s</span></span><span class=\"ogg\"><span class=\"orow\"><span class=\"ocell\"><i class=\"ar up\">↑</i></span><span class=\"ocell\"><i class=\"ar up\">↑</i></span><span class=\"ocell\"><i class=\"ar up\">↑</i></span></span><span class=\"olab\">2p</span></span></span>"}, {"q": "Собери внешний слой атома <b>бора</b>: 2s и 2p, всего 3 электрона.", "pre": "B: …", "groups": [["2s", 1], ["2p", 3]], "ans": [[2], [1, 0, 0]], "n": 3, "why": "Пара на 2s и один электрон на 2p. Неспаренный один — в основном состоянии бор одновалентен.", "sol": "<b>Правильная схема:</b><br><span class=\"og\"><span class=\"ogpre\">B: …</span><span class=\"ogg\"><span class=\"orow\"><span class=\"ocell\"><i class=\"ar up\">↑</i><i class=\"ar dn\">↓</i></span></span><span class=\"olab\">2s</span></span><span class=\"ogg\"><span class=\"orow\"><span class=\"ocell\"><i class=\"ar up\">↑</i></span><span class=\"ocell\"></span><span class=\"ocell\"></span></span><span class=\"olab\">2p</span></span></span>"}, {"q": "Собери внешний слой атома <b>неона</b>: 2s и 2p, всего 8 электронов.", "pre": "Ne: …", "groups": [["2s", 1], ["2p", 3]], "ans": [[2], [2, 2, 2]], "n": 8, "why": "Все орбитали заполнены парами. Слой завершён, неспаренных нет — неон в реакции не вступает.", "sol": "<b>Правильная схема:</b><br><span class=\"og\"><span class=\"ogpre\">Ne: …</span><span class=\"ogg\"><span class=\"orow\"><span class=\"ocell\"><i class=\"ar up\">↑</i><i class=\"ar dn\">↓</i></span></span><span class=\"olab\">2s</span></span><span class=\"ogg\"><span class=\"orow\"><span class=\"ocell\"><i class=\"ar up\">↑</i><i class=\"ar dn\">↓</i></span><span class=\"ocell\"><i class=\"ar up\">↑</i><i class=\"ar dn\">↓</i></span><span class=\"ocell\"><i class=\"ar up\">↑</i><i class=\"ar dn\">↓</i></span></span><span class=\"olab\">2p</span></span></span>"}, {"q": "Собери внешний слой атома <b>бериллия</b>: 2s, всего 2 электрона.", "pre": "Be: …", "groups": [["2s", 1], ["2p", 3]], "ans": [[2], [0, 0, 0]], "n": 2, "why": "Оба электрона спариваются на 2s, 2p-орбитали пустые. Неспаренных нет — чтобы образовать связи, бериллию нужно возбуждение.", "sol": "<b>Правильная схема:</b><br><span class=\"og\"><span class=\"ogpre\">Be: …</span><span class=\"ogg\"><span class=\"orow\"><span class=\"ocell\"><i class=\"ar up\">↑</i><i class=\"ar dn\">↓</i></span></span><span class=\"olab\">2s</span></span><span class=\"ogg\"><span class=\"orow\"><span class=\"ocell\"></span><span class=\"ocell\"></span><span class=\"ocell\"></span></span><span class=\"olab\">2p</span></span></span>"}]);
+
+</script>
+</body>
+</html>
