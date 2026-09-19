@@ -139,7 +139,7 @@ input.gp.bad{border-color:#b3261e;background:#fdecea}
 .tohw{font-weight:700;margin:18px 0 0;font-size:18px}
 .tohw span{color:var(--muted);font-weight:400;font-size:15px;display:block;margin-top:3px}
 .small,.mini{color:var(--muted);font-size:15px}
-.fr{display:inline-block;vertical-align:-0.58em;text-align:center;margin:0 3px}
+.fr{display:inline-block;vertical-align:middle;text-align:center;margin:0 3px}
 .fr b{display:block;border-bottom:1.7px solid currentColor;padding:0 6px;font-weight:400;
   white-space:nowrap}
 .fr i{display:block;font-style:normal;padding:0 6px;white-space:nowrap}
@@ -181,7 +181,7 @@ input.gp.bad{border-color:#b3261e;background:#fdecea}
   .sheet>.meta{display:none}
   .sheet h2{font-size:18px;margin:0 0 5px}
   .sheet .f-formula{font-size:11.5px;line-height:1.8;margin:2px 0}
-  .sheet .fr{font-size:10.5px;vertical-align:-0.55em}
+  .sheet .fr{font-size:10.5px;vertical-align:middle}
 }
 
 .task.ok{border-color:var(--ok);background:var(--ok-soft)}
@@ -253,16 +253,16 @@ input.gp.bad{border-color:#b3261e;background:#fdecea}
 <div class="meta">Сюда возвращаются, когда застряли. Читать целиком сразу не нужно.</div>
 
 <h3>Минус — источник большинства ошибок</h3>
-<div class="fgrid"><div class="fbox"><h4>Минус перед скобкой</h4><div class="ff">a − (b + c) = a − b − c</div><p>Меняется знак <b>каждого</b> слагаемого в скобке, а не только первого.</p><p class="small">2x + 4 − (2a + 5 − 3x) = 5x − 2a − 1.</p></div><div class="fbox"><h4>Вынесение минуса</h4><div class="ff">−15x + 20a − 45 = −5(3x − 4a + 9)</div><p>Все знаки в скобке меняются на противоположные.</p><p class="small">Сомневаешься — раскрой скобки обратно и сверь.</p></div><div class="fbox"><h4>Минус перед дробью</h4><div class="ff"><span class='fr'><b>2x + 5</b><i>4</i></span> − <span class='fr'><b>3x − 4</b><i>2</i></span> = <span class='fr'><b>2x + 5 − 2(3x − 4)</b><i>4</i></span></div><p>Числитель второй дроби берём в скобки — иначе знак потеряется.</p><p class="small">Итог здесь: <span class='fr'><b>−4x + 13</b><i>4</i></span>.</p></div></div>
+<div class="fgrid"><div class="fbox"><h4>Минус перед скобкой</h4><div class="ff"><span class='nw'>a − (b + c)</span> = <span class='nw'>a − b − c</span></div><p>Меняется знак <b>каждого</b> слагаемого в скобке, а не только первого.</p><p class="small">2x + 4 − (2a + 5 − 3x) = 5x − 2a − 1.</p></div><div class="fbox"><h4>Вынесение минуса</h4><div class="ff"><span class='nw'>−15x + 20a − 45</span> = <span class='nw'>−5(3x − 4a + 9)</span></div><p>Все знаки в скобке меняются на противоположные.</p><p class="small">Сомневаешься — раскрой скобки обратно и сверь.</p></div><div class="fbox"><h4>Минус перед дробью</h4><div class="ff"><span class='nw'><span class='fr'><b>2x + 5</b><i>4</i></span> − <span class='fr'><b>3x − 4</b><i>2</i></span></span> = <span class='nw'><span class='fr'><b>2x + 5 − 2(3x − 4)</b><i>4</i></span></span></div><p>Числитель второй дроби берём в скобки — иначе знак потеряется.</p><p class="small">Итог здесь: <span class='fr'><b>−4x + 13</b><i>4</i></span>.</p></div></div>
 
 <h3>Термины</h3>
-<div class="fgrid"><div class="fbox"><h4>Уравнение и корень</h4><p><b>Корень</b> — значение переменной, при котором равенство становится верным.</p><p>Проверка одна: подставить и посчитать обе части.</p><p class="small">Решить уравнение — найти <b>все</b> корни, а не один.</p></div><div class="fbox"><h4>Равносильные уравнения</h4><p>Это уравнения с одними и теми же корнями.</p><p class="small">5x − 25 = 0 и 2x − 7 = 3 равносильны: у обоих x = 5.</p></div><div class="fbox"><h4>Произведение равно нулю</h4><div class="ff">(x + 3)(x − 5)(x + 1) = 0</div><p>Произведение равно нулю, если хотя бы один множитель равен нулю.</p><p class="small">Приравниваем к нулю каждую скобку по очереди.</p></div></div>
+<div class="fgrid"><div class="fbox"><h4>Уравнение и корень</h4><p><b>Корень</b> — значение переменной, при котором равенство становится верным.</p><p>Проверка одна: подставить и посчитать обе части.</p><p class="small">Решить уравнение — найти <b>все</b> корни, а не один.</p></div><div class="fbox"><h4>Равносильные уравнения</h4><p>Это уравнения с одними и теми же корнями.</p><p class="small">5x − 25 = 0 и 2x − 7 = 3 равносильны: у обоих x = 5.</p></div><div class="fbox"><h4>Произведение равно нулю</h4><div class="ff"><span class='nw'>(x + 3)(x − 5)(x + 1)</span> = <span class='nw'>0</span></div><p>Произведение равно нулю, если хотя бы один множитель равен нулю.</p><p class="small">Приравниваем к нулю каждую скобку по очереди.</p></div></div>
 
 <h3>Линейное уравнение</h3>
-<div class="fgrid"><div class="fbox"><h4>Линейное уравнение</h4><div class="ff">ax + b = 0, &nbsp; a ≠ 0</div><div class="ff">x = −<span class='fr'><b>b</b><i>a</i></span></div><p class="small">Неизвестное стоит в первой степени.</p></div><div class="fbox"><h4>Алгоритм</h4><p>1. Раскрыть все скобки.</p><p>2. С переменной — налево, без переменной — направо, меняя знаки.</p><p>3. Привести подобные: получится ax = b.</p><p class="small">4. Разделить: x = b : a.</p></div><div class="fbox"><h4>Три исхода</h4><p>a ≠ 0 — ровно один корень.</p><p>0 = 0 — корней бесконечно много.</p><p>0 = 13 — корней нет.</p><p class="small">Ноль в ответе (x = 0) — это обычный корень, а не «нет корней».</p></div></div>
+<div class="fgrid"><div class="fbox"><h4>Линейное уравнение</h4><div class="ff"><span class='nw'>ax + b = 0</span>, &nbsp; <span class='nw'>a ≠ 0</span></div><div class="ff">x = −<span class='fr'><b>b</b><i>a</i></span></div><p class="small">Неизвестное стоит в первой степени.</p></div><div class="fbox"><h4>Алгоритм</h4><p>1. Раскрыть все скобки.</p><p>2. С переменной — налево, без переменной — направо, меняя знаки.</p><p>3. Привести подобные: получится ax = b.</p><p class="small">4. Разделить: x = b : a.</p></div><div class="fbox"><h4>Три исхода</h4><p>a ≠ 0 — ровно один корень.</p><p>0 = 0 — корней бесконечно много.</p><p>0 = 13 — корней нет.</p><p class="small">Ноль в ответе (x = 0) — это обычный корень, а не «нет корней».</p></div></div>
 
 <h3>Опасные преобразования</h3>
-<div class="fgrid"><div class="fbox"><h4>Что делать можно</h4><p>Заменять выражение тождественно равным.</p><p>Переносить слагаемые через знак равно со сменой знака.</p><p class="small">Умножать и делить обе части на <b>число</b>, не равное нулю.</p></div><div class="fbox"><h4>Посторонний корень</h4><div class="ff">x − 1 = 0 &nbsp;→&nbsp; (x − 1)(x − 3) = 0</div><p>Умножили на выражение с переменной — появился лишний корень x = 3.</p><p class="small">Поэтому умножать на выражение с x нельзя.</p></div><div class="fbox"><h4>Потеря корня</h4><div class="ff">(x − 2)(x − 4) = (x − 4)</div><p>Сократили на (x − 4) — потеряли корень x = 4.</p><p class="small">Сокращать в уравнении можно только числа.</p></div></div>
+<div class="fgrid"><div class="fbox"><h4>Что делать можно</h4><p>Заменять выражение тождественно равным.</p><p>Переносить слагаемые через знак равно со сменой знака.</p><p class="small">Умножать и делить обе части на <b>число</b>, не равное нулю.</p></div><div class="fbox"><h4>Посторонний корень</h4><div class="ff"><span class='nw'>x − 1 = 0</span> &nbsp;→&nbsp; <span class='nw'>(x − 1)(x − 3) = 0</span></div><p>Умножили на выражение с переменной — появился лишний корень x = 3.</p><p class="small">Поэтому умножать на выражение с x нельзя.</p></div><div class="fbox"><h4>Потеря корня</h4><div class="ff"><span class='nw'>(x − 2)(x − 4)</span> = <span class='nw'>(x − 4)</span></div><p>Сократили на (x − 4) — потеряли корень x = 4.</p><p class="small">Сокращать в уравнении можно только числа.</p></div></div>
 
 </div>
 
@@ -274,23 +274,23 @@ input.gp.bad{border-color:#b3261e;background:#fdecea}
 <div class="rule2"><div class="n">ПРАВИЛО 1</div>
 Знак «минус» перед скобкой меняет знаки <b>всех</b> слагаемых внутри скобки
 на противоположные, а не только первого.</div>
-<div class='fx'>2x + 4 − (2a + 5 − 3x) = 2x + 4 − 2a − 5 + 3x = <span class='nw'>5x − 2a − 1</span></div>
+<div class='fx'><span class='nw'>2x + 4 − (2a + 5 − 3x)</span> = <span class='nw'>2x + 4 − 2a − 5 + 3x</span> = <span class='nw'>5x − 2a − 1</span></div>
 <div class="rule2"><div class="n">ПРАВИЛО 2</div>
 Вынося за скобки отрицательный множитель, меняем знаки всех слагаемых, которые
 остаются в скобках.</div>
-<div class='fx'>−15x + 20a − 45 = −5(3x − 4a + 9)</div>
+<div class='fx'><span class='nw'>−15x + 20a − 45</span> = <span class='nw'>−5(3x − 4a + 9)</span></div>
 <div class="warn"><div class="n">ТИПИЧНАЯ ОШИБКА</div>
 −15x + 20a − 45 = −(15x + 20a − 45) — так писать нельзя.
 Нельзя менять знак только перед первым слагаемым.</div>
 <p>Не уверен — раскрой скобки обратно и сверь:</p>
-<div class='fx'>−5(3x − 4a + 9) = −15x + 20a − 45</div>
+<div class='fx'><span class='nw'>−5(3x − 4a + 9)</span> = <span class='nw'>−15x + 20a − 45</span></div>
 <div class="rule2"><div class="n">ПРАВИЛО 3</div>
 Если перед дробью стоит минус, возьми числитель этой дроби в скобки — тогда при
 приведении к общему знаменателю знак не потеряется.</div>
-<div class='fx'><span class='fr'><b>2x + 5</b><i>4</i></span> − <span class='fr'><b>3x − 4</b><i>2</i></span> = <span class='fr'><b>2x + 5 − 2(3x − 4)</b><i>4</i></span> = <span class='fr'><b>−4x + 13</b><i>4</i></span></div>
+<div class='fx'><span class='nw'><span class='fr'><b>2x + 5</b><i>4</i></span> − <span class='fr'><b>3x − 4</b><i>2</i></span></span> = <span class='nw'><span class='fr'><b>2x + 5 − 2(3x − 4)</b><i>4</i></span></span> = <span class='nw'><span class='fr'><b>−4x + 13</b><i>4</i></span></span></div>
 <div class="ex"><h3>Пример 1</h3>
 <p>Упрости 5 − 2(3 − x).</p>
-<div class='step'>1. Раскрываем скобки: множитель −2 умножаем на каждое слагаемое.</div><div class='step'>2. −2 · 3 = −6, &nbsp; −2 · (−x) = +2x.</div><div class='fx'>5 − 6 + 2x = 2x − 1</div><div class='step mini'>Проверка на числе: при x = 1 исходное выражение равно 5 − 2 · 2 = 1, и ответ 2 · 1 − 1 = 1. Сошлось.</div>
+<div class='step'>1. Раскрываем скобки: множитель −2 умножаем на каждое слагаемое.</div><div class='step'>2. −2 · 3 = −6, &nbsp; −2 · (−x) = +2x.</div><div class='fx'><span class='nw'>5 − 6 + 2x</span> = <span class='nw'>2x − 1</span></div><div class='step mini'>Проверка на числе: при x = 1 исходное выражение равно 5 − 2 · 2 = 1, и ответ 2 · 1 − 1 = 1. Сошлось.</div>
 </div>
 <div class="tohw">Задание 1<span>Три задачи на скобки и знаки.</span></div>
 </div>
@@ -317,7 +317,7 @@ input.gp.bad{border-color:#b3261e;background:#fdecea}
 </div>
 <div class="def"><div class="n">РАВНОСИЛЬНЫЕ УРАВНЕНИЯ</div>
 Два уравнения называют равносильными, если у них одни и те же корни.</div>
-<div class='fx'>5x − 25 = 0 &nbsp; и &nbsp; 2x − 7 = 3 — оба дают x = 5</div>
+<div class='fx'><span class='nw'>5x − 25 = 0</span> &nbsp; и &nbsp; <span class='nw'>2x − 7 = 3</span> — оба дают x = 5</div>
 <div class="tohw">Задание 2<span>Три задачи про корень уравнения.</span></div>
 </div>
 
@@ -333,7 +333,7 @@ input.gp.bad{border-color:#b3261e;background:#fdecea}
 <div class="def"><div class="n">ПРОИЗВЕДЕНИЕ РАВНО НУЛЮ</div>
 Произведение равно нулю, если хотя бы один из множителей равен нулю. Поэтому каждую
 скобку по очереди приравнивают к нулю.</div>
-<div class='fx'>(x + 3)(x − 5)(x + 1) = 0 &nbsp;→&nbsp; x = −3, &nbsp; x = 5, &nbsp; x = −1</div>
+<div class='fx'><span class='nw'>(x + 3)(x − 5)(x + 1) = 0</span> &nbsp;→&nbsp; x = −3, &nbsp; x = 5, &nbsp; x = −1</div>
 <div class="ex"><h3>Пример 3</h3>
 <div class='step'>1. <span class='pw'>x<sup>2</sup></span> = 25 — два корня: 5 и −5.</div><div class='step'>2. <span class='pw'>x<sup>2</sup></span> = −25 — корней нет: квадрат не бывает отрицательным.</div><div class='step'>3. 0x = 25 — корней нет: ноль, умноженный на любое число, даёт ноль, а не 25.</div><div class='step'>4. 0x = 0 — корней бесконечно много: подходит любое число.</div><div class='step'>5. 10x = 10x — тоже бесконечно много корней.</div><div class='step mini'>Если нашёл один корень и не проверил, есть ли другие, — уравнение ещё не решено.</div>
 </div>
@@ -355,11 +355,11 @@ input.gp.bad{border-color:#b3261e;background:#fdecea}
 <div class="def"><div class="n">2. ПЕРЕНОС СЛАГАЕМЫХ</div>
 Переносим через знак равно, меняя знак каждого перенесённого слагаемого:
 9<span class='pw'>x<sup>2</sup></span> + 12x + 4 − 15x − 10 = 0, то есть 9<span class='pw'>x<sup>2</sup></span> − 3x − 6 = 0.</div>
-<div class='fx'>5x − 3y = 4x − 8y &nbsp;→&nbsp; 5x − 4x = 3y − 8y</div>
+<div class='fx'><span class='nw'>5x − 3y = 4x − 8y</span> &nbsp;→&nbsp; <span class='nw'>5x − 4x = 3y − 8y</span></div>
 <div class="def"><div class="n">3. УМНОЖЕНИЕ И ДЕЛЕНИЕ НА ЧИСЛО</div>
 Обе части можно умножить или разделить на одно и то же <b>число</b>, не равное нулю.</div>
-<div class='fx'>9<span class='pw'>x<sup>2</sup></span> − 3x − 6 = 0 &nbsp;| : 3 &nbsp;→&nbsp; 3<span class='pw'>x<sup>2</sup></span> − x − 2 = 0</div>
-<div class='fx'>0,2<span class='pw'>t<sup>2</sup></span> + 0,4t − 7 = 0 &nbsp;| · 5 &nbsp;→&nbsp; <span class='pw'>t<sup>2</sup></span> + 2t − 35 = 0</div>
+<div class='fx'><span class='nw'>9<span class='pw'>x<sup>2</sup></span> − 3x − 6 = 0 &nbsp;| : 3</span> &nbsp;→&nbsp; <span class='nw'>3<span class='pw'>x<sup>2</sup></span> − x − 2 = 0</span></div>
+<div class='fx'><span class='nw'>0,2<span class='pw'>t<sup>2</sup></span> + 0,4t − 7 = 0 &nbsp;| · 5</span> &nbsp;→&nbsp; <span class='nw'><span class='pw'>t<sup>2</sup></span> + 2t − 35 = 0</span></div>
 <div class="warn"><div class="n">ЧЕГО ДЕЛАТЬ НЕЛЬЗЯ</div>
 Умножать или делить на выражение с переменной. Умножение даёт <b>посторонний
 корень</b>: у x − 1 = 0 корень один, а у (x − 1)(x − 3) = 0
@@ -386,7 +386,7 @@ input.gp.bad{border-color:#b3261e;background:#fdecea}
 <div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>
 Линейным уравнением с одним неизвестным называют уравнение вида ax + b = 0,
 где a и b — числа, а x — неизвестное. Переменная стоит в первой степени.</div>
-<div class='fx'>если a ≠ 0, то x = −<span class='fr'><b>b</b><i>a</i></span></div>
+<div class='fx'>если <span class='nw'>a ≠ 0</span>, то <span class='nw'>x = −<span class='fr'><b>b</b><i>a</i></span></span></div>
 <p>В простейших случаях достаточно разделить обе части на коэффициент при x.</p>
 <div class="ex"><h3>Пример 4</h3>
 <div class='step'>1. 3x = 6 &nbsp;→&nbsp; x = <span class='fr'><b>6</b><i>3</i></span> = 2.</div><div class='step'>2. <span class='fr'><b>2</b><i>5</i></span>x = <span class='fr'><b>3</b><i>4</i></span> &nbsp;→&nbsp; x = <span class='fr'><b>3</b><i>4</i></span> : <span class='fr'><b>2</b><i>5</i></span> = <span class='fr'><b>3</b><i>4</i></span> · <span class='fr'><b>5</b><i>2</i></span> = <span class='fr'><b>15</b><i>8</i></span>.</div><div class='step'>3. <span class='fr'><b>3</b><i>2</i></span>x = 4 &nbsp;→&nbsp; x = 4 · <span class='fr'><b>2</b><i>3</i></span> = <span class='fr'><b>8</b><i>3</i></span>.</div><div class='step'>4. 2x = <span class='fr'><b>4</b><i>5</i></span> &nbsp;→&nbsp; x = <span class='fr'><b>4</b><i>5</i></span> : 2 = <span class='fr'><b>2</b><i>5</i></span>.</div><div class='step mini'>Деление на дробь — это умножение на обратную к ней.</div>
@@ -415,11 +415,11 @@ input.gp.bad{border-color:#b3261e;background:#fdecea}
 </ol></div>
 <div class="ex"><h3>Пример 5</h3>
 <p>Решить 3(x − 2) + 7(4 − 2x) − 5(5 − 3x) = 4 − 6x.</p>
-<div class='step'>1. Раскрываем скобки, особенно аккуратно третью, с множителем −5: 3x − 6 + 28 − 14x − 25 + 15x = 4 − 6x.</div><div class='step'>2. Приводим подобные слева: 4x − 3 = 4 − 6x.</div><div class='step'>3. Переносим: 4x + 6x = 4 + 3.</div><div class='fx'>10x = 7 &nbsp;→&nbsp; x = 0,7</div>
+<div class='step'>1. Раскрываем скобки, особенно аккуратно третью, с множителем −5: 3x − 6 + 28 − 14x − 25 + 15x = 4 − 6x.</div><div class='step'>2. Приводим подобные слева: 4x − 3 = 4 − 6x.</div><div class='step'>3. Переносим: 4x + 6x = 4 + 3.</div><div class='fx'><span class='nw'>10x = 7</span> &nbsp;→&nbsp; <span class='nw'>x = 0,7</span></div>
 </div>
 <div class="ex"><h3>Пример 6</h3>
 <p>Решить 3(x − 5) + 2(x − 4) = −23.</p>
-<div class='step'>1. 3x − 15 + 2x − 8 = −23.</div><div class='step'>2. 3x + 2x = −23 + 8 + 15.</div><div class='fx'>5x = 0 &nbsp;→&nbsp; x = 0</div><div class='step mini'>Ноль в ответе — обычный корень. Это не «нет корней» и не повод сбиваться с алгоритма.</div>
+<div class='step'>1. 3x − 15 + 2x − 8 = −23.</div><div class='step'>2. 3x + 2x = −23 + 8 + 15.</div><div class='fx'><span class='nw'>5x = 0</span> &nbsp;→&nbsp; <span class='nw'>x = 0</span></div><div class='step mini'>Ноль в ответе — обычный корень. Это не «нет корней» и не повод сбиваться с алгоритма.</div>
 </div>
 <div class="hard"><div class="n">ДВА ОСОБЫХ СЛУЧАЯ</div>
 Если после приведения подобных переменная исчезла совсем, смотрим на то, что осталось:<br>
@@ -1045,7 +1045,7 @@ function makeTrainer(id, items){
 makeTrainer("ts1", [{"q": "Чему равно 2x + 4 − (2a + 5 − 3x)?", "opts": ["5x − 2a − 1", "5x − 2a + 9", "−x − 2a − 1", "5x + 2a − 1"], "ans": 0, "why": "Минус меняет знак каждого слагаемого: −2a − 5 + 3x. Остаётся 5x − 2a − 1."}, {"q": "Чему равно 3 − (x − 7)?", "opts": ["10 − x", "−4 − x", "10 + x", "−x − 4"], "ans": 0, "why": "3 − x + 7 = 10 − x. Минус перед скобкой сделал из −7 плюс семь."}, {"q": "Чему равно −(15x − 20a + 45)?", "opts": ["−15x + 20a − 45", "−15x − 20a + 45", "15x + 20a − 45", "−15x + 20a + 45"], "ans": 0, "why": "Знак меняется у всех трёх слагаемых."}, {"q": "Чему равно 5 − 2(3 − x)?", "opts": ["2x − 1", "−2x − 1", "2x + 11", "−x − 1"], "ans": 0, "why": "5 − 6 + 2x = 2x − 1. Произведение −2 · (−x) даёт +2x."}, {"q": "Какое выражение останется в скобках: −15x + 20a − 45 = −5 · (…)?", "opts": ["3x − 4a + 9", "3x + 4a − 9", "−3x + 4a − 9", "3x − 4a − 9"], "ans": 0, "why": "Делим каждое слагаемое на −5: −15x : (−5) = 3x, 20a : (−5) = −4a, −45 : (−5) = 9."}, {"q": "Чему равно a − (b − c)?", "opts": ["a − b + c", "a − b − c", "a + b − c", "−a − b + c"], "ans": 0, "why": "Минус перед скобкой: b становится −b, а −c становится +c."}, {"q": "Чему равно −(−x + 3)?", "opts": ["x − 3", "−x − 3", "x + 3", "−x + 3"], "ans": 0, "why": "Оба знака меняются на противоположные."}, {"q": "Чему равно 4 − 3(2 − 5x)?", "opts": ["15x − 2", "−15x − 2", "15x + 10", "−15x + 10"], "ans": 0, "why": "4 − 6 + 15x = 15x − 2."}]);
 makeTrainer("ts2", [{"q": "Является ли число 4 корнем уравнения 5x = 20?", "opts": ["да", "нет"], "ans": 0, "why": "5 · 4 = 20, равенство 20 = 20 верное."}, {"q": "Является ли число 4 корнем уравнения 20x = 10?", "opts": ["да", "нет"], "ans": 1, "why": "20 · 4 = 80, а равенство 80 = 10 неверное."}, {"q": "Является ли число −5 корнем уравнения <span class='pw'>x<sup>2</sup></span> = 25?", "opts": ["да", "нет"], "ans": 0, "why": "(−5)<sup>2</sup> = 25 — равенство верное."}, {"q": "Является ли число −9 корнем уравнения <span class='pw'>x<sup>2</sup></span> = −81?", "opts": ["да", "нет"], "ans": 1, "why": "(−9)<sup>2</sup> = 81, а нужно −81. Квадрат не бывает отрицательным."}, {"q": "Является ли число 13 корнем уравнения 0x = 0?", "opts": ["да", "нет"], "ans": 0, "why": "0 · 13 = 0, равенство 0 = 0 верное. У этого уравнения корнем является любое число."}, {"q": "Является ли число 0 корнем уравнения 0x = 25?", "opts": ["да", "нет"], "ans": 1, "why": "0 · 0 = 0, а равенство 0 = 25 неверное. У этого уравнения корней нет вообще."}, {"q": "Является ли число 2 корнем уравнения 3x − 6 = 0?", "opts": ["да", "нет"], "ans": 0, "why": "3 · 2 − 6 = 0 — верно."}, {"q": "Является ли число 3 корнем уравнения (x + 3)(x − 5) = 0?", "opts": ["да", "нет"], "ans": 1, "why": "(3 + 3)(3 − 5) = 6 · (−2) = −12, а не 0. Корни здесь −3 и 5."}]);
 makeTrainer("ts3", [{"q": "Сколько корней у уравнения 0x = 0?", "opts": ["ровно один", "ни одного", "бесконечно много"], "ans": 2, "why": "Любое число подходит: 0 умножить на что угодно даёт 0."}, {"q": "Сколько корней у уравнения 0x = 25?", "opts": ["ровно один", "ни одного", "бесконечно много"], "ans": 1, "why": "Слева всегда получается 0, а справа 25 — равенство никогда не станет верным."}, {"q": "Сколько корней у уравнения 5x = 25?", "opts": ["ровно один", "ни одного", "бесконечно много"], "ans": 0, "why": "Коэффициент при x не равен нулю, поэтому корень один: x = 5."}, {"q": "Сколько корней у уравнения 10x = 10x?", "opts": ["ровно один", "ни одного", "бесконечно много"], "ans": 2, "why": "Равенство верно при любом x."}, {"q": "Сколько корней у уравнения 2(2x − 4) = 4(x + 3) − 7?", "opts": ["ровно один", "ни одного", "бесконечно много"], "ans": 1, "why": "После раскрытия скобок получается 0 = 13 — неверное равенство."}, {"q": "Сколько корней у уравнения 3(x + 5) − 15 = 3x?", "opts": ["ровно один", "ни одного", "бесконечно много"], "ans": 2, "why": "После раскрытия скобок получается 0 = 0 — верное равенство."}, {"q": "Сколько корней у уравнения 7x − 3 = 4?", "opts": ["ровно один", "ни одного", "бесконечно много"], "ans": 0, "why": "7x = 7, значит x = 1 — единственный корень."}, {"q": "Сколько корней у уравнения x + 1 = x + 2?", "opts": ["ровно один", "ни одного", "бесконечно много"], "ans": 1, "why": "После переноса получается 0 = 1 — равенство неверное."}]);
-makeTrainer("ts4", [{"q": "Верно ли выполнен перенос: 5x − 3y = 4x − 8y &nbsp;→&nbsp; 5x − 4x = 3y − 8y?", "opts": ["да", "нет"], "ans": 0, "why": "4x переехало влево со знаком минус, −3y уехало вправо со знаком плюс."}, {"q": "Верно ли выполнен перенос: −5a + 2b − 4 = 3a + 8b + 5 &nbsp;→&nbsp; −5a − 3a − 4 = 8b − 2b + 5?", "opts": ["да", "нет"], "ans": 0, "why": "Все четыре перенесённых слагаемых поменяли знак."}, {"q": "Верно ли выполнен перенос: 3x + 5 = 6 &nbsp;→&nbsp; 3x = 6 + 5?", "opts": ["да", "нет"], "ans": 1, "why": "Пятёрка переезжает вправо со знаком минус: 3x = 6 − 5."}, {"q": "Верно ли выполнен перенос: 4x − 3 = 4 − 6x &nbsp;→&nbsp; 4x + 6x = 4 + 3?", "opts": ["да", "нет"], "ans": 0, "why": "−6x стало +6x слева, −3 стало +3 справа."}, {"q": "Верно ли выполнен перенос: 2x = 7 − x &nbsp;→&nbsp; 2x + x = 7?", "opts": ["да", "нет"], "ans": 0, "why": "−x переехало влево и стало +x."}, {"q": "Верно ли выполнен перенос: 5 − 2x = 3x &nbsp;→&nbsp; −2x − 3x = −5?", "opts": ["да", "нет"], "ans": 0, "why": "3x уехало влево со знаком минус, пятёрка — вправо со знаком минус."}, {"q": "Верно ли выполнен перенос: <span class='fr'><b>x</b><i>2</i></span> + 3 = x &nbsp;→&nbsp; <span class='fr'><b>x</b><i>2</i></span> − x = 3?", "opts": ["да", "нет"], "ans": 1, "why": "Тройка должна уехать вправо со знаком минус: <span class='fr'><b>x</b><i>2</i></span> − x = −3."}, {"q": "Верно ли выполнен перенос: 6x = 2x − 8 &nbsp;→&nbsp; 6x − 2x = −8?", "opts": ["да", "нет"], "ans": 0, "why": "2x переехало влево со знаком минус, восьмёрка осталась справа."}]);
+makeTrainer("ts4", [{"q": "Верно ли выполнен перенос: <span class='nw'>5x − 3y = 4x − 8y</span> &nbsp;→&nbsp; <span class='nw'>5x − 4x = 3y − 8y</span>?", "opts": ["да", "нет"], "ans": 0, "why": "4x переехало влево со знаком минус, −3y уехало вправо со знаком плюс."}, {"q": "Верно ли выполнен перенос: <span class='nw'>−5a + 2b − 4 = 3a + 8b + 5</span> &nbsp;→&nbsp; <span class='nw'>−5a − 3a − 4 = 8b − 2b + 5</span>?", "opts": ["да", "нет"], "ans": 0, "why": "Все четыре перенесённых слагаемых поменяли знак."}, {"q": "Верно ли выполнен перенос: <span class='nw'>3x + 5 = 6</span> &nbsp;→&nbsp; <span class='nw'>3x = 6 + 5</span>?", "opts": ["да", "нет"], "ans": 1, "why": "Пятёрка переезжает вправо со знаком минус: 3x = 6 − 5."}, {"q": "Верно ли выполнен перенос: <span class='nw'>4x − 3 = 4 − 6x</span> &nbsp;→&nbsp; <span class='nw'>4x + 6x = 4 + 3</span>?", "opts": ["да", "нет"], "ans": 0, "why": "−6x стало +6x слева, −3 стало +3 справа."}, {"q": "Верно ли выполнен перенос: <span class='nw'>2x = 7 − x</span> &nbsp;→&nbsp; <span class='nw'>2x + x = 7</span>?", "opts": ["да", "нет"], "ans": 0, "why": "−x переехало влево и стало +x."}, {"q": "Верно ли выполнен перенос: <span class='nw'>5 − 2x = 3x</span> &nbsp;→&nbsp; <span class='nw'>−2x − 3x = −5</span>?", "opts": ["да", "нет"], "ans": 0, "why": "3x уехало влево со знаком минус, пятёрка — вправо со знаком минус."}, {"q": "Верно ли выполнен перенос: <span class='nw'><span class='fr'><b>x</b><i>2</i></span> + 3 = x</span> &nbsp;→&nbsp; <span class='nw'><span class='fr'><b>x</b><i>2</i></span> − x = 3</span>?", "opts": ["да", "нет"], "ans": 1, "why": "Тройка должна уехать вправо со знаком минус: <span class='fr'><b>x</b><i>2</i></span> − x = −3."}, {"q": "Верно ли выполнен перенос: <span class='nw'>6x = 2x − 8</span> &nbsp;→&nbsp; <span class='nw'>6x − 2x = −8</span>?", "opts": ["да", "нет"], "ans": 0, "why": "2x переехало влево со знаком минус, восьмёрка осталась справа."}]);
 makeTrainer("ts5", [{"q": "Реши уравнение: 3x = 6", "ans": ["2"], "why": "x = 6 : 3 = 2."}, {"q": "Реши уравнение: 5x = 20", "ans": ["4"], "why": "x = 20 : 5 = 4."}, {"q": "Реши уравнение: 2x + 6 = 0", "ans": ["-3"], "why": "2x = −6, значит x = −3."}, {"q": "Реши уравнение: 3x + 5 = 11", "ans": ["2"], "why": "3x = 11 − 5 = 6, значит x = 2."}, {"q": "Реши уравнение: 4x − 7 = 5", "ans": ["3"], "why": "4x = 5 + 7 = 12, значит x = 3."}, {"q": "Реши уравнение: 2(x − 3) = 8", "ans": ["7"], "why": "2x − 6 = 8, отсюда 2x = 14 и x = 7."}, {"q": "Реши уравнение: 5 − 2x = 1", "ans": ["2"], "why": "−2x = 1 − 5 = −4, значит x = 2."}, {"q": "Реши уравнение: 10x = 7", "ans": ["0,7"], "why": "x = 7 : 10 = 0,7."}]);
 
 /* ---------- тренажёры и пропуски обязательны для отправки ---------- */

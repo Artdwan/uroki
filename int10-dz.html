@@ -110,7 +110,7 @@ details[open] summary{margin-bottom:8px}
 .tohw span{color:var(--muted);font-weight:400;font-size:15px;display:block;margin-top:3px}
 .wrap-t th,.wrap-t td{white-space:normal;text-align:left;vertical-align:top}
 .small,.mini{color:var(--muted);font-size:15px}
-.fr{display:inline-block;vertical-align:-0.58em;text-align:center;margin:0 3px}
+.fr{display:inline-block;vertical-align:middle;text-align:center;margin:0 3px}
 .fr b{display:block;border-bottom:1.7px solid currentColor;padding:0 5px;font-weight:400}
 .fr i{display:block;font-style:normal;padding:0 5px}
 .bad{color:#b3261e;font-weight:700}
@@ -1020,6 +1020,7 @@ function makeTrainer(id, items){
     b.innerHTML='<div class="trdone" style="flex:1 1 100%">'+ok+" из "+items.length+
       " ("+pct+" %) · "+word+'</div><button type="button" class="pri" data-go="1">Пройти заново</button>';
     sc.textContent="готово";
+    if(window.trFinished) window.trFinished(id, ok, items.length);
   }
 
   function show(){
