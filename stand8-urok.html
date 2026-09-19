@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Стандартный вид числа — урок с заданиями, §3, 8 класс</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:800px;margin:0 auto;padding:16px 14px 60px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+.f-formula{font-size:19px}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.step{margin:6px 0}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.fig{margin:12px 0;text-align:center}
+
+.snw{margin:14px 0;border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--bg)}
+.snbar{display:flex;flex-wrap:wrap;gap:9px;align-items:center}
+.snbar label{font-size:15px;color:var(--muted)}
+.snbar input{font:inherit;font-size:18px;padding:8px 10px;border:1.5px solid var(--line);
+  border-radius:9px;background:var(--card);color:inherit;text-align:center}
+.snbar input.num{width:190px}
+.snbar input.pw{width:86px}
+.snbar button{min-height:42px;font-size:15px;padding:8px 13px}
+.snex{margin-top:9px;display:flex;flex-wrap:wrap;gap:7px}
+.snex button{font-size:14px;padding:6px 10px;min-height:36px}
+.snview{margin-top:12px;text-align:center;font-size:23px;font-weight:700;line-height:2;
+  letter-spacing:.5px;word-break:break-all}
+.snview .zero{color:var(--muted);font-weight:500}
+.snview .sig{color:#b3261e}
+.snsteps{margin:10px 0 0;padding:0;list-style:none;counter-reset:sn}
+.snsteps li{counter-increment:sn;margin:7px 0;padding-left:32px;position:relative;font-size:16px;
+  line-height:1.85}
+.snsteps li::before{content:counter(sn);position:absolute;left:0;top:2px;width:23px;height:23px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:13px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.snres{margin-top:10px;border:1px solid var(--line);border-radius:10px;padding:11px;
+  background:var(--card);text-align:center;font-size:22px;font-weight:700;line-height:2}
+.snnote{color:var(--muted);font-size:15px;margin-top:9px;line-height:1.5}
+.snbad{color:#b3261e;font-weight:700}
+.scale{text-align:center;margin:12px 0}
+.scale svg{width:100%;max-width:340px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+
+.pw{white-space:nowrap}
+.pw sup{font-size:0.68em;line-height:0;vertical-align:0.62em;padding-left:1px}
+.nw{white-space:nowrap}
+.fig{text-align:center;margin:12px 0}
+.fx{display:block;background:var(--acc-soft,var(--acc2,#e8f0ff));border:1px solid var(--line);
+  border-radius:10px;padding:11px 13px;margin:12px 0;text-align:center;font-size:20px;
+  line-height:2.1;font-weight:600;white-space:normal;overflow-wrap:break-word}
+.ex .fx,.zsol .fx{font-size:18px;margin:9px 0}
+.def{border:1px solid var(--line);border-left:4px solid #2f6bd8;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#eef3fb}
+.def .n{font-size:14px;color:#2f6bd8;font-weight:700;letter-spacing:.4px}
+.rule2{border:1px solid var(--line);border-left:4px solid #c0397a;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdf0f6}
+.rule2 .n{font-size:14px;color:#a02a62;font-weight:700;letter-spacing:.4px}
+.hard{border:1px solid var(--line);border-left:4px solid #7a3fbf;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#f4efff}
+.hard .n{font-size:14px;color:#5f2ea0;font-weight:700;letter-spacing:.4px}
+@media (prefers-color-scheme:dark){.rule2{background:#2a1b23}.def{background:#18212f}
+  .hard{background:#221a33}}
+.ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;background:var(--bg)}
+.ex h3{margin-top:0}
+.zad{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;
+  background:var(--bg)}
+.zad .zh{font-weight:700;font-size:17px;margin-bottom:6px;color:var(--acc)}
+.zad .zh span{color:var(--muted);font-weight:400;font-size:15px}
+.zad .zt{font-size:17px;line-height:1.75}
+.zad ol,.zad ul{margin:7px 0 0;padding-left:22px}
+.zad li{margin:5px 0}
+.zs{margin-top:10px;border-top:1px dashed var(--line);padding-top:7px}
+.zs summary{cursor:pointer;color:var(--acc);font-weight:600;font-size:16px;
+  padding:5px 0;list-style:none}
+.zs summary::-webkit-details-marker{display:none}
+.zs summary::before{content:"▸ ";font-weight:700}
+.zs[open] summary::before{content:"▾ "}
+.zsol{font-size:16px;line-height:1.7;padding-top:4px}
+.step{margin:7px 0}
+.step.mini,.mini,.small{color:var(--muted);font-size:15px}
+.tools{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.tools button{font-size:15px;padding:8px 13px;min-height:42px}
+.fr{display:inline-block;vertical-align:-0.58em;text-align:center;margin:0 3px}
+.fr b{display:block;border-bottom:1.7px solid currentColor;padding:0 6px;font-weight:400;
+  white-space:nowrap}
+.fr i{display:block;font-style:normal;padding:0 6px;white-space:nowrap}
+.vtab{width:100%;border-collapse:collapse;font-size:16px;margin:10px 0}
+.vtab th,.vtab td{border:1px solid var(--line);padding:6px 6px;text-align:center}
+.vtab th{background:var(--acc2,#e8f0ff);font-size:15px}
+.vtab td.l{text-align:left}
+.fgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));margin:9px 0}
+.fbox{border:1px solid var(--line);border-radius:12px;padding:9px 12px 11px;background:var(--bg)}
+.fbox h4{margin:0 0 3px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.fbox p{margin:6px 0 0;line-height:1.6;font-size:16px}
+.qq{margin:10px 0 0;padding-left:22px}
+.qq li{margin:5px 0}
+@media print{
+  .tools{display:none !important}
+  .zad{break-inside:avoid}
+}
+
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+@media print{
+  body{background:#fff}
+  .tools{display:none !important}
+  .card{border:none;box-shadow:none;padding:0;margin:0 0 12px}
+  .zad{break-inside:avoid;background:#fff}
+  .sheet{font-size:13px}
+  .sheet h2{font-size:18px}
+  .sheet th,.sheet td{padding:4px 5px;font-size:12px}
+  @page{size:A4;margin:12mm}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card top">
+  <h1>Стандартный вид числа</h1>
+  <div class="meta">Алгебра · 8 класс · §3 · теория порциями, разобранные примеры
+  и 28 заданий для самостоятельной работы</div>
+  <div class="note" style="margin-top:14px">
+    <b>Как работать.</b> Читаешь порцию теории, разбираешь пример, затем решаешь задания
+    этого блока <b>в тетради</b> — и только потом открываешь решение и сверяешься.
+    <div style="margin-top:8px">Главная мысль темы: у любого числа, кроме нуля, есть
+    ровно одна запись вида a · 10 в степени n, где множитель лежит между 1 и 10.
+    Показатель этой степени и называют порядком.</div>
+    <div style="margin-top:8px">В третьем блоке есть разборщик: впиши туда любое число —
+    он покажет, куда едет запятая и какой получается показатель.</div>
+    <div style="margin-top:8px">Тренажёров и отправки работы здесь нет: это урок.</div>
+  </div>
+  <div class="tools">
+    <button type="button" id="openall">Раскрыть все решения</button>
+    <button type="button" id="closeall">Свернуть все</button>
+  </div>
+</div>
+
+<div class="card">
+
+<h2>1. Зачем нужен стандартный вид</h2>
+<p>Масса Земли — 6 000 000 000 000 000 000 000 000 кг, масса Марса —
+640 000 000 000 000 000 000 000 кг. Сравнить такие записи на глаз почти невозможно:
+пока пересчитаешь нули, собьёшься.</p>
+<p>Но каждое из чисел можно записать как произведение:</p>
+<div class="fx"><span class='nw'>6 · <span class='pw'>10<sup>24</sup></span></span> кг &nbsp; и &nbsp; <span class='nw'>6,4 · <span class='pw'>10<sup>23</sup></span></span> кг</div>
+<p>Теперь видно сразу: у Земли показатель больше, значит и масса больше.</p>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>
+Записать число b в <b>стандартном виде</b> — значит представить его в виде произведения
+числа a, которое больше или равно 1, но меньше 10, и степени числа 10 с целым
+показателем. Этот показатель называют <b>порядком числа</b>.</div>
+<div class="fx">b = <span class='nw'>a · <span class='pw'>10<sup>n</sup></span></span>, &nbsp; где 1 ≤ a &lt; 10, &nbsp; n — целое</div>
+<div class="fig"><svg viewBox="0 0 340 500" role="img" aria-label="шкала порядков"><rect x="0" y="0" width="340" height="500" rx="12" fill="#ffffff"/><text x="58" y="20" font-size="13" fill="#5b6270" text-anchor="middle" font-weight="600">порядок</text><text x="106" y="20" font-size="13" fill="#5b6270" text-anchor="start" font-weight="600">что это такое</text><line x1="92" y1="32" x2="92" y2="466" stroke="#15181e" stroke-width="2.4"/><circle cx="92" cy="46" r="4.6" fill="#2f6bd8"/><text x="80" y="46" font-size="15" fill="#15181e" text-anchor="end" dy=".35em" font-weight="700">10<tspan dy="-6" font-size="11">16</tspan></text><text x="104" y="44" font-size="14" fill="#15181e" text-anchor="start" font-weight="600">световой год</text><text x="104" y="60" font-size="12.5" fill="#5b6270" text-anchor="start">9,5 · 10¹⁵ м</text><circle cx="92" cy="96" r="4.6" fill="#2f6bd8"/><text x="80" y="96" font-size="15" fill="#15181e" text-anchor="end" dy=".35em" font-weight="700">10<tspan dy="-6" font-size="11">11</tspan></text><text x="104" y="94" font-size="14" fill="#15181e" text-anchor="start" font-weight="600">от Земли до Солнца</text><text x="104" y="110" font-size="12.5" fill="#5b6270" text-anchor="start">1,5 · 10¹¹ м</text><circle cx="92" cy="146" r="4.6" fill="#2f6bd8"/><text x="80" y="146" font-size="15" fill="#15181e" text-anchor="end" dy=".35em" font-weight="700">10<tspan dy="-6" font-size="11">7</tspan></text><text x="104" y="144" font-size="14" fill="#15181e" text-anchor="start" font-weight="600">диаметр Земли</text><text x="104" y="160" font-size="12.5" fill="#5b6270" text-anchor="start">1,3 · 10⁷ м</text><circle cx="92" cy="196" r="4.6" fill="#2f6bd8"/><text x="80" y="196" font-size="15" fill="#15181e" text-anchor="end" dy=".35em" font-weight="700">10<tspan dy="-6" font-size="11">3</tspan></text><text x="104" y="194" font-size="14" fill="#15181e" text-anchor="start" font-weight="600">километр</text><text x="104" y="210" font-size="12.5" fill="#5b6270" text-anchor="start">1 · 10³ м</text><circle cx="92" cy="246" r="4.6" fill="#2f6bd8"/><text x="80" y="246" font-size="15" fill="#15181e" text-anchor="end" dy=".35em" font-weight="700">10<tspan dy="-6" font-size="11">0</tspan></text><text x="104" y="244" font-size="14" fill="#15181e" text-anchor="start" font-weight="600">рост человека</text><text x="104" y="260" font-size="12.5" fill="#5b6270" text-anchor="start">1,7 · 10⁰ м</text><circle cx="92" cy="296" r="4.6" fill="#2f6bd8"/><text x="80" y="296" font-size="15" fill="#15181e" text-anchor="end" dy=".35em" font-weight="700">10<tspan dy="-6" font-size="11">−2</tspan></text><text x="104" y="294" font-size="14" fill="#15181e" text-anchor="start" font-weight="600">вишня</text><text x="104" y="310" font-size="12.5" fill="#5b6270" text-anchor="start">1,3 · 10⁻² м</text><circle cx="92" cy="346" r="4.6" fill="#2f6bd8"/><text x="80" y="346" font-size="15" fill="#15181e" text-anchor="end" dy=".35em" font-weight="700">10<tspan dy="-6" font-size="11">−6</tspan></text><text x="104" y="344" font-size="14" fill="#15181e" text-anchor="start" font-weight="600">клетка крови</text><text x="104" y="360" font-size="12.5" fill="#5b6270" text-anchor="start">7 · 10⁻⁶ м</text><circle cx="92" cy="396" r="4.6" fill="#2f6bd8"/><text x="80" y="396" font-size="15" fill="#15181e" text-anchor="end" dy=".35em" font-weight="700">10<tspan dy="-6" font-size="11">−9</tspan></text><text x="104" y="394" font-size="14" fill="#15181e" text-anchor="start" font-weight="600">нанометр</text><text x="104" y="410" font-size="12.5" fill="#5b6270" text-anchor="start">1 · 10⁻⁹ м</text><circle cx="92" cy="446" r="4.6" fill="#2f6bd8"/><text x="80" y="446" font-size="15" fill="#15181e" text-anchor="end" dy=".35em" font-weight="700">10<tspan dy="-6" font-size="11">−10</tspan></text><text x="104" y="444" font-size="14" fill="#15181e" text-anchor="start" font-weight="600">молекула воды</text><text x="104" y="460" font-size="12.5" fill="#5b6270" text-anchor="start">3 · 10⁻¹⁰ м</text><text x="170" y="486" font-size="12.5" fill="#5b6270" text-anchor="middle">шаг вниз — в десять раз меньше</text></svg></div>
+<p>Порядок сразу говорит, насколько величина большая или маленькая: каждый шаг по шкале —
+это десять раз.</p>
+<div class="ex"><h3>Пример 1</h3>
+<p>Какое из чисел имеет стандартный вид <span class='nw'>4,05 · <span class='pw'>10<sup>−2</sup></span></span>: 40,5; 405; 0,0405?</p>
+<div class="step">1. 40,5 = <span class='nw'>4,05 · <span class='pw'>10<sup>1</sup></span></span> — множитель подходит, но показатель 1.</div><div class="step">2. 405 = <span class='nw'>4,05 · <span class='pw'>10<sup>2</sup></span></span>.</div><div class="step">3. 0,0405 = <span class='nw'>4,05 · <span class='pw'>10<sup>−2</sup></span></span> — это и есть нужное число.</div><div class="fx">Ответ: 0,0405</div><div class="step mini">Множитель a у всех трёх чисел один и тот же — различает их именно показатель степени.</div>
+</div>
+
+<h3>Задания к блоку 1</h3>
+<div class="zad" id="z1"><div class="zh">Задание 1<span> · узнавание</span></div><div class="zt">Выпиши числа, записанные в стандартном виде:<ol><li><span class='nw'>57 · <span class='pw'>10<sup>4</sup></span></span>;</li><li><span class='nw'>0,023 · <span class='pw'>10<sup>−6</sup></span></span>;</li><li><span class='nw'>4,5 · <span class='pw'>10<sup>13</sup></span></span>;</li><li><span class='nw'>1,067 · <span class='pw'>10<sup>−4</sup></span></span>;</li><li><span class='nw'>30 · <span class='pw'>10<sup>5</sup></span></span>;</li><li><span class='nw'>0,7 · <span class='pw'>10<sup>4</sup></span></span>.</li></ol></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">Проверяем только одно: множитель должен быть не меньше 1 и меньше 10.</div><div class="step">57, 30 — больше десяти; 0,023 и 0,7 — меньше единицы. Эти четыре записи стандартными не являются.</div><div class="fx">Ответ: <span class='nw'>4,5 · <span class='pw'>10<sup>13</sup></span></span> и <span class='nw'>1,067 · <span class='pw'>10<sup>−4</sup></span></span></div><div class="step mini">Показатель степени при проверке роли не играет: он может быть каким угодно целым.</div></div></details></div><div class="zad" id="z2"><div class="zh">Задание 2<span> · узнавание</span></div><div class="zt">Какие из чисел записаны в стандартном виде:<ol><li><span class='nw'>0,48 · <span class='pw'>10<sup>3</sup></span></span>;</li><li><span class='nw'>87,9 · <span class='pw'>10<sup>−4</sup></span></span>;</li><li>8 · 100<sup>12</sup>;</li><li><span class='nw'>9,1 · <span class='pw'>10<sup>−45</sup></span></span>;</li><li><span class='nw'>6 · <span class='pw'>10<sup>−4</sup></span></span>;</li><li><span class='nw'>24 · <span class='pw'>10<sup>6</sup></span></span>.</li></ol></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">0,48 меньше единицы, 87,9 и 24 больше десяти — не подходят.</div><div class="step">В третьей записи основание степени не 10, а 100, поэтому стандартным видом она не является, даже если множитель годится.</div><div class="fx">Ответ: <span class='nw'>9,1 · <span class='pw'>10<sup>−45</sup></span></span> и <span class='nw'>6 · <span class='pw'>10<sup>−4</sup></span></span></div><div class="step mini">Множитель a = 6 годится: условие 1 ≤ a &lt; 10 не требует запятой.</div></div></details></div><div class="zad" id="z3"><div class="zh">Задание 3<span> · рассуждение</span></div><div class="zt">Верно ли, что в стандартном виде можно записать любое число? Если нет — назови исключение.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">Любое положительное число записать можно: подбором показателя всегда добиваемся множителя от 1 до 10.</div><div class="step">Отрицательные числа записывают со знаком минус перед множителем, например −<span class='nw'>2,5 · <span class='pw'>10<sup>3</sup></span></span> = −2500.</div><div class="step">А вот нуль записать нельзя: сколько ни умножай на степень десятки, множитель a не станет одновременно нулём и числом от 1 до 10.</div><div class="fx">Ответ: любое, кроме нуля</div><div class="step mini">Это единственное исключение во всей теме.</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>2. Порядок числа</h2>
+<div class="def"><div class="n">ЧТО ТАКОЕ ПОРЯДОК</div>
+Порядок — это показатель степени десятки в стандартной записи. Он говорит,
+между какими соседними степенями десятки лежит число.</div>
+<div class="fx"><span class='pw'>10<sup>n</sup></span> ≤ b &lt; <span class='pw'>10<sup>n+1</sup></span></div>
+<p>Например, порядок числа <span class='nw'>5 · <span class='pw'>10<sup>18</sup></span></span> равен 18, а порядок числа <span class='nw'>1,2547 · <span class='pw'>10<sup>−21</sup></span></span> равен −21.</p>
+<div class="rule2"><div class="n">ЧЕГО ПОРЯДОК НЕ ОЗНАЧАЕТ</div>
+Отрицательный порядок не делает число отрицательным: <span class='nw'>5 · <span class='pw'>10<sup>−3</sup></span></span> = 0,005 —
+это положительное число, просто маленькое. Знак числа задаёт множитель a, а не показатель.</div>
+<div class="ex"><h3>Пример 2</h3>
+<p>Сравним <span class='nw'>9,5687 · <span class='pw'>10<sup>14</sup></span></span> и <span class='nw'>1,06 · <span class='pw'>10<sup>15</sup></span></span>.</p>
+<div class="step">1. Порядки разные: 14 и 15.</div><div class="step">2. У положительных чисел больше то, у которого порядок больше.</div><div class="fx"><span class='nw'>9,5687 · <span class='pw'>10<sup>14</sup></span></span> &lt; <span class='nw'>1,06 · <span class='pw'>10<sup>15</sup></span></span></div><div class="step mini">Множители сравнивать не пришлось: 9,5687 больше 1,06, но порядок решает первым.</div>
+</div>
+
+<h3>Задания к блоку 2</h3>
+<div class="zad" id="z4"><div class="zh">Задание 4<span> · порядок</span></div><div class="zt">Назови порядок каждого числа:<ol><li><span class='nw'>4,05 · <span class='pw'>10<sup>−6</sup></span></span>;</li><li><span class='nw'>9,49 · <span class='pw'>10<sup>−4</sup></span></span>;</li><li><span class='nw'>2,081 · <span class='pw'>10<sup>24</sup></span></span>;</li><li><span class='nw'>3,8 · <span class='pw'>10<sup>−30</sup></span></span>;</li><li><span class='nw'>2,56 · <span class='pw'>10<sup>10</sup></span></span>.</li></ol></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">Порядок — это показатель степени десятки, больше ничего считать не нужно.</div><div class="fx">−6; &nbsp; −4; &nbsp; 24; &nbsp; −30; &nbsp; 10</div><div class="step mini">Если бы множитель был не из промежутка от 1 до 10, сначала пришлось бы привести запись к стандартному виду.</div></div></details></div><div class="zad" id="z5"><div class="zh">Задание 5<span> · рассуждение</span></div><div class="zt">Верно ли утверждение:<ol><li>чем больше порядок числа, тем больше само число;</li><li>если порядок числа отрицательный, то и само число отрицательное?</li></ol></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Для положительных чисел — верно: разница в порядке перекрывает любую разницу множителей, ведь множитель меньше 10.</div><div class="step">2. Неверно. <span class='nw'>5 · <span class='pw'>10<sup>−3</sup></span></span> = 0,005 — число положительное. Отрицательный порядок означает лишь, что число меньше единицы.</div><div class="fx">Ответ: первое — верно, второе — неверно</div><div class="step mini">Для отрицательных чисел первое утверждение тоже ломается: −<span class='nw'>2 · <span class='pw'>10<sup>5</sup></span></span> меньше, чем −<span class='nw'>2 · <span class='pw'>10<sup>3</sup></span></span>.</div></div></details></div><div class="zad" id="z6"><div class="zh">Задание 6<span> · порядок</span></div><div class="zt">Есть ли среди чисел <span class='nw'>4 · <span class='pw'>10<sup>6</sup></span></span>, <span class='nw'>5,607 · <span class='pw'>10<sup>4</sup></span></span>, <span class='nw'>2,5 · <span class='pw'>10<sup>−4</sup></span></span> число, порядок которого равен 4? Если есть — назови его.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">Смотрим показатели: 6, 4 и −4.</div><div class="fx">Да, это <span class='nw'>5,607 · <span class='pw'>10<sup>4</sup></span></span></div><div class="step mini">У третьего числа порядок −4 — это не то же самое, что 4.</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>3. Большое число в стандартном виде</h2>
+<div class="rule2"><div class="n">ПРАВИЛО</div>
+Если число больше 10, переносим запятую <b>влево</b> — так, чтобы в целой части осталась
+одна ненулевая цифра. Сколько шагов сделала запятая, такой и показатель степени,
+и он положительный.</div>
+<div class="ex"><h3>Пример 3</h3>
+<div class="step">350 000: первая значащая цифра 3, ставим запятую после неё — 3,5. Запятая переехала на 5 шагов влево.</div><div class="fx">350 000 = <span class='nw'>3,5 · <span class='pw'>10<sup>5</sup></span></span></div><div class="step">183,023: запятая переезжает на 2 шага влево.</div><div class="fx">183,023 = <span class='nw'>1,83023 · <span class='pw'>10<sup>2</sup></span></span></div><div class="step mini">Проверка: чтобы вернуться к исходному числу, запятую двигают обратно — вправо на столько же шагов.</div>
+</div>
+<h3>Разбор по шагам для любого числа</h3>
+<div class="meta">Впиши своё число — страница покажет, куда едет запятая, какой получится
+показатель и какой у числа порядок. Второе поле нужно, если в записи уже есть множитель
+вида <span class='pw'>10<sup>n</sup></span>.</div>
+<div class="snw" id="sn1"><div class="snbar"><label for="sn1v">число</label><input type="text" class="num" id="sn1v" autocomplete="off" inputmode="decimal" value="350000"><label for="sn1p">· 10 в степени</label><input type="text" class="pw" id="sn1p" autocomplete="off" inputmode="text" value="0"><button type="button" class="pri" id="sn1go">Разобрать</button></div><div class="snex"><button type="button" data-ex="350000 0">350000</button><button type="button" data-ex="183,023 0">183,023</button><button type="button" data-ex="0,000000052 0">0,000000052</button><button type="button" data-ex="0,58702 0">0,58702</button><button type="button" data-ex="27 5">27 · 10⁵</button><button type="button" data-ex="0,0049 -2">0,0049 · 10⁻²</button></div><div class="snview" id="sn1w"></div><ol class="snsteps" id="sn1s"></ol><div class="snres" id="sn1r"></div><div class="snnote" id="sn1n"></div></div>
+
+<h3>Задания к блоку 3</h3>
+<div class="zad" id="z7"><div class="zh">Задание 7<span> · запись</span></div><div class="zt">Запиши в стандартном виде:<ol><li>480 000 000;</li><li>3504,8;</li><li>82 400 000 000;</li><li>62 500 000 000 000.</li></ol></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">Считаем, на сколько шагов влево уезжает запятая.</div><div class="fx"><span class='nw'>4,8 · <span class='pw'>10<sup>8</sup></span></span>; &nbsp; <span class='nw'>3,5048 · <span class='pw'>10<sup>3</sup></span></span>; &nbsp; <span class='nw'>8,24 · <span class='pw'>10<sup>10</sup></span></span>; &nbsp; <span class='nw'>6,25 · <span class='pw'>10<sup>13</sup></span></span></div><div class="step mini">Нули в конце числа в множитель не попадают: 4,8, а не 4,80000000.</div></div></details></div><div class="zad" id="z8"><div class="zh">Задание 8<span> · практика</span></div><div class="zt">Учёные полагают, что возраст нашей Вселенной составляет около 14 000 000 000 лет. Запиши это число в стандартном виде.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">Первая значащая цифра 1, за ней 4 — множитель 1,4.</div><div class="step">Запятая переезжает на 10 шагов влево.</div><div class="fx"><span class='nw'>1,4 · <span class='pw'>10<sup>10</sup></span></span> лет</div><div class="step mini">Порядок 10 означает, что число лежит между 10 миллиардами и 100 миллиардами.</div></div></details></div><div class="zad" id="z9"><div class="zh">Задание 9<span> · практика</span></div><div class="zt">Единица длины в астрономии — 1 парсек — приближённо равна 30 857 000 000 000 км. Запиши это значение в стандартном виде.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">Значащие цифры: 3, 0, 8, 5, 7 — множитель 3,0857.</div><div class="step">Всего в числе 14 цифр до запятой, значит запятая делает 13 шагов.</div><div class="fx"><span class='nw'>3,0857 · <span class='pw'>10<sup>13</sup></span></span> км</div><div class="step mini">Нули внутри числа отбрасывать нельзя — они значащие, в отличие от нулей в конце.</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>4. Маленькое число в стандартном виде</h2>
+<div class="rule2"><div class="n">ПРАВИЛО</div>
+Если число меньше единицы, переносим запятую <b>вправо</b> — до первой ненулевой цифры.
+Показатель степени равен числу шагов, но со знаком минус.</div>
+<div class="ex"><h3>Пример 4</h3>
+<div class="step">0,000000052: первая значащая цифра 5, запятая переезжает на 8 шагов вправо.</div><div class="fx">0,000000052 = <span class='nw'>5,2 · <span class='pw'>10<sup>−8</sup></span></span></div><div class="step">0,58702: запятая делает всего один шаг вправо.</div><div class="fx">0,58702 = <span class='nw'>5,8702 · <span class='pw'>10<sup>−1</sup></span></span></div><div class="step mini">Количество шагов совпадает с количеством нулей после запятой плюс один — но считать шаги надёжнее, чем нули.</div>
+</div>
+<div class="def"><div class="n">КАК ПРОВЕРИТЬ СЕБЯ</div>
+Разверни запись обратно: <span class='nw'>5,2 · <span class='pw'>10<sup>−8</sup></span></span> — это 5,2, делённое на 100 000 000.
+Получилось исходное число — значит всё верно.</div>
+
+<h3>Задания к блоку 4</h3>
+<div class="zad" id="z10"><div class="zh">Задание 10<span> · запись</span></div><div class="zt">Запиши в стандартном виде:<ol><li>0,00000214;</li><li>0,000068;</li><li>0,0000000000121;</li><li>0,000000000016.</li></ol></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">Считаем шаги запятой вправо до первой значащей цифры.</div><div class="fx"><span class='nw'>2,14 · <span class='pw'>10<sup>−6</sup></span></span>; &nbsp; <span class='nw'>6,8 · <span class='pw'>10<sup>−5</sup></span></span>; &nbsp; <span class='nw'>1,21 · <span class='pw'>10<sup>−11</sup></span></span>; &nbsp; <span class='nw'>1,6 · <span class='pw'>10<sup>−11</sup></span></span></div><div class="step mini">Два последних числа имеют одинаковый порядок −11, а значит сравнивать их надо по множителю: 1,21 больше 1,6? Нет — значит третье число меньше четвёртого.</div></div></details></div><div class="zad" id="z11"><div class="zh">Задание 11<span> · запись</span></div><div class="zt">Представь в стандартном виде число <span class='fr'><b>1</b><i>125</i></span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Сначала переводим дробь в десятичную: <span class='fr'><b>1</b><i>125</i></span> = <span class='fr'><b>8</b><i>1000</i></span> = 0,008.</div><div class="step">2. Запятая переезжает на 3 шага вправо.</div><div class="fx"><span class='nw'>8 · <span class='pw'>10<sup>−3</sup></span></span></div><div class="step mini">Домножать числитель и знаменатель до тысячных удобнее, чем делить уголком.</div></div></details></div><div class="zad" id="z12"><div class="zh">Задание 12<span> · обратный ход</span></div><div class="zt">Число записано в стандартном виде. Запиши его в виде натурального числа или десятичной дроби:<ol><li><span class='nw'>7,3 · <span class='pw'>10<sup>3</sup></span></span>;</li><li><span class='nw'>2,87 · <span class='pw'>10<sup>6</sup></span></span>;</li><li><span class='nw'>3,8 · <span class='pw'>10<sup>−3</sup></span></span>;</li><li><span class='nw'>5 · <span class='pw'>10<sup>−7</sup></span></span>.</li></ol></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">Показатель положительный — запятая едет вправо, отрицательный — влево.</div><div class="fx">7300; &nbsp; 2 870 000; &nbsp; 0,0038; &nbsp; 0,0000005</div><div class="step mini">Это обратная операция к тому, что мы делали в примерах: полезно уметь в обе стороны.</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>5. Когда запись «почти стандартная»</h2>
+<p>Часто число уже записано как произведение, но множитель не из промежутка от 1 до 10:
+например, <span class='nw'>27 · <span class='pw'>10<sup>5</sup></span></span> или <span class='nw'>0,0049 · <span class='pw'>10<sup>−2</sup></span></span>. Такую запись приводят
+к стандартному виду в два шага.</p>
+<div class="rule2"><div class="n">ПОРЯДОК ДЕЙСТВИЙ</div>
+1. Записать в стандартном виде сам множитель.<br>
+2. Перемножить степени десятки — показатели <b>складываются</b>.</div>
+<div class="ex"><h3>Пример 5</h3>
+<div class="step">1. <span class='nw'>27 · <span class='pw'>10<sup>5</sup></span></span>: множитель 27 = <span class='nw'>2,7 · <span class='pw'>10<sup>1</sup></span></span>.</div><div class="step">2. Складываем показатели: 1 + 5 = 6.</div><div class="fx"><span class='nw'>27 · <span class='pw'>10<sup>5</sup></span></span> = <span class='nw'>2,7 · <span class='pw'>10<sup>6</sup></span></span></div><div class="step">3. <span class='nw'>0,0049 · <span class='pw'>10<sup>−2</sup></span></span>: множитель 0,0049 = <span class='nw'>4,9 · <span class='pw'>10<sup>−3</sup></span></span>, показатели дают −3 + (−2) = −5.</div><div class="fx"><span class='nw'>0,0049 · <span class='pw'>10<sup>−2</sup></span></span> = <span class='nw'>4,9 · <span class='pw'>10<sup>−5</sup></span></span></div><div class="step mini">Главная ошибка здесь — забыть про уже имеющийся множитель и оставить только новый показатель.</div>
+</div>
+
+<h3>Задания к блоку 5</h3>
+<div class="zad" id="z13"><div class="zh">Задание 13<span> · приведение</span></div><div class="zt">Запиши в стандартном виде:<ol><li><span class='nw'>0,3 · <span class='pw'>10<sup>−4</sup></span></span>;</li><li><span class='nw'>27 · <span class='pw'>10<sup>5</sup></span></span>;</li><li><span class='nw'>6,87 · <span class='pw'>10<sup>10</sup></span></span>.</li></ol></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. 0,3 = <span class='nw'>3 · <span class='pw'>10<sup>−1</sup></span></span>, показатели: −1 + (−4) = −5.</div><div class="step">2. 27 = <span class='nw'>2,7 · <span class='pw'>10<sup>1</sup></span></span>, показатели: 1 + 5 = 6.</div><div class="step">3. Третья запись уже стандартная — трогать её не нужно.</div><div class="fx"><span class='nw'>3 · <span class='pw'>10<sup>−5</sup></span></span>; &nbsp; <span class='nw'>2,7 · <span class='pw'>10<sup>6</sup></span></span>; &nbsp; <span class='nw'>6,87 · <span class='pw'>10<sup>10</sup></span></span></div><div class="step mini">Всегда сначала смотри, не стандартная ли запись уже.</div></div></details></div><div class="zad" id="z14"><div class="zh">Задание 14<span> · приведение</span></div><div class="zt">Представь в стандартном виде:<ol><li><span class='nw'>256 · <span class='pw'>10<sup>12</sup></span></span>;</li><li><span class='nw'>0,0961 · <span class='pw'>10<sup>−3</sup></span></span>;</li><li><span class='nw'>1024 · <span class='pw'>10<sup>9</sup></span></span>;</li><li><span class='nw'>0,0049 · <span class='pw'>10<sup>−2</sup></span></span>.</li></ol></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">256 = <span class='nw'>2,56 · <span class='pw'>10<sup>2</sup></span></span> → 2 + 12 = 14.</div><div class="step">0,0961 = <span class='nw'>9,61 · <span class='pw'>10<sup>−2</sup></span></span> → −2 + (−3) = −5.</div><div class="step">1024 = <span class='nw'>1,024 · <span class='pw'>10<sup>3</sup></span></span> → 3 + 9 = 12.</div><div class="step">0,0049 = <span class='nw'>4,9 · <span class='pw'>10<sup>−3</sup></span></span> → −3 + (−2) = −5.</div><div class="fx"><span class='nw'>2,56 · <span class='pw'>10<sup>14</sup></span></span>; &nbsp; <span class='nw'>9,61 · <span class='pw'>10<sup>−5</sup></span></span>; &nbsp; <span class='nw'>1,024 · <span class='pw'>10<sup>12</sup></span></span>; &nbsp; <span class='nw'>4,9 · <span class='pw'>10<sup>−5</sup></span></span></div><div class="step mini">Обрати внимание: у второго и четвёртого чисел получился одинаковый порядок −5, но сами числа разные.</div></div></details></div><div class="zad" id="z15"><div class="zh">Задание 15<span> · приведение</span></div><div class="zt">Представь в стандартном виде:<ol><li><span class='nw'>513 · <span class='pw'>10<sup>−5</sup></span></span>;</li><li><span class='nw'>7831 · <span class='pw'>10<sup>8</sup></span></span>;</li><li><span class='nw'>0,029 · <span class='pw'>10<sup>−7</sup></span></span>;</li><li><span class='nw'>0,00047 · <span class='pw'>10<sup>13</sup></span></span>.</li></ol></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">513 = <span class='nw'>5,13 · <span class='pw'>10<sup>2</sup></span></span> → 2 + (−5) = −3.</div><div class="step">7831 = <span class='nw'>7,831 · <span class='pw'>10<sup>3</sup></span></span> → 3 + 8 = 11.</div><div class="step">0,029 = <span class='nw'>2,9 · <span class='pw'>10<sup>−2</sup></span></span> → −2 + (−7) = −9.</div><div class="step">0,00047 = <span class='nw'>4,7 · <span class='pw'>10<sup>−4</sup></span></span> → −4 + 13 = 9.</div><div class="fx"><span class='nw'>5,13 · <span class='pw'>10<sup>−3</sup></span></span>; &nbsp; <span class='nw'>7,831 · <span class='pw'>10<sup>11</sup></span></span>; &nbsp; <span class='nw'>2,9 · <span class='pw'>10<sup>−9</sup></span></span>; &nbsp; <span class='nw'>4,7 · <span class='pw'>10<sup>9</sup></span></span></div><div class="step mini">В последнем случае показатели разных знаков — складываем их как обычные целые числа.</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>6. Сравнение чисел в стандартном виде</h2>
+<div class="rule2"><div class="n">ПРАВИЛО</div>
+Сначала сравниваем порядки: у какого положительного числа порядок больше, то число
+и больше. Если порядки совпали — сравниваем множители a.</div>
+<div class="ex"><h3>Пример 6</h3>
+<p>Какое из произведений наименьшее: <span class='nw'>0,35 · <span class='pw'>10<sup>−2</sup></span></span>; &nbsp; <span class='nw'>0,7 · <span class='pw'>10<sup>−1</sup></span></span> · <span class='pw'>10<sup>2</sup></span>; &nbsp; <span class='nw'>0,33 · <span class='pw'>10<sup>−3</sup></span></span>; &nbsp; <span class='nw'>0,2 · <span class='pw'>10<sup>−2</sup></span></span>?</p>
+<div class="step">1. Приводим всё к стандартному виду: <span class='nw'>0,35 · <span class='pw'>10<sup>−2</sup></span></span> = <span class='nw'>3,5 · <span class='pw'>10<sup>−3</sup></span></span>, порядок −3.</div><div class="step">2. <span class='nw'>0,7 · <span class='pw'>10<sup>−1</sup></span></span> · <span class='pw'>10<sup>2</sup></span> = <span class='nw'>7 · <span class='pw'>10<sup>0</sup></span></span>, порядок 0.</div><div class="step">3. <span class='nw'>0,33 · <span class='pw'>10<sup>−3</sup></span></span> = <span class='nw'>3,3 · <span class='pw'>10<sup>−4</sup></span></span>, порядок −4.</div><div class="step">4. <span class='nw'>0,2 · <span class='pw'>10<sup>−2</sup></span></span> = <span class='nw'>2 · <span class='pw'>10<sup>−3</sup></span></span>, порядок −3.</div><div class="step">5. Наименьший порядок −4 — только у третьего числа.</div><div class="fx">Наименьшее: <span class='nw'>0,33 · <span class='pw'>10<sup>−3</sup></span></span></div><div class="step mini">Если бы чисел с порядком −4 было два, пришлось бы сравнить их множители.</div>
+</div>
+
+<h3>Задания к блоку 6</h3>
+<div class="zad" id="z16"><div class="zh">Задание 16<span> · сравнение</span></div><div class="zt">Сравни числа:<ol><li><span class='nw'>9,5687 · <span class='pw'>10<sup>14</sup></span></span> и <span class='nw'>1,06 · <span class='pw'>10<sup>15</sup></span></span>;</li><li><span class='nw'>2,1 · <span class='pw'>10<sup>−4</sup></span></span> и <span class='nw'>3,235 · <span class='pw'>10<sup>−5</sup></span></span>;</li><li><span class='nw'>5,23 · <span class='pw'>10<sup>8</sup></span></span> и <span class='nw'>5,061 · <span class='pw'>10<sup>8</sup></span></span>.</li></ol></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Порядки 14 и 15 — больше второе число.</div><div class="step">2. Порядки −4 и −5, а −4 больше — значит первое число больше.</div><div class="step">3. Порядки одинаковые, сравниваем множители: 5,23 больше 5,061.</div><div class="fx"><span class='nw'>9,5687 · <span class='pw'>10<sup>14</sup></span></span> &lt; <span class='nw'>1,06 · <span class='pw'>10<sup>15</sup></span></span>; &nbsp; <span class='nw'>2,1 · <span class='pw'>10<sup>−4</sup></span></span> &gt; <span class='nw'>3,235 · <span class='pw'>10<sup>−5</sup></span></span>; &nbsp; <span class='nw'>5,23 · <span class='pw'>10<sup>8</sup></span></span> &gt; <span class='nw'>5,061 · <span class='pw'>10<sup>8</sup></span></span></div><div class="step mini">Сравнивая отрицательные порядки, не путай: −4 больше, чем −5.</div></div></details></div><div class="zad" id="z17"><div class="zh">Задание 17<span> · сравнение</span></div><div class="zt">Представь числа <span class='nw'>0,56 · <span class='pw'>10<sup>−8</sup></span></span>, <span class='nw'>2300 · <span class='pw'>10<sup>−10</sup></span></span>, <span class='nw'>0,053 · <span class='pw'>10<sup>−6</sup></span></span> в стандартном виде и расположи их в порядке возрастания.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. <span class='nw'>0,56 · <span class='pw'>10<sup>−8</sup></span></span> = <span class='nw'>5,6 · <span class='pw'>10<sup>−9</sup></span></span>.</div><div class="step">2. <span class='nw'>2300 · <span class='pw'>10<sup>−10</sup></span></span> = <span class='nw'>2,3 · <span class='pw'>10<sup>−7</sup></span></span>.</div><div class="step">3. <span class='nw'>0,053 · <span class='pw'>10<sup>−6</sup></span></span> = <span class='nw'>5,3 · <span class='pw'>10<sup>−8</sup></span></span>.</div><div class="step">4. Сравниваем по порядкам: −9, −8, −7.</div><div class="fx"><span class='nw'>5,6 · <span class='pw'>10<sup>−9</sup></span></span> &lt; <span class='nw'>5,3 · <span class='pw'>10<sup>−8</sup></span></span> &lt; <span class='nw'>2,3 · <span class='pw'>10<sup>−7</sup></span></span></div><div class="step mini">Без приведения к стандартному виду сравнивать эти записи опасно: множитель 2300 сбивает с толку.</div></div></details></div><div class="zad" id="z18"><div class="zh">Задание 18<span> · практика</span></div><div class="zt">В таблице объём воды в крупнейших озёрах Беларуси.<table class="vtab"><tr><th>Озеро</th><th>Объём воды, м<sup>3</sup></th></tr><tr><td>Мядель</td><td><span class='nw'>1,02 · <span class='pw'>10<sup>8</sup></span></span></td></tr><tr><td>Нарочь</td><td><span class='nw'>7,1 · <span class='pw'>10<sup>8</sup></span></span></td></tr><tr><td>Свирь</td><td><span class='nw'>1,043 · <span class='pw'>10<sup>8</sup></span></span></td></tr><tr><td>Селява</td><td><span class='nw'>9,48 · <span class='pw'>10<sup>7</sup></span></span></td></tr></table><ol><li>В каком озере воды больше всего?</li><li>В каких озёрах объём воды не превышает 102 500 000 м<sup>3</sup>?</li></ol></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Три числа имеют порядок 8, одно — порядок 7. Среди чисел с порядком 8 наибольший множитель у Нарочи.</div><div class="step">2. Переводим границу в стандартный вид: 102 500 000 = <span class='nw'>1,025 · <span class='pw'>10<sup>8</sup></span></span>.</div><div class="step">3. Сравниваем: 1,02 &lt; 1,025 — Мядель подходит; 1,043 &gt; 1,025 — Свирь не подходит; у Селявы порядок меньше, значит она точно подходит.</div><div class="fx">Больше всего воды в Нарочи; не превышают границу Мядель и Селява</div><div class="step mini">Селяву можно было не считать: порядок 7 меньше порядка 8 — этого достаточно.</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>7. Умножение, деление и степень</h2>
+<div class="rule2"><div class="n">КАК СЧИТАТЬ</div>
+Отдельно перемножаем (или делим) множители, отдельно — степени десятки.
+Показатели при умножении складываются, при делении вычитаются.</div>
+<div class="ex"><h3>Пример 7</h3>
+<div class="step">1. <span class='nw'>3,8 · <span class='pw'>10<sup>−3</sup></span></span> · <span class='nw'>4,5 · <span class='pw'>10<sup>5</sup></span></span> = (3,8 · 4,5) · (<span class='pw'>10<sup>−3</sup></span> · <span class='pw'>10<sup>5</sup></span>) = <span class='nw'>17,1 · <span class='pw'>10<sup>2</sup></span></span>.</div><div class="step">2. Ответ получился не в стандартном виде: 17,1 больше десяти. Приводим: 17,1 = <span class='nw'>1,71 · <span class='pw'>10<sup>1</sup></span></span>, значит 1 + 2 = 3.</div><div class="fx"><span class='nw'>3,8 · <span class='pw'>10<sup>−3</sup></span></span> · <span class='nw'>4,5 · <span class='pw'>10<sup>5</sup></span></span> = <span class='nw'>1,71 · <span class='pw'>10<sup>3</sup></span></span></div><div class="step">3. Деление: <span class='nw'>7,56 · <span class='pw'>10<sup>5</sup></span></span> : <span class='nw'>4,2 · <span class='pw'>10<sup>−6</sup></span></span> = (7,56 : 4,2) · <span class='pw'>10<sup>5−(−6)</sup></span>.</div><div class="fx"><span class='nw'>7,56 · <span class='pw'>10<sup>5</sup></span></span> : <span class='nw'>4,2 · <span class='pw'>10<sup>−6</sup></span></span> = <span class='nw'>1,8 · <span class='pw'>10<sup>11</sup></span></span></div><div class="step mini">Произведение двух чисел в стандартном виде не обязано сразу быть в стандартном виде — это частая ловушка в тестах.</div>
+</div>
+<div class="def"><div class="n">ВОЗВЕДЕНИЕ В СТЕПЕНЬ</div>
+В степень возводят и множитель, и десятку: (<span class='nw'>6 · <span class='pw'>10<sup>−6</sup></span></span>)<sup>2</sup> = 6<sup>2</sup> · <span class='pw'>10<sup>−12</sup></span> = <span class='nw'>36 · <span class='pw'>10<sup>−12</sup></span></span> = <span class='nw'>3,6 · <span class='pw'>10<sup>−11</sup></span></span>.</div>
+
+<h3>Задания к блоку 7</h3>
+<div class="zad" id="z19"><div class="zh">Задание 19<span> · действия</span></div><div class="zt">Выполни умножение и запиши результат в стандартном виде:<ol><li><span class='nw'>(4,2 · <span class='pw'>10<sup>−3</sup></span>)</span> · <span class='nw'>(3 · <span class='pw'>10<sup>−1</sup></span>)</span>;</li><li><span class='nw'>(6,8 · <span class='pw'>10<sup>−3</sup></span>)</span> · <span class='nw'>(4,5 · <span class='pw'>10<sup>4</sup></span>)</span>;</li><li><span class='nw'>(8,8 · <span class='pw'>10<sup>2</sup></span>)</span> · <span class='nw'>(9,5 · <span class='pw'>10<sup>−3</sup></span>)</span>.</li></ol></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. 4,2 · 3 = 12,6; показатели: −3 + (−1) = −4. Получилось <span class='nw'>12,6 · <span class='pw'>10<sup>−4</sup></span></span> = <span class='nw'>1,26 · <span class='pw'>10<sup>−3</sup></span></span>.</div><div class="step">2. 6,8 · 4,5 = 30,6; показатели: −3 + 4 = 1. Значит <span class='nw'>30,6 · <span class='pw'>10<sup>1</sup></span></span> = <span class='nw'>3,06 · <span class='pw'>10<sup>2</sup></span></span>.</div><div class="step">3. 8,8 · 9,5 = 83,6; показатели: 2 + (−3) = −1. Значит <span class='nw'>83,6 · <span class='pw'>10<sup>−1</sup></span></span> = <span class='nw'>8,36 · <span class='pw'>10<sup>0</sup></span></span> = 8,36.</div><div class="fx"><span class='nw'>1,26 · <span class='pw'>10<sup>−3</sup></span></span>; &nbsp; <span class='nw'>3,06 · <span class='pw'>10<sup>2</sup></span></span>; &nbsp; <span class='nw'>8,36 · <span class='pw'>10<sup>0</sup></span></span></div><div class="step mini">В третьем случае <span class='pw'>10<sup>0</sup></span> = 1, поэтому ответ можно записать просто числом 8,36.</div></div></details></div><div class="zad" id="z20"><div class="zh">Задание 20<span> · действия</span></div><div class="zt">Выполни деление и запиши результат в стандартном виде:<ol><li><span class='nw'>(7,2 · <span class='pw'>10<sup>7</sup></span>)</span> : <span class='nw'>(9 · <span class='pw'>10<sup>10</sup></span>)</span>;</li><li><span class='nw'>(6,65 · <span class='pw'>10<sup>7</sup></span>)</span> : <span class='nw'>(3,5 · <span class='pw'>10<sup>3</sup></span>)</span>;</li><li><span class='nw'>(1,38 · <span class='pw'>10<sup>−8</sup></span>)</span> : <span class='nw'>(1,5 · <span class='pw'>10<sup>−5</sup></span>)</span>.</li></ol></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. 7,2 : 9 = 0,8; показатели: 7 − 10 = −3. Получилось <span class='nw'>0,8 · <span class='pw'>10<sup>−3</sup></span></span> = <span class='nw'>8 · <span class='pw'>10<sup>−4</sup></span></span>.</div><div class="step">2. 6,65 : 3,5 = 1,9; показатели: 7 − 3 = 4.</div><div class="step">3. 1,38 : 1,5 = 0,92; показатели: −8 − (−5) = −3. Значит <span class='nw'>0,92 · <span class='pw'>10<sup>−3</sup></span></span> = <span class='nw'>9,2 · <span class='pw'>10<sup>−4</sup></span></span>.</div><div class="fx"><span class='nw'>8 · <span class='pw'>10<sup>−4</sup></span></span>; &nbsp; <span class='nw'>1,9 · <span class='pw'>10<sup>4</sup></span></span>; &nbsp; <span class='nw'>9,2 · <span class='pw'>10<sup>−4</sup></span></span></div><div class="step mini">Когда множитель получается меньше единицы, показатель уменьшается ещё на единицу — не забывай про этот шаг.</div></div></details></div><div class="zad" id="z21"><div class="zh">Задание 21<span> · действия</span></div><div class="zt">Вычисли и запиши результат в стандартном виде:<ol><li>(<span class='nw'>6 · <span class='pw'>10<sup>−6</sup></span></span>)<sup>2</sup>;</li><li>(<span class='nw'>1,5 · <span class='pw'>10<sup>4</sup></span></span>)<sup>3</sup>;</li><li><span class='nw'>(1,2 · <span class='pw'>10<sup>62</sup></span>)</span> · <span class='nw'>(4 · <span class='pw'>10<sup>28</sup></span>)</span> : <span class='nw'>(5 · <span class='pw'>10<sup>45</sup></span>)</span>.</li></ol></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. 6<sup>2</sup> = 36, показатель −6 · 2 = −12. Значит <span class='nw'>36 · <span class='pw'>10<sup>−12</sup></span></span> = <span class='nw'>3,6 · <span class='pw'>10<sup>−11</sup></span></span>.</div><div class="step">2. 1,5<sup>3</sup> = 3,375, показатель 4 · 3 = 12.</div><div class="step">3. Сначала умножение: 1,2 · 4 = 4,8, показатель 62 + 28 = 90. Затем деление: 4,8 : 5 = 0,96, показатель 90 − 45 = 45. Осталось привести: <span class='nw'>0,96 · <span class='pw'>10<sup>45</sup></span></span> = <span class='nw'>9,6 · <span class='pw'>10<sup>44</sup></span></span>.</div><div class="fx"><span class='nw'>3,6 · <span class='pw'>10<sup>−11</sup></span></span>; &nbsp; <span class='nw'>3,375 · <span class='pw'>10<sup>12</sup></span></span>; &nbsp; <span class='nw'>9,6 · <span class='pw'>10<sup>44</sup></span></span></div><div class="step mini">При возведении в степень показатель умножается, а не складывается.</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>8. Единицы измерения и приставки</h2>
+<p>Перевод единиц — это умножение или деление на степень десятки, поэтому стандартный вид
+здесь работает особенно удобно.</p>
+<table class="vtab"><tr><th>приставка</th><th>обозначение</th><th>множитель</th></tr><tr><td class='l'>экса</td><td>Э</td><td><span class='pw'>10<sup>18</sup></span></td></tr><tr><td class='l'>пета</td><td>П</td><td><span class='pw'>10<sup>15</sup></span></td></tr><tr><td class='l'>тера</td><td>Т</td><td><span class='pw'>10<sup>12</sup></span></td></tr><tr><td class='l'>гига</td><td>Г</td><td><span class='pw'>10<sup>9</sup></span></td></tr><tr><td class='l'>мега</td><td>М</td><td><span class='pw'>10<sup>6</sup></span></td></tr><tr><td class='l'>кило</td><td>к</td><td><span class='pw'>10<sup>3</sup></span></td></tr><tr><td class='l'>гекто</td><td>г</td><td><span class='pw'>10<sup>2</sup></span></td></tr><tr><td class='l'>дека</td><td>да</td><td><span class='pw'>10<sup>1</sup></span></td></tr><tr><td class='l'>деци</td><td>д</td><td><span class='pw'>10<sup>−1</sup></span></td></tr><tr><td class='l'>санти</td><td>с</td><td><span class='pw'>10<sup>−2</sup></span></td></tr><tr><td class='l'>милли</td><td>м</td><td><span class='pw'>10<sup>−3</sup></span></td></tr><tr><td class='l'>микро</td><td>мк</td><td><span class='pw'>10<sup>−6</sup></span></td></tr><tr><td class='l'>нано</td><td>н</td><td><span class='pw'>10<sup>−9</sup></span></td></tr><tr><td class='l'>пико</td><td>п</td><td><span class='pw'>10<sup>−12</sup></span></td></tr><tr><td class='l'>фемто</td><td>ф</td><td><span class='pw'>10<sup>−15</sup></span></td></tr><tr><td class='l'>атто</td><td>а</td><td><span class='pw'>10<sup>−18</sup></span></td></tr></table>
+<div class="ex"><h3>Пример 8</h3>
+<div class="step">1. Переведём <span class='nw'>4,5 · <span class='pw'>10<sup>2</sup></span></span> Мт в тонны. Приставка «мега» — это множитель <span class='pw'>10<sup>6</sup></span>.</div><div class="fx"><span class='nw'>4,5 · <span class='pw'>10<sup>2</sup></span></span> · <span class='pw'>10<sup>6</sup></span> = <span class='nw'>4,5 · <span class='pw'>10<sup>8</sup></span></span> т</div><div class="step">2. Переведём 578 г в тонны. В тонне миллион граммов, значит делим на <span class='pw'>10<sup>6</sup></span>.</div><div class="fx">578 г = <span class='nw'>5,78 · <span class='pw'>10<sup>−4</sup></span></span> т</div><div class="step mini">Переводя в более крупные единицы, показатель уменьшается; в более мелкие — увеличивается.</div>
+</div>
+
+<h3>Задания к блоку 8</h3>
+<div class="zad" id="z22"><div class="zh">Задание 22<span> · единицы</span></div><div class="zt">Переведи и запиши результат в стандартном виде:<ol><li>5 872 600 км в метры;</li><li>578 г в тонны.</li></ol></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. В километре 1000 метров: 5 872 600 · 1000 = 5 872 600 000 м.</div><div class="step">Запятая переезжает на 9 шагов влево.</div><div class="fx"><span class='nw'>5,8726 · <span class='pw'>10<sup>9</sup></span></span> м</div><div class="step">2. В тонне <span class='pw'>10<sup>6</sup></span> граммов, поэтому делим на миллион.</div><div class="fx"><span class='nw'>5,78 · <span class='pw'>10<sup>−4</sup></span></span> т</div><div class="step mini">Проверка здравым смыслом: метров должно получиться больше, а тонн — меньше.</div></div></details></div><div class="zad" id="z23"><div class="zh">Задание 23<span> · единицы</span></div><div class="zt">Вырази и запиши ответ в стандартном виде:<ol><li>29 км<sup>2</sup> в квадратных метрах;</li><li>0,47 м<sup>2</sup> в квадратных километрах;</li><li>389 т в граммах.</li></ol></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. В квадратном километре <span class='pw'>10<sup>6</sup></span> квадратных метров: 29 · <span class='pw'>10<sup>6</sup></span> = <span class='nw'>2,9 · <span class='pw'>10<sup>7</sup></span></span>.</div><div class="step">2. Обратный перевод — делим на <span class='pw'>10<sup>6</sup></span>: 0,47 · <span class='pw'>10<sup>−6</sup></span> = <span class='nw'>4,7 · <span class='pw'>10<sup>−7</sup></span></span>.</div><div class="step">3. 389 · <span class='pw'>10<sup>6</sup></span> = <span class='nw'>3,89 · <span class='pw'>10<sup>8</sup></span></span>.</div><div class="fx"><span class='nw'>2,9 · <span class='pw'>10<sup>7</sup></span></span> м<sup>2</sup>; &nbsp; <span class='nw'>4,7 · <span class='pw'>10<sup>−7</sup></span></span> км<sup>2</sup>; &nbsp; <span class='nw'>3,89 · <span class='pw'>10<sup>8</sup></span></span> г</div><div class="step mini">Для площадей множитель возводится в квадрат: не <span class='pw'>10<sup>3</sup></span>, а <span class='pw'>10<sup>6</sup></span>.</div></div></details></div><div class="zad" id="z24"><div class="zh">Задание 24<span> · приставки</span></div><div class="zt">Пользуясь таблицей приставок, вырази:<ol><li><span class='nw'>6 · <span class='pw'>10<sup>10</sup></span></span> мг в килограммах;</li><li><span class='nw'>3,5 · <span class='pw'>10<sup>9</sup></span></span> нм в метрах;</li><li><span class='nw'>1,5 · <span class='pw'>10<sup>3</sup></span></span> г в килограммах.</li></ol></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Миллиграмм — это <span class='pw'>10<sup>−3</sup></span> г, а килограмм — <span class='pw'>10<sup>3</sup></span> г, значит из миллиграммов в килограммы делим на <span class='pw'>10<sup>6</sup></span>.</div><div class="fx"><span class='nw'>6 · <span class='pw'>10<sup>4</sup></span></span> кг</div><div class="step">2. Нанометр — это <span class='pw'>10<sup>−9</sup></span> м: <span class='nw'>3,5 · <span class='pw'>10<sup>9</sup></span></span> · <span class='pw'>10<sup>−9</sup></span> = 3,5 м.</div><div class="fx"><span class='nw'>3,5 · <span class='pw'>10<sup>0</sup></span></span> м</div><div class="step">3. <span class='nw'>1,5 · <span class='pw'>10<sup>3</sup></span></span> г = 1500 г = 1,5 кг.</div><div class="fx"><span class='nw'>1,5 · <span class='pw'>10<sup>0</sup></span></span> кг</div><div class="step mini">Во втором и третьем случае получился порядок 0 — это нормально: число лежит между 1 и 10.</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>9. Где это встречается</h2>
+<p>Стандартный вид придумали не для школьных упражнений: в астрономии, физике и химии
+без него работать невозможно.</p>
+<div class="ex"><h3>Пример 9</h3>
+<p>Астрономическая единица — расстояние от Земли до Солнца, оно равно <span class='nw'>1,5 · <span class='pw'>10<sup>8</sup></span></span> км. Световой год — расстояние, которое луч света проходит за год, это <span class='nw'>9,5 · <span class='pw'>10<sup>12</sup></span></span> км. Сколько астрономических единиц в одном световом году?</p>
+<div class="step">1. Делим большее на меньшее: (9,5 : 1,5) · <span class='pw'>10<sup>12−8</sup></span>.</div><div class="step">2. 9,5 : 1,5 ≈ 6,33.</div><div class="fx">≈ <span class='nw'>6,3 · <span class='pw'>10<sup>4</sup></span></span> астрономических единиц</div><div class="step mini">То есть свет идёт от Солнца до Земли примерно в 63 тысячи раз быстрее, чем проходит световой год.</div>
+</div>
+
+<h3>Задания к блоку 9</h3>
+<div class="zad" id="z25"><div class="zh">Задание 25<span> · оценка</span></div><div class="zt">«Нано-» — приставка для обозначения одной миллиардной доли: 1 нм = <span class='nw'>1 · <span class='pw'>10<sup>−9</sup></span></span> м. Ягода вишни меньше земного шара примерно во столько же раз, во сколько нанометр меньше метра. Средняя вишня имеет диаметр 1,3 см. Определи приблизительно диаметр земного шара в километрах.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Метр больше нанометра в <span class='pw'>10<sup>9</sup></span> раз.</div><div class="step">2. Значит диаметр Земли ≈ 1,3 см · <span class='pw'>10<sup>9</sup></span> = <span class='nw'>1,3 · <span class='pw'>10<sup>−2</sup></span></span> м · <span class='pw'>10<sup>9</sup></span> = <span class='nw'>1,3 · <span class='pw'>10<sup>7</sup></span></span> м.</div><div class="step">3. Переводим в километры: делим на 1000.</div><div class="fx">≈ <span class='nw'>1,3 · <span class='pw'>10<sup>4</sup></span></span> км, то есть около 13 000 км</div><div class="step mini">Настоящий средний диаметр Земли — примерно <span class='nw'>1,27 · <span class='pw'>10<sup>4</sup></span></span> км, так что оценка ошибается всего на пару процентов.</div></div></details></div><div class="zad" id="z26"><div class="zh">Задание 26<span> · оценка</span></div><div class="zt">Диаметр молекулы воды приблизительно равен 0,3 нм, диаметр Земли — около <span class='nw'>1,3 · <span class='pw'>10<sup>7</sup></span></span> м. Во сколько раз молекула воды меньше земного шара?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Переводим диаметр молекулы в метры: 0,3 нм = 0,3 · <span class='pw'>10<sup>−9</sup></span> м = <span class='nw'>3 · <span class='pw'>10<sup>−10</sup></span></span> м.</div><div class="step">2. Делим: (1,3 : 3) · <span class='pw'>10<sup>7−(−10)</sup></span> ≈ 0,43 · <span class='pw'>10<sup>17</sup></span>.</div><div class="step">3. Приводим к стандартному виду.</div><div class="fx">≈ <span class='nw'>4,3 · <span class='pw'>10<sup>16</sup></span></span> раз</div><div class="step mini">Сравни с примером про вишню: разница между молекулой и Землёй намного больше, чем между вишней и Землёй.</div></div></details></div><div class="zad" id="z27"><div class="zh">Задание 27<span> · практика</span></div><div class="zt">Выпускнику предложили работу две фирмы. Доход по кварталам, в рублях:<ul><li><b>Фирма A:</b> <span class='nw'>4,1 · <span class='pw'>10<sup>4</sup></span></span>, &nbsp;<span class='nw'>12 · <span class='pw'>10<sup>2</sup></span></span>, &nbsp;<span class='nw'>0,86 · <span class='pw'>10<sup>4</sup></span></span>, &nbsp;<span class='nw'>19 · <span class='pw'>10<sup>3</sup></span></span>.</li><li><b>Фирма B:</b> <span class='nw'>0,69 · <span class='pw'>10<sup>5</sup></span></span>, &nbsp;<span class='nw'>5,1 · <span class='pw'>10<sup>4</sup></span></span>, &nbsp;<span class='nw'>25 · <span class='pw'>10<sup>2</sup></span></span>, &nbsp;<span class='nw'>0,19 · <span class='pw'>10<sup>5</sup></span></span>.</li></ul><p>На предложение какой фирмы стоит согласиться, если остальные условия одинаковые?</p></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Фирма A: 41 000 + 1200 + 8600 + 19 000 = 69 800 р.</div><div class="step">2. Фирма B: 69 000 + 51 000 + 2500 + 19 000 = 141 500 р.</div><div class="step">3. В стандартном виде: <span class='nw'>6,98 · <span class='pw'>10<sup>4</sup></span></span> и <span class='nw'>1,415 · <span class='pw'>10<sup>5</sup></span></span>.</div><div class="fx">Стоит согласиться на фирму B — её годовой доход вдвое больше</div><div class="step mini">Складывать числа в стандартном виде напрямую нельзя: сначала приводят к обычной записи или к одинаковому порядку.</div></div></details></div><div class="zad" id="z28"><div class="zh">Задание 28<span> · со звёздочкой</span></div><div class="zt">После уборки школьный бассейн длиной <span class='nw'>2,5 · <span class='pw'>10<sup>3</sup></span></span> см, шириной <span class='nw'>1,6 · <span class='pw'>10<sup>3</sup></span></span> см и глубиной <span class='nw'>2 · <span class='pw'>10<sup>2</sup></span></span> см нужно наполнить водой на 80 %. Успеет ли он к уроку в 10 ч 15 мин, если воду пустили в 5 ч 00 мин через трубу, пропускающую 130 м<sup>3</sup> в час?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Объём: <span class='nw'>2,5 · <span class='pw'>10<sup>3</sup></span></span> · <span class='nw'>1,6 · <span class='pw'>10<sup>3</sup></span></span> · <span class='nw'>2 · <span class='pw'>10<sup>2</sup></span></span> = <span class='nw'>8 · <span class='pw'>10<sup>8</sup></span></span> см<sup>3</sup>.</div><div class="step">2. В кубометре <span class='pw'>10<sup>6</sup></span> см<sup>3</sup>, значит объём равен 800 м<sup>3</sup>.</div><div class="step">3. Нужно 80 %: 800 · 0,8 = 640 м<sup>3</sup>.</div><div class="step">4. Время: 640 : 130 ≈ 4,92 ч, это примерно 4 ч 55 мин.</div><div class="fx">Вода наберётся к 9 ч 55 мин — бассейн успеет</div><div class="step mini">Запас всего 20 минут, так что опаздывать с запуском трубы нельзя.</div></div></details></div>
+</div>
+
+<div class="card pam">
+
+<h2>Что забрать с урока</h2>
+<div class="fgrid">
+  <div class="fbox"><h4>Определение</h4>
+    <p>b = <span class='nw'>a · <span class='pw'>10<sup>n</sup></span></span>, где 1 ≤ a &lt; 10, а n — целое. Число n называют
+    порядком.</p></div>
+  <div class="fbox"><h4>Большое число</h4>
+    <p>Запятую переносим влево до одной цифры в целой части. Показатель положительный
+    и равен числу шагов.</p></div>
+  <div class="fbox"><h4>Маленькое число</h4>
+    <p>Запятую переносим вправо до первой значащей цифры. Показатель отрицательный.</p></div>
+  <div class="fbox"><h4>Приведение записи</h4>
+    <p>Множитель приводим к виду от 1 до 10, показатели степеней десятки складываем.</p></div>
+  <div class="fbox"><h4>Сравнение</h4>
+    <p>Сначала порядок, и только при равных порядках — множители.</p></div>
+  <div class="fbox"><h4>Действия</h4>
+    <p>Множители отдельно, степени отдельно. Результат почти всегда приходится
+    доводить до стандартного вида.</p></div>
+  <div class="fbox"><h4>Единицы</h4>
+    <p>Перевод единиц — умножение на степень десятки. Для площадей множитель
+    возводится в квадрат.</p></div>
+  <div class="fbox"><h4>Исключение</h4>
+    <p>В стандартном виде можно записать любое число, кроме нуля.</p></div>
+</div>
+<h3>Вопросы для устного ответа</h3>
+<ol class="qq">
+  <li>Что значит записать число в стандартном виде?</li>
+  <li>Что такое порядок числа и что он показывает?</li>
+  <li>В какую сторону переносят запятую у большого числа? У числа меньше единицы?</li>
+  <li>Верно ли, что чем больше порядок, тем больше само число?</li>
+  <li>Верно ли, что при отрицательном порядке число отрицательное?</li>
+  <li>Будет ли произведение двух чисел, записанных в стандартном виде, сразу
+  в стандартном виде?</li>
+  <li>Как сравнивают два числа, записанных в стандартном виде?</li>
+  <li>Какое число нельзя записать в стандартном виде?</li>
+</ol>
+<details class="zs"><summary>Короткие ответы</summary><div class="zsol">
+<div class="step">1. Представить его как <span class='nw'>a · <span class='pw'>10<sup>n</sup></span></span>, где множитель
+не меньше 1 и меньше 10, а показатель — целое число.</div>
+<div class="step">2. Порядок — показатель степени десятки; он показывает, между какими
+соседними степенями десятки лежит число.</div>
+<div class="step">3. У большого — влево, у маленького — вправо.</div>
+<div class="step">4. Для положительных чисел — да.</div>
+<div class="step">5. Нет: <span class='nw'>5 · <span class='pw'>10<sup>−3</sup></span></span> = 0,005 — положительное число.</div>
+<div class="step">6. Не обязательно: 3,8 · 4,5 = 17,1, и запись приходится
+поправлять.</div>
+<div class="step">7. Сначала по порядку, при равных порядках — по множителю.</div>
+<div class="step">8. Нуль.</div>
+</div></details>
+
+</div>
+
+</div>
+
+<script>
+
+/* ============ разбор числа в стандартный вид ============ */
+window.STDNUM = function(id){
+  var host = document.getElementById(id);
+  if(!host) return null;
+  var inp = document.getElementById(id + "v"), pw = document.getElementById(id + "p"),
+      go = document.getElementById(id + "go"), view = document.getElementById(id + "w"),
+      steps = document.getElementById(id + "s"), res = document.getElementById(id + "r"),
+      note = document.getElementById(id + "n");
+
+  function sup(n){ return "10<sup>" + String(n).replace("-", "−") + "</sup>"; }
+  function parseDec(s){
+    s = String(s || "").trim().replace(/\s+/g, "").replace(/,/g, ".").replace(/−/g, "-");
+    var m = /^(-?)(\d*)(?:\.(\d*))?$/.exec(s);
+    if(!m) return null;
+    var ip = m[2] || "", fp = m[3] || "";
+    if(!ip && !fp) return null;
+    if(ip.length + fp.length > 30) return null;
+    return {neg: m[1] === "-", ip: ip, fp: fp};
+  }
+  function bad(msg){
+    note.innerHTML = '<span class="snbad">' + msg + "</span>";
+    view.innerHTML = ""; steps.innerHTML = ""; res.innerHTML = "";
+  }
+
+  function run(){
+    var d = parseDec(inp.value), n = String(pw.value || "0").trim().replace(/−/g, "-");
+    note.innerHTML = "";
+    if(!d) return bad("Впиши число: целое или десятичную дробь, например 350000 или 0,00052.");
+    if(!/^-?\d{1,3}$/.test(n)) return bad("Показатель у десятки — целое число, не больше трёх цифр.");
+    n = +n;
+    var digits = d.ip + d.fp, point = d.ip.length, i = 0;
+    while(i < digits.length && digits.charAt(i) === "0") i++;
+    if(i === digits.length)
+      return bad("Нуль в стандартном виде не записывают: множитель a должен быть не меньше 1.");
+
+    var shift = point - 1 - i;          /* на сколько шагов переехала запятая */
+    var exp = shift + n;
+    var rest = digits.slice(i + 1).replace(/0+$/, "");
+    var mant = digits.charAt(i) + (rest ? "," + rest : "");
+    var sgn = d.neg ? "−" : "";
+
+    /* исходное число с подсветкой первой значащей цифры */
+    var html = "", k;
+    for(k = 0; k < digits.length; k++){
+      if(k === point && point > 0) html += ",";
+      var cls = (k === i) ? "sig" : (k < i ? "zero" : "");
+      html += cls ? '<span class="' + cls + '">' + digits.charAt(k) + "</span>"
+                  : digits.charAt(k);
+    }
+    if(point === 0) html = '<span class="zero">0</span>,' + html;
+    view.innerHTML = sgn + html + (n ? " · " + sup(n) : "");
+
+    var h = [];
+    h.push("Первая значащая цифра — " + digits.charAt(i) +
+           ". Запятую ставим сразу после неё: получается " + sgn + mant + ".");
+    if(shift > 0)
+      h.push("Запятая переехала на " + shift + " шаг" + (shift === 1 ? "" : shift < 5 ? "а" : "ов") +
+             " влево, значит число надо вернуть, умножив на " + sup(shift) + ".");
+    else if(shift < 0)
+      h.push("Запятая переехала на " + (-shift) + " шаг" + (-shift === 1 ? "" : -shift < 5 ? "а" : "ов") +
+             " вправо, значит множитель будет " + sup(shift) + " — с отрицательным показателем.");
+    else
+      h.push("Запятая осталась на месте: у числа уже одна цифра в целой части, множитель " +
+             sup(0) + " = 1.");
+    if(n)
+      h.push("Учитываем множитель, который был в записи: " + sup(shift) + " · " + sup(n) +
+             " = " + sup(exp) + " — показатели складываются.");
+    h.push("Проверяем условие 1 ≤ a &lt; 10: множитель " + mant + " ему удовлетворяет.");
+    steps.innerHTML = h.map(function(x){ return "<li>" + x + "</li>"; }).join("");
+
+    res.innerHTML = sgn + mant + " · " + sup(exp) +
+                    '<div class="snnote" style="margin-top:4px">порядок числа: ' +
+                    String(exp).replace("-", "−") + "</div>";
+    note.innerHTML = (exp >= 0
+      ? "Показатель положительный — число большое, не меньше единицы."
+      : "Показатель отрицательный — число меньше единицы, но само оно положительное.") +
+      " Порядок показывает, между какими степенями десятки лежит число: " +
+      sup(exp) + " ≤ " + (d.neg ? "|b|" : "b") + " &lt; " + sup(exp + 1) + ".";
+  }
+
+  host.addEventListener("click", function(ev){
+    var el = ev.target, ex = (el && el.getAttribute) ? el.getAttribute("data-ex") : null;
+    if(!ex) return;
+    var parts = ex.split(" ");
+    inp.value = parts[0];
+    pw.value = parts.length > 1 ? parts[1] : "0";
+    run();
+  });
+  go.addEventListener("click", run);
+  inp.addEventListener("keydown", function(e){ if(e.key === "Enter") run(); });
+  pw.addEventListener("keydown", function(e){ if(e.key === "Enter") run(); });
+  run();
+  return {run: run};
+};
+
+var SNS = ["sn1"];
+for (var _s = 0; _s < SNS.length; _s++){ STDNUM(SNS[_s]); }
+
+function allSol(open){
+  var ds = document.querySelectorAll("details.zs"), k;
+  for(k = 0; k < ds.length; k++) ds[k].open = open;
+}
+document.getElementById("openall").addEventListener("click", function(){ allSol(true); });
+document.getElementById("closeall").addEventListener("click", function(){ allSol(false); });
+
+</script>
+</body>
+</html>
