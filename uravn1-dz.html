@@ -1,0 +1,1271 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Линейные уравнения — домашнее задание, тема 1.01</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:800px;margin:0 auto;padding:16px 14px 60px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+.f-formula{font-size:19px}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.step{margin:6px 0}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.fig{margin:12px 0;text-align:center}
+
+.tr{border:1px solid var(--line);border-radius:12px;padding:14px;margin:16px 0;background:var(--bg)}
+.trhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;
+  margin-bottom:8px}
+.trhead b{font-size:17px}
+.trscore{color:var(--muted);font-size:15px;white-space:nowrap}
+.trq{font-size:17px;margin:8px 0}
+.trfig{text-align:center;margin:8px 0}
+.trfig svg{width:100%;max-width:330px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.tropts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
+.tropt{border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;
+  background:var(--card);font-size:16px;text-align:left;min-height:46px}
+.tropt:hover{border-color:var(--acc)}
+.tropt.right{border-color:var(--ok);background:var(--ok-soft);font-weight:600}
+.tropt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.tropts.done .tropt{cursor:default}
+.trnum{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.trnum input{font:inherit;font-size:18px;padding:9px 11px;border-radius:9px;
+  border:1.5px solid var(--line);background:var(--card);color:var(--ink);max-width:130px}
+.trmsg{font-size:16px;margin-top:8px}
+.trmsg .v{font-weight:700}
+.trmsg .v.ok{color:var(--ok)} .trmsg .v.bad{color:var(--bad)}
+.trmsg .why{color:var(--muted);font-size:15px;margin-top:4px}
+.trbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.trbar button{font-size:15px;padding:8px 13px;min-height:42px}
+.trdone{background:var(--acc-soft);border-radius:10px;padding:12px;font-size:17px;
+  text-align:center;font-weight:600}
+
+.gaps{border:1px solid var(--line);border-radius:12px;padding:14px;margin:16px 0;background:var(--bg)}
+.gaps .ghead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  flex-wrap:wrap;margin-bottom:6px}
+.gaps .ghead b{font-size:17px}
+.gscore{color:var(--muted);font-size:15px;white-space:nowrap}
+.gline{font-size:19px;line-height:2.5;margin:6px 0;text-align:center;
+  white-space:normal;overflow-wrap:break-word}
+.gline.l{text-align:left;font-size:17px;line-height:2.2}
+.gnote{color:var(--muted);font-size:15px;margin:6px 0 0;line-height:1.5}
+input.gp{font:inherit;font-size:17px;text-align:center;padding:3px 4px;border-radius:8px;
+  border:1.8px solid var(--acc);background:var(--card);color:inherit;min-width:38px;
+  vertical-align:baseline}
+@media (max-width:460px){
+  .gline{font-size:17px;line-height:2.3}
+  input.gp{font-size:16px;min-width:34px}
+}
+input.gp.ok{border-color:#137a45;background:#e9f7ef;color:#0f6b3c;font-weight:700}
+input.gp.bad{border-color:#b3261e;background:#fdecea}
+@media (prefers-color-scheme:dark){input.gp.ok{background:#12281d}input.gp.bad{background:#2a1618}}
+.gbar{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px;align-items:center}
+.gbar button{font-size:15px;padding:8px 13px;min-height:42px}
+.gbar button:disabled{opacity:.55;cursor:default}
+.gmsg{font-size:16px;margin-top:8px}
+.gmsg .v{font-weight:700}
+.gmsg .v.ok{color:#137a45} .gmsg .v.bad{color:#b3261e}
+.gtip{color:var(--muted);font-size:15px;margin-top:5px;line-height:1.5}
+.gaps.need{outline:2px solid #c99a2e;outline-offset:3px}
+@media print{input.gp{border:1px solid #999;background:#fff}}
+
+.pw{white-space:nowrap}
+.pw sup{font-size:0.68em;line-height:0;vertical-align:0.62em;padding-left:1px}
+.nw{white-space:nowrap}
+.fx{display:block;background:var(--acc-soft,var(--acc2,#e8f0ff));border:1px solid var(--line);
+  border-radius:10px;padding:12px 13px;margin:12px 0;text-align:center;font-size:21px;
+  line-height:2.2;font-weight:600;white-space:normal;overflow-wrap:break-word}
+.sol .fx,.ex .fx{font-size:19px;margin:9px 0}
+.def{border:1px solid var(--line);border-left:4px solid #2f6bd8;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#eef3fb}
+.def .n{font-size:14px;color:#2f6bd8;font-weight:700;letter-spacing:.4px}
+.rule2{border:1px solid var(--line);border-left:4px solid #c0397a;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdf0f6}
+.rule2 .n{font-size:14px;color:#a02a62;font-weight:700;letter-spacing:.4px}
+.hard{border:1px solid var(--line);border-left:4px solid #7a3fbf;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#f4efff}
+.hard .n{font-size:14px;color:#5f2ea0;font-weight:700;letter-spacing:.4px}
+.warn{border:1px solid var(--line);border-left:4px solid #b3261e;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdecea}
+.warn .n{font-size:14px;color:#b3261e;font-weight:700;letter-spacing:.4px}
+@media (prefers-color-scheme:dark){.rule2{background:#2a1b23}.def{background:#18212f}
+  .hard{background:#221a33}.warn{background:#2a1618}}
+.ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;background:var(--bg)}
+.ex h3{margin-top:0}
+.tohw{font-weight:700;margin:18px 0 0;font-size:18px}
+.tohw span{color:var(--muted);font-weight:400;font-size:15px;display:block;margin-top:3px}
+.small,.mini{color:var(--muted);font-size:15px}
+.fr{display:inline-block;vertical-align:-0.58em;text-align:center;margin:0 3px}
+.fr b{display:block;border-bottom:1.7px solid currentColor;padding:0 6px;font-weight:400;
+  white-space:nowrap}
+.fr i{display:block;font-style:normal;padding:0 6px;white-space:nowrap}
+.opts .opt{font-size:18px;line-height:2.2}
+.task>div:first-child{line-height:2.3}
+.trq,.trmsg .why{line-height:2.2}
+.tropt{line-height:2.1}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.alg{margin:10px 0 0;padding-left:22px}
+.alg li{margin:6px 0;font-size:17px}
+.pam h3{font-size:18px;margin:18px 0 2px}
+.pam h3:first-of-type{margin-top:10px}
+.fgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));margin:9px 0}
+.fbox{border:1px solid var(--line);border-radius:12px;padding:9px 12px 11px;background:var(--bg)}
+.fbox h4{margin:0 0 3px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.fbox p{margin:6px 0 0;line-height:1.6;font-size:16px}
+.fbox p.small{font-size:15px}
+.ff{font-size:20px;line-height:2.3;text-align:center;margin:6px 0;font-weight:600;
+  white-space:normal;overflow-wrap:break-word}
+.fbox .ff{font-size:18px;line-height:2.1}
+.trnav{margin-top:12px;display:flex;gap:9px;flex-wrap:wrap}
+.trgate{margin-top:12px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;
+  font-size:16px;background:var(--bg)}
+.trgate.ready{border-color:#1f8a54;background:#e9f7ef}
+.trgate ul{margin:6px 0 0;padding-left:20px}
+.trgate li{margin:3px 0}
+.trgate a{color:var(--acc);text-decoration:none;border-bottom:1px solid currentColor;cursor:pointer}
+@media (prefers-color-scheme:dark){.trgate.ready{background:#12281d}}
+.tr.need,.gaps.need{outline:2px solid #c99a2e;outline-offset:3px}
+.savenote{margin-top:9px;color:var(--muted);font-size:14.5px;line-height:1.45}
+.savenote button{font-size:14px;padding:5px 10px;min-height:34px;margin-left:8px}
+.sheet .f-formula{margin:5px 0;font-size:14.5px;line-height:2}
+@media print{
+  .sheet>.meta{display:none}
+  .sheet h2{font-size:18px;margin:0 0 5px}
+  .sheet .f-formula{font-size:11.5px;line-height:1.8;margin:2px 0}
+  .sheet .fr{font-size:10.5px;vertical-align:-0.55em}
+}
+
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+@media print{
+  body{background:#fff}
+  .bar{display:none !important}
+  .wrap>*{display:none !important}
+  .wrap>.sheet{display:block !important;border:none;margin:0;padding:0}
+  .sheet{font-size:13px}
+  .sheet h2{font-size:18px}
+  .sheet th,.sheet td{padding:4px 5px;font-size:12px}
+  @page{size:A4;margin:12mm}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card top">
+  <h1>Линейные уравнения</h1>
+  <div class="meta">Алгебра · тема 1.01 · 5 тренажёров, 4 блока с пропусками, 18 задач</div>
+  <label class="f" for="name">Имя и фамилия</label>
+  <input type="text" id="name" placeholder="напиши, как в журнале" autocapitalize="words" spellcheck="false">
+  <div class="savenote" id="savenote"></div>
+  <div class="note" style="margin-top:14px">
+    <b>Как работать.</b> Страница идёт по кругу: короткая порция теории — разобранный
+    пример — тренажёр или блок с пропусками — задачи. Не перепрыгивай вперёд.
+    <div style="margin-top:8px">Главная мысль темы: <b>решить уравнение — значит найти
+    все его корни</b>. Один найденный корень без проверки остальных — это ещё
+    не решение.</div>
+    <div style="margin-top:8px">В блоках «заполни пропуски» нужно вписать недостающие
+    куски решения: знак, число или дробь. Знак минус пиши как обычный минус, дроби —
+    через косую черту: 15/8.</div>
+    <div style="margin-top:8px"><b>Все пять тренажёров и все четыре блока с пропусками
+    нужно пройти до конца</b> — без этого работа не отправится.</div>
+  </div>
+</div>
+
+<div class="card pam">
+
+<h2>Памятка: всё, что понадобится</h2>
+<div class="meta">Сюда возвращаются, когда застряли. Читать целиком сразу не нужно.</div>
+
+<h3>Минус — источник большинства ошибок</h3>
+<div class="fgrid"><div class="fbox"><h4>Минус перед скобкой</h4><div class="ff">a − (b + c) = a − b − c</div><p>Меняется знак <b>каждого</b> слагаемого в скобке, а не только первого.</p><p class="small">2x + 4 − (2a + 5 − 3x) = 5x − 2a − 1.</p></div><div class="fbox"><h4>Вынесение минуса</h4><div class="ff">−15x + 20a − 45 = −5(3x − 4a + 9)</div><p>Все знаки в скобке меняются на противоположные.</p><p class="small">Сомневаешься — раскрой скобки обратно и сверь.</p></div><div class="fbox"><h4>Минус перед дробью</h4><div class="ff"><span class='fr'><b>2x + 5</b><i>4</i></span> − <span class='fr'><b>3x − 4</b><i>2</i></span> = <span class='fr'><b>2x + 5 − 2(3x − 4)</b><i>4</i></span></div><p>Числитель второй дроби берём в скобки — иначе знак потеряется.</p><p class="small">Итог здесь: <span class='fr'><b>−4x + 13</b><i>4</i></span>.</p></div></div>
+
+<h3>Термины</h3>
+<div class="fgrid"><div class="fbox"><h4>Уравнение и корень</h4><p><b>Корень</b> — значение переменной, при котором равенство становится верным.</p><p>Проверка одна: подставить и посчитать обе части.</p><p class="small">Решить уравнение — найти <b>все</b> корни, а не один.</p></div><div class="fbox"><h4>Равносильные уравнения</h4><p>Это уравнения с одними и теми же корнями.</p><p class="small">5x − 25 = 0 и 2x − 7 = 3 равносильны: у обоих x = 5.</p></div><div class="fbox"><h4>Произведение равно нулю</h4><div class="ff">(x + 3)(x − 5)(x + 1) = 0</div><p>Произведение равно нулю, если хотя бы один множитель равен нулю.</p><p class="small">Приравниваем к нулю каждую скобку по очереди.</p></div></div>
+
+<h3>Линейное уравнение</h3>
+<div class="fgrid"><div class="fbox"><h4>Линейное уравнение</h4><div class="ff">ax + b = 0, &nbsp; a ≠ 0</div><div class="ff">x = −<span class='fr'><b>b</b><i>a</i></span></div><p class="small">Неизвестное стоит в первой степени.</p></div><div class="fbox"><h4>Алгоритм</h4><p>1. Раскрыть все скобки.</p><p>2. С переменной — налево, без переменной — направо, меняя знаки.</p><p>3. Привести подобные: получится ax = b.</p><p class="small">4. Разделить: x = b : a.</p></div><div class="fbox"><h4>Три исхода</h4><p>a ≠ 0 — ровно один корень.</p><p>0 = 0 — корней бесконечно много.</p><p>0 = 13 — корней нет.</p><p class="small">Ноль в ответе (x = 0) — это обычный корень, а не «нет корней».</p></div></div>
+
+<h3>Опасные преобразования</h3>
+<div class="fgrid"><div class="fbox"><h4>Что делать можно</h4><p>Заменять выражение тождественно равным.</p><p>Переносить слагаемые через знак равно со сменой знака.</p><p class="small">Умножать и делить обе части на <b>число</b>, не равное нулю.</p></div><div class="fbox"><h4>Посторонний корень</h4><div class="ff">x − 1 = 0 &nbsp;→&nbsp; (x − 1)(x − 3) = 0</div><p>Умножили на выражение с переменной — появился лишний корень x = 3.</p><p class="small">Поэтому умножать на выражение с x нельзя.</p></div><div class="fbox"><h4>Потеря корня</h4><div class="ff">(x − 2)(x − 4) = (x − 4)</div><p>Сократили на (x − 4) — потеряли корень x = 4.</p><p class="small">Сокращать в уравнении можно только числа.</p></div></div>
+
+</div>
+
+<div class="card">
+
+<h2>1. Минус — главный источник ошибок</h2>
+<p>Прежде чем браться за уравнения, разберёмся с вычитанием. Именно на нём теряется
+больше всего баллов.</p>
+<div class="rule2"><div class="n">ПРАВИЛО 1</div>
+Знак «минус» перед скобкой меняет знаки <b>всех</b> слагаемых внутри скобки
+на противоположные, а не только первого.</div>
+<div class='fx'>2x + 4 − (2a + 5 − 3x) = 2x + 4 − 2a − 5 + 3x = <span class='nw'>5x − 2a − 1</span></div>
+<div class="rule2"><div class="n">ПРАВИЛО 2</div>
+Вынося за скобки отрицательный множитель, меняем знаки всех слагаемых, которые
+остаются в скобках.</div>
+<div class='fx'>−15x + 20a − 45 = −5(3x − 4a + 9)</div>
+<div class="warn"><div class="n">ТИПИЧНАЯ ОШИБКА</div>
+−15x + 20a − 45 = −(15x + 20a − 45) — так писать нельзя.
+Нельзя менять знак только перед первым слагаемым.</div>
+<p>Не уверен — раскрой скобки обратно и сверь:</p>
+<div class='fx'>−5(3x − 4a + 9) = −15x + 20a − 45</div>
+<div class="rule2"><div class="n">ПРАВИЛО 3</div>
+Если перед дробью стоит минус, возьми числитель этой дроби в скобки — тогда при
+приведении к общему знаменателю знак не потеряется.</div>
+<div class='fx'><span class='fr'><b>2x + 5</b><i>4</i></span> − <span class='fr'><b>3x − 4</b><i>2</i></span> = <span class='fr'><b>2x + 5 − 2(3x − 4)</b><i>4</i></span> = <span class='fr'><b>−4x + 13</b><i>4</i></span></div>
+<div class="ex"><h3>Пример 1</h3>
+<p>Упрости 5 − 2(3 − x).</p>
+<div class='step'>1. Раскрываем скобки: множитель −2 умножаем на каждое слагаемое.</div><div class='step'>2. −2 · 3 = −6, &nbsp; −2 · (−x) = +2x.</div><div class='fx'>5 − 6 + 2x = 2x − 1</div><div class='step mini'>Проверка на числе: при x = 1 исходное выражение равно 5 − 2 · 2 = 1, и ответ 2 · 1 − 1 = 1. Сошлось.</div>
+</div>
+<div class="tohw">Задание 1<span>Три задачи на скобки и знаки.</span></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts1"><div class="trhead"><b>Тренажёр 1. Раскрой скобки</b><span class="trscore" id="ts1s"></span></div><div class="meta">Восемь выражений. Следи за знаком каждого слагаемого.</div><div class="trq" id="ts1q"></div><div class="trfig" id="ts1f"></div><div id="ts1a"></div><div class="trmsg" id="ts1m"></div><div class="trbar" id="ts1b"></div></div>
+</div>
+
+<div class="card">
+<div class="gaps" id="gp1"><div class="ghead"><b>Пропуски 1. Минус перед скобкой</b><span class="gscore" id="gp1s"></span></div><div class="meta">Семь пропусков. Знак пишем как + или −.</div><div class="gline">2x + 4 − (2a + 5 − 3x) =</div><div class="gline">= 2x + 4 <input class="gp" data-k="a1" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a1"> 2a <input class="gp" data-k="a2" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a2"> 5 <input class="gp" data-k="a3" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a3"> 3x</div><div class="gline">= <input class="gp" data-k="a4" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a4">x − 2a − <input class="gp" data-k="a5" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a5"></div><div class="gnote">В первые три поля впиши знак: + или −. Теперь вынесем за скобки отрицательный множитель.</div><div class="gline">−15x + 20a − 45 =</div><div class="gline">= −5(3x <input class="gp" data-k="a6" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a6"> 4a <input class="gp" data-k="a7" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a7"> 9)</div><div class="gbar"><button type="button" class="pri" id="gp1go">Проверить</button></div><div class="gmsg" id="gp1m"></div><div class="gtip" id="gp1t"></div></div>
+</div>
+<div id="tasks1"></div>
+
+<div class="card">
+
+<h2>2. Уравнение, корень, равносильность</h2>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЯ</div>
+<b>Уравнение</b> — равенство, которое верно только при некоторых значениях переменной.
+Такие значения называют <b>корнями</b>. Найти все корни — значит <b>решить</b> уравнение.</div>
+<p>Проверить, корень ли данное число, можно всегда одинаково: подставить его вместо
+переменной и посмотреть, получилось ли верное равенство.</p>
+<div class="ex"><h3>Пример 2</h3>
+<div class='step'>1. Число 4 и уравнение 20x = 10: 20 · 4 = 80, то есть 80 = 10 — неверно. Значит 4 не корень.</div><div class='step'>2. Число 4 и уравнение 5x = 20: 5 · 4 = 20, то есть 20 = 20 — верно. Значит 4 — корень.</div><div class='step'>3. Число −5 и уравнение <span class='pw'>x<sup>2</sup></span> = 25: (−5)<sup>2</sup> = 25 — верно, это корень.</div><div class='step'>4. Число −9 и уравнение <span class='pw'>x<sup>2</sup></span> = −81: получаем 81 = −81 — неверно, не корень.</div><div class='step mini'>Квадрат любого числа неотрицателен, поэтому у такого уравнения корней не будет вовсе.</div>
+</div>
+<div class="def"><div class="n">РАВНОСИЛЬНЫЕ УРАВНЕНИЯ</div>
+Два уравнения называют равносильными, если у них одни и те же корни.</div>
+<div class='fx'>5x − 25 = 0 &nbsp; и &nbsp; 2x − 7 = 3 — оба дают x = 5</div>
+<div class="tohw">Задание 2<span>Три задачи про корень уравнения.</span></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts2"><div class="trhead"><b>Тренажёр 2. Корень или нет</b><span class="trscore" id="ts2s"></span></div><div class="meta">Восемь проверок подстановкой.</div><div class="trq" id="ts2q"></div><div class="trfig" id="ts2f"></div><div id="ts2a"></div><div class="trmsg" id="ts2m"></div><div class="trbar" id="ts2b"></div></div>
+</div>
+<div id="tasks2"></div>
+
+<div class="card">
+
+<h2>3. Сколько бывает корней</h2>
+<p>У уравнения может быть один корень, несколько, ни одного или бесконечно много.</p>
+<div class="def"><div class="n">ПРОИЗВЕДЕНИЕ РАВНО НУЛЮ</div>
+Произведение равно нулю, если хотя бы один из множителей равен нулю. Поэтому каждую
+скобку по очереди приравнивают к нулю.</div>
+<div class='fx'>(x + 3)(x − 5)(x + 1) = 0 &nbsp;→&nbsp; x = −3, &nbsp; x = 5, &nbsp; x = −1</div>
+<div class="ex"><h3>Пример 3</h3>
+<div class='step'>1. <span class='pw'>x<sup>2</sup></span> = 25 — два корня: 5 и −5.</div><div class='step'>2. <span class='pw'>x<sup>2</sup></span> = −25 — корней нет: квадрат не бывает отрицательным.</div><div class='step'>3. 0x = 25 — корней нет: ноль, умноженный на любое число, даёт ноль, а не 25.</div><div class='step'>4. 0x = 0 — корней бесконечно много: подходит любое число.</div><div class='step'>5. 10x = 10x — тоже бесконечно много корней.</div><div class='step mini'>Если нашёл один корень и не проверил, есть ли другие, — уравнение ещё не решено.</div>
+</div>
+<div class="tohw">Задание 3<span>Три задачи про число корней.</span></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts3"><div class="trhead"><b>Тренажёр 3. Сколько корней</b><span class="trscore" id="ts3s"></span></div><div class="meta">Восемь уравнений: один корень, ни одного или бесконечно много.</div><div class="trq" id="ts3q"></div><div class="trfig" id="ts3f"></div><div id="ts3a"></div><div class="trmsg" id="ts3m"></div><div class="trbar" id="ts3b"></div></div>
+</div>
+<div id="tasks3"></div>
+
+<div class="card">
+
+<h2>4. Тождественные преобразования</h2>
+<p>Решение уравнения — это замена его другим уравнением, у которого те же корни.
+Вот что делать можно.</p>
+<div class="def"><div class="n">1. ЗАМЕНА ВЫРАЖЕНИЯ РАВНЫМ</div>
+<span class='pw'>(3x + 2)<sup>2</sup></span> = 15x + 10 &nbsp;→&nbsp; 9<span class='pw'>x<sup>2</sup></span> + 12x + 4 = 15x + 10.</div>
+<div class="def"><div class="n">2. ПЕРЕНОС СЛАГАЕМЫХ</div>
+Переносим через знак равно, меняя знак каждого перенесённого слагаемого:
+9<span class='pw'>x<sup>2</sup></span> + 12x + 4 − 15x − 10 = 0, то есть 9<span class='pw'>x<sup>2</sup></span> − 3x − 6 = 0.</div>
+<div class='fx'>5x − 3y = 4x − 8y &nbsp;→&nbsp; 5x − 4x = 3y − 8y</div>
+<div class="def"><div class="n">3. УМНОЖЕНИЕ И ДЕЛЕНИЕ НА ЧИСЛО</div>
+Обе части можно умножить или разделить на одно и то же <b>число</b>, не равное нулю.</div>
+<div class='fx'>9<span class='pw'>x<sup>2</sup></span> − 3x − 6 = 0 &nbsp;| : 3 &nbsp;→&nbsp; 3<span class='pw'>x<sup>2</sup></span> − x − 2 = 0</div>
+<div class='fx'>0,2<span class='pw'>t<sup>2</sup></span> + 0,4t − 7 = 0 &nbsp;| · 5 &nbsp;→&nbsp; <span class='pw'>t<sup>2</sup></span> + 2t − 35 = 0</div>
+<div class="warn"><div class="n">ЧЕГО ДЕЛАТЬ НЕЛЬЗЯ</div>
+Умножать или делить на выражение с переменной. Умножение даёт <b>посторонний
+корень</b>: у x − 1 = 0 корень один, а у (x − 1)(x − 3) = 0
+их уже два. Деление <b>теряет корень</b>: сократив (x − 2)(x − 4) = (x − 4) на скобку, теряем x = 4.</div>
+<div class="hard"><div class="n">ЧЁТНАЯ СТЕПЕНЬ</div>
+Возведение обеих частей в чётную степень может добавить посторонние корни:
+у 7x = 35 корень один, а у 49<span class='pw'>x<sup>2</sup></span> = 1225 их два. И наоборот, неправильное
+извлечение корня теряет корни: из 16<span class='pw'>x<sup>2</sup></span> = 64 следует <span class='pw'>x<sup>2</sup></span> = 4, то есть x = 2 <b>и</b> x = −2.</div>
+<div class="tohw">Задание 4<span>Три задачи на тождественные преобразования.</span></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts4"><div class="trhead"><b>Тренажёр 4. Перенос слагаемых</b><span class="trscore" id="ts4s"></span></div><div class="meta">Восемь переносов. Где-то знак потерян — найди это.</div><div class="trq" id="ts4q"></div><div class="trfig" id="ts4f"></div><div id="ts4a"></div><div class="trmsg" id="ts4m"></div><div class="trbar" id="ts4b"></div></div>
+</div>
+
+<div class="card">
+<div class="gaps" id="gp2"><div class="ghead"><b>Пропуски 2. Тождественные преобразования</b><span class="gscore" id="gp2s"></span></div><div class="meta">Шесть пропусков. Всё — числа.</div><div class="gline"><span class='pw'>(3x + 2)<sup>2</sup></span> = 15x + 10</div><div class="gline">9<span class='pw'>x<sup>2</sup></span> + 12x + 4 = 15x + 10</div><div class="gline">9<span class='pw'>x<sup>2</sup></span> + 12x + 4 − 15x − 10 = 0</div><div class="gline">9<span class='pw'>x<sup>2</sup></span> − <input class="gp" data-k="b1" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b1">x − <input class="gp" data-k="b2" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b2"> = 0</div><div class="gnote">Разделим обе части на 3 — это число, так делать можно.</div><div class="gline"><input class="gp" data-k="b3" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b3"><span class='pw'>x<sup>2</sup></span> − x − <input class="gp" data-k="b4" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b4"> = 0</div><div class="gnote">А это уравнение удобнее умножить на 5, чтобы убрать запятые.</div><div class="gline">0,2<span class='pw'>t<sup>2</sup></span> + 0,4t − 7 = 0 &nbsp;| · 5</div><div class="gline"><span class='pw'>t<sup>2</sup></span> + <input class="gp" data-k="b5" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b5">t − <input class="gp" data-k="b6" size="3" style="width:57px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b6"> = 0</div><div class="gbar"><button type="button" class="pri" id="gp2go">Проверить</button></div><div class="gmsg" id="gp2m"></div><div class="gtip" id="gp2t"></div></div>
+</div>
+<div id="tasks4"></div>
+
+<div class="card">
+
+<h2>5. Линейное уравнение</h2>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>
+Линейным уравнением с одним неизвестным называют уравнение вида ax + b = 0,
+где a и b — числа, а x — неизвестное. Переменная стоит в первой степени.</div>
+<div class='fx'>если a ≠ 0, то x = −<span class='fr'><b>b</b><i>a</i></span></div>
+<p>В простейших случаях достаточно разделить обе части на коэффициент при x.</p>
+<div class="ex"><h3>Пример 4</h3>
+<div class='step'>1. 3x = 6 &nbsp;→&nbsp; x = <span class='fr'><b>6</b><i>3</i></span> = 2.</div><div class='step'>2. <span class='fr'><b>2</b><i>5</i></span>x = <span class='fr'><b>3</b><i>4</i></span> &nbsp;→&nbsp; x = <span class='fr'><b>3</b><i>4</i></span> : <span class='fr'><b>2</b><i>5</i></span> = <span class='fr'><b>3</b><i>4</i></span> · <span class='fr'><b>5</b><i>2</i></span> = <span class='fr'><b>15</b><i>8</i></span>.</div><div class='step'>3. <span class='fr'><b>3</b><i>2</i></span>x = 4 &nbsp;→&nbsp; x = 4 · <span class='fr'><b>2</b><i>3</i></span> = <span class='fr'><b>8</b><i>3</i></span>.</div><div class='step'>4. 2x = <span class='fr'><b>4</b><i>5</i></span> &nbsp;→&nbsp; x = <span class='fr'><b>4</b><i>5</i></span> : 2 = <span class='fr'><b>2</b><i>5</i></span>.</div><div class='step mini'>Деление на дробь — это умножение на обратную к ней.</div>
+</div>
+<div class="tohw">Задание 5<span>Три простейших линейных уравнения.</span></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts5"><div class="trhead"><b>Тренажёр 5. Реши уравнение</b><span class="trscore" id="ts5s"></span></div><div class="meta">Восемь простейших линейных уравнений. Ответ — число.</div><div class="trq" id="ts5q"></div><div class="trfig" id="ts5f"></div><div id="ts5a"></div><div class="trmsg" id="ts5m"></div><div class="trbar" id="ts5b"></div></div>
+</div>
+
+<div class="card">
+<div class="gaps" id="gp3"><div class="ghead"><b>Пропуски 3. Простейшие линейные уравнения</b><span class="gscore" id="gp3s"></span></div><div class="meta">Семь пропусков. Дроби пиши через косую черту: 15/8.</div><div class="gline"><span class='fr'><b>2</b><i>5</i></span>x = <span class='fr'><b>3</b><i>4</i></span></div><div class="gline">x = <span class='fr'><b>3</b><i>4</i></span> : <span class='fr'><b>2</b><i>5</i></span></div><div class="gline">x = <span class='fr'><b>3</b><i>4</i></span> · <span class='fr'><b><input class="gp" data-k="c1" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c1"></b><i><input class="gp" data-k="c2" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c2"></i></span></div><div class="gline">x = <span class='fr'><b><input class="gp" data-k="c3" size="3" style="width:57px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c3"></b><i><input class="gp" data-k="c4" size="3" style="width:57px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c4"></i></span></div><div class="gnote">Деление на дробь — умножение на обратную. Теперь уравнение со слагаемым.</div><div class="gline">3x + 5 = 6</div><div class="gline">3x = 6 <input class="gp" data-k="c5" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c5"> 5</div><div class="gline">3x = <input class="gp" data-k="c6" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c6"></div><div class="gline">x = <input class="gp" data-k="c7" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c7"></div><div class="gnote">Последний ответ — дробь, запиши её как 1/3.</div><div class="gbar"><button type="button" class="pri" id="gp3go">Проверить</button></div><div class="gmsg" id="gp3m"></div><div class="gtip" id="gp3t"></div></div>
+</div>
+<div id="tasks5"></div>
+
+<div class="card">
+
+<h2>6. Алгоритм и особые случаи</h2>
+<div class="rule2"><div class="n">АЛГОРИТМ</div>
+<ol class="alg">
+<li>Раскрыть все скобки.</li>
+<li>Слагаемые с переменной перенести налево, без переменной — направо, меняя знаки.</li>
+<li>Привести подобные слева и справа: получится ax = b.</li>
+<li>Найти ответ делением: x = b : a.</li>
+</ol></div>
+<div class="ex"><h3>Пример 5</h3>
+<p>Решить 3(x − 2) + 7(4 − 2x) − 5(5 − 3x) = 4 − 6x.</p>
+<div class='step'>1. Раскрываем скобки, особенно аккуратно третью, с множителем −5: 3x − 6 + 28 − 14x − 25 + 15x = 4 − 6x.</div><div class='step'>2. Приводим подобные слева: 4x − 3 = 4 − 6x.</div><div class='step'>3. Переносим: 4x + 6x = 4 + 3.</div><div class='fx'>10x = 7 &nbsp;→&nbsp; x = 0,7</div>
+</div>
+<div class="ex"><h3>Пример 6</h3>
+<p>Решить 3(x − 5) + 2(x − 4) = −23.</p>
+<div class='step'>1. 3x − 15 + 2x − 8 = −23.</div><div class='step'>2. 3x + 2x = −23 + 8 + 15.</div><div class='fx'>5x = 0 &nbsp;→&nbsp; x = 0</div><div class='step mini'>Ноль в ответе — обычный корень. Это не «нет корней» и не повод сбиваться с алгоритма.</div>
+</div>
+<div class="hard"><div class="n">ДВА ОСОБЫХ СЛУЧАЯ</div>
+Если после приведения подобных переменная исчезла совсем, смотрим на то, что осталось:<br>
+<b>0 = 0</b> (верное равенство) — корней бесконечно много;<br>
+<b>0 = 13</b> (неверное равенство) — корней нет.</div>
+<div class="ex"><h3>Пример 7</h3>
+<div class='step'>1. 3(x + 5) − 15 = 3x &nbsp;→&nbsp; 3x + 15 − 15 = 3x &nbsp;→&nbsp; 3x − 3x = 0 &nbsp;→&nbsp; 0 = 0.</div><div class='fx'>Корней бесконечно много</div><div class='step'>2. 2(2x − 4) = 4(x + 3) − 7 &nbsp;→&nbsp; 4x − 8 = 4x + 12 − 7 &nbsp;→&nbsp; 4x − 4x = 8 + 12 − 7 &nbsp;→&nbsp; 0 = 13.</div><div class='fx'>Корней нет</div>
+</div>
+<div class="tohw">Задание 6<span>Три задачи на полный алгоритм и особые случаи.</span></div>
+</div>
+
+<div class="card">
+<div class="gaps" id="gp4"><div class="ghead"><b>Пропуски 4. Особые случаи</b><span class="gscore" id="gp4s"></span></div><div class="meta">Семь пропусков. Здесь важно не запутаться в знаках.</div><div class="gline">3(x + 5) − 15 = 3x</div><div class="gline">3x + <input class="gp" data-k="d1" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d1"> − 15 = 3x</div><div class="gline">3x − 3x = <input class="gp" data-k="d2" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d2"></div><div class="gline">получили <input class="gp" data-k="d3" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d3"> = 0 — верное равенство</div><div class="gnote">Переменная исчезла, равенство верное — значит корней бесконечно много.</div><div class="gline">2(2x − 4) = 4(x + 3) − 7</div><div class="gline">4x − <input class="gp" data-k="d4" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d4"> = 4x + <input class="gp" data-k="d5" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d5"> − 7</div><div class="gline">4x − 4x = 8 + 12 − <input class="gp" data-k="d6" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d6"></div><div class="gline">получили 0 = <input class="gp" data-k="d7" size="3" style="width:57px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d7"> — неверное равенство</div><div class="gnote">Переменная исчезла, равенство неверное — значит корней нет.</div><div class="gbar"><button type="button" class="pri" id="gp4go">Проверить</button></div><div class="gmsg" id="gp4m"></div><div class="gtip" id="gp4t"></div></div>
+</div>
+<div id="tasks6"></div>
+<div id="tasks"></div>
+
+<div class="card sheet">
+  <h2>Шпаргалка</h2>
+  <div class="meta">Печатается на один лист A4: Ctrl+P (⌘+P) → печать.</div>
+  <p class="f-formula"><b>Минус перед скобкой.</b> a − (b + c) = a − b − c. Меняется знак каждого
+  слагаемого, а не только первого.</p>
+  <p class="f-formula"><b>Вынесение минуса.</b> −15x + 20a − 45 = −5(3x − 4a + 9). Проверка — раскрыть скобки обратно.</p>
+  <p class="f-formula"><b>Минус перед дробью.</b> Числитель берём в скобки:
+  <span class='fr'><b>2x + 5</b><i>4</i></span> − <span class='fr'><b>3x − 4</b><i>2</i></span> = <span class='fr'><b>−4x + 13</b><i>4</i></span>.</p>
+  <p class="f-formula"><b>Корень.</b> Значение переменной, при котором равенство верное.
+  Проверяется подстановкой. Решить уравнение — найти все корни.</p>
+  <p class="f-formula"><b>Произведение равно нулю.</b> (x + 3)(x − 5)(x + 1) = 0 → x = −3; 5; −1. Приравниваем к нулю
+  каждую скобку.</p>
+  <p class="f-formula"><b>Линейное уравнение.</b> ax + b = 0, &nbsp; x = −<span class='fr'><b>b</b><i>a</i></span>. При a ≠ 0 корень один.</p>
+  <p class="f-formula"><b>Алгоритм.</b> 1) раскрыть скобки; 2) с переменной — налево,
+  без переменной — направо, меняя знаки; 3) привести подобные: ax = b; 4) x = b : a.</p>
+  <p class="f-formula"><b>Особые случаи.</b> 0 = 0 — корней бесконечно много;
+  0 = 13 — корней нет; x = 0 — обычный единственный корень.</p>
+  <p class="f-formula"><b>Нельзя.</b> Умножать на выражение с переменной (появится
+  посторонний корень) и сокращать на него (потеряется корень). Сокращать можно только
+  числа.</p>
+  <p class="f-formula"><b>Чётная степень.</b> Возведение обеих частей в квадрат может
+  добавить посторонний корень; при извлечении корня помним про два случая: <span class='pw'>x<sup>2</sup></span> = 4 → x = 2 и x = −2.</p>
+</div>
+
+<div class="card">
+  <h2>Шаг 1. Фото решений — по желанию</h2>
+  <div class="meta">В поле уходит только ответ, а я смотрю ещё и ход решения.
+  Фото прикладывать не обязательно, но с ними разбор будет точнее.</div>
+  <ol class="steps-list">
+    <li>Каждое новое действие уравнения пиши с новой строки — по одному знаку равно
+    в строке.</li>
+    <li>Показывай шаг с раскрытием скобок целиком: там теряется больше всего знаков.</li>
+    <li>В конце подставь найденный корень в исходное уравнение и проверь.</li>
+  </ol>
+  <input type="file" id="photos" accept="image/*" multiple style="margin-top:12px">
+  <div class="thumbs" id="thumbs"></div>
+</div>
+
+<div class="card">
+  <h2>Шаг 2. Отправь работу</h2>
+  <div class="meta">Проверь, что вверху написано твоё имя. По кнопке ответы и результат
+  уходят преподавателю. Вторая кнопка сохраняет копию тебе.</div>
+  <div class="trgate" id="trgate"></div>
+  <div class="row" style="margin-top:12px">
+    <button class="pri" id="send">Отправить на проверку</button>
+    <button id="report">Скачать копию себе</button>
+  </div>
+  <div id="repnote" class="meta" style="margin-top:8px"></div>
+</div>
+
+</div>
+
+<div class="bar">
+  <button class="pri" id="checkall">Проверить всё</button>
+  <span id="progress" class="meta">решено 0 из 18</span>
+</div>
+
+<script>
+var CF = {};
+var STUDENT_CODE = (function(){
+  try{ var m = /[#&?]code=([^&]+)/.exec(location.hash + location.search);
+       return m ? decodeURIComponent(m[1]) : ""; }catch(e){ return ""; }
+})();
+var TOPIC = "Линейные уравнения (1.01, алгебра)";
+
+"use strict";
+var started = Date.now();
+var spentBefore = 0;
+
+/* ---------- данные задач; ответы закодированы, чтобы не читались в исходнике ---------- */
+function e(s){return btoa(unescape(encodeURIComponent(s)));}
+function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return s;}}
+
+var TASKS = [{"id": 1, "blk": "1", "lvl": "база", "img": "", "type": "num", "text": "Раскрой скобки и приведи подобные слагаемые в выражении 2x + 4 − (2a + 5 − 3x). В ответ запиши коэффициент при x.", "ans": ["NQ=="], "hints": ["Минус перед скобкой меняет знак каждого слагаемого внутри.", "Получится 2x + 4 − 2a − 5 + 3x.", "Складываем 2x и 3x."], "sol": "<div class='step'>1. 2x + 4 − 2a − 5 + 3x.</div><div class='step'>2. Приводим подобные: 5x − 2a − 1.</div><div class='fx'>Коэффициент при x равен 5</div><div class='step mini'>Если получилось −x, значит третье слагаемое не поменяло знак.</div>"}, {"id": 2, "blk": "1", "lvl": "база", "img": "", "type": "num", "text": "Вынеси за скобки множитель −5: &nbsp;−15x + 20a − 45 = −5(3x − 4a + ?). Какое число стоит на месте вопроса?", "ans": ["OQ=="], "hints": ["Каждое слагаемое делим на −5.", "−45 : (−5) — минус на минус даёт плюс.", "Результат — однозначное число."], "sol": "<div class='step'>1. −15x : (−5) = 3x.</div><div class='step'>2. 20a : (−5) = −4a.</div><div class='step'>3. −45 : (−5) = 9.</div><div class='fx'>−15x + 20a − 45 = −5(3x − 4a + 9)</div><div class='step mini'>Проверка — раскрыть скобки обратно.</div>"}, {"id": 3, "blk": "1", "lvl": "средний", "img": "", "type": "num", "text": "Найди значение выражения <span class='fr'><b>2x + 5</b><i>4</i></span> − <span class='fr'><b>3x − 4</b><i>2</i></span> при x = 3.", "ans": ["MCwyNQ=="], "hints": ["Приведи к общему знаменателю 4, взяв числитель второй дроби в скобки.", "Получится <span class='fr'><b>2x + 5 − 2(3x − 4)</b><i>4</i></span> = <span class='fr'><b>−4x + 13</b><i>4</i></span>.", "Подставь x = 3 в упрощённое выражение."], "sol": "<div class='step'>1. Общий знаменатель 4: <span class='fr'><b>2x + 5 − 2(3x − 4)</b><i>4</i></span>.</div><div class='step'>2. В числителе: 2x + 5 − 6x + 8 = −4x + 13.</div><div class='step'>3. При x = 3: −12 + 13 = 1.</div><div class='fx'><span class='fr'><b>1</b><i>4</i></span> = 0,25</div><div class='step mini'>Скобки в числителе — единственная защита от потери знака.</div>"}, {"id": 4, "blk": "2", "lvl": "база", "img": "", "type": "choice", "text": "Является ли число 4 корнем уравнения 20x = 10?", "ans": ["0L3QtdGC"], "hints": ["Подставь 4 вместо x.", "20 · 4 = 80.", "Сравни полученное равенство: 80 = 10."], "sol": "<div class='step'>1. 20 · 4 = 80.</div><div class='step'>2. Равенство 80 = 10 неверное.</div><div class='fx'>Ответ: нет</div><div class='step mini'>Корень этого уравнения — 0,5.</div>", "options": ["да", "нет"], "optionsHtml": ["да", "нет"]}, {"id": 5, "blk": "2", "lvl": "средний", "img": "", "type": "num", "text": "При каком значении a число 3 будет корнем уравнения ax = 12?", "ans": ["NA=="], "hints": ["Подставь x = 3 в уравнение.", "Получится 3a = 12.", "Раздели обе части на 3."], "sol": "<div class='step'>1. Подставляем: a · 3 = 12.</div><div class='step'>2. a = 12 : 3.</div><div class='fx'>a = 4</div><div class='step mini'>Проверка: 4 · 3 = 12 — верно.</div>"}, {"id": 6, "blk": "2", "lvl": "средний", "img": "", "type": "num", "text": "При каком значении b число −2 будет корнем уравнения 5x + b = 0?", "ans": ["MTA="], "hints": ["Подставь x = −2.", "Получится −10 + b = 0.", "Перенеси −10 вправо со сменой знака."], "sol": "<div class='step'>1. 5 · (−2) + b = 0.</div><div class='step'>2. −10 + b = 0.</div><div class='fx'>b = 10</div><div class='step mini'>Общая формула: корень линейного уравнения равен −<span class='fr'><b>b</b><i>a</i></span>.</div>"}, {"id": 7, "blk": "3", "lvl": "база", "img": "", "type": "num", "text": "Сколько корней у уравнения (x + 3)(x − 5)(x + 1) = 0?", "ans": ["Mw=="], "hints": ["Произведение равно нулю, если хотя бы один множитель равен нулю.", "Приравняй к нулю каждую скобку.", "Корни: −3, 5 и −1."], "sol": "<div class='step'>1. x + 3 = 0 → x = −3.</div><div class='step'>2. x − 5 = 0 → x = 5.</div><div class='step'>3. x + 1 = 0 → x = −1.</div><div class='fx'>Три корня</div><div class='step mini'>Все три числа разные, поэтому корней ровно три.</div>"}, {"id": 8, "blk": "3", "lvl": "средний", "img": "", "type": "choice", "text": "Сколько корней у уравнения 0x = 25?", "ans": ["0L3QuCDQvtC00L3QvtCz0L4="], "hints": ["Что получается слева при любом значении x?", "Ноль, умноженный на любое число, равен нулю.", "Может ли 0 равняться 25?"], "sol": "<div class='step'>1. При любом x слева получается 0.</div><div class='step'>2. Равенство 0 = 25 неверное.</div><div class='fx'>Корней нет</div><div class='step mini'>А вот у уравнения 0x = 0 корней бесконечно много.</div>", "options": ["ровно один", "ни одного", "бесконечно много"], "optionsHtml": ["ровно один", "ни одного", "бесконечно много"]}, {"id": 9, "blk": "3", "lvl": "средний", "img": "", "type": "num", "text": "Найди сумму корней уравнения (x + 3)(x − 5)(x + 1) = 0.", "ans": ["MQ=="], "hints": ["Сначала выпиши все корни.", "Их три: −3, 5 и −1.", "Сложи их."], "sol": "<div class='step'>1. Корни: −3, 5, −1.</div><div class='step'>2. −3 + 5 − 1 = 1.</div><div class='fx'>Сумма равна 1</div><div class='step mini'>Задачи такого вида часто встречаются в тестах: сначала все корни, потом действие с ними.</div>"}, {"id": 10, "blk": "4", "lvl": "средний", "img": "", "type": "num", "text": "Уравнение 0,2<span class='pw'>t<sup>2</sup></span> + 0,4t − 7 = 0 умножили на 5, чтобы убрать запятые. Чему равен свободный член нового уравнения?", "ans": ["LTM1"], "hints": ["Умножаем на 5 каждое слагаемое.", "Свободный член — это слагаемое без переменной.", "−7 · 5."], "sol": "<div class='step'>1. 0,2<span class='pw'>t<sup>2</sup></span> · 5 = <span class='pw'>t<sup>2</sup></span>.</div><div class='step'>2. 0,4t · 5 = 2t.</div><div class='step'>3. −7 · 5 = −35.</div><div class='fx'><span class='pw'>t<sup>2</sup></span> + 2t − 35 = 0</div><div class='step mini'>Корни при этом не меняются: уравнения равносильны.</div>"}, {"id": 11, "blk": "4", "lvl": "средний", "img": "", "type": "num", "text": "Уравнение x − 1 = 0 умножили на (x − 3). Сколько корней стало у нового уравнения?", "ans": ["Mg=="], "hints": ["Запиши новое уравнение: (x − 1)(x − 3) = 0.", "Приравняй к нулю каждый множитель.", "Один из корней — посторонний."], "sol": "<div class='step'>1. Новое уравнение: (x − 1)(x − 3) = 0.</div><div class='step'>2. Корни: x = 1 и x = 3.</div><div class='fx'>Стало два корня</div><div class='step mini'>x = 3 — посторонний корень: в исходное уравнение он не подходит. Именно поэтому умножать на выражение с переменной нельзя.</div>"}, {"id": 12, "blk": "4", "lvl": "сложный", "img": "", "type": "num", "text": "Сколько корней у уравнения (x − 2)(x − 4) = (x − 4)?", "ans": ["Mg=="], "hints": ["Сокращать на (x − 4) нельзя — потеряешь корень.", "Перенеси всё влево и вынеси общий множитель (x − 4).", "Получится (x − 4)(x − 3) = 0."], "sol": "<div class='step'>1. Переносим: (x − 2)(x − 4) − (x − 4) = 0.</div><div class='step'>2. Выносим общий множитель: (x − 4)(x − 2 − 1) = 0.</div><div class='step'>3. (x − 4)(x − 3) = 0.</div><div class='fx'>Два корня: x = 4 и x = 3</div><div class='step mini'>Если бы сократили на скобку, остался бы только x = 3, а корень x = 4 потерялся.</div>"}, {"id": 13, "blk": "5", "lvl": "база", "img": "", "type": "num", "text": "Реши уравнение 3x = 6.", "ans": ["Mg=="], "hints": ["Раздели обе части на коэффициент при x.", "6 : 3.", "Ответ — целое число."], "sol": "<div class='step'>1. x = <span class='fr'><b>6</b><i>3</i></span>.</div><div class='fx'>x = 2</div><div class='step mini'>Проверка: 3 · 2 = 6.</div>"}, {"id": 14, "blk": "5", "lvl": "средний", "img": "", "type": "num", "text": "Реши уравнение <span class='fr'><b>2</b><i>5</i></span>x = <span class='fr'><b>3</b><i>4</i></span>. Ответ запиши дробью, например 7/4.", "ans": ["MTUvOA=="], "hints": ["Раздели обе части на <span class='fr'><b>2</b><i>5</i></span>.", "Деление на дробь — умножение на обратную: <span class='fr'><b>5</b><i>2</i></span>.", "<span class='fr'><b>3</b><i>4</i></span> · <span class='fr'><b>5</b><i>2</i></span>."], "sol": "<div class='step'>1. x = <span class='fr'><b>3</b><i>4</i></span> : <span class='fr'><b>2</b><i>5</i></span>.</div><div class='step'>2. x = <span class='fr'><b>3</b><i>4</i></span> · <span class='fr'><b>5</b><i>2</i></span>.</div><div class='fx'>x = <span class='fr'><b>15</b><i>8</i></span> = 1,875</div><div class='step mini'>Ответ можно записать и десятичной дробью, но дробью надёжнее.</div>"}, {"id": 15, "blk": "5", "lvl": "средний", "img": "", "type": "num", "text": "Реши уравнение 2x = <span class='fr'><b>4</b><i>5</i></span>. Ответ можно записать как 2/5.", "ans": ["Mi81"], "hints": ["Раздели обе части на 2.", "<span class='fr'><b>4</b><i>5</i></span> : 2 = <span class='fr'><b>4</b><i>5</i></span> · <span class='fr'><b>1</b><i>2</i></span>.", "Сократи получившуюся дробь."], "sol": "<div class='step'>1. x = <span class='fr'><b>4</b><i>5</i></span> : 2.</div><div class='step'>2. x = <span class='fr'><b>4</b><i>10</i></span>.</div><div class='fx'>x = <span class='fr'><b>2</b><i>5</i></span> = 0,4</div><div class='step mini'>Дробь в ответе всегда сокращаем.</div>"}, {"id": 16, "blk": "6", "lvl": "средний", "img": "", "type": "num", "text": "Реши уравнение 3(x − 2) + 7(4 − 2x) − 5(5 − 3x) = 4 − 6x.", "ans": ["MCw3"], "hints": ["Раскрой все три скобки, особенно аккуратно третью.", "Слева получится 4x − 3, справа 4 − 6x.", "Перенеси: 4x + 6x = 4 + 3."], "sol": "<div class='step'>1. 3x − 6 + 28 − 14x − 25 + 15x = 4 − 6x.</div><div class='step'>2. Слева приводим подобные: 4x − 3 = 4 − 6x.</div><div class='step'>3. 4x + 6x = 4 + 3, то есть 10x = 7.</div><div class='fx'>x = 0,7</div><div class='step mini'>Множитель −5 перед третьей скобкой меняет знаки внутри неё — именно здесь чаще всего ошибаются.</div>"}, {"id": 17, "blk": "6", "lvl": "средний", "img": "", "type": "num", "text": "Реши уравнение 3(x − 5) + 2(x − 4) = −23.", "ans": ["MA=="], "hints": ["Раскрой скобки: 3x − 15 + 2x − 8.", "Перенеси числа вправо со сменой знака.", "−23 + 8 + 15 = 0."], "sol": "<div class='step'>1. 3x − 15 + 2x − 8 = −23.</div><div class='step'>2. 3x + 2x = −23 + 8 + 15.</div><div class='step'>3. 5x = 0.</div><div class='fx'>x = 0</div><div class='step mini'>Ноль справа — не повод пугаться: делим как обычно, 0 : 5 = 0.</div>"}, {"id": 18, "blk": "6", "lvl": "сложный", "img": "", "type": "choice", "text": "Сколько корней у уравнения 2(2x − 4) = 4(x + 3) − 7?", "ans": ["0L3QuCDQvtC00L3QvtCz0L4="], "hints": ["Раскрой скобки в обеих частях.", "Слева 4x − 8, справа 4x + 5.", "Переменная сократится — посмотри, что осталось."], "sol": "<div class='step'>1. 4x − 8 = 4x + 12 − 7.</div><div class='step'>2. 4x − 4x = 8 + 12 − 7.</div><div class='step'>3. 0 = 13 — равенство неверное.</div><div class='fx'>Корней нет</div><div class='step mini'>Сравни с уравнением 3(x + 5) − 15 = 3x: там получается 0 = 0 и корней бесконечно много.</div>", "options": ["ровно один", "ни одного", "бесконечно много"], "optionsHtml": ["ровно один", "ни одного", "бесконечно много"]}];
+
+/* ---------- разбор ответа ---------- */
+function norm(s){
+  return String(s).toLowerCase().replace(/\s+/g,"")
+    .replace(/[\u2013\u2014\u2212]/g,"-")
+    .replace(/[\u00d7\u00b7]/g,"*")
+    .replace(/,/g,".")
+    .replace(/^(ответ:?|x=|y=|α=|a=)/,"");
+}
+function toNum(str){
+  var t = norm(str);
+  if(!t) return NaN;
+  t = t.replace(/\u221a/g,"sqrt").replace(/\u03c0/g,"pi");
+  t = t.replace(/sqrt(\d+(?:\.\d+)?)/g,"sqrt($1)");
+  t = t.replace(/(\d)sqrt/g,"$1*sqrt");
+  t = t.replace(/(\d)pi/g,"$1*pi");
+  t = t.replace(/(\d)\(/g,"$1*(").replace(/\)(\d)/g,")*$1").replace(/\)\(/g,")*(");
+  if(!/^[-+*/().0-9a-z]+$/.test(t)) return NaN;
+  if(t.replace(/sqrt|pi/g,"").match(/[a-z]/)) return NaN;
+  try{
+    var v = new Function("sqrt","pi","return ("+t+");")(Math.sqrt, Math.PI);
+    return (typeof v === "number" && isFinite(v)) ? v : NaN;
+  }catch(err){ return NaN; }
+}
+function same(given, right, tol){
+  var a = toNum(given), b = toNum(right);
+  if(!isNaN(a) && !isNaN(b)){
+    var t = tol || 1e-4;
+    return Math.abs(a-b) <= Math.max(t, Math.abs(b)*t);
+  }
+  return norm(given) === norm(right);
+}
+
+/* ---------- отрисовка ---------- */
+var state = {};
+function boxOf(t){
+  return document.getElementById("tasks" + (t.blk || "")) ||
+         document.getElementById("tasks");
+}
+
+TASKS.forEach(function(t){
+  state[t.id] = {tries:0, hints:0, done:false, ok:false, given:"", sel:null};
+  var el = document.createElement("div");
+  el.className = "task"; el.id = "t"+t.id;
+  var body = '<div><span class="tnum">'+t.id+'.</span>'+t.text+
+             '<span class="lvl">'+t.lvl+'</span></div>';
+  if(t.img){ body += '<div class="fig">'+t.img+'</div>'; }
+  if(t.type === "choice"){
+    body += '<div class="opts">'+t.options.map(function(o,i){
+      return '<label class="opt" data-v="'+o+'"><input type="radio" name="q'+t.id+'" value="'+o+'"> '+((t.optionsHtml && t.optionsHtml[i]) || o)+'</label>';
+    }).join("")+'</div>';
+  } else {
+    body += '<div class="keys">'+
+      ["/","−",","].map(function(k){
+        return '<button class="key" data-k="'+k+'" type="button">'+k+'</button>';}).join("")+
+      '</div><input type="text" id="in'+t.id+'" inputmode="text" autocapitalize="off" '+
+      'autocorrect="off" autocomplete="off" spellcheck="false" placeholder="ответ">';
+  }
+  body += '<div class="row" style="margin-top:10px">'+
+          '<button class="pri sm chk">Проверить</button>'+
+          '<button class="sm hnt">Подсказка</button></div>'+
+          '<div class="hints"></div><div class="verdict"></div><div class="sol"></div>';
+  el.innerHTML = body;
+  boxOf(t).appendChild(el);
+
+  el.querySelectorAll(".key").forEach(function(b){
+    b.addEventListener("click", function(){
+      var inp = document.getElementById("in"+t.id);
+      var k = b.dataset.k === "−" ? "-" : b.dataset.k;
+      var s = inp.selectionStart || inp.value.length;
+      inp.value = inp.value.slice(0,s) + k + inp.value.slice(inp.selectionEnd || s);
+      inp.focus(); inp.setSelectionRange(s+k.length, s+k.length);
+    });
+  });
+  if(t.type === "choice"){
+    el.querySelectorAll(".opt").forEach(function(l){
+      l.addEventListener("click", function(){
+        el.querySelectorAll(".opt").forEach(function(x){x.classList.remove("sel");});
+        l.classList.add("sel"); state[t.id].sel = l.dataset.v;
+      });
+    });
+  } else {
+    el.querySelector("#in"+t.id).addEventListener("keydown", function(ev){
+      if(ev.key === "Enter"){ ev.preventDefault(); check(t.id); }
+    });
+  }
+  el.querySelector(".chk").addEventListener("click", function(){ check(t.id); });
+  el.querySelector(".hnt").addEventListener("click", function(){ hint(t.id); });
+});
+
+function hint(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var host = document.querySelector("#t"+id+" .hints");
+  if(s.hints >= t.hints.length){
+    if(!host.querySelector(".last")){
+      var w = document.createElement("div");
+      w.className = "hint last"; w.textContent = "Подсказки закончились — нажми «Проверить», решение откроется после второй попытки.";
+      host.appendChild(w);
+    }
+    return;
+  }
+  var h = document.createElement("div");
+  h.className = "hint";
+  h.innerHTML = "Подсказка " + (s.hints+1) + ": " + t.hints[s.hints];
+  host.appendChild(h);
+  s.hints++;
+  saveWork();
+}
+
+function check(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var el = document.getElementById("t"+id);
+  var v = document.querySelector(".verdict");
+  v = el.querySelector(".verdict");
+  var given = (t.type === "choice") ? (s.sel || "") :
+              (document.getElementById("in"+id).value || "");
+  if(!given.trim()){ v.className = "verdict bad"; v.textContent = "Введи ответ."; return; }
+  s.given = given; s.tries++;
+  var ok = t.ans.some(function(a){ return same(given, d(a), t.tol); });
+  s.ok = ok; s.done = ok || s.tries >= 2;
+  el.classList.remove("ok","bad");
+  el.classList.add(ok ? "ok" : "bad");
+  v.className = "verdict " + (ok ? "ok" : "bad");
+  if(ok){
+    v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    showSol(el, t);
+  } else if(s.tries === 1){
+    v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+  } else {
+    v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    showSol(el, t);
+  }
+  progress();
+  saveWork();
+}
+function showSol(el, t){
+  var host = el.querySelector(".sol");
+  if(host.dataset.on) return;
+  host.dataset.on = "1";
+  var det = document.createElement("details");
+  det.open = true;
+  det.innerHTML = "<summary>Решение</summary><div class='step'>"+t.sol+"</div>";
+  host.appendChild(det);
+}
+function progress(){
+  var done = TASKS.filter(function(t){return state[t.id].done;}).length;
+  var ok = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  document.getElementById("progress").textContent =
+    "решено " + done + " из " + TASKS.length + " · верно " + ok;
+}
+document.getElementById("checkall").addEventListener("click", function(){
+  TASKS.forEach(function(t){
+    var s = state[t.id];
+    var given = (t.type === "choice") ? (s.sel || "") : (document.getElementById("in"+t.id).value || "");
+    if(given.trim() && !s.done) check(t.id);
+  });
+  var first = TASKS.find(function(t){ return !state[t.id].done; });
+  var note = first ? "Осталась задача " + first.id + "." : "Все задачи закрыты.";
+  document.getElementById("progress").textContent += " · " + note;
+});
+progress();
+
+/* ---------- фото ---------- */
+var photos = [];
+document.getElementById("photos").addEventListener("change", function(ev){
+  var files = Array.prototype.slice.call(ev.target.files || []);
+  files.forEach(function(f){
+    var r = new FileReader();
+    r.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var m = 1400, w = img.width, h = img.height;
+        if(Math.max(w,h) > m){ var k = m/Math.max(w,h); w = Math.round(w*k); h = Math.round(h*k); }
+        var c = document.createElement("canvas"); c.width = w; c.height = h;
+        c.getContext("2d").drawImage(img, 0, 0, w, h);
+        photos.push({url: c.toDataURL("image/jpeg", 0.7), task: ""});
+        drawThumbs();
+      };
+      img.src = r.result;
+    };
+    r.readAsDataURL(f);
+  });
+  ev.target.value = "";
+});
+function drawThumbs(){
+  var host = document.getElementById("thumbs");
+  host.innerHTML = "";
+  var total = 0;
+  photos.forEach(function(p, i){
+    total += p.url.length * 0.75;
+    var d0 = document.createElement("div"); d0.className = "thumb";
+    var opts = '<option value="">задача…</option>' + TASKS.map(function(t){
+      return '<option value="'+t.id+'"'+(p.task==String(t.id)?" selected":"")+'>№'+t.id+'</option>';
+    }).join("");
+    d0.innerHTML = '<img src="'+p.url+'" alt="фото решения"><button type="button">×</button>'+
+                   '<select>'+opts+'</select>';
+    d0.querySelector("button").addEventListener("click", function(){ photos.splice(i,1); drawThumbs(); });
+    d0.querySelector("select").addEventListener("change", function(ev){ p.task = ev.target.value; });
+    host.appendChild(d0);
+  });
+  var note = document.getElementById("repnote");
+  if(total > 15e6){ note.textContent = "Фото уже больше 15 МБ — отчёт может отправляться долго, лишние лучше удалить."; }
+  else if(photos.length){ note.textContent = "Фото в отчёте: " + photos.length + "."; }
+  else { note.textContent = ""; }
+}
+
+/* ---------- отчёт ---------- */
+var ENDPOINT = "https://script.google.com/macros/s/AKfycbwqIhgBtFnoUik3N1Lh_YRhNeEFAjmXWSxBNoX1a_Yxu-2dEKHFwo4Dd5Ch9UTOHH-X/exec";
+var SECRET = "artteach2026";
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function buildReport(){
+  var name = (document.getElementById("name").value || "").trim() || "без имени";
+  var now = new Date();
+  var mins = Math.max(1, Math.round(spentMs()/60000));
+  var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  var data = {tип:"дз", предмет:"математика", тема:"Линейные уравнения (1.01, алгебра)",
+    ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
+    верно:okN, всего:TASKS.length, тренажёры:trSummary(), задачи:[]};
+  var rows = TASKS.map(function(t){
+    var s = state[t.id];
+    data.задачи.push({n:t.id, условие:t.text.replace(/<[^>]+>/g,""), ответ_ученика:s.given,
+      верный_ответ:t.ans.map(d).join(" или "), верно:s.ok, попыток:s.tries, подсказок:s.hints,
+      уровень:t.lvl});
+    return "<tr><td>"+t.id+"</td><td style='text-align:left'>"+esc(t.text.replace(/<[^>]+>/g,""))+
+      "</td><td>"+esc(s.given||"—")+"</td><td>"+esc(t.ans.map(d).join(" / "))+"</td><td>"+
+      (s.ok?"верно":(s.given?"неверно":"не решал"))+"</td><td>"+s.tries+"</td><td>"+s.hints+"</td></tr>";
+  }).join("");
+  var pics = photos.map(function(p,i){
+    return "<figure><img src='"+p.url+"'><figcaption>Фото "+(i+1)+
+      (p.task?" — к задаче №"+p.task:"")+"</figcaption></figure>";
+  }).join("");
+  var html = "<!doctype html><html lang='ru'><head><meta charset='utf-8'>"+
+    "<meta name='viewport' content='width=device-width,initial-scale=1'>"+
+    "<title>Отчёт — "+esc(name)+" — линейные уравнения · тема 1.01</title><style>"+
+    "body{font:16px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;padding:20px;color:#16181d;background:#fff}"+
+    "h1{font-size:22px;margin:0 0 4px}.m{color:#5b6270;font-size:15px}"+
+    "table{border-collapse:collapse;width:100%;margin-top:14px;font-size:15px}"+
+    "th,td{border:1px solid #dfe3ea;padding:6px 8px;text-align:center}th{background:#eef3fb}"+
+    "figure{margin:14px 0}img{max-width:100%;border:1px solid #dfe3ea;border-radius:8px}"+
+    "figcaption{color:#5b6270;font-size:14px;margin-top:4px}</style></head><body>"+
+    "<h1>Отчёт по домашнему заданию</h1>"+
+    "<div class='m'>Тема: линейные уравнения · 1.01</div>"+
+    "<div class='m'>Ученик: <b>"+esc(name)+"</b> · сдано: "+esc(now.toLocaleString("ru-RU"))+
+    " · время работы: около "+mins+" мин</div>"+
+    "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)</h2>"+
+    "<table><tr><th>№</th><th>Задача</th><th>Ответ ученика</th><th>Верный ответ</th>"+
+    "<th>Итог</th><th>Попыток</th><th>Подсказок</th></tr>"+rows+"</table>"+
+    trReportHtml()+
+    (pics ? "<h2>Фото решений</h2>"+pics : "<p class='m'>Фото решений не прикреплены.</p>")+
+    "<script type='application/json' id='result-data'>"+
+    JSON.stringify(data).replace(/</g,"\\u003c")+"<\/script></body></html>";
+  var stamp = now.getDate()+"-"+(now.getMonth()+1);
+  return {
+    html: html,
+    name: name,
+    ok: okN,
+    total: TASKS.length,
+    file: "Отчёт_Линейные_уравнения_"+name.replace(/\s+/g,"_")+"_"+stamp+".html",
+    caption: name+" · линейные уравнения · тема 1.01 · "+okN+" из "+TASKS.length+
+             " ("+Math.round(okN/TASKS.length*100)+"%)"+
+             " · тренажёры и пропуски "+trSummary().ok+" из "+trSummary().total
+  };
+}
+
+document.getElementById("send").addEventListener("click", function(){
+  var note = document.getElementById("repnote");
+  var who = (document.getElementById("name").value || "").trim();
+  if(!who){ note.className = "meta bad-note"; note.textContent = "Сначала впиши имя вверху страницы."; return; }
+  var left = trPending();
+  if(left.length){
+    note.className = "meta bad-note";
+    note.textContent = "Работа не отправлена: сначала пройди тренажёры " +
+      "и блоки с пропусками. Осталось " + left.length + " из " + TRREQ.length + ".";
+    trStatus();
+    trJump(left[0].id);
+    return;
+  }
+  note.className = "meta";
+  var r = buildReport();
+  note.textContent = "Отправляю…";
+  var payload = {
+    secret: SECRET,
+    code: STUDENT_CODE,
+    student: r.name,
+    topic: TOPIC,
+    ok: r.ok,
+    total: r.total,
+    name: r.file,
+    caption: r.caption,
+    trainers: trSummary().ok + " из " + trSummary().total,
+    file: btoa(unescape(encodeURIComponent(r.html)))
+  };
+  fetch(ENDPOINT, {method:"POST", mode:"no-cors", body: JSON.stringify(payload)})
+    .then(function(){
+      note.textContent = "Отправлено преподавателю." +
+        (photos.length ? "" : " Фото решений не приложены — если решал в тетради, приложи их и отправь ещё раз.") +
+        " Если хочешь, сохрани копию себе кнопкой ниже.";
+    })
+    .catch(function(){
+      note.textContent = "Не получилось отправить. Скачай файл кнопкой ниже и пришли его вручную.";
+    });
+});
+
+document.getElementById("report").addEventListener("click", function(){
+  var r = buildReport();
+  var blob = new Blob([r.html], {type:"text/html;charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = r.file;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  document.getElementById("repnote").textContent = "Файл скачан — он в папке загрузок.";
+});
+
+
+/* ============ заполни пропуски ============ */
+window.GAPSTATE = {};
+window.GAPSAPI = {};
+window.GAPS = function(id, data){
+  var host = document.getElementById(id);
+  if(!host) return null;
+  var btn = document.getElementById(id + "go"), msg = document.getElementById(id + "m"),
+      sc = document.getElementById(id + "s"), tip = document.getElementById(id + "t");
+  var inputs = host.querySelectorAll("input.gp");
+  var tries = 0, done = false;
+
+  function norm(s){
+    return String(s).toLowerCase().replace(/\s+/g, "")
+      .replace(/[–—−]/g, "-")
+      .replace(/[×·\*]/g, "*")
+      .replace(/,/g, ".");
+  }
+  function toNum(s){
+    var t = norm(s);
+    if(!t || !/^[-+*/().0-9]+$/.test(t)) return NaN;
+    try{
+      var v = new Function("return (" + t + ");")();
+      return (typeof v === "number" && isFinite(v)) ? v : NaN;
+    }catch(e){ return NaN; }
+  }
+  function same(given, right){
+    var a = toNum(given), b = toNum(right);
+    if(!isNaN(a) && !isNaN(b)) return Math.abs(a - b) <= Math.max(1e-9, Math.abs(b) * 1e-9);
+    return norm(given) === norm(right);
+  }
+  function record(){
+    var vals = {}, k;
+    for(k = 0; k < inputs.length; k++) vals[inputs[k].getAttribute("data-k")] = inputs[k].value;
+    window.GAPSTATE[id] = {vals: vals, done: done};
+    if(window.saveWork) window.saveWork();
+  }
+
+  function check(quiet){
+    var ok = 0, total = inputs.length, firstBad = null, k, el, key, good;
+    for(k = 0; k < total; k++){
+      el = inputs[k];
+      key = el.getAttribute("data-k");
+      good = (el.value || "").trim() !== "" &&
+             (data.ans[key] || []).some(function(a){ return same(el.value, a); });
+      if(good){
+        el.className = "gp ok";
+        el.readOnly = true;
+        ok++;
+      } else {
+        el.className = (el.value || "").trim() === "" ? "gp" : "gp bad";
+        if(firstBad === null) firstBad = key;
+      }
+    }
+    sc.textContent = "заполнено верно " + ok + " из " + total;
+    if(ok === total){
+      done = true;
+      btn.disabled = true;
+      msg.innerHTML = '<span class="v ok">Все пропуски заполнены верно.</span>';
+      tip.innerHTML = data.after || "";
+      if(window.trFinished) window.trFinished(id, ok, total);
+    } else if(!quiet){
+      tries++;
+      msg.innerHTML = '<span class="v bad">Пока не всё.</span> Красные поля поправь, ' +
+                      "зелёные уже засчитаны.";
+      if(tries >= 2 && data.tips && data.tips[firstBad])
+        tip.innerHTML = "Подсказка: " + data.tips[firstBad];
+    }
+    record();
+    return ok;
+  }
+
+  btn.addEventListener("click", function(){ check(false); });
+  host.addEventListener("keydown", function(ev){
+    if(ev.key === "Enter"){ ev.preventDefault(); check(false); }
+  });
+  sc.textContent = "заполнено верно 0 из " + inputs.length;
+  window.GAPSAPI[id] = {check: check, inputs: inputs};
+  return {check: check};
+};
+
+window.gapRestore = function(saved){
+  var id, api, k, vals, el;
+  for(id in saved){
+    api = window.GAPSAPI[id];
+    if(!api) continue;
+    vals = (saved[id] && saved[id].vals) || {};
+    for(k = 0; k < api.inputs.length; k++){
+      el = api.inputs[k];
+      if(vals[el.getAttribute("data-k")] !== undefined)
+        el.value = vals[el.getAttribute("data-k")];
+    }
+    api.check(true);
+  }
+};
+
+var GPD = {"gp1": {"ans": {"a1": ["-"], "a2": ["-"], "a3": ["+"], "a4": ["5"], "a5": ["1"], "a6": ["-"], "a7": ["+"]}, "tips": {"a1": "Минус перед скобкой меняет знак каждого слагаемого.", "a3": "Было −3x внутри скобки, значит станет +3x.", "a4": "2x и 3x складываются.", "a6": "В скобке остаётся 3x, а знак следующего слагаемого меняется."}, "after": "Проверить себя можно раскрытием: −5 · 3x = −15x, −5 · (−4a) = +20a, −5 · 9 = −45."}, "gp2": {"ans": {"b1": ["3"], "b2": ["6"], "b3": ["3"], "b4": ["2"], "b5": ["2"], "b6": ["35"]}, "tips": {"b1": "12x − 15x = −3x.", "b2": "4 − 10 = −6.", "b3": "9 : 3 = 3.", "b5": "0,4 · 5 = 2.", "b6": "7 · 5 = 35."}, "after": "Корни от умножения и деления на число не меняются — уравнения равносильны."}, "gp3": {"ans": {"c1": ["5"], "c2": ["2"], "c3": ["15"], "c4": ["8"], "c5": ["-"], "c6": ["1"], "c7": ["1/3"]}, "tips": {"c1": "Обратная к <span class='fr'><b>2</b><i>5</i></span> — это <span class='fr'><b>5</b><i>2</i></span>.", "c3": "3 · 5 = 15.", "c5": "Слагаемое 5 переносим вправо, меняя знак.", "c7": "Делим 1 на 3 — получается дробь."}, "after": "Ответ <span class='fr'><b>1</b><i>3</i></span> — нормальный корень: дробь ничем не хуже целого числа."}, "gp4": {"ans": {"d1": ["15"], "d2": ["0"], "d3": ["0"], "d4": ["8"], "d5": ["12"], "d6": ["7"], "d7": ["13"]}, "tips": {"d1": "3 · 5 = 15.", "d4": "2 · 4 = 8.", "d6": "Семёрку переносим влево со сменой знака.", "d7": "8 + 12 − 7 = 13."}, "after": "Запомни разницу: 0 = 0 — корней бесконечно много, 0 = 13 — корней нет."}};
+for (var _g in GPD){ GAPS(_g, GPD[_g]); }
+
+
+/* ---------- движок тренажёров ---------- */
+function makeTrainer(id, items){
+  var q=document.getElementById(id+"q"), f=document.getElementById(id+"f"),
+      a=document.getElementById(id+"a"), m=document.getElementById(id+"m"),
+      b=document.getElementById(id+"b"), sc=document.getElementById(id+"s");
+  var order=[], perm=[], i=0, ok=0, answered=false;
+
+  function shuffle(n){
+    var arr=[], k, j, t;
+    for(k=0;k<n;k++) arr.push(k);
+    for(k=arr.length-1;k>0;k--){ j=Math.floor(Math.random()*(k+1)); t=arr[k]; arr[k]=arr[j]; arr[j]=t; }
+    return arr;
+  }
+  function norm(s){
+    return String(s).trim().toLowerCase().replace(/\s+/g,"").replace(/−/g,"-").replace(/,/g,".");
+  }
+  function same(x, y){
+    var p=parseFloat(norm(x)), r=parseFloat(norm(y));
+    if(isFinite(p) && isFinite(r)) return Math.abs(p-r) < 1e-9;
+    return norm(x) === norm(y);
+  }
+  function score(){
+    sc.textContent = "вопрос " + Math.min(i + 1, items.length) + " из " + items.length +
+                     " · верно " + ok;
+  }
+
+  function finish(){
+    q.innerHTML=""; f.innerHTML=""; a.innerHTML=""; m.innerHTML="";
+    var pct=Math.round(ok/items.length*100);
+    var word = pct===100 ? "Всё верно — тема закрыта." :
+               pct>=70 ? "Хорошо, но пару мест стоит перечитать." :
+               "Стоит вернуться к теории и пройти ещё раз.";
+    b.innerHTML='<div class="trdone" style="flex:1 1 100%">'+ok+" из "+items.length+
+      " ("+pct+" %) · "+word+'</div><button type="button" class="pri" data-go="1">Пройти заново</button>';
+    sc.textContent="готово";
+    if(window.trFinished) window.trFinished(id, ok, items.length);
+  }
+
+  function show(){
+    answered=false;
+    m.innerHTML=""; b.innerHTML="";
+    var t=items[order[i]];
+    q.innerHTML="<b>"+(i+1)+".</b> "+t.q;
+    f.innerHTML=t.fig || "";
+    f.style.display = t.fig ? "" : "none";
+    if(t.opts){
+      perm = shuffle(t.opts.length);          /* perm[позиция] = номер варианта в банке */
+      var html='<div class="tropts" id="'+id+'o">';
+      for(var k=0;k<perm.length;k++)
+        html+='<button type="button" class="tropt" data-k="'+perm[k]+'">'+t.opts[perm[k]]+'</button>';
+      a.innerHTML = html+"</div>";
+      var box=document.getElementById(id+"o");
+      box.addEventListener("click", function(ev){
+        var el=ev.target; while(el && el!==box && el.className.indexOf("tropt")<0) el=el.parentNode;
+        if(!el || el===box || answered) return;
+        pick(parseInt(el.getAttribute("data-k"),10), box);
+      });
+    } else {
+      a.innerHTML='<div class="trnum"><span>Ответ:</span>'+
+        '<input type="text" id="'+id+'i" inputmode="text" autocomplete="off" '+
+        'autocorrect="off" spellcheck="false" placeholder="число">'+
+        '<button type="button" class="pri" data-check="1">Проверить</button></div>';
+      var inp=document.getElementById(id+"i");
+      inp.addEventListener("keydown", function(ev){ if(ev.key==="Enter") check(); });
+    }
+    score();
+  }
+
+  function verdict(good, t){
+    answered=true;
+    if(good) ok++;
+    i++;
+    m.innerHTML='<div class="v '+(good?"ok":"bad")+'">'+(good?"Верно.":"Неверно.")+"</div>"+
+                '<div class="why">'+t.why+"</div>";
+    b.innerHTML = (i<items.length)
+      ? '<button type="button" class="pri" data-next="1">Дальше</button>'
+      : '<button type="button" class="pri" data-next="1">Показать итог</button>';
+    score();
+  }
+  function pick(k, box){
+    var t=items[order[i]], good = (k === t.ans);
+    var bs=box.querySelectorAll(".tropt");
+    for(var j=0;j<bs.length;j++){
+      var n=parseInt(bs[j].getAttribute("data-k"),10);
+      if(n===t.ans) bs[j].className="tropt right";
+      else if(n===k) bs[j].className="tropt wrong";
+    }
+    box.className="tropts done";
+    verdict(good, t);
+  }
+  function check(){
+    if(answered) return;
+    var t=items[order[i]], inp=document.getElementById(id+"i");
+    var v=(inp.value||"").trim();
+    if(!v){ m.innerHTML='<div class="why">Впиши ответ.</div>'; return; }
+    var good = t.ans.some(function(x){ return same(v, x); });
+    inp.disabled=true;
+    if(!good) m.innerHTML="";
+    verdict(good, t);
+    if(!good) m.innerHTML='<div class="v bad">Неверно. Правильный ответ: '+t.ans[0]+".</div>"+
+                          '<div class="why">'+t.why+"</div>";
+  }
+
+  b.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-next")){ if(i<items.length) show(); else finish(); }
+    if(el.getAttribute && el.getAttribute("data-go")){ start(); }
+  });
+  a.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-check")) check();
+  });
+
+  function start(){ order=shuffle(items.length); i=0; ok=0; show(); }
+  start();
+}
+
+makeTrainer("ts1", [{"q": "Чему равно 2x + 4 − (2a + 5 − 3x)?", "opts": ["5x − 2a − 1", "5x − 2a + 9", "−x − 2a − 1", "5x + 2a − 1"], "ans": 0, "why": "Минус меняет знак каждого слагаемого: −2a − 5 + 3x. Остаётся 5x − 2a − 1."}, {"q": "Чему равно 3 − (x − 7)?", "opts": ["10 − x", "−4 − x", "10 + x", "−x − 4"], "ans": 0, "why": "3 − x + 7 = 10 − x. Минус перед скобкой сделал из −7 плюс семь."}, {"q": "Чему равно −(15x − 20a + 45)?", "opts": ["−15x + 20a − 45", "−15x − 20a + 45", "15x + 20a − 45", "−15x + 20a + 45"], "ans": 0, "why": "Знак меняется у всех трёх слагаемых."}, {"q": "Чему равно 5 − 2(3 − x)?", "opts": ["2x − 1", "−2x − 1", "2x + 11", "−x − 1"], "ans": 0, "why": "5 − 6 + 2x = 2x − 1. Произведение −2 · (−x) даёт +2x."}, {"q": "Какое выражение останется в скобках: −15x + 20a − 45 = −5 · (…)?", "opts": ["3x − 4a + 9", "3x + 4a − 9", "−3x + 4a − 9", "3x − 4a − 9"], "ans": 0, "why": "Делим каждое слагаемое на −5: −15x : (−5) = 3x, 20a : (−5) = −4a, −45 : (−5) = 9."}, {"q": "Чему равно a − (b − c)?", "opts": ["a − b + c", "a − b − c", "a + b − c", "−a − b + c"], "ans": 0, "why": "Минус перед скобкой: b становится −b, а −c становится +c."}, {"q": "Чему равно −(−x + 3)?", "opts": ["x − 3", "−x − 3", "x + 3", "−x + 3"], "ans": 0, "why": "Оба знака меняются на противоположные."}, {"q": "Чему равно 4 − 3(2 − 5x)?", "opts": ["15x − 2", "−15x − 2", "15x + 10", "−15x + 10"], "ans": 0, "why": "4 − 6 + 15x = 15x − 2."}]);
+makeTrainer("ts2", [{"q": "Является ли число 4 корнем уравнения 5x = 20?", "opts": ["да", "нет"], "ans": 0, "why": "5 · 4 = 20, равенство 20 = 20 верное."}, {"q": "Является ли число 4 корнем уравнения 20x = 10?", "opts": ["да", "нет"], "ans": 1, "why": "20 · 4 = 80, а равенство 80 = 10 неверное."}, {"q": "Является ли число −5 корнем уравнения <span class='pw'>x<sup>2</sup></span> = 25?", "opts": ["да", "нет"], "ans": 0, "why": "(−5)<sup>2</sup> = 25 — равенство верное."}, {"q": "Является ли число −9 корнем уравнения <span class='pw'>x<sup>2</sup></span> = −81?", "opts": ["да", "нет"], "ans": 1, "why": "(−9)<sup>2</sup> = 81, а нужно −81. Квадрат не бывает отрицательным."}, {"q": "Является ли число 13 корнем уравнения 0x = 0?", "opts": ["да", "нет"], "ans": 0, "why": "0 · 13 = 0, равенство 0 = 0 верное. У этого уравнения корнем является любое число."}, {"q": "Является ли число 0 корнем уравнения 0x = 25?", "opts": ["да", "нет"], "ans": 1, "why": "0 · 0 = 0, а равенство 0 = 25 неверное. У этого уравнения корней нет вообще."}, {"q": "Является ли число 2 корнем уравнения 3x − 6 = 0?", "opts": ["да", "нет"], "ans": 0, "why": "3 · 2 − 6 = 0 — верно."}, {"q": "Является ли число 3 корнем уравнения (x + 3)(x − 5) = 0?", "opts": ["да", "нет"], "ans": 1, "why": "(3 + 3)(3 − 5) = 6 · (−2) = −12, а не 0. Корни здесь −3 и 5."}]);
+makeTrainer("ts3", [{"q": "Сколько корней у уравнения 0x = 0?", "opts": ["ровно один", "ни одного", "бесконечно много"], "ans": 2, "why": "Любое число подходит: 0 умножить на что угодно даёт 0."}, {"q": "Сколько корней у уравнения 0x = 25?", "opts": ["ровно один", "ни одного", "бесконечно много"], "ans": 1, "why": "Слева всегда получается 0, а справа 25 — равенство никогда не станет верным."}, {"q": "Сколько корней у уравнения 5x = 25?", "opts": ["ровно один", "ни одного", "бесконечно много"], "ans": 0, "why": "Коэффициент при x не равен нулю, поэтому корень один: x = 5."}, {"q": "Сколько корней у уравнения 10x = 10x?", "opts": ["ровно один", "ни одного", "бесконечно много"], "ans": 2, "why": "Равенство верно при любом x."}, {"q": "Сколько корней у уравнения 2(2x − 4) = 4(x + 3) − 7?", "opts": ["ровно один", "ни одного", "бесконечно много"], "ans": 1, "why": "После раскрытия скобок получается 0 = 13 — неверное равенство."}, {"q": "Сколько корней у уравнения 3(x + 5) − 15 = 3x?", "opts": ["ровно один", "ни одного", "бесконечно много"], "ans": 2, "why": "После раскрытия скобок получается 0 = 0 — верное равенство."}, {"q": "Сколько корней у уравнения 7x − 3 = 4?", "opts": ["ровно один", "ни одного", "бесконечно много"], "ans": 0, "why": "7x = 7, значит x = 1 — единственный корень."}, {"q": "Сколько корней у уравнения x + 1 = x + 2?", "opts": ["ровно один", "ни одного", "бесконечно много"], "ans": 1, "why": "После переноса получается 0 = 1 — равенство неверное."}]);
+makeTrainer("ts4", [{"q": "Верно ли выполнен перенос: 5x − 3y = 4x − 8y &nbsp;→&nbsp; 5x − 4x = 3y − 8y?", "opts": ["да", "нет"], "ans": 0, "why": "4x переехало влево со знаком минус, −3y уехало вправо со знаком плюс."}, {"q": "Верно ли выполнен перенос: −5a + 2b − 4 = 3a + 8b + 5 &nbsp;→&nbsp; −5a − 3a − 4 = 8b − 2b + 5?", "opts": ["да", "нет"], "ans": 0, "why": "Все четыре перенесённых слагаемых поменяли знак."}, {"q": "Верно ли выполнен перенос: 3x + 5 = 6 &nbsp;→&nbsp; 3x = 6 + 5?", "opts": ["да", "нет"], "ans": 1, "why": "Пятёрка переезжает вправо со знаком минус: 3x = 6 − 5."}, {"q": "Верно ли выполнен перенос: 4x − 3 = 4 − 6x &nbsp;→&nbsp; 4x + 6x = 4 + 3?", "opts": ["да", "нет"], "ans": 0, "why": "−6x стало +6x слева, −3 стало +3 справа."}, {"q": "Верно ли выполнен перенос: 2x = 7 − x &nbsp;→&nbsp; 2x + x = 7?", "opts": ["да", "нет"], "ans": 0, "why": "−x переехало влево и стало +x."}, {"q": "Верно ли выполнен перенос: 5 − 2x = 3x &nbsp;→&nbsp; −2x − 3x = −5?", "opts": ["да", "нет"], "ans": 0, "why": "3x уехало влево со знаком минус, пятёрка — вправо со знаком минус."}, {"q": "Верно ли выполнен перенос: <span class='fr'><b>x</b><i>2</i></span> + 3 = x &nbsp;→&nbsp; <span class='fr'><b>x</b><i>2</i></span> − x = 3?", "opts": ["да", "нет"], "ans": 1, "why": "Тройка должна уехать вправо со знаком минус: <span class='fr'><b>x</b><i>2</i></span> − x = −3."}, {"q": "Верно ли выполнен перенос: 6x = 2x − 8 &nbsp;→&nbsp; 6x − 2x = −8?", "opts": ["да", "нет"], "ans": 0, "why": "2x переехало влево со знаком минус, восьмёрка осталась справа."}]);
+makeTrainer("ts5", [{"q": "Реши уравнение: 3x = 6", "ans": ["2"], "why": "x = 6 : 3 = 2."}, {"q": "Реши уравнение: 5x = 20", "ans": ["4"], "why": "x = 20 : 5 = 4."}, {"q": "Реши уравнение: 2x + 6 = 0", "ans": ["-3"], "why": "2x = −6, значит x = −3."}, {"q": "Реши уравнение: 3x + 5 = 11", "ans": ["2"], "why": "3x = 11 − 5 = 6, значит x = 2."}, {"q": "Реши уравнение: 4x − 7 = 5", "ans": ["3"], "why": "4x = 5 + 7 = 12, значит x = 3."}, {"q": "Реши уравнение: 2(x − 3) = 8", "ans": ["7"], "why": "2x − 6 = 8, отсюда 2x = 14 и x = 7."}, {"q": "Реши уравнение: 5 − 2x = 1", "ans": ["2"], "why": "−2x = 1 − 5 = −4, значит x = 2."}, {"q": "Реши уравнение: 10x = 7", "ans": ["0,7"], "why": "x = 7 : 10 = 0,7."}]);
+
+/* ---------- тренажёры и пропуски обязательны для отправки ---------- */
+var TRREQ = [
+  {id:"ts1", name:"Тренажёр 1. Раскрой скобки"},
+  {id:"gp1", name:"Пропуски 1. Минус перед скобкой"},
+  {id:"ts2", name:"Тренажёр 2. Корень или нет"},
+  {id:"ts3", name:"Тренажёр 3. Сколько корней"},
+  {id:"ts4", name:"Тренажёр 4. Перенос слагаемых"},
+  {id:"gp2", name:"Пропуски 2. Тождественные преобразования"},
+  {id:"ts5", name:"Тренажёр 5. Реши уравнение"},
+  {id:"gp3", name:"Пропуски 3. Простейшие линейные уравнения"},
+  {id:"gp4", name:"Пропуски 4. Особые случаи"}
+];
+var TRDONE = {};
+window.trFinished = function(id, ok, total){
+  var prev = TRDONE[id];
+  if(!prev || ok > prev.ok) TRDONE[id] = {ok: ok, total: total};
+  trStatus();
+  if(window.saveWork) saveWork();
+};
+function trPending(){
+  var out = [], k;
+  for(k = 0; k < TRREQ.length; k++){ if(!TRDONE[TRREQ[k].id]) out.push(TRREQ[k]); }
+  return out;
+}
+function trSummary(){
+  var ok = 0, total = 0, parts = [], k, d;
+  for(k = 0; k < TRREQ.length; k++){
+    d = TRDONE[TRREQ[k].id];
+    parts.push({name: TRREQ[k].name, ok: d ? d.ok : null, total: d ? d.total : null});
+    if(d){ ok += d.ok; total += d.total; }
+  }
+  return {ok: ok, total: total, parts: parts, done: TRREQ.length - trPending().length};
+}
+function trReportHtml(){
+  var s = trSummary(), k, pt, h;
+  h = "<h2>Тренажёры и пропуски: " + s.done + " из " + TRREQ.length + " пройдено" +
+      (s.total ? " · верных ответов " + s.ok + " из " + s.total : "") + "</h2><table><tr>" +
+      "<th>Блок</th><th>Результат</th></tr>";
+  for(k = 0; k < s.parts.length; k++){
+    pt = s.parts[k];
+    h += "<tr><td style='text-align:left'>" + pt.name + "</td><td>" +
+         (pt.ok === null ? "не пройден" : pt.ok + " из " + pt.total) + "</td></tr>";
+  }
+  return h + "</table>";
+}
+function trJump(id){
+  var el = document.getElementById(id);
+  if(!el) return;
+  try{ el.scrollIntoView({behavior: "smooth", block: "center"}); }
+  catch(e){ el.scrollIntoView(); }
+  el.classList.add("need");
+  setTimeout(function(){ el.classList.remove("need"); }, 2600);
+}
+function trStatus(){
+  var g = document.getElementById("trgate");
+  if(!g) return;
+  var left = trPending(), s = trSummary(), h, k;
+  if(!left.length){
+    g.className = "trgate ready";
+    g.innerHTML = "<b>Все тренажёры и пропуски пройдены.</b> Верных ответов: " + s.ok +
+                  " из " + s.total + ". Работу можно отправлять.";
+    return;
+  }
+  g.className = "trgate";
+  h = "<b>Пройдено: " + s.done + " из " + TRREQ.length + ".</b> " +
+      "Работа отправится, когда пройдёшь всё. Осталось:<ul>";
+  for(k = 0; k < left.length; k++){
+    h += '<li><a data-jump="' + left[k].id + '">' + left[k].name + "</a></li>";
+  }
+  g.innerHTML = h + "</ul>";
+}
+document.addEventListener("click", function(ev){
+  var el = ev.target;
+  var id = (el && el.getAttribute) ? el.getAttribute("data-jump") : null;
+  if(id) trJump(id);
+});
+trStatus();
+
+/* ---------- память страницы ---------- */
+var SAVE_V = 1;
+var SKEY = "arttich:uravn1:" + (STUDENT_CODE || "-");
+
+function spentMs(){ return spentBefore + (Date.now() - started); }
+
+var CAN_STORE = (function(){
+  try{
+    localStorage.setItem("arttich:probe", "1");
+    localStorage.removeItem("arttich:probe");
+    return true;
+  }catch(e){ return false; }
+})();
+
+var wiping = false;
+function saveWork(){
+  if(wiping) return;
+  try{
+    var box = {v: SAVE_V, at: Date.now(), spent: spentMs(), tr: TRDONE, gaps: (window.GAPSTATE || {}), tasks: {},
+               name: (document.getElementById("name").value || "")};
+    TASKS.forEach(function(t){
+      var x = state[t.id];
+      if(x.tries || x.hints || x.given || x.sel){
+        box.tasks[t.id] = {tries: x.tries, hints: x.hints, done: x.done,
+                           ok: x.ok, given: x.given, sel: x.sel};
+      }
+    });
+    localStorage.setItem(SKEY, JSON.stringify(box));
+    saveNote(box.at);
+  }catch(e){}
+}
+function loadWork(){
+  try{
+    var raw = localStorage.getItem(SKEY);
+    if(!raw) return null;
+    var box = JSON.parse(raw);
+    return (box && box.v === SAVE_V) ? box : null;
+  }catch(e){ return null; }
+}
+function clearWork(){
+  try{ localStorage.removeItem(SKEY); }catch(e){}
+}
+
+function saveNote(at){
+  var n = document.getElementById("savenote");
+  if(!n) return;
+  if(!CAN_STORE){
+    n.textContent = "Этот браузер не разрешает страницам ничего запоминать, поэтому " +
+      "при перезагрузке ответы пропадут. Решай за один заход или отправь работу до того, " +
+      "как закроешь вкладку.";
+    return;
+  }
+  var when = "";
+  if(at){
+    var d = new Date(at);
+    var two = function(x){ return (x < 10 ? "0" : "") + x; };
+    when = " Последнее сохранение: " + two(d.getDate()) + "." + two(d.getMonth() + 1) +
+           ", " + two(d.getHours()) + ":" + two(d.getMinutes()) + ".";
+  }
+  n.innerHTML = "Ответы, пропуски и пройденные тренажёры хранятся в этом браузере: можно закрыть " +
+    "страницу и вернуться позже." + when +
+    " Фото не сохраняются." +
+    (at ? ' <button type="button" id="wipe">Начать заново</button>' : "");
+  var w = document.getElementById("wipe");
+  if(w){
+    w.addEventListener("click", function(){
+      wiping = true;
+      clearWork();
+      location.reload();
+    });
+  }
+}
+
+function restoreTask(t, s){
+  var el = document.getElementById("t" + t.id);
+  if(!el) return;
+  if(t.type === "choice"){
+    if(s.sel){
+      el.querySelectorAll(".opt").forEach(function(l){
+        if(l.dataset.v === s.sel){
+          l.classList.add("sel");
+          var r = l.querySelector("input");
+          if(r) r.checked = true;
+        }
+      });
+    }
+  } else if(s.given){
+    var inp = document.getElementById("in" + t.id);
+    if(inp) inp.value = s.given;
+  }
+  var host = el.querySelector(".hints"), k, h;
+  for(k = 0; k < s.hints && k < t.hints.length; k++){
+    h = document.createElement("div");
+    h.className = "hint";
+    h.innerHTML = "Подсказка " + (k + 1) + ": " + t.hints[k];
+    host.appendChild(h);
+  }
+  if(s.tries > 0){
+    var v = el.querySelector(".verdict");
+    el.classList.add(s.ok ? "ok" : "bad");
+    v.className = "verdict " + (s.ok ? "ok" : "bad");
+    if(s.ok){
+      v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    } else if(s.tries === 1){
+      v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+    } else {
+      v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    }
+    if(s.done) showSol(el, t);
+  }
+}
+
+(function(){
+  var saved = loadWork(), k;
+  if(saved){
+    spentBefore = saved.spent || 0;
+    if(saved.name){
+      var nm = document.getElementById("name");
+      if(nm && !nm.value) nm.value = saved.name;
+    }
+    TASKS.forEach(function(t){
+      var s = saved.tasks && saved.tasks[t.id];
+      if(!s) return;
+      var cur = state[t.id];
+      cur.tries = s.tries || 0; cur.hints = s.hints || 0;
+      cur.done = !!s.done; cur.ok = !!s.ok;
+      cur.given = s.given || ""; cur.sel = s.sel || null;
+      restoreTask(t, cur);
+    });
+    if(saved.tr){ for(k in saved.tr){ TRDONE[k] = saved.tr[k]; } }
+    if(saved.gaps && window.gapRestore) window.gapRestore(saved.gaps);
+    progress();
+    trStatus();
+  }
+  saveNote(saved ? saved.at : 0);
+  var nm = document.getElementById("name");
+  if(nm) nm.addEventListener("change", saveWork);
+  window.addEventListener("beforeunload", saveWork);
+})();
+
+</script>
+</body>
+</html>
