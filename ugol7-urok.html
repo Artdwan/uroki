@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Угол. Виды углов. Биссектриса — урок, §3, 7 класс</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:800px;margin:0 auto;padding:16px 14px 60px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+.f-formula{font-size:19px}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.step{margin:6px 0}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.fig{margin:12px 0;text-align:center}
+
+.nw{white-space:nowrap}
+.fig{text-align:center;margin:12px 0}
+.fig svg{width:100%;max-width:330px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.figrow{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  margin:12px 0}
+.figrow .fig{margin:0}
+.figrow .fig svg{max-width:100%}
+.fx{display:block;background:var(--acc-soft,var(--acc2,#e8f0ff));border:1px solid var(--line);
+  border-radius:10px;padding:11px 13px;margin:12px 0;text-align:center;font-size:20px;
+  line-height:2.1;font-weight:600;white-space:normal;overflow-wrap:break-word}
+.ex .fx,.zsol .fx{font-size:18px;margin:9px 0}
+.def{border:1px solid var(--line);border-left:4px solid #2f6bd8;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#eef3fb}
+.def .n{font-size:14px;color:#2f6bd8;font-weight:700;letter-spacing:.4px}
+.def>div+div{margin-top:4px}
+.rule2{border:1px solid var(--line);border-left:4px solid #c0397a;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdf0f6}
+.rule2 .n{font-size:14px;color:#a02a62;font-weight:700;letter-spacing:.4px}
+.hard{border:1px solid var(--line);border-left:4px solid #7a3fbf;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#f4efff}
+.hard .n{font-size:14px;color:#5f2ea0;font-weight:700;letter-spacing:.4px}
+.warn{border:1px solid var(--line);border-left:4px solid #b3261e;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdecea}
+.warn .n{font-size:14px;color:#b3261e;font-weight:700;letter-spacing:.4px}
+@media (prefers-color-scheme:dark){.rule2{background:#2a1b23}.def{background:#18212f}
+  .hard{background:#221a33}.warn{background:#2a1618}}
+.ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;
+  background:var(--bg)}
+.ex h3{margin-top:0}
+.zad{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;
+  background:var(--bg)}
+.zad .zh{font-weight:700;font-size:17px;margin-bottom:6px;color:var(--acc)}
+.zad .zh span{color:var(--muted);font-weight:400;font-size:15px}
+.zad .zt{font-size:17px;line-height:1.75}
+.zad ol,.zad ul{margin:7px 0 0;padding-left:22px}
+.zad li{margin:5px 0}
+.zs{margin-top:10px;border-top:1px dashed var(--line);padding-top:7px}
+.zs summary{cursor:pointer;color:var(--acc);font-weight:600;font-size:16px;
+  padding:5px 0;list-style:none}
+.zs summary::-webkit-details-marker{display:none}
+.zs summary::before{content:"▸ "}
+.zs[open] summary::before{content:"▾ "}
+.zsol{font-size:16px;line-height:1.7;padding-top:4px}
+.step{margin:7px 0}
+.step.mini,.mini,.small{color:var(--muted);font-size:15px}
+.tools{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.tools button{font-size:15px;padding:8px 13px;min-height:42px}
+.fr{display:inline-block;vertical-align:middle;text-align:center;margin:0 3px}
+.fr b{display:block;border-bottom:1.7px solid currentColor;padding:0 6px;font-weight:400;
+  white-space:nowrap}
+.fr i{display:block;font-style:normal;padding:0 6px;white-space:nowrap}
+.stol{width:100%;border-collapse:collapse;font-size:17px;margin:10px 0}
+.stol td{border:1px solid var(--line);padding:7px 9px}
+.stol td.r{text-align:right;font-variant-numeric:tabular-nums}
+@media (max-width:620px){
+  .stol,.stol tbody,.stol tr,.stol td{display:block;width:100%}
+  .stol{border-collapse:separate}
+  .stol tr{border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:5px 10px}
+  .stol td{border:none;padding:2px 0}
+  .stol td.r{text-align:left;color:var(--acc);font-weight:600}
+}
+.fgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));
+  margin:9px 0}
+.fbox{border:1px solid var(--line);border-radius:12px;padding:9px 12px 11px;
+  background:var(--bg)}
+.fbox h4{margin:0 0 3px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.fbox p{margin:6px 0 0;line-height:1.6;font-size:16px}
+.fbox p.small{font-size:15px}
+.pam h3{font-size:18px;margin:18px 0 2px}
+.pam h3:first-of-type{margin-top:10px}
+.qq{margin:10px 0 0;padding-left:22px}
+.qq li{margin:6px 0}
+@media print{
+  .tools{display:none !important}
+  .zad{break-inside:avoid}
+}
+
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+@media print{
+  body{background:#fff}
+  .tools{display:none !important}
+  .card{border:none;box-shadow:none;padding:0;margin:0 0 12px}
+  .zad{break-inside:avoid;background:#fff}
+  .sheet{font-size:13px}
+  .sheet h2{font-size:18px}
+  .sheet th,.sheet td{padding:4px 5px;font-size:12px}
+  @page{size:A4;margin:12mm}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card top">
+  <h1>Угол. Виды углов. Биссектриса</h1>
+  <div class="meta">Геометрия · 7 класс · §3 · теория порциями, 7 разобранных примеров
+  и 31 задание с решениями</div>
+  <div class="note" style="margin-top:14px">
+    <b>Как работать.</b> Читаем порцию теории, разбираем пример, затем решаем задания
+    блока <b>в тетради</b> — и только потом открываем решение и сверяемся.
+    <div style="margin-top:8px">Главная мысль темы: угол измеряют числом, а все задачи
+    сводятся к двум действиям — сложить части или вычесть часть из целого.</div>
+    <div style="margin-top:8px">Градусы, минуты и секунды ведут себя как часы, минуты
+    и секунды: «полных» здесь 60, а не 10.</div>
+    <div style="margin-top:8px">Тренажёров и отправки работы здесь нет: это урок.</div>
+  </div>
+  <div class="tools">
+    <button type="button" id="openall">Раскрыть все решения</button>
+    <button type="button" id="closeall">Свернуть все</button>
+  </div>
+</div>
+
+<div class="card">
+
+<h2>1. Угол: вершина, стороны, обозначение</h2>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>
+Угол — геометрическая фигура, состоящая из двух лучей с общим началом и одной из частей
+плоскости, на которые эти лучи разделяют остальные точки плоскости.</div>
+<div class="fig"><svg viewBox="0 0 300 202"><rect x="0" y="0" width="300" height="202" rx="12" fill="#ffffff"/><line x1="133.2" y1="149.9" x2="93.1" y2="45.4" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="87.0" y="34.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">T</text><line x1="133.2" y1="149.9" x2="200.6" y2="60.5" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="210.8" y="51.9" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">P</text><path d="M 153.7 122.8 A 34.0 34.0 0 0 0 121.0 118.2" fill="none" stroke="#2f6bd8" stroke-width="1.9"/><circle cx="133.2" cy="149.9" r="4.4" fill="#15181e"/><text x="118.2" y="164.9" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">M</text><text x="150" y="196" font-size="14" fill="#5b6270" text-anchor="middle">Вершина M, стороны MT и MP</text></svg></div>
+<p>Общее начало лучей — <b>вершина</b> угла, сами лучи — <b>стороны</b>. Для обозначения
+используют значок ∠. Один и тот же угол на чертеже можно назвать тремя способами:
+<span class='nw'>∠M</span>, <span class='nw'>∠TMP</span> или <span class='nw'>∠PMT</span>. В записи из трёх букв
+<b>вершина всегда стоит посередине</b>.</p>
+<div class="rule2"><div class="n">КОГДА ТРЁХ БУКВ НЕ ИЗБЕЖАТЬ</div>
+Если из одной вершины выходит несколько лучей, запись ∠M становится непонятной: неясно,
+о каком именно угле речь. Тогда пишут только тремя буквами.</div>
+<p>Лучи делят плоскость на две части: <b>внутреннюю</b> область угла (закрашена
+на чертеже) и <b>внешнюю</b>. Точка может лежать внутри угла, вне его или на стороне —
+это три разных случая.</p>
+<div class="fig"><svg viewBox="0 0 300 222"><rect x="0" y="0" width="300" height="222" rx="12" fill="#ffffff"/><polygon points="56.0,152.0 97.3,7.8 259.0,123.5" fill="#dce8fb"/><line x1="56.0" y1="152.0" x2="97.3" y2="7.8" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="56.0" y1="152.0" x2="259.0" y2="123.5" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><circle cx="85.8" cy="48.2" r="3.6" fill="#15181e"/><text x="71.8" y="44.2" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">B</text><circle cx="77.5" cy="77.0" r="3.6" fill="#15181e"/><text x="63.5" y="79.0" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">C</text><circle cx="169.2" cy="53.6" r="3.6" fill="#15181e"/><text x="169.2" y="41.6" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">A</text><circle cx="51.7" cy="28.1" r="3.6" fill="#15181e"/><text x="51.7" y="16.1" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">G</text><circle cx="213.9" cy="94.5" r="3.6" fill="#15181e"/><text x="215.9" y="82.5" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">E</text><circle cx="174.8" cy="135.3" r="3.6" fill="#15181e"/><text x="174.8" y="152.3" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">D</text><circle cx="242.0" cy="155.2" r="3.6" fill="#15181e"/><text x="246.0" y="170.2" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">F</text><circle cx="56.0" cy="152.0" r="4.4" fill="#15181e"/><text x="42.0" y="168.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">O</text><text x="150" y="216" font-size="14" fill="#5b6270" text-anchor="middle">Точки внутри, на сторонах и вне угла</text></svg></div>
+
+<h3>Задания к блоку 1</h3>
+<div class="zad" id="z1"><div class="zh">Задание 1<span> · по чертежу</span></div><div class="zt">Используя чертёж, назови точки, которые лежат внутри угла, на его сторонах и вне его.</div><div class="fig"><svg viewBox="0 0 300 200"><rect x="0" y="0" width="300" height="200" rx="12" fill="#ffffff"/><polygon points="56.0,152.0 97.3,7.8 259.0,123.5" fill="#dce8fb"/><line x1="56.0" y1="152.0" x2="97.3" y2="7.8" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="56.0" y1="152.0" x2="259.0" y2="123.5" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><circle cx="85.8" cy="48.2" r="3.6" fill="#15181e"/><text x="71.8" y="44.2" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">B</text><circle cx="77.5" cy="77.0" r="3.6" fill="#15181e"/><text x="63.5" y="79.0" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">C</text><circle cx="169.2" cy="53.6" r="3.6" fill="#15181e"/><text x="169.2" y="41.6" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">A</text><circle cx="51.7" cy="28.1" r="3.6" fill="#15181e"/><text x="51.7" y="16.1" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">G</text><circle cx="213.9" cy="94.5" r="3.6" fill="#15181e"/><text x="215.9" y="82.5" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">E</text><circle cx="174.8" cy="135.3" r="3.6" fill="#15181e"/><text x="174.8" y="152.3" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">D</text><circle cx="242.0" cy="155.2" r="3.6" fill="#15181e"/><text x="246.0" y="170.2" font-size="15" fill="#15181e" text-anchor="middle" font-weight="600">F</text><circle cx="56.0" cy="152.0" r="4.4" fill="#15181e"/><text x="42.0" y="168.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">O</text></svg></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">Внутри угла: A и E — они попали в закрашенную часть.</div><div class="step">На сторонах: B и C лежат на одной стороне, D — на другой.</div><div class="step">Вне угла: G (выше верхней стороны) и F (ниже нижней).</div><div class="step mini">Точки на сторонах не относят ни к внутренней области, ни к внешней — это граница.</div></div></details></div><div class="zad" id="z2"><div class="zh">Задание 2<span> · обозначения</span></div><div class="zt">Угол с вершиной B и сторонами BA и BC записали как <span class='nw'>∠ABC</span>. Как ещё можно записать этот же угол? Какая запись будет ошибкой: <span class='nw'>∠CBA</span>, <span class='nw'>∠BAC</span> или <span class='nw'>∠B</span>?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">Верные записи: <span class='nw'>∠ABC</span>, <span class='nw'>∠CBA</span> и <span class='nw'>∠B</span> — вершина в середине или названа одна.</div><div class="step">Ошибка — <span class='nw'>∠BAC</span>: здесь в середине стоит A, значит это угол с вершиной A, а не с вершиной B.</div><div class="step mini">Порядок крайних букв роли не играет: <span class='nw'>∠ABC</span> и <span class='nw'>∠CBA</span> — один и тот же угол.</div></div></details></div><div class="zad" id="z3"><div class="zh">Задание 3<span> · обозначения</span></div><div class="zt">Из вершины O выходят четыре луча: OA, OB, OC и OD. Почему запись <span class='nw'>∠O</span> в этом случае не годится?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">Из четырёх лучей можно составить шесть разных углов: AOB, AOC, AOD, BOC, BOD, COD.</div><div class="fx">Запись <span class='nw'>∠O</span> не говорит, какой из шести имеется в виду</div><div class="step mini">Одной буквой угол обозначают только тогда, когда из вершины выходят ровно два луча.</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>2. Градус, минута, секунда</h2>
+<div class="def"><div class="n">ЕДИНИЦЫ ИЗМЕРЕНИЯ</div>
+<div>Градусом называют <span class='fr'><b>1</b><i>180</i></span> часть развёрнутого угла, обозначают
+1°.</div>
+<div><span class='fr'><b>1</b><i>60</i></span> часть градуса — минута: <span class='nw'>1° = 60′</span>.</div>
+<div><span class='fr'><b>1</b><i>60</i></span> часть минуты — секунда: <span class='nw'>1′ = 60″</span>.</div></div>
+<p>Угол, равный 5 градусам 20 минутам и 35 секундам, записывают так: <span class='nw'>5°20′35″</span>.</p>
+<div class="rule2"><div class="n">КАК ГОВОРЯТ</div>
+Вместо «градусная мера угла равна 20°» чаще говорят коротко «угол равен 20°», а вместо
+«найти градусную меру угла» — «найти угол».</div>
+<div class="def"><div class="n">СВОЙСТВА ГРАДУСНОЙ МЕРЫ</div>
+<div>Любой угол имеет градусную меру, выраженную положительным числом.</div>
+<div>Равным углам соответствуют равные градусные меры.</div>
+<div>Большему углу — большая градусная мера, и наоборот.</div></div>
+<div class="ex"><h3>Пример 1. Перевод</h3>
+<p>Сколько минут в <span class='nw'>2°15′</span>? Сколько секунд в <span class='nw'>0°3′20″</span>?</p>
+<div class="step">1. В одном градусе 60 минут, значит в двух — 120 минут.</div><div class="step">2. <span class='nw'>120′ + 15′ = 135′</span>.</div><div class="step">3. В одной минуте 60 секунд: <span class='nw'>3′ = 180″</span>.</div><div class="step">4. <span class='nw'>180″ + 20″ = 200″</span>.</div><div class="fx"><span class='nw'>2°15′ = 135′</span> &nbsp;и&nbsp; <span class='nw'>3′20″ = 200″</span></div>
+</div>
+
+<h3>Задания к блоку 2</h3>
+<div class="zad" id="z4"><div class="zh">Задание 4<span> · перевод</span></div><div class="zt">Вырази в минутах: 1) <span class='nw'>1°40′</span>; &nbsp; 2) <span class='nw'>3°</span>; &nbsp; 3) <span class='nw'>0°12′</span> в секундах.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. <span class='nw'>1° = 60′</span>, значит <span class='nw'>1°40′ = 60′ + 40′ = 100′</span>.</div><div class="step">2. <span class='nw'>3° = 3 · 60′ = 180′</span>.</div><div class="step">3. <span class='nw'>12′ = 12 · 60″ = 720″</span>.</div><div class="step mini">Перевод всегда идёт умножением на 60 вниз и делением на 60 вверх.</div></div></details></div><div class="zad" id="z5"><div class="zh">Задание 5<span> · перевод</span></div><div class="zt">Запиши одной записью: 90 минут; 75 секунд; 3700 секунд.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. <span class='nw'>90′ = 60′ + 30′ = 1°30′</span>.</div><div class="step">2. <span class='nw'>75″ = 60″ + 15″ = 1′15″</span>.</div><div class="step">3. <span class='nw'>3700″ = 61′40″</span>, а <span class='nw'>61′ = 1°1′</span>, значит <span class='nw'>3700″ = 1°1′40″</span>.</div><div class="step mini">Пока в минутах или секундах набирается 60 и больше — переносим разряд, как при сложении столбиком.</div></div></details></div><div class="zad" id="z6"><div class="zh">Задание 6<span> · сравнение</span></div><div class="zt">Какой угол больше: <span class='nw'>37°45′</span> или <span class='nw'>37°5′</span>? А <span class='nw'>12°59′</span> или <span class='nw'>13°</span>?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Градусы одинаковые, сравниваем минуты: 45 > 5, значит первый больше.</div><div class="step">2. <span class='nw'>12°59′</span> меньше, чем <span class='nw'>13°</span>: до целого градуса не хватает одной минуты.</div><div class="fx"><span class='nw'>37°45′ > 37°5′</span> &nbsp;и&nbsp; <span class='nw'>12°59′ < 13°</span></div><div class="step mini">Сравнивают слева направо: сначала градусы, потом минуты, потом секунды.</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>3. Сложение и вычитание углов</h2>
+<p>Градусы складывают с градусами, минуты с минутами, секунды с секундами — как единицы
+измерения времени. Разница только в том, что «полных» здесь 60, а не 10.</p>
+<div class="rule2"><div class="n">ПРАВИЛО ПЕРЕНОСА</div>
+Если после сложения секунд получилось 60 и больше, отдаём минуту вверх. Если минут
+набралось 60 и больше — отдаём градус.</div>
+<div class="ex"><h3>Пример 2. Сложение</h3>
+<p>Выполни действие: <span class='nw'>36°24′16″</span> + <span class='nw'>25°31′50″</span>.</p>
+<div class="step">1. Складываем по разрядам: <span class='nw'>61°55′66″</span>.</div><div class="step">2. Секунд набралось больше 60: <span class='nw'>66″ = 1′6″</span>.</div><div class="fx"><span class='nw'>61°55′66″ = 61°56′6″</span></div><div class="step mini">Ответ с 66 секундами не считается ошибкой по существу, но записан не до конца — переносить обязательно.</div>
+</div>
+<div class="rule2"><div class="n">ПРАВИЛО ЗАЙМА</div>
+Если вычитаемых минут больше, чем есть, занимаем один градус и превращаем его в 60 минут.
+Для секунд — точно так же занимаем минуту.</div>
+<div class="ex"><h3>Пример 3. Вычитание</h3>
+<p>Выполни действие: <span class='nw'>54°18′</span> − <span class='nw'>27°23′</span>.</p>
+<div class="step">1. Минут не хватает: 18 меньше 23. Занимаем градус: <span class='nw'>54°18′ = 53°78′</span>.</div><div class="step">2. Теперь вычитаем по разрядам: <span class='nw'>53° − 27° = 26°</span>, <span class='nw'>78′ − 23′ = 55′</span>.</div><div class="fx"><span class='nw'>26°55′</span></div><div class="step mini">Проверка сложением: <span class='nw'>26°55′ + 27°23′ = 53°78′ = 54°18′</span>. Сошлось.</div>
+</div>
+<div class="warn"><div class="n">ВНИМАНИЕ НА ОТВЕТЫ В ПОСОБИИ</div>
+В образце этого примера напечатано <span class='nw'>26°54′</span> — там опечатка. Правильный
+ответ — <span class='nw'>26°55′</span>, и его легко проверить обратным сложением.</div>
+
+<h3>Задания к блоку 3</h3>
+<div class="zad" id="z7"><div class="zh">Задание 7<span> · сложение</span></div><div class="zt">Выполни действия.<ol class='qq'><li><span class='nw'>121° + 13°42′</span> = …</li><li><span class='nw'>62°11′ + 37°12′</span> = …</li><li><span class='nw'>54°9′ + 2°51′</span> = …</li><li><span class='nw'>43°43′ + 46°17′</span> = …</li></ol></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><table class="stol"><tr><td>1) <span class='nw'>121° + 13°42′</span></td><td class='r'><span class='nw'>134°42′</span></td></tr><tr><td>2) <span class='nw'>62°11′ + 37°12′</span></td><td class='r'><span class='nw'>99°23′</span></td></tr><tr><td>3) <span class='nw'>54°9′ + 2°51′</span></td><td class='r'><span class='nw'>56°60′</span> = <span class='nw'>57°</span></td></tr><tr><td>4) <span class='nw'>43°43′ + 46°17′</span></td><td class='r'><span class='nw'>89°60′</span> = <span class='nw'>90°</span></td></tr></table><div class="step mini">В третьем и четвёртом примерах минут набралось ровно 60 — значит, получился целый градус, а минут в ответе не остаётся.</div></div></details></div><div class="zad" id="z8"><div class="zh">Задание 8<span> · сложение</span></div><div class="zt">Выполни действия.<ol class='qq'><li><span class='nw'>18°37′42″ + 39°24′18″</span> = …</li><li><span class='nw'>36°17′26″ + 53°42′34″</span> = …</li><li><span class='nw'>137°39′ + 26°26′</span> = …</li><li><span class='nw'>84°12′ + 36°19′54″</span> = …</li></ol></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><table class="stol"><tr><td>1) <span class='nw'>18°37′42″ + 39°24′18″</span></td><td class='r'><span class='nw'>57°61′60″</span> = <span class='nw'>58°2′</span></td></tr><tr><td>2) <span class='nw'>36°17′26″ + 53°42′34″</span></td><td class='r'><span class='nw'>89°59′60″</span> = <span class='nw'>90°</span></td></tr><tr><td>3) <span class='nw'>137°39′ + 26°26′</span></td><td class='r'><span class='nw'>163°65′</span> = <span class='nw'>164°5′</span></td></tr><tr><td>4) <span class='nw'>84°12′ + 36°19′54″</span></td><td class='r'><span class='nw'>120°31′54″</span></td></tr></table><div class="step mini">В первом примере перенос идёт дважды: сначала секунды дают минуту, потом минуты дают градус.</div></div></details></div><div class="zad" id="z9"><div class="zh">Задание 9<span> · вычитание</span></div><div class="zt">Выполни действия.<ol class='qq'><li><span class='nw'>153°19′ − 12°7′</span> = …</li><li><span class='nw'>19°42′ − 6°37′</span> = …</li><li><span class='nw'>54° − 18°21′</span> = …</li><li><span class='nw'>175°25′ − 39°58′</span> = …</li></ol></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><table class="stol"><tr><td>1) <span class='nw'>153°19′ − 12°7′</span></td><td class='r'><span class='nw'>141°12′</span></td></tr><tr><td>2) <span class='nw'>19°42′ − 6°37′</span></td><td class='r'><span class='nw'>13°5′</span></td></tr><tr><td>3) <span class='nw'>54° − 18°21′</span></td><td class='r'><span class='nw'>53°60′ − 18°21′</span> = <span class='nw'>35°39′</span></td></tr><tr><td>4) <span class='nw'>175°25′ − 39°58′</span></td><td class='r'><span class='nw'>174°85′ − 39°58′</span> = <span class='nw'>135°27′</span></td></tr></table><div class="step mini">В третьем и четвёртом примерах пришлось занимать градус: минут не хватало.</div></div></details></div><div class="zad" id="z10"><div class="zh">Задание 10<span> · вычитание</span></div><div class="zt">Выполни действия.<ol class='qq'><li><span class='nw'>67° − 23°25′13″</span> = …</li><li><span class='nw'>34°25′13″ − 12°16′25″</span> = …</li><li><span class='nw'>49°11′31″ − 48°52′33″</span> = …</li><li><span class='nw'>18°13′2″ − 9°14′7″</span> = …</li></ol></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><table class="stol"><tr><td>1) <span class='nw'>67° − 23°25′13″</span></td><td class='r'><span class='nw'>66°59′60″ − 23°25′13″</span> = <span class='nw'>43°34′47″</span></td></tr><tr><td>2) <span class='nw'>34°25′13″ − 12°16′25″</span></td><td class='r'><span class='nw'>34°24′73″ − 12°16′25″</span> = <span class='nw'>22°8′48″</span></td></tr><tr><td>3) <span class='nw'>49°11′31″ − 48°52′33″</span></td><td class='r'><span class='nw'>48°70′91″ − 48°52′33″</span> = <span class='nw'>0°18′58″</span></td></tr><tr><td>4) <span class='nw'>18°13′2″ − 9°14′7″</span></td><td class='r'><span class='nw'>17°72′62″ − 9°14′7″</span> = <span class='nw'>8°58′55″</span></td></tr></table><div class="step mini">В последних двух примерах заём двойной: сначала занимаем минуту для секунд, потом градус для минут.</div></div></details></div><div class="zad" id="z11"><div class="zh">Задание 11<span> · сумма и разность</span></div><div class="zt">Даны углы α = <span class='nw'>62°50′30″</span> и β = <span class='nw'>12°20′40″</span>. Найди их сумму и разность.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">Сумма. <span class='nw'>30″ + 40″ = 70″ = 1′10″</span>; <span class='nw'>50′ + 20′ + 1′ = 71′ = 1°11′</span>; <span class='nw'>62° + 12° + 1° = 75°</span>.</div><div class="fx">α + β = <span class='nw'>75°11′10″</span></div><div class="step">Разность. Секунд не хватает, занимаем минуту: <span class='nw'>62°50′30″ = 62°49′90″</span>.</div><div class="step"><span class='nw'>90″ − 40″ = 50″</span>; <span class='nw'>49′ − 20′ = 29′</span>; <span class='nw'>62° − 12° = 50°</span>.</div><div class="fx">α − β = <span class='nw'>50°29′50″</span></div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>4. Виды углов</h2>
+<div class="def"><div class="n">ЧЕТЫРЕ НАЗВАНИЯ</div>
+<div><b>Острый</b> — меньше 90°.</div>
+<div><b>Прямой</b> — равен 90°.</div>
+<div><b>Тупой</b> — больше 90°, но меньше 180°.</div>
+<div><b>Развёрнутый</b> — равен 180°: его стороны — дополнительные лучи.</div></div>
+<div class="figrow"><div class="fig"><svg viewBox="0 0 300 192"><rect x="0" y="0" width="300" height="192" rx="12" fill="#ffffff"/><path d="M 133.6 142.8 L 168.3 91.4 A 62.0 62.0 0 0 0 114.5 83.8 z" fill="#dce8fb" stroke="none"/><line x1="133.6" y1="142.8" x2="101.2" y2="43.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="133.6" y1="142.8" x2="192.3" y2="55.8" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><path d="M 152.6 114.6 A 34.0 34.0 0 0 0 123.1 110.4" fill="none" stroke="#2f6bd8" stroke-width="1.9"/><text x="141.0" y="95.3" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">52°</text><circle cx="133.6" cy="142.8" r="4.4" fill="#15181e"/><text x="118.6" y="157.8" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600"></text><text x="150" y="186" font-size="14" fill="#5b6270" text-anchor="middle">острый</text></svg></div><div class="fig"><svg viewBox="0 0 300 192"><rect x="0" y="0" width="300" height="192" rx="12" fill="#ffffff"/><path d="M 136.4 135.6 L 185.9 98.3 A 62.0 62.0 0 0 0 99.1 86.1 z" fill="#dce8fb" stroke="none"/><line x1="136.4" y1="135.6" x2="69.0" y2="46.2" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="136.4" y1="135.6" x2="225.9" y2="68.2" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="148.4" y1="126.6" x2="139.4" y2="114.6" stroke="#15181e" stroke-width="1.8" stroke-linecap="butt"/><line x1="127.4" y1="123.6" x2="139.4" y2="114.6" stroke="#15181e" stroke-width="1.8" stroke-linecap="butt"/><circle cx="136.4" cy="135.6" r="4.4" fill="#15181e"/><text x="121.4" y="150.6" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600"></text><text x="150" y="186" font-size="14" fill="#5b6270" text-anchor="middle">прямой</text></svg></div><div class="fig"><svg viewBox="0 0 300 192"><rect x="0" y="0" width="300" height="192" rx="12" fill="#ffffff"/><path d="M 141.6 119.1 L 200.5 99.9 A 62.0 62.0 0 0 0 90.2 84.4 z" fill="#dce8fb" stroke="none"/><line x1="141.6" y1="119.1" x2="48.7" y2="56.5" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="141.6" y1="119.1" x2="248.1" y2="84.5" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><path d="M 173.9 108.6 A 34.0 34.0 0 0 0 113.4 100.1" fill="none" stroke="#2f6bd8" stroke-width="1.9"/><text x="149.0" y="71.6" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">128°</text><circle cx="141.6" cy="119.1" r="4.4" fill="#15181e"/><text x="126.6" y="134.1" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600"></text><text x="150" y="186" font-size="14" fill="#5b6270" text-anchor="middle">тупой</text></svg></div><div class="fig"><svg viewBox="0 0 300 192"><rect x="0" y="0" width="300" height="192" rx="12" fill="#ffffff"/><path d="M 150.0 80.5 L 212.0 80.5 A 62.0 62.0 0 0 0 88.0 80.5 z" fill="#dce8fb" stroke="none"/><line x1="150.0" y1="80.5" x2="44.0" y2="80.5" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="150.0" y1="80.5" x2="256.0" y2="80.5" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><path d="M 184.0 80.5 A 34.0 34.0 0 0 0 116.0 80.5" fill="none" stroke="#2f6bd8" stroke-width="1.9"/><text x="150.0" y="32.5" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">180°</text><circle cx="150.0" cy="80.5" r="4.4" fill="#15181e"/><text x="135.0" y="95.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600"></text><text x="150" y="186" font-size="14" fill="#5b6270" text-anchor="middle">развёрнутый</text></svg></div></div>
+<p>Есть ещё <b>полный</b> угол, равный 360°: его стороны совпадают.
+На рисунках он выглядит как целый круг.</p>
+<div class="warn"><div class="n">ЛОВУШКА ТЕСТА</div>
+«Если угол больше 90°, то он тупой» — <b>неверно</b>. Развёрнутый угол 180° и угол 270°
+тоже больше 90°, но тупыми не являются. У тупого угла есть верхняя граница: он должен
+быть <b>меньше 180°</b>.</div>
+
+<h3>Задания к блоку 4</h3>
+<div class="zad" id="z12"><div class="zh">Задание 12<span> · верно или нет</span></div><div class="zt">Верно ли утверждение: если градусная мера угла больше 90°, то угол тупой?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">Нет. Тупой угол должен быть и больше 90°, и меньше 180°.</div><div class="step">Контрпример: угол 180° больше 90°, но он развёрнутый, а не тупой.</div><div class="fx">Ответ: нет</div><div class="step mini">Чтобы опровергнуть утверждение, достаточно одного контрпримера.</div></div></details></div><div class="zad" id="z13"><div class="zh">Задание 13<span> · классификация</span></div><div class="zt">Даны углы: 1°, <span class='nw'>80°52′</span>, 100°, 90°, 45°, 99°, 179°, 89°, 180°. Сколько среди них острых и сколько тупых?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">Острые (меньше 90°): 1°, <span class='nw'>80°52′</span>, 45°, 89° — четыре.</div><div class="step">Тупые (больше 90° и меньше 180°): 100°, 99°, 179° — три.</div><div class="fx">Острых 4, тупых 3</div><div class="step mini">Углы 90° и 180° не попали никуда: один прямой, другой развёрнутый.</div></div></details></div><div class="zad" id="z14"><div class="zh">Задание 14<span> · устно</span></div><div class="zt">Чему равна градусная мера угла, образованного стрелками часов в 15:00? А каким будет этот угол по виду?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Весь циферблат — 360°, на нём 12 делений, значит одно деление — 30°.</div><div class="step">2. В 15:00 между стрелками три деления: <span class='nw'>3 · 30° = 90°</span>.</div><div class="fx">90°, угол прямой</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>5. Луч внутри угла</h2>
+<div class="def"><div class="n">АКСИОМА ИЗМЕРЕНИЯ УГЛОВ</div>
+Если внутри угла из его вершины провести луч, он разобьёт данный угол на два угла, сумма
+градусных мер которых равна градусной мере данного угла.</div>
+<div class="fig"><svg viewBox="0 0 330 222"><rect x="0" y="0" width="330" height="222" rx="12" fill="#ffffff"/><line x1="101.2" y1="167.1" x2="218.1" y2="150.7" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="234.9" y="153.3" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><line x1="101.2" y1="167.1" x2="186.1" y2="85.1" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="198.3" y="78.3" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><line x1="101.2" y1="167.1" x2="88.9" y2="49.8" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="87.1" y="37.8" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><path d="M 140.8 161.5 A 40.0 40.0 0 0 0 130.0 139.3" fill="none" stroke="#2f6bd8" stroke-width="1.9"/><path d="M 145.8 124.0 A 62.0 62.0 0 0 0 94.7 105.4" fill="none" stroke="#b3261e" stroke-width="1.9"/><circle cx="101.2" cy="167.1" r="4.4" fill="#15181e"/><text x="86.2" y="183.1" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><text x="165" y="216" font-size="14" fill="#5b6270" text-anchor="middle">Луч AD проходит внутри угла BAC</text></svg></div>
+<div class="fx"><span class='nw'>∠BAD</span> + <span class='nw'>∠DAC</span> = <span class='nw'>∠BAC</span></div>
+<div class="def"><div class="n">АКСИОМА ОТКЛАДЫВАНИЯ УГЛОВ</div>
+От любого луча в данную полуплоскость можно отложить угол данной градусной меры,
+и притом только один.</div>
+<div class="ex"><h3>Пример 4. Сложение и вычитание по чертежу</h3>
+<p>Внутри угла ABC проведены лучи BD и BF. Найди <span class='nw'>∠DBF</span>, если <span class='nw'>∠ABC</span> = 109°, <span class='nw'>∠ABF</span> = 95°, <span class='nw'>∠CBD</span> = 54°.</p>
+<div class="fig"><svg viewBox="0 0 340 215"><rect x="0" y="0" width="340" height="215" rx="12" fill="#ffffff"/><line x1="128.8" y1="168.3" x2="246.2" y2="155.9" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="263.1" y="159.1" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><line x1="128.8" y1="168.3" x2="239.7" y2="127.9" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="255.7" y="127.1" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">F</text><line x1="128.8" y1="168.3" x2="187.8" y2="66.1" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="196.3" y="56.3" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><line x1="128.8" y1="168.3" x2="79.0" y2="61.3" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="71.8" y="50.9" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><circle cx="128.8" cy="168.3" r="4.4" fill="#15181e"/><text x="113.8" y="184.3" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text></svg></div><div class="step">1. <span class='nw'>∠FBC</span> = <span class='nw'>∠ABC</span> − <span class='nw'>∠ABF</span> = <span class='nw'>109° − 95° = 14°</span>.</div><div class="step">2. <span class='nw'>∠DBF</span> = <span class='nw'>∠CBD</span> − <span class='nw'>∠FBC</span> = <span class='nw'>54° − 14° = 40°</span>.</div><div class="fx"><span class='nw'>∠DBF</span> = 40°</div><div class="step mini">Общий приём: лишний кусок вычитаем, недостающий прибавляем — и всегда смотрим на чертёж, какой луч где лежит.</div>
+</div>
+
+<h3>Задания к блоку 5</h3>
+<div class="zad" id="z15"><div class="zh">Задание 15<span> · сложение частей</span></div><div class="zt">Луч OB делит угол AOC на два угла: <span class='nw'>∠AOB</span> = <span class='nw'>33°11′</span> и <span class='nw'>∠BOC</span> = <span class='nw'>27°33′</span>. Вычисли <span class='nw'>∠AOC</span>.</div><div class="fig"><svg viewBox="0 0 320 195"><rect x="0" y="0" width="320" height="195" rx="12" fill="#ffffff"/><line x1="100.0" y1="164.1" x2="216.8" y2="147.7" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="233.7" y="150.3" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><line x1="100.0" y1="164.1" x2="177.4" y2="75.1" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="188.5" y="67.2" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><line x1="100.0" y1="164.1" x2="81.5" y2="47.6" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="78.8" y="35.8" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><circle cx="100.0" cy="164.1" r="4.4" fill="#15181e"/><text x="85.0" y="180.1" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">O</text></svg></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">По аксиоме измерения складываем части: <span class='nw'>33°11′ + 27°33′</span>.</div><div class="step">Минуты: <span class='nw'>11′ + 33′ = 44′</span>. Градусы: <span class='nw'>33° + 27° = 60°</span>.</div><div class="fx"><span class='nw'>∠AOC</span> = <span class='nw'>60°44′</span></div></div></details></div><div class="zad" id="z16"><div class="zh">Задание 16<span> · целое минус часть</span></div><div class="zt">Луч MO делит угол KMN, равный 124°, на два угла так, что <span class='nw'>∠KMO</span> = <span class='nw'>59°26′</span>. Вычисли <span class='nw'>∠OMN</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">Целое минус известная часть: <span class='nw'>124° − 59°26′</span>.</div><div class="step">Минут не хватает, занимаем градус: <span class='nw'>124° = 123°60′</span>.</div><div class="step"><span class='nw'>123°60′ − 59°26′ = 64°34′</span>.</div><div class="fx"><span class='nw'>∠OMN</span> = <span class='nw'>64°34′</span></div><div class="step mini">Проверка: <span class='nw'>64°34′ + 59°26′ = 123°60′ = 124°</span>.</div></div></details></div><div class="zad" id="z17"><div class="zh">Задание 17<span> · одна полуплоскость</span></div><div class="zt">От одного луча в одну полуплоскость отложили углы <span class='nw'>∠ABC</span> = 59° и <span class='nw'>∠ABK</span> = 73°. Найди <span class='nw'>∠KBC</span>.</div><div class="fig"><svg viewBox="0 0 320 195"><rect x="0" y="0" width="320" height="195" rx="12" fill="#ffffff"/><line x1="93.7" y1="164.1" x2="210.6" y2="147.7" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="227.4" y="150.3" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><line x1="93.7" y1="164.1" x2="139.8" y2="55.5" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="146.4" y="44.8" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><line x1="93.7" y1="164.1" x2="112.2" y2="47.6" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="114.8" y="35.8" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">K</text><circle cx="93.7" cy="164.1" r="4.4" fill="#15181e"/><text x="78.7" y="180.1" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text></svg></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">Оба угла отложены от луча BA в одну сторону, значит луч BC лежит внутри угла ABK.</div><div class="step"><span class='nw'>∠KBC</span> = <span class='nw'>∠ABK</span> − <span class='nw'>∠ABC</span> = <span class='nw'>73° − 59° = 14°</span>.</div><div class="fx"><span class='nw'>∠KBC</span> = 14°</div></div></details></div><div class="zad" id="z18"><div class="zh">Задание 18<span> · разные полуплоскости</span></div><div class="zt">От одного луча в <b>разные</b> полуплоскости отложили углы <span class='nw'>∠HBM</span> = 34° и <span class='nw'>∠HBK</span> = 18°. Найди <span class='nw'>∠KBM</span>.</div><div class="fig"><svg viewBox="0 0 320 200"><rect x="0" y="0" width="320" height="200" rx="12" fill="#ffffff"/><line x1="94.6" y1="160.2" x2="196.8" y2="101.2" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="211.5" y="97.7" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">H</text><line x1="94.6" y1="160.2" x2="146.3" y2="54.2" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="153.8" y="43.9" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">M</text><line x1="94.6" y1="160.2" x2="210.0" y2="135.7" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="226.6" y="137.1" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">K</text><circle cx="94.6" cy="160.2" r="4.4" fill="#15181e"/><text x="79.6" y="176.2" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text></svg></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">Лучи BM и BK лежат по разные стороны от луча BH, поэтому углы складываются.</div><div class="step"><span class='nw'>∠KBM</span> = <span class='nw'>34° + 18° = 52°</span>.</div><div class="fx"><span class='nw'>∠KBM</span> = 52°</div><div class="step mini">Сравни с предыдущей задачей: те же действия, но знак другой. Всё решает слово «одну» или «разные».</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>6. Когда нужно уравнение</h2>
+<p>Если про части угла известно только, во сколько раз или на сколько они отличаются,
+одну из них обозначают буквой x и составляют уравнение.</p>
+<div class="ex"><h3>Пример 5</h3>
+<p>Луч BK делит угол ABC, равный 72°, на два угла так, что <span class='nw'>∠ABK</span> на 12° больше <span class='nw'>∠KBC</span>. Найди <span class='nw'>∠ABK</span>.</p>
+<div class="fig"><svg viewBox="0 0 340 205"><rect x="0" y="0" width="340" height="205" rx="12" fill="#ffffff"/><line x1="104.1" y1="169.3" x2="220.3" y2="148.8" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="237.0" y="150.9" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><line x1="104.1" y1="169.3" x2="194.5" y2="93.5" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="207.5" y="87.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">K</text><line x1="104.1" y1="169.3" x2="120.5" y2="52.4" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="122.9" y="40.6" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><path d="M 177.0 156.4 A 74.0 74.0 0 0 0 114.4 96.0" fill="none" stroke="#2f6bd8" stroke-width="1.9"/><text x="168.7" y="107.4" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">72°</text><circle cx="104.1" cy="169.3" r="4.4" fill="#15181e"/><text x="89.1" y="185.3" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text></svg></div><div class="step"><b>Первый способ.</b> Пусть <span class='nw'>∠KBC</span> = x, тогда <span class='nw'>∠ABK</span> = x + 12.</div><div class="step"><span class='nw'>x + (x + 12) = 72</span>; &nbsp;<span class='nw'>2x + 12 = 72</span>; &nbsp;<span class='nw'>2x = 60</span>; &nbsp;<span class='nw'>x = 30</span>.</div><div class="step">Значит <span class='nw'>∠KBC</span> = 30°, а <span class='nw'>∠ABK</span> = <span class='nw'>30° + 12° = 42°</span>.</div><div class="step"><b>Второй способ, без уравнения.</b> Уберём «лишние» 12°: <span class='nw'>72° − 12° = 60°</span>. Остаток делится поровну: <span class='nw'>60° : 2 = 30°</span>. Возвращаем 12°: <span class='nw'>30° + 12° = 42°</span>.</div><div class="fx"><span class='nw'>∠ABK</span> = 42°</div><div class="step mini">Второй способ быстрее, но работает только в схеме «на столько-то больше». Уравнение годится всегда.</div>
+</div>
+<div class="rule2"><div class="n">ОТНОШЕНИЕ ЧАСТЕЙ</div>
+Если части относятся как 3 : 4 : 2, берут одну часть за x и складывают:
+<span class='nw'>3x + 4x + 2x = 9x</span>. Сумма всех частей равна целому углу — отсюда и
+находят x.</div>
+
+<h3>Задания к блоку 6</h3>
+<div class="zad" id="z19"><div class="zh">Задание 19<span> · на сколько больше</span></div><div class="zt">Луч AC делит прямой угол BAK на два угла, причём <span class='nw'>∠BAC</span> на 22° больше <span class='nw'>∠CAK</span>. Вычисли оба угла.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Прямой угол — это 90°.</div><div class="step">2. Пусть <span class='nw'>∠CAK</span> = x, тогда <span class='nw'>∠BAC</span> = x + 22.</div><div class="step">3. <span class='nw'>x + x + 22 = 90</span>; &nbsp;<span class='nw'>2x = 68</span>; &nbsp;<span class='nw'>x = 34</span>.</div><div class="fx"><span class='nw'>∠CAK</span> = 34°, &nbsp;<span class='nw'>∠BAC</span> = 56°</div><div class="step mini">Проверка: <span class='nw'>34° + 56° = 90°</span> и <span class='nw'>56° − 34° = 22°</span>.</div></div></details></div><div class="zad" id="z20"><div class="zh">Задание 20<span> · отношение</span></div><div class="zt">Луч AK делит угол BAC на два угла, <span class='nw'>∠BAK</span> : <span class='nw'>∠KAC</span> = 1 : 2. Найди меньший из них, если <span class='nw'>∠BAC</span> = 75°.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Пусть одна часть равна x. Тогда углы — x и 2x.</div><div class="step">2. <span class='nw'>x + 2x = 75</span>; &nbsp;<span class='nw'>3x = 75</span>; &nbsp;<span class='nw'>x = 25</span>.</div><div class="fx">Меньший угол: 25°</div><div class="step mini">Больший равен 50°, вместе 75° — сошлось.</div></div></details></div><div class="zad" id="z21"><div class="zh">Задание 21<span> · три части</span></div><div class="zt">Лучи NP и NS делят развёрнутый угол MNK на три угла, <span class='nw'>∠MNP</span> : <span class='nw'>∠PNS</span> : <span class='nw'>∠SNK</span> = 3 : 4 : 2. Найди <span class='nw'>∠PNS</span>.</div><div class="fig"><svg viewBox="0 0 350 180"><rect x="0" y="0" width="350" height="180" rx="12" fill="#ffffff"/><line x1="175.0" y1="147.9" x2="293.0" y2="147.9" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="310.0" y="152.9" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">K</text><line x1="175.0" y1="147.9" x2="265.4" y2="72.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="278.4" y="66.1" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">S</text><line x1="175.0" y1="147.9" x2="116.0" y2="45.7" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="107.5" y="35.9" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">P</text><line x1="175.0" y1="147.9" x2="57.0" y2="147.9" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="40.0" y="152.9" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">M</text><circle cx="175.0" cy="147.9" r="4.4" fill="#15181e"/><text x="160.0" y="163.9" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">N</text></svg></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Развёрнутый угол — 180°.</div><div class="step">2. Частей всего <span class='nw'>3 + 4 + 2 = 9</span>.</div><div class="step">3. <span class='nw'>9x = 180</span>, значит <span class='nw'>x = 20</span>.</div><div class="step">4. <span class='nw'>∠PNS</span> = <span class='nw'>4x = 80°</span>.</div><div class="fx"><span class='nw'>∠PNS</span> = 80°</div><div class="step mini">Остальные углы: 60° и 40°. Сумма <span class='nw'>60 + 80 + 40 = 180</span>.</div></div></details></div><div class="zad" id="z22"><div class="zh">Задание 22<span> · три части</span></div><div class="zt">Лучи BM и BK делят угол ABC, равный 120°, на три угла: <span class='nw'>∠MBK</span> вдвое больше <span class='nw'>∠ABM</span>, а <span class='nw'>∠KBC</span> на 12° больше <span class='nw'>∠ABM</span>. Найди больший из этих углов.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Пусть <span class='nw'>∠ABM</span> = x. Тогда <span class='nw'>∠MBK</span> = 2x, <span class='nw'>∠KBC</span> = x + 12.</div><div class="step">2. <span class='nw'>x + 2x + (x + 12) = 120</span>; &nbsp;<span class='nw'>4x + 12 = 120</span>; &nbsp;<span class='nw'>4x = 108</span>; &nbsp;<span class='nw'>x = 27</span>.</div><div class="step">3. Углы: <span class='nw'>27°</span>, <span class='nw'>54°</span> и <span class='nw'>39°</span>.</div><div class="fx">Больший угол: 54°</div><div class="step mini">Проверка: <span class='nw'>27 + 54 + 39 = 120</span>. Вопрос был про больший — не забудь выбрать, а не выписать все три.</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>7. Биссектриса угла</h2>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>
+Биссектрисой угла называется луч с началом в вершине этого угла, делящий его на два
+равных угла.</div>
+<div class="fig"><svg viewBox="0 0 330 222"><rect x="0" y="0" width="330" height="222" rx="12" fill="#ffffff"/><line x1="149.9" y1="155.3" x2="93.9" y2="58.3" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="85.4" y="48.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><line x1="149.9" y1="155.3" x2="230.4" y2="77.5" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="242.7" y="70.6" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><line x1="149.9" y1="155.3" x2="163.5" y2="58.2" stroke="#b3261e" stroke-width="2.3" stroke-linecap="round"/><text x="165.9" y="46.4" font-size="16" fill="#b3261e" text-anchor="middle" font-weight="600">K</text><path d="M 174.3 131.6 A 34.0 34.0 0 0 0 132.9 125.8" fill="none" stroke="#2f6bd8" stroke-width="1.9"/><circle cx="149.9" cy="155.3" r="4.4" fill="#15181e"/><text x="134.9" y="170.3" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><text x="165" y="216" font-size="14" fill="#5b6270" text-anchor="middle">AK — биссектриса угла BAC</text></svg></div>
+<div class="fx"><span class='nw'>∠BAK</span> = <span class='nw'>∠KAC</span> = <span class='fr'><b>1</b><i>2</i></span> · <span class='nw'>∠BAC</span></div>
+<div class="hard"><div class="n">КЛЮЧЕВОЕ СВОЙСТВО</div>
+Если внутри угла провести луч, то угол между биссектрисами двух получившихся углов
+равен половине исходного угла.</div>
+<div class="ex"><h3>Пример 6. Почему это так</h3>
+<p>Луч AD делит угол BAC на два угла. AK — биссектриса <span class='nw'>∠BAD</span>, AE — биссектриса <span class='nw'>∠DAC</span>. Докажем, что <span class='nw'>∠KAE</span> = <span class='fr'><b>1</b><i>2</i></span> · <span class='nw'>∠BAC</span>.</p>
+<div class="fig"><svg viewBox="0 0 340 210"><rect x="0" y="0" width="340" height="210" rx="12" fill="#ffffff"/><line x1="123.0" y1="170.9" x2="240.4" y2="158.6" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="257.3" y="161.8" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><line x1="123.0" y1="170.9" x2="229.1" y2="119.2" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="244.4" y="116.7" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">E</text><line x1="123.0" y1="170.9" x2="205.0" y2="86.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="216.8" y="78.8" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><line x1="123.0" y1="170.9" x2="147.6" y2="55.5" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="151.1" y="43.9" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">K</text><line x1="123.0" y1="170.9" x2="82.7" y2="60.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="76.8" y="49.1" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><circle cx="123.0" cy="170.9" r="4.4" fill="#15181e"/><text x="108.0" y="186.9" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text></svg></div><div class="step">1. Обозначим <span class='nw'>∠KAD</span> = α и <span class='nw'>∠DAE</span> = β.</div><div class="step">2. Тогда <span class='nw'>∠BAK</span> = α и <span class='nw'>∠EAC</span> = β — это и значит, что AK и AE биссектрисы.</div><div class="step">3. Весь угол: <span class='nw'>∠BAC</span> = <span class='nw'>α + α + β + β = 2(α + β)</span>.</div><div class="step">4. Угол между биссектрисами: <span class='nw'>∠KAE</span> = <span class='nw'>α + β</span>.</div><div class="fx"><span class='nw'>∠KAE</span> = <span class='fr'><b>1</b><i>2</i></span> · <span class='nw'>∠BAC</span></div><div class="step mini">Заметь: ответ не зависит от того, где именно провели луч AD. Это и делает свойство таким удобным.</div>
+</div>
+
+<h3>Задания к блоку 7</h3>
+<div class="zad" id="z23"><div class="zh">Задание 23<span> · две биссектрисы</span></div><div class="zt">Известно, что <span class='nw'>∠BAC</span> = 68°, AM — биссектриса угла BAC, AK — биссектриса угла MAC. Найди <span class='nw'>∠BAK</span>.</div><div class="fig"><svg viewBox="0 0 330 200"><rect x="0" y="0" width="330" height="200" rx="12" fill="#ffffff"/><line x1="98.4" y1="164.7" x2="215.7" y2="152.4" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="232.7" y="155.6" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><line x1="98.4" y1="164.7" x2="207.0" y2="118.6" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="222.7" y="117.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">K</text><line x1="98.4" y1="164.7" x2="188.8" y2="88.9" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="201.8" y="82.9" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">M</text><line x1="98.4" y1="164.7" x2="130.9" y2="51.3" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="135.6" y="39.9" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><circle cx="98.4" cy="164.7" r="4.4" fill="#15181e"/><text x="83.4" y="180.7" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text></svg></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. AM делит угол пополам: <span class='nw'>∠BAM</span> = <span class='nw'>∠MAC</span> = <span class='nw'>68° : 2 = 34°</span>.</div><div class="step">2. AK делит пополам уже <span class='nw'>∠MAC</span>: <span class='nw'>∠MAK</span> = <span class='nw'>34° : 2 = 17°</span>.</div><div class="step">3. <span class='nw'>∠BAK</span> = <span class='nw'>∠BAM</span> + <span class='nw'>∠MAK</span> = <span class='nw'>34° + 17°</span>.</div><div class="fx"><span class='nw'>∠BAK</span> = 51°</div></div></details></div><div class="zad" id="z24"><div class="zh">Задание 24<span> · обратная задача</span></div><div class="zt">Луч AC — биссектриса угла BAD, луч AK — биссектриса угла CAD. Найди <span class='nw'>∠BAD</span>, если <span class='nw'>∠BAK</span> = 36°.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Пусть <span class='nw'>∠BAD</span> = x. Тогда <span class='nw'>∠BAC</span> = <span class='nw'>∠CAD</span> = <span class='nw'>x : 2</span>.</div><div class="step">2. AK делит <span class='nw'>∠CAD</span> пополам: <span class='nw'>∠CAK</span> = <span class='nw'>x : 4</span>.</div><div class="step">3. <span class='nw'>∠BAK</span> = <span class='nw'>x : 2 + x : 4 = 3x : 4</span>.</div><div class="step">4. <span class='nw'>3x : 4 = 36</span>, значит <span class='nw'>3x = 144</span> и <span class='nw'>x = 48</span>.</div><div class="fx"><span class='nw'>∠BAD</span> = 48°</div><div class="step mini">Проверка: <span class='nw'>48 : 2 = 24</span>, <span class='nw'>24 : 2 = 12</span>, <span class='nw'>24 + 12 = 36</span>. Сошлось.</div></div></details></div><div class="zad" id="z25"><div class="zh">Задание 25<span> · отношение и биссектриса</span></div><div class="zt"><span class='nw'>∠AMB</span> = 72°, луч MK делит этот угол так, что <span class='nw'>∠AMK</span> : <span class='nw'>∠KMB</span> = 1 : 3. Луч MC — биссектриса угла KMB. Найди <span class='nw'>∠CMK</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Частей всего 4: <span class='nw'>4x = 72</span>, значит <span class='nw'>x = 18</span>.</div><div class="step">2. <span class='nw'>∠AMK</span> = 18°, <span class='nw'>∠KMB</span> = <span class='nw'>3x = 54°</span>.</div><div class="step">3. MC делит <span class='nw'>∠KMB</span> пополам: <span class='nw'>54° : 2 = 27°</span>.</div><div class="fx"><span class='nw'>∠CMK</span> = 27°</div></div></details></div><div class="zad" id="z26"><div class="zh">Задание 26<span> · сложный</span></div><div class="zt">Луч BK делит угол ABC на два угла. Лучи BT и BP — биссектрисы углов ABK и KBC. Найди <span class='nw'>∠ABC</span>, если <span class='nw'>∠ABP</span> = <span class='nw'>64°52′</span>, а <span class='nw'>∠TBC</span> = <span class='nw'>76°35′</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Обозначим <span class='nw'>∠ABK</span> = a, <span class='nw'>∠KBC</span> = c.</div><div class="step">2. <span class='nw'>∠ABP</span> = <span class='nw'>a + c : 2</span>, <span class='nw'>∠TBC</span> = <span class='nw'>a : 2 + c</span>.</div><div class="step">3. Сложим: <span class='nw'>1,5a + 1,5c = 64°52′ + 76°35′ = 141°27′</span>.</div><div class="step">4. Значит <span class='nw'>a + c = 141°27′ : 1,5 = 94°18′</span>.</div><div class="fx"><span class='nw'>∠ABC</span> = <span class='nw'>94°18′</span></div><div class="step mini">Приём стандартный: складываем два данных равенства, и половинки собираются в полтора целых. Отдельно a и c здесь не найти.</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>8. Когда ответов два</h2>
+<p>Аксиома откладывания говорит: от данного луча <b>в данную полуплоскость</b> угол
+откладывается единственным образом. Но полуплоскости две — и если в условии не сказано,
+в какую сторону отложен угол, задача имеет два ответа.</p>
+<div class="figrow"><div class="fig"><svg viewBox="0 0 320 190"><rect x="0" y="0" width="320" height="190" rx="12" fill="#ffffff"/><line x1="98.2" y1="159.7" x2="207.7" y2="115.5" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="223.4" y="114.1" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">H</text><line x1="98.2" y1="159.7" x2="164.2" y2="61.9" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="173.7" y="52.8" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">M</text><line x1="98.2" y1="159.7" x2="130.8" y2="46.3" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="135.5" y="34.9" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">K</text><path d="M 135.3 144.7 A 40.0 40.0 0 0 0 120.6 126.5" fill="none" stroke="#2f6bd8" stroke-width="1.9"/><circle cx="98.2" cy="159.7" r="4.4" fill="#15181e"/><text x="83.2" y="175.7" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text></svg></div><div class="fig"><svg viewBox="0 0 320 190"><rect x="0" y="0" width="320" height="190" rx="12" fill="#ffffff"/><line x1="94.6" y1="155.2" x2="196.8" y2="96.2" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="211.5" y="92.7" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">H</text><line x1="94.6" y1="155.2" x2="146.3" y2="49.2" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="153.8" y="38.9" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">M</text><line x1="94.6" y1="155.2" x2="210.0" y2="130.7" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="226.6" y="132.1" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">K</text><path d="M 129.2 135.2 A 40.0 40.0 0 0 0 112.1 119.3" fill="none" stroke="#2f6bd8" stroke-width="1.9"/><circle cx="94.6" cy="155.2" r="4.4" fill="#15181e"/><text x="79.6" y="171.2" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text></svg></div></div>
+<div class="rule2"><div class="n">КАК ДЕЙСТВОВАТЬ</div>
+Рисуем оба случая. В одной полуплоскости углы вычитаются, в разных — складываются.
+В ответе пишем оба числа и указываем, что решений два.</div>
+<div class="ex"><h3>Пример 7</h3>
+<p>От одного луча отложили углы MNK и MNP. Найди <span class='nw'>∠MNP</span>, если <span class='nw'>∠KNP</span> = 93°, а <span class='nw'>∠KNM</span> = 37°. Сколько решений имеет
+задача?</p>
+<div class="step">1. Если лучи NM и NP лежат по одну сторону от NK, то NM внутри угла KNP: <span class='nw'>∠MNP</span> = <span class='nw'>93° − 37° = 56°</span>.</div><div class="step">2. Если по разные стороны, углы складываются: <span class='nw'>∠MNP</span> = <span class='nw'>93° + 37° = 130°</span>.</div><div class="fx">56° или 130° — два решения</div><div class="step mini">Спрашивают «сколько решений» — значит, одного числа в ответе мало.</div>
+</div>
+
+<h3>Задания к блоку 8</h3>
+<div class="zad" id="z27"><div class="zh">Задание 27<span> · две биссектрисы</span></div><div class="zt">Луч AM — биссектриса острого угла BAC и одновременно биссектриса прямого угла KAE. Найди <span class='nw'>∠BAC</span>, если <span class='nw'>∠CAE</span> = 13°.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. AM делит прямой угол пополам: <span class='nw'>∠MAE</span> = <span class='nw'>90° : 2 = 45°</span>.</div><div class="step">2. Луч AC лежит внутри угла MAE, поэтому <span class='nw'>∠MAC</span> = <span class='nw'>45° − 13° = 32°</span>.</div><div class="step">3. AM — биссектриса угла BAC, значит <span class='nw'>∠BAC</span> = <span class='nw'>2 · 32°</span>.</div><div class="fx"><span class='nw'>∠BAC</span> = 64°</div><div class="step mini">Проверка: 64° меньше 90°, то есть угол действительно острый — условие не нарушено.</div></div></details></div><div class="zad" id="z28"><div class="zh">Задание 28<span> · сложный</span></div><div class="zt">Луч BK — биссектриса угла ABC и угла MBN. Найди <span class='nw'>∠ABC</span>, если <span class='nw'>∠NBA</span> = 82° и <span class='nw'>∠KBN</span> = 45°. Сколько решений имеет задача?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Случай первый: луч BK внутри угла ABN. Тогда <span class='nw'>∠ABK</span> = <span class='nw'>82° − 45° = 37°</span>, а <span class='nw'>∠ABC</span> = <span class='nw'>2 · 37° = 74°</span>.</div><div class="step">2. Случай второй: луч BN внутри угла ABK. Тогда <span class='nw'>∠ABK</span> = <span class='nw'>82° + 45° = 127°</span>, а <span class='nw'>∠ABC</span> = <span class='nw'>2 · 127° = 254°</span>.</div><div class="step">3. Угол в 254° больше развёрнутого — такого угла мы не рассматриваем, второй случай отпадает.</div><div class="fx">74°, решение одно</div><div class="step mini">Здесь вопрос «сколько решений» — проверка на внимательность: разобрать надо оба случая, но в ответ идёт только возможный.</div></div></details></div><div class="zad" id="z29"><div class="zh">Задание 29<span> · комбинаторика</span></div><div class="zt">Внутри острого угла A провели три луча AM, AK и AP. Сколько острых углов получилось на чертеже?</div><div class="fig"><svg viewBox="0 0 330 190"><rect x="0" y="0" width="330" height="190" rx="12" fill="#ffffff"/><line x1="98.2" y1="150.2" x2="215.9" y2="142.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="232.8" y="145.8" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><line x1="98.2" y1="150.2" x2="211.6" y2="117.7" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="227.9" y="118.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">P</text><line x1="98.2" y1="150.2" x2="202.4" y2="94.8" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="217.4" y="91.8" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">K</text><line x1="98.2" y1="150.2" x2="188.6" y2="74.3" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="201.6" y="68.4" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">M</text><line x1="98.2" y1="150.2" x2="164.2" y2="52.4" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="173.7" y="43.3" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><circle cx="98.2" cy="150.2" r="4.4" fill="#15181e"/><text x="83.2" y="166.2" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text></svg></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Всего лучей стало пять: две стороны угла и три проведённых.</div><div class="step">2. Каждая пара лучей задаёт угол. Пар из пяти лучей: <span class='nw'>5 · 4 : 2 = 10</span>.</div><div class="step">3. Каждый из этих углов не больше исходного, а исходный острый — значит острые все.</div><div class="fx">10 острых углов</div><div class="step mini">Считать пары удобнее по формуле, чем перечислять: легко потерять пару-другую.</div></div></details></div><div class="zad" id="z30"><div class="zh">Задание 30<span> · биссектрисы</span></div><div class="zt">Луч OK — биссектриса прямого угла MOP. Лучи OC и OS — биссектрисы получившихся углов MOK и KOP. Найди <span class='nw'>∠COP</span>.</div><div class="fig"><svg viewBox="0 0 330 200"><rect x="0" y="0" width="330" height="200" rx="12" fill="#ffffff"/><line x1="103.7" y1="166.8" x2="220.6" y2="150.4" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="237.4" y="153.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">P</text><line x1="103.7" y1="166.8" x2="205.9" y2="107.8" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="220.6" y="104.3" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">S</text><line x1="103.7" y1="166.8" x2="174.7" y2="72.6" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="185.0" y="64.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">K</text><line x1="103.7" y1="166.8" x2="134.3" y2="52.8" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="138.7" y="41.4" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><line x1="103.7" y1="166.8" x2="87.3" y2="49.9" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="84.9" y="38.1" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">M</text><circle cx="103.7" cy="166.8" r="4.4" fill="#15181e"/><text x="88.7" y="182.8" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">O</text></svg></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. <span class='nw'>∠MOP</span> = 90°, значит <span class='nw'>∠MOK</span> = <span class='nw'>∠KOP</span> = 45°.</div><div class="step">2. OC делит <span class='nw'>∠MOK</span> пополам: <span class='nw'>∠COK</span> = <span class='nw'>45° : 2 = 22°30′</span>.</div><div class="step">3. <span class='nw'>∠COP</span> = <span class='nw'>∠COK</span> + <span class='nw'>∠KOP</span> = <span class='nw'>22°30′ + 45°</span>.</div><div class="fx"><span class='nw'>∠COP</span> = <span class='nw'>67°30′</span></div><div class="step mini">Половина от 45° — это 22,5°, то есть <span class='nw'>22°30′</span>. В геометрии такой ответ принято записывать в минутах.</div></div></details></div><div class="zad" id="z31"><div class="zh">Задание 31<span> · со звёздочкой</span></div><div class="zt">Какой угол образуют часовая и минутная стрелки в 10 ч 10 мин?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Минутная стрелка за минуту проходит <span class='nw'>360° : 60 = 6°</span>. В 10 минут она на <span class='nw'>10 · 6° = 60°</span> от цифры 12.</div><div class="step">2. Часовая за час проходит 30°, а за минуту — <span class='nw'>30° : 60 = 0,5°</span>.</div><div class="step">3. В 10 ч 10 мин часовая на <span class='nw'>10 · 30° + 10 · 0,5° = 305°</span> от цифры 12.</div><div class="step">4. Разность: <span class='nw'>305° − 60° = 245°</span>. Это больше развёрнутого, берём другой угол: <span class='nw'>360° − 245° = 115°</span>.</div><div class="fx">115°</div><div class="step mini">Типичная ошибка — забыть, что часовая стрелка за 10 минут тоже сдвинулась на 5°.</div></div></details></div>
+</div>
+
+<div class="card pam">
+
+<h2>Что забрать с урока</h2>
+<h3>Угол и его мера</h3>
+<div class="fgrid"><div class="fbox"><h4>Обозначение</h4><p>Вершина посередине: <span class='nw'>∠TMP</span> и <span class='nw'>∠PMT</span> — один и тот же угол.</p><p class="small">Одной буквой — только если из вершины выходят ровно два луча.</p></div><div class="fbox"><h4>Единицы</h4><p><span class='nw'>1° = 60′</span>, &nbsp;<span class='nw'>1′ = 60″</span>.</p><p>Градус — <span class='fr'><b>1</b><i>180</i></span> развёрнутого угла.</p><p class="small">Набралось 60 — переносим разряд.</p></div><div class="fbox"><h4>Виды</h4><p>Острый < 90°, прямой = 90°, тупой — между 90° и 180°.</p><p>Развёрнутый = 180°, полный = 360°.</p><p class="small">«Больше 90°» ещё не значит «тупой».</p></div></div>
+<h3>Части угла</h3>
+<div class="fgrid"><div class="fbox"><h4>Луч внутри угла</h4><p><span class='nw'>∠BAD</span> + <span class='nw'>∠DAC</span> = <span class='nw'>∠BAC</span>.</p><p class="small">Лишнюю часть вычитаем, недостающую прибавляем.</p></div><div class="fbox"><h4>Биссектриса</h4><p>Делит угол на два равных: <span class='nw'>∠BAK</span> = <span class='nw'>∠KAC</span>.</p><p class="small">Угол между биссектрисами двух частей равен половине всего угла.</p></div><div class="fbox"><h4>Уравнение</h4><p>«На k° больше» → x и x + k.</p><p>«В n раз больше» → x и nx.</p><p class="small">Отношение 3 : 4 : 2 → 3x + 4x + 2x = целое.</p></div></div>
+<h3>Осторожно</h3>
+<div class="fgrid"><div class="fbox"><h4>Две полуплоскости</h4><p>В одну сторону — углы вычитаются, в разные — складываются.</p><p class="small">Если сторона не указана, решений два.</p></div><div class="fbox"><h4>Проверка</h4><p>Сложи найденные части — должно получиться целое.</p><p class="small">Сравни ответ с видом угла из условия: острый не может выйти 100°.</p></div><div class="fbox"><h4>Частые ошибки</h4><p>Вычитать минуты, не заняв градус.</p><p>Найти все части и забыть выбрать ту, про которую спросили.</p><p class="small">Считать, что 180° — тупой угол.</p></div></div>
+
+</div>
+
+</div>
+
+<script>
+
+function allSol(open){
+  var ds = document.querySelectorAll("details.zs"), k;
+  for(k = 0; k < ds.length; k++) ds[k].open = open;
+}
+document.getElementById("openall").addEventListener("click", function(){ allSol(true); });
+document.getElementById("closeall").addEventListener("click", function(){ allSol(false); });
+
+</script>
+</body>
+</html>

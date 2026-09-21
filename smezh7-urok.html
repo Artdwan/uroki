@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Смежные и вертикальные углы — урок, §4, 7 класс</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:800px;margin:0 auto;padding:16px 14px 60px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+.f-formula{font-size:19px}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.step{margin:6px 0}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.fig{margin:12px 0;text-align:center}
+
+.nw{white-space:nowrap}
+.fig{text-align:center;margin:12px 0}
+.fig svg{width:100%;max-width:330px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.figrow{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  margin:12px 0}
+.figrow .fig{margin:0}
+.figrow .fig svg{max-width:100%}
+.fx{display:block;background:var(--acc-soft,var(--acc2,#e8f0ff));border:1px solid var(--line);
+  border-radius:10px;padding:11px 13px;margin:12px 0;text-align:center;font-size:20px;
+  line-height:2.1;font-weight:600;white-space:normal;overflow-wrap:break-word}
+.ex .fx,.zsol .fx{font-size:18px;margin:9px 0}
+.def{border:1px solid var(--line);border-left:4px solid #2f6bd8;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#eef3fb}
+.def .n{font-size:14px;color:#2f6bd8;font-weight:700;letter-spacing:.4px}
+.def>div+div{margin-top:4px}
+.rule2{border:1px solid var(--line);border-left:4px solid #c0397a;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdf0f6}
+.rule2 .n{font-size:14px;color:#a02a62;font-weight:700;letter-spacing:.4px}
+.hard{border:1px solid var(--line);border-left:4px solid #7a3fbf;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#f4efff}
+.hard .n{font-size:14px;color:#5f2ea0;font-weight:700;letter-spacing:.4px}
+.warn{border:1px solid var(--line);border-left:4px solid #b3261e;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdecea}
+.warn .n{font-size:14px;color:#b3261e;font-weight:700;letter-spacing:.4px}
+@media (prefers-color-scheme:dark){.rule2{background:#2a1b23}.def{background:#18212f}
+  .hard{background:#221a33}.warn{background:#2a1618}}
+.ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;
+  background:var(--bg)}
+.ex h3{margin-top:0}
+.zad{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;
+  background:var(--bg)}
+.zad .zh{font-weight:700;font-size:17px;margin-bottom:6px;color:var(--acc)}
+.zad .zh span{color:var(--muted);font-weight:400;font-size:15px}
+.zad .zt{font-size:17px;line-height:1.75}
+.zad ol,.zad ul{margin:7px 0 0;padding-left:22px}
+.zad li{margin:5px 0}
+.zs{margin-top:10px;border-top:1px dashed var(--line);padding-top:7px}
+.zs summary{cursor:pointer;color:var(--acc);font-weight:600;font-size:16px;
+  padding:5px 0;list-style:none}
+.zs summary::-webkit-details-marker{display:none}
+.zs summary::before{content:"▸ "}
+.zs[open] summary::before{content:"▾ "}
+.zsol{font-size:16px;line-height:1.7;padding-top:4px}
+.step{margin:7px 0}
+.step.mini,.mini,.small{color:var(--muted);font-size:15px}
+.tools{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.tools button{font-size:15px;padding:8px 13px;min-height:42px}
+.fr{display:inline-block;vertical-align:middle;text-align:center;margin:0 3px}
+.fr b{display:block;border-bottom:1.7px solid currentColor;padding:0 6px;font-weight:400;
+  white-space:nowrap}
+.fr i{display:block;font-style:normal;padding:0 6px;white-space:nowrap}
+.stol{width:100%;border-collapse:collapse;font-size:17px;margin:10px 0}
+.stol td{border:1px solid var(--line);padding:7px 9px}
+.stol td.r{text-align:right;font-variant-numeric:tabular-nums}
+@media (max-width:620px){
+  .stol,.stol tbody,.stol tr,.stol td{display:block;width:100%}
+  .stol{border-collapse:separate}
+  .stol tr{border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:5px 10px}
+  .stol td{border:none;padding:2px 0}
+  .stol td.r{text-align:left;color:var(--acc);font-weight:600}
+}
+.fgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));
+  margin:9px 0}
+.fbox{border:1px solid var(--line);border-radius:12px;padding:9px 12px 11px;
+  background:var(--bg)}
+.fbox h4{margin:0 0 3px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.fbox p{margin:6px 0 0;line-height:1.6;font-size:16px}
+.fbox p.small{font-size:15px}
+.pam h3{font-size:18px;margin:18px 0 2px}
+.pam h3:first-of-type{margin-top:10px}
+.qq{margin:10px 0 0;padding-left:22px}
+.qq li{margin:6px 0}
+@media print{
+  .tools{display:none !important}
+  .zad{break-inside:avoid}
+}
+
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+@media print{
+  body{background:#fff}
+  .tools{display:none !important}
+  .card{border:none;box-shadow:none;padding:0;margin:0 0 12px}
+  .zad{break-inside:avoid;background:#fff}
+  .sheet{font-size:13px}
+  .sheet h2{font-size:18px}
+  .sheet th,.sheet td{padding:4px 5px;font-size:12px}
+  @page{size:A4;margin:12mm}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card top">
+  <h1>Смежные и вертикальные углы. Перпендикулярные прямые</h1>
+  <div class="meta">Геометрия · 7 класс · §4 · теория порциями, 6 разобранных примеров,
+  два доказательства и 33 заданий с решениями</div>
+  <div class="note" style="margin-top:14px">
+    <b>Как работать.</b> Читаем порцию теории, разбираем пример, затем решаем задания
+    блока <b>в тетради</b> — и только потом открываем решение и сверяемся.
+    <div style="margin-top:8px">Главная мысль темы: <b>смежные дают в сумме 180°,
+    вертикальные просто равны</b>. Почти каждая задача сводится к этим двум строчкам.</div>
+    <div style="margin-top:8px">Если про углы известно только отношение или «во сколько
+    раз», обозначай одну часть за x и составляй уравнение.</div>
+    <div style="margin-top:8px">Тренажёров и отправки работы здесь нет: это урок.</div>
+  </div>
+  <div class="tools">
+    <button type="button" id="openall">Раскрыть все решения</button>
+    <button type="button" id="closeall">Свернуть все</button>
+  </div>
+</div>
+
+<div class="card">
+
+<h2>1. Смежные углы</h2>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>
+Два угла называются смежными, если у них одна сторона общая, а две другие являются
+дополнительными лучами.</div>
+<p><b>Дополнительные лучи</b> — это два луча с общим началом, которые вместе составляют
+прямую. Именно поэтому смежные углы всегда «стоят» на одной прямой.</p>
+<div class="fig"><svg viewBox="0 0 360 212"><rect x="0" y="0" width="360" height="212" rx="12" fill="#ffffff"/><path d="M 180.0 138.0 L 238.0 138.0 A 58.0 58.0 0 0 0 206.3 86.3 z" fill="#dce8fb" stroke="none"/><path d="M 180.0 138.0 L 202.7 93.4 A 50.0 50.0 0 0 0 130.0 138.0 z" fill="#fde4ec" stroke="none"/><line x1="50.0" y1="138.0" x2="310.0" y2="138.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="38.0" y="143.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><text x="322.0" y="143.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">K</text><line x1="180.0" y1="138.0" x2="228.1" y2="43.6" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="235.8" y="33.4" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><path d="M 216.0 138.0 A 36.0 36.0 0 0 0 196.3 105.9" fill="none" stroke="#2f6bd8" stroke-width="1.9"/><text x="226.9" y="114.3" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">63°</text><path d="M 203.6 91.7 A 52.0 52.0 0 0 0 128.0 138.0" fill="none" stroke="#b3261e" stroke-width="1.9"/><text x="142.9" y="82.5" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">117°</text><circle cx="180.0" cy="138.0" r="4.4" fill="#15181e"/><text x="174.0" y="158.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><text x="180" y="206" font-size="14" fill="#5b6270" text-anchor="middle">∠BAC и ∠CAK — смежные</text></svg></div>
+<div class="rule2"><div class="n">ТЕОРЕМА</div>
+Сумма смежных углов равна 180°.</div>
+<div class="hard"><div class="n">ДОКАЗАТЕЛЬСТВО</div>
+<div>Дано: <span class='nw'>∠BAC</span> и <span class='nw'>∠CAK</span> — смежные.</div>
+<div>Доказать: <span class='nw'>∠BAC</span> + <span class='nw'>∠CAK</span> = 180°.</div>
+<div style="margin-top:6px">Лучи AB и AK — дополнительные, значит вместе они образуют
+прямую, то есть развёрнутый угол BAK, равный 180°.</div>
+<div>Луч AC проходит между сторонами этого угла, поэтому по аксиоме измерения углов
+<span class='nw'>∠BAC</span> + <span class='nw'>∠CAK</span> = <span class='nw'>∠BAK</span>.</div>
+<div>Значит <span class='nw'>∠BAC</span> + <span class='nw'>∠CAK</span> = 180°. Что и требовалось
+доказать.</div></div>
+<div class="ex"><h3>Пример 1</h3>
+<p>Один из смежных углов равен 60°. Найди второй.</p>
+<div class="step">Сумма смежных углов равна 180°, значит второй угол — это <span class='nw'>180° − 60°</span>.</div><div class="fx">120°</div><div class="step mini">Вся тема держится на одной строчке: знаешь один угол — вычитаешь из 180° и получаешь второй.</div>
+</div>
+
+<h3>Задания к блоку 1</h3>
+<div class="zad" id="z1"><div class="zh">Задание 1<span> · разминка</span></div><div class="zt">Один из смежных углов равен 54°. Найди градусную меру второго.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step"><span class='nw'>180° − 54° = 126°</span>.</div><div class="fx">126°</div></div></details></div><div class="zad" id="z2"><div class="zh">Задание 2<span> · с минутами</span></div><div class="zt">Найди угол, смежный с углом: 1) 40°; &nbsp; 2) 75°; &nbsp; 3) <span class='nw'>140°20′</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. <span class='nw'>180° − 40°</span> = <span class='nw'>140°</span>.</div><div class="step">2. <span class='nw'>180° − 75°</span> = <span class='nw'>105°</span>.</div><div class="step">3. Минут не хватает, занимаем градус: <span class='nw'>180° = 179°60′</span>.</div><div class="step"><span class='nw'>179°60′ − 140°20′</span> = <span class='nw'>39°40′</span>.</div><div class="fx">140°, &nbsp;105°, &nbsp;<span class='nw'>39°40′</span></div></div></details></div><div class="zad" id="z3"><div class="zh">Задание 3<span> · рассуждение</span></div><div class="zt">Один из смежных углов увеличили на 23°. Как изменится градусная мера второго?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">Сумма смежных углов всегда 180° — она не меняется.</div><div class="step">Значит если один вырос на 23°, второй ровно на столько же уменьшился.</div><div class="fx">Уменьшится на 23°</div><div class="step mini">Здесь не нужны ни уравнение, ни конкретные числа: достаточно постоянной суммы.</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>2. Что следует из теоремы</h2>
+<div class="def"><div class="n">СЛЕДСТВИЕ 1</div>
+Если смежные углы равны, то каждый из них прямой.</div>
+<p>Действительно, если оба угла равны x, то <span class='nw'>x + x = 180°</span>, откуда
+<span class='nw'>x = 90°</span>.</p>
+<div class="def"><div class="n">СЛЕДСТВИЕ 2</div>
+Если два угла равны, то равны и смежные с ними углы.</div>
+<div class="rule2"><div class="n">ВИД СМЕЖНОГО УГЛА</div>
+Острому углу смежен тупой, прямому — прямой, тупому — острый. Двух острых или двух тупых
+смежных углов не бывает.</div>
+<div class="figrow"><div class="fig"><svg viewBox="0 0 320 197"><rect x="0" y="0" width="320" height="197" rx="12" fill="#ffffff"/><line x1="30.0" y1="123.0" x2="290.0" y2="123.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="18.0" y="128.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><text x="302.0" y="128.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">K</text><line x1="160.0" y1="123.0" x2="243.5" y2="57.7" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="256.9" y="52.3" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><path d="M 196.0 123.0 A 36.0 36.0 0 0 0 188.4 100.8" fill="none" stroke="#2f6bd8" stroke-width="1.9"/><text x="212.0" y="110.1" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">38°</text><path d="M 201.0 91.0 A 52.0 52.0 0 0 0 108.0 123.0" fill="none" stroke="#b3261e" stroke-width="1.9"/><text x="136.9" y="60.9" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">142°</text><circle cx="160.0" cy="123.0" r="4.4" fill="#15181e"/><text x="154.0" y="143.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><text x="160" y="191" font-size="14" fill="#5b6270" text-anchor="middle">острый и тупой</text></svg></div><div class="fig"><svg viewBox="0 0 320 197"><rect x="0" y="0" width="320" height="197" rx="12" fill="#ffffff"/><line x1="30.0" y1="123.0" x2="290.0" y2="123.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="18.0" y="128.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><text x="302.0" y="128.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">K</text><line x1="160.0" y1="123.0" x2="160.0" y2="27.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="160.0" y="15.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><line x1="175.0" y1="123.0" x2="175.0" y2="108.0" stroke="#15181e" stroke-width="1.8" stroke-linecap="butt"/><line x1="160.0" y1="108.0" x2="175.0" y2="108.0" stroke="#15181e" stroke-width="1.8" stroke-linecap="butt"/><path d="M 160.0 71.0 A 52.0 52.0 0 0 0 108.0 123.0" fill="none" stroke="#b3261e" stroke-width="1.9"/><text x="109.8" y="77.8" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">90°</text><circle cx="160.0" cy="123.0" r="4.4" fill="#15181e"/><text x="154.0" y="143.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><text x="160" y="191" font-size="14" fill="#5b6270" text-anchor="middle">оба прямые</text></svg></div></div>
+<div class="warn"><div class="n">ЧАСТЫЙ ВОПРОС</div>
+Сколько углов, смежных с данным? Их <b>два</b>: у угла две стороны, и каждую можно
+продолжить за вершину. Оба смежных угла равны между собой.</div>
+
+<h3>Задания к блоку 2</h3>
+<div class="zad" id="z4"><div class="zh">Задание 4<span> · по следствию</span></div><div class="zt"><span class='nw'>∠1</span> и <span class='nw'>∠2</span> — смежные. Вставь пропущенное слово: <ol class='qq'><li>если <span class='nw'>∠1</span> острый, то <span class='nw'>∠2</span> — …;</li><li>если <span class='nw'>∠1</span> прямой, то <span class='nw'>∠2</span> — …;</li><li>если <span class='nw'>∠1</span> тупой, то <span class='nw'>∠2</span> — …</li></ol></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Острый меньше 90°, значит второй больше 90° — <b>тупой</b>.</div><div class="step">2. <span class='nw'>180° − 90°</span> = <span class='nw'>90°</span> — <b>прямой</b>.</div><div class="step">3. Тупой больше 90°, значит второй меньше 90° — <b>острый</b>.</div><div class="step mini">Проверка одна и та же: вычитаем из 180° и смотрим, по какую сторону от 90° оказались.</div></div></details></div><div class="zad" id="z5"><div class="zh">Задание 5<span> · устно</span></div><div class="zt">Могут ли быть смежными прямой и острый угол? А прямой и тупой?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">Если один из смежных прямой, то второй равен <span class='nw'>180° − 90°</span> = <span class='nw'>90°</span> — тоже прямой.</div><div class="fx">Ни то, ни другое невозможно</div><div class="step mini">Прямому углу смежен только прямой — третьего не дано.</div></div></details></div><div class="zad" id="z6"><div class="zh">Задание 6<span> · теория</span></div><div class="zt">Сколько существует углов, смежных с данным углом? Равны ли они между собой?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">У угла две стороны. Продолжив первую за вершину, получим один смежный угол, продолжив вторую — второй.</div><div class="step">Оба равны <span class='nw'>180° − α</span>, где α — данный угол.</div><div class="fx">Два, и они равны между собой</div><div class="step mini">Ответ «один» — самая частая ошибка в этом вопросе.</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>3. Смежные углы и уравнение</h2>
+<p>Если про смежные углы известно только, во сколько раз или на сколько они отличаются,
+одну часть берут за x и пользуются тем, что сумма равна 180°.</p>
+<div class="ex"><h3>Пример 2. Во сколько раз</h3>
+<p>Один из смежных углов в 8 раз меньше второго. Найди оба угла.</p>
+<div class="step">1. Пусть меньший угол равен x, тогда больший — 8x.</div><div class="step">2. <span class='nw'>x + 8x</span> = <span class='nw'>180</span>; &nbsp;<span class='nw'>9x</span> = <span class='nw'>180</span>; &nbsp;<span class='nw'>x</span> = <span class='nw'>20</span>.</div><div class="fx">20° и 160°</div><div class="step mini">Проверка: <span class='nw'>20 + 160</span> = <span class='nw'>180</span> и <span class='nw'>160 : 20</span> = <span class='nw'>8</span>.</div>
+</div>
+<div class="ex"><h3>Пример 3. Отношение</h3>
+<p>Смежные углы относятся как 2 : 3. Найди каждый.</p>
+<div class="step">1. Пусть одна часть равна x. Тогда углы — 2x и 3x.</div><div class="step">2. <span class='nw'>2x + 3x</span> = <span class='nw'>180</span>; &nbsp;<span class='nw'>5x</span> = <span class='nw'>180</span>; &nbsp;<span class='nw'>x</span> = <span class='nw'>36</span>.</div><div class="step">3. <span class='nw'>∠1</span> = <span class='nw'>2 · 36°</span> = <span class='nw'>72°</span>, &nbsp;<span class='nw'>∠2</span> = <span class='nw'>180° − 72°</span> = <span class='nw'>108°</span>.</div><div class="fx">72° и 108°</div><div class="step mini">Удобно считать сразу: частей всего 5, значит одна часть — <span class='nw'>180° : 5 = 36°</span>.</div>
+</div>
+<div class="rule2"><div class="n">ПРОЦЕНТЫ — ТО ЖЕ САМОЕ</div>
+«На 40 % больше» означает 1,4x, «составляет 20 % от второго» означает 0,2x. Дальше
+уравнение обычное.</div>
+
+<h3>Задания к блоку 3</h3>
+<div class="zad" id="z7"><div class="zh">Задание 7<span> · во сколько раз</span></div><div class="zt">Один из смежных углов в 3 раза больше второго. Найди больший угол.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step"><span class='nw'>x + 3x</span> = <span class='nw'>180</span>; &nbsp;<span class='nw'>4x</span> = <span class='nw'>180</span>; &nbsp;<span class='nw'>x</span> = <span class='nw'>45</span>.</div><div class="fx">Больший угол: 135°</div><div class="step mini">Спросили только про больший — второй угол 45° в ответ не идёт.</div></div></details></div><div class="zad" id="z8"><div class="zh">Задание 8<span> · во сколько раз</span></div><div class="zt">Один из смежных углов в 1,5 раза меньше второго. Найди меньший угол.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">Пусть меньший равен x, тогда больший — 1,5x.</div><div class="step"><span class='nw'>x + 1,5x</span> = <span class='nw'>180</span>; &nbsp;<span class='nw'>2,5x</span> = <span class='nw'>180</span>; &nbsp;<span class='nw'>x</span> = <span class='nw'>72</span>.</div><div class="fx">Меньший угол: 72°</div><div class="step mini">Проверка: <span class='nw'>72 · 1,5</span> = <span class='nw'>108</span> и <span class='nw'>72 + 108</span> = <span class='nw'>180</span>.</div></div></details></div><div class="zad" id="z9"><div class="zh">Задание 9<span> · отношение</span></div><div class="zt">Найди углы, если градусные меры смежных углов относятся как: 1) 4 : 5 (назови больший); &nbsp; 2) 7 : 2 (назови оба).</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Частей 9, одна часть <span class='nw'>180° : 9</span> = <span class='nw'>20°</span>. Больший — <span class='nw'>5 · 20°</span> = <span class='nw'>100°</span>.</div><div class="step">2. Частей тоже 9: углы <span class='nw'>7 · 20°</span> = <span class='nw'>140°</span> и <span class='nw'>2 · 20°</span> = <span class='nw'>40°</span>.</div><div class="fx">100°; &nbsp;140° и 40°</div></div></details></div><div class="zad" id="z10"><div class="zh">Задание 10<span> · на сколько больше</span></div><div class="zt">Найди углы: 1) один из смежных на 74° больше второго — назови меньший; &nbsp; 2) один на 67° меньше второго — назови больший; &nbsp; 3) разность смежных углов равна 40° — назови оба.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. <span class='nw'>x + (x + 74)</span> = <span class='nw'>180</span>; <span class='nw'>2x</span> = <span class='nw'>106</span>; <span class='nw'>x</span> = <span class='nw'>53</span>. Меньший 53°.</div><div class="step">2. <span class='nw'>x + (x − 67)</span> = <span class='nw'>180</span>; <span class='nw'>2x</span> = <span class='nw'>247</span>; <span class='nw'>x</span> = <span class='nw'>123,5</span>. Больший <span class='nw'>123°30′</span>.</div><div class="step">3. <span class='nw'>x + (x − 40)</span> = <span class='nw'>180</span>; <span class='nw'>2x</span> = <span class='nw'>220</span>; <span class='nw'>x</span> = <span class='nw'>110</span>. Углы 110° и 70°.</div><div class="fx">53°; &nbsp;<span class='nw'>123°30′</span>; &nbsp;110° и 70°</div><div class="step mini">Во втором пункте ответ получился дробным: 123,5° записывают как <span class='nw'>123°30′</span>.</div></div></details></div><div class="zad" id="z11"><div class="zh">Задание 11<span> · проценты</span></div><div class="zt">Найди оба угла: 1) градусная мера одного из смежных на 40 % больше второго; &nbsp; 2) градусная мера одного составляет 20 % от второго.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. <span class='nw'>x + 1,4x</span> = <span class='nw'>180</span>; <span class='nw'>2,4x</span> = <span class='nw'>180</span>; <span class='nw'>x</span> = <span class='nw'>75</span>. Углы 75° и 105°.</div><div class="step">2. <span class='nw'>x + 0,2x</span> = <span class='nw'>180</span>; <span class='nw'>1,2x</span> = <span class='nw'>180</span>; <span class='nw'>x</span> = <span class='nw'>150</span>. Углы 150° и 30°.</div><div class="fx">75° и 105°; &nbsp;150° и 30°</div><div class="step mini">За x всегда берут тот угол, с которым сравнивают — иначе проценты придётся считать от неизвестного.</div></div></details></div><div class="zad" id="z12"><div class="zh">Задание 12<span> · сложный</span></div><div class="zt"><span class='nw'>∠1</span> и <span class='nw'>∠2</span> — смежные. Найди <span class='nw'>∠1</span>, если: <ol class='qq'><li><span class='nw'>∠1 − ∠2</span> = <span class='nw'>28°</span>;</li><li><span class='nw'>∠1</span> : <span class='nw'>∠2</span> = 7 : 2;</li><li><span class='nw'>∠1</span> = <span class='nw'>⅔ · ∠2</span>;</li><li><span class='nw'>5 · ∠1 − 7 · ∠2</span> = <span class='nw'>0</span>.</li></ol></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Сумма 180°, разность 28°: больший угол <span class='nw'>(180 + 28) : 2</span> = <span class='nw'>104°</span>.</div><div class="step">2. Частей 9, одна часть 20°: <span class='nw'>∠1</span> = <span class='nw'>7 · 20°</span> = <span class='nw'>140°</span>.</div><div class="step">3. <span class='nw'>⅔x + x</span> = <span class='nw'>180</span>; <span class='nw'>⁵⁄₃x</span> = <span class='nw'>180</span>; <span class='nw'>x</span> = <span class='nw'>108</span>, значит <span class='nw'>∠1</span> = <span class='nw'>72°</span>.</div><div class="step">4. Из <span class='nw'>5∠1</span> = <span class='nw'>7∠2</span> следует <span class='nw'>∠1</span> = <span class='nw'>1,4 · ∠2</span>. Тогда <span class='nw'>1,4x + x</span> = <span class='nw'>180</span>; <span class='nw'>x</span> = <span class='nw'>75</span> и <span class='nw'>∠1</span> = <span class='nw'>105°</span>.</div><div class="fx">104°; &nbsp;140°; &nbsp;72°; &nbsp;105°</div><div class="step mini">В первом пункте пригодился приём «полусумма и полуразность»: больший угол равен (сумма + разность) : 2.</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>4. Вертикальные углы</h2>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>
+Два угла называются вертикальными, если стороны одного угла являются дополнительными
+лучами к сторонам другого.</div>
+<p>При пересечении двух прямых получаются две пары вертикальных углов и четыре пары
+смежных.</p>
+<div class="fig"><svg viewBox="0 0 340 252"><rect x="0" y="0" width="340" height="252" rx="12" fill="#ffffff"/><line x1="73.7" y1="115.0" x2="266.3" y2="115.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="110.7" y1="190.8" x2="229.3" y2="39.2" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="57.7" y="120.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><text x="282.3" y="120.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><text x="100.9" y="208.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><text x="239.1" y="31.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><text x="206.0" y="102.5" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">2</text><text x="152.5" y="84.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">1</text><text x="134.0" y="137.5" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">4</text><text x="187.5" y="156.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">3</text><circle cx="170.0" cy="115.0" r="4.4" fill="#15181e"/><text x="156.0" y="132.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">O</text><text x="170" y="246" font-size="14" fill="#5b6270" text-anchor="middle">∠1 и ∠3 вертикальные, ∠2 и ∠4 вертикальные</text></svg></div>
+<div class="rule2"><div class="n">ТЕОРЕМА</div>
+Вертикальные углы равны.</div>
+<div class="hard"><div class="n">ДОКАЗАТЕЛЬСТВО</div>
+<div>Дано: <span class='nw'>∠1</span> и <span class='nw'>∠3</span> — вертикальные (см. чертёж выше).</div>
+<div>Доказать: <span class='nw'>∠1</span> = <span class='nw'>∠3</span>.</div>
+<div style="margin-top:6px">Возьмём соседний угол <span class='nw'>∠2</span> — он смежен
+и с первым, и с третьим.</div>
+<div>Углы 1 и 2 смежные, поэтому <span class='nw'>∠1 + ∠2</span> = <span class='nw'>180°</span>.</div>
+<div>Углы 3 и 2 тоже смежные, поэтому <span class='nw'>∠3 + ∠2</span> = <span class='nw'>180°</span>.</div>
+<div>Отсюда <span class='nw'>∠1</span> = <span class='nw'>180° − ∠2</span> и <span class='nw'>∠3</span> = <span class='nw'>180° − ∠2</span> —
+правые части одинаковые.</div>
+<div>Значит <span class='nw'>∠1</span> = <span class='nw'>∠3</span>. Что и требовалось доказать.</div></div>
+<div class="ex"><h3>Пример 4</h3>
+<p>Один из углов, образовавшихся при пересечении двух прямых, равен 110°. Найди
+остальные три.</p>
+<div class="step">1. Смежный с ним: <span class='nw'>180° − 110°</span> = <span class='nw'>70°</span>.</div><div class="step">2. Вертикальный данному равен ему самому: 110°.</div><div class="step">3. Четвёртый вертикален второму: 70°.</div><div class="fx">110°, 70°, 110°, 70°</div><div class="step mini">Достаточно знать один угол — остальные получаются сами. И сумма всех четырёх всегда 360°.</div>
+</div>
+
+<h3>Задания к блоку 4</h3>
+<div class="zad" id="z13"><div class="zh">Задание 13<span> · разминка</span></div><div class="zt"><span class='nw'>∠1</span> и <span class='nw'>∠2</span> — вертикальные. Чему равен <span class='nw'>∠2</span>, если <span class='nw'>∠1</span> = 35°? А если <span class='nw'>∠1</span> и <span class='nw'>∠2</span> смежные и <span class='nw'>∠2</span> = 54°, чему равен <span class='nw'>∠1</span>?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Вертикальные углы равны: <span class='nw'>∠2</span> = <span class='nw'>35°</span>.</div><div class="step">2. Смежные дают в сумме 180°: <span class='nw'>∠1</span> = <span class='nw'>180° − 54°</span> = <span class='nw'>126°</span>.</div><div class="fx">35° и 126°</div><div class="step mini">Не путай: вертикальные — равны, смежные — дают 180°.</div></div></details></div><div class="zad" id="z14"><div class="zh">Задание 14<span> · по теореме</span></div><div class="zt"><span class='nw'>∠1</span> и <span class='nw'>∠2</span> — вертикальные. Вставь пропущенное слово: <ol class='qq'><li>если <span class='nw'>∠1</span> острый, то <span class='nw'>∠2</span> — …;</li><li>если <span class='nw'>∠1</span> прямой, то <span class='nw'>∠2</span> — …;</li><li>если <span class='nw'>∠1</span> тупой, то <span class='nw'>∠2</span> — …</li></ol></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">Вертикальные углы равны, значит вид у них всегда одинаковый.</div><div class="fx">острый; &nbsp;прямой; &nbsp;тупой</div><div class="step mini">Сравни с заданием про смежные: там вид менялся на противоположный.</div></div></details></div><div class="zad" id="z15"><div class="zh">Задание 15<span> · все четыре</span></div><div class="zt">Один из углов при пересечении двух прямых равен: 1) 20°; &nbsp; 2) 110°; &nbsp; 3) 90°. Найди остальные три в каждом случае.</div><div class="fig"><svg viewBox="0 0 330 215"><rect x="0" y="0" width="330" height="215" rx="12" fill="#ffffff"/><line x1="67.0" y1="107.5" x2="263.0" y2="107.5" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="72.9" y1="141.0" x2="257.1" y2="74.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="51.0" y="112.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><text x="279.0" y="112.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><text x="57.9" y="151.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><text x="272.1" y="73.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><path d="M 192.0 107.5 A 27.0 27.0 0 0 0 190.4 98.3" fill="none" stroke="#2f6bd8" stroke-width="1.9"/><text x="235.5" y="100.1" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">20°</text><path d="M 195.1 96.6 A 32.0 32.0 0 0 0 133.0 107.5" fill="none" stroke="#2f6bd8" stroke-width="1.9"/><text x="156.1" y="62.3" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">160°</text><circle cx="165.0" cy="107.5" r="4.4" fill="#15181e"/><text x="151.0" y="124.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">O</text></svg></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. <span class='nw'>180° − 20°</span> = <span class='nw'>160°</span>, значит углы 20°, 160°, 20°, 160°.</div><div class="step">2. <span class='nw'>180° − 110°</span> = <span class='nw'>70°</span>, значит 110°, 70°, 110°, 70°.</div><div class="step">3. <span class='nw'>180° − 90°</span> = <span class='nw'>90°</span> — все четыре угла прямые.</div><div class="fx">20°, 160°, 160°; &nbsp;70°, 110°, 70°; &nbsp;90°, 90°, 90°</div><div class="step mini">Третий случай стоит запомнить: если один угол при пересечении прямой, то прямые все четыре.</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>5. Четыре угла при пересечении</h2>
+<p>Удобно пронумеровать углы по кругу: 1 сверху, 2 справа, 3 снизу, 4 слева. Тогда
+<span class='nw'>∠1</span> = <span class='nw'>∠3</span> и <span class='nw'>∠2</span> = <span class='nw'>∠4</span>
+как вертикальные, а соседние углы смежные.</p>
+<div class="fig"><svg viewBox="0 0 340 252"><rect x="0" y="0" width="340" height="252" rx="12" fill="#ffffff"/><line x1="73.7" y1="115.0" x2="266.3" y2="115.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="110.7" y1="190.8" x2="229.3" y2="39.2" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="57.7" y="120.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><text x="282.3" y="120.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><text x="100.9" y="208.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><text x="239.1" y="31.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><text x="206.0" y="102.5" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">2</text><text x="152.5" y="84.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">1</text><text x="134.0" y="137.5" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">4</text><text x="187.5" y="156.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">3</text><circle cx="170.0" cy="115.0" r="4.4" fill="#15181e"/><text x="156.0" y="132.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">O</text><text x="170" y="246" font-size="14" fill="#5b6270" text-anchor="middle">∠1 и ∠2 смежные, ∠1 и ∠3 вертикальные</text></svg></div>
+<div class="fx"><span class='nw'>∠1 + ∠2</span> = <span class='nw'>180°</span>, &nbsp;&nbsp;<span class='nw'>∠1</span> = <span class='nw'>∠3</span>, &nbsp;&nbsp;<span class='nw'>∠2</span> = <span class='nw'>∠4</span></div>
+<div class="rule2"><div class="n">ПРИЁМ</div>
+Любое условие про эти четыре угла сводится к двум неизвестным: сначала выражаем всё
+через ∠1 и ∠2, потом пользуемся тем, что их сумма равна 180°.</div>
+<div class="ex"><h3>Пример 5</h3>
+<p><span class='nw'>∠1 + ∠2 + ∠3</span> = <span class='nw'>333°</span>. Найди <span class='nw'>∠1</span>.</p>
+<div class="step">1. <span class='nw'>∠1</span> и <span class='nw'>∠2</span> смежные, их сумма 180°.</div><div class="step">2. Значит <span class='nw'>180° + ∠3</span> = <span class='nw'>333°</span>, откуда <span class='nw'>∠3</span> = <span class='nw'>153°</span>.</div><div class="step">3. <span class='nw'>∠1</span> и <span class='nw'>∠3</span> вертикальные, поэтому они равны.</div><div class="fx"><span class='nw'>∠1</span> = <span class='nw'>153°</span></div><div class="step mini">Секрет в том, чтобы увидеть внутри суммы пару смежных углов и сразу заменить её на 180°.</div>
+</div>
+
+<h3>Задания к блоку 5</h3>
+<div class="zad" id="z16"><div class="zh">Задание 16<span> · по чертежу</span></div><div class="zt"><span class='nw'>∠1</span> больше <span class='nw'>∠2</span> на 100°. Найди <span class='nw'>∠3</span>.</div><div class="fig"><svg viewBox="0 0 330 220"><rect x="0" y="0" width="330" height="220" rx="12" fill="#ffffff"/><line x1="79.2" y1="110.0" x2="250.8" y2="110.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="119.5" y1="182.8" x2="210.5" y2="37.2" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="63.2" y="115.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><text x="266.8" y="115.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><text x="111.0" y="201.4" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><text x="219.0" y="28.6" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><text x="200.0" y="95.6" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">2</text><text x="145.6" y="80.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">1</text><text x="130.0" y="134.4" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">4</text><text x="184.4" y="150.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">3</text><circle cx="165.0" cy="110.0" r="4.4" fill="#15181e"/><text x="151.0" y="127.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">O</text></svg></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. <span class='nw'>∠1</span> и <span class='nw'>∠2</span> смежные: сумма 180°, разность 100°.</div><div class="step">2. <span class='nw'>∠1</span> = <span class='nw'>(180 + 100) : 2</span> = <span class='nw'>140°</span>.</div><div class="step">3. <span class='nw'>∠3</span> вертикален <span class='nw'>∠1</span>.</div><div class="fx"><span class='nw'>∠3</span> = <span class='nw'>140°</span></div></div></details></div><div class="zad" id="z17"><div class="zh">Задание 17<span> · по чертежу</span></div><div class="zt"><span class='nw'>∠1</span> в 5 раз больше <span class='nw'>∠2</span>. Найди <span class='nw'>∠4</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. <span class='nw'>5x + x</span> = <span class='nw'>180</span>; <span class='nw'>6x</span> = <span class='nw'>180</span>; <span class='nw'>x</span> = <span class='nw'>30</span>.</div><div class="step">2. <span class='nw'>∠2</span> = <span class='nw'>30°</span>, а <span class='nw'>∠4</span> вертикален <span class='nw'>∠2</span>.</div><div class="fx"><span class='nw'>∠4</span> = <span class='nw'>30°</span></div></div></details></div><div class="zad" id="z18"><div class="zh">Задание 18<span> · по чертежу</span></div><div class="zt"><span class='nw'>∠1 + ∠2 + ∠4</span> = <span class='nw'>250°</span>. Найди <span class='nw'>∠3</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. <span class='nw'>∠2</span> = <span class='nw'>∠4</span> как вертикальные, значит в сумме есть пара смежных <span class='nw'>∠1</span> и <span class='nw'>∠2</span>.</div><div class="step">2. <span class='nw'>180° + ∠4</span> = <span class='nw'>250°</span>, откуда <span class='nw'>∠4</span> = <span class='nw'>70°</span>.</div><div class="step">3. Тогда <span class='nw'>∠2</span> = <span class='nw'>70°</span> и <span class='nw'>∠1</span> = <span class='nw'>110°</span>.</div><div class="step">4. <span class='nw'>∠3</span> вертикален <span class='nw'>∠1</span>.</div><div class="fx"><span class='nw'>∠3</span> = <span class='nw'>110°</span></div></div></details></div><div class="zad" id="z19"><div class="zh">Задание 19<span> · по чертежу</span></div><div class="zt"><span class='nw'>∠2 + ∠4</span> = <span class='nw'>64°</span>. Найди <span class='nw'>∠1</span>. И отдельно: <span class='nw'>∠1 − ∠2</span> = <span class='nw'>30°</span> — найди <span class='nw'>∠3</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. <span class='nw'>∠2</span> и <span class='nw'>∠4</span> вертикальные, значит каждый равен <span class='nw'>64° : 2</span> = <span class='nw'>32°</span>.</div><div class="step">2. <span class='nw'>∠1</span> = <span class='nw'>180° − 32°</span> = <span class='nw'>148°</span>.</div><div class="step">3. Во второй части: сумма 180°, разность 30°, значит <span class='nw'>∠1</span> = <span class='nw'>(180 + 30) : 2</span> = <span class='nw'>105°</span>.</div><div class="step">4. <span class='nw'>∠3</span> вертикален <span class='nw'>∠1</span>.</div><div class="fx"><span class='nw'>∠1</span> = <span class='nw'>148°</span>; &nbsp;<span class='nw'>∠3</span> = <span class='nw'>105°</span></div></div></details></div><div class="zad" id="z20"><div class="zh">Задание 20<span> · сложный</span></div><div class="zt">Градусная мера <span class='nw'>∠3</span> больше градусной меры <span class='nw'>∠2</span> на 38°. Найди сумму градусных мер углов 1 и 3.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. <span class='nw'>∠3</span> и <span class='nw'>∠2</span> смежные: сумма 180°, разность 38°.</div><div class="step">2. <span class='nw'>∠3</span> = <span class='nw'>(180 + 38) : 2</span> = <span class='nw'>109°</span>.</div><div class="step">3. <span class='nw'>∠1</span> вертикален <span class='nw'>∠3</span>, значит тоже 109°.</div><div class="fx"><span class='nw'>∠1 + ∠3</span> = <span class='nw'>218°</span></div><div class="step mini">Вопрос был про сумму, а не про каждый угол — читай до конца.</div></div></details></div><div class="zad" id="z21"><div class="zh">Задание 21<span> · сложный</span></div><div class="zt">Сумма градусных мер трёх углов, образованных при пересечении двух прямых, равна 245°. Найди меньший из углов.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Все четыре угла в сумме дают 360°.</div><div class="step">2. Четвёртый угол: <span class='nw'>360° − 245°</span> = <span class='nw'>115°</span>.</div><div class="step">3. Смежный с ним: <span class='nw'>180° − 115°</span> = <span class='nw'>65°</span>.</div><div class="step">4. Углы при пересечении — это 115°, 65°, 115°, 65°.</div><div class="fx">Меньший угол: 65°</div><div class="step mini">Ключ к задаче — что сумма всех четырёх углов равна 360°.</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>6. Перпендикулярные прямые</h2>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>
+Две прямые называются перпендикулярными, если при пересечении они образуют прямой угол.
+Записывают так: a <span class='nw'>⊥</span> b.</div>
+<p>Если один из четырёх углов при пересечении прямой, то и остальные три прямые —
+это видно из свойств смежных и вертикальных углов.</p>
+<div class="fig"><svg viewBox="0 0 260 240"><rect x="0" y="0" width="260" height="240" rx="12" fill="#ffffff"/><line x1="24.0" y1="142.0" x2="216.0" y2="142.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="10.0" y="147.0" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">a</text><line x1="120.0" y1="164.0" x2="120.0" y2="38.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="120.0" y="26.0" font-size="16" fill="#5b6270" text-anchor="middle" font-weight="600">b</text><line x1="135.0" y1="142.0" x2="135.0" y2="127.0" stroke="#15181e" stroke-width="1.8" stroke-linecap="butt"/><line x1="120.0" y1="127.0" x2="135.0" y2="127.0" stroke="#15181e" stroke-width="1.8" stroke-linecap="butt"/><circle cx="120.0" cy="142.0" r="4.4" fill="#15181e"/><text x="133.0" y="159.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><circle cx="120.0" cy="68.0" r="4.4" fill="#15181e"/><text x="105.0" y="72.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><line x1="146.0" y1="142.0" x2="146.0" y2="68.0" stroke="#137a45" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="4 4"/><text x="172.0" y="109.0" font-size="14" fill="#137a45" text-anchor="middle" font-weight="600">BA</text><text x="130" y="216" font-size="14" fill="#5b6270" text-anchor="middle">BA — перпендикуляр к прямой a,</text><text x="130" y="234" font-size="14" fill="#5b6270" text-anchor="middle">A — его основание</text></svg></div>
+<div class="def"><div class="n">ПЕРПЕНДИКУЛЯР И РАССТОЯНИЕ</div>
+<div>Отрезок BA называется перпендикуляром к прямой a, проведённым из точки B.</div>
+<div>Точка A — основание перпендикуляра.</div>
+<div>Длина этого перпендикуляра принимается за расстояние от точки B до прямой a.</div></div>
+<div class="rule2"><div class="n">ГЛАВНОЕ СВОЙСТВО</div>
+Из точки, не лежащей на прямой, можно провести к этой прямой <b>ровно один</b>
+перпендикуляр. Любой другой отрезок из этой точки к прямой будет длиннее.</div>
+
+<h3>Задания к блоку 6</h3>
+<div class="zad" id="z22"><div class="zh">Задание 22<span> · построение</span></div><div class="zt">Построй перпендикулярные прямые AB и KC, отметь точку их пересечения O. Запиши все углы, которые они образуют, и их градусные меры.</div><div class="fig"><svg viewBox="0 0 320 215"><rect x="0" y="0" width="320" height="215" rx="12" fill="#ffffff"/><line x1="88.0" y1="107.5" x2="232.0" y2="107.5" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="160.0" y1="179.5" x2="160.0" y2="35.5" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="72.0" y="112.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><text x="248.0" y="112.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><text x="160.0" y="200.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">K</text><text x="160.0" y="24.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><line x1="175.0" y1="107.5" x2="175.0" y2="92.5" stroke="#15181e" stroke-width="1.8" stroke-linecap="butt"/><line x1="160.0" y1="92.5" x2="175.0" y2="92.5" stroke="#15181e" stroke-width="1.8" stroke-linecap="butt"/><circle cx="160.0" cy="107.5" r="4.4" fill="#15181e"/><text x="146.0" y="124.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">O</text></svg></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Прямые дают четыре угла с вершиной O: <span class='nw'>∠AOK</span>, <span class='nw'>∠KOB</span>, <span class='nw'>∠BOC</span>, <span class='nw'>∠COA</span>.</div><div class="step">2. Один из них прямой по условию, остальные — смежные и вертикальные с ним.</div><div class="fx">Все четыре угла по 90°</div><div class="step mini">Записывать углы нужно тремя буквами: из точки O выходят четыре луча, и запись <span class='nw'>∠O</span> была бы непонятной.</div></div></details></div><div class="zad" id="z23"><div class="zh">Задание 23<span> · рассуждение</span></div><div class="zt">Отрезок CK — перпендикуляр, проведённый из точки C к прямой c. Из точки N, не лежащей на c, провели перпендикуляр NM к прямой c. Может ли точка C принадлежать прямой NM?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Допустим, C лежит на прямой NM. Тогда из C к прямой c идут два перпендикуляра: CK и часть прямой NM.</div><div class="step">2. Но из точки вне прямой перпендикуляр только один, значит эти два перпендикуляра совпадают.</div><div class="fx">Может — но только если прямые CK и NM совпадают, то есть K и M — одна и та же точка</div><div class="step mini">Если же K и M различны, точка C на прямой NM лежать не может.</div></div></details></div><div class="zad" id="z24"><div class="zh">Задание 24<span> · рассуждение</span></div><div class="zt">Из точки T, не лежащей на прямой d, опустили перпендикуляр TS к прямой d. Из точки K вне прямой d опустили перпендикуляр KN к d. Обязательно ли точка K принадлежит прямой ST?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Точка K взята произвольно, её перпендикуляр KN — своя прямая.</div><div class="step">2. Совпасть с прямой ST она обязана только тогда, когда основания совпадают: <span class='nw'>N</span> = <span class='nw'>S</span>.</div><div class="fx">Не обязательно</div><div class="step mini">Перпендикуляров к одной прямой сколько угодно — по одному из каждой точки. Единственность работает для одной точки, а не для всей плоскости.</div></div></details></div><div class="zad" id="z25"><div class="zh">Задание 25<span> · тест</span></div><div class="zt">Известно, что точка A не лежит на прямой m, точки F и K лежат на m (и не совпадают), причём AK <span class='nw'>⊥</span> m. Какое утверждение верно?<ol class='qq'><li>AF <span class='nw'>⊥</span> m;</li><li>AF параллельна m;</li><li>F лежит на AK;</li><li>K лежит на AF;</li><li>AF и AK имеют только одну общую точку.</li></ol></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. AF не перпендикулярна m: перпендикуляр из A только один, и это AK.</div><div class="step">2. AF не параллельна m: она пересекает её в точке F.</div><div class="step">3. F не лежит на AK, иначе прямая AK пересекала бы m дважды — в F и в K.</div><div class="step">4. Точно так же K не лежит на AF.</div><div class="fx">Верно пятое: общая точка у AF и AK только одна — точка A</div><div class="step mini">Два отрезка, выходящие из одной точки к разным точкам прямой, больше нигде не встречаются.</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>7. Биссектрисы смежных и вертикальных углов</h2>
+<div class="hard"><div class="n">СВОЙСТВО</div>
+Биссектрисы смежных углов перпендикулярны.</div>
+<div class="fig"><svg viewBox="0 0 360 255"><rect x="0" y="0" width="360" height="255" rx="12" fill="#ffffff"/><line x1="50.0" y1="163.0" x2="310.0" y2="163.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="38.0" y="168.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><text x="322.0" y="168.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><line x1="180.0" y1="163.0" x2="216.3" y2="63.4" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="222.1" y="52.4" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><path d="M 216.0 163.0 A 36.0 36.0 0 0 0 192.3 129.2" fill="none" stroke="#2f6bd8" stroke-width="1.9"/><path d="M 197.8 114.1 A 52.0 52.0 0 0 0 128.0 163.0" fill="none" stroke="#b3261e" stroke-width="1.9"/><line x1="180.0" y1="163.0" x2="253.7" y2="111.4" stroke="#137a45" stroke-width="2.2" stroke-linecap="round"/><text x="267.6" y="106.6" font-size="16" fill="#137a45" text-anchor="middle" font-weight="600">K</text><line x1="180.0" y1="163.0" x2="128.4" y2="89.3" stroke="#137a45" stroke-width="2.2" stroke-linecap="round"/><text x="118.6" y="80.4" font-size="16" fill="#137a45" text-anchor="middle" font-weight="600">M</text><line x1="193.9" y1="153.2" x2="184.2" y2="139.3" stroke="#137a45" stroke-width="1.8" stroke-linecap="butt"/><line x1="170.2" y1="149.1" x2="184.2" y2="139.3" stroke="#137a45" stroke-width="1.8" stroke-linecap="butt"/><circle cx="180.0" cy="163.0" r="4.4" fill="#15181e"/><text x="174.0" y="183.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">O</text><text x="180" y="231" font-size="14" fill="#5b6270" text-anchor="middle">OK и OM — биссектрисы смежных углов ∠BOC и</text><text x="180" y="249" font-size="14" fill="#5b6270" text-anchor="middle">∠AOC, ∠MOK = 90°</text></svg></div>
+<div class="ex"><h3>Пример 6</h3>
+<p>Найди угол между биссектрисами OK и OM смежных углов BOC и AOC, если <span class='nw'>∠BOC</span> = 70°. Затем докажи, что так будет всегда.</p>
+<div class="step">1. <span class='nw'>∠AOC</span> = <span class='nw'>180° − 70°</span> = <span class='nw'>110°</span>.</div><div class="step">2. OK — биссектриса <span class='nw'>∠BOC</span>: <span class='nw'>∠COK</span> = <span class='nw'>35°</span>.</div><div class="step">3. OM — биссектриса <span class='nw'>∠AOC</span>: <span class='nw'>∠COM</span> = <span class='nw'>55°</span>.</div><div class="step">4. <span class='nw'>∠MOK</span> = <span class='nw'>35° + 55°</span> = <span class='nw'>90°</span>.</div><div class="step"><b>Доказательство в общем виде.</b> <span class='nw'>∠COM</span> = <span class='nw'>½ · ∠AOC</span> и <span class='nw'>∠COK</span> = <span class='nw'>½ · ∠BOC</span>.</div><div class="step">Тогда <span class='nw'>∠MOK</span> = <span class='nw'>½(∠AOC + ∠BOC)</span> = <span class='nw'>½ · 180°</span> = <span class='nw'>90°</span>.</div><div class="fx">Биссектрисы смежных углов всегда перпендикулярны</div><div class="step mini">Обрати внимание: конкретные 70° в доказательстве не понадобились — работает только сумма 180°.</div>
+</div>
+<div class="hard"><div class="n">ВТОРОЕ СВОЙСТВО</div>
+Биссектрисы вертикальных углов образуют развёрнутый угол, то есть лежат на одной
+прямой.</div>
+<div class="fig"><svg viewBox="0 0 340 270"><rect x="0" y="0" width="340" height="270" rx="12" fill="#ffffff"/><line x1="84.5" y1="115.0" x2="255.5" y2="115.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="132.5" y1="191.8" x2="207.5" y2="38.2" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="68.5" y="120.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><text x="271.5" y="120.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><text x="125.5" y="211.2" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><text x="214.5" y="28.8" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><line x1="170.0" y1="115.0" x2="230.6" y2="77.1" stroke="#137a45" stroke-width="2.2" stroke-linecap="round"/><text x="245.0" y="73.1" font-size="16" fill="#137a45" text-anchor="middle" font-weight="600">E</text><line x1="170.0" y1="115.0" x2="109.4" y2="152.9" stroke="#137a45" stroke-width="2.2" stroke-linecap="round"/><text x="95.0" y="166.9" font-size="16" fill="#137a45" text-anchor="middle" font-weight="600">K</text><circle cx="170.0" cy="115.0" r="4.4" fill="#15181e"/><text x="156.0" y="132.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">O</text><text x="170" y="246" font-size="14" fill="#5b6270" text-anchor="middle">OE и OK — биссектрисы вертикальных углов</text><text x="170" y="264" font-size="14" fill="#5b6270" text-anchor="middle">AOC и BOD</text></svg></div>
+<div class="hard"><div class="n">ПОЧЕМУ</div>
+<div>На чертеже OE — биссектриса <span class='nw'>∠BOD</span>, OK — биссектриса <span class='nw'>∠AOC</span>.</div>
+<div>Углы BOD и AOC вертикальные, значит равны и их половины: <span class='nw'>∠EOB</span> = <span class='nw'>∠KOC</span>.</div>
+<div>Углы AOC и BOC смежные, поэтому <span class='nw'>∠AOC + ∠BOC</span> = <span class='nw'>180°</span>.</div>
+<div>Теперь соберём угол EOK из трёх кусков: <span class='nw'>∠EOK</span> = <span class='nw'>∠EOB + ∠BOC + ∠COK</span>.</div>
+<div>Первый кусок — половина <span class='nw'>∠BOD</span>, третий — половина <span class='nw'>∠AOC</span>, а эти углы равны. Значит две половины вместе дают целый <span class='nw'>∠AOC</span>.</div>
+<div>Получаем <span class='nw'>∠EOK</span> = <span class='nw'>∠AOC + ∠BOC</span> = <span class='nw'>180°</span> — угол развёрнутый,
+и лучи OE и OK лежат на одной прямой.</div></div>
+
+<h3>Задания к блоку 7</h3>
+<div class="zad" id="z26"><div class="zh">Задание 26<span> · биссектриса и отношение</span></div><div class="zt">Смежные углы AOP и BOP относятся как 4 : 5. Луч OE — биссектриса угла BOP. Найди угол между лучом OE и лучом OA.</div><div class="fig"><svg viewBox="0 0 340 190"><rect x="0" y="0" width="340" height="190" rx="12" fill="#ffffff"/><line x1="170.0" y1="161.1" x2="287.4" y2="161.1" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="304.4" y="166.1" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><line x1="170.0" y1="161.1" x2="245.5" y2="71.2" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="256.4" y="63.1" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">E</text><line x1="170.0" y1="161.1" x2="149.6" y2="45.5" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="146.7" y="33.7" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">P</text><line x1="170.0" y1="161.1" x2="52.6" y2="161.1" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="35.6" y="166.1" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><circle cx="170.0" cy="161.1" r="4.4" fill="#15181e"/><text x="155.0" y="177.1" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">O</text></svg></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Частей 9, одна часть <span class='nw'>180° : 9</span> = <span class='nw'>20°</span>.</div><div class="step">2. <span class='nw'>∠AOP</span> = <span class='nw'>4 · 20°</span> = <span class='nw'>80°</span>, <span class='nw'>∠BOP</span> = <span class='nw'>5 · 20°</span> = <span class='nw'>100°</span>.</div><div class="step">3. OE делит <span class='nw'>∠BOP</span> пополам: <span class='nw'>∠BOE</span> = <span class='nw'>50°</span>.</div><div class="step">4. <span class='nw'>∠EOA</span> и <span class='nw'>∠BOE</span> смежные: <span class='nw'>180° − 50°</span> = <span class='nw'>130°</span>.</div><div class="fx"><span class='nw'>∠EOA</span> = <span class='nw'>130°</span></div></div></details></div><div class="zad" id="z27"><div class="zh">Задание 27<span> · окружность</span></div><div class="zt">AB и CD — диаметры окружности с центром O. Угол AOD составляет половину угла AOC. Найди <span class='nw'>∠BOD</span>.</div><div class="fig"><svg viewBox="0 0 260 230"><rect x="0" y="0" width="260" height="230" rx="12" fill="#ffffff"/><circle cx="130.0" cy="111.0" r="76.0" fill="none" stroke="#2f6bd8" stroke-width="2.2"/><line x1="54.0" y1="111.0" x2="206.0" y2="111.0" stroke="#137a45" stroke-width="2.4" stroke-linecap="round"/><line x1="81.1" y1="52.8" x2="178.9" y2="169.2" stroke="#15181e" stroke-width="2.4" stroke-linecap="round"/><text x="38.0" y="116.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><text x="222.0" y="116.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><text x="189.1" y="186.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><text x="70.9" y="45.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><circle cx="130.0" cy="111.0" r="4.2" fill="#15181e"/><text x="117.0" y="128.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">O</text></svg></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. OC и OD — дополнительные лучи, значит <span class='nw'>∠AOD</span> и <span class='nw'>∠AOC</span> смежные.</div><div class="step">2. Пусть <span class='nw'>∠AOC</span> = <span class='nw'>x</span>, тогда <span class='nw'>∠AOD</span> = <span class='nw'>½x</span>.</div><div class="step">3. <span class='nw'>x + ½x</span> = <span class='nw'>180</span>; <span class='nw'>1,5x</span> = <span class='nw'>180</span>; <span class='nw'>x</span> = <span class='nw'>120</span>.</div><div class="step">4. <span class='nw'>∠BOD</span> вертикален <span class='nw'>∠AOC</span>, значит равен ему.</div><div class="fx"><span class='nw'>∠BOD</span> = <span class='nw'>120°</span></div></div></details></div><div class="zad" id="z28"><div class="zh">Задание 28<span> · по чертежу</span></div><div class="zt">Углы MON и KON смежные, причём <span class='nw'>∠MON</span> на 70° больше <span class='nw'>∠KON</span>. Найди <span class='nw'>∠MON</span>.</div><div class="fig"><svg viewBox="0 0 340 185"><rect x="0" y="0" width="340" height="185" rx="12" fill="#ffffff"/><line x1="170.0" y1="147.0" x2="288.0" y2="147.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="305.0" y="152.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">K</text><line x1="170.0" y1="147.0" x2="237.7" y2="50.3" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="247.4" y="41.4" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">N</text><line x1="170.0" y1="147.0" x2="52.0" y2="147.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="35.0" y="152.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">M</text><circle cx="170.0" cy="147.0" r="4.4" fill="#15181e"/><text x="155.0" y="163.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">O</text></svg></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step"><span class='nw'>x + (x + 70)</span> = <span class='nw'>180</span>; <span class='nw'>2x</span> = <span class='nw'>110</span>; <span class='nw'>x</span> = <span class='nw'>55</span>.</div><div class="step">Значит <span class='nw'>∠KON</span> = <span class='nw'>55°</span>, а <span class='nw'>∠MON</span> = <span class='nw'>125°</span>.</div><div class="fx"><span class='nw'>∠MON</span> = <span class='nw'>125°</span></div></div></details></div><div class="zad" id="z29"><div class="zh">Задание 29<span> · два смежных</span></div><div class="zt">Точки A, B и C лежат на одной прямой, B — между ними. <span class='nw'>∠ABM</span> = 100°, <span class='nw'>∠CBK</span> = 155°. Найди <span class='nw'>∠KBM</span>.</div><div class="fig"><svg viewBox="0 0 350 195"><rect x="0" y="0" width="350" height="195" rx="12" fill="#ffffff"/><line x1="175.0" y1="163.9" x2="293.0" y2="163.9" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="310.0" y="168.9" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><line x1="175.0" y1="163.9" x2="195.5" y2="47.7" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="198.4" y="36.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">M</text><line x1="175.0" y1="163.9" x2="68.1" y2="114.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="52.6" y="111.9" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">K</text><line x1="175.0" y1="163.9" x2="57.0" y2="163.9" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="40.0" y="168.9" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><circle cx="175.0" cy="163.9" r="4.4" fill="#15181e"/><text x="160.0" y="179.9" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text></svg></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. <span class='nw'>∠ABM</span> и <span class='nw'>∠MBC</span> смежные: <span class='nw'>∠MBC</span> = <span class='nw'>180° − 100°</span> = <span class='nw'>80°</span>.</div><div class="step">2. <span class='nw'>∠CBK</span> и <span class='nw'>∠ABK</span> смежные: <span class='nw'>∠ABK</span> = <span class='nw'>180° − 155°</span> = <span class='nw'>25°</span>.</div><div class="step">3. Луч BK лежит внутри <span class='nw'>∠ABM</span>, поэтому <span class='nw'>∠KBM</span> = <span class='nw'>100° − 25°</span> = <span class='nw'>75°</span>.</div><div class="fx"><span class='nw'>∠KBM</span> = <span class='nw'>75°</span></div><div class="step mini">Проверка другим путём: <span class='nw'>∠KBM</span> = <span class='nw'>∠CBK − ∠MBC</span> = <span class='nw'>155° − 80°</span> = <span class='nw'>75°</span>.</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>8. Угол между прямыми</h2>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>
+Углом между двумя пересекающимися прямыми называется <b>меньший</b> из образованных
+ими углов.</div>
+<div class="fig"><svg viewBox="0 0 340 242"><rect x="0" y="0" width="340" height="242" rx="12" fill="#ffffff"/><line x1="72.0" y1="110.0" x2="268.0" y2="110.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="85.1" y1="159.0" x2="254.9" y2="61.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="56.0" y="115.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><text x="284.0" y="115.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><text x="71.3" y="172.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><text x="268.7" y="58.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><path d="M 197.0 110.0 A 27.0 27.0 0 0 0 193.4 96.5" fill="none" stroke="#2f6bd8" stroke-width="1.9"/><text x="223.7" y="100.6" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">30°</text><path d="M 197.7 94.0 A 32.0 32.0 0 0 0 138.0 110.0" fill="none" stroke="#2f6bd8" stroke-width="1.9"/><text x="156.8" y="65.7" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">150°</text><circle cx="170.0" cy="110.0" r="4.4" fill="#15181e"/><text x="156.0" y="127.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">O</text><text x="170" y="236" font-size="14" fill="#5b6270" text-anchor="middle">Прямые AB и CD пересекаются под углом 30°</text></svg></div>
+<p>Если <span class='nw'>∠DOB</span> = 30°, то <span class='nw'>∠AOD</span> = <span class='nw'>180° − 30°</span> = <span class='nw'>150°</span>,
+а угол между прямыми считают равным 30°. Говорят: прямые пересекаются под углом 30°.</p>
+<div class="rule2"><div class="n">ДВА ОСОБЫХ СЛУЧАЯ</div>
+Если один из четырёх углов прямой, все четыре равны 90°: прямые пересекаются
+под прямым углом. Угол между параллельными прямыми считается равным 0°.</div>
+
+<h3>Задания к блоку 8</h3>
+<div class="zad" id="z30"><div class="zh">Задание 30<span> · практическая</span></div><div class="zt">Прямоугольный лист картона обрезали по прямой под углом 38° к его большей стороне. Какой угол со стороной листа получился у второй, отрезанной части?</div><div class="fig"><svg viewBox="0 0 340 180"><rect x="0" y="0" width="340" height="180" rx="12" fill="#ffffff"/><line x1="40.0" y1="128.0" x2="300.0" y2="128.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="28.0" y="133.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><text x="312.0" y="133.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">K</text><line x1="170.0" y1="128.0" x2="253.5" y2="62.7" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><text x="266.9" y="57.3" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><path d="M 206.0 128.0 A 36.0 36.0 0 0 0 198.4 105.8" fill="none" stroke="#2f6bd8" stroke-width="1.9"/><text x="222.0" y="115.1" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">38°</text><path d="M 211.0 96.0 A 52.0 52.0 0 0 0 118.0 128.0" fill="none" stroke="#b3261e" stroke-width="1.9"/><text x="146.9" y="65.9" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">142°</text><circle cx="170.0" cy="128.0" r="4.4" fill="#15181e"/><text x="164.0" y="148.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text></svg></div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Линия разреза и сторона листа образуют два смежных угла.</div><div class="step">2. Один из них — данные 38°, значит второй равен <span class='nw'>180° − 38°</span> = <span class='nw'>142°</span>.</div><div class="fx">142°</div><div class="step mini">Если у предложенного варианта указан угол 148° или 152°, это другая деталь: сумма со 38° не даёт 180°.</div></div></details></div><div class="zad" id="z31"><div class="zh">Задание 31<span> · с минутами</span></div><div class="zt">Сумма градусных мер двух вертикальных углов равна <span class='nw'>34°42′</span>. Найди угол, смежный с одним из этих углов.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Вертикальные углы равны, значит каждый равен <span class='nw'>34°42′ : 2</span> = <span class='nw'>17°21′</span>.</div><div class="step">2. Смежный: <span class='nw'>180° − 17°21′</span>. Занимаем градус: <span class='nw'>180° = 179°60′</span>.</div><div class="step">3. <span class='nw'>179°60′ − 17°21′</span> = <span class='nw'>162°39′</span>.</div><div class="fx"><span class='nw'>162°39′</span></div><div class="step mini">Половина от <span class='nw'>34°42′</span> — это <span class='nw'>17°21′</span>: делим отдельно градусы и отдельно минуты, а нечётный градус переводим в 60 минут.</div></div></details></div><div class="zad" id="z32"><div class="zh">Задание 32<span> · со звёздочкой</span></div><div class="zt">Один из смежных углов увеличили поворотом общей стороны вокруг вершины на 40 %, после чего второй угол уменьшился на 60 %. Найди первоначальные градусные меры этих углов.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Пусть углы равны a и b, причём <span class='nw'>a + b</span> = <span class='nw'>180</span>.</div><div class="step">2. После поворота они остались смежными: <span class='nw'>1,4a + 0,4b</span> = <span class='nw'>180</span>.</div><div class="step">3. Подставим <span class='nw'>b</span> = <span class='nw'>180 − a</span>: <span class='nw'>1,4a + 0,4(180 − a)</span> = <span class='nw'>180</span>.</div><div class="step">4. <span class='nw'>1,4a + 72 − 0,4a</span> = <span class='nw'>180</span>; <span class='nw'>a</span> = <span class='nw'>108</span>.</div><div class="fx">108° и 72°</div><div class="step mini">Проверка: <span class='nw'>1,4 · 108</span> = <span class='nw'>151,2</span>, <span class='nw'>0,4 · 72</span> = <span class='nw'>28,8</span>, вместе ровно 180°.</div></div></details></div><div class="zad" id="z33"><div class="zh">Задание 33<span> · со звёздочкой</span></div><div class="zt">Через одну точку на плоскости проходят четыре прямые. Они делят плоскость на 8 углов, три из которых относятся как 1 : 2 : 3, а один из углов равен сумме этих трёх. Найди каждый угол.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class="step">1. Все восемь углов в сумме дают 360°, а углы разбиваются на четыре пары вертикальных.</div><div class="step">2. Значит четыре «разных» угла дают в сумме <span class='nw'>360° : 2</span> = <span class='nw'>180°</span>.</div><div class="step">3. Три из них — x, 2x и 3x, четвёртый равен их сумме: <span class='nw'>x + 2x + 3x</span> = <span class='nw'>6x</span>.</div><div class="step">4. <span class='nw'>x + 2x + 3x + 6x</span> = <span class='nw'>180</span>; <span class='nw'>12x</span> = <span class='nw'>180</span>; <span class='nw'>x</span> = <span class='nw'>15</span>.</div><div class="fx">15°, 30°, 45° и 90° — и столько же вертикальных им</div><div class="step mini">Самый трудный шаг — сообразить, что складывать надо не все восемь углов, а только четыре подряд идущих.</div></div></details></div>
+</div>
+
+<div class="card pam">
+
+<h2>Что забрать с урока</h2>
+<h3>Три определения</h3>
+<div class="fgrid"><div class="fbox"><h4>Смежные</h4><p>Общая сторона, две другие — дополнительные лучи.</p><p><span class='nw'>∠1 + ∠2</span> = <span class='nw'>180°</span>.</p><p class="small">Смежных с данным углом ровно два, и они равны.</p></div><div class="fbox"><h4>Вертикальные</h4><p>Стороны одного — дополнительные лучи к сторонам другого.</p><p><span class='nw'>∠1</span> = <span class='nw'>∠2</span> — вертикальные углы равны.</p><p class="small">Вид угла при этом сохраняется.</p></div><div class="fbox"><h4>Четыре угла</h4><p>Соседние — смежные, противоположные — вертикальные.</p><p>Сумма всех четырёх равна 360°.</p><p class="small">Знаешь один — знаешь все.</p></div></div>
+<h3>Свойства</h3>
+<div class="fgrid"><div class="fbox"><h4>Перпендикуляр</h4><p>a <span class='nw'>⊥</span> b — при пересечении прямой угол, а значит все четыре.</p><p>Длина перпендикуляра — расстояние от точки до прямой.</p><p class="small">Из точки вне прямой он ровно один.</p></div><div class="fbox"><h4>Биссектрисы</h4><p>Смежных углов — перпендикулярны.</p><p>Вертикальных — лежат на одной прямой.</p><p class="small">Оба свойства доказываются через сумму 180°.</p></div><div class="fbox"><h4>Угол между прямыми</h4><p>Это меньший из четырёх углов.</p><p>Под прямым углом — все четыре по 90°.</p><p class="small">Для параллельных считают 0°.</p></div></div>
+<h3>Техника</h3>
+<div class="fgrid"><div class="fbox"><h4>Как решать</h4><p>Обозначь один угол за x, второй выразится через него.</p><p>Сумма смежных 180° — это и есть уравнение.</p><p class="small">Сумма и разность известны → больший = (сумма + разность) : 2.</p></div><div class="fbox"><h4>Проценты и доли</h4><p>«На 40 % больше» → 1,4x.</p><p>«Составляет 20 % от» → 0,2x.</p><p class="small">«В 1,5 раза меньше» → второй угол 1,5x.</p></div><div class="fbox"><h4>Частые ошибки</h4><p>Перепутать смежные с вертикальными: 180° вместо равенства.</p><p>Найти оба угла и забыть выбрать нужный.</p><p class="small">Вычитать из 180° минуты, не заняв градус.</p></div></div>
+
+</div>
+
+</div>
+
+<script>
+
+function allSol(open){
+  var ds = document.querySelectorAll("details.zs"), k;
+  for(k = 0; k < ds.length; k++) ds[k].open = open;
+}
+document.getElementById("openall").addEventListener("click", function(){ allSol(true); });
+document.getElementById("closeall").addEventListener("click", function(){ allSol(false); });
+
+</script>
+</body>
+</html>
