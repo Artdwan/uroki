@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Разложение на множители и общий знаменатель — шпаргалка</title>
+<style>
+:root{--bg:#f5f6f8;--card:#fff;--ink:#16181d;--muted:#5b6270;--line:#dfe3ea;
+  --acc:#2f6bd8;--acc2:#e8f0ff}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#14161a;--card:#1c1f25;--ink:#eceef2;--muted:#a3abb8;--line:#2c313a;
+    --acc:#7aa5f5;--acc2:#1e2838}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+.wrap{max-width:1000px;margin:0 auto;padding:22px 16px 60px}
+header{border-bottom:2px solid var(--acc);padding-bottom:14px;margin-bottom:18px}
+h1{font-size:27px;margin:0 0 5px;line-height:1.25}
+.meta{color:var(--muted);font-size:15px}
+h2{font-size:20px;margin:26px 0 10px;padding-left:10px;border-left:4px solid var(--acc)}
+.nw{white-space:nowrap}
+.pw{white-space:nowrap}
+.pw sup,sup.p2{font-size:0.68em;line-height:0;vertical-align:0.62em;padding-left:1px}
+.fr{display:inline-block;vertical-align:middle;text-align:center;margin:0 3px}
+.fr b{display:block;border-bottom:1.7px solid currentColor;padding:0 6px;font-weight:400;
+  white-space:nowrap}
+.fr i{display:block;font-style:normal;padding:0 6px;white-space:nowrap}
+.grid{display:grid;gap:11px;grid-template-columns:repeat(auto-fit,minmax(min(255px,100%),1fr))}
+.c{border:1px solid var(--line);border-radius:12px;padding:11px 13px 12px;
+  background:var(--card);border-top:3px solid var(--acc);min-width:0}
+.c.fsu{border-top-color:#c0397a}
+.c.tri{border-top-color:#7a3fbf}
+.c.warn{border-top-color:#b3261e}
+.c .h{font-size:13px;letter-spacing:.5px;text-transform:uppercase;color:var(--acc);
+  font-weight:700;margin-bottom:7px}
+.c.fsu .h{color:#c0397a}
+.c.tri .h{color:#7a3fbf}
+.c.warn .h{color:#b3261e}
+.c .f{font-size:19px;line-height:2.1;font-weight:600;text-align:center;margin:4px 0 2px;
+  overflow-wrap:anywhere}
+.c .sub{font-size:16px;line-height:2;text-align:center;color:var(--muted);margin-top:4px;
+  overflow-wrap:anywhere}
+.c .note{font-size:14.5px;line-height:1.5;color:var(--muted);margin-top:7px}
+.steps{border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin:12px 0;
+  background:var(--card);border-left:4px solid var(--acc)}
+.steps.green{border-left-color:#1f8a54}
+.steps.blue{border-left-color:#2f6bd8}
+.steps.red{border-left-color:#b3261e}
+.steps .sh{font-size:17px;font-weight:700;margin-bottom:6px}
+.steps ol{margin:6px 0 0;padding-left:22px}
+.steps li{margin:6px 0;line-height:1.55}
+.steps .note{font-size:15px;color:var(--muted);margin-top:9px;line-height:1.6}
+.steps .f{font-size:19px;line-height:2.1;font-weight:600;text-align:center;margin:8px 0;
+  overflow-wrap:anywhere}
+.steps,.ex{min-width:0}
+.steps .f.big{font-size:20px}
+@media (max-width:520px){.steps .f.big{font-size:16px}.steps .f.big .fr{font-size:0.9em}}
+.ex{border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin:12px 0;
+  background:var(--card)}
+.ex .sh{font-size:17px;font-weight:700;margin-bottom:4px;color:var(--acc)}
+.ex ol{margin:8px 0 0;padding-left:22px}
+.ex li{margin:6px 0;line-height:1.6}
+.ex .f{font-size:20px;line-height:2.2;text-align:center;margin:10px 0;font-weight:600;
+  overflow-wrap:anywhere}
+.ex .f.ans{background:var(--acc2);border-radius:10px;padding:9px 12px;
+  border:1px solid var(--line)}
+.cols{display:grid;gap:12px;grid-template-columns:1fr 1fr}
+@media (max-width:760px){.cols{grid-template-columns:1fr}}
+.tools{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.tools button{font:inherit;font-size:15px;padding:8px 14px;min-height:42px;
+  border-radius:10px;border:1.5px solid var(--line);background:var(--card);
+  color:var(--ink);cursor:pointer}
+.tools button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+@media (max-width:460px){
+  .c .f,.steps .f,.ex .f{font-size:16.5px;line-height:2}
+  .c .sub{font-size:14.5px}
+  .fr{font-size:0.92em}
+}
+footer{margin-top:28px;color:var(--muted);font-size:14px;border-top:1px solid var(--line);
+  padding-top:14px}
+@media print{
+  body{background:#fff;font-size:12.5px;line-height:1.35}
+  .wrap{max-width:100%;padding:0}
+  .tools,footer{display:none !important}
+  header{margin-bottom:10px;padding-bottom:8px}
+  h1{font-size:19px}
+  h2{font-size:15px;margin:11px 0 6px}
+  .grid{gap:6px;grid-template-columns:repeat(3,1fr)}
+  .c{padding:6px 8px;border-radius:8px;break-inside:avoid}
+  .c .h{font-size:10px;margin-bottom:3px}
+  .c .f{font-size:13px;line-height:1.9;margin:2px 0}
+  .c .sub{font-size:11.5px;line-height:1.8}
+  .c .note{font-size:10.5px;line-height:1.35;margin-top:4px}
+  .steps,.ex{padding:7px 9px;margin:6px 0;break-inside:avoid;border-radius:8px}
+  .steps .sh,.ex .sh{font-size:13px}
+  .steps li,.ex li{margin:2px 0;line-height:1.35;font-size:11.5px}
+  .steps .note{font-size:11px;margin-top:5px}
+  .steps .f,.ex .f{font-size:13.5px;line-height:1.9;margin:5px 0}
+  .ex .f.ans{padding:4px 7px}
+  .cols{gap:7px}
+  .fr{font-size:0.92em}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header>
+  <h1>Разложение на множители и общий знаменатель</h1>
+  <div class="meta">Алгебра · 8 класс · шпаргалка к действиям с рациональными дробями</div>
+  <div class="tools">
+    <button type="button" class="pri" id="print">Распечатать</button>
+  </div>
+</header>
+
+<h2>Формулы разложения</h2>
+<div class="grid"><div class="c acc"><div class="h">Общий множитель</div><div class="f"><span class='nw'>ab + ac = a(b + c)</span></div><div class="sub"><span class='nw'>6<span class='pw'>x<sup>2</sup></span>y − 9xy</span> = <span class='nw'>3xy(2x − 3)</span></div><div class="note">Ищем то, что есть в каждом слагаемом: и число, и буквы в наименьшей степени.</div></div><div class="c acc"><div class="h">Минус за скобку</div><div class="f"><span class='nw'>−a − b = −(a + b)</span></div><div class="sub"><span class='nw'>−2x + 6</span> = <span class='nw'>−2(x − 3)</span></div><div class="note">Выносим минус — у каждого слагаемого в скобке меняется знак.</div></div><div class="c warn"><div class="h">Противоположные скобки</div><div class="f"><span class='nw'>a − b = −(b − a)</span></div><div class="sub"><span class='nw'><span class='fr'><b>2</b><i>5 − x</i></span> = −<span class='fr'><b>2</b><i>x − 5</i></span></span></div><div class="note">Главный приём при общем знаменателе: скобки вида x − 5 и 5 − x отличаются только знаком.</div></div><div class="c warn"><div class="h">Чётная степень знаков не помнит</div><div class="f"><span class='nw'>(a − b)<sup class='p2'>2</sup> = (b − a)<sup class='p2'>2</sup></span></div><div class="sub"><span class='nw'>(a − b)<sup class='p2'>3</sup> = −(b − a)<sup class='p2'>3</sup></span></div><div class="note">В чётной степени скобку можно перевернуть бесплатно. В нечётной — только со сменой знака перед ней.</div></div><div class="c fsu"><div class="h">Разность квадратов</div><div class="f"><span class='nw'><span class='pw'>a<sup>2</sup></span> − <span class='pw'>b<sup>2</sup></span></span> = <span class='nw'>(a − b)(a + b)</span></div><div class="sub"><span class='nw'>9<span class='pw'>x<sup>2</sup></span> − 25</span> = <span class='nw'>(3x − 5)(3x + 5)</span></div><div class="note">Суммы квадратов на множители не раскладывают.</div></div><div class="c fsu"><div class="h">Квадрат суммы и разности</div><div class="f"><span class='nw'><span class='pw'>a<sup>2</sup></span> + 2ab + <span class='pw'>b<sup>2</sup></span></span> = <span class='nw'>(a + b)<sup class='p2'>2</sup></span></div><div class="sub"><span class='nw'><span class='pw'>a<sup>2</sup></span> − 2ab + <span class='pw'>b<sup>2</sup></span></span> = <span class='nw'>(a − b)<sup class='p2'>2</sup></span></div><div class="note">Узнаём по среднему слагаемому: оно равно удвоенному произведению.</div></div><div class="c fsu"><div class="h">Сумма и разность кубов</div><div class="f"><span class='nw'><span class='pw'>a<sup>3</sup></span> + <span class='pw'>b<sup>3</sup></span></span> = <span class='nw'>(a + b)(<span class='pw'>a<sup>2</sup></span> − ab + <span class='pw'>b<sup>2</sup></span>)</span></div><div class="sub"><span class='nw'><span class='pw'>a<sup>3</sup></span> − <span class='pw'>b<sup>3</sup></span></span> = <span class='nw'>(a − b)(<span class='pw'>a<sup>2</sup></span> + ab + <span class='pw'>b<sup>2</sup></span>)</span></div><div class="note">Знак в первой скобке тот же, что в условии, в середине второй — противоположный, и никакой двойки при ab.</div></div><div class="c tri"><div class="h">Квадратный трёхчлен</div><div class="f"><span class='nw'>a<span class='pw'>x<sup>2</sup></span> + bx + c</span> = <span class='nw'>a(x − x₁)(x − x₂)</span></div><div class="sub"><span class='nw'>2<span class='pw'>x<sup>2</sup></span> − 7x + 3</span> = <span class='nw'>2(x − 3)(x − 0,5)</span></div><div class="note">Корни ищем через дискриминант. Старший коэффициент выносим вперёд — его забывают чаще всего.</div></div><div class="c tri"><div class="h">Группировка</div><div class="f"><span class='nw'>ax + ay + bx + by</span> = <span class='nw'>a(x + y) + b(x + y)</span> = <span class='nw'>(x + y)(a + b)</span></div><div class="sub"><span class='nw'><span class='pw'>x<sup>3</sup></span> + 3<span class='pw'>x<sup>2</sup></span> − 4x − 12</span> = <span class='nw'>(x + 3)(<span class='pw'>x<sup>2</sup></span> − 4)</span> = <span class='nw'>(x + 3)(x − 2)(x + 2)</span></div><div class="note">Собираем слагаемые парами так, чтобы в каждой паре нашёлся общий множитель, а в скобках получилось одно и то же.</div></div></div>
+
+
+<div class="steps">
+<div class="sh">В каком порядке пробовать</div>
+<ol>
+<li><b>Общий множитель</b> — всегда первым делом, даже если потом понадобится
+что-то ещё.</li>
+<li><b>Формула сокращённого умножения</b> — два слагаемых или три с удвоенным
+произведением.</li>
+<li><b>Квадратный трёхчлен</b> — три слагаемых, старшая степень вторая.</li>
+<li><b>Группировка</b> — четыре слагаемых и больше.</li>
+<li>Разложили — <b>проверь каждую скобку</b>: возможно, её тоже можно разложить
+дальше.</li>
+</ol>
+</div>
+
+
+<h2>Сложение и вычитание дробей</h2>
+
+<div class="steps green">
+<div class="sh">Как найти общий знаменатель</div>
+<ol>
+<li><b>Разложи каждый знаменатель на множители</b> — по правилам выше. Пока дроби
+не разложены, искать нечего.</li>
+<li><b>Числовые коэффициенты</b>: берём их наименьшее общее кратное.</li>
+<li><b>Выпиши все разные множители</b>, которые встретились хотя бы в одном
+знаменателе.</li>
+<li><b>Каждый возьми в наибольшей степени</b>, в какой он где-либо встретился.</li>
+<li><b>Перемножь</b> — это и есть наименьший общий знаменатель.</li>
+</ol>
+<div class="note">Если знаменатели отличаются только порядком букв в скобке — <span class='nw'>x − 5</span> и <span class='nw'>5 − x</span> — сначала вынеси
+минус и сделай скобки одинаковыми. Иначе общий знаменатель получится вдвое длиннее,
+чем нужно.</div>
+</div>
+
+
+<div class="steps blue">
+<div class="sh">Дополнительные множители</div>
+<div class="f big"><span class='nw'>дополнительный множитель</span> = <span class='nw'><span class='fr'><b>общий знаменатель</b><i>знаменатель дроби</i></span></span></div>
+<ol>
+<li>Общий знаменатель <b>дели</b> на знаменатель каждой дроби — получишь её
+дополнительный множитель.</li>
+<li>Умножь на него <b>и числитель</b> этой дроби. Знаменатель уже общий, его
+переписывать не нужно.</li>
+<li>Числители сложи или вычти, приведи подобные — знаменатель не трогаем.</li>
+<li>Готовую дробь попробуй сократить: числитель тоже раскладывают на множители.</li>
+</ol>
+<div class="note">Вычитание — место ошибок номер один: минус относится ко всему
+числителю, поэтому его берут в скобки.
+<span class='nw'><span class='fr'><b>a</b><i>d</i></span> − <span class='fr'><b>b + c</b><i>d</i></span> = <span class='fr'><b>a − (b + c)</b><i>d</i></span></span></div>
+</div>
+
+
+<h2>Разобранные примеры</h2>
+
+<div class="ex">
+<div class="sh">Пример с числами и буквами</div>
+<div class="f"><span class='nw'><span class='fr'><b>5</b><i>6<span class='pw'>a<sup>2</sup></span>b</i></span> − <span class='fr'><b>1</b><i>4a<span class='pw'>b<sup>3</sup></span></i></span></span></div>
+<ol>
+<li>Числа 6 и 4 → наименьшее общее кратное 12.</li>
+<li>Буквы: a встречается в степенях 2 и 1 → берём <span class='nw'><span class='pw'>a<sup>2</sup></span></span>;
+b — в степенях 1 и 3 → берём <span class='nw'><span class='pw'>b<sup>3</sup></span></span>.</li>
+<li>Общий знаменатель: <span class='nw'>12<span class='pw'>a<sup>2</sup></span><span class='pw'>b<sup>3</sup></span></span>.</li>
+<li>Дополнительные множители: <span class='nw'>12<span class='pw'>a<sup>2</sup></span><span class='pw'>b<sup>3</sup></span> : 6<span class='pw'>a<sup>2</sup></span>b = 2<span class='pw'>b<sup>2</sup></span></span> и <span class='nw'>12<span class='pw'>a<sup>2</sup></span><span class='pw'>b<sup>3</sup></span> : 4a<span class='pw'>b<sup>3</sup></span> = 3a</span>.</li>
+<li>Числитель: <span class='nw'>5 · 2<span class='pw'>b<sup>2</sup></span> − 1 · 3a = 10<span class='pw'>b<sup>2</sup></span> − 3a</span>.</li>
+</ol>
+<div class="f ans"><span class='nw'><span class='fr'><b>10<span class='pw'>b<sup>2</sup></span> − 3a</b><i>12<span class='pw'>a<sup>2</sup></span><span class='pw'>b<sup>3</sup></span></i></span></span></div>
+</div>
+
+<div class="ex">
+<div class="sh">Пример со скобками</div>
+<div class="f"><span class='nw'><span class='fr'><b>1</b><i><span class='pw'>x<sup>2</sup></span> − 4</i></span> + <span class='fr'><b>3</b><i><span class='pw'>x<sup>2</sup></span> + 4x + 4</i></span></span></div>
+<ol>
+<li>Раскладываем знаменатели: <span class='nw'><span class='pw'>x<sup>2</sup></span> − 4 = (x − 2)(x + 2)</span> и <span class='nw'><span class='pw'>x<sup>2</sup></span> + 4x + 4 = (x + 2)<sup class='p2'>2</sup></span>.</li>
+<li>Разные множители: <span class='nw'>(x − 2)</span> и <span class='nw'>(x + 2)</span>.
+Второй встретился в степени 2 — берём его в квадрате.</li>
+<li>Общий знаменатель: <span class='nw'>(x − 2)(x + 2)<sup class='p2'>2</sup></span>.</li>
+<li>Дополнительные множители: у первой дроби <span class='nw'>(x + 2)</span>,
+у второй <span class='nw'>(x − 2)</span>.</li>
+<li>Числитель: <span class='nw'>1 · (x + 2) + 3 · (x − 2) = 4x − 4</span>.</li>
+<li>Сокращаем, если получится: <span class='nw'>4x − 4 = 4(x − 1)</span> —
+общих скобок со знаменателем нет, значит дробь уже несократима.</li>
+</ol>
+<div class="f ans"><span class='nw'><span class='fr'><b>4(x − 1)</b><i>(x − 2)(x + 2)<sup class='p2'>2</sup></i></span></span></div>
+</div>
+
+<div class="ex">
+<div class="sh">Пример с противоположными скобками</div>
+<div class="f"><span class='nw'><span class='fr'><b>3</b><i>x − 5</i></span> − <span class='fr'><b>2</b><i>5 − x</i></span></span></div>
+<ol>
+<li>Знаменатели отличаются знаком: <span class='nw'>5 − x = −(x − 5)</span>.</li>
+<li>Выносим минус: <span class='nw'>−<span class='fr'><b>2</b><i>5 − x</i></span> = <span class='fr'><b>2</b><i>x − 5</i></span></span> — вычитание превратилось
+в сложение.</li>
+<li>Знаменатель уже общий, дополнительные множители не нужны.</li>
+</ol>
+<div class="f ans"><span class='nw'><span class='fr'><b>5</b><i>x − 5</i></span></span></div>
+</div>
+
+
+<h2>Чего не делать</h2>
+
+<div class="steps red">
+<div class="sh">Пять ошибок, которые стоят балла</div>
+<ol>
+<li>Вынесли минус за скобку и не поменяли знак у второго слагаемого.</li>
+<li>Разложили трёхчлен и потеряли старший коэффициент: написали
+<span class='nw'>(x − 3)(x − 0,5)</span> вместо
+<span class='nw'>2(x − 3)(x − 0,5)</span> — двойка обязана остаться
+множителем.</li>
+<li>Взяли общим знаменателем произведение всех знаменателей подряд — получается
+верно, но потом не сокращается.</li>
+<li>При вычитании не взяли числитель в скобки и потеряли знак.</li>
+<li>Сократили дробь на слагаемое, а не на множитель. Сокращать можно только то,
+что перемножается.</li>
+</ol>
+</div>
+
+
+<footer>
+  Шпаргалка печатается на два листа A4. Порядок один и тот же всегда: разложить
+  знаменатели, собрать общий знаменатель, найти дополнительные множители, сложить
+  числители, попробовать сократить.
+</footer>
+</div>
+
+<script>
+document.getElementById("print").addEventListener("click", function(){ window.print(); });
+</script>
+</body>
+</html>
