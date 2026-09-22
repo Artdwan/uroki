@@ -56,25 +56,6 @@ details[open] summary{margin-bottom:8px}
 .task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
 .fig{margin:12px 0;text-align:center}
 
-.pick4{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-top:10px}
-.pk{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px}
-.pk svg{width:100%;height:auto;display:block}
-.fig svg{width:100%;max-width:420px;height:auto}
-.def{border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:10px;
-  padding:11px 13px;margin:11px 0;background:var(--card)}
-.def .n{font-size:14px;color:var(--muted);font-weight:700;letter-spacing:.4px}
-.ax{border:1px solid var(--line);border-left:4px solid #c0397a;border-radius:10px;
-  padding:11px 13px;margin:11px 0;background:#fdf0f6}
-.ax .n{font-size:14px;color:#a02a62;font-weight:700;letter-spacing:.4px}
-.wrap-t th,.wrap-t td{white-space:normal;text-align:left;vertical-align:top}
-.fx{display:block;background:var(--acc-soft);border:1px solid var(--line);border-radius:10px;
-  padding:11px 13px;margin:12px 0;text-align:center;font-size:21px;line-height:1.7;
-  font-weight:600;overflow-x:auto}
-.sol .fx,.ex .fx{font-size:19px;margin:9px 0}
-.ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;background:var(--bg)}
-.ex h3{margin-top:0}
-.small,.mini{color:var(--muted);font-size:15px}
-
 .tr{border:1px solid var(--line);border-radius:12px;padding:14px;margin:16px 0;background:var(--bg)}
 .trhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;
   margin-bottom:8px}
@@ -102,6 +83,106 @@ details[open] summary{margin-bottom:8px}
 .trbar button{font-size:15px;padding:8px 13px;min-height:42px}
 .trdone{background:var(--acc-soft);border-radius:10px;padding:12px;font-size:17px;
   text-align:center;font-weight:600}
+
+.gaps{border:1px solid var(--line);border-radius:12px;padding:14px;margin:16px 0;background:var(--bg)}
+.gaps .ghead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  flex-wrap:wrap;margin-bottom:6px}
+.gaps .ghead b{font-size:17px}
+.gscore{color:var(--muted);font-size:15px;white-space:nowrap}
+.gline{font-size:19px;line-height:2.5;margin:6px 0;text-align:center;
+  white-space:normal;overflow-wrap:break-word}
+.gline.l{text-align:left;font-size:17px;line-height:2.2}
+.gnote{color:var(--muted);font-size:15px;margin:6px 0 0;line-height:1.5}
+input.gp{font:inherit;font-size:17px;text-align:center;padding:3px 4px;border-radius:8px;
+  border:1.8px solid var(--acc);background:var(--card);color:inherit;min-width:38px;
+  vertical-align:baseline}
+@media (max-width:460px){
+  .gline{font-size:17px;line-height:2.3}
+  input.gp{font-size:16px;min-width:34px}
+}
+input.gp.ok{border-color:#137a45;background:#e9f7ef;color:#0f6b3c;font-weight:700}
+input.gp.bad{border-color:#b3261e;background:#fdecea}
+@media (prefers-color-scheme:dark){input.gp.ok{background:#12281d}input.gp.bad{background:#2a1618}}
+.gbar{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px;align-items:center}
+.gbar button{font-size:15px;padding:8px 13px;min-height:42px}
+.gbar button:disabled{opacity:.55;cursor:default}
+.gmsg{font-size:16px;margin-top:8px}
+.gmsg .v{font-weight:700}
+.gmsg .v.ok{color:#137a45} .gmsg .v.bad{color:#b3261e}
+.gtip{color:var(--muted);font-size:15px;margin-top:5px;line-height:1.5}
+.gaps.need{outline:2px solid #c99a2e;outline-offset:3px}
+@media print{input.gp{border:1px solid #999;background:#fff}}
+
+.pw{white-space:nowrap}
+.pw sup{font-size:0.68em;line-height:0;vertical-align:0.62em;padding-left:1px}
+.nw{white-space:nowrap}
+.fx{display:block;background:var(--acc-soft,var(--acc2,#e8f0ff));border:1px solid var(--line);
+  border-radius:10px;padding:12px 13px;margin:12px 0;text-align:center;font-size:21px;
+  line-height:2.2;font-weight:600;white-space:normal;overflow-wrap:break-word}
+.sol .fx,.ex .fx{font-size:19px;margin:9px 0}
+.def{border:1px solid var(--line);border-left:4px solid #2f6bd8;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#eef3fb}
+.def .n{font-size:14px;color:#2f6bd8;font-weight:700;letter-spacing:.4px}
+.rule2{border:1px solid var(--line);border-left:4px solid #c0397a;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdf0f6}
+.rule2 .n{font-size:14px;color:#a02a62;font-weight:700;letter-spacing:.4px}
+.hard{border:1px solid var(--line);border-left:4px solid #7a3fbf;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#f4efff}
+.hard .n{font-size:14px;color:#5f2ea0;font-weight:700;letter-spacing:.4px}
+.warn{border:1px solid var(--line);border-left:4px solid #b3261e;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdecea}
+.warn .n{font-size:14px;color:#b3261e;font-weight:700;letter-spacing:.4px}
+@media (prefers-color-scheme:dark){.rule2{background:#2a1b23}.def{background:#18212f}
+  .hard{background:#221a33}.warn{background:#2a1618}}
+.ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;background:var(--bg)}
+.ex h3{margin-top:0}
+.tohw{font-weight:700;margin:18px 0 0;font-size:18px}
+.tohw span{color:var(--muted);font-weight:400;font-size:15px;display:block;margin-top:3px}
+.small,.mini{color:var(--muted);font-size:15px}
+.fr{display:inline-block;vertical-align:middle;text-align:center;margin:0 3px}
+.fr b{display:block;border-bottom:1.7px solid currentColor;padding:0 6px;font-weight:400;
+  white-space:nowrap}
+.fr i{display:block;font-style:normal;padding:0 6px;white-space:nowrap}
+.opts .opt{font-size:18px;line-height:2.2}
+.task>div:first-child{line-height:2.3}
+.trq,.trmsg .why{line-height:2.2}
+.tropt{line-height:2.1}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.alg{margin:10px 0 0;padding-left:22px}
+.alg li{margin:6px 0;font-size:17px}
+.pam h3{font-size:18px;margin:18px 0 2px}
+.pam h3:first-of-type{margin-top:10px}
+.fgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));margin:9px 0}
+.fbox{border:1px solid var(--line);border-radius:12px;padding:9px 12px 11px;background:var(--bg)}
+.fbox h4{margin:0 0 3px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.fbox p{margin:6px 0 0;line-height:1.6;font-size:16px}
+.fbox p.small{font-size:15px}
+.ff{font-size:20px;line-height:2.3;text-align:center;margin:6px 0;font-weight:600;
+  white-space:normal;overflow-wrap:break-word}
+.fbox .ff{font-size:18px;line-height:2.1}
+.trnav{margin-top:12px;display:flex;gap:9px;flex-wrap:wrap}
+.trgate{margin-top:12px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;
+  font-size:16px;background:var(--bg)}
+.trgate.ready{border-color:#1f8a54;background:#e9f7ef}
+.trgate ul{margin:6px 0 0;padding-left:20px}
+.trgate li{margin:3px 0}
+.trgate a{color:var(--acc);text-decoration:none;border-bottom:1px solid currentColor;cursor:pointer}
+@media (prefers-color-scheme:dark){.trgate.ready{background:#12281d}}
+.tr.need,.gaps.need{outline:2px solid #c99a2e;outline-offset:3px}
+.savenote{margin-top:9px;color:var(--muted);font-size:14.5px;line-height:1.45}
+.savenote button{font-size:14px;padding:5px 10px;min-height:34px;margin-left:8px}
+.sheet .f-formula{margin:5px 0;font-size:14.5px;line-height:2}
+@media print{
+  .sheet>.meta{display:none}
+  .sheet h2{font-size:18px;margin:0 0 5px}
+  .sheet .f-formula{font-size:11.5px;line-height:1.8;margin:2px 0}
+  .sheet .fr{font-size:10.5px;vertical-align:middle}
+}
 
 .task.ok{border-color:var(--ok);background:var(--ok-soft)}
 .task.bad{border-color:var(--bad);background:var(--bad-soft)}
@@ -141,6 +222,15 @@ details[open] summary{margin-bottom:8px}
   @page{size:A4;margin:12mm}
 }
 </style>
+
+<style>
+/* поля-показатели: поднимаем и ужимаем, но не мельче 16px на телефоне -
+   иначе iOS зумит страницу при тапе по полю */
+sup input.gp{font-size:15px;min-width:30px;padding:1px 3px;border-radius:6px;
+  border-width:1.5px;vertical-align:baseline}
+@media (max-width:460px){sup input.gp{font-size:16px;min-width:30px}}
+.gline sup{line-height:0}
+</style>
 </head>
 <body>
 
@@ -152,12 +242,12 @@ details[open] summary{margin-bottom:8px}
   <label class="f" for="name">Имя и фамилия</label>
   <input type="text" id="name" placeholder="напиши, как в журнале" autocapitalize="words" spellcheck="false">
   <div class="note" style="margin-top:14px">
-    <b>Как работать.</b> Сначала прочитай теорию - она вся здесь, учебник открывать не нужно.
-    В начале короткое повторение степеней с целым показателем: без него тема не пойдёт.
-    Потом разбери семь примеров - в них показаны все типы задач отсюда.
-    <div style="margin-top:8px">Тренажёры прогони до конца хотя бы по разу: они не идут
-    в отчёт, зато там сразу видно, где путаешься. Задачи решай в тетради и записывай ход,
-    а в поле вводи только ответ.</div>
+    <b>Как работать.</b> Тема разбита на пять блоков, и каждый устроен одинаково:
+    короткая теория, разобранный пример, тренажёр и задание с пропусками.
+    Иди по порядку и не перескакивай: пропуски проверяют ровно то, что было в теории выше.
+    <div style="margin-top:8px">Тренажёры и пропуски в отчёт не идут - это тренировка,
+    проходи их сколько нужно. В самом конце четырнадцать задач, которые решаешь
+    самостоятельно: они и попадают в отчёт преподавателю.</div>
     <div style="margin-top:8px">У каждой задачи три подсказки, они открываются по одной.
     Полное решение появляется после верного ответа или после второй попытки.
     Единицы измерения писать не нужно, запятая и точка равнозначны,
@@ -166,163 +256,228 @@ details[open] summary{margin-bottom:8px}
 </div>
 
 <div class="card">
-  <h2>Теория</h2>
 
-<h2>Повторение. Степень с целым показателем</h2>
-<p>Без этого дальше не обойтись: стандартный вид - это запись через степень десятки.</p>
-<div class="def"><b>Нулевой и отрицательный показатель.</b> При a ≠ 0
-<span class="f-formula">a<sup>0</sup> = 1</span> и
-<span class="f-formula">a<sup>−n</sup> = 1 : a<sup>n</sup></span>.
-Например 5<sup>0</sup> = 1, а 3<sup>−2</sup> = 1 : 3<sup>2</sup> = 1 : 9.</div>
-<div class="rule"><b>Свойства степеней</b> работают при любых целых показателях:
-<div class="f-formula">a<sup>m</sup> · a<sup>n</sup> = a<sup>m+n</sup> &nbsp;·&nbsp;
-a<sup>m</sup> : a<sup>n</sup> = a<sup>m−n</sup> &nbsp;·&nbsp;
-(a<sup>m</sup>)<sup>n</sup> = a<sup>mn</sup> &nbsp;·&nbsp;
-(ab)<sup>n</sup> = a<sup>n</sup>b<sup>n</sup></div>
-Минус в показателе - это не минус у числа: 3<sup>−2</sup> положительно, оно просто меньше единицы.</div>
+<h2>1. Повторение: степень с целым показателем</h2>
+<p>Стандартный вид - это запись через степень десятки, поэтому начнём с того,
+что уже проходили.</p>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЯ</div>
+При a ≠ 0: <b>a<sup>0</sup> = 1</b> и <b>a<sup>−n</sup> = 1 : a<sup>n</sup></b>.
+Например 5<sup>0</sup> = 1, а 3<sup>−2</sup> = 1 : 9.</div>
+<p>Свойства работают при любых целых показателях:
+a<sup>m</sup> · a<sup>n</sup> = a<sup>m+n</sup>,
+a<sup>m</sup> : a<sup>n</sup> = a<sup>m−n</sup>,
+(a<sup>m</sup>)<sup>n</sup> = a<sup>mn</sup>.</p>
+<p>Минус в показателе - это не минус у числа: 3<sup>−2</sup> положительно,
+просто меньше единицы.</p>
 
-<h2>3.1. Что такое стандартный вид</h2>
-<div class="def"><b>Определение.</b> Стандартным видом числа <i>b</i> называют его запись
-<div class="f-formula">b = a · 10<sup>n</sup>, где 1 ≤ a &lt; 10, n - целое число</div>
-Число <i>n</i> называют <b>порядком</b> числа <i>b</i>.</div>
-<p>Условие 1 ≤ a &lt; 10 значит, что в целой части множителя <i>a</i> стоит ровно одна цифра
-и она не нуль. Поэтому 24,5 · 10<sup>2</sup> и 0,5 · 10<sup>5</sup> стандартным видом
-<b>не являются</b>: в первом числе целая часть двузначная, во втором - нуль.
-А 6,1 · 10<sup>−3</sup>, 3,45 · 10<sup>8</sup> и 9 · 10<sup>3</sup> - являются.</p>
-<div class="rule">Множитель <i>a</i> может быть и однозначным целым: 9 · 10<sup>3</sup> -
-стандартный вид, потому что 1 ≤ 9 &lt; 10.</div>
+<div class="ex"><h3>Пример 1</h3>
+<p>Найди значение 8<sup>−6</sup> : 8<sup>−7</sup>.</p>
+<div class='step'>1. Основания одинаковые - показатели вычитаем.</div>
+<div class='fx'>8<sup>−6</sup> : 8<sup>−7</sup> = 8<sup>−6−(−7)</sup> = 8<sup>1</sup></div>
+<div class='step mini'>Минус минус даёт плюс: −6 + 7 = 1, а не −13.</div>
+</div>
+<div class="ex"><h3>Пример 2</h3>
+<p>Вычисли 25 · 5<sup>−3</sup>.</p>
+<div class='step'>1. Сводим к одному основанию: 25 = 5<sup>2</sup>.</div>
+<div class='fx'>5<sup>2</sup> · 5<sup>−3</sup> = 5<sup>−1</sup> = 1 : 5 = 0,2</div>
+<div class='step mini'>Ответ меньше единицы - так и должно быть, показатель отрицательный.</div>
+</div>
+<div class="tohw">Дальше<span>тренажёр на узнавание, потом пропуски с опорой.</span></div>
+</div>
 
-<h2>3.2. Порядок числа</h2>
-<p>Порядок показывает, насколько число велико или мало. 150 000 = 1,5 · 10<sup>5</sup> -
-порядок 5; 0,000015 = 1,5 · 10<sup>−5</sup> - порядок −5. У числа 1,45 · 10<sup>3</sup>
-порядок равен 3.</p>
-<div class="rule">Чем больше порядок, тем больше само число - но сравнивать по порядку
-можно только числа, уже записанные в стандартном виде.</div>
+<div class="card">
+<div class="tr" id="ts1"><div class="trhead"><b>Тренажёр 1. Степени с целым показателем</b><span class="trscore" id="ts1s"></span></div><div class="meta">Десять примеров на нулевой и отрицательный показатель и на свойства степеней.</div><div class="trq" id="ts1q"></div><div class="trfig" id="ts1f"></div><div id="ts1a"></div><div class="trmsg" id="ts1m"></div><div class="trbar" id="ts1b"></div></div>
+</div>
 
-<h2>3.3. Как записать число в стандартном виде</h2>
-<div class="rule"><b>Число больше или равно 10.</b> Переносим запятую влево, пока в целой
-части не останется одна ненулевая цифра. Сколько разрядов перенесли - такой и порядок,
-он положительный.
-<div class="f-formula">350 000 = 3,5 · 10<sup>5</sup> &nbsp;·&nbsp; 183,023 = 1,83023 · 10<sup>2</sup></div></div>
-<div class="rule"><b>Число меньше единицы.</b> Переносим запятую вправо до той же одной
-ненулевой цифры в целой части. Порядок отрицательный и равен числу перенесённых разрядов.
-<div class="f-formula">0,000000052 = 5,2 · 10<sup>−8</sup> &nbsp;·&nbsp; 0,58702 = 5,8702 · 10<sup>−1</sup></div></div>
-<div class="rule"><b>Число от 1 до 10.</b> Запятую двигать не надо, порядок равен нулю:
-4,05 = 4,05 · 10<sup>0</sup>.</div>
+<div class="card">
+<div class="gaps" id="gp1"><div class="ghead"><b>Пропуски 1. Свойства степеней</b><span class="gscore" id="gp1s"></span></div><div class="meta">Шесть пропусков. Вписывай только показатель или число.</div>
 
-<h2>3.4. Если множитель не подходит под условие</h2>
-<p>Часто число уже записано со степенью десятки, но множитель не влезает в промежуток
-от 1 до 10. Тогда сначала приводим к стандартному виду сам множитель, а потом
-складываем показатели.</p>
-<div class="f-formula">0,0144 · 10<sup>4</sup> = 1,44 · 10<sup>−2</sup> · 10<sup>4</sup> = 1,44 · 10<sup>2</sup></div>
-<div class="f-formula">529 000 · 10<sup>−2</sup> = 5,29 · 10<sup>5</sup> · 10<sup>−2</sup> = 5,29 · 10<sup>3</sup></div>
+<div class="gline">3<sup>−2</sup> = 1 : <span class="nw">3<sup><input class="gp" data-k="a1" size="2" style="width:36px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a1"></sup></span> = 1 : <input class="gp" data-k="a2" size="2" style="width:54px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a2"></div>
+<div class="gline">x<sup>−7</sup> · x<sup>−4</sup> = <span class="nw">x<sup><input class="gp" data-k="a3" size="2" style="width:36px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a3"></sup></span></div>
+<div class="gline">y<sup>3</sup> : y<sup>−9</sup> = <span class="nw">y<sup><input class="gp" data-k="a4" size="2" style="width:36px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a4"></sup></span></div>
+<div class="gnote">Дальше - возведение степени в степень и нулевой показатель.</div>
+<div class="gline">(y<sup>−2</sup>)<sup>6</sup> = <span class="nw">y<sup><input class="gp" data-k="a5" size="2" style="width:36px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a5"></sup></span></div>
+<div class="gline">5<sup>0</sup> = <input class="gp" data-k="a6" size="2" style="width:54px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a6"></div>
+<div class="gbar"><button type="button" class="pri" id="gp1go">Проверить</button></div><div class="gmsg" id="gp1m"></div><div class="gtip" id="gp1t"></div></div>
+</div>
 
-<h2>3.5. Умножение и деление</h2>
-<div class="rule">Отдельно перемножаем (делим) множители, отдельно - степени десятки.
-Если новый множитель вышел за промежуток от 1 до 10, приводим результат ещё раз.
-<div class="f-formula">(3,8 · 10<sup>−3</sup>) · (4,5 · 10<sup>5</sup>) = 17,1 · 10<sup>2</sup> = 1,71 · 10<sup>3</sup></div>
-<div class="f-formula">(7,56 · 10<sup>5</sup>) : (4,2 · 10<sup>−6</sup>) = 1,8 · 10<sup>11</sup></div></div>
+<div class="card">
 
-<h2>3.6. Сравнение</h2>
-<div class="rule">Сначала смотрим на порядок: у кого он больше, то число и больше.
-Порядки равны - сравниваем множители.
-<div class="f-formula">1,5 · 10<sup>−3</sup> &lt; 1,4 · 10<sup>−2</sup>, потому что −3 &lt; −2</div>
-<div class="f-formula">6,4 · 10<sup>6</sup> &lt; 6,5 · 10<sup>6</sup>, порядки равны, а 6,4 &lt; 6,5</div></div>
+<h2>2. Стандартный вид и порядок числа</h2>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>
+<b>Стандартный вид</b> числа b - это запись b = a · 10<sup>n</sup>,
+где 1 ≤ a &lt; 10, а n - целое число. Показатель n называют <b>порядком</b> числа.</div>
+<p>Условие 1 ≤ a &lt; 10 значит: в целой части множителя ровно одна цифра и она не нуль.
+Поэтому 24,5 · 10<sup>2</sup> и 0,5 · 10<sup>5</sup> стандартным видом не являются,
+а 6,1 · 10<sup>−3</sup>, 3,45 · 10<sup>8</sup> и 9 · 10<sup>3</sup> - являются.</p>
+<p>Порядок показывает, насколько число велико или мало:
+150 000 = 1,5 · 10<sup>5</sup> - порядок 5, а 0,000015 = 1,5 · 10<sup>−5</sup> - порядок −5.</p>
 
-<h2>3.7. Единицы измерения и приставки</h2>
-<p>Перевод единиц - это умножение на степень десятки, поэтому ответ удобно сразу писать
-в стандартном виде.</p>
+<div class="ex"><h3>Пример 3</h3>
+<p>Какие из чисел записаны в стандартном виде: 24,5 · 10<sup>2</sup>; 0,5 · 10<sup>5</sup>;
+6,1 · 10<sup>−3</sup>; 9 · 10<sup>3</sup>?</p>
+<div class='step'>1. Смотрим только на множитель, показатель роли не играет.</div>
+<div class='step'>2. 24,5 больше 10 - не годится. 0,5 меньше 1 - не годится.</div>
+<div class='step'>3. 6,1 и 9 лежат между 1 и 10 - эти записи стандартные.</div>
+<div class='step mini'>Однозначное целое тоже подходит: 1 ≤ 9 &lt; 10.</div>
+</div>
+<div class="tohw">Дальше<span>тренажёр на узнавание, потом пропуски с опорой.</span></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts2"><div class="trhead"><b>Тренажёр 2. Стандартный вид и порядок</b><span class="trscore" id="ts2s"></span></div><div class="meta">Десять записей и чисел: где стандартный вид, а где нет, и какой порядок.</div><div class="trq" id="ts2q"></div><div class="trfig" id="ts2f"></div><div id="ts2a"></div><div class="trmsg" id="ts2m"></div><div class="trbar" id="ts2b"></div></div>
+</div>
+
+<div class="card">
+<div class="gaps" id="gp2"><div class="ghead"><b>Пропуски 2. Порядок числа</b><span class="gscore" id="gp2s"></span></div><div class="meta">Пять пропусков. Минус ставь кнопкой или с клавиатуры.</div>
+
+<div class="gline">150 000 = 1,5 · <span class="nw">10<sup><input class="gp" data-k="b1" size="2" style="width:36px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b1"></sup></span>, порядок равен <input class="gp" data-k="b2" size="2" style="width:54px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b2"></div>
+<div class="gline">0,000015 = 1,5 · <span class="nw">10<sup><input class="gp" data-k="b3" size="2" style="width:36px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b3"></sup></span></div>
+<div class="gnote">Теперь поправим записи, которые стандартными не являются.</div>
+<div class="gline">24,5 · 10<sup>2</sup> = 2,45 · <span class="nw">10<sup><input class="gp" data-k="b4" size="2" style="width:36px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b4"></sup></span></div>
+<div class="gline">0,5 · 10<sup>5</sup> = 5 · <span class="nw">10<sup><input class="gp" data-k="b5" size="2" style="width:36px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b5"></sup></span></div>
+<div class="gbar"><button type="button" class="pri" id="gp2go">Проверить</button></div><div class="gmsg" id="gp2m"></div><div class="gtip" id="gp2t"></div></div>
+</div>
+
+<div class="card">
+
+<h2>3. Как записать число в стандартном виде</h2>
+<p><b>Число больше или равно 10.</b> Переносим запятую влево, пока в целой части
+не останется одна ненулевая цифра. Сколько разрядов перенесли - такой и порядок,
+он положительный: 350 000 = 3,5 · 10<sup>5</sup>.</p>
+<p><b>Число меньше единицы.</b> Переносим запятую вправо до той же одной ненулевой цифры.
+Порядок отрицательный: 0,000000052 = 5,2 · 10<sup>−8</sup>.</p>
+<p><b>Число от 1 до 10.</b> Запятую не двигаем, порядок нулевой: 4,05 = 4,05 · 10<sup>0</sup>.</p>
+<div class="def"><div class="n">ЕСЛИ МНОЖИТЕЛЬ НЕ ПОДОШЁЛ</div>
+Сначала приводим к стандартному виду сам множитель, потом <b>складываем</b> показатели:
+0,0144 · 10<sup>4</sup> = 1,44 · 10<sup>−2</sup> · 10<sup>4</sup> = 1,44 · 10<sup>2</sup>.</div>
+
+<div class="ex"><h3>Пример 4</h3>
+<p>Запиши в стандартном виде 82 400 000 000 и 0,000068.</p>
+<div class='step'>1. В первом числе ставим запятую после восьмёрки: 8,24. Разрядов прошли 10.</div>
+<div class='fx'>82 400 000 000 = 8,24 · 10<sup>10</sup></div>
+<div class='step'>2. Во втором первая ненулевая цифра - 6, запятая едет вправо на 5 разрядов.</div>
+<div class='fx'>0,000068 = 6,8 · 10<sup>−5</sup></div>
+<div class='step mini'>Считают шаги запятой, а не нули: 0,0<u>00068</u> - пять шагов.</div>
+</div>
+<div class="ex"><h3>Пример 5</h3>
+<p>Приведи к стандартному виду 529 000 · 10<sup>−2</sup>.</p>
+<div class='step'>1. Множитель: 529 000 = 5,29 · 10<sup>5</sup>.</div>
+<div class='fx'>5,29 · 10<sup>5</sup> · 10<sup>−2</sup> = 5,29 · 10<sup>3</sup></div>
+<div class='step mini'>Показатели складываются: 5 + (−2) = 3.</div>
+</div>
+<div class="tohw">Дальше<span>тренажёр на узнавание, потом пропуски с опорой.</span></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts3"><div class="trhead"><b>Тренажёр 3. Запиши в стандартном виде</b><span class="trscore" id="ts3s"></span></div><div class="meta">Десять чисел. Спрашивают то множитель a, то порядок n - читай вопрос до конца.</div><div class="trq" id="ts3q"></div><div class="trfig" id="ts3f"></div><div id="ts3a"></div><div class="trmsg" id="ts3m"></div><div class="trbar" id="ts3b"></div></div>
+</div>
+
+<div class="card">
+<div class="gaps" id="gp3"><div class="ghead"><b>Пропуски 3. Запись числа</b><span class="gscore" id="gp3s"></span></div><div class="meta">Восемь пропусков: множители и показатели.</div>
+
+<div class="gline">82 400 000 000 = <input class="gp" data-k="c1" size="2" style="width:54px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c1"> · <span class="nw">10<sup><input class="gp" data-k="c2" size="2" style="width:36px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c2"></sup></span></div>
+<div class="gline">0,000068 = <input class="gp" data-k="c3" size="2" style="width:54px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c3"> · <span class="nw">10<sup><input class="gp" data-k="c4" size="2" style="width:36px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c4"></sup></span></div>
+<div class="gnote">Здесь множитель сначала надо подогнать, а потом сложить показатели.</div>
+<div class="gline">0,0144 · 10<sup>4</sup> = 1,44 · <span class="nw">10<sup><input class="gp" data-k="c5" size="2" style="width:36px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c5"></sup></span> · 10<sup>4</sup> = 1,44 · <span class="nw">10<sup><input class="gp" data-k="c6" size="2" style="width:36px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c6"></sup></span></div>
+<div class="gline">529 000 · 10<sup>−2</sup> = 5,29 · <span class="nw">10<sup><input class="gp" data-k="c7" size="2" style="width:36px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c7"></sup></span> · 10<sup>−2</sup> = 5,29 · <span class="nw">10<sup><input class="gp" data-k="c8" size="2" style="width:36px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c8"></sup></span></div>
+<div class="gbar"><button type="button" class="pri" id="gp3go">Проверить</button></div><div class="gmsg" id="gp3m"></div><div class="gtip" id="gp3t"></div></div>
+</div>
+
+<div class="card">
+
+<h2>4. Умножение, деление, сравнение</h2>
+<div class="def"><div class="n">ПРАВИЛО</div>
+Отдельно множители, отдельно степени десятки:
+(a · 10<sup>m</sup>) · (b · 10<sup>n</sup>) = (a · b) · 10<sup>m+n</sup>,
+(a · 10<sup>m</sup>) : (b · 10<sup>n</sup>) = (a : b) · 10<sup>m−n</sup>.
+Если новый множитель вышел из промежутка от 1 до 10, результат приводим ещё раз.</div>
+<p>Сравнивают так: сначала по порядку - у кого он больше, то число и больше.
+Порядки равны - сравнивают множители. Поэтому 1,5 · 10<sup>−3</sup> &lt; 1,4 · 10<sup>−2</sup>,
+хотя 1,5 больше 1,4: решает показатель.</p>
+
+<div class="ex"><h3>Пример 6</h3>
+<p>Выполни умножение (3,8 · 10<sup>−3</sup>) · (4,5 · 10<sup>5</sup>).</p>
+<div class='step'>1. Множители: 3,8 · 4,5 = 17,1. Показатели: −3 + 5 = 2.</div>
+<div class='fx'>17,1 · 10<sup>2</sup> = 1,71 · 10<sup>3</sup></div>
+<div class='step mini'>17,1 больше 10, поэтому понадобился второй шаг.</div>
+</div>
+<div class="ex"><h3>Пример 7</h3>
+<p>Выполни деление (7,56 · 10<sup>5</sup>) : (4,2 · 10<sup>−6</sup>).</p>
+<div class='step'>1. Множители: 7,56 : 4,2 = 1,8. Показатели: 5 − (−6) = 11.</div>
+<div class='fx'>(7,56 : 4,2) · 10<sup>5−(−6)</sup> = 1,8 · 10<sup>11</sup></div>
+<div class='step mini'>Вычитание отрицательного показателя увеличивает порядок.</div>
+</div>
+<div class="tohw">Дальше<span>тренажёр на узнавание, потом пропуски с опорой.</span></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts4"><div class="trhead"><b>Тренажёр 4. Умножение и деление</b><span class="trscore" id="ts4s"></span></div><div class="meta">Десять действий над числами в стандартном виде. Не забывай приводить результат.</div><div class="trq" id="ts4q"></div><div class="trfig" id="ts4f"></div><div id="ts4a"></div><div class="trmsg" id="ts4m"></div><div class="trbar" id="ts4b"></div></div>
+</div>
+
+<div class="card">
+<div class="gaps" id="gp4"><div class="ghead"><b>Пропуски 4. Действия и сравнение</b><span class="gscore" id="gp4s"></span></div><div class="meta">Шесть пропусков, в последнем - знак сравнения.</div>
+
+<div class="gline">(3,8 · 10<sup>−3</sup>) · (4,5 · 10<sup>5</sup>) = <input class="gp" data-k="d1" size="2" style="width:54px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d1"> · <span class="nw">10<sup><input class="gp" data-k="d2" size="2" style="width:36px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d2"></sup></span> = 1,71 · <span class="nw">10<sup><input class="gp" data-k="d3" size="2" style="width:36px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d3"></sup></span></div>
+<div class="gline">(7,56 · 10<sup>5</sup>) : (4,2 · 10<sup>−6</sup>) = <input class="gp" data-k="d4" size="2" style="width:54px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d4"> · <span class="nw">10<sup><input class="gp" data-k="d5" size="2" style="width:36px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d5"></sup></span></div>
+<div class="gnote">В последней строке впиши знак сравнения: &lt; или &gt;.</div>
+<div class="gline">1,5 · 10<sup>−3</sup> <input class="gp" data-k="d6" size="2" style="width:54px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d6"> 1,4 · 10<sup>−2</sup></div>
+<div class="gbar"><button type="button" class="pri" id="gp4go">Проверить</button></div><div class="gmsg" id="gp4m"></div><div class="gtip" id="gp4t"></div></div>
+</div>
+
+<div class="card">
+
+<h2>5. Единицы измерения и приставки</h2>
+<p>Перевод единиц - это умножение на степень десятки, поэтому ответ удобно сразу
+писать в стандартном виде.</p>
 <div class="scroll"><table class="wrap-t">
-<tr><th>Приставка</th><th>Множитель</th><th>Обозначение</th><th>Приставка</th><th>Множитель</th><th>Обозначение</th></tr>
-<tr><td>тера</td><td>10<sup>12</sup></td><td>Т</td><td>пико</td><td>10<sup>−12</sup></td><td>п</td></tr>
-<tr><td>гига</td><td>10<sup>9</sup></td><td>Г</td><td>нано</td><td>10<sup>−9</sup></td><td>н</td></tr>
-<tr><td>мега</td><td>10<sup>6</sup></td><td>М</td><td>микро</td><td>10<sup>−6</sup></td><td>мк</td></tr>
-<tr><td>кило</td><td>10<sup>3</sup></td><td>к</td><td>милли</td><td>10<sup>−3</sup></td><td>м</td></tr>
-<tr><td>гекто</td><td>10<sup>2</sup></td><td>г</td><td>санти</td><td>10<sup>−2</sup></td><td>с</td></tr>
-<tr><td>дека</td><td>10<sup>1</sup></td><td>да</td><td>деци</td><td>10<sup>−1</sup></td><td>д</td></tr>
+<tr><th>Приставка</th><th>Множитель</th><th>Приставка</th><th>Множитель</th></tr>
+<tr><td>тера</td><td>10<sup>12</sup></td><td>пико</td><td>10<sup>−12</sup></td></tr>
+<tr><td>гига</td><td>10<sup>9</sup></td><td>нано</td><td>10<sup>−9</sup></td></tr>
+<tr><td>мега</td><td>10<sup>6</sup></td><td>микро</td><td>10<sup>−6</sup></td></tr>
+<tr><td>кило</td><td>10<sup>3</sup></td><td>милли</td><td>10<sup>−3</sup></td></tr>
+<tr><td>гекто</td><td>10<sup>2</sup></td><td>санти</td><td>10<sup>−2</sup></td></tr>
 </table></div>
-<div class="rule">Частые переводы: 1 км = 10<sup>3</sup> м, 1 т = 10<sup>6</sup> г,
-1 ц = 10<sup>5</sup> г, 1 км<sup>2</sup> = 10<sup>6</sup> м<sup>2</sup>,
-1 м = 10<sup>2</sup> см = 10<sup>3</sup> мм.</div>
-<div class="rule">Площадь переводится через квадрат множителя: раз в километре 10<sup>3</sup> м,
+<div class="def"><div class="n">ВАЖНО</div>
+Площадь переводится через <b>квадрат</b> множителя: раз в километре 10<sup>3</sup> м,
 то в квадратном километре 10<sup>6</sup> м<sup>2</sup>, а не 10<sup>3</sup>.</div>
 
+<div class="ex"><h3>Пример 8</h3>
+<p>Вырази 5 872 600 км в метрах.</p>
+<div class='step'>1. Сначала сами километры: 5 872 600 = 5,8726 · 10<sup>6</sup>.</div>
+<div class='step'>2. В километре 10<sup>3</sup> метров, показатели складываются.</div>
+<div class='fx'>5,8726 · 10<sup>6</sup> · 10<sup>3</sup> = 5,8726 · 10<sup>9</sup> м</div>
+<div class='step mini'>Метров больше, чем километров, значит порядок должен вырасти - сошлось.</div>
+</div>
+<div class="ex"><h3>Пример 9</h3>
+<p>За сколько часов корабль долетит до Луны, если скорость 3,888 · 10<sup>4</sup> км/ч,
+а расстояние 3,844 · 10<sup>5</sup> км?</p>
+<div class='step'>1. Время - это расстояние делить на скорость.</div>
+<div class='fx'>(3,844 · 10<sup>5</sup>) : (3,888 · 10<sup>4</sup>) ≈ 0,9887 · 10<sup>1</sup> ≈ 9,9 ч</div>
+<div class='step mini'>Округляем до целых часов: 10 ч.</div>
+</div>
+<div class="tohw">Дальше<span>тренажёр на узнавание, потом пропуски с опорой.</span></div>
 </div>
 
 <div class="card">
-  <h2>Разобранные примеры</h2>
-  <div class="meta">Семь разборов: по одному на каждый тип заданий домашки.</div>
-
-<div class="ex"><b>Пример 1. Стандартный вид или нет.</b>
-<div class="step">Проверяем только одно: лежит ли множитель в промежутке от 1 до 10.</div>
-<div class="step">24,5 · 10<sup>2</sup> - нет, 24,5 больше 10.</div>
-<div class="step">0,5 · 10<sup>5</sup> - нет, 0,5 меньше 1.</div>
-<div class="step">6,1 · 10<sup>−3</sup> и 9 · 10<sup>3</sup> - да, оба множителя подходят.</div>
-<div class="step mini">Ловушка: степень с минусом ничего не портит. Смотрят на множитель, а не на показатель.</div></div>
-
-<div class="ex"><b>Пример 2. Назови порядок.</b>
-<div class="step">Порядок - это показатель степени десятки в стандартной записи.</div>
-<div class="fx">2,56 · 10<sup>10</sup> → порядок 10 &nbsp;·&nbsp; 3,8 · 10<sup>−30</sup> → порядок −30</div>
-<div class="step mini">Если число записано не в стандартном виде, порядок называть рано:
-сначала приведи запись, потом читай показатель.</div></div>
-
-<div class="ex"><b>Пример 3. Большое число.</b> Записать 82 400 000 000.
-<div class="step">1. Ставим запятую после первой цифры: 8,24.</div>
-<div class="step">2. Считаем, сколько разрядов перенесли: 10.</div>
-<div class="fx">82 400 000 000 = 8,24 · 10<sup>10</sup></div>
-<div class="step mini">Проверка: 8,24 · 10<sup>10</sup> - это 8 с лишним десятков миллиардов. Похоже на исходное.</div></div>
-
-<div class="ex"><b>Пример 4. Маленькое число.</b> Записать 0,000068.
-<div class="step">1. Первая ненулевая цифра - 6, ставим запятую после неё: 6,8.</div>
-<div class="step">2. Запятую двигали вправо на 5 разрядов, значит порядок −5.</div>
-<div class="fx">0,000068 = 6,8 · 10<sup>−5</sup></div>
-<div class="step mini">Считают нули вместе с той цифрой, до которой дошли:
-0,0<u>00068</u> - пять шагов.</div></div>
-
-<div class="ex"><b>Пример 5. Множитель не подходит.</b> Привести 0,0144 · 10<sup>4</sup>.
-<div class="step">1. Сам множитель в стандартном виде: 0,0144 = 1,44 · 10<sup>−2</sup>.</div>
-<div class="step">2. Подставляем и складываем показатели.</div>
-<div class="fx">1,44 · 10<sup>−2</sup> · 10<sup>4</sup> = 1,44 · 10<sup>2</sup></div>
-<div class="step">Так же с большим множителем: 529 000 · 10<sup>−2</sup> = 5,29 · 10<sup>5</sup> · 10<sup>−2</sup> = 5,29 · 10<sup>3</sup>.</div>
-<div class="step mini">Показатели именно складывают, а не вычитают: 10<sup>−2</sup> · 10<sup>4</sup> = 10<sup>2</sup>.</div></div>
-
-<div class="ex"><b>Пример 6. Умножение и деление.</b>
-<div class="step">1. Группируем: множители к множителям, десятки к десяткам.</div>
-<div class="fx">(3,8 · 10<sup>−3</sup>) · (4,5 · 10<sup>5</sup>) = (3,8 · 4,5) · 10<sup>−3+5</sup> = 17,1 · 10<sup>2</sup></div>
-<div class="step">2. 17,1 больше 10, поэтому приводим ещё раз: 17,1 · 10<sup>2</sup> = 1,71 · 10<sup>3</sup>.</div>
-<div class="step">При делении множители делят, а показатели вычитают:
-(7,56 · 10<sup>5</sup>) : (4,2 · 10<sup>−6</sup>) = 1,8 · 10<sup>5−(−6)</sup> = 1,8 · 10<sup>11</sup>.</div>
-<div class="step mini">Минус минус даёт плюс: 5 − (−6) = 11, а не −1.</div></div>
-
-<div class="ex"><b>Пример 7. Единицы и задача.</b>
-<div class="step">5 872 600 км в метрах: умножаем на 10<sup>3</sup>.</div>
-<div class="fx">5 872 600 км = 5,8726 · 10<sup>6</sup> км = 5,8726 · 10<sup>9</sup> м</div>
-<div class="step">Корабль летит со скоростью 3,888 · 10<sup>4</sup> км/ч, до Луны 3,844 · 10<sup>5</sup> км.
-Время - это расстояние делить на скорость.</div>
-<div class="fx">t = (3,844 · 10<sup>5</sup>) : (3,888 · 10<sup>4</sup>) ≈ 0,9887 · 10<sup>1</sup> ≈ 9,9 ч ≈ 10 ч</div>
-<div class="step mini">Деление множителей тут даёт число меньше 1 - это нормально,
-просто в конце приводим результат к нормальной записи.</div></div>
-
+<div class="tr" id="ts5"><div class="trhead"><b>Тренажёр 5. Единицы измерения</b><span class="trscore" id="ts5s"></span></div><div class="meta">Десять переводов. Помни про квадрат множителя у площадей.</div><div class="trq" id="ts5q"></div><div class="trfig" id="ts5f"></div><div id="ts5a"></div><div class="trmsg" id="ts5m"></div><div class="trbar" id="ts5b"></div></div>
 </div>
 
 <div class="card">
-  <h2>Тренажёры</h2>
-  <div class="meta">Шесть коротких тренажёров на разные умения темы. Задания каждый раз идут
-  в новом порядке, варианты ответов тоже перемешиваются. После каждого ответа появляется
-  объяснение - читай его, даже когда ответил верно. Тренажёры не входят в отчёт:
-  проходи их столько раз, сколько нужно.</div>
-<div class="tr" id="tr1"><div class="trhead"><b>Тренажёр 1. Стандартный вид или нет</b><span class="trscore" id="tr1s"></span></div><div class="meta">Десять записей. Смотри только на множитель: он должен быть не меньше 1 и меньше 10.</div><div class="trq" id="tr1q"></div><div class="trfig" id="tr1f"></div><div id="tr1a"></div><div class="trmsg" id="tr1m"></div><div class="trbar" id="tr1b"></div></div>
-<div class="tr" id="tr2"><div class="trhead"><b>Тренажёр 2. Назови порядок</b><span class="trscore" id="tr2s"></span></div><div class="meta">Десять чисел. Где запись уже стандартная - читай показатель, где нет - сначала приведи.</div><div class="trq" id="tr2q"></div><div class="trfig" id="tr2f"></div><div id="tr2a"></div><div class="trmsg" id="tr2m"></div><div class="trbar" id="tr2b"></div></div>
-<div class="tr" id="tr3"><div class="trhead"><b>Тренажёр 3. Запиши в стандартном виде</b><span class="trscore" id="tr3s"></span></div><div class="meta">Десять чисел. Спрашивают то множитель a, то порядок n - читай вопрос до конца.</div><div class="trq" id="tr3q"></div><div class="trfig" id="tr3f"></div><div id="tr3a"></div><div class="trmsg" id="tr3m"></div><div class="trbar" id="tr3b"></div></div>
-<div class="tr" id="tr4"><div class="trhead"><b>Тренажёр 4. Повторение: степени</b><span class="trscore" id="tr4s"></span></div><div class="meta">Десять примеров на нулевой и отрицательный показатель и на свойства степеней.</div><div class="trq" id="tr4q"></div><div class="trfig" id="tr4f"></div><div id="tr4a"></div><div class="trmsg" id="tr4m"></div><div class="trbar" id="tr4b"></div></div>
-<div class="tr" id="tr5"><div class="trhead"><b>Тренажёр 5. Умножение и деление</b><span class="trscore" id="tr5s"></span></div><div class="meta">Десять действий над числами в стандартном виде. Не забывай приводить результат.</div><div class="trq" id="tr5q"></div><div class="trfig" id="tr5f"></div><div id="tr5a"></div><div class="trmsg" id="tr5m"></div><div class="trbar" id="tr5b"></div></div>
-<div class="tr" id="tr6"><div class="trhead"><b>Тренажёр 6. Единицы измерения</b><span class="trscore" id="tr6s"></span></div><div class="meta">Десять переводов. Помни про квадрат множителя у площадей.</div><div class="trq" id="tr6q"></div><div class="trfig" id="tr6f"></div><div id="tr6a"></div><div class="trmsg" id="tr6m"></div><div class="trbar" id="tr6b"></div></div>
+<div class="gaps" id="gp5"><div class="ghead"><b>Пропуски 5. Перевод единиц</b><span class="gscore" id="gp5s"></span></div><div class="meta">Шесть пропусков. Следи, куда переводишь.</div>
+
+<div class="gline">5 872 600 км = 5,8726 · <span class="nw">10<sup><input class="gp" data-k="f1" size="2" style="width:36px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск f1"></sup></span> км = 5,8726 · <span class="nw">10<sup><input class="gp" data-k="f2" size="2" style="width:36px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск f2"></sup></span> м</div>
+<div class="gline">21,6 г = 21,6 · <span class="nw">10<sup><input class="gp" data-k="f3" size="2" style="width:36px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск f3"></sup></span> т = 2,16 · <span class="nw">10<sup><input class="gp" data-k="f4" size="2" style="width:36px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск f4"></sup></span> т</div>
+<div class="gnote">А теперь площадь - здесь множитель возводится в квадрат.</div>
+<div class="gline">29 км<sup>2</sup> = 29 · <span class="nw">10<sup><input class="gp" data-k="f5" size="2" style="width:36px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск f5"></sup></span> м<sup>2</sup> = 2,9 · <span class="nw">10<sup><input class="gp" data-k="f6" size="2" style="width:36px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск f6"></sup></span> м<sup>2</sup></div>
+<div class="gbar"><button type="button" class="pri" id="gp5go">Проверить</button></div><div class="gmsg" id="gp5m"></div><div class="gtip" id="gp5t"></div></div>
 </div>
 
+
 <div class="card">
-  <h2>Домашнее задание</h2>
-  <div class="meta">Шесть задач базы, пять среднего уровня и три посложнее.
-  Решай по порядку - они выстроены от простого к сложному.</div>
+  <h2>Самостоятельно</h2>
+  <div class="meta">Четырнадцать задач: шесть базы, пять среднего уровня и три посложнее.
+  Здесь подсказок в теории уже нет - решай сам, в тетради, и записывай ход.</div>
 </div>
 <div id="tasks"></div>
 
@@ -347,9 +502,8 @@ a<sup>m</sup> : a<sup>n</sup> = a<sup>m−n</sup> &nbsp;·&nbsp;
   <div class="scroll"><table class="wrap-t">
   <tr><th>Перевод</th><th>Множитель</th><th>Перевод</th><th>Множитель</th></tr>
   <tr><td>км → м</td><td>10<sup>3</sup></td><td>т → г</td><td>10<sup>6</sup></td></tr>
-  <tr><td>км<sup>2</sup> → м<sup>2</sup></td><td>10<sup>6</sup></td><td>ц → г</td><td>10<sup>5</sup></td></tr>
-  <tr><td>м → мм</td><td>10<sup>3</sup></td><td>г → т</td><td>10<sup>−6</sup></td></tr>
-  <tr><td>мг → кг</td><td>10<sup>−6</sup></td><td>нм → м</td><td>10<sup>−9</sup></td></tr>
+  <tr><td>км<sup>2</sup> → м<sup>2</sup></td><td>10<sup>6</sup></td><td>г → т</td><td>10<sup>−6</sup></td></tr>
+  <tr><td>м → мм</td><td>10<sup>3</sup></td><td>мг → кг</td><td>10<sup>−6</sup></td></tr>
   </table></div>
   <p class="f-formula">Площадь переводится через <b>квадрат</b> множителя, объём - через куб.</p>
 
@@ -374,6 +528,7 @@ a<sup>m</sup> : a<sup>n</sup> = a<sup>m−n</sup> &nbsp;·&nbsp;
   <div class="meta">Проверь, что вверху страницы написано твоё имя. Фото - по желанию.
   По кнопке ответы, результат и фотографии уходят преподавателю - пересылать ничего
   не нужно. Вторая кнопка просто сохраняет копию тебе на устройство.</div>
+  <div class="trgate" id="trgate"></div>
   <div class="row" style="margin-top:12px">
     <button class="pri" id="send">Отправить на проверку</button>
     <button id="report">Скачать копию себе</button>
@@ -389,17 +544,23 @@ a<sup>m</sup> : a<sup>n</sup> = a<sup>m−n</sup> &nbsp;·&nbsp;
 </div>
 
 <script>
-var F = {};
+var CF = {};
+var STUDENT_CODE = (function(){
+  try{ var m = /[#&?]code=([^&]+)/.exec(location.hash + location.search);
+       return m ? decodeURIComponent(m[1]) : ""; }catch(e){ return ""; }
+})();
+var TOPIC = "Стандартный вид числа (§3, математика 7 класс)";
 
 "use strict";
 var started = Date.now();
+var spentBefore = 0;
 
 /* ---------- данные задач; ответы закодированы, чтобы не читались в исходнике ---------- */
 function e(s){return btoa(unescape(encodeURIComponent(s)));}
 function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return s;}}
 
 var TASKS = [
- {id:1,lvl:"база",type:"num",text:"Назови порядок числа 2,081 · 10<sup>24</sup>.",ans:[e("MjQ=")],
+ {id:1,lvl:"база",type:"num",text:"Назови порядок числа 2,081 · 10<sup>24</sup>.",ans:["MjQ="],
   hints:["Запись уже стандартная: множитель 2,081 лежит между 1 и 10.",
          "Порядок - это показатель степени десятки.",
          "Смотри на показатель: 10 в какой степени?"],
@@ -407,58 +568,58 @@ var TASKS = [
       "<div class='step'>Порядок - показатель степени десятки.</div>"+
       "<div class='fx'>2,081 · 10<sup>24</sup> → порядок 24</div>"+
       "<div class='step'><b>Ответ: 24.</b></div>"},
- {id:2,lvl:"база",type:"num",text:"Вычисли 5<sup>0</sup> + 3<sup>−2</sup> · 9.",ans:[e("Mg==")],
+ {id:2,lvl:"база",type:"num",text:"Вычисли 5<sup>0</sup> + 3<sup>−2</sup> · 9.",ans:["Mg=="],
   hints:["Любое число, кроме нуля, в нулевой степени равно 1.",
          "3⁻² = 1 : 3² = 1 : 9.",
          "Осталось сложить 1 и результат умножения."],
   sol:"<div class='step'>5<sup>0</sup> = 1.</div>"+
-      "<div class='step'>3<sup>−2</sup> = 1 : 9, поэтому 3<sup>−2</sup> · 9 = (1 : 9) · 9 = 1.</div>"+
+      "<div class='step'>3<sup>−2</sup> = 1 : 9, поэтому 3<sup>−2</sup> · 9 = 1.</div>"+
       "<div class='step'>Складываем: 1 + 1 = 2.</div>"+
       "<div class='fx'>5<sup>0</sup> + 3<sup>−2</sup> · 9 = 1 + 1</div>"+
       "<div class='step'><b>Ответ: 2.</b></div>"},
- {id:3,lvl:"база",type:"num",text:"Найди значение выражения 8<sup>−6</sup> : 8<sup>−7</sup>.",ans:[e("OA==")],
+ {id:3,lvl:"база",type:"num",text:"Найди значение выражения 8<sup>−6</sup> : 8<sup>−7</sup>.",ans:["OA=="],
   hints:["Основания одинаковые, значит показатели вычитаются.",
          "−6 − (−7) = −6 + 7.",
          "Получится 8 в первой степени."],
   sol:"<div class='step'>При делении степеней с одинаковым основанием показатели вычитают.</div>"+
       "<div class='step'>−6 − (−7) = 1.</div>"+
-      "<div class='fx'>8<sup>−6</sup> : 8<sup>−7</sup> = 8<sup>−6−(−7)</sup> = 8<sup>1</sup></div>"+
+      "<div class='fx'>8<sup>−6</sup> : 8<sup>−7</sup> = 8<sup>1</sup></div>"+
       "<div class='step'><b>Ответ: 8.</b></div>"},
- {id:4,lvl:"база",type:"num",text:"Число 0,000068 записали в стандартном виде a · 10<sup>n</sup>. Чему равно n?",ans:[e("LTU=")],
-  hints:["Число меньше единицы, значит показатель будет отрицательным.",
+ {id:4,lvl:"база",type:"num",text:"Число 0,000068 записали в стандартном виде a · 10<sup>n</sup>. Чему равно n?",ans:["LTU="],
+  hints:["Число меньше единицы, значит показатель отрицательный.",
          "Переноси запятую вправо, пока в целой части не встанет 6.",
-         "Посчитай, сколько разрядов прошла запятая: 0,0 0 0 0 6 8."],
-  sol:"<div class='step'>Первая ненулевая цифра - 6, после переноса получаем множитель 6,8.</div>"+
+         "Посчитай шаги запятой: 0,0 0 0 0 6 8."],
+  sol:"<div class='step'>Первая ненулевая цифра - 6, множитель получается 6,8.</div>"+
       "<div class='step'>Запятая переехала вправо на 5 разрядов, поэтому показатель равен −5.</div>"+
       "<div class='fx'>0,000068 = 6,8 · 10<sup>−5</sup></div>"+
       "<div class='step'><b>Ответ: −5.</b></div>"},
- {id:5,lvl:"база",type:"num",text:"Число 82 400 000 000 записали в стандартном виде a · 10<sup>n</sup>. Чему равно a?",ans:[e("OC4yNA==")],
+ {id:5,lvl:"база",type:"num",text:"Число 82 400 000 000 записали в стандартном виде a · 10<sup>n</sup>. Чему равно a?",ans:["OCwyNA==","OC4yNA=="],
   hints:["В целой части должна остаться одна ненулевая цифра.",
-         "Первые значащие цифры числа - 8, 2 и 4.",
+         "Значащие цифры числа - 8, 2 и 4.",
          "Запятую ставят сразу после восьмёрки."],
   sol:"<div class='step'>Переносим запятую так, чтобы в целой части осталась одна цифра: 8,24.</div>"+
-      "<div class='step'>Разрядов перенесли 10, поэтому полная запись 8,24 · 10<sup>10</sup>.</div>"+
+      "<div class='step'>Разрядов прошли 10, поэтому полная запись 8,24 · 10<sup>10</sup>.</div>"+
       "<div class='fx'>82 400 000 000 = 8,24 · 10<sup>10</sup></div>"+
       "<div class='step'><b>Ответ: 8,24.</b></div>"},
- {id:6,lvl:"база",type:"num",text:"Вычисли (6,8 · 10<sup>−3</sup>) · (4,5 · 10<sup>4</sup>). В ответ запиши обычное число.",ans:[e("MzA2")],
+ {id:6,lvl:"база",type:"num",text:"Вычисли (6,8 · 10<sup>−3</sup>) · (4,5 · 10<sup>4</sup>). В ответ запиши обычное число.",ans:["MzA2"],
   hints:["Отдельно перемножь множители, отдельно степени десятки.",
-         "6,8 · 4,5 = 30,6, а показатели складываются: −3 + 4 = 1.",
+         "6,8 · 4,5 = 30,6, показатели складываются: −3 + 4 = 1.",
          "30,6 · 10 - это сколько?"],
   sol:"<div class='step'>Группируем: (6,8 · 4,5) · (10<sup>−3</sup> · 10<sup>4</sup>).</div>"+
-      "<div class='step'>6,8 · 4,5 = 30,6, показатели складываются: −3 + 4 = 1.</div>"+
-      "<div class='step'>30,6 · 10<sup>1</sup> = 306. В стандартном виде это 3,06 · 10<sup>2</sup>.</div>"+
+      "<div class='step'>6,8 · 4,5 = 30,6, показатели: −3 + 4 = 1.</div>"+
+      "<div class='step'>30,6 · 10<sup>1</sup> = 306, в стандартном виде 3,06 · 10<sup>2</sup>.</div>"+
       "<div class='fx'>(6,8 · 4,5) · 10<sup>−3+4</sup> = 30,6 · 10<sup>1</sup></div>"+
       "<div class='step'><b>Ответ: 306.</b></div>"},
- {id:7,lvl:"средний",type:"num",text:"Найди значение выражения (6,65 · 10<sup>7</sup>) : (3,5 · 10<sup>3</sup>). В ответ запиши обычное число.",ans:[e("MTkwMDA=")],
+ {id:7,lvl:"средний",type:"num",text:"Найди значение выражения (6,65 · 10<sup>7</sup>) : (3,5 · 10<sup>3</sup>). В ответ запиши обычное число.",ans:["MTkwMDA="],
   hints:["Множители делим, показатели вычитаем.",
          "6,65 : 3,5 = 1,9, а 7 − 3 = 4.",
-         "1,9 · 10⁴ - это 1,9 с четырьмя нулями после переноса запятой."],
+         "1,9 · 10⁴ - перенеси запятую на четыре разряда вправо."],
   sol:"<div class='step'>Делим отдельно: 6,65 : 3,5 = 1,9.</div>"+
       "<div class='step'>Показатели вычитаем: 7 − 3 = 4.</div>"+
       "<div class='step'>Получаем 1,9 · 10<sup>4</sup> = 19 000.</div>"+
       "<div class='fx'>(6,65 : 3,5) · 10<sup>7−3</sup> = 1,9 · 10<sup>4</sup></div>"+
       "<div class='step'><b>Ответ: 19 000.</b></div>"},
- {id:8,lvl:"средний",type:"num",text:"Представь 0,0144 · 10<sup>4</sup> в стандартном виде a · 10<sup>n</sup>. Чему равно a?",ans:[e("MS40NA==")],
+ {id:8,lvl:"средний",type:"num",text:"Представь 0,0144 · 10<sup>4</sup> в стандартном виде a · 10<sup>n</sup>. Чему равно a?",ans:["MSw0NA==","MS40NA=="],
   hints:["Сначала приведи к стандартному виду сам множитель 0,0144.",
          "0,0144 = 1,44 · 10⁻².",
          "Дальше показатели складываются, но спрашивают только про a."],
@@ -467,25 +628,25 @@ var TASKS = [
       "<div class='step'>Множитель a равен 1,44, а порядок получился 2.</div>"+
       "<div class='fx'>0,0144 · 10<sup>4</sup> = 1,44 · 10<sup>2</sup></div>"+
       "<div class='step'><b>Ответ: 1,44.</b></div>"},
- {id:9,lvl:"средний",type:"num",text:"Переведи 5 872 600 км в метры и запиши в стандартном виде a · 10<sup>n</sup>. Чему равно n?",ans:[e("OQ==")],
+ {id:9,lvl:"средний",type:"num",text:"Переведи 5 872 600 км в метры и запиши в стандартном виде a · 10<sup>n</sup>. Чему равно n?",ans:["OQ=="],
   hints:["В одном километре 10³ метров.",
-         "Сначала запиши сами километры в стандартном виде: 5,8726 · 10⁶.",
+         "Сначала запиши сами километры: 5,8726 · 10⁶.",
          "Показатели при умножении складываются: 6 + 3."],
   sol:"<div class='step'>5 872 600 км = 5,8726 · 10<sup>6</sup> км.</div>"+
       "<div class='step'>Умножаем на 10<sup>3</sup>, потому что в километре 1000 метров.</div>"+
       "<div class='step'>5,8726 · 10<sup>6</sup> · 10<sup>3</sup> = 5,8726 · 10<sup>9</sup> м.</div>"+
       "<div class='fx'>5 872 600 км = 5,8726 · 10<sup>9</sup> м</div>"+
       "<div class='step'><b>Ответ: 9.</b></div>"},
- {id:10,lvl:"средний",type:"num",text:"Вырази 29 км<sup>2</sup> в квадратных метрах и запиши в стандартном виде a · 10<sup>n</sup>. Чему равно n?",ans:[e("Nw==")],
+ {id:10,lvl:"средний",type:"num",text:"Вырази 29 км<sup>2</sup> в квадратных метрах и запиши в стандартном виде a · 10<sup>n</sup>. Чему равно n?",ans:["Nw=="],
   hints:["Это площадь, поэтому множитель возводится в квадрат.",
          "1 км² = (10³ м)² = 10⁶ м².",
          "29 · 10⁶ - приведи к стандартному виду."],
-  sol:"<div class='step'>1 км = 10<sup>3</sup> м, значит 1 км<sup>2</sup> = (10<sup>3</sup>)<sup>2</sup> = 10<sup>6</sup> м<sup>2</sup>.</div>"+
+  sol:"<div class='step'>1 км = 10<sup>3</sup> м, значит 1 км<sup>2</sup> = 10<sup>6</sup> м<sup>2</sup>.</div>"+
       "<div class='step'>29 км<sup>2</sup> = 29 · 10<sup>6</sup> м<sup>2</sup>.</div>"+
       "<div class='step'>29 = 2,9 · 10<sup>1</sup>, поэтому 2,9 · 10<sup>1</sup> · 10<sup>6</sup> = 2,9 · 10<sup>7</sup>.</div>"+
       "<div class='fx'>29 км<sup>2</sup> = 2,9 · 10<sup>7</sup> м<sup>2</sup></div>"+
       "<div class='step'><b>Ответ: 7.</b></div>"},
- {id:11,lvl:"средний",type:"num",text:"Для отлёта к Луне кораблю нужна скорость 3,888 · 10<sup>4</sup> км/ч. Расстояние от Земли до Луны 3,844 · 10<sup>5</sup> км. За сколько часов корабль долетит? Ответ округли до целых часов.",ans:[e("MTA=")],
+ {id:11,lvl:"средний",type:"num",text:"Для отлёта к Луне кораблю нужна скорость 3,888 · 10<sup>4</sup> км/ч. Расстояние от Земли до Луны 3,844 · 10<sup>5</sup> км. За сколько часов корабль долетит? Ответ округли до целых часов.",ans:["MTA="],
   hints:["Время равно расстоянию, делённому на скорость.",
          "Дели отдельно множители и отдельно степени десятки.",
          "3,844 : 3,888 ≈ 0,9887, а показатели дают 5 − 4 = 1."],
@@ -494,16 +655,16 @@ var TASKS = [
       "<div class='step'>t ≈ 0,9887 · 10<sup>1</sup> ≈ 9,89 ч, округляем до 10 часов.</div>"+
       "<div class='fx'>t ≈ 9,89 ч ≈ 10 ч</div>"+
       "<div class='step'><b>Ответ: 10.</b></div>"},
- {id:12,lvl:"сложный",type:"num",text:"Значение выражения (9<sup>−6</sup> · 27<sup>−3</sup>) : 3<sup>−19</sup> записали как 3<sup>k</sup>. Чему равно k?",ans:[e("LTI=")],
+ {id:12,lvl:"сложный",type:"num",text:"Значение выражения (9<sup>−6</sup> · 27<sup>−3</sup>) : 3<sup>−19</sup> записали как 3<sup>k</sup>. Чему равно k?",ans:["LTI="],
   hints:["Приведи всё к одному основанию 3: 9 = 3², 27 = 3³.",
          "9⁻⁶ = 3⁻¹², 27⁻³ = 3⁻⁹.",
-         "Сложи показатели в числителе, потом вычти −19."],
-  sol:"<div class='step'>9<sup>−6</sup> = (3<sup>2</sup>)<sup>−6</sup> = 3<sup>−12</sup>, 27<sup>−3</sup> = (3<sup>3</sup>)<sup>−3</sup> = 3<sup>−9</sup>.</div>"+
+         "Сложи показатели, потом вычти −19."],
+  sol:"<div class='step'>9<sup>−6</sup> = 3<sup>−12</sup>, 27<sup>−3</sup> = 3<sup>−9</sup>.</div>"+
       "<div class='step'>Умножаем: 3<sup>−12</sup> · 3<sup>−9</sup> = 3<sup>−21</sup>.</div>"+
       "<div class='step'>Делим: −21 − (−19) = −2.</div>"+
       "<div class='fx'>3<sup>−21</sup> : 3<sup>−19</sup> = 3<sup>−2</sup></div>"+
       "<div class='step'><b>Ответ: −2.</b></div>"},
- {id:13,lvl:"сложный",type:"num",text:"Найди n, при котором 7<sup>−13</sup> · 7<sup>18</sup> : 7<sup>n</sup> = 1 : 7.",ans:[e("Ng==")],
+ {id:13,lvl:"сложный",type:"num",text:"Найди n, при котором 7<sup>−13</sup> · 7<sup>18</sup> : 7<sup>n</sup> = 1 : 7.",ans:["Ng=="],
   hints:["Справа 1 : 7 - это 7 в степени −1.",
          "Слева показатели складываются и вычитаются: −13 + 18 − n.",
          "Получается уравнение 5 − n = −1."],
@@ -512,13 +673,13 @@ var TASKS = [
       "<div class='step'>Основания равны, значит 5 − n = −1, откуда n = 6.</div>"+
       "<div class='fx'>5 − n = −1 → n = 6</div>"+
       "<div class='step'><b>Ответ: 6.</b></div>"},
- {id:14,lvl:"сложный",type:"num",text:"Винчестер ёмкостью 2,1 Тб нужно переписать на диски по 700 Мб. Сколько дисков потребуется? Считай, что 1 Тб = 10<sup>12</sup> байт, 1 Мб = 10<sup>6</sup> байт.",ans:[e("MzAwMA==")],
+ {id:14,lvl:"сложный",type:"num",text:"Винчестер ёмкостью 2,1 Тб нужно переписать на диски по 700 Мб. Сколько дисков потребуется? Считай, что 1 Тб = 10<sup>12</sup> байт, 1 Мб = 10<sup>6</sup> байт.",ans:["MzAwMA=="],
   hints:["Переведи обе величины в байты и запиши в стандартном виде.",
          "2,1 Тб = 2,1 · 10¹² байт, 700 Мб = 7 · 10⁸ байт.",
          "Раздели: множители отдельно, показатели отдельно."],
   sol:"<div class='step'>2,1 Тб = 2,1 · 10<sup>12</sup> байт.</div>"+
       "<div class='step'>700 Мб = 700 · 10<sup>6</sup> = 7 · 10<sup>8</sup> байт.</div>"+
-      "<div class='step'>Делим: 2,1 : 7 = 0,3, показатели 12 − 8 = 4. Получаем 0,3 · 10<sup>4</sup> = 3 · 10<sup>3</sup> = 3000.</div>"+
+      "<div class='step'>Делим: 2,1 : 7 = 0,3, показатели 12 − 8 = 4. Значит 0,3 · 10<sup>4</sup> = 3000.</div>"+
       "<div class='fx'>(2,1 · 10<sup>12</sup>) : (7 · 10<sup>8</sup>) = 3 · 10<sup>3</sup></div>"+
       "<div class='step'><b>Ответ: 3000 дисков.</b></div>"},
 ];
@@ -549,7 +710,7 @@ function toNum(str){
 function same(given, right, tol){
   var a = toNum(given), b = toNum(right);
   if(!isNaN(a) && !isNaN(b)){
-    var t = tol || 1e-9;
+    var t = tol || 1e-4;
     return Math.abs(a-b) <= Math.max(t, Math.abs(b)*t);
   }
   return norm(given) === norm(right);
@@ -557,7 +718,10 @@ function same(given, right, tol){
 
 /* ---------- отрисовка ---------- */
 var state = {};
-var box = document.getElementById("tasks");
+function boxOf(t){
+  return document.getElementById("tasks" + (t.blk || "")) ||
+         document.getElementById("tasks");
+}
 
 TASKS.forEach(function(t){
   state[t.id] = {tries:0, hints:0, done:false, ok:false, given:"", sel:null};
@@ -568,11 +732,11 @@ TASKS.forEach(function(t){
   if(t.img){ body += '<div class="fig">'+t.img+'</div>'; }
   if(t.type === "choice"){
     body += '<div class="opts">'+t.options.map(function(o,i){
-      return '<label class="opt" data-v="'+o+'"><input type="radio" name="q'+t.id+'" value="'+o+'"> '+o+'</label>';
+      return '<label class="opt" data-v="'+o+'"><input type="radio" name="q'+t.id+'" value="'+o+'"> '+((t.optionsHtml && t.optionsHtml[i]) || o)+'</label>';
     }).join("")+'</div>';
   } else {
     body += '<div class="keys">'+
-      [",","−"].map(function(k){
+      ["/","−",","].map(function(k){
         return '<button class="key" data-k="'+k+'" type="button">'+k+'</button>';}).join("")+
       '</div><input type="text" id="in'+t.id+'" inputmode="text" autocapitalize="off" '+
       'autocorrect="off" autocomplete="off" spellcheck="false" placeholder="ответ">';
@@ -582,7 +746,7 @@ TASKS.forEach(function(t){
           '<button class="sm hnt">Подсказка</button></div>'+
           '<div class="hints"></div><div class="verdict"></div><div class="sol"></div>';
   el.innerHTML = body;
-  box.appendChild(el);
+  boxOf(t).appendChild(el);
 
   el.querySelectorAll(".key").forEach(function(b){
     b.addEventListener("click", function(){
@@ -622,9 +786,10 @@ function hint(id){
   }
   var h = document.createElement("div");
   h.className = "hint";
-  h.textContent = "Подсказка " + (s.hints+1) + ": " + t.hints[s.hints];
+  h.innerHTML = "Подсказка " + (s.hints+1) + ": " + t.hints[s.hints];
   host.appendChild(h);
   s.hints++;
+  saveWork();
 }
 
 function check(id){
@@ -651,6 +816,7 @@ function check(id){
     showSol(el, t);
   }
   progress();
+  saveWork();
 }
 function showSol(el, t){
   var host = el.querySelector(".sol");
@@ -724,17 +890,17 @@ function drawThumbs(){
 }
 
 /* ---------- отчёт ---------- */
-var ENDPOINT = "https://script.google.com/macros/s/AKfycbztH9c-wQuKC7pSfD8AcFfnOcGpSHxoeqovulmvLMp9W23SgFx9dDQ2JTlWcIJDMN6W/exec";
+var ENDPOINT = "https://script.google.com/macros/s/AKfycbwqIhgBtFnoUik3N1Lh_YRhNeEFAjmXWSxBNoX1a_Yxu-2dEKHFwo4Dd5Ch9UTOHH-X/exec";
 var SECRET = "artteach2026";
 function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 function buildReport(){
   var name = (document.getElementById("name").value || "").trim() || "без имени";
   var now = new Date();
-  var mins = Math.max(1, Math.round((Date.now()-started)/60000));
+  var mins = Math.max(1, Math.round(spentMs()/60000));
   var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
-  var data = {tип:"дз", предмет:"математика", тема:"Стандартный вид числа (математика, 7 класс)",
+  var data = {tип:"дз", предмет:"математика", тема:"Стандартный вид числа (1.01, алгебра)",
     ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
-    верно:okN, всего:TASKS.length, задачи:[]};
+    верно:okN, всего:TASKS.length, тренажёры:trSummary(), задачи:[]};
   var rows = TASKS.map(function(t){
     var s = state[t.id];
     data.задачи.push({n:t.id, условие:t.text.replace(/<[^>]+>/g,""), ответ_ученика:s.given,
@@ -758,12 +924,13 @@ function buildReport(){
     "figure{margin:14px 0}img{max-width:100%;border:1px solid #dfe3ea;border-radius:8px}"+
     "figcaption{color:#5b6270;font-size:14px;margin-top:4px}</style></head><body>"+
     "<h1>Отчёт по домашнему заданию</h1>"+
-    "<div class='m'>Тема: стандартный вид числа · математика, 7 класс</div>"+
+    "<div class='m'>Тема: стандартный вид числа · 1.01</div>"+
     "<div class='m'>Ученик: <b>"+esc(name)+"</b> · сдано: "+esc(now.toLocaleString("ru-RU"))+
     " · время работы: около "+mins+" мин</div>"+
     "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)</h2>"+
     "<table><tr><th>№</th><th>Задача</th><th>Ответ ученика</th><th>Верный ответ</th>"+
     "<th>Итог</th><th>Попыток</th><th>Подсказок</th></tr>"+rows+"</table>"+
+    trReportHtml()+
     (pics ? "<h2>Фото решений</h2>"+pics : "<p class='m'>Фото решений не прикреплены.</p>")+
     "<script type='application/json' id='result-data'>"+
     JSON.stringify(data).replace(/</g,"\\u003c")+"<\/script></body></html>";
@@ -771,9 +938,12 @@ function buildReport(){
   return {
     html: html,
     name: name,
+    ok: okN,
+    total: TASKS.length,
     file: "Отчёт_Стандартный_вид_числа_"+name.replace(/\s+/g,"_")+"_"+stamp+".html",
     caption: name+" · стандартный вид числа · 7 класс · "+okN+" из "+TASKS.length+
-             " ("+Math.round(okN/TASKS.length*100)+"%)"
+             " ("+Math.round(okN/TASKS.length*100)+"%)"+
+             " · тренажёры и пропуски "+trSummary().ok+" из "+trSummary().total
   };
 }
 
@@ -781,13 +951,28 @@ document.getElementById("send").addEventListener("click", function(){
   var note = document.getElementById("repnote");
   var who = (document.getElementById("name").value || "").trim();
   if(!who){ note.className = "meta bad-note"; note.textContent = "Сначала впиши имя вверху страницы."; return; }
+  var left = trPending();
+  if(left.length){
+    note.className = "meta bad-note";
+    note.textContent = "Работа не отправлена: сначала пройди тренажёры " +
+      "и блоки с пропусками. Осталось " + left.length + " из " + TRREQ.length + ".";
+    trStatus();
+    trJump(left[0].id);
+    return;
+  }
   note.className = "meta";
   var r = buildReport();
   note.textContent = "Отправляю…";
   var payload = {
     secret: SECRET,
+    code: STUDENT_CODE,
+    student: r.name,
+    topic: TOPIC,
+    ok: r.ok,
+    total: r.total,
     name: r.file,
     caption: r.caption,
+    trainers: trSummary().ok + " из " + trSummary().total,
     file: btoa(unescape(encodeURIComponent(r.html)))
   };
   fetch(ENDPOINT, {method:"POST", mode:"no-cors", body: JSON.stringify(payload)})
@@ -811,6 +996,105 @@ document.getElementById("report").addEventListener("click", function(){
   setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
   document.getElementById("repnote").textContent = "Файл скачан — он в папке загрузок.";
 });
+
+
+/* ============ заполни пропуски ============ */
+window.GAPSTATE = {};
+window.GAPSAPI = {};
+window.GAPS = function(id, data){
+  var host = document.getElementById(id);
+  if(!host) return null;
+  var btn = document.getElementById(id + "go"), msg = document.getElementById(id + "m"),
+      sc = document.getElementById(id + "s"), tip = document.getElementById(id + "t");
+  var inputs = host.querySelectorAll("input.gp");
+  var tries = 0, done = false;
+
+  function norm(s){
+    return String(s).toLowerCase().replace(/\s+/g, "")
+      .replace(/[–—−]/g, "-")
+      .replace(/[×·\*]/g, "*")
+      .replace(/,/g, ".");
+  }
+  function toNum(s){
+    var t = norm(s);
+    if(!t || !/^[-+*/().0-9]+$/.test(t)) return NaN;
+    try{
+      var v = new Function("return (" + t + ");")();
+      return (typeof v === "number" && isFinite(v)) ? v : NaN;
+    }catch(e){ return NaN; }
+  }
+  function same(given, right){
+    var a = toNum(given), b = toNum(right);
+    if(!isNaN(a) && !isNaN(b)) return Math.abs(a - b) <= Math.max(1e-9, Math.abs(b) * 1e-9);
+    return norm(given) === norm(right);
+  }
+  function record(){
+    var vals = {}, k;
+    for(k = 0; k < inputs.length; k++) vals[inputs[k].getAttribute("data-k")] = inputs[k].value;
+    window.GAPSTATE[id] = {vals: vals, done: done};
+    if(window.saveWork) window.saveWork();
+  }
+
+  function check(quiet){
+    var ok = 0, total = inputs.length, firstBad = null, k, el, key, good;
+    for(k = 0; k < total; k++){
+      el = inputs[k];
+      key = el.getAttribute("data-k");
+      good = (el.value || "").trim() !== "" &&
+             (data.ans[key] || []).some(function(a){ return same(el.value, a); });
+      if(good){
+        el.className = "gp ok";
+        el.readOnly = true;
+        ok++;
+      } else {
+        el.className = (el.value || "").trim() === "" ? "gp" : "gp bad";
+        if(firstBad === null) firstBad = key;
+      }
+    }
+    sc.textContent = "заполнено верно " + ok + " из " + total;
+    if(ok === total){
+      done = true;
+      btn.disabled = true;
+      msg.innerHTML = '<span class="v ok">Все пропуски заполнены верно.</span>';
+      tip.innerHTML = data.after || "";
+      if(window.trFinished) window.trFinished(id, ok, total);
+    } else if(!quiet){
+      tries++;
+      msg.innerHTML = '<span class="v bad">Пока не всё.</span> Красные поля поправь, ' +
+                      "зелёные уже засчитаны.";
+      if(tries >= 2 && data.tips && data.tips[firstBad])
+        tip.innerHTML = "Подсказка: " + data.tips[firstBad];
+    }
+    record();
+    return ok;
+  }
+
+  btn.addEventListener("click", function(){ check(false); });
+  host.addEventListener("keydown", function(ev){
+    if(ev.key === "Enter"){ ev.preventDefault(); check(false); }
+  });
+  sc.textContent = "заполнено верно 0 из " + inputs.length;
+  window.GAPSAPI[id] = {check: check, inputs: inputs};
+  return {check: check};
+};
+
+window.gapRestore = function(saved){
+  var id, api, k, vals, el;
+  for(id in saved){
+    api = window.GAPSAPI[id];
+    if(!api) continue;
+    vals = (saved[id] && saved[id].vals) || {};
+    for(k = 0; k < api.inputs.length; k++){
+      el = api.inputs[k];
+      if(vals[el.getAttribute("data-k")] !== undefined)
+        el.value = vals[el.getAttribute("data-k")];
+    }
+    api.check(true);
+  }
+};
+
+var GPD = {"gp1": {"ans": {"a1": ["2"], "a2": ["9"], "a3": ["-11"], "a4": ["12"], "a5": ["-12"], "a6": ["1"]}, "tips": {"a1": "Отрицательный показатель переворачивает степень: 3⁻² = 1 : 3².", "a3": "При умножении показатели складываются: −7 + (−4).", "a4": "При делении вычитаются: 3 − (−9).", "a5": "При возведении в степень перемножаются: −2 · 6."}, "after": "Все четыре свойства работают одинаково и для положительных, и для отрицательных показателей."}, "gp2": {"ans": {"b1": ["5"], "b2": ["5"], "b3": ["-5"], "b4": ["3"], "b5": ["4"]}, "tips": {"b1": "Запятая переехала влево на пять разрядов.", "b3": "Число меньше единицы, значит показатель отрицательный.", "b4": "24,5 = 2,45 · 10¹, дальше 1 + 2.", "b5": "0,5 = 5 · 10⁻¹, дальше −1 + 5."}, "after": "Порядок читают только по стандартной записи: пока множитель не подогнан, называть порядок рано."}, "gp3": {"ans": {"c1": ["8,24", "8.24"], "c2": ["10"], "c3": ["6,8", "6.8"], "c4": ["-5"], "c5": ["-2"], "c6": ["2"], "c7": ["5"], "c8": ["3"]}, "tips": {"c1": "В целой части должна остаться одна цифра: 8.", "c4": "Запятая едет вправо на пять разрядов.", "c5": "0,0144 = 1,44 · 10⁻².", "c8": "5 + (−2) = 3."}, "after": "Проверка простая: вернись к обычной записи и сравни с исходным числом."}, "gp4": {"ans": {"d1": ["17,1", "17.1"], "d2": ["2"], "d3": ["3"], "d4": ["1,8", "1.8"], "d5": ["11"], "d6": ["<"]}, "tips": {"d1": "3,8 · 4,5 = 17,1.", "d3": "17,1 = 1,71 · 10¹, значит 1 + 2.", "d5": "5 − (−6) = 11.", "d6": "Сравнивают по порядку: −3 меньше −2."}, "after": "Ответ всегда дописывают в стандартном виде - иначе задание считается недоделанным."}, "gp5": {"ans": {"f1": ["6"], "f2": ["9"], "f3": ["-6"], "f4": ["-5"], "f5": ["6"], "f6": ["7"]}, "tips": {"f2": "В километре 10³ метров, показатели складываются: 6 + 3.", "f3": "Грамм меньше тонны в миллион раз: 1 г = 10⁻⁶ т.", "f4": "21,6 = 2,16 · 10¹, дальше 1 + (−6).", "f5": "1 км² = (10³)² = 10⁶ м²."}, "after": "Проверяй направление: переводишь в меньшие единицы - число растёт, в большие - уменьшается."}};
+for (var _g in GPD){ GAPS(_g, GPD[_g]); }
 
 
 /* ---------- движок тренажёров ---------- */
@@ -848,6 +1132,7 @@ function makeTrainer(id, items){
     b.innerHTML='<div class="trdone" style="flex:1 1 100%">'+ok+" из "+items.length+
       " ("+pct+" %) · "+word+'</div><button type="button" class="pri" data-go="1">Пройти заново</button>';
     sc.textContent="готово";
+    if(window.trFinished) window.trFinished(id, ok, items.length);
   }
 
   function show(){
@@ -929,17 +1214,234 @@ function makeTrainer(id, items){
   start();
 }
 
-makeTrainer("tr1", [{"q": "6,1 · 10⁻³ записано в стандартном виде?", "opts": ["да", "нет"], "ans": 0, "why": "Множитель 6,1 лежит между 1 и 10, показатель целый. Минус в показателе ничему не мешает."}, {"q": "24,5 · 10² записано в стандартном виде?", "opts": ["да", "нет"], "ans": 1, "why": "24,5 больше 10. Правильно: 24,5 · 10² = 2,45 · 10³."}, {"q": "0,5 · 10⁵ записано в стандартном виде?", "opts": ["да", "нет"], "ans": 1, "why": "Множитель меньше 1. Правильно: 0,5 · 10⁵ = 5 · 10⁴."}, {"q": "9 · 10³ записано в стандартном виде?", "opts": ["да", "нет"], "ans": 0, "why": "Однозначное число тоже годится: 1 ≤ 9 < 10."}, {"q": "3,45 · 10⁸ записано в стандартном виде?", "opts": ["да", "нет"], "ans": 0, "why": "3,45 между 1 и 10, показатель целый."}, {"q": "0,1 · 10⁻⁴ записано в стандартном виде?", "opts": ["да", "нет"], "ans": 1, "why": "0,1 меньше 1. Правильно: 0,1 · 10⁻⁴ = 1 · 10⁻⁵."}, {"q": "57 · 10⁴ записано в стандартном виде?", "opts": ["да", "нет"], "ans": 1, "why": "57 больше 10. Правильно: 5,7 · 10⁵."}, {"q": "1,067 · 10⁻⁴ записано в стандартном виде?", "opts": ["да", "нет"], "ans": 0, "why": "Множитель 1,067 подходит, показатель целый."}, {"q": "0,023 · 10⁻⁶ записано в стандартном виде?", "opts": ["да", "нет"], "ans": 1, "why": "0,023 меньше 1. Правильно: 2,3 · 10⁻⁸."}, {"q": "4,5 · 10¹⁸ записано в стандартном виде?", "opts": ["да", "нет"], "ans": 0, "why": "Большой показатель не мешает: важен только множитель."}]);
+makeTrainer("ts1", [{"q": "Вычисли 5⁰.", "ans": ["1"], "why": "Любое число, кроме нуля, в нулевой степени равно 1."}, {"q": "Вычисли 3⁻² · 9.", "ans": ["1"], "why": "3⁻² = 1 : 9, значит (1 : 9) · 9 = 1."}, {"q": "Вычисли 8⁻⁶ : 8⁻⁷.", "ans": ["8"], "why": "Показатели вычитаются: −6 − (−7) = 1, значит 8¹ = 8."}, {"q": "Вычисли 25 · 5⁻³.", "ans": ["0,2", "0.2"], "why": "25 = 5², значит 5² · 5⁻³ = 5⁻¹ = 0,2."}, {"q": "Вычисли (−10)² · 10⁻¹.", "ans": ["10"], "why": "(−10)² = 100, дальше 100 · 0,1 = 10."}, {"q": "Вычисли 4⁻² : (−4)⁻³ + 1.", "ans": ["-3"], "why": "4⁻² = 1 : 16, (−4)⁻³ = −1 : 64. Деление даёт −4, затем −4 + 1 = −3."}, {"q": "x⁻⁷ · x⁻⁴ = x в какой степени? Введи показатель.", "ans": ["-11"], "why": "При умножении показатели складываются: −7 + (−4) = −11."}, {"q": "y³ : y⁻⁹ = y в какой степени?", "ans": ["12"], "why": "3 − (−9) = 12."}, {"q": "(y⁻²)⁶ = y в какой степени?", "ans": ["-12"], "why": "При возведении степени в степень показатели перемножаются: −2 · 6 = −12."}, {"q": "Найди n, если 7⁻¹³ · 7¹⁸ : 7ⁿ = 7¹.", "ans": ["4"], "why": "−13 + 18 − n = 1, значит 5 − n = 1 и n = 4."}]);
 
-makeTrainer("tr2", [{"q": "Назови порядок числа 4,05 · 10⁻⁶. Введи целое число.", "ans": ["-6"], "why": "Порядок - это показатель степени десятки, здесь −6."}, {"q": "Назови порядок числа 2,081 · 10²⁴.", "ans": ["24"], "why": "Показатель равен 24, множитель уже стандартный."}, {"q": "Назови порядок числа 3,8 · 10⁻³⁰.", "ans": ["-30"], "why": "Порядок отрицательный: −30."}, {"q": "Назови порядок числа 9,49 · 10⁻⁴.", "ans": ["-4"], "why": "Показатель −4."}, {"q": "Назови порядок числа 2,56 · 10¹⁰.", "ans": ["10"], "why": "Показатель 10."}, {"q": "Каков порядок числа 150 000?", "ans": ["5"], "why": "150 000 = 1,5 · 10⁵, значит порядок 5."}, {"q": "Каков порядок числа 0,000015?", "ans": ["-5"], "why": "0,000015 = 1,5 · 10⁻⁵, порядок −5."}, {"q": "Каков порядок числа 7,3?", "ans": ["0"], "why": "Число от 1 до 10 записывается как 7,3 · 10⁰, порядок 0."}, {"q": "Каков порядок числа 24,2 · 10⁻¹²? Сначала приведи запись.", "ans": ["-11"], "why": "24,2 · 10⁻¹² = 2,42 · 10¹ · 10⁻¹² = 2,42 · 10⁻¹¹, порядок −11."}, {"q": "Каков порядок числа 0,33 · 10⁻⁸?", "ans": ["-9"], "why": "0,33 · 10⁻⁸ = 3,3 · 10⁻¹ · 10⁻⁸ = 3,3 · 10⁻⁹, порядок −9."}]);
+makeTrainer("ts2", [{"q": "6,1 · 10⁻³ записано в стандартном виде?", "opts": ["да", "нет"], "ans": 0, "why": "Множитель 6,1 лежит между 1 и 10. Минус в показателе ничему не мешает."}, {"q": "24,5 · 10² записано в стандартном виде?", "opts": ["да", "нет"], "ans": 1, "why": "24,5 больше 10. Правильно: 2,45 · 10³."}, {"q": "0,5 · 10⁵ записано в стандартном виде?", "opts": ["да", "нет"], "ans": 1, "why": "Множитель меньше 1. Правильно: 5 · 10⁴."}, {"q": "9 · 10³ записано в стандартном виде?", "opts": ["да", "нет"], "ans": 0, "why": "Однозначное число тоже годится: 1 ≤ 9 < 10."}, {"q": "0,023 · 10⁻⁶ записано в стандартном виде?", "opts": ["да", "нет"], "ans": 1, "why": "0,023 меньше 1. Правильно: 2,3 · 10⁻⁸."}, {"q": "Назови порядок числа 4,05 · 10⁻⁶.", "ans": ["-6"], "why": "Порядок - это показатель, здесь −6."}, {"q": "Назови порядок числа 2,081 · 10²⁴.", "ans": ["24"], "why": "Показатель равен 24."}, {"q": "Каков порядок числа 150 000?", "ans": ["5"], "why": "150 000 = 1,5 · 10⁵."}, {"q": "Каков порядок числа 0,000015?", "ans": ["-5"], "why": "0,000015 = 1,5 · 10⁻⁵."}, {"q": "Каков порядок числа 24,2 · 10⁻¹²? Сначала приведи запись.", "ans": ["-11"], "why": "24,2 · 10⁻¹² = 2,42 · 10¹ · 10⁻¹² = 2,42 · 10⁻¹¹."}]);
 
-makeTrainer("tr3", [{"q": "45 000 000 = a · 10ⁿ. Чему равно a?", "ans": ["4.5"], "why": "Запятая после первой цифры: 4,5. Полностью 45 000 000 = 4,5 · 10⁷."}, {"q": "45 000 000 = a · 10ⁿ. Чему равно n?", "ans": ["7"], "why": "Запятую перенесли на 7 разрядов влево."}, {"q": "0,0000075 = a · 10ⁿ. Чему равно a?", "ans": ["7.5"], "why": "Первая ненулевая цифра 7, дальше 5: получается 7,5."}, {"q": "0,0000075 = a · 10ⁿ. Чему равно n?", "ans": ["-6"], "why": "Запятую перенесли вправо на 6 разрядов, порядок −6."}, {"q": "56 400 000 000 000 = a · 10ⁿ. Чему равно n?", "ans": ["13"], "why": "5,64 · 10¹³: запятая переехала на 13 разрядов."}, {"q": "0,00000056 = a · 10ⁿ. Чему равно a?", "ans": ["5.6"], "why": "0,00000056 = 5,6 · 10⁻⁷."}, {"q": "3504,8 = a · 10ⁿ. Чему равно a?", "ans": ["3.5048"], "why": "Запятая после первой цифры: 3,5048 · 10³."}, {"q": "0,004507 = a · 10ⁿ. Чему равно n?", "ans": ["-3"], "why": "0,004507 = 4,507 · 10⁻³."}, {"q": "513 · 10⁻⁵ = a · 10ⁿ. Чему равно n?", "ans": ["-3"], "why": "513 = 5,13 · 10², значит 5,13 · 10² · 10⁻⁵ = 5,13 · 10⁻³."}, {"q": "0,00047 · 10¹³ = a · 10ⁿ. Чему равно n?", "ans": ["9"], "why": "0,00047 = 4,7 · 10⁻⁴, дальше −4 + 13 = 9."}]);
+makeTrainer("ts3", [{"q": "45 000 000 = a · 10ⁿ. Чему равно a?", "ans": ["4,5", "4.5"], "why": "Запятая после первой цифры: 4,5. Полностью 4,5 · 10⁷."}, {"q": "45 000 000 = a · 10ⁿ. Чему равно n?", "ans": ["7"], "why": "Запятую перенесли на 7 разрядов влево."}, {"q": "0,0000075 = a · 10ⁿ. Чему равно a?", "ans": ["7,5", "7.5"], "why": "Первая ненулевая цифра 7, дальше 5."}, {"q": "0,0000075 = a · 10ⁿ. Чему равно n?", "ans": ["-6"], "why": "Запятая едет вправо на 6 разрядов."}, {"q": "56 400 000 000 000 = a · 10ⁿ. Чему равно n?", "ans": ["13"], "why": "5,64 · 10¹³."}, {"q": "0,00000056 = a · 10ⁿ. Чему равно a?", "ans": ["5,6", "5.6"], "why": "0,00000056 = 5,6 · 10⁻⁷."}, {"q": "3504,8 = a · 10ⁿ. Чему равно a?", "ans": ["3,5048", "3.5048"], "why": "3,5048 · 10³."}, {"q": "0,004507 = a · 10ⁿ. Чему равно n?", "ans": ["-3"], "why": "0,004507 = 4,507 · 10⁻³."}, {"q": "513 · 10⁻⁵ = a · 10ⁿ. Чему равно n?", "ans": ["-3"], "why": "513 = 5,13 · 10², значит 5,13 · 10² · 10⁻⁵ = 5,13 · 10⁻³."}, {"q": "0,00047 · 10¹³ = a · 10ⁿ. Чему равно n?", "ans": ["9"], "why": "0,00047 = 4,7 · 10⁻⁴, дальше −4 + 13 = 9."}]);
 
-makeTrainer("tr4", [{"q": "Вычисли 5⁰.", "ans": ["1"], "why": "Любое число, кроме нуля, в нулевой степени равно 1."}, {"q": "Вычисли 3⁻² · 9.", "ans": ["1"], "why": "3⁻² = 1 : 9, значит (1 : 9) · 9 = 1."}, {"q": "Вычисли 8⁻⁶ : 8⁻⁷.", "ans": ["8"], "why": "Показатели вычитаются: −6 − (−7) = 1, значит 8¹ = 8."}, {"q": "Вычисли 25 · 5⁻³.", "ans": ["0.2"], "why": "25 = 5², значит 5² · 5⁻³ = 5⁻¹ = 1 : 5 = 0,2."}, {"q": "Вычисли (−10)² · 10⁻¹.", "ans": ["10"], "why": "(−10)² = 100, дальше 100 · 0,1 = 10."}, {"q": "Вычисли 4⁻² : (−4)⁻³ + 1.", "ans": ["-3"], "why": "4⁻² = 1 : 16, (−4)⁻³ = −1 : 64. Деление даёт (1 : 16) · (−64) = −4, затем −4 + 1 = −3."}, {"q": "Чему равно x⁻⁷ · x⁻⁴ при основании x? Введи показатель степени.", "ans": ["-11"], "why": "При умножении показатели складываются: −7 + (−4) = −11."}, {"q": "Чему равно y³ : y⁻⁹? Введи показатель степени.", "ans": ["12"], "why": "3 − (−9) = 12."}, {"q": "Чему равно (y⁻²)⁶? Введи показатель степени.", "ans": ["-12"], "why": "При возведении степени в степень показатели перемножаются: −2 · 6 = −12."}, {"q": "Найди n, если 7⁻¹³ · 7¹⁸ : 7ⁿ = 7¹.", "ans": ["4"], "why": "−13 + 18 − n = 1, значит 5 − n = 1 и n = 4."}]);
+makeTrainer("ts4", [{"q": "(6,8 · 10⁻³) · (4,5 · 10⁴) = ? Введи число.", "ans": ["306"], "why": "6,8 · 4,5 = 30,6; показатели −3 + 4 = 1. Получается 306."}, {"q": "(7,42 · 10⁻⁶) · (5 · 10²) = a · 10ⁿ. Чему равно n?", "ans": ["-3"], "why": "7,42 · 5 = 37,1 = 3,71 · 10¹; −6 + 2 = −4; итого 3,71 · 10⁻³."}, {"q": "(6,65 · 10⁷) : (3,5 · 10³) = ? Введи число.", "ans": ["19000"], "why": "6,65 : 3,5 = 1,9; 7 − 3 = 4. Значит 1,9 · 10⁴ = 19 000."}, {"q": "(1,38 · 10⁻⁸) : (1,5 · 10⁻⁵) = a · 10ⁿ. Чему равно a?", "ans": ["9,2", "9.2"], "why": "1,38 : 1,5 = 0,92; −8 − (−5) = −3; 0,92 · 10⁻³ = 9,2 · 10⁻⁴."}, {"q": "(1,38 · 10⁻⁸) : (1,5 · 10⁻⁵) = a · 10ⁿ. Чему равно n?", "ans": ["-4"], "why": "0,92 · 10⁻³ = 9,2 · 10⁻⁴, порядок −4."}, {"q": "(5,4 · 10²) : (2 · 10⁵) = a · 10ⁿ. Чему равно n?", "ans": ["-3"], "why": "5,4 : 2 = 2,7; показатели 2 − 5 = −3."}, {"q": "(1,5 · 10⁻⁴)² = a · 10ⁿ. Чему равно n?", "ans": ["-8"], "why": "1,5² = 2,25; показатель −4 · 2 = −8."}, {"q": "(3,8 · 10⁻³) · (4,5 · 10⁵) = a · 10ⁿ. Чему равно a?", "ans": ["1,71", "1.71"], "why": "3,8 · 4,5 = 17,1 = 1,71 · 10¹, итого 1,71 · 10³."}, {"q": "(4,37 · 10⁻⁴) : (4,6 · 10⁻³) = a · 10ⁿ. Чему равно n?", "ans": ["-2"], "why": "4,37 : 4,6 = 0,95; −4 − (−3) = −1; 0,95 · 10⁻¹ = 9,5 · 10⁻²."}, {"q": "Какое число больше: 7,89 · 10¹⁰ или 1,3 · 10¹¹? Введи порядок большего.", "ans": ["11"], "why": "Порядок 11 больше порядка 10, значит больше 1,3 · 10¹¹."}]);
 
-makeTrainer("tr5", [{"q": "(6,8 · 10⁻³) · (4,5 · 10⁴) = ? Введи число.", "ans": ["306"], "why": "6,8 · 4,5 = 30,6; показатели −3 + 4 = 1. Получается 30,6 · 10¹ = 3,06 · 10² = 306."}, {"q": "(7,42 · 10⁻⁶) · (5 · 10²) = a · 10ⁿ. Чему равно n?", "ans": ["-3"], "why": "7,42 · 5 = 37,1 = 3,71 · 10¹; показатели −6 + 2 = −4; итого 3,71 · 10⁻³."}, {"q": "(6,65 · 10⁷) : (3,5 · 10³) = ? Введи число.", "ans": ["19000"], "why": "6,65 : 3,5 = 1,9; показатели 7 − 3 = 4. Значит 1,9 · 10⁴ = 19 000."}, {"q": "(1,38 · 10⁻⁸) : (1,5 · 10⁻⁵) = a · 10ⁿ. Чему равно a?", "ans": ["9.2"], "why": "1,38 : 1,5 = 0,92; показатели −8 − (−5) = −3; 0,92 · 10⁻³ = 9,2 · 10⁻⁴."}, {"q": "(1,38 · 10⁻⁸) : (1,5 · 10⁻⁵) = a · 10ⁿ. Чему равно n?", "ans": ["-4"], "why": "0,92 · 10⁻³ = 9,2 · 10⁻⁴, порядок −4."}, {"q": "(5,4 · 10²) : (2 · 10⁵) = a · 10ⁿ. Чему равно n?", "ans": ["-3"], "why": "5,4 : 2 = 2,7; показатели 2 − 5 = −3."}, {"q": "(1,5 · 10⁻⁴)² = a · 10ⁿ. Чему равно n?", "ans": ["-8"], "why": "1,5² = 2,25; показатель −4 · 2 = −8."}, {"q": "(3,8 · 10⁻³) · (4,5 · 10⁵) = a · 10ⁿ. Чему равно a?", "ans": ["1.71"], "why": "3,8 · 4,5 = 17,1 = 1,71 · 10¹, итого 1,71 · 10³."}, {"q": "(4,37 · 10⁻⁴) : (4,6 · 10⁻³) = a · 10ⁿ. Чему равно n?", "ans": ["-2"], "why": "4,37 : 4,6 = 0,95; показатели −4 − (−3) = −1; 0,95 · 10⁻¹ = 9,5 · 10⁻²."}, {"q": "Какое число больше: 7,89 · 10¹⁰ или 1,3 · 10¹¹? Введи порядок большего.", "ans": ["11"], "why": "Порядок 11 больше порядка 10, значит больше число 1,3 · 10¹¹."}]);
+makeTrainer("ts5", [{"q": "5 872 600 км в метрах = a · 10ⁿ м. Чему равно n?", "ans": ["9"], "why": "В километре 10³ м: 5,8726 · 10⁶ · 10³ = 5,8726 · 10⁹."}, {"q": "389 т в граммах = a · 10ⁿ г. Чему равно n?", "ans": ["8"], "why": "1 т = 10⁶ г: 389 · 10⁶ = 3,89 · 10⁸."}, {"q": "21,6 г в тоннах = a · 10ⁿ т. Чему равно n?", "ans": ["-5"], "why": "1 г = 10⁻⁶ т: 21,6 · 10⁻⁶ = 2,16 · 10⁻⁵."}, {"q": "29 км² в квадратных метрах = a · 10ⁿ м². Чему равно n?", "ans": ["7"], "why": "1 км² = 10⁶ м²: 29 · 10⁶ = 2,9 · 10⁷."}, {"q": "6 · 10¹⁰ мг в килограммах = a · 10ⁿ кг. Чему равно n?", "ans": ["4"], "why": "1 мг = 10⁻⁶ кг: 6 · 10¹⁰ · 10⁻⁶ = 6 · 10⁴."}, {"q": "7 · 10⁻⁵ ккал в калориях = a · 10ⁿ кал. Чему равно n?", "ans": ["-2"], "why": "Приставка кило - это 10³: −5 + 3 = −2."}, {"q": "3,5 · 10⁹ нм в метрах = a · 10ⁿ м. Чему равно n?", "ans": ["0"], "why": "Нано - это 10⁻⁹: 3,5 · 10⁹ · 10⁻⁹ = 3,5 · 10⁰."}, {"q": "Сколько метров в 1 км? Введи показатель степени десятки.", "ans": ["3"], "why": "1 км = 10³ м."}, {"q": "Сколько квадратных метров в 1 км²? Введи показатель степени десятки.", "ans": ["6"], "why": "Множитель возводится в квадрат: (10³)² = 10⁶."}, {"q": "9,8 · 10¹⁰ кг в мегатоннах = a · 10ⁿ Мт. Чему равно n?", "ans": ["1"], "why": "1 Мт = 10⁹ кг: 9,8 · 10¹⁰ : 10⁹ = 9,8 · 10¹."}]);
 
-makeTrainer("tr6", [{"q": "5 872 600 км в метрах = a · 10ⁿ м. Чему равно n?", "ans": ["9"], "why": "В километре 10³ м: 5,8726 · 10⁶ · 10³ = 5,8726 · 10⁹."}, {"q": "389 т в граммах = a · 10ⁿ г. Чему равно n?", "ans": ["8"], "why": "1 т = 10⁶ г, значит 389 · 10⁶ = 3,89 · 10² · 10⁶ = 3,89 · 10⁸."}, {"q": "21,6 г в тоннах = a · 10ⁿ т. Чему равно n?", "ans": ["-5"], "why": "1 г = 10⁻⁶ т: 21,6 · 10⁻⁶ = 2,16 · 10¹ · 10⁻⁶ = 2,16 · 10⁻⁵."}, {"q": "29 км² в квадратных метрах = a · 10ⁿ м². Чему равно n?", "ans": ["7"], "why": "1 км² = 10⁶ м²: 29 · 10⁶ = 2,9 · 10⁷."}, {"q": "6 · 10¹⁰ мг в килограммах = a · 10ⁿ кг. Чему равно n?", "ans": ["4"], "why": "1 мг = 10⁻⁶ кг: 6 · 10¹⁰ · 10⁻⁶ = 6 · 10⁴."}, {"q": "7 · 10⁻⁵ ккал в калориях = a · 10ⁿ кал. Чему равно n?", "ans": ["-2"], "why": "Приставка кило - это 10³: −5 + 3 = −2."}, {"q": "3,5 · 10⁹ нм в метрах = a · 10ⁿ м. Чему равно n?", "ans": ["0"], "why": "Нано - это 10⁻⁹: 3,5 · 10⁹ · 10⁻⁹ = 3,5 · 10⁰."}, {"q": "Сколько метров в 1 км? Введи показатель степени десятки.", "ans": ["3"], "why": "1 км = 10³ м."}, {"q": "Сколько квадратных метров в 1 км²? Введи показатель степени десятки.", "ans": ["6"], "why": "Множитель возводится в квадрат: (10³)² = 10⁶."}, {"q": "9,8 · 10¹⁰ кг в мегатоннах = a · 10ⁿ Мт. Чему равно n?", "ans": ["1"], "why": "1 Мт = 10⁹ кг, значит 9,8 · 10¹⁰ : 10⁹ = 9,8 · 10¹."}]);
+/* ---------- тренажёры и пропуски обязательны для отправки ---------- */
+var TRREQ = [
+  {id:"ts1", name:"Тренажёр 1. Степени с целым показателем"},
+  {id:"gp1", name:"Пропуски 1. Свойства степеней"},
+  {id:"ts2", name:"Тренажёр 2. Стандартный вид и порядок"},
+  {id:"gp2", name:"Пропуски 2. Порядок числа"},
+  {id:"ts3", name:"Тренажёр 3. Запиши в стандартном виде"},
+  {id:"gp3", name:"Пропуски 3. Запись числа"},
+  {id:"ts4", name:"Тренажёр 4. Умножение и деление"},
+  {id:"gp4", name:"Пропуски 4. Действия и сравнение"},
+  {id:"ts5", name:"Тренажёр 5. Единицы измерения"},
+  {id:"gp5", name:"Пропуски 5. Перевод единиц"}
+];
+var TRDONE = {};
+window.trFinished = function(id, ok, total){
+  var prev = TRDONE[id];
+  if(!prev || ok > prev.ok) TRDONE[id] = {ok: ok, total: total};
+  trStatus();
+  if(window.saveWork) saveWork();
+};
+function trPending(){
+  var out = [], k;
+  for(k = 0; k < TRREQ.length; k++){ if(!TRDONE[TRREQ[k].id]) out.push(TRREQ[k]); }
+  return out;
+}
+function trSummary(){
+  var ok = 0, total = 0, parts = [], k, d;
+  for(k = 0; k < TRREQ.length; k++){
+    d = TRDONE[TRREQ[k].id];
+    parts.push({name: TRREQ[k].name, ok: d ? d.ok : null, total: d ? d.total : null});
+    if(d){ ok += d.ok; total += d.total; }
+  }
+  return {ok: ok, total: total, parts: parts, done: TRREQ.length - trPending().length};
+}
+function trReportHtml(){
+  var s = trSummary(), k, pt, h;
+  h = "<h2>Тренажёры и пропуски: " + s.done + " из " + TRREQ.length + " пройдено" +
+      (s.total ? " · верных ответов " + s.ok + " из " + s.total : "") + "</h2><table><tr>" +
+      "<th>Блок</th><th>Результат</th></tr>";
+  for(k = 0; k < s.parts.length; k++){
+    pt = s.parts[k];
+    h += "<tr><td style='text-align:left'>" + pt.name + "</td><td>" +
+         (pt.ok === null ? "не пройден" : pt.ok + " из " + pt.total) + "</td></tr>";
+  }
+  return h + "</table>";
+}
+function trJump(id){
+  var el = document.getElementById(id);
+  if(!el) return;
+  try{ el.scrollIntoView({behavior: "smooth", block: "center"}); }
+  catch(e){ el.scrollIntoView(); }
+  el.classList.add("need");
+  setTimeout(function(){ el.classList.remove("need"); }, 2600);
+}
+function trStatus(){
+  var g = document.getElementById("trgate");
+  if(!g) return;
+  var left = trPending(), s = trSummary(), h, k;
+  if(!left.length){
+    g.className = "trgate ready";
+    g.innerHTML = "<b>Все тренажёры и пропуски пройдены.</b> Верных ответов: " + s.ok +
+                  " из " + s.total + ". Работу можно отправлять.";
+    return;
+  }
+  g.className = "trgate";
+  h = "<b>Пройдено: " + s.done + " из " + TRREQ.length + ".</b> " +
+      "Работа отправится, когда пройдёшь всё. Осталось:<ul>";
+  for(k = 0; k < left.length; k++){
+    h += '<li><a data-jump="' + left[k].id + '">' + left[k].name + "</a></li>";
+  }
+  g.innerHTML = h + "</ul>";
+}
+document.addEventListener("click", function(ev){
+  var el = ev.target;
+  var id = (el && el.getAttribute) ? el.getAttribute("data-jump") : null;
+  if(id) trJump(id);
+});
+trStatus();
+
+/* ---------- память страницы ---------- */
+var SAVE_V = 1;
+var SKEY = "arttich:std7:" + (STUDENT_CODE || "-");
+
+function spentMs(){ return spentBefore + (Date.now() - started); }
+
+var CAN_STORE = (function(){
+  try{
+    localStorage.setItem("arttich:probe", "1");
+    localStorage.removeItem("arttich:probe");
+    return true;
+  }catch(e){ return false; }
+})();
+
+var wiping = false;
+function saveWork(){
+  if(wiping) return;
+  try{
+    var box = {v: SAVE_V, at: Date.now(), spent: spentMs(), tr: TRDONE, gaps: (window.GAPSTATE || {}), tasks: {},
+               name: (document.getElementById("name").value || "")};
+    TASKS.forEach(function(t){
+      var x = state[t.id];
+      if(x.tries || x.hints || x.given || x.sel){
+        box.tasks[t.id] = {tries: x.tries, hints: x.hints, done: x.done,
+                           ok: x.ok, given: x.given, sel: x.sel};
+      }
+    });
+    localStorage.setItem(SKEY, JSON.stringify(box));
+    saveNote(box.at);
+  }catch(e){}
+}
+function loadWork(){
+  try{
+    var raw = localStorage.getItem(SKEY);
+    if(!raw) return null;
+    var box = JSON.parse(raw);
+    return (box && box.v === SAVE_V) ? box : null;
+  }catch(e){ return null; }
+}
+function clearWork(){
+  try{ localStorage.removeItem(SKEY); }catch(e){}
+}
+
+function saveNote(at){
+  var n = document.getElementById("savenote");
+  if(!n) return;
+  if(!CAN_STORE){
+    n.textContent = "Этот браузер не разрешает страницам ничего запоминать, поэтому " +
+      "при перезагрузке ответы пропадут. Решай за один заход или отправь работу до того, " +
+      "как закроешь вкладку.";
+    return;
+  }
+  var when = "";
+  if(at){
+    var d = new Date(at);
+    var two = function(x){ return (x < 10 ? "0" : "") + x; };
+    when = " Последнее сохранение: " + two(d.getDate()) + "." + two(d.getMonth() + 1) +
+           ", " + two(d.getHours()) + ":" + two(d.getMinutes()) + ".";
+  }
+  n.innerHTML = "Ответы, пропуски и пройденные тренажёры хранятся в этом браузере: можно закрыть " +
+    "страницу и вернуться позже." + when +
+    " Фото не сохраняются." +
+    (at ? ' <button type="button" id="wipe">Начать заново</button>' : "");
+  var w = document.getElementById("wipe");
+  if(w){
+    w.addEventListener("click", function(){
+      wiping = true;
+      clearWork();
+      location.reload();
+    });
+  }
+}
+
+function restoreTask(t, s){
+  var el = document.getElementById("t" + t.id);
+  if(!el) return;
+  if(t.type === "choice"){
+    if(s.sel){
+      el.querySelectorAll(".opt").forEach(function(l){
+        if(l.dataset.v === s.sel){
+          l.classList.add("sel");
+          var r = l.querySelector("input");
+          if(r) r.checked = true;
+        }
+      });
+    }
+  } else if(s.given){
+    var inp = document.getElementById("in" + t.id);
+    if(inp) inp.value = s.given;
+  }
+  var host = el.querySelector(".hints"), k, h;
+  for(k = 0; k < s.hints && k < t.hints.length; k++){
+    h = document.createElement("div");
+    h.className = "hint";
+    h.innerHTML = "Подсказка " + (k + 1) + ": " + t.hints[k];
+    host.appendChild(h);
+  }
+  if(s.tries > 0){
+    var v = el.querySelector(".verdict");
+    el.classList.add(s.ok ? "ok" : "bad");
+    v.className = "verdict " + (s.ok ? "ok" : "bad");
+    if(s.ok){
+      v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    } else if(s.tries === 1){
+      v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+    } else {
+      v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    }
+    if(s.done) showSol(el, t);
+  }
+}
+
+(function(){
+  var saved = loadWork(), k;
+  if(saved){
+    spentBefore = saved.spent || 0;
+    if(saved.name){
+      var nm = document.getElementById("name");
+      if(nm && !nm.value) nm.value = saved.name;
+    }
+    TASKS.forEach(function(t){
+      var s = saved.tasks && saved.tasks[t.id];
+      if(!s) return;
+      var cur = state[t.id];
+      cur.tries = s.tries || 0; cur.hints = s.hints || 0;
+      cur.done = !!s.done; cur.ok = !!s.ok;
+      cur.given = s.given || ""; cur.sel = s.sel || null;
+      restoreTask(t, cur);
+    });
+    if(saved.tr){ for(k in saved.tr){ TRDONE[k] = saved.tr[k]; } }
+    if(saved.gaps && window.gapRestore) window.gapRestore(saved.gaps);
+    progress();
+    trStatus();
+  }
+  saveNote(saved ? saved.at : 0);
+  var nm = document.getElementById("name");
+  if(nm) nm.addEventListener("change", saveWork);
+  window.addEventListener("beforeunload", saveWork);
+})();
 
 </script>
 </body>
