@@ -1,0 +1,1619 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Уравнения и задачи на движение — домашнее задание, 5 класс</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:800px;margin:0 auto;padding:16px 14px 60px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+.f-formula{font-size:19px}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.step{margin:6px 0}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.fig{margin:12px 0;text-align:center}
+
+.tr{border:1px solid var(--line);border-radius:12px;padding:14px;margin:16px 0;background:var(--bg)}
+.trhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;
+  margin-bottom:8px}
+.trhead b{font-size:17px}
+.trscore{color:var(--muted);font-size:15px;white-space:nowrap}
+.trq{font-size:17px;margin:8px 0}
+.trfig{text-align:center;margin:8px 0}
+.trfig svg{width:100%;max-width:330px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.tropts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
+.tropt{border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;
+  background:var(--card);font-size:16px;text-align:left;min-height:46px}
+.tropt:hover{border-color:var(--acc)}
+.tropt.right{border-color:var(--ok);background:var(--ok-soft);font-weight:600}
+.tropt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.tropts.done .tropt{cursor:default}
+.trnum{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.trnum input{font:inherit;font-size:18px;padding:9px 11px;border-radius:9px;
+  border:1.5px solid var(--line);background:var(--card);color:var(--ink);max-width:130px}
+.trmsg{font-size:16px;margin-top:8px}
+.trmsg .v{font-weight:700}
+.trmsg .v.ok{color:var(--ok)} .trmsg .v.bad{color:var(--bad)}
+.trmsg .why{color:var(--muted);font-size:15px;margin-top:4px}
+.trbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.trbar button{font-size:15px;padding:8px 13px;min-height:42px}
+.trdone{background:var(--acc-soft);border-radius:10px;padding:12px;font-size:17px;
+  text-align:center;font-weight:600}
+
+.gaps{border:1px solid var(--line);border-radius:12px;padding:14px;margin:16px 0;background:var(--bg)}
+.gaps .ghead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  flex-wrap:wrap;margin-bottom:6px}
+.gaps .ghead b{font-size:17px}
+.gscore{color:var(--muted);font-size:15px;white-space:nowrap}
+.gline{font-size:19px;line-height:2.5;margin:6px 0;text-align:center;
+  white-space:normal;overflow-wrap:break-word}
+.gline.l{text-align:left;font-size:17px;line-height:2.2}
+.gnote{color:var(--muted);font-size:15px;margin:6px 0 0;line-height:1.5}
+input.gp{font:inherit;font-size:17px;text-align:center;padding:3px 4px;border-radius:8px;
+  border:1.8px solid var(--acc);background:var(--card);color:inherit;min-width:38px;
+  vertical-align:baseline}
+@media (max-width:460px){
+  .gline{font-size:17px;line-height:2.3}
+  input.gp{font-size:16px;min-width:34px}
+}
+input.gp.ok{border-color:#137a45;background:#e9f7ef;color:#0f6b3c;font-weight:700}
+input.gp.bad{border-color:#b3261e;background:#fdecea}
+@media (prefers-color-scheme:dark){input.gp.ok{background:#12281d}input.gp.bad{background:#2a1618}}
+.gbar{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px;align-items:center}
+.gbar button{font-size:15px;padding:8px 13px;min-height:42px}
+.gbar button:disabled{opacity:.55;cursor:default}
+.gmsg{font-size:16px;margin-top:8px}
+.gmsg .v{font-weight:700}
+.gmsg .v.ok{color:#137a45} .gmsg .v.bad{color:#b3261e}
+.gtip{color:var(--muted);font-size:15px;margin-top:5px;line-height:1.5}
+.gaps.need{outline:2px solid #c99a2e;outline-offset:3px}
+@media print{input.gp{border:1px solid #999;background:#fff}}
+
+.pw{white-space:nowrap}
+.pw sup{font-size:0.68em;line-height:0;vertical-align:0.62em;padding-left:1px}
+.nw{white-space:nowrap}
+.fx{display:block;background:var(--acc-soft,var(--acc2,#e8f0ff));border:1px solid var(--line);
+  border-radius:10px;padding:12px 13px;margin:12px 0;text-align:center;font-size:21px;
+  line-height:2.2;font-weight:600;white-space:normal;overflow-wrap:break-word}
+.sol .fx,.ex .fx{font-size:19px;margin:9px 0}
+.def{border:1px solid var(--line);border-left:4px solid #2f6bd8;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#eef3fb}
+.def .n{font-size:14px;color:#2f6bd8;font-weight:700;letter-spacing:.4px}
+.rule2{border:1px solid var(--line);border-left:4px solid #c0397a;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdf0f6}
+.rule2 .n{font-size:14px;color:#a02a62;font-weight:700;letter-spacing:.4px}
+.hard{border:1px solid var(--line);border-left:4px solid #7a3fbf;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#f4efff}
+.hard .n{font-size:14px;color:#5f2ea0;font-weight:700;letter-spacing:.4px}
+.warn{border:1px solid var(--line);border-left:4px solid #b3261e;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdecea}
+.warn .n{font-size:14px;color:#b3261e;font-weight:700;letter-spacing:.4px}
+@media (prefers-color-scheme:dark){.rule2{background:#2a1b23}.def{background:#18212f}
+  .hard{background:#221a33}.warn{background:#2a1618}}
+.ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;background:var(--bg)}
+.ex h3{margin-top:0}
+.tohw{font-weight:700;margin:18px 0 0;font-size:18px}
+.tohw span{color:var(--muted);font-weight:400;font-size:15px;display:block;margin-top:3px}
+.small,.mini{color:var(--muted);font-size:15px}
+.fr{display:inline-block;vertical-align:middle;text-align:center;margin:0 3px}
+.fr b{display:block;border-bottom:1.7px solid currentColor;padding:0 6px;font-weight:400;
+  white-space:nowrap}
+.fr i{display:block;font-style:normal;padding:0 6px;white-space:nowrap}
+.opts .opt{font-size:18px;line-height:2.2}
+.task>div:first-child{line-height:2.3}
+.trq,.trmsg .why{line-height:2.2}
+.tropt{line-height:2.1}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.alg{margin:10px 0 0;padding-left:22px}
+.alg li{margin:6px 0;font-size:17px}
+.pam h3{font-size:18px;margin:18px 0 2px}
+.pam h3:first-of-type{margin-top:10px}
+.fgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));margin:9px 0}
+.fbox{border:1px solid var(--line);border-radius:12px;padding:9px 12px 11px;background:var(--bg)}
+.fbox h4{margin:0 0 3px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.fbox p{margin:6px 0 0;line-height:1.6;font-size:16px}
+.fbox p.small{font-size:15px}
+.ff{font-size:20px;line-height:2.3;text-align:center;margin:6px 0;font-weight:600;
+  white-space:normal;overflow-wrap:break-word}
+.fbox .ff{font-size:18px;line-height:2.1}
+.trnav{margin-top:12px;display:flex;gap:9px;flex-wrap:wrap}
+.trgate{margin-top:12px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;
+  font-size:16px;background:var(--bg)}
+.trgate.ready{border-color:#1f8a54;background:#e9f7ef}
+.trgate ul{margin:6px 0 0;padding-left:20px}
+.trgate li{margin:3px 0}
+.trgate a{color:var(--acc);text-decoration:none;border-bottom:1px solid currentColor;cursor:pointer}
+@media (prefers-color-scheme:dark){.trgate.ready{background:#12281d}}
+.tr.need,.gaps.need{outline:2px solid #c99a2e;outline-offset:3px}
+.savenote{margin-top:9px;color:var(--muted);font-size:14.5px;line-height:1.45}
+.savenote button{font-size:14px;padding:5px 10px;min-height:34px;margin-left:8px}
+.sheet .f-formula{margin:5px 0;font-size:14.5px;line-height:2}
+@media print{
+  .sheet>.meta{display:none}
+  .sheet h2{font-size:18px;margin:0 0 5px}
+  .sheet .f-formula{font-size:11.5px;line-height:1.8;margin:2px 0}
+  .sheet .fr{font-size:10.5px;vertical-align:middle}
+}
+
+.fig{text-align:center;margin:12px 0}
+.fig svg{width:100%;max-width:440px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.figrow{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));
+  margin:12px 0}
+.figrow .fig{margin:0}
+.figrow .fig svg{max-width:100%}
+.trfig svg{width:100%;max-width:330px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.def>div+div{margin-top:4px}
+
+.live{border:1px solid var(--line);border-radius:12px;padding:12px 13px 13px;margin:14px 0;
+  background:var(--bg)}
+.live h4{margin:0 0 3px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.live .lhint{color:var(--muted);font-size:15px;margin:0 0 9px;line-height:1.5}
+.livebar{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:10px}
+.livebar button{font-size:15px;padding:7px 11px;min-height:40px;border-radius:9px;
+  border:1.6px solid var(--line);background:var(--card);color:inherit;cursor:pointer;
+  line-height:1.25}
+.livebar button.on{border-color:var(--acc);background:var(--acc);color:#fff;font-weight:600}
+.livefig{text-align:center}
+.livefig svg{width:100%;max-width:440px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.livemsg{font-size:16px;line-height:1.6;margin-top:9px;min-height:46px}
+.livemsg .v{font-weight:700}
+.livemsg .num{display:block;color:var(--muted);font-size:15px;margin-top:3px}
+.livemsg .warn2{display:block;color:#b3261e;font-size:15px;margin-top:3px}
+.livectl{display:grid;gap:7px;margin-top:11px}
+.livectl label{display:flex;align-items:center;gap:9px;font-size:15px;color:var(--muted)}
+.livectl input[type=range]{flex:1;min-width:0}
+.livectl .v{font-variant-numeric:tabular-nums;min-width:74px;text-align:right;
+  color:inherit;font-weight:600}
+
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+@media print{
+  body{background:#fff}
+  .bar{display:none !important}
+  .wrap>*{display:none !important}
+  .wrap>.sheet{display:block !important;border:none;margin:0;padding:0}
+  .sheet{font-size:13px}
+  .sheet h2{font-size:18px}
+  .sheet th,.sheet td{padding:4px 5px;font-size:12px}
+  @page{size:A4;margin:12mm}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card top">
+  <h1>Уравнения и задачи на движение</h1>
+  <div class="meta">Математика · 5 класс · десятичные дроби · 6 тренажёров,
+  4 блока с пропусками, 18 задач</div>
+  <label class="f" for="name">Имя и фамилия</label>
+  <input type="text" id="name" placeholder="напиши, как в журнале" autocapitalize="words" spellcheck="false">
+  <div class="savenote" id="savenote"></div>
+  <div class="note" style="margin-top:14px">
+    <b>Как работать.</b> Страница идёт по кругу: короткая порция теории — разобранный
+    пример — тренажёр или блок с пропусками — задачи. Не перепрыгивай вперёд.
+    <div style="margin-top:8px">Первое правило: в столбике <b>запятая стоит под
+    запятой</b>, а недостающие нули дописывают.</div>
+    <div style="margin-top:8px">Второе правило: обратный ход начинают с
+    <b>последнего</b> действия и меняют каждый знак на противоположный.</div>
+    <div style="margin-top:8px">Третье правило: навстречу и в разные стороны —
+    <b>сумма</b> скоростей, в одну сторону — <b>разность</b>.</div>
+    <div style="margin-top:8px">Ответы пиши с запятой и без единиц измерения:
+    6,83 или 25,65. Целое число — просто 18.</div>
+    <div style="margin-top:8px"><b>Пять тренажёров и все четыре блока с пропусками
+    нужно пройти до конца</b> — без этого работа не отправится. Тренажёр 6 —
+    дополнительный, в отправку он не входит.</div>
+  </div>
+</div>
+
+<div class="card pam">
+
+<h2>Памятка: всё, что нужно для этой работы</h2>
+<div class="meta">Сюда возвращаться, когда застрял. Ниже то же самое, но подробно
+и с разобранными примерами.</div>
+<h3>Столбик</h3>
+<div class="fgrid"><div class="fbox"><h4>Запятая под запятой</h4><p>Складывают и вычитают десятичные дроби в столбик, записывая запятую точно под запятой.</p><p class="small">Разряды тогда сами встанут на свои места.</p></div><div class="fbox"><h4>Дописать нули</h4><div class="ff"><span class='nw'>13,4</span> = <span class='nw'>13,40</span></div><p>Нули справа в конце дробной части ничего не меняют — их дописывают, чтобы знаков стало поровну.</p><p class="small"><span class='nw'>7,2 = 7,20</span>, <span class='nw'>5 = 5,00</span>.</p></div><div class="fbox"><h4>Запятая в ответе</h4><p>Запятая в результате стоит там же, под общей чертой.</p><p class="small">Если её забыть, ответ отличается в 10 или 100 раз.</p></div></div>
+<h3>Уравнения</h3>
+<div class="fgrid"><div class="fbox"><h4>Из слов в запись</h4><p>«Задумал число» — это x. «Увеличил на 7,2» — это <span class='nw'>x + 7,2</span>. «Из суммы вычел 0,63» — <span class='nw'>x + 7,2 − 0,63</span>.</p><p class="small">«Получил 13,4» — ставим знак равенства.</p></div><div class="fbox"><h4>Обратный ход</h4><div class="ff"><span class='nw'>x + a − b</span> = <span class='nw'>c</span> → <span class='nw'>x = c + b − a</span></div><p>Идём по цепочке назад и меняем каждое действие на противоположное.</p><p class="small">Плюс становится минусом, минус — плюсом.</p></div><div class="fbox"><h4>Компоненты</h4><p>Неизвестное слагаемое = сумма − известное слагаемое.</p><p class="small">Уменьшаемое = разность + вычитаемое. Вычитаемое = уменьшаемое − разность.</p></div><div class="fbox"><h4>Проверка</h4><p>Найденное число подставляют в условие и проходят по всем действиям.</p><p class="small">Совпало с тем, что «получил» — решение верное.</p></div></div>
+<h3>Движение</h3>
+<div class="fgrid"><div class="fbox"><h4>Скорость сближения</h4><div class="ff"><span class='nw'>v</span> = <span class='nw'>v₁ + v₂</span></div><p>Навстречу друг другу расстояние уменьшается на сумму скоростей за час.</p><p class="small">В одном направлении, когда задний быстрее, — на разность.</p></div><div class="fbox"><h4>Скорость удаления</h4><div class="ff"><span class='nw'>v</span> = <span class='nw'>v₁ + v₂</span></div><p>В противоположных направлениях расстояние растёт на сумму скоростей.</p><p class="small">В одном направлении, когда задний медленнее, — на разность.</p></div><div class="fbox"><h4>Через 1 час</h4><p>Сближаются: <span class='nw'>S − v</span>. Удаляются: <span class='nw'>S + v</span>.</p><p class="small">Сначала решают, сближаются они или удаляются, и только потом считают.</p></div><div class="fbox"><h4>Сумма или разность</h4><p>Едут в разные стороны или навстречу — <b>сумма</b> скоростей.</p><p class="small">Едут в одну сторону — <b>разность</b>.</p></div></div>
+<div class="figrow"><div class="fig"><svg viewBox="0 0 300 152"><rect x="0" y="0" width="300" height="152" rx="12" fill="#ffffff"/><line x1="36.0" y1="62.0" x2="264.0" y2="62.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><circle cx="46.0" cy="62.0" r="5.2" fill="#137a45"/><text x="46.0" y="82.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">A</text><line x1="59.0" y1="48.0" x2="88.0" y2="48.0" stroke="#137a45" stroke-width="2.2" stroke-linecap="round"/><path d="M 88.0 48.0 L 79.5 50.8 L 79.5 45.2 z" fill="#137a45"/><text x="74.0" y="40.0" font-size="14" fill="#137a45" text-anchor="middle" font-weight="600">7,5</text><circle cx="254.0" cy="62.0" r="5.2" fill="#b3261e"/><text x="254.0" y="82.0" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">B</text><line x1="241.0" y1="26.0" x2="212.0" y2="26.0" stroke="#b3261e" stroke-width="2.2" stroke-linecap="round"/><path d="M 212.0 26.0 L 220.5 23.2 L 220.5 28.8 z" fill="#b3261e"/><text x="226.0" y="18.0" font-size="14" fill="#b3261e" text-anchor="middle" font-weight="600">6,85</text><line x1="46.0" y1="98.0" x2="254.0" y2="98.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="46.0" y1="93.0" x2="46.0" y2="103.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="254.0" y1="93.0" x2="254.0" y2="103.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><text x="150.0" y="115.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">40 км</text><text x="150" y="146" font-size="14" fill="#5b6270" text-anchor="middle">навстречу друг другу</text></svg></div><div class="fig"><svg viewBox="0 0 300 152"><rect x="0" y="0" width="300" height="152" rx="12" fill="#ffffff"/><line x1="36.0" y1="62.0" x2="264.0" y2="62.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><circle cx="46.0" cy="62.0" r="5.2" fill="#137a45"/><text x="46.0" y="82.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">A</text><line x1="33.0" y1="48.0" x2="4.0" y2="48.0" stroke="#137a45" stroke-width="2.2" stroke-linecap="round"/><path d="M 4.0 48.0 L 12.5 45.2 L 12.5 50.8 z" fill="#137a45"/><text x="18.0" y="40.0" font-size="14" fill="#137a45" text-anchor="middle" font-weight="600">7,5</text><circle cx="254.0" cy="62.0" r="5.2" fill="#b3261e"/><text x="254.0" y="82.0" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">B</text><line x1="267.0" y1="26.0" x2="296.0" y2="26.0" stroke="#b3261e" stroke-width="2.2" stroke-linecap="round"/><path d="M 296.0 26.0 L 287.5 28.8 L 287.5 23.2 z" fill="#b3261e"/><text x="282.0" y="18.0" font-size="14" fill="#b3261e" text-anchor="middle" font-weight="600">6,85</text><line x1="46.0" y1="98.0" x2="254.0" y2="98.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="46.0" y1="93.0" x2="46.0" y2="103.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="254.0" y1="93.0" x2="254.0" y2="103.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><text x="150.0" y="115.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">40 км</text><text x="150" y="146" font-size="14" fill="#5b6270" text-anchor="middle">в противоположных направлениях</text></svg></div><div class="fig"><svg viewBox="0 0 300 152"><rect x="0" y="0" width="300" height="152" rx="12" fill="#ffffff"/><line x1="36.0" y1="62.0" x2="264.0" y2="62.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><circle cx="46.0" cy="62.0" r="5.2" fill="#137a45"/><text x="46.0" y="82.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">A</text><line x1="59.0" y1="48.0" x2="88.0" y2="48.0" stroke="#137a45" stroke-width="2.2" stroke-linecap="round"/><path d="M 88.0 48.0 L 79.5 50.8 L 79.5 45.2 z" fill="#137a45"/><text x="74.0" y="40.0" font-size="14" fill="#137a45" text-anchor="middle" font-weight="600">7,5</text><circle cx="254.0" cy="62.0" r="5.2" fill="#b3261e"/><text x="254.0" y="82.0" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">B</text><line x1="267.0" y1="26.0" x2="296.0" y2="26.0" stroke="#b3261e" stroke-width="2.2" stroke-linecap="round"/><path d="M 296.0 26.0 L 287.5 28.8 L 287.5 23.2 z" fill="#b3261e"/><text x="282.0" y="18.0" font-size="14" fill="#b3261e" text-anchor="middle" font-weight="600">6,85</text><line x1="46.0" y1="98.0" x2="254.0" y2="98.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="46.0" y1="93.0" x2="46.0" y2="103.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="254.0" y1="93.0" x2="254.0" y2="103.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><text x="150.0" y="115.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">40 км</text><text x="150" y="146" font-size="14" fill="#5b6270" text-anchor="middle">в одном направлении, догоняет</text></svg></div><div class="fig"><svg viewBox="0 0 300 152"><rect x="0" y="0" width="300" height="152" rx="12" fill="#ffffff"/><line x1="36.0" y1="62.0" x2="264.0" y2="62.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><circle cx="46.0" cy="62.0" r="5.2" fill="#137a45"/><text x="46.0" y="82.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">A</text><line x1="59.0" y1="48.0" x2="88.0" y2="48.0" stroke="#137a45" stroke-width="2.2" stroke-linecap="round"/><path d="M 88.0 48.0 L 79.5 50.8 L 79.5 45.2 z" fill="#137a45"/><text x="74.0" y="40.0" font-size="14" fill="#137a45" text-anchor="middle" font-weight="600">6,85</text><circle cx="254.0" cy="62.0" r="5.2" fill="#b3261e"/><text x="254.0" y="82.0" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">B</text><line x1="267.0" y1="26.0" x2="296.0" y2="26.0" stroke="#b3261e" stroke-width="2.2" stroke-linecap="round"/><path d="M 296.0 26.0 L 287.5 28.8 L 287.5 23.2 z" fill="#b3261e"/><text x="282.0" y="18.0" font-size="14" fill="#b3261e" text-anchor="middle" font-weight="600">7,5</text><line x1="46.0" y1="98.0" x2="254.0" y2="98.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="46.0" y1="93.0" x2="46.0" y2="103.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="254.0" y1="93.0" x2="254.0" y2="103.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><text x="150.0" y="115.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">40 км</text><text x="150" y="146" font-size="14" fill="#5b6270" text-anchor="middle">в одном направлении, отстаёт</text></svg></div></div>
+</div>
+
+<div class="card">
+
+<h2>1. Столбик: запятая под запятой</h2>
+<p>Всё, что дальше, держится на одном умении — сложить и вычесть десятичные дроби
+без ошибки. Правило одно:</p>
+<div class="rule2"><div class="n">ПРАВИЛО</div>
+Записывай числа так, чтобы <b>запятая стояла под запятой</b>. Если знаков после
+запятой разное количество, допиши нули — от этого число не меняется.</div>
+<div class="figrow"><div class="fig"><svg viewBox="0 0 260 187"><rect x="0" y="0" width="260" height="187" rx="12" fill="#ffffff"/><text x="129.0" y="40.0" font-size="20" fill="#15181e" text-anchor="middle" font-weight="600">3</text><text x="114.0" y="40.0" font-size="20" fill="#15181e" text-anchor="middle" font-weight="600">1</text><text x="137.5" y="40.0" font-size="20" fill="#15181e" text-anchor="middle" font-weight="600">,</text><text x="149.5" y="40.0" font-size="20" fill="#15181e" text-anchor="middle" font-weight="600">4</text><text x="164.5" y="40.0" font-size="20" fill="#e0952a" text-anchor="middle" font-weight="600">0</text><text x="129.0" y="74.0" font-size="20" fill="#15181e" text-anchor="middle" font-weight="600">0</text><text x="137.5" y="74.0" font-size="20" fill="#15181e" text-anchor="middle" font-weight="600">,</text><text x="149.5" y="74.0" font-size="20" fill="#15181e" text-anchor="middle" font-weight="600">6</text><text x="164.5" y="74.0" font-size="20" fill="#15181e" text-anchor="middle" font-weight="600">3</text><text x="77.5" y="74.0" font-size="20" fill="#15181e" text-anchor="middle" font-weight="600">+</text><line x1="71.5" y1="83.0" x2="180.0" y2="83.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><text x="129.0" y="114.0" font-size="20" fill="#2f6bd8" text-anchor="middle" font-weight="600">4</text><text x="114.0" y="114.0" font-size="20" fill="#2f6bd8" text-anchor="middle" font-weight="600">1</text><text x="137.5" y="114.0" font-size="20" fill="#2f6bd8" text-anchor="middle" font-weight="600">,</text><text x="149.5" y="114.0" font-size="20" fill="#2f6bd8" text-anchor="middle" font-weight="600">0</text><text x="164.5" y="114.0" font-size="20" fill="#2f6bd8" text-anchor="middle" font-weight="600">3</text><line x1="137.5" y1="22.0" x2="137.5" y2="128.0" stroke="#e0952a" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="4 4"/><text x="137.5" y="16.0" font-size="13" fill="#e0952a" text-anchor="middle" font-weight="600">запятая</text><text x="130" y="181" font-size="14" fill="#5b6270" text-anchor="middle">13,4 = 13,40, дальше складываем</text></svg></div><div class="fig"><svg viewBox="0 0 260 187"><rect x="0" y="0" width="260" height="187" rx="12" fill="#ffffff"/><text x="129.0" y="40.0" font-size="20" fill="#15181e" text-anchor="middle" font-weight="600">4</text><text x="114.0" y="40.0" font-size="20" fill="#15181e" text-anchor="middle" font-weight="600">1</text><text x="137.5" y="40.0" font-size="20" fill="#15181e" text-anchor="middle" font-weight="600">,</text><text x="149.5" y="40.0" font-size="20" fill="#15181e" text-anchor="middle" font-weight="600">0</text><text x="164.5" y="40.0" font-size="20" fill="#15181e" text-anchor="middle" font-weight="600">3</text><text x="129.0" y="74.0" font-size="20" fill="#15181e" text-anchor="middle" font-weight="600">7</text><text x="137.5" y="74.0" font-size="20" fill="#15181e" text-anchor="middle" font-weight="600">,</text><text x="149.5" y="74.0" font-size="20" fill="#15181e" text-anchor="middle" font-weight="600">2</text><text x="164.5" y="74.0" font-size="20" fill="#e0952a" text-anchor="middle" font-weight="600">0</text><text x="77.5" y="74.0" font-size="20" fill="#15181e" text-anchor="middle" font-weight="600">−</text><line x1="71.5" y1="83.0" x2="180.0" y2="83.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><text x="129.0" y="114.0" font-size="20" fill="#2f6bd8" text-anchor="middle" font-weight="600">6</text><text x="137.5" y="114.0" font-size="20" fill="#2f6bd8" text-anchor="middle" font-weight="600">,</text><text x="149.5" y="114.0" font-size="20" fill="#2f6bd8" text-anchor="middle" font-weight="600">8</text><text x="164.5" y="114.0" font-size="20" fill="#2f6bd8" text-anchor="middle" font-weight="600">3</text><line x1="137.5" y1="22.0" x2="137.5" y2="128.0" stroke="#e0952a" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="4 4"/><text x="137.5" y="16.0" font-size="13" fill="#e0952a" text-anchor="middle" font-weight="600">запятая</text><text x="130" y="181" font-size="14" fill="#5b6270" text-anchor="middle">7,2 = 7,20, дальше вычитаем</text></svg></div></div>
+<div class="ex"><h3>Пример 1</h3>
+<p>Найти значение выражения <span class='nw'>13,4 + 0,63</span>.</p>
+<div class='step'>1. Дописываем нуль: <span class='nw'>13,40 + 0,63</span>.</div><div class='step'>2. Складываем по разрядам: сотые 0 + 3 = 3, десятые 4 + 6 = 10 — единицу в целые.</div><div class='fx'><span class='nw'>13,4 + 0,63</span> = <span class='nw'>14,03</span></div><div class='step mini'>Нуль в ответе на месте десятых — не потеряй его: 14,3 и 14,03 — разные числа.</div>
+</div>
+<div class="ex"><h3>Пример 2</h3>
+<p>Найти значение выражения <span class='nw'>14,03 − 7,2</span>.</p>
+<div class='step'>1. Дописываем нуль: <span class='nw'>14,03 − 7,20</span>.</div><div class='step'>2. Вычитаем по разрядам, занимая у соседнего, где не хватает.</div><div class='fx'><span class='nw'>14,03 − 7,2</span> = <span class='nw'>6,83</span></div><div class='step mini'>Проверка сложением: <span class='nw'>6,83 + 7,2 = 14,03</span>. Сошлось.</div>
+</div>
+<div class="warn"><div class="n">ЧАСТАЯ ОШИБКА</div>
+Выравнивать числа по правому краю, а не по запятой. Тогда сотые складываются
+с десятыми, и ответ получается неверным.</div>
+<div class="tohw">Задание 1<span>Три примера в столбик.</span></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts1"><div class="trhead"><b>Тренажёр 1. Столбик</b><span class="trscore" id="ts1s"></span></div><div class="meta">Десять примеров. Перед вычислением мысленно допиши нули.</div><div class="trq" id="ts1q"></div><div class="trfig" id="ts1f"></div><div id="ts1a"></div><div class="trmsg" id="ts1m"></div><div class="trbar" id="ts1b"></div></div>
+</div>
+<div id="tasks1"></div>
+
+<div class="card">
+
+<h2>2. Из текста — в уравнение</h2>
+<p>Задача звучит так: «Я задумал число, увеличил его на 7,2, из полученной суммы
+вычел 0,63 и получил 13,4». Переводим по кусочкам.</p>
+<div class="def"><div class="n">СЛОВАРЬ</div>
+<div>«задумал число» → <b>x</b></div>
+<div>«увеличил на 7,2» → <b>x + 7,2</b></div>
+<div>«из полученной суммы вычел 0,63» → <b>x + 7,2 − 0,63</b></div>
+<div>«получил 13,4» → <b>= 13,4</b></div>
+</div>
+<div class='fx'><span class='nw'>x + 7,2 − 0,63</span> = <span class='nw'>13,4</span></div>
+<p>Удобно нарисовать цепочку: в левом окошке задуманное число, дальше действия
+по порядку, в правом — то, что получилось.</p>
+<div class="fig"><svg viewBox="0 0 420 192"><rect x="0" y="0" width="420" height="192" rx="12" fill="#ffffff"/><rect x="10.0" y="46.0" width="78.0" height="40" rx="9" fill="#e8f0ff" stroke="#2f6bd8" stroke-width="2"/><text x="49.0" y="72.0" font-size="17" fill="#2f6bd8" text-anchor="middle" font-weight="600">x</text><rect x="171.0" y="46.0" width="78.0" height="40" rx="9" fill="#ffffff" stroke="#5b6270" stroke-width="2" stroke-dasharray="5 4"/><text x="210.0" y="72.0" font-size="17" fill="#5b6270" text-anchor="middle" font-weight="600">?</text><rect x="332.0" y="46.0" width="78.0" height="40" rx="9" fill="#e7f6ee" stroke="#137a45" stroke-width="2"/><text x="371.0" y="72.0" font-size="17" fill="#137a45" text-anchor="middle" font-weight="600">13,4</text><line x1="91.0" y1="66.0" x2="168.0" y2="66.0" stroke="#7a3fbf" stroke-width="2.2" stroke-linecap="round"/><path d="M 168.0 66.0 L 159.5 68.8 L 159.5 63.2 z" fill="#7a3fbf"/><text x="129.5" y="57.0" font-size="15" fill="#7a3fbf" text-anchor="middle" font-weight="600">+ 7,2</text><line x1="252.0" y1="66.0" x2="329.0" y2="66.0" stroke="#7a3fbf" stroke-width="2.2" stroke-linecap="round"/><path d="M 329.0 66.0 L 320.5 68.8 L 320.5 63.2 z" fill="#7a3fbf"/><text x="290.5" y="57.0" font-size="15" fill="#7a3fbf" text-anchor="middle" font-weight="600">− 0,63</text><text x="210.0" y="111.0" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">обратный ход</text><line x1="168.0" y1="128.0" x2="91.0" y2="128.0" stroke="#b3261e" stroke-width="2.2" stroke-linecap="round"/><path d="M 91.0 128.0 L 99.5 125.2 L 99.5 130.8 z" fill="#b3261e"/><text x="129.5" y="147.0" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">− 7,2</text><line x1="329.0" y1="128.0" x2="252.0" y2="128.0" stroke="#b3261e" stroke-width="2.2" stroke-linecap="round"/><path d="M 252.0 128.0 L 260.5 125.2 L 260.5 130.8 z" fill="#b3261e"/><text x="290.5" y="147.0" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">+ 0,63</text><line x1="49.0" y1="88.0" x2="49.0" y2="128.0" stroke="#b3261e" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="4 4"/><line x1="371.0" y1="88.0" x2="371.0" y2="124.0" stroke="#b3261e" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="4 4"/><text x="210" y="186" font-size="14" fill="#5b6270" text-anchor="middle">Сверху — как шли вперёд, снизу — как вернуться назад</text></svg></div>
+<div class="rule2"><div class="n">ПОРЯДОК СЛОВ ВАЖЕН</div>
+«Увеличил на 7,2» и «увеличил в 7,2 раза» — разные действия. В нашей теме везде
+«на», значит сложение и вычитание.</div>
+<div class="ex"><h3>Пример 3</h3>
+<p>Записать уравнение: «Задумал число, уменьшил его на 6,4, к результату прибавил
+0,95 и получил 12,3».</p>
+<div class='step'>1. Задуманное число — x.</div><div class='step'>2. «Уменьшил на 6,4» — <span class='nw'>x − 6,4</span>.</div><div class='step'>3. «Прибавил 0,95» — <span class='nw'>x − 6,4 + 0,95</span>.</div><div class='fx'><span class='nw'>x − 6,4 + 0,95</span> = <span class='nw'>12,3</span></div>
+</div>
+
+</div>
+
+<div class="card">
+<div class="tr" id="ts2"><div class="trhead"><b>Тренажёр 2. Составь уравнение</b><span class="trscore" id="ts2s"></span></div><div class="meta">Десять вопросов на перевод слов в запись.</div><div class="trq" id="ts2q"></div><div class="trfig" id="ts2f"></div><div id="ts2a"></div><div class="trmsg" id="ts2m"></div><div class="trbar" id="ts2b"></div></div>
+</div>
+
+<div class="card">
+
+<h2>3. Решаем уравнение обратным ходом</h2>
+<div class="rule2"><div class="n">ГЛАВНАЯ МЫСЛЬ</div>
+Чтобы вернуться от результата к задуманному числу, идём по цепочке <b>назад</b>
+и каждое действие меняем на противоположное: было «+» — станет «−»,
+было «−» — станет «+».</div>
+<div class='fx'><span class='nw'>x + a − b</span> = <span class='nw'>c</span> &nbsp;⟹&nbsp; <span class='nw'>x = c + b − a</span></div>
+<div class="ex"><h3>Пример 4</h3>
+<p>Решить уравнение <span class='nw'>x + 7,2 − 0,63 = 13,4</span>.</p>
+<div class='step'>1. Последним было вычитание 0,63 — возвращаем его сложением: <span class='nw'>13,4 + 0,63 = 14,03</span>.</div><div class='step'>2. Перед этим прибавляли 7,2 — возвращаем вычитанием: <span class='nw'>14,03 − 7,2 = 6,83</span>.</div><div class='fx'>x = 6,83</div><div class='step'>3. Проверка: <span class='nw'>6,83 + 7,2 = 14,03</span>, затем <span class='nw'>14,03 − 0,63 = 13,4</span>.</div><div class='step mini'>Проверку делают всегда: она ловит и ошибку в столбике, и перепутанный знак.</div>
+</div>
+<div class="def"><div class="n">ВТОРОЙ СПОСОБ — ПО КОМПОНЕНТАМ</div>
+<div>Неизвестное слагаемое = сумма − известное слагаемое.</div>
+<div>Неизвестное уменьшаемое = разность + вычитаемое.</div>
+<div>Неизвестное вычитаемое = уменьшаемое − разность.</div>
+</div>
+<div class="ex"><h3>Пример 5</h3>
+<p>Решить уравнение <span class='nw'>x − 4,5 + 0,72 = 9,3</span>.</p>
+<div class='step'>1. Последним прибавляли 0,72 — вычитаем: <span class='nw'>9,3 − 0,72 = 8,58</span>.</div><div class='step'>2. Перед этим вычитали 4,5 — прибавляем: <span class='nw'>8,58 + 4,5 = 13,08</span>.</div><div class='fx'>x = 13,08</div><div class='step'>3. Проверка: <span class='nw'>13,08 − 4,5 = 8,58</span>, затем <span class='nw'>8,58 + 0,72 = 9,3</span>.</div>
+</div>
+<div class="warn"><div class="n">ЛОВУШКА</div>
+Обратный ход начинают с <b>последнего</b> действия, а не с первого. Если начать
+не с того конца, ответ будет другим.</div>
+<div class="tohw">Задания 2 и 3<span>Шесть уравнений: три записью и три словами.</span></div>
+</div>
+
+<div class="card">
+
+<h2>Живая цепочка: как работает обратный ход</h2>
+<div class="meta">Три кнопки — три вида условия. Ползунки меняют числа, а внизу
+сразу видно, как из результата получается задуманное число.</div>
+<div class="live" id="mv1" data-kind="chain"><h4>Задумал число и что-то с ним сделал</h4><p class="lhint">Сверху цепочка вперёд, снизу — обратный ход. Подвинь ползунок и посмотри, как меняется ответ.</p><div class="livebar" id="mv1b"></div><div class="livefig" id="mv1f"></div><div class="livemsg" id="mv1m"></div><div class="livectl" id="mv1c"></div></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts3"><div class="trhead"><b>Тренажёр 3. Реши уравнение</b><span class="trscore" id="ts3s"></span></div><div class="meta">Десять уравнений. Обратный ход начинай с последнего действия.</div><div class="trq" id="ts3q"></div><div class="trfig" id="ts3f"></div><div id="ts3a"></div><div class="trmsg" id="ts3m"></div><div class="trbar" id="ts3b"></div></div>
+</div>
+
+<div class="card">
+<div class="gaps" id="gp1"><div class="ghead"><b>Пропуски 1. Уравнение обратным ходом</b><span class="gscore" id="gp1s"></span></div><div class="meta">Пять пропусков. Задумал число, увеличил на 7,2, вычел 0,63, получил 13,4.</div><div class="gline">Дано: <span class='nw'>x + 7,2 − 0,63 = 13,4</span></div><div class="gline">последним вычитали 0,63, возвращаем сложением:</div><div class="gline"><span class='nw'>13,4 + 0,63 = <input class="gp" data-k="a1" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a1"></span></div><div class="gline">перед этим прибавляли 7,2, возвращаем вычитанием:</div><div class="gline"><span class='nw'><input class="gp" data-k="a2" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a2"> − 7,2 = <input class="gp" data-k="a3" size="4" style="width:68px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a3"></span></div><div class="gline">проверка: <span class='nw'><input class="gp" data-k="a4" size="4" style="width:68px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a4"> + 7,2 = 14,03</span>, затем <span class='nw'>14,03 − 0,63 = <input class="gp" data-k="a5" size="4" style="width:68px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a5"></span></div><div class="gnote">Числа пиши с запятой: 14,03. Нули в конце дробной части дописывать не нужно.</div><div class="gbar"><button type="button" class="pri" id="gp1go">Проверить</button></div><div class="gmsg" id="gp1m"></div><div class="gtip" id="gp1t"></div></div>
+</div>
+<div id="tasks2"></div>
+
+<div class="card">
+<div class="gaps" id="gp2"><div class="ghead"><b>Пропуски 2. Уравнение с минусом</b><span class="gscore" id="gp2s"></span></div><div class="meta">Пять пропусков. Сначала уменьшил, потом прибавил.</div><div class="gline">Дано: <span class='nw'>x − 4,5 + 0,72 = 9,3</span></div><div class="gline">последним прибавляли 0,72, возвращаем вычитанием:</div><div class="gline"><span class='nw'>9,3 − 0,72 = <input class="gp" data-k="b1" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b1"></span></div><div class="gline">перед этим вычитали 4,5, возвращаем сложением:</div><div class="gline"><span class='nw'><input class="gp" data-k="b2" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b2"> + 4,5 = <input class="gp" data-k="b3" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b3"></span></div><div class="gline">проверка: <span class='nw'><input class="gp" data-k="b4" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b4"> − 4,5 = 8,58</span>, затем <span class='nw'>8,58 + 0,72 = <input class="gp" data-k="b5" size="4" style="width:68px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b5"></span></div><div class="gnote">Здесь знаки обратного хода меняются наоборот: было «−» — стало «+».</div><div class="gbar"><button type="button" class="pri" id="gp2go">Проверить</button></div><div class="gmsg" id="gp2m"></div><div class="gtip" id="gp2t"></div></div>
+</div>
+<div id="tasks3"></div>
+
+<div class="card">
+
+<h2>4. Движение: сближение и удаление</h2>
+<p>Два тела едут по одной дороге. Всё сводится к одному вопросу: за час расстояние
+между ними <b>уменьшается</b> или <b>увеличивается</b> — и на сколько.</p>
+<div class="def"><div class="n">ЧЕТЫРЕ СЛУЧАЯ</div>
+<div>1. Навстречу друг другу — сближаются на <b>сумму</b> скоростей.</div>
+<div>2. В противоположных направлениях — удаляются на <b>сумму</b>.</div>
+<div>3. В одном направлении, задний быстрее (догоняет) — сближаются на
+<b>разность</b>.</div>
+<div>4. В одном направлении, задний медленнее (отстаёт) — удаляются на
+<b>разность</b>.</div>
+</div>
+<div class="figrow"><div class="fig"><svg viewBox="0 0 300 154"><rect x="0" y="0" width="300" height="154" rx="12" fill="#ffffff"/><line x1="36.0" y1="62.0" x2="264.0" y2="62.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><circle cx="46.0" cy="62.0" r="5.2" fill="#137a45"/><text x="46.0" y="82.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">A</text><line x1="59.0" y1="48.0" x2="88.0" y2="48.0" stroke="#137a45" stroke-width="2.2" stroke-linecap="round"/><path d="M 88.0 48.0 L 79.5 50.8 L 79.5 45.2 z" fill="#137a45"/><text x="74.0" y="40.0" font-size="14" fill="#137a45" text-anchor="middle" font-weight="600">7,5</text><circle cx="254.0" cy="62.0" r="5.2" fill="#b3261e"/><text x="254.0" y="82.0" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">B</text><line x1="241.0" y1="26.0" x2="212.0" y2="26.0" stroke="#b3261e" stroke-width="2.2" stroke-linecap="round"/><path d="M 212.0 26.0 L 220.5 23.2 L 220.5 28.8 z" fill="#b3261e"/><text x="226.0" y="18.0" font-size="14" fill="#b3261e" text-anchor="middle" font-weight="600">6,85</text><line x1="46.0" y1="98.0" x2="254.0" y2="98.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="46.0" y1="93.0" x2="46.0" y2="103.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="254.0" y1="93.0" x2="254.0" y2="103.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><text x="150.0" y="115.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">40 км</text><text x="150" y="148" font-size="14" fill="#5b6270" text-anchor="middle">навстречу друг другу</text></svg></div><div class="fig"><svg viewBox="0 0 300 154"><rect x="0" y="0" width="300" height="154" rx="12" fill="#ffffff"/><line x1="36.0" y1="62.0" x2="264.0" y2="62.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><circle cx="46.0" cy="62.0" r="5.2" fill="#137a45"/><text x="46.0" y="82.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">A</text><line x1="33.0" y1="48.0" x2="4.0" y2="48.0" stroke="#137a45" stroke-width="2.2" stroke-linecap="round"/><path d="M 4.0 48.0 L 12.5 45.2 L 12.5 50.8 z" fill="#137a45"/><text x="18.0" y="40.0" font-size="14" fill="#137a45" text-anchor="middle" font-weight="600">7,5</text><circle cx="254.0" cy="62.0" r="5.2" fill="#b3261e"/><text x="254.0" y="82.0" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">B</text><line x1="267.0" y1="26.0" x2="296.0" y2="26.0" stroke="#b3261e" stroke-width="2.2" stroke-linecap="round"/><path d="M 296.0 26.0 L 287.5 28.8 L 287.5 23.2 z" fill="#b3261e"/><text x="282.0" y="18.0" font-size="14" fill="#b3261e" text-anchor="middle" font-weight="600">6,85</text><line x1="46.0" y1="98.0" x2="254.0" y2="98.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="46.0" y1="93.0" x2="46.0" y2="103.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="254.0" y1="93.0" x2="254.0" y2="103.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><text x="150.0" y="115.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">40 км</text><text x="150" y="148" font-size="14" fill="#5b6270" text-anchor="middle">в противоположных направлениях</text></svg></div><div class="fig"><svg viewBox="0 0 300 154"><rect x="0" y="0" width="300" height="154" rx="12" fill="#ffffff"/><line x1="36.0" y1="62.0" x2="264.0" y2="62.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><circle cx="46.0" cy="62.0" r="5.2" fill="#137a45"/><text x="46.0" y="82.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">A</text><line x1="59.0" y1="48.0" x2="88.0" y2="48.0" stroke="#137a45" stroke-width="2.2" stroke-linecap="round"/><path d="M 88.0 48.0 L 79.5 50.8 L 79.5 45.2 z" fill="#137a45"/><text x="74.0" y="40.0" font-size="14" fill="#137a45" text-anchor="middle" font-weight="600">7,5</text><circle cx="254.0" cy="62.0" r="5.2" fill="#b3261e"/><text x="254.0" y="82.0" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">B</text><line x1="267.0" y1="26.0" x2="296.0" y2="26.0" stroke="#b3261e" stroke-width="2.2" stroke-linecap="round"/><path d="M 296.0 26.0 L 287.5 28.8 L 287.5 23.2 z" fill="#b3261e"/><text x="282.0" y="18.0" font-size="14" fill="#b3261e" text-anchor="middle" font-weight="600">6,85</text><line x1="46.0" y1="98.0" x2="254.0" y2="98.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="46.0" y1="93.0" x2="46.0" y2="103.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="254.0" y1="93.0" x2="254.0" y2="103.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><text x="150.0" y="115.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">40 км</text><text x="150" y="148" font-size="14" fill="#5b6270" text-anchor="middle">в одном направлении, догоняет</text></svg></div><div class="fig"><svg viewBox="0 0 300 154"><rect x="0" y="0" width="300" height="154" rx="12" fill="#ffffff"/><line x1="36.0" y1="62.0" x2="264.0" y2="62.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><circle cx="46.0" cy="62.0" r="5.2" fill="#137a45"/><text x="46.0" y="82.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">A</text><line x1="59.0" y1="48.0" x2="88.0" y2="48.0" stroke="#137a45" stroke-width="2.2" stroke-linecap="round"/><path d="M 88.0 48.0 L 79.5 50.8 L 79.5 45.2 z" fill="#137a45"/><text x="74.0" y="40.0" font-size="14" fill="#137a45" text-anchor="middle" font-weight="600">6,85</text><circle cx="254.0" cy="62.0" r="5.2" fill="#b3261e"/><text x="254.0" y="82.0" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">B</text><line x1="267.0" y1="26.0" x2="296.0" y2="26.0" stroke="#b3261e" stroke-width="2.2" stroke-linecap="round"/><path d="M 296.0 26.0 L 287.5 28.8 L 287.5 23.2 z" fill="#b3261e"/><text x="282.0" y="18.0" font-size="14" fill="#b3261e" text-anchor="middle" font-weight="600">7,5</text><line x1="46.0" y1="98.0" x2="254.0" y2="98.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="46.0" y1="93.0" x2="46.0" y2="103.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="254.0" y1="93.0" x2="254.0" y2="103.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><text x="150.0" y="115.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">40 км</text><text x="150" y="148" font-size="14" fill="#5b6270" text-anchor="middle">в одном направлении, отстаёт</text></svg></div></div>
+<div class="rule2"><div class="n">КАК НЕ ПЕРЕПУТАТЬ</div>
+Едут по одной прямой в разные стороны (навстречу или врозь) — <b>складываем</b>
+скорости. Едут в одну сторону — <b>вычитаем</b>.</div>
+<div class='fx'><span class='nw'>сближаются: S − v · t</span> &nbsp;&nbsp; <span class='nw'>удаляются: S + v · t</span></div>
+<p>Здесь v — скорость сближения или удаления, а t — время. В наших задачах
+<span class='nw'>t = 1 ч</span>, поэтому умножать не придётся: просто прибавляем
+или вычитаем.</p>
+
+</div>
+
+<div class="card">
+
+<h2>Живая схема движения</h2>
+<div class="meta">Четыре кнопки — четыре случая. Ползунки меняют расстояние,
+обе скорости и время. Верхний этаж — как было, нижний — что стало.</div>
+<div class="live" id="mv2" data-kind="move"><h4>Два тела на одной дороге</h4><p class="lhint">Попробуй вывести время так, чтобы они встретились: расстояние должно дойти до нуля.</p><div class="livebar" id="mv2b"></div><div class="livefig" id="mv2f"></div><div class="livemsg" id="mv2m"></div><div class="livectl" id="mv2c"></div></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts4"><div class="trhead"><b>Тренажёр 4. Сближаются или удаляются</b><span class="trscore" id="ts4s"></span></div><div class="meta">Десять ситуаций. Сумма или разность — решай по направлению.</div><div class="trq" id="ts4q"></div><div class="trfig" id="ts4f"></div><div id="ts4a"></div><div class="trmsg" id="ts4m"></div><div class="trbar" id="ts4b"></div></div>
+</div>
+
+<div class="card">
+
+<h2>5. Разбор задачи про лыжников</h2>
+<p>Расстояние между лыжниками <span class='nw'>40 км</span>. Их скорости <span class='nw'>7,5 км/ч</span> и <span class='nw'>6,85 км/ч</span>. Какое расстояние будет
+между ними через 1 ч в каждом из четырёх случаев?</p>
+<div class='step'>Сначала посчитаем один раз оба вспомогательных числа.</div><div class='fx'><span class='nw'>сумма скоростей: 7,5 + 6,85</span> = <span class='nw'>14,35 км/ч</span></div><div class='fx'><span class='nw'>разность скоростей: 7,5 − 6,85</span> = <span class='nw'>0,65 км/ч</span></div>
+<div class="ex"><h3>а) Навстречу друг другу</h3>
+<div class="fig"><svg viewBox="0 0 430 304"><rect x="0" y="0" width="430" height="304" rx="12" fill="#ffffff"/><line x1="36.0" y1="50.0" x2="394.0" y2="50.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><circle cx="46.0" cy="50.0" r="5.2" fill="#5b6270"/><text x="46.0" y="70.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">A</text><circle cx="384.0" cy="50.0" r="5.2" fill="#5b6270"/><text x="384.0" y="70.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">B</text><line x1="46.0" y1="76.0" x2="384.0" y2="76.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><line x1="46.0" y1="71.0" x2="46.0" y2="81.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><line x1="384.0" y1="71.0" x2="384.0" y2="81.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><text x="215.0" y="93.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">40 км</text><text x="215.0" y="112.0" font-size="15" fill="#7a3fbf" text-anchor="middle" font-weight="600">через 1 ч</text><line x1="24.0" y1="96.0" x2="24.0" y2="126.0" stroke="#7a3fbf" stroke-width="2.0" stroke-linecap="round"/><path d="M 24.0 126.0 L 21.2 117.5 L 26.8 117.5 z" fill="#7a3fbf"/><line x1="406.0" y1="96.0" x2="406.0" y2="126.0" stroke="#7a3fbf" stroke-width="2.0" stroke-linecap="round"/><path d="M 406.0 126.0 L 403.2 117.5 L 408.8 117.5 z" fill="#7a3fbf"/><line x1="36.0" y1="196.0" x2="394.0" y2="196.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><circle cx="109.4" cy="196.0" r="5.2" fill="#137a45"/><text x="109.4" y="216.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">A₁</text><line x1="122.4" y1="182.0" x2="151.4" y2="182.0" stroke="#137a45" stroke-width="2.2" stroke-linecap="round"/><path d="M 151.4 182.0 L 142.8 184.8 L 142.8 179.2 z" fill="#137a45"/><text x="137.4" y="174.0" font-size="14" fill="#137a45" text-anchor="middle" font-weight="600">7,5</text><circle cx="326.1" cy="196.0" r="5.2" fill="#b3261e"/><text x="326.1" y="216.0" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">B₁</text><line x1="313.1" y1="160.0" x2="284.1" y2="160.0" stroke="#b3261e" stroke-width="2.2" stroke-linecap="round"/><path d="M 284.1 160.0 L 292.7 157.2 L 292.7 162.8 z" fill="#b3261e"/><text x="298.1" y="152.0" font-size="14" fill="#b3261e" text-anchor="middle" font-weight="600">6,85</text><line x1="109.4" y1="240.0" x2="326.1" y2="240.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="109.4" y1="235.0" x2="109.4" y2="245.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="326.1" y1="235.0" x2="326.1" y2="245.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><text x="217.7" y="257.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">25,65 км</text><text x="215" y="298" font-size="14" fill="#5b6270" text-anchor="middle">сближаются на 14,35 км за час</text></svg></div><div class='step'>Сближаются на сумму: <span class='nw'>40 − 14,35 = 25,65</span>.</div><div class='fx'>25,65 км</div>
+</div>
+<div class="ex"><h3>б) В противоположных направлениях</h3>
+<div class="fig"><svg viewBox="0 0 430 304"><rect x="0" y="0" width="430" height="304" rx="12" fill="#ffffff"/><line x1="36.0" y1="50.0" x2="394.0" y2="50.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><circle cx="46.0" cy="50.0" r="5.2" fill="#5b6270"/><text x="46.0" y="70.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">A</text><circle cx="384.0" cy="50.0" r="5.2" fill="#5b6270"/><text x="384.0" y="70.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">B</text><line x1="46.0" y1="76.0" x2="384.0" y2="76.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><line x1="46.0" y1="71.0" x2="46.0" y2="81.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><line x1="384.0" y1="71.0" x2="384.0" y2="81.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><text x="215.0" y="93.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">40 км</text><text x="215.0" y="112.0" font-size="15" fill="#7a3fbf" text-anchor="middle" font-weight="600">через 1 ч</text><line x1="24.0" y1="96.0" x2="24.0" y2="126.0" stroke="#7a3fbf" stroke-width="2.0" stroke-linecap="round"/><path d="M 24.0 126.0 L 21.2 117.5 L 26.8 117.5 z" fill="#7a3fbf"/><line x1="406.0" y1="96.0" x2="406.0" y2="126.0" stroke="#7a3fbf" stroke-width="2.0" stroke-linecap="round"/><path d="M 406.0 126.0 L 403.2 117.5 L 408.8 117.5 z" fill="#7a3fbf"/><line x1="36.0" y1="196.0" x2="394.0" y2="196.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><circle cx="46.0" cy="196.0" r="5.2" fill="#137a45"/><text x="46.0" y="216.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">A₁</text><line x1="33.0" y1="182.0" x2="4.0" y2="182.0" stroke="#137a45" stroke-width="2.2" stroke-linecap="round"/><path d="M 4.0 182.0 L 12.5 179.2 L 12.5 184.8 z" fill="#137a45"/><text x="18.0" y="174.0" font-size="14" fill="#137a45" text-anchor="middle" font-weight="600">7,5</text><circle cx="384.0" cy="196.0" r="5.2" fill="#b3261e"/><text x="384.0" y="216.0" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">B₁</text><line x1="397.0" y1="160.0" x2="426.0" y2="160.0" stroke="#b3261e" stroke-width="2.2" stroke-linecap="round"/><path d="M 426.0 160.0 L 417.5 162.8 L 417.5 157.2 z" fill="#b3261e"/><text x="412.0" y="152.0" font-size="14" fill="#b3261e" text-anchor="middle" font-weight="600">6,85</text><line x1="46.0" y1="240.0" x2="384.0" y2="240.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="46.0" y1="235.0" x2="46.0" y2="245.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="384.0" y1="235.0" x2="384.0" y2="245.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><text x="215.0" y="257.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">54,35 км</text><text x="215" y="298" font-size="14" fill="#5b6270" text-anchor="middle">удаляются на 14,35 км за час</text></svg></div><div class='step'>Удаляются на сумму: <span class='nw'>40 + 14,35 = 54,35</span>.</div><div class='fx'>54,35 км</div>
+</div>
+<div class="ex"><h3>в) В одном направлении, быстрый догоняет</h3>
+<div class="fig"><svg viewBox="0 0 430 304"><rect x="0" y="0" width="430" height="304" rx="12" fill="#ffffff"/><line x1="36.0" y1="50.0" x2="394.0" y2="50.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><circle cx="46.0" cy="50.0" r="5.2" fill="#5b6270"/><text x="46.0" y="70.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">A</text><circle cx="384.0" cy="50.0" r="5.2" fill="#5b6270"/><text x="384.0" y="70.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">B</text><line x1="46.0" y1="76.0" x2="384.0" y2="76.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><line x1="46.0" y1="71.0" x2="46.0" y2="81.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><line x1="384.0" y1="71.0" x2="384.0" y2="81.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><text x="215.0" y="93.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">40 км</text><text x="215.0" y="112.0" font-size="15" fill="#7a3fbf" text-anchor="middle" font-weight="600">через 1 ч</text><line x1="24.0" y1="96.0" x2="24.0" y2="126.0" stroke="#7a3fbf" stroke-width="2.0" stroke-linecap="round"/><path d="M 24.0 126.0 L 21.2 117.5 L 26.8 117.5 z" fill="#7a3fbf"/><line x1="406.0" y1="96.0" x2="406.0" y2="126.0" stroke="#7a3fbf" stroke-width="2.0" stroke-linecap="round"/><path d="M 406.0 126.0 L 403.2 117.5 L 408.8 117.5 z" fill="#7a3fbf"/><line x1="36.0" y1="196.0" x2="394.0" y2="196.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><circle cx="100.1" cy="196.0" r="5.2" fill="#137a45"/><text x="100.1" y="216.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">A₁</text><line x1="113.1" y1="182.0" x2="142.1" y2="182.0" stroke="#137a45" stroke-width="2.2" stroke-linecap="round"/><path d="M 142.1 182.0 L 133.6 184.8 L 133.6 179.2 z" fill="#137a45"/><text x="128.1" y="174.0" font-size="14" fill="#137a45" text-anchor="middle" font-weight="600">7,5</text><circle cx="384.0" cy="196.0" r="5.2" fill="#b3261e"/><text x="384.0" y="216.0" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">B₁</text><line x1="397.0" y1="160.0" x2="426.0" y2="160.0" stroke="#b3261e" stroke-width="2.2" stroke-linecap="round"/><path d="M 426.0 160.0 L 417.5 162.8 L 417.5 157.2 z" fill="#b3261e"/><text x="412.0" y="152.0" font-size="14" fill="#b3261e" text-anchor="middle" font-weight="600">6,85</text><line x1="100.1" y1="240.0" x2="384.0" y2="240.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="100.1" y1="235.0" x2="100.1" y2="245.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="384.0" y1="235.0" x2="384.0" y2="245.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><text x="242.1" y="257.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">39,35 км</text><text x="215" y="298" font-size="14" fill="#5b6270" text-anchor="middle">сближаются на 0,65 км за час</text></svg></div><div class='step'>Сближаются на разность: <span class='nw'>40 − 0,65 = 39,35</span>.</div><div class='fx'>39,35 км</div><div class='step mini'>Разность маленькая, поэтому за час расстояние почти не изменилось. Так и должно быть.</div>
+</div>
+<div class="ex"><h3>г) В одном направлении, медленный отстаёт</h3>
+<div class="fig"><svg viewBox="0 0 430 304"><rect x="0" y="0" width="430" height="304" rx="12" fill="#ffffff"/><line x1="36.0" y1="50.0" x2="394.0" y2="50.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><circle cx="46.0" cy="50.0" r="5.2" fill="#5b6270"/><text x="46.0" y="70.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">A</text><circle cx="384.0" cy="50.0" r="5.2" fill="#5b6270"/><text x="384.0" y="70.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">B</text><line x1="46.0" y1="76.0" x2="384.0" y2="76.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><line x1="46.0" y1="71.0" x2="46.0" y2="81.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><line x1="384.0" y1="71.0" x2="384.0" y2="81.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><text x="215.0" y="93.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">40 км</text><text x="215.0" y="112.0" font-size="15" fill="#7a3fbf" text-anchor="middle" font-weight="600">через 1 ч</text><line x1="24.0" y1="96.0" x2="24.0" y2="126.0" stroke="#7a3fbf" stroke-width="2.0" stroke-linecap="round"/><path d="M 24.0 126.0 L 21.2 117.5 L 26.8 117.5 z" fill="#7a3fbf"/><line x1="406.0" y1="96.0" x2="406.0" y2="126.0" stroke="#7a3fbf" stroke-width="2.0" stroke-linecap="round"/><path d="M 406.0 126.0 L 403.2 117.5 L 408.8 117.5 z" fill="#7a3fbf"/><line x1="36.0" y1="196.0" x2="394.0" y2="196.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><circle cx="94.7" cy="196.0" r="5.2" fill="#137a45"/><text x="94.7" y="216.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">A₁</text><line x1="107.7" y1="182.0" x2="136.7" y2="182.0" stroke="#137a45" stroke-width="2.2" stroke-linecap="round"/><path d="M 136.7 182.0 L 128.2 184.8 L 128.2 179.2 z" fill="#137a45"/><text x="122.7" y="174.0" font-size="14" fill="#137a45" text-anchor="middle" font-weight="600">6,85</text><circle cx="384.0" cy="196.0" r="5.2" fill="#b3261e"/><text x="384.0" y="216.0" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">B₁</text><line x1="397.0" y1="160.0" x2="426.0" y2="160.0" stroke="#b3261e" stroke-width="2.2" stroke-linecap="round"/><path d="M 426.0 160.0 L 417.5 162.8 L 417.5 157.2 z" fill="#b3261e"/><text x="412.0" y="152.0" font-size="14" fill="#b3261e" text-anchor="middle" font-weight="600">7,5</text><line x1="94.7" y1="240.0" x2="384.0" y2="240.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="94.7" y1="235.0" x2="94.7" y2="245.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="384.0" y1="235.0" x2="384.0" y2="245.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><text x="239.4" y="257.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">40,65 км</text><text x="215" y="298" font-size="14" fill="#5b6270" text-anchor="middle">удаляются на 0,65 км за час</text></svg></div><div class='step'>Удаляются на разность: <span class='nw'>40 + 0,65 = 40,65</span>.</div><div class='fx'>40,65 км</div>
+</div>
+<div class="def"><div class="n">ЗАПОМНИ ПОРЯДОК</div>
+<div>1. Посчитать сумму и разность скоростей.</div>
+<div>2. Решить, сближаются или удаляются.</div>
+<div>3. Вычесть или прибавить нужное число к расстоянию.</div>
+</div>
+<div class="tohw">Задания 4 и 5<span>Шесть задач на движение.</span></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts5"><div class="trhead"><b>Тренажёр 5. Расстояние через 1 ч</b><span class="trscore" id="ts5s"></span></div><div class="meta">Десять задач. Ответ — число километров.</div><div class="trq" id="ts5q"></div><div class="trfig" id="ts5f"></div><div id="ts5a"></div><div class="trmsg" id="ts5m"></div><div class="trbar" id="ts5b"></div></div>
+</div>
+
+<div class="card">
+<div class="gaps" id="gp3"><div class="ghead"><b>Пропуски 3. Лыжники</b><span class="gscore" id="gp3s"></span></div><div class="meta">Шесть пропусков. Все четыре случая сразу.</div><div class="gline">Лыжники: <span class='nw'>S = 40 км</span>, скорости <span class='nw'>7,5 км/ч</span> и <span class='nw'>6,85 км/ч</span></div><div class="gline">сумма скоростей: <span class='nw'>7,5 + 6,85 = <input class="gp" data-k="c1" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c1"></span></div><div class="gline">разность скоростей: <span class='nw'>7,5 − 6,85 = <input class="gp" data-k="c2" size="4" style="width:68px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c2"></span></div><div class="gline">а) навстречу: <span class='nw'>40 − 14,35 = <input class="gp" data-k="c3" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c3"></span></div><div class="gline">б) в разные стороны: <span class='nw'>40 + 14,35 = <input class="gp" data-k="c4" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c4"></span></div><div class="gline">в) догоняет: <span class='nw'>40 − 0,65 = <input class="gp" data-k="c5" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c5"></span></div><div class="gline">г) отстаёт: <span class='nw'>40 + 0,65 = <input class="gp" data-k="c6" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c6"></span></div><div class="gnote">Сумму и разность считают один раз, а дальше только прибавляют или вычитают.</div><div class="gbar"><button type="button" class="pri" id="gp3go">Проверить</button></div><div class="gmsg" id="gp3m"></div><div class="gtip" id="gp3t"></div></div>
+</div>
+<div id="tasks4"></div>
+
+<div class="card">
+<div class="gaps" id="gp4"><div class="ghead"><b>Пропуски 4. Велосипедисты</b><span class="gscore" id="gp4s"></span></div><div class="meta">Шесть пропусков. Те же четыре случая, другие числа.</div><div class="gline">Велосипедисты: <span class='nw'>S = 32 км</span>, скорости <span class='nw'>12,5 км/ч</span> и <span class='nw'>15,78 км/ч</span></div><div class="gline">сумма скоростей: <span class='nw'>12,5 + 15,78 = <input class="gp" data-k="d1" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d1"></span></div><div class="gline">разность скоростей: <span class='nw'>15,78 − 12,5 = <input class="gp" data-k="d2" size="4" style="width:68px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d2"></span></div><div class="gline">а) навстречу: <span class='nw'>32 − 28,28 = <input class="gp" data-k="d3" size="4" style="width:68px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d3"></span></div><div class="gline">б) в разные стороны: <span class='nw'>32 + 28,28 = <input class="gp" data-k="d4" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d4"></span></div><div class="gline">в) догоняет: <span class='nw'>32 − 3,28 = <input class="gp" data-k="d5" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d5"></span></div><div class="gline">г) отстаёт: <span class='nw'>32 + 3,28 = <input class="gp" data-k="d6" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d6"></span></div><div class="gnote">Здесь скорости отличаются сильнее, поэтому в пункте «навстречу» они почти встретились.</div><div class="gbar"><button type="button" class="pri" id="gp4go">Проверить</button></div><div class="gmsg" id="gp4m"></div><div class="gtip" id="gp4t"></div></div>
+</div>
+<div id="tasks5"></div>
+
+<div class="card">
+
+<h2>6. Ловушки в задачах на движение</h2>
+<div class="warn"><div class="n">ЛОВУШКА 1: СУММА ИЛИ РАЗНОСТЬ</div>
+«В одном направлении» — всегда разность, даже если кажется, что они едут «вместе».
+«В противоположных» и «навстречу» — всегда сумма.</div>
+<div class="warn"><div class="n">ЛОВУШКА 2: ДОГОНЯЕТ ИЛИ ОТСТАЁТ</div>
+Смотри, кто сзади. Если сзади тот, кто быстрее, — он догоняет, расстояние
+<b>уменьшается</b>. Если сзади тот, кто медленнее, — он отстаёт, расстояние
+<b>растёт</b>. Числа одни и те же, ответы разные.</div>
+<div class="figrow"><div class="fig"><svg viewBox="0 0 300 154"><rect x="0" y="0" width="300" height="154" rx="12" fill="#ffffff"/><line x1="36.0" y1="62.0" x2="264.0" y2="62.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><circle cx="46.0" cy="62.0" r="5.2" fill="#137a45"/><text x="46.0" y="82.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">A</text><line x1="59.0" y1="48.0" x2="88.0" y2="48.0" stroke="#137a45" stroke-width="2.2" stroke-linecap="round"/><path d="M 88.0 48.0 L 79.5 50.8 L 79.5 45.2 z" fill="#137a45"/><text x="74.0" y="40.0" font-size="14" fill="#137a45" text-anchor="middle" font-weight="600">7,5</text><circle cx="254.0" cy="62.0" r="5.2" fill="#b3261e"/><text x="254.0" y="82.0" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">B</text><line x1="267.0" y1="26.0" x2="296.0" y2="26.0" stroke="#b3261e" stroke-width="2.2" stroke-linecap="round"/><path d="M 296.0 26.0 L 287.5 28.8 L 287.5 23.2 z" fill="#b3261e"/><text x="282.0" y="18.0" font-size="14" fill="#b3261e" text-anchor="middle" font-weight="600">6,85</text><line x1="46.0" y1="98.0" x2="254.0" y2="98.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="46.0" y1="93.0" x2="46.0" y2="103.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="254.0" y1="93.0" x2="254.0" y2="103.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><text x="150.0" y="115.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">40 км</text><text x="150" y="148" font-size="14" fill="#5b6270" text-anchor="middle">сзади быстрый: 40 − 0,65 = 39,35</text></svg></div><div class="fig"><svg viewBox="0 0 300 154"><rect x="0" y="0" width="300" height="154" rx="12" fill="#ffffff"/><line x1="36.0" y1="62.0" x2="264.0" y2="62.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><circle cx="46.0" cy="62.0" r="5.2" fill="#137a45"/><text x="46.0" y="82.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">A</text><line x1="59.0" y1="48.0" x2="88.0" y2="48.0" stroke="#137a45" stroke-width="2.2" stroke-linecap="round"/><path d="M 88.0 48.0 L 79.5 50.8 L 79.5 45.2 z" fill="#137a45"/><text x="74.0" y="40.0" font-size="14" fill="#137a45" text-anchor="middle" font-weight="600">6,85</text><circle cx="254.0" cy="62.0" r="5.2" fill="#b3261e"/><text x="254.0" y="82.0" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">B</text><line x1="267.0" y1="26.0" x2="296.0" y2="26.0" stroke="#b3261e" stroke-width="2.2" stroke-linecap="round"/><path d="M 296.0 26.0 L 287.5 28.8 L 287.5 23.2 z" fill="#b3261e"/><text x="282.0" y="18.0" font-size="14" fill="#b3261e" text-anchor="middle" font-weight="600">7,5</text><line x1="46.0" y1="98.0" x2="254.0" y2="98.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="46.0" y1="93.0" x2="46.0" y2="103.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="254.0" y1="93.0" x2="254.0" y2="103.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><text x="150.0" y="115.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">40 км</text><text x="150" y="148" font-size="14" fill="#5b6270" text-anchor="middle">сзади медленный: 40 + 0,65 = 40,65</text></svg></div></div>
+<div class="ex"><h3>Пример 6</h3>
+<p>Расстояние между пешеходами <span class='nw'>18 км</span>, скорости <span class='nw'>9,4 км/ч</span> и <span class='nw'>8,6 км/ч</span>, идут навстречу.
+Какое расстояние будет между ними через 1 ч?</p>
+<div class='step'>1. Сумма скоростей: <span class='nw'>9,4 + 8,6 = 18</span>.</div><div class='step'>2. Сближаются ровно на 18 км: <span class='nw'>18 − 18 = 0</span>.</div><div class='fx'>0 км — они как раз встретятся</div><div class='step mini'>Если бы времени было больше часа, они бы разошлись и расстояние снова начало расти. Проверь это на живом чертеже выше.</div>
+</div>
+<div class="ex"><h3>Пример 7</h3>
+<p>Расстояние было <span class='nw'>40 км</span>, лыжники ехали навстречу, и через 1 ч
+между ними стало <span class='nw'>25,65 км</span>. Скорость первого <span class='nw'>7,5 км/ч</span>. Какова скорость второго?</p>
+<div class='step'>1. За час сблизились на <span class='nw'>40 − 25,65 = 14,35</span> км.</div><div class='step'>2. Это сумма скоростей, значит <span class='nw'>14,35 − 7,5 = 6,85</span>.</div><div class='fx'>6,85 км/ч</div>
+</div>
+<div class="tohw">Задание 6<span>Три задачи посложнее.</span></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts6"><div class="trhead"><b>Тренажёр 6. Обратные задачи · дополнительный</b><span class="trscore" id="ts6s"></span></div><div class="meta">Десять задач: по расстояниям найти скорости. В отправку не входит.</div><div class="trq" id="ts6q"></div><div class="trfig" id="ts6f"></div><div id="ts6a"></div><div class="trmsg" id="ts6m"></div><div class="trbar" id="ts6b"></div></div>
+</div>
+<div id="tasks6"></div>
+<div id="tasks"></div>
+
+<div class="card sheet">
+  <h2>Шпаргалка</h2>
+  <div class="meta">Печатается на один лист A4: Ctrl+P (⌘+P) → печать.</div>
+  <p class="f-formula"><b>Столбик.</b> Запятая под запятой. Не хватает знаков —
+  допиши нули: 13,4 = 13,40; 7,2 = 7,20; 5 = 5,00.</p>
+  <p class="f-formula"><b>Запятая в ответе.</b> Стоит ровно под общей чертой, на том
+  же месте. 14,03 и 14,3 — разные числа.</p>
+  <p class="f-formula"><b>Из слов в запись.</b> «задумал число» → x; «увеличил на a»
+  → x + a; «уменьшил на a» → x − a; «получил c» → = c.</p>
+  <p class="f-formula"><b>Обратный ход.</b> x + a − b = c ⟹ x = c + b − a.
+  Идём с конца и меняем каждый знак на противоположный.</p>
+  <p class="f-formula"><b>Компоненты.</b> Слагаемое = сумма − второе слагаемое.
+  Уменьшаемое = разность + вычитаемое. Вычитаемое = уменьшаемое − разность.</p>
+  <p class="f-formula"><b>Проверка.</b> Подставь найденное число и пройди все действия
+  по условию. Должно получиться то, что «получил».</p>
+  <p class="f-formula"><b>Скорость сближения и удаления.</b> Навстречу и в разные
+  стороны — сумма скоростей. В одном направлении — разность.</p>
+  <p class="f-formula"><b>Четыре случая через 1 ч.</b> навстречу: S − (v₁ + v₂);
+  в разные стороны: S + (v₁ + v₂); догоняет: S − |v₁ − v₂|; отстаёт: S + |v₁ − v₂|.</p>
+  <p class="f-formula"><b>Кто сзади.</b> Сзади быстрый — догоняет, расстояние
+  уменьшается. Сзади медленный — отстаёт, расстояние растёт.</p>
+  <p class="f-formula"><b>Порядок решения.</b> 1) сумма и разность скоростей;
+  2) сближаются или удаляются; 3) вычесть или прибавить.</p>
+  <p class="f-formula"><b>Обратные задачи.</b> Насколько изменилось расстояние за час —
+  это и есть скорость сближения или удаления.</p>
+</div>
+
+<div class="card">
+  <h2>Шаг 1. Фото решений — по желанию</h2>
+  <div class="meta">В поле уходит только ответ, а я смотрю ещё и ход решения.
+  Фото прикладывать не обязательно, но с ними разбор будет точнее.</div>
+  <ol class="steps-list">
+    <li>Примеры в столбик записывай именно столбиком, с дописанными нулями.</li>
+    <li>В задачах на число сначала запиши уравнение, потом решай.</li>
+    <li>Каждое уравнение заканчивай проверкой — подстановкой в условие.</li>
+    <li>В задачах на движение первой строкой пиши сумму и разность скоростей.</li>
+  </ol>
+  <input type="file" id="photos" accept="image/*" multiple style="margin-top:12px">
+  <div class="thumbs" id="thumbs"></div>
+</div>
+
+<div class="card">
+  <h2>Шаг 2. Отправь работу</h2>
+  <div class="meta">Проверь, что вверху написано твоё имя. По кнопке ответы и результат
+  уходят преподавателю. Вторая кнопка сохраняет копию тебе.</div>
+  <div class="trgate" id="trgate"></div>
+  <div class="row" style="margin-top:12px">
+    <button class="pri" id="send">Отправить на проверку</button>
+    <button id="report">Скачать копию себе</button>
+  </div>
+  <div id="repnote" class="meta" style="margin-top:8px"></div>
+</div>
+
+</div>
+
+<div class="bar">
+  <button class="pri" id="checkall">Проверить всё</button>
+  <span id="progress" class="meta">решено 0 из 18</span>
+</div>
+
+<script>
+var CF = {};
+var STUDENT_CODE = (function(){
+  try{ var m = /[#&?]code=([^&]+)/.exec(location.hash + location.search);
+       return m ? decodeURIComponent(m[1]) : ""; }catch(e){ return ""; }
+})();
+var TOPIC = "Уравнения и задачи на движение (математика, 5 класс)";
+
+"use strict";
+var started = Date.now();
+var spentBefore = 0;
+
+/* ---------- данные задач; ответы закодированы, чтобы не читались в исходнике ---------- */
+function e(s){return btoa(unescape(encodeURIComponent(s)));}
+function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return s;}}
+
+var TASKS = [{"id": 1, "blk": "1", "lvl": "база", "img": "", "type": "num", "text": "Вычисли <span class='nw'>13,4 + 0,63</span>.", "ans": ["MTQsMDM="], "hints": ["Допиши нуль: 13,40.", "Запятая под запятой.", "Сотые: 0 + 3, десятые: 4 + 6."], "sol": "<div class='step'>1. <span class='nw'>13,40 + 0,63</span>.</div><div class='fx'>14,03</div><div class='step mini'>14,03 и 14,3 — разные числа. Нуль в разряде десятых обязателен.</div>"}, {"id": 2, "blk": "1", "lvl": "база", "img": "", "type": "num", "text": "Вычисли <span class='nw'>14,03 − 7,2</span>.", "ans": ["Niw4Mw=="], "hints": ["Допиши нуль: 7,20.", "Вычитай по разрядам, занимая где нужно.", "Проверь сложением."], "sol": "<div class='step'>1. <span class='nw'>14,03 − 7,20</span>.</div><div class='fx'>6,83</div><div class='step mini'>Проверка: <span class='nw'>6,83 + 7,2 = 14,03</span>.</div>"}, {"id": 3, "blk": "1", "lvl": "средний", "img": "", "type": "num", "text": "Вычисли <span class='nw'>12,08 − 5,7</span>.", "ans": ["NiwzOA=="], "hints": ["Допиши нуль: 5,70.", "Сотые: 8 − 0.", "Десятые: 0 − 7 — занимай у единиц."], "sol": "<div class='step'>1. <span class='nw'>12,08 − 5,70</span>.</div><div class='fx'>6,38</div>"}, {"id": 4, "blk": "2", "lvl": "база", "img": "", "type": "num", "text": "Реши уравнение <span class='nw'>x + 7,2 − 0,63 = 13,4</span>. Чему равен x?", "ans": ["Niw4Mw=="], "hints": ["Иди по цепочке назад.", "Последним вычитали 0,63 — значит прибавь его.", "<span class='nw'>13,4 + 0,63 = 14,03</span>."], "sol": "<div class='step'>1. <span class='nw'>13,4 + 0,63 = 14,03</span>.</div><div class='step'>2. <span class='nw'>14,03 − 7,2 = 6,83</span>.</div><div class='fx'>x = 6,83</div><div class='step mini'>Проверка: <span class='nw'>6,83 + 7,2 = 14,03</span>, затем <span class='nw'>14,03 − 0,63 = 13,4</span>.</div>"}, {"id": 5, "blk": "2", "lvl": "база", "img": "", "type": "num", "text": "Реши уравнение <span class='nw'>x + 5,7 − 0,38 = 11,7</span>. Чему равен x?", "ans": ["NiwzOA=="], "hints": ["Обратный ход начинают с последнего действия.", "<span class='nw'>11,7 + 0,38 = 12,08</span>.", "Дальше вычти 5,7."], "sol": "<div class='step'>1. <span class='nw'>11,7 + 0,38 = 12,08</span>.</div><div class='step'>2. <span class='nw'>12,08 − 5,7 = 6,38</span>.</div><div class='fx'>x = 6,38</div>"}, {"id": 6, "blk": "2", "lvl": "средний", "img": "", "type": "num", "text": "Реши уравнение <span class='nw'>x − 4,5 + 0,72 = 9,3</span>. Чему равен x?", "ans": ["MTMsMDg="], "hints": ["Последним прибавляли 0,72 — значит вычти его.", "<span class='nw'>9,3 − 0,72 = 8,58</span>.", "Перед этим вычитали 4,5 — значит прибавь."], "sol": "<div class='step'>1. <span class='nw'>9,3 − 0,72 = 8,58</span>.</div><div class='step'>2. <span class='nw'>8,58 + 4,5 = 13,08</span>.</div><div class='fx'>x = 13,08</div><div class='step mini'>Знаки обратного хода всегда противоположны знакам в условии.</div>"}, {"id": 7, "blk": "3", "lvl": "средний", "img": "", "type": "num", "text": "Я задумал число, увеличил его на 3,45, из полученной суммы вычел 1,8 и получил 9,15. Какое число я задумал?", "ans": ["Nyw1"], "hints": ["Составь уравнение: <span class='nw'>x + 3,45 − 1,8 = 9,15</span>.", "Последним вычитали 1,8 — значит прибавь.", "<span class='nw'>9,15 + 1,8 = 10,95</span>."], "sol": "<div class='step'>1. Уравнение: <span class='nw'>x + 3,45 − 1,8 = 9,15</span>.</div><div class='step'>2. <span class='nw'>9,15 + 1,8 = 10,95</span>.</div><div class='step'>3. <span class='nw'>10,95 − 3,45 = 7,5</span>.</div><div class='fx'>x = 7,5</div><div class='step mini'>Проверка: <span class='nw'>7,5 + 3,45 = 10,95</span>, затем <span class='nw'>10,95 − 1,8 = 9,15</span>.</div>"}, {"id": 8, "blk": "3", "lvl": "средний", "img": "", "type": "num", "text": "Я задумал число, уменьшил его на 6,4, к результату прибавил 0,95 и получил 12,3. Какое число я задумал?", "ans": ["MTcsNzU="], "hints": ["Уравнение: <span class='nw'>x − 6,4 + 0,95 = 12,3</span>.", "Последним прибавляли 0,95 — значит вычти.", "<span class='nw'>12,3 − 0,95 = 11,35</span>."], "sol": "<div class='step'>1. Уравнение: <span class='nw'>x − 6,4 + 0,95 = 12,3</span>.</div><div class='step'>2. <span class='nw'>12,3 − 0,95 = 11,35</span>.</div><div class='step'>3. <span class='nw'>11,35 + 6,4 = 17,75</span>.</div><div class='fx'>x = 17,75</div>"}, {"id": 9, "blk": "3", "lvl": "сложный", "img": "", "type": "num", "text": "Я задумал число, увеличил его на 2,7, потом увеличил ещё на 0,45 и получил 10. Какое число я задумал?", "ans": ["Niw4NQ=="], "hints": ["Оба действия — сложение.", "Значит обратный ход — два вычитания.", "<span class='nw'>10 − 0,45 = 9,55</span>."], "sol": "<div class='step'>1. Уравнение: <span class='nw'>x + 2,7 + 0,45 = 10</span>.</div><div class='step'>2. <span class='nw'>10 − 0,45 = 9,55</span>.</div><div class='step'>3. <span class='nw'>9,55 − 2,7 = 6,85</span>.</div><div class='fx'>x = 6,85</div><div class='step mini'>Можно короче: сложить 2,7 + 0,45 = 3,15 и один раз вычесть — получится то же самое.</div>"}, {"id": 10, "blk": "4", "lvl": "база", "img": "<svg viewBox=\"0 0 430 282\"><rect x=\"0\" y=\"0\" width=\"430\" height=\"282\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"36.0\" y1=\"50.0\" x2=\"394.0\" y2=\"50.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"50.0\" r=\"5.2\" fill=\"#5b6270\"/><text x=\"46.0\" y=\"70.0\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><circle cx=\"384.0\" cy=\"50.0\" r=\"5.2\" fill=\"#5b6270\"/><text x=\"384.0\" y=\"70.0\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text><line x1=\"46.0\" y1=\"76.0\" x2=\"384.0\" y2=\"76.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"46.0\" y1=\"71.0\" x2=\"46.0\" y2=\"81.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"384.0\" y1=\"71.0\" x2=\"384.0\" y2=\"81.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"215.0\" y=\"93.0\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">40 км</text><text x=\"215.0\" y=\"112.0\" font-size=\"15\" fill=\"#7a3fbf\" text-anchor=\"middle\" font-weight=\"600\">через 1 ч</text><line x1=\"24.0\" y1=\"96.0\" x2=\"24.0\" y2=\"126.0\" stroke=\"#7a3fbf\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><path d=\"M 24.0 126.0 L 21.2 117.5 L 26.8 117.5 z\" fill=\"#7a3fbf\"/><line x1=\"406.0\" y1=\"96.0\" x2=\"406.0\" y2=\"126.0\" stroke=\"#7a3fbf\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><path d=\"M 406.0 126.0 L 403.2 117.5 L 408.8 117.5 z\" fill=\"#7a3fbf\"/><line x1=\"36.0\" y1=\"196.0\" x2=\"394.0\" y2=\"196.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><circle cx=\"109.4\" cy=\"196.0\" r=\"5.2\" fill=\"#137a45\"/><text x=\"109.4\" y=\"216.0\" font-size=\"15\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">A₁</text><line x1=\"122.4\" y1=\"182.0\" x2=\"151.4\" y2=\"182.0\" stroke=\"#137a45\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 151.4 182.0 L 142.8 184.8 L 142.8 179.2 z\" fill=\"#137a45\"/><text x=\"137.4\" y=\"174.0\" font-size=\"14\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">7,5</text><circle cx=\"326.1\" cy=\"196.0\" r=\"5.2\" fill=\"#b3261e\"/><text x=\"326.1\" y=\"216.0\" font-size=\"15\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">B₁</text><line x1=\"313.1\" y1=\"160.0\" x2=\"284.1\" y2=\"160.0\" stroke=\"#b3261e\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 284.1 160.0 L 292.7 157.2 L 292.7 162.8 z\" fill=\"#b3261e\"/><text x=\"298.1\" y=\"152.0\" font-size=\"14\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">6,85</text><line x1=\"109.4\" y1=\"240.0\" x2=\"326.1\" y2=\"240.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"109.4\" y1=\"235.0\" x2=\"109.4\" y2=\"245.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"326.1\" y1=\"235.0\" x2=\"326.1\" y2=\"245.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"217.7\" y=\"257.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">25,65 км</text></svg>", "type": "num", "text": "Расстояние между лыжниками <span class='nw'>40 км</span>. Их скорости <span class='nw'>7,5 км/ч</span> и <span class='nw'>6,85 км/ч</span>. Какое расстояние (в километрах) будет между ними через 1 ч, если они едут навстречу друг другу?", "ans": ["MjUsNjU="], "hints": ["Навстречу — расстояние уменьшается.", "Сближаются на сумму скоростей.", "<span class='nw'>7,5 + 6,85 = 14,35</span>."], "sol": "<div class='step'>1. Сумма скоростей: <span class='nw'>7,5 + 6,85 = 14,35</span>.</div><div class='step'>2. Сближаются: <span class='nw'>40 − 14,35 = 25,65</span>.</div><div class='fx'>25,65 км</div>"}, {"id": 11, "blk": "4", "lvl": "база", "img": "<svg viewBox=\"0 0 430 282\"><rect x=\"0\" y=\"0\" width=\"430\" height=\"282\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"36.0\" y1=\"50.0\" x2=\"394.0\" y2=\"50.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"50.0\" r=\"5.2\" fill=\"#5b6270\"/><text x=\"46.0\" y=\"70.0\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><circle cx=\"384.0\" cy=\"50.0\" r=\"5.2\" fill=\"#5b6270\"/><text x=\"384.0\" y=\"70.0\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text><line x1=\"46.0\" y1=\"76.0\" x2=\"384.0\" y2=\"76.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"46.0\" y1=\"71.0\" x2=\"46.0\" y2=\"81.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"384.0\" y1=\"71.0\" x2=\"384.0\" y2=\"81.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"215.0\" y=\"93.0\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">40 км</text><text x=\"215.0\" y=\"112.0\" font-size=\"15\" fill=\"#7a3fbf\" text-anchor=\"middle\" font-weight=\"600\">через 1 ч</text><line x1=\"24.0\" y1=\"96.0\" x2=\"24.0\" y2=\"126.0\" stroke=\"#7a3fbf\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><path d=\"M 24.0 126.0 L 21.2 117.5 L 26.8 117.5 z\" fill=\"#7a3fbf\"/><line x1=\"406.0\" y1=\"96.0\" x2=\"406.0\" y2=\"126.0\" stroke=\"#7a3fbf\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><path d=\"M 406.0 126.0 L 403.2 117.5 L 408.8 117.5 z\" fill=\"#7a3fbf\"/><line x1=\"36.0\" y1=\"196.0\" x2=\"394.0\" y2=\"196.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"196.0\" r=\"5.2\" fill=\"#137a45\"/><text x=\"46.0\" y=\"216.0\" font-size=\"15\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">A₁</text><line x1=\"33.0\" y1=\"182.0\" x2=\"4.0\" y2=\"182.0\" stroke=\"#137a45\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 4.0 182.0 L 12.5 179.2 L 12.5 184.8 z\" fill=\"#137a45\"/><text x=\"18.0\" y=\"174.0\" font-size=\"14\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">7,5</text><circle cx=\"384.0\" cy=\"196.0\" r=\"5.2\" fill=\"#b3261e\"/><text x=\"384.0\" y=\"216.0\" font-size=\"15\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">B₁</text><line x1=\"397.0\" y1=\"160.0\" x2=\"426.0\" y2=\"160.0\" stroke=\"#b3261e\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 426.0 160.0 L 417.5 162.8 L 417.5 157.2 z\" fill=\"#b3261e\"/><text x=\"412.0\" y=\"152.0\" font-size=\"14\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">6,85</text><line x1=\"46.0\" y1=\"240.0\" x2=\"384.0\" y2=\"240.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"46.0\" y1=\"235.0\" x2=\"46.0\" y2=\"245.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"384.0\" y1=\"235.0\" x2=\"384.0\" y2=\"245.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"215.0\" y=\"257.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">54,35 км</text></svg>", "type": "num", "text": "Те же лыжники: расстояние <span class='nw'>40 км</span>, скорости <span class='nw'>7,5 км/ч</span> и <span class='nw'>6,85 км/ч</span>. Сколько километров будет между ними через 1 ч, если они едут в противоположных направлениях?", "ans": ["NTQsMzU="], "hints": ["В разные стороны — расстояние растёт.", "Удаляются на сумму скоростей.", "<span class='nw'>40 + 14,35</span>."], "sol": "<div class='step'>1. Сумма скоростей: <span class='nw'>14,35 км/ч</span>.</div><div class='step'>2. Удаляются: <span class='nw'>40 + 14,35 = 54,35</span>.</div><div class='fx'>54,35 км</div>"}, {"id": 12, "blk": "4", "lvl": "средний", "img": "<svg viewBox=\"0 0 430 282\"><rect x=\"0\" y=\"0\" width=\"430\" height=\"282\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"36.0\" y1=\"50.0\" x2=\"394.0\" y2=\"50.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"50.0\" r=\"5.2\" fill=\"#5b6270\"/><text x=\"46.0\" y=\"70.0\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><circle cx=\"384.0\" cy=\"50.0\" r=\"5.2\" fill=\"#5b6270\"/><text x=\"384.0\" y=\"70.0\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text><line x1=\"46.0\" y1=\"76.0\" x2=\"384.0\" y2=\"76.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"46.0\" y1=\"71.0\" x2=\"46.0\" y2=\"81.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"384.0\" y1=\"71.0\" x2=\"384.0\" y2=\"81.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"215.0\" y=\"93.0\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">40 км</text><text x=\"215.0\" y=\"112.0\" font-size=\"15\" fill=\"#7a3fbf\" text-anchor=\"middle\" font-weight=\"600\">через 1 ч</text><line x1=\"24.0\" y1=\"96.0\" x2=\"24.0\" y2=\"126.0\" stroke=\"#7a3fbf\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><path d=\"M 24.0 126.0 L 21.2 117.5 L 26.8 117.5 z\" fill=\"#7a3fbf\"/><line x1=\"406.0\" y1=\"96.0\" x2=\"406.0\" y2=\"126.0\" stroke=\"#7a3fbf\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><path d=\"M 406.0 126.0 L 403.2 117.5 L 408.8 117.5 z\" fill=\"#7a3fbf\"/><line x1=\"36.0\" y1=\"196.0\" x2=\"394.0\" y2=\"196.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><circle cx=\"100.1\" cy=\"196.0\" r=\"5.2\" fill=\"#137a45\"/><text x=\"100.1\" y=\"216.0\" font-size=\"15\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">A₁</text><line x1=\"113.1\" y1=\"182.0\" x2=\"142.1\" y2=\"182.0\" stroke=\"#137a45\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 142.1 182.0 L 133.6 184.8 L 133.6 179.2 z\" fill=\"#137a45\"/><text x=\"128.1\" y=\"174.0\" font-size=\"14\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">7,5</text><circle cx=\"384.0\" cy=\"196.0\" r=\"5.2\" fill=\"#b3261e\"/><text x=\"384.0\" y=\"216.0\" font-size=\"15\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">B₁</text><line x1=\"397.0\" y1=\"160.0\" x2=\"426.0\" y2=\"160.0\" stroke=\"#b3261e\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 426.0 160.0 L 417.5 162.8 L 417.5 157.2 z\" fill=\"#b3261e\"/><text x=\"412.0\" y=\"152.0\" font-size=\"14\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">6,85</text><line x1=\"100.1\" y1=\"240.0\" x2=\"384.0\" y2=\"240.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"100.1\" y1=\"235.0\" x2=\"100.1\" y2=\"245.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"384.0\" y1=\"235.0\" x2=\"384.0\" y2=\"245.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"242.1\" y=\"257.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">39,35 км</text></svg>", "type": "num", "text": "Те же лыжники едут в одном направлении, причём лыжник с большей скоростью догоняет. Сколько километров будет между ними через 1 ч?", "ans": ["MzksMzU="], "hints": ["В одном направлении — работает разность скоростей.", "<span class='nw'>7,5 − 6,85 = 0,65</span>.", "Догоняет — значит расстояние уменьшается."], "sol": "<div class='step'>1. Разность скоростей: <span class='nw'>7,5 − 6,85 = 0,65</span>.</div><div class='step'>2. Сближаются: <span class='nw'>40 − 0,65 = 39,35</span>.</div><div class='fx'>39,35 км</div><div class='step mini'>За час расстояние изменилось всего на 650 метров — скорости почти одинаковые.</div>"}, {"id": 13, "blk": "5", "lvl": "средний", "img": "<svg viewBox=\"0 0 430 282\"><rect x=\"0\" y=\"0\" width=\"430\" height=\"282\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"36.0\" y1=\"50.0\" x2=\"394.0\" y2=\"50.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"50.0\" r=\"5.2\" fill=\"#5b6270\"/><text x=\"46.0\" y=\"70.0\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><circle cx=\"384.0\" cy=\"50.0\" r=\"5.2\" fill=\"#5b6270\"/><text x=\"384.0\" y=\"70.0\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text><line x1=\"46.0\" y1=\"76.0\" x2=\"384.0\" y2=\"76.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"46.0\" y1=\"71.0\" x2=\"46.0\" y2=\"81.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"384.0\" y1=\"71.0\" x2=\"384.0\" y2=\"81.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"215.0\" y=\"93.0\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">32 км</text><text x=\"215.0\" y=\"112.0\" font-size=\"15\" fill=\"#7a3fbf\" text-anchor=\"middle\" font-weight=\"600\">через 1 ч</text><line x1=\"24.0\" y1=\"96.0\" x2=\"24.0\" y2=\"126.0\" stroke=\"#7a3fbf\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><path d=\"M 24.0 126.0 L 21.2 117.5 L 26.8 117.5 z\" fill=\"#7a3fbf\"/><line x1=\"406.0\" y1=\"96.0\" x2=\"406.0\" y2=\"126.0\" stroke=\"#7a3fbf\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><path d=\"M 406.0 126.0 L 403.2 117.5 L 408.8 117.5 z\" fill=\"#7a3fbf\"/><line x1=\"36.0\" y1=\"196.0\" x2=\"394.0\" y2=\"196.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><circle cx=\"178.0\" cy=\"196.0\" r=\"5.2\" fill=\"#137a45\"/><text x=\"178.0\" y=\"216.0\" font-size=\"15\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">A₁</text><line x1=\"191.0\" y1=\"182.0\" x2=\"220.0\" y2=\"182.0\" stroke=\"#137a45\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 220.0 182.0 L 211.5 184.8 L 211.5 179.2 z\" fill=\"#137a45\"/><text x=\"206.0\" y=\"174.0\" font-size=\"14\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">12,5</text><circle cx=\"217.3\" cy=\"196.0\" r=\"5.2\" fill=\"#b3261e\"/><text x=\"217.3\" y=\"216.0\" font-size=\"15\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">B₁</text><line x1=\"204.3\" y1=\"160.0\" x2=\"175.3\" y2=\"160.0\" stroke=\"#b3261e\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 175.3 160.0 L 183.9 157.2 L 183.9 162.8 z\" fill=\"#b3261e\"/><text x=\"189.3\" y=\"152.0\" font-size=\"14\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">15,78</text><line x1=\"178.0\" y1=\"240.0\" x2=\"217.3\" y2=\"240.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"178.0\" y1=\"235.0\" x2=\"178.0\" y2=\"245.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"217.3\" y1=\"235.0\" x2=\"217.3\" y2=\"245.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"197.7\" y=\"257.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">3,72 км</text></svg>", "type": "num", "text": "Расстояние между велосипедистами <span class='nw'>32 км</span>, скорости <span class='nw'>12,5 км/ч</span> и <span class='nw'>15,78 км/ч</span>. Сколько километров будет между ними через 1 ч при движении навстречу друг другу?", "ans": ["Myw3Mg=="], "hints": ["Сумма скоростей: <span class='nw'>12,5 + 15,78</span>.", "<span class='nw'>28,28 км/ч</span> — столько они съедают за час.", "<span class='nw'>32 − 28,28</span>."], "sol": "<div class='step'>1. Сумма: <span class='nw'>12,5 + 15,78 = 28,28</span>.</div><div class='step'>2. <span class='nw'>32 − 28,28 = 3,72</span>.</div><div class='fx'>3,72 км</div><div class='step mini'>Ещё немного — и они бы встретились за этот час.</div>"}, {"id": 14, "blk": "5", "lvl": "средний", "img": "<svg viewBox=\"0 0 430 282\"><rect x=\"0\" y=\"0\" width=\"430\" height=\"282\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"36.0\" y1=\"50.0\" x2=\"394.0\" y2=\"50.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"50.0\" r=\"5.2\" fill=\"#5b6270\"/><text x=\"46.0\" y=\"70.0\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><circle cx=\"384.0\" cy=\"50.0\" r=\"5.2\" fill=\"#5b6270\"/><text x=\"384.0\" y=\"70.0\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text><line x1=\"46.0\" y1=\"76.0\" x2=\"384.0\" y2=\"76.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"46.0\" y1=\"71.0\" x2=\"46.0\" y2=\"81.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"384.0\" y1=\"71.0\" x2=\"384.0\" y2=\"81.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"215.0\" y=\"93.0\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">32 км</text><text x=\"215.0\" y=\"112.0\" font-size=\"15\" fill=\"#7a3fbf\" text-anchor=\"middle\" font-weight=\"600\">через 1 ч</text><line x1=\"24.0\" y1=\"96.0\" x2=\"24.0\" y2=\"126.0\" stroke=\"#7a3fbf\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><path d=\"M 24.0 126.0 L 21.2 117.5 L 26.8 117.5 z\" fill=\"#7a3fbf\"/><line x1=\"406.0\" y1=\"96.0\" x2=\"406.0\" y2=\"126.0\" stroke=\"#7a3fbf\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><path d=\"M 406.0 126.0 L 403.2 117.5 L 408.8 117.5 z\" fill=\"#7a3fbf\"/><line x1=\"36.0\" y1=\"196.0\" x2=\"394.0\" y2=\"196.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><circle cx=\"165.9\" cy=\"196.0\" r=\"5.2\" fill=\"#137a45\"/><text x=\"165.9\" y=\"216.0\" font-size=\"15\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">A₁</text><line x1=\"178.9\" y1=\"182.0\" x2=\"207.9\" y2=\"182.0\" stroke=\"#137a45\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 207.9 182.0 L 199.3 184.8 L 199.3 179.2 z\" fill=\"#137a45\"/><text x=\"193.9\" y=\"174.0\" font-size=\"14\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">15,78</text><circle cx=\"384.0\" cy=\"196.0\" r=\"5.2\" fill=\"#b3261e\"/><text x=\"384.0\" y=\"216.0\" font-size=\"15\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">B₁</text><line x1=\"397.0\" y1=\"160.0\" x2=\"426.0\" y2=\"160.0\" stroke=\"#b3261e\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 426.0 160.0 L 417.5 162.8 L 417.5 157.2 z\" fill=\"#b3261e\"/><text x=\"412.0\" y=\"152.0\" font-size=\"14\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">12,5</text><line x1=\"165.9\" y1=\"240.0\" x2=\"384.0\" y2=\"240.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"165.9\" y1=\"235.0\" x2=\"165.9\" y2=\"245.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"384.0\" y1=\"235.0\" x2=\"384.0\" y2=\"245.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"274.9\" y=\"257.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">28,72 км</text></svg>", "type": "num", "text": "Те же велосипедисты едут в одном направлении, и велосипедист с большей скоростью догоняет. Сколько километров между ними через 1 ч?", "ans": ["MjgsNzI="], "hints": ["Разность скоростей: <span class='nw'>15,78 − 12,5</span>.", "<span class='nw'>3,28 км/ч</span>.", "Догоняет — вычитаем."], "sol": "<div class='step'>1. Разность: <span class='nw'>15,78 − 12,5 = 3,28</span>.</div><div class='step'>2. <span class='nw'>32 − 3,28 = 28,72</span>.</div><div class='fx'>28,72 км</div>"}, {"id": 15, "blk": "5", "lvl": "средний", "img": "<svg viewBox=\"0 0 430 282\"><rect x=\"0\" y=\"0\" width=\"430\" height=\"282\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"36.0\" y1=\"50.0\" x2=\"394.0\" y2=\"50.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"50.0\" r=\"5.2\" fill=\"#5b6270\"/><text x=\"46.0\" y=\"70.0\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">A</text><circle cx=\"384.0\" cy=\"50.0\" r=\"5.2\" fill=\"#5b6270\"/><text x=\"384.0\" y=\"70.0\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">B</text><line x1=\"46.0\" y1=\"76.0\" x2=\"384.0\" y2=\"76.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"46.0\" y1=\"71.0\" x2=\"46.0\" y2=\"81.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"384.0\" y1=\"71.0\" x2=\"384.0\" y2=\"81.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"215.0\" y=\"93.0\" font-size=\"15\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">32 км</text><text x=\"215.0\" y=\"112.0\" font-size=\"15\" fill=\"#7a3fbf\" text-anchor=\"middle\" font-weight=\"600\">через 1 ч</text><line x1=\"24.0\" y1=\"96.0\" x2=\"24.0\" y2=\"126.0\" stroke=\"#7a3fbf\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><path d=\"M 24.0 126.0 L 21.2 117.5 L 26.8 117.5 z\" fill=\"#7a3fbf\"/><line x1=\"406.0\" y1=\"96.0\" x2=\"406.0\" y2=\"126.0\" stroke=\"#7a3fbf\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><path d=\"M 406.0 126.0 L 403.2 117.5 L 408.8 117.5 z\" fill=\"#7a3fbf\"/><line x1=\"36.0\" y1=\"196.0\" x2=\"394.0\" y2=\"196.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><circle cx=\"134.4\" cy=\"196.0\" r=\"5.2\" fill=\"#137a45\"/><text x=\"134.4\" y=\"216.0\" font-size=\"15\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">A₁</text><line x1=\"147.4\" y1=\"182.0\" x2=\"176.4\" y2=\"182.0\" stroke=\"#137a45\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 176.4 182.0 L 167.9 184.8 L 167.9 179.2 z\" fill=\"#137a45\"/><text x=\"162.4\" y=\"174.0\" font-size=\"14\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">12,5</text><circle cx=\"384.0\" cy=\"196.0\" r=\"5.2\" fill=\"#b3261e\"/><text x=\"384.0\" y=\"216.0\" font-size=\"15\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">B₁</text><line x1=\"397.0\" y1=\"160.0\" x2=\"426.0\" y2=\"160.0\" stroke=\"#b3261e\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 426.0 160.0 L 417.5 162.8 L 417.5 157.2 z\" fill=\"#b3261e\"/><text x=\"412.0\" y=\"152.0\" font-size=\"14\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">15,78</text><line x1=\"134.4\" y1=\"240.0\" x2=\"384.0\" y2=\"240.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"134.4\" y1=\"235.0\" x2=\"134.4\" y2=\"245.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"384.0\" y1=\"235.0\" x2=\"384.0\" y2=\"245.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"259.2\" y=\"257.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">35,28 км</text></svg>", "type": "num", "text": "Те же велосипедисты едут в одном направлении, и велосипедист с меньшей скоростью отстаёт. Сколько километров между ними через 1 ч?", "ans": ["MzUsMjg="], "hints": ["Снова разность скоростей.", "Отстаёт — значит расстояние растёт.", "<span class='nw'>32 + 3,28</span>."], "sol": "<div class='step'>1. Разность: <span class='nw'>3,28 км/ч</span>.</div><div class='step'>2. <span class='nw'>32 + 3,28 = 35,28</span>.</div><div class='fx'>35,28 км</div><div class='step mini'>Сравни с предыдущей задачей: числа те же, а ответы разные — всё решает, кто сзади.</div>"}, {"id": 16, "blk": "6", "lvl": "сложный", "img": "", "type": "num", "text": "Расстояние между пешеходами <span class='nw'>18 км</span>, их скорости <span class='nw'>9,4 км/ч</span> и <span class='nw'>8,6 км/ч</span>, идут навстречу друг другу. Сколько километров будет между ними через 1 ч?", "ans": ["MA=="], "hints": ["Посчитай сумму скоростей.", "<span class='nw'>9,4 + 8,6 = 18</span>.", "Сравни это число с расстоянием."], "sol": "<div class='step'>1. Сумма скоростей: <span class='nw'>9,4 + 8,6 = 18</span> км/ч.</div><div class='step'>2. За час они съедают ровно всё расстояние: <span class='nw'>18 − 18 = 0</span>.</div><div class='fx'>0 км — встретятся ровно через час</div><div class='step mini'>Если бы шли дольше часа, расстояние снова начало бы расти.</div>"}, {"id": 17, "blk": "6", "lvl": "сложный", "img": "", "type": "num", "text": "Расстояние между лыжниками было <span class='nw'>40 км</span>, они ехали навстречу друг другу, и через 1 ч между ними стало <span class='nw'>25,65 км</span>. Скорость первого <span class='nw'>7,5 км/ч</span>. Какова скорость второго (в км/ч)?", "ans": ["Niw4NQ=="], "hints": ["Сначала найди, на сколько они сблизились за час.", "<span class='nw'>40 − 25,65 = 14,35</span>.", "Это сумма скоростей — вычти из неё известную."], "sol": "<div class='step'>1. Сблизились на <span class='nw'>40 − 25,65 = 14,35</span> км.</div><div class='step'>2. Это сумма скоростей: <span class='nw'>14,35 − 7,5 = 6,85</span>.</div><div class='fx'>6,85 км/ч</div>"}, {"id": 18, "blk": "6", "lvl": "сложный", "img": "", "type": "num", "text": "Два пешехода идут в одном направлении. Сначала между ними было <span class='nw'>6,4 км</span>, а через 1 ч стало <span class='nw'>4,75 км</span>. На сколько километров в час отличаются их скорости?", "ans": ["MSw2NQ=="], "hints": ["Расстояние уменьшилось — значит задний догоняет.", "За час оно уменьшилось на разность скоростей.", "<span class='nw'>6,4 − 4,75</span>."], "sol": "<div class='step'>1. Расстояние уменьшилось: <span class='nw'>6,4 − 4,75 = 1,65</span> км.</div><div class='step'>2. В одном направлении расстояние меняется на разность скоростей.</div><div class='fx'>1,65 км/ч</div><div class='step mini'>Сами скорости по этим данным найти нельзя — известна только их разность.</div>"}];
+
+/* ---------- разбор ответа ---------- */
+function norm(s){
+  return String(s).toLowerCase().replace(/\s+/g,"")
+    .replace(/[\u2013\u2014\u2212]/g,"-")
+    .replace(/[\u00d7\u00b7]/g,"*")
+    .replace(/,/g,".")
+    .replace(/^(ответ:?|x=|y=|α=|a=)/,"");
+}
+function toNum(str){
+  var t = norm(str);
+  if(!t) return NaN;
+  t = t.replace(/\u221a/g,"sqrt").replace(/\u03c0/g,"pi");
+  t = t.replace(/sqrt(\d+(?:\.\d+)?)/g,"sqrt($1)");
+  t = t.replace(/(\d)sqrt/g,"$1*sqrt");
+  t = t.replace(/(\d)pi/g,"$1*pi");
+  t = t.replace(/(\d)\(/g,"$1*(").replace(/\)(\d)/g,")*$1").replace(/\)\(/g,")*(");
+  if(!/^[-+*/().0-9a-z]+$/.test(t)) return NaN;
+  if(t.replace(/sqrt|pi/g,"").match(/[a-z]/)) return NaN;
+  try{
+    var v = new Function("sqrt","pi","return ("+t+");")(Math.sqrt, Math.PI);
+    return (typeof v === "number" && isFinite(v)) ? v : NaN;
+  }catch(err){ return NaN; }
+}
+function same(given, right, tol){
+  var a = toNum(given), b = toNum(right);
+  if(!isNaN(a) && !isNaN(b)){
+    var t = tol || 1e-4;
+    return Math.abs(a-b) <= Math.max(t, Math.abs(b)*t);
+  }
+  return norm(given) === norm(right);
+}
+
+/* ---------- отрисовка ---------- */
+var state = {};
+function boxOf(t){
+  return document.getElementById("tasks" + (t.blk || "")) ||
+         document.getElementById("tasks");
+}
+
+TASKS.forEach(function(t){
+  state[t.id] = {tries:0, hints:0, done:false, ok:false, given:"", sel:null};
+  var el = document.createElement("div");
+  el.className = "task"; el.id = "t"+t.id;
+  var body = '<div><span class="tnum">'+t.id+'.</span>'+t.text+
+             '<span class="lvl">'+t.lvl+'</span></div>';
+  if(t.img){ body += '<div class="fig">'+t.img+'</div>'; }
+  if(t.type === "choice"){
+    body += '<div class="opts">'+t.options.map(function(o,i){
+      return '<label class="opt" data-v="'+o+'"><input type="radio" name="q'+t.id+'" value="'+o+'"> '+((t.optionsHtml && t.optionsHtml[i]) || o)+'</label>';
+    }).join("")+'</div>';
+  } else {
+    body += '<div class="keys">'+
+      [",","−"].map(function(k){
+        return '<button class="key" data-k="'+k+'" type="button">'+k+'</button>';}).join("")+
+      '</div><input type="text" id="in'+t.id+'" inputmode="text" autocapitalize="off" '+
+      'autocorrect="off" autocomplete="off" spellcheck="false" placeholder="ответ">';
+  }
+  body += '<div class="row" style="margin-top:10px">'+
+          '<button class="pri sm chk">Проверить</button>'+
+          '<button class="sm hnt">Подсказка</button></div>'+
+          '<div class="hints"></div><div class="verdict"></div><div class="sol"></div>';
+  el.innerHTML = body;
+  boxOf(t).appendChild(el);
+
+  el.querySelectorAll(".key").forEach(function(b){
+    b.addEventListener("click", function(){
+      var inp = document.getElementById("in"+t.id);
+      var k = b.dataset.k === "−" ? "-" : b.dataset.k;
+      var s = inp.selectionStart || inp.value.length;
+      inp.value = inp.value.slice(0,s) + k + inp.value.slice(inp.selectionEnd || s);
+      inp.focus(); inp.setSelectionRange(s+k.length, s+k.length);
+    });
+  });
+  if(t.type === "choice"){
+    el.querySelectorAll(".opt").forEach(function(l){
+      l.addEventListener("click", function(){
+        el.querySelectorAll(".opt").forEach(function(x){x.classList.remove("sel");});
+        l.classList.add("sel"); state[t.id].sel = l.dataset.v;
+      });
+    });
+  } else {
+    el.querySelector("#in"+t.id).addEventListener("keydown", function(ev){
+      if(ev.key === "Enter"){ ev.preventDefault(); check(t.id); }
+    });
+  }
+  el.querySelector(".chk").addEventListener("click", function(){ check(t.id); });
+  el.querySelector(".hnt").addEventListener("click", function(){ hint(t.id); });
+});
+
+function hint(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var host = document.querySelector("#t"+id+" .hints");
+  if(s.hints >= t.hints.length){
+    if(!host.querySelector(".last")){
+      var w = document.createElement("div");
+      w.className = "hint last"; w.textContent = "Подсказки закончились — нажми «Проверить», решение откроется после второй попытки.";
+      host.appendChild(w);
+    }
+    return;
+  }
+  var h = document.createElement("div");
+  h.className = "hint";
+  h.innerHTML = "Подсказка " + (s.hints+1) + ": " + t.hints[s.hints];
+  host.appendChild(h);
+  s.hints++;
+  saveWork();
+}
+
+function check(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var el = document.getElementById("t"+id);
+  var v = document.querySelector(".verdict");
+  v = el.querySelector(".verdict");
+  var given = (t.type === "choice") ? (s.sel || "") :
+              (document.getElementById("in"+id).value || "");
+  if(!given.trim()){ v.className = "verdict bad"; v.textContent = "Введи ответ."; return; }
+  s.given = given; s.tries++;
+  var ok = t.ans.some(function(a){ return same(given, d(a), t.tol); });
+  s.ok = ok; s.done = ok || s.tries >= 2;
+  el.classList.remove("ok","bad");
+  el.classList.add(ok ? "ok" : "bad");
+  v.className = "verdict " + (ok ? "ok" : "bad");
+  if(ok){
+    v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    showSol(el, t);
+  } else if(s.tries === 1){
+    v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+  } else {
+    v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    showSol(el, t);
+  }
+  progress();
+  saveWork();
+}
+function showSol(el, t){
+  var host = el.querySelector(".sol");
+  if(host.dataset.on) return;
+  host.dataset.on = "1";
+  var det = document.createElement("details");
+  det.open = true;
+  det.innerHTML = "<summary>Решение</summary><div class='step'>"+t.sol+"</div>";
+  host.appendChild(det);
+}
+function progress(){
+  var done = TASKS.filter(function(t){return state[t.id].done;}).length;
+  var ok = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  document.getElementById("progress").textContent =
+    "решено " + done + " из " + TASKS.length + " · верно " + ok;
+}
+document.getElementById("checkall").addEventListener("click", function(){
+  TASKS.forEach(function(t){
+    var s = state[t.id];
+    var given = (t.type === "choice") ? (s.sel || "") : (document.getElementById("in"+t.id).value || "");
+    if(given.trim() && !s.done) check(t.id);
+  });
+  var first = TASKS.find(function(t){ return !state[t.id].done; });
+  var note = first ? "Осталась задача " + first.id + "." : "Все задачи закрыты.";
+  document.getElementById("progress").textContent += " · " + note;
+});
+progress();
+
+/* ---------- фото ---------- */
+var photos = [];
+document.getElementById("photos").addEventListener("change", function(ev){
+  var files = Array.prototype.slice.call(ev.target.files || []);
+  files.forEach(function(f){
+    var r = new FileReader();
+    r.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var m = 1400, w = img.width, h = img.height;
+        if(Math.max(w,h) > m){ var k = m/Math.max(w,h); w = Math.round(w*k); h = Math.round(h*k); }
+        var c = document.createElement("canvas"); c.width = w; c.height = h;
+        c.getContext("2d").drawImage(img, 0, 0, w, h);
+        photos.push({url: c.toDataURL("image/jpeg", 0.7), task: ""});
+        drawThumbs();
+      };
+      img.src = r.result;
+    };
+    r.readAsDataURL(f);
+  });
+  ev.target.value = "";
+});
+function drawThumbs(){
+  var host = document.getElementById("thumbs");
+  host.innerHTML = "";
+  var total = 0;
+  photos.forEach(function(p, i){
+    total += p.url.length * 0.75;
+    var d0 = document.createElement("div"); d0.className = "thumb";
+    var opts = '<option value="">задача…</option>' + TASKS.map(function(t){
+      return '<option value="'+t.id+'"'+(p.task==String(t.id)?" selected":"")+'>№'+t.id+'</option>';
+    }).join("");
+    d0.innerHTML = '<img src="'+p.url+'" alt="фото решения"><button type="button">×</button>'+
+                   '<select>'+opts+'</select>';
+    d0.querySelector("button").addEventListener("click", function(){ photos.splice(i,1); drawThumbs(); });
+    d0.querySelector("select").addEventListener("change", function(ev){ p.task = ev.target.value; });
+    host.appendChild(d0);
+  });
+  var note = document.getElementById("repnote");
+  if(total > 15e6){ note.textContent = "Фото уже больше 15 МБ — отчёт может отправляться долго, лишние лучше удалить."; }
+  else if(photos.length){ note.textContent = "Фото в отчёте: " + photos.length + "."; }
+  else { note.textContent = ""; }
+}
+
+/* ---------- отчёт ---------- */
+var ENDPOINT = "https://script.google.com/macros/s/AKfycbwqIhgBtFnoUik3N1Lh_YRhNeEFAjmXWSxBNoX1a_Yxu-2dEKHFwo4Dd5Ch9UTOHH-X/exec";
+var SECRET = "artteach2026";
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function buildReport(){
+  var name = (document.getElementById("name").value || "").trim() || "без имени";
+  var now = new Date();
+  var mins = Math.max(1, Math.round(spentMs()/60000));
+  var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  var data = {tип:"дз", предмет:"математика", тема:"Уравнения и задачи на движение (математика, 5 класс)",
+    ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
+    верно:okN, всего:TASKS.length, тренажёры:trSummary(), задачи:[]};
+  var rows = TASKS.map(function(t){
+    var s = state[t.id];
+    data.задачи.push({n:t.id, условие:t.text.replace(/<[^>]+>/g,""), ответ_ученика:s.given,
+      верный_ответ:t.ans.map(d).join(" или "), верно:s.ok, попыток:s.tries, подсказок:s.hints,
+      уровень:t.lvl});
+    return "<tr><td>"+t.id+"</td><td style='text-align:left'>"+esc(t.text.replace(/<[^>]+>/g,""))+
+      "</td><td>"+esc(s.given||"—")+"</td><td>"+esc(t.ans.map(d).join(" / "))+"</td><td>"+
+      (s.ok?"верно":(s.given?"неверно":"не решал"))+"</td><td>"+s.tries+"</td><td>"+s.hints+"</td></tr>";
+  }).join("");
+  var pics = photos.map(function(p,i){
+    return "<figure><img src='"+p.url+"'><figcaption>Фото "+(i+1)+
+      (p.task?" — к задаче №"+p.task:"")+"</figcaption></figure>";
+  }).join("");
+  var html = "<!doctype html><html lang='ru'><head><meta charset='utf-8'>"+
+    "<meta name='viewport' content='width=device-width,initial-scale=1'>"+
+    "<title>Отчёт — "+esc(name)+" — уравнения и движение · 5 класс</title><style>"+
+    "body{font:16px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;padding:20px;color:#16181d;background:#fff}"+
+    "h1{font-size:22px;margin:0 0 4px}.m{color:#5b6270;font-size:15px}"+
+    "table{border-collapse:collapse;width:100%;margin-top:14px;font-size:15px}"+
+    "th,td{border:1px solid #dfe3ea;padding:6px 8px;text-align:center}th{background:#eef3fb}"+
+    "figure{margin:14px 0}img{max-width:100%;border:1px solid #dfe3ea;border-radius:8px}"+
+    "figcaption{color:#5b6270;font-size:14px;margin-top:4px}</style></head><body>"+
+    "<h1>Отчёт по домашнему заданию</h1>"+
+    "<div class='m'>Тема: уравнения и задачи на движение · 5 класс</div>"+
+    "<div class='m'>Ученик: <b>"+esc(name)+"</b> · сдано: "+esc(now.toLocaleString("ru-RU"))+
+    " · время работы: около "+mins+" мин</div>"+
+    "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)</h2>"+
+    "<table><tr><th>№</th><th>Задача</th><th>Ответ ученика</th><th>Верный ответ</th>"+
+    "<th>Итог</th><th>Попыток</th><th>Подсказок</th></tr>"+rows+"</table>"+
+    trReportHtml()+
+    (pics ? "<h2>Фото решений</h2>"+pics : "<p class='m'>Фото решений не прикреплены.</p>")+
+    "<script type='application/json' id='result-data'>"+
+    JSON.stringify(data).replace(/</g,"\\u003c")+"<\/script></body></html>";
+  var stamp = now.getDate()+"-"+(now.getMonth()+1);
+  return {
+    html: html,
+    name: name,
+    ok: okN,
+    total: TASKS.length,
+    file: "Отчёт_Уравнения_и_движение_"+name.replace(/\s+/g,"_")+"_"+stamp+".html",
+    caption: name+" · уравнения и движение · 5 класс · "+okN+" из "+TASKS.length+
+             " ("+Math.round(okN/TASKS.length*100)+"%)"+
+             " · тренажёры и пропуски "+trSummary().ok+" из "+trSummary().total
+  };
+}
+
+document.getElementById("send").addEventListener("click", function(){
+  var note = document.getElementById("repnote");
+  var who = (document.getElementById("name").value || "").trim();
+  if(!who){ note.className = "meta bad-note"; note.textContent = "Сначала впиши имя вверху страницы."; return; }
+  var left = trPending();
+  if(left.length){
+    note.className = "meta bad-note";
+    note.textContent = "Работа не отправлена: сначала пройди тренажёры " +
+      "и блоки с пропусками. Осталось " + left.length + " из " + TRREQ.length + ".";
+    trStatus();
+    trJump(left[0].id);
+    return;
+  }
+  note.className = "meta";
+  var r = buildReport();
+  note.textContent = "Отправляю…";
+  var payload = {
+    secret: SECRET,
+    code: STUDENT_CODE,
+    student: r.name,
+    topic: TOPIC,
+    ok: r.ok,
+    total: r.total,
+    name: r.file,
+    caption: r.caption,
+    trainers: trSummary().ok + " из " + trSummary().total,
+    file: btoa(unescape(encodeURIComponent(r.html)))
+  };
+  fetch(ENDPOINT, {method:"POST", mode:"no-cors", body: JSON.stringify(payload)})
+    .then(function(){
+      note.textContent = "Отправлено преподавателю." +
+        (photos.length ? "" : " Фото решений не приложены — если решал в тетради, приложи их и отправь ещё раз.") +
+        " Если хочешь, сохрани копию себе кнопкой ниже.";
+    })
+    .catch(function(){
+      note.textContent = "Не получилось отправить. Скачай файл кнопкой ниже и пришли его вручную.";
+    });
+});
+
+document.getElementById("report").addEventListener("click", function(){
+  var r = buildReport();
+  var blob = new Blob([r.html], {type:"text/html;charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = r.file;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  document.getElementById("repnote").textContent = "Файл скачан — он в папке загрузок.";
+});
+
+
+/* ============ заполни пропуски ============ */
+window.GAPSTATE = {};
+window.GAPSAPI = {};
+window.GAPS = function(id, data){
+  var host = document.getElementById(id);
+  if(!host) return null;
+  var btn = document.getElementById(id + "go"), msg = document.getElementById(id + "m"),
+      sc = document.getElementById(id + "s"), tip = document.getElementById(id + "t");
+  var inputs = host.querySelectorAll("input.gp");
+  var tries = 0, done = false;
+
+  function norm(s){
+    return String(s).toLowerCase().replace(/\s+/g, "")
+      .replace(/[–—−]/g, "-")
+      .replace(/[×·\*]/g, "*")
+      .replace(/,/g, ".");
+  }
+  function toNum(s){
+    var t = norm(s);
+    if(!t || !/^[-+*/().0-9]+$/.test(t)) return NaN;
+    try{
+      var v = new Function("return (" + t + ");")();
+      return (typeof v === "number" && isFinite(v)) ? v : NaN;
+    }catch(e){ return NaN; }
+  }
+  function same(given, right){
+    var a = toNum(given), b = toNum(right);
+    if(!isNaN(a) && !isNaN(b)) return Math.abs(a - b) <= Math.max(1e-9, Math.abs(b) * 1e-9);
+    return norm(given) === norm(right);
+  }
+  function record(){
+    var vals = {}, k;
+    for(k = 0; k < inputs.length; k++) vals[inputs[k].getAttribute("data-k")] = inputs[k].value;
+    window.GAPSTATE[id] = {vals: vals, done: done};
+    if(window.saveWork) window.saveWork();
+  }
+
+  function check(quiet){
+    var ok = 0, total = inputs.length, firstBad = null, k, el, key, good;
+    for(k = 0; k < total; k++){
+      el = inputs[k];
+      key = el.getAttribute("data-k");
+      good = (el.value || "").trim() !== "" &&
+             (data.ans[key] || []).some(function(a){ return same(el.value, a); });
+      if(good){
+        el.className = "gp ok";
+        el.readOnly = true;
+        ok++;
+      } else {
+        el.className = (el.value || "").trim() === "" ? "gp" : "gp bad";
+        if(firstBad === null) firstBad = key;
+      }
+    }
+    sc.textContent = "заполнено верно " + ok + " из " + total;
+    if(ok === total){
+      done = true;
+      btn.disabled = true;
+      msg.innerHTML = '<span class="v ok">Все пропуски заполнены верно.</span>';
+      tip.innerHTML = data.after || "";
+      if(window.trFinished) window.trFinished(id, ok, total);
+    } else if(!quiet){
+      tries++;
+      msg.innerHTML = '<span class="v bad">Пока не всё.</span> Красные поля поправь, ' +
+                      "зелёные уже засчитаны.";
+      if(tries >= 2 && data.tips && data.tips[firstBad])
+        tip.innerHTML = "Подсказка: " + data.tips[firstBad];
+    }
+    record();
+    return ok;
+  }
+
+  btn.addEventListener("click", function(){ check(false); });
+  host.addEventListener("keydown", function(ev){
+    if(ev.key === "Enter"){ ev.preventDefault(); check(false); }
+  });
+  sc.textContent = "заполнено верно 0 из " + inputs.length;
+  window.GAPSAPI[id] = {check: check, inputs: inputs};
+  return {check: check};
+};
+
+window.gapRestore = function(saved){
+  var id, api, k, vals, el;
+  for(id in saved){
+    api = window.GAPSAPI[id];
+    if(!api) continue;
+    vals = (saved[id] && saved[id].vals) || {};
+    for(k = 0; k < api.inputs.length; k++){
+      el = api.inputs[k];
+      if(vals[el.getAttribute("data-k")] !== undefined)
+        el.value = vals[el.getAttribute("data-k")];
+    }
+    api.check(true);
+  }
+};
+
+var GPD = {"gp1": {"ans": {"a1": ["14,03"], "a2": ["14,03"], "a3": ["6,83"], "a4": ["6,83"], "a5": ["13,4"]}, "tips": {"a1": "Допиши нуль: 13,40 + 0,63.", "a3": "14,03 − 7,20.", "a5": "Должно получиться то, что было в условии."}, "after": "Задуманное число 6,83. Проверка сошлась."}, "gp2": {"ans": {"b1": ["8,58"], "b2": ["8,58"], "b3": ["13,08"], "b4": ["13,08"], "b5": ["9,3"]}, "tips": {"b1": "9,30 − 0,72.", "b3": "8,58 + 4,50.", "b5": "Должно получиться 9,3, как в условии."}, "after": "Задуманное число 13,08."}, "gp3": {"ans": {"c1": ["14,35"], "c2": ["0,65"], "c3": ["25,65"], "c4": ["54,35"], "c5": ["39,35"], "c6": ["40,65"]}, "tips": {"c1": "7,50 + 6,85.", "c2": "7,50 − 6,85.", "c3": "Навстречу — вычитаем сумму.", "c5": "В одном направлении — работает разность."}, "after": "25,65 · 54,35 · 39,35 · 40,65 — четыре разных ответа из одних и тех же чисел."}, "gp4": {"ans": {"d1": ["28,28"], "d2": ["3,28"], "d3": ["3,72"], "d4": ["60,28"], "d5": ["28,72"], "d6": ["35,28"]}, "tips": {"d1": "12,50 + 15,78.", "d2": "15,78 − 12,50.", "d3": "32,00 − 28,28.", "d5": "32,00 − 3,28."}, "after": "3,72 км — за час они почти сошлись."}};
+for (var _g in GPD){ GAPS(_g, GPD[_g]); }
+
+
+/* ---------- движок тренажёров ---------- */
+function makeTrainer(id, items){
+  var q=document.getElementById(id+"q"), f=document.getElementById(id+"f"),
+      a=document.getElementById(id+"a"), m=document.getElementById(id+"m"),
+      b=document.getElementById(id+"b"), sc=document.getElementById(id+"s");
+  var order=[], perm=[], i=0, ok=0, answered=false;
+
+  function shuffle(n){
+    var arr=[], k, j, t;
+    for(k=0;k<n;k++) arr.push(k);
+    for(k=arr.length-1;k>0;k--){ j=Math.floor(Math.random()*(k+1)); t=arr[k]; arr[k]=arr[j]; arr[j]=t; }
+    return arr;
+  }
+  function norm(s){
+    return String(s).trim().toLowerCase().replace(/\s+/g,"").replace(/−/g,"-").replace(/,/g,".");
+  }
+  function same(x, y){
+    var p=parseFloat(norm(x)), r=parseFloat(norm(y));
+    if(isFinite(p) && isFinite(r)) return Math.abs(p-r) < 1e-9;
+    return norm(x) === norm(y);
+  }
+  function score(){
+    sc.textContent = "вопрос " + Math.min(i + 1, items.length) + " из " + items.length +
+                     " · верно " + ok;
+  }
+
+  function finish(){
+    q.innerHTML=""; f.innerHTML=""; a.innerHTML=""; m.innerHTML="";
+    var pct=Math.round(ok/items.length*100);
+    var word = pct===100 ? "Всё верно — тема закрыта." :
+               pct>=70 ? "Хорошо, но пару мест стоит перечитать." :
+               "Стоит вернуться к теории и пройти ещё раз.";
+    b.innerHTML='<div class="trdone" style="flex:1 1 100%">'+ok+" из "+items.length+
+      " ("+pct+" %) · "+word+'</div><button type="button" class="pri" data-go="1">Пройти заново</button>';
+    sc.textContent="готово";
+    if(window.trFinished) window.trFinished(id, ok, items.length);
+  }
+
+  function show(){
+    answered=false;
+    m.innerHTML=""; b.innerHTML="";
+    var t=items[order[i]];
+    q.innerHTML="<b>"+(i+1)+".</b> "+t.q;
+    f.innerHTML=t.fig || "";
+    f.style.display = t.fig ? "" : "none";
+    if(t.opts){
+      perm = shuffle(t.opts.length);          /* perm[позиция] = номер варианта в банке */
+      var html='<div class="tropts" id="'+id+'o">';
+      for(var k=0;k<perm.length;k++)
+        html+='<button type="button" class="tropt" data-k="'+perm[k]+'">'+t.opts[perm[k]]+'</button>';
+      a.innerHTML = html+"</div>";
+      var box=document.getElementById(id+"o");
+      box.addEventListener("click", function(ev){
+        var el=ev.target; while(el && el!==box && el.className.indexOf("tropt")<0) el=el.parentNode;
+        if(!el || el===box || answered) return;
+        pick(parseInt(el.getAttribute("data-k"),10), box);
+      });
+    } else {
+      a.innerHTML='<div class="trnum"><span>Ответ:</span>'+
+        '<input type="text" id="'+id+'i" inputmode="text" autocomplete="off" '+
+        'autocorrect="off" spellcheck="false" placeholder="число">'+
+        '<button type="button" class="pri" data-check="1">Проверить</button></div>';
+      var inp=document.getElementById(id+"i");
+      inp.addEventListener("keydown", function(ev){ if(ev.key==="Enter") check(); });
+    }
+    score();
+  }
+
+  function verdict(good, t){
+    answered=true;
+    if(good) ok++;
+    i++;
+    m.innerHTML='<div class="v '+(good?"ok":"bad")+'">'+(good?"Верно.":"Неверно.")+"</div>"+
+                '<div class="why">'+t.why+"</div>";
+    b.innerHTML = (i<items.length)
+      ? '<button type="button" class="pri" data-next="1">Дальше</button>'
+      : '<button type="button" class="pri" data-next="1">Показать итог</button>';
+    score();
+  }
+  function pick(k, box){
+    var t=items[order[i]], good = (k === t.ans);
+    var bs=box.querySelectorAll(".tropt");
+    for(var j=0;j<bs.length;j++){
+      var n=parseInt(bs[j].getAttribute("data-k"),10);
+      if(n===t.ans) bs[j].className="tropt right";
+      else if(n===k) bs[j].className="tropt wrong";
+    }
+    box.className="tropts done";
+    verdict(good, t);
+  }
+  function check(){
+    if(answered) return;
+    var t=items[order[i]], inp=document.getElementById(id+"i");
+    var v=(inp.value||"").trim();
+    if(!v){ m.innerHTML='<div class="why">Впиши ответ.</div>'; return; }
+    var good = t.ans.some(function(x){ return same(v, x); });
+    inp.disabled=true;
+    if(!good) m.innerHTML="";
+    verdict(good, t);
+    if(!good) m.innerHTML='<div class="v bad">Неверно. Правильный ответ: '+t.ans[0]+".</div>"+
+                          '<div class="why">'+t.why+"</div>";
+  }
+
+  b.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-next")){ if(i<items.length) show(); else finish(); }
+    if(el.getAttribute && el.getAttribute("data-go")){ start(); }
+  });
+  a.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-check")) check();
+  });
+
+  function start(){ order=shuffle(items.length); i=0; ok=0; show(); }
+  start();
+}
+
+makeTrainer("ts1", [{"q": "Вычисли <span class='nw'>13,4 + 0,63</span>.", "ans": ["14,03"], "why": "13,40 + 0,63 = 14,03. Нуль на месте десятых пропускать нельзя."}, {"q": "Вычисли <span class='nw'>14,03 − 7,2</span>.", "ans": ["6,83"], "why": "14,03 − 7,20 = 6,83."}, {"q": "Вычисли <span class='nw'>5,7 + 0,38</span>.", "ans": ["6,08"], "why": "5,70 + 0,38 = 6,08."}, {"q": "Вычисли <span class='nw'>12,08 − 5,7</span>.", "ans": ["6,38"], "why": "12,08 − 5,70 = 6,38."}, {"q": "Вычисли <span class='nw'>7,5 + 6,85</span>.", "ans": ["14,35"], "why": "7,50 + 6,85 = 14,35."}, {"q": "Вычисли <span class='nw'>7,5 − 6,85</span>.", "ans": ["0,65"], "why": "7,50 − 6,85 = 0,65."}, {"q": "Вычисли <span class='nw'>12,5 + 15,78</span>.", "ans": ["28,28"], "why": "12,50 + 15,78 = 28,28."}, {"q": "Вычисли <span class='nw'>15,78 − 12,5</span>.", "ans": ["3,28"], "why": "15,78 − 12,50 = 3,28."}, {"q": "Вычисли <span class='nw'>9,3 − 0,72</span>.", "ans": ["8,58"], "why": "9,30 − 0,72 = 8,58."}, {"q": "Вычисли <span class='nw'>8,58 + 4,5</span>.", "ans": ["13,08"], "why": "8,58 + 4,50 = 13,08."}]);
+makeTrainer("ts2", [{"q": "«Задумал число, увеличил его на 7,2, из суммы вычел 0,63 и получил 13,4».", "opts": ["<span class='nw'>x + 7,2 − 0,63 = 13,4</span>", "<span class='nw'>x − 7,2 + 0,63 = 13,4</span>", "<span class='nw'>x + 7,2 + 0,63 = 13,4</span>", "<span class='nw'>13,4 + 7,2 − 0,63 = x</span>"], "ans": 0, "why": "Действия записывают по порядку: сначала прибавили, потом вычли."}, {"q": "«Задумал число, уменьшил его на 6,4, прибавил 0,95 и получил 12,3».", "opts": ["<span class='nw'>x − 6,4 + 0,95 = 12,3</span>", "<span class='nw'>x + 6,4 − 0,95 = 12,3</span>", "<span class='nw'>x − 6,4 − 0,95 = 12,3</span>", "<span class='nw'>6,4 − x + 0,95 = 12,3</span>"], "ans": 0, "why": "«Уменьшил на» — это вычитание из задуманного числа."}, {"q": "«Задумал число, увеличил на 2,7, потом ещё на 0,45 и получил 10».", "opts": ["<span class='nw'>x + 2,7 + 0,45 = 10</span>", "<span class='nw'>x + 2,7 − 0,45 = 10</span>", "<span class='nw'>x − 2,7 + 0,45 = 10</span>", "<span class='nw'>2,7 + 0,45 = x</span>"], "ans": 0, "why": "Оба раза увеличивал, значит оба знака плюс."}, {"q": "Как записать «число увеличили на 3,45»?", "opts": ["<span class='nw'>x + 3,45</span>", "<span class='nw'>x − 3,45</span>", "<span class='nw'>3,45 − x</span>", "<span class='nw'>x · 3,45</span>"], "ans": 0, "why": "«Увеличить на» — прибавить. «Увеличить в» — умножить, но это другая тема."}, {"q": "Как записать «из задуманного числа вычли 1,8»?", "opts": ["<span class='nw'>x − 1,8</span>", "<span class='nw'>1,8 − x</span>", "<span class='nw'>x + 1,8</span>", "<span class='nw'>1,8 : x</span>"], "ans": 0, "why": "Из задуманного вычитают, значит x стоит первым."}, {"q": "Как записать «число 20 уменьшили на задуманное число»?", "opts": ["<span class='nw'>20 − x</span>", "<span class='nw'>x − 20</span>", "<span class='nw'>20 + x</span>", "<span class='nw'>x : 20</span>"], "ans": 0, "why": "Уменьшают число 20, значит оно и есть уменьшаемое."}, {"q": "Какое уравнение подходит к тексту «к задуманному числу прибавили 4,6 и получили 11»?", "opts": ["<span class='nw'>x + 4,6 = 11</span>", "<span class='nw'>x − 4,6 = 11</span>", "<span class='nw'>4,6 − x = 11</span>", "<span class='nw'>11 + 4,6 = x</span>"], "ans": 0, "why": "Прибавили к x, результат записан после знака равенства."}, {"q": "В уравнении <span class='nw'>x + 7,2 − 0,63 = 13,4</span> какое действие было последним?", "opts": ["вычитание 0,63", "сложение с 7,2", "умножение", "их порядок не важен"], "ans": 0, "why": "Действия идут слева направо, последним стоит вычитание."}, {"q": "С какого действия начинают обратный ход в уравнении <span class='nw'>x − 4,5 + 0,72 = 9,3</span>?", "opts": ["вычитают 0,72", "прибавляют 4,5", "прибавляют 0,72", "вычитают 4,5"], "ans": 0, "why": "Обратный ход начинают с последнего действия. Последним прибавляли 0,72, значит возвращаем вычитанием."}, {"q": "Что значит проверить решение уравнения?", "opts": ["подставить найденное число и пройти все действия", "решить уравнение ещё раз тем же способом", "сравнить ответ с ответом соседа", "округлить ответ до десятых"], "ans": 0, "why": "Проверка — это подстановка: пройти по условию и получить то же число."}]);
+makeTrainer("ts3", [{"q": "Реши уравнение <span class='nw'>x + 7,2 − 0,63 = 13,4</span>. Чему равен x?", "ans": ["6,83"], "why": "13,4 + 0,63 = 14,03, затем 14,03 − 7,2 = 6,83."}, {"q": "Реши уравнение <span class='nw'>x + 5,7 − 0,38 = 11,7</span>. Чему равен x?", "ans": ["6,38"], "why": "11,7 + 0,38 = 12,08, затем 12,08 − 5,7 = 6,38."}, {"q": "Реши уравнение <span class='nw'>x − 4,5 + 0,72 = 9,3</span>. Чему равен x?", "ans": ["13,08"], "why": "9,3 − 0,72 = 8,58, затем 8,58 + 4,5 = 13,08."}, {"q": "Реши уравнение <span class='nw'>x + 3,45 − 1,8 = 9,15</span>. Чему равен x?", "ans": ["7,5"], "why": "9,15 + 1,8 = 10,95, затем 10,95 − 3,45 = 7,5."}, {"q": "Реши уравнение <span class='nw'>x − 6,4 + 0,95 = 12,3</span>. Чему равен x?", "ans": ["17,75"], "why": "12,3 − 0,95 = 11,35, затем 11,35 + 6,4 = 17,75."}, {"q": "Реши уравнение <span class='nw'>x + 2,7 + 0,45 = 10</span>. Чему равен x?", "ans": ["6,85"], "why": "10 − 0,45 = 9,55, затем 9,55 − 2,7 = 6,85."}, {"q": "Реши уравнение <span class='nw'>x + 4,6 = 11</span>. Чему равен x?", "ans": ["6,4"], "why": "Неизвестное слагаемое: 11 − 4,6 = 6,4."}, {"q": "Реши уравнение <span class='nw'>x − 2,35 = 8,4</span>. Чему равен x?", "ans": ["10,75"], "why": "Неизвестное уменьшаемое: 8,4 + 2,35 = 10,75."}, {"q": "Реши уравнение <span class='nw'>20 − x = 13,6</span>. Чему равен x?", "ans": ["6,4"], "why": "Неизвестное вычитаемое: 20 − 13,6 = 6,4."}, {"q": "Реши уравнение <span class='nw'>x + 0,08 − 1,5 = 4</span>. Чему равен x?", "ans": ["5,42"], "why": "4 + 1,5 = 5,5, затем 5,5 − 0,08 = 5,42."}]);
+makeTrainer("ts4", [{"q": "Двое едут навстречу друг другу.", "opts": ["сближаются, на сумму скоростей", "удаляются, на сумму скоростей", "сближаются, на разность скоростей", "удаляются, на разность скоростей"], "ans": 0, "why": "Навстречу — расстояние уменьшается на сумму скоростей.", "fig": "<svg viewBox=\"0 0 300 132\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"132\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"264.0\" y2=\"62.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"62.0\" r=\"5.2\" fill=\"#137a45\"/><text x=\"46.0\" y=\"82.0\" font-size=\"15\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">A</text><line x1=\"59.0\" y1=\"48.0\" x2=\"88.0\" y2=\"48.0\" stroke=\"#137a45\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 88.0 48.0 L 79.5 50.8 L 79.5 45.2 z\" fill=\"#137a45\"/><text x=\"74.0\" y=\"40.0\" font-size=\"14\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">7,5</text><circle cx=\"254.0\" cy=\"62.0\" r=\"5.2\" fill=\"#b3261e\"/><text x=\"254.0\" y=\"82.0\" font-size=\"15\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">B</text><line x1=\"241.0\" y1=\"26.0\" x2=\"212.0\" y2=\"26.0\" stroke=\"#b3261e\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 212.0 26.0 L 220.5 23.2 L 220.5 28.8 z\" fill=\"#b3261e\"/><text x=\"226.0\" y=\"18.0\" font-size=\"14\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">6,85</text><line x1=\"46.0\" y1=\"98.0\" x2=\"254.0\" y2=\"98.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"46.0\" y1=\"93.0\" x2=\"46.0\" y2=\"103.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"254.0\" y1=\"93.0\" x2=\"254.0\" y2=\"103.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"150.0\" y=\"115.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">40 км</text></svg>"}, {"q": "Двое едут в противоположных направлениях.", "opts": ["сближаются, на сумму скоростей", "удаляются, на сумму скоростей", "сближаются, на разность скоростей", "удаляются, на разность скоростей"], "ans": 1, "why": "В разные стороны — расстояние растёт на сумму скоростей.", "fig": "<svg viewBox=\"0 0 300 132\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"132\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"264.0\" y2=\"62.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"62.0\" r=\"5.2\" fill=\"#137a45\"/><text x=\"46.0\" y=\"82.0\" font-size=\"15\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">A</text><line x1=\"33.0\" y1=\"48.0\" x2=\"4.0\" y2=\"48.0\" stroke=\"#137a45\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 4.0 48.0 L 12.5 45.2 L 12.5 50.8 z\" fill=\"#137a45\"/><text x=\"18.0\" y=\"40.0\" font-size=\"14\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">7,5</text><circle cx=\"254.0\" cy=\"62.0\" r=\"5.2\" fill=\"#b3261e\"/><text x=\"254.0\" y=\"82.0\" font-size=\"15\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">B</text><line x1=\"267.0\" y1=\"26.0\" x2=\"296.0\" y2=\"26.0\" stroke=\"#b3261e\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 296.0 26.0 L 287.5 28.8 L 287.5 23.2 z\" fill=\"#b3261e\"/><text x=\"282.0\" y=\"18.0\" font-size=\"14\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">6,85</text><line x1=\"46.0\" y1=\"98.0\" x2=\"254.0\" y2=\"98.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"46.0\" y1=\"93.0\" x2=\"46.0\" y2=\"103.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"254.0\" y1=\"93.0\" x2=\"254.0\" y2=\"103.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"150.0\" y=\"115.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">40 км</text></svg>"}, {"q": "Едут в одном направлении, сзади тот, у кого скорость больше.", "opts": ["сближаются, на сумму скоростей", "удаляются, на сумму скоростей", "сближаются, на разность скоростей", "удаляются, на разность скоростей"], "ans": 2, "why": "Задний догоняет: расстояние уменьшается на разность скоростей.", "fig": "<svg viewBox=\"0 0 300 132\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"132\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"264.0\" y2=\"62.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"62.0\" r=\"5.2\" fill=\"#137a45\"/><text x=\"46.0\" y=\"82.0\" font-size=\"15\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">A</text><line x1=\"59.0\" y1=\"48.0\" x2=\"88.0\" y2=\"48.0\" stroke=\"#137a45\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 88.0 48.0 L 79.5 50.8 L 79.5 45.2 z\" fill=\"#137a45\"/><text x=\"74.0\" y=\"40.0\" font-size=\"14\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">7,5</text><circle cx=\"254.0\" cy=\"62.0\" r=\"5.2\" fill=\"#b3261e\"/><text x=\"254.0\" y=\"82.0\" font-size=\"15\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">B</text><line x1=\"267.0\" y1=\"26.0\" x2=\"296.0\" y2=\"26.0\" stroke=\"#b3261e\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 296.0 26.0 L 287.5 28.8 L 287.5 23.2 z\" fill=\"#b3261e\"/><text x=\"282.0\" y=\"18.0\" font-size=\"14\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">6,85</text><line x1=\"46.0\" y1=\"98.0\" x2=\"254.0\" y2=\"98.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"46.0\" y1=\"93.0\" x2=\"46.0\" y2=\"103.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"254.0\" y1=\"93.0\" x2=\"254.0\" y2=\"103.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"150.0\" y=\"115.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">40 км</text></svg>"}, {"q": "Едут в одном направлении, сзади тот, у кого скорость меньше.", "opts": ["сближаются, на сумму скоростей", "удаляются, на сумму скоростей", "сближаются, на разность скоростей", "удаляются, на разность скоростей"], "ans": 3, "why": "Задний отстаёт: расстояние растёт на разность скоростей.", "fig": "<svg viewBox=\"0 0 300 132\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"132\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"264.0\" y2=\"62.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"62.0\" r=\"5.2\" fill=\"#137a45\"/><text x=\"46.0\" y=\"82.0\" font-size=\"15\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">A</text><line x1=\"59.0\" y1=\"48.0\" x2=\"88.0\" y2=\"48.0\" stroke=\"#137a45\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 88.0 48.0 L 79.5 50.8 L 79.5 45.2 z\" fill=\"#137a45\"/><text x=\"74.0\" y=\"40.0\" font-size=\"14\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">6,85</text><circle cx=\"254.0\" cy=\"62.0\" r=\"5.2\" fill=\"#b3261e\"/><text x=\"254.0\" y=\"82.0\" font-size=\"15\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">B</text><line x1=\"267.0\" y1=\"26.0\" x2=\"296.0\" y2=\"26.0\" stroke=\"#b3261e\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 296.0 26.0 L 287.5 28.8 L 287.5 23.2 z\" fill=\"#b3261e\"/><text x=\"282.0\" y=\"18.0\" font-size=\"14\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">7,5</text><line x1=\"46.0\" y1=\"98.0\" x2=\"254.0\" y2=\"98.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"46.0\" y1=\"93.0\" x2=\"46.0\" y2=\"103.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"254.0\" y1=\"93.0\" x2=\"254.0\" y2=\"103.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"150.0\" y=\"115.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">40 км</text></svg>"}, {"q": "Лыжник со скоростью 7,5 км/ч догоняет лыжника со скоростью 6,85 км/ч.", "opts": ["сближаются, на сумму скоростей", "удаляются, на сумму скоростей", "сближаются, на разность скоростей", "удаляются, на разность скоростей"], "ans": 2, "why": "Одно направление и задний быстрее — разность 0,65 км/ч, расстояние уменьшается."}, {"q": "Велосипедист со скоростью 12,5 км/ч отстаёт от велосипедиста со скоростью 15,78 км/ч.", "opts": ["сближаются, на сумму скоростей", "удаляются, на сумму скоростей", "сближаются, на разность скоростей", "удаляются, на разность скоростей"], "ans": 3, "why": "Одно направление и задний медленнее — разность 3,28 км/ч, расстояние растёт."}, {"q": "Два катера отходят от одной пристани в разные стороны.", "opts": ["сближаются, на сумму скоростей", "удаляются, на сумму скоростей", "сближаются, на разность скоростей", "удаляются, на разность скоростей"], "ans": 1, "why": "Разные стороны — сумма скоростей, расстояние растёт."}, {"q": "Пешеход и велосипедист выходят из двух посёлков навстречу друг другу.", "opts": ["сближаются, на сумму скоростей", "удаляются, на сумму скоростей", "сближаются, на разность скоростей", "удаляются, на разность скоростей"], "ans": 0, "why": "Навстречу — сумма скоростей, расстояние уменьшается."}, {"q": "Две машины едут по шоссе в одну сторону, передняя быстрее.", "opts": ["сближаются, на сумму скоростей", "удаляются, на сумму скоростей", "сближаются, на разность скоростей", "удаляются, на разность скоростей"], "ans": 3, "why": "Одно направление, задний медленнее — разность, расстояние растёт."}, {"q": "Две машины едут по шоссе в одну сторону, задняя быстрее.", "opts": ["сближаются, на сумму скоростей", "удаляются, на сумму скоростей", "сближаются, на разность скоростей", "удаляются, на разность скоростей"], "ans": 2, "why": "Одно направление, задний быстрее — разность, расстояние уменьшается."}]);
+makeTrainer("ts5", [{"q": "Расстояние 40 км, скорости 7,5 км/ч и 6,85 км/ч. Едут навстречу. Сколько километров будет между ними через 1 ч?", "ans": ["25,65"], "why": "7,5 + 6,85 = 14,35; 40 − 14,35 = 25,65.", "fig": "<svg viewBox=\"0 0 300 132\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"132\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"264.0\" y2=\"62.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"62.0\" r=\"5.2\" fill=\"#137a45\"/><text x=\"46.0\" y=\"82.0\" font-size=\"15\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">A</text><line x1=\"59.0\" y1=\"48.0\" x2=\"88.0\" y2=\"48.0\" stroke=\"#137a45\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 88.0 48.0 L 79.5 50.8 L 79.5 45.2 z\" fill=\"#137a45\"/><text x=\"74.0\" y=\"40.0\" font-size=\"14\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">7,5</text><circle cx=\"254.0\" cy=\"62.0\" r=\"5.2\" fill=\"#b3261e\"/><text x=\"254.0\" y=\"82.0\" font-size=\"15\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">B</text><line x1=\"241.0\" y1=\"26.0\" x2=\"212.0\" y2=\"26.0\" stroke=\"#b3261e\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 212.0 26.0 L 220.5 23.2 L 220.5 28.8 z\" fill=\"#b3261e\"/><text x=\"226.0\" y=\"18.0\" font-size=\"14\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">6,85</text><line x1=\"46.0\" y1=\"98.0\" x2=\"254.0\" y2=\"98.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"46.0\" y1=\"93.0\" x2=\"46.0\" y2=\"103.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"254.0\" y1=\"93.0\" x2=\"254.0\" y2=\"103.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"150.0\" y=\"115.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">40 км</text></svg>"}, {"q": "Расстояние 40 км, скорости 7,5 км/ч и 6,85 км/ч. Едут в противоположных направлениях. Сколько километров через 1 ч?", "ans": ["54,35"], "why": "40 + 14,35 = 54,35.", "fig": "<svg viewBox=\"0 0 300 132\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"132\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"264.0\" y2=\"62.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"62.0\" r=\"5.2\" fill=\"#137a45\"/><text x=\"46.0\" y=\"82.0\" font-size=\"15\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">A</text><line x1=\"33.0\" y1=\"48.0\" x2=\"4.0\" y2=\"48.0\" stroke=\"#137a45\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 4.0 48.0 L 12.5 45.2 L 12.5 50.8 z\" fill=\"#137a45\"/><text x=\"18.0\" y=\"40.0\" font-size=\"14\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">7,5</text><circle cx=\"254.0\" cy=\"62.0\" r=\"5.2\" fill=\"#b3261e\"/><text x=\"254.0\" y=\"82.0\" font-size=\"15\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">B</text><line x1=\"267.0\" y1=\"26.0\" x2=\"296.0\" y2=\"26.0\" stroke=\"#b3261e\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 296.0 26.0 L 287.5 28.8 L 287.5 23.2 z\" fill=\"#b3261e\"/><text x=\"282.0\" y=\"18.0\" font-size=\"14\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">6,85</text><line x1=\"46.0\" y1=\"98.0\" x2=\"254.0\" y2=\"98.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"46.0\" y1=\"93.0\" x2=\"46.0\" y2=\"103.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"254.0\" y1=\"93.0\" x2=\"254.0\" y2=\"103.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"150.0\" y=\"115.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">40 км</text></svg>"}, {"q": "Расстояние 40 км, скорости 7,5 км/ч и 6,85 км/ч. Едут в одном направлении, быстрый догоняет. Сколько через 1 ч?", "ans": ["39,35"], "why": "7,5 − 6,85 = 0,65; 40 − 0,65 = 39,35.", "fig": "<svg viewBox=\"0 0 300 132\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"132\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"264.0\" y2=\"62.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"62.0\" r=\"5.2\" fill=\"#137a45\"/><text x=\"46.0\" y=\"82.0\" font-size=\"15\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">A</text><line x1=\"59.0\" y1=\"48.0\" x2=\"88.0\" y2=\"48.0\" stroke=\"#137a45\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 88.0 48.0 L 79.5 50.8 L 79.5 45.2 z\" fill=\"#137a45\"/><text x=\"74.0\" y=\"40.0\" font-size=\"14\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">7,5</text><circle cx=\"254.0\" cy=\"62.0\" r=\"5.2\" fill=\"#b3261e\"/><text x=\"254.0\" y=\"82.0\" font-size=\"15\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">B</text><line x1=\"267.0\" y1=\"26.0\" x2=\"296.0\" y2=\"26.0\" stroke=\"#b3261e\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 296.0 26.0 L 287.5 28.8 L 287.5 23.2 z\" fill=\"#b3261e\"/><text x=\"282.0\" y=\"18.0\" font-size=\"14\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">6,85</text><line x1=\"46.0\" y1=\"98.0\" x2=\"254.0\" y2=\"98.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"46.0\" y1=\"93.0\" x2=\"46.0\" y2=\"103.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"254.0\" y1=\"93.0\" x2=\"254.0\" y2=\"103.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"150.0\" y=\"115.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">40 км</text></svg>"}, {"q": "Расстояние 40 км, скорости 7,5 км/ч и 6,85 км/ч. Едут в одном направлении, медленный отстаёт. Сколько через 1 ч?", "ans": ["40,65"], "why": "40 + 0,65 = 40,65.", "fig": "<svg viewBox=\"0 0 300 132\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"132\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"264.0\" y2=\"62.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"62.0\" r=\"5.2\" fill=\"#137a45\"/><text x=\"46.0\" y=\"82.0\" font-size=\"15\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">A</text><line x1=\"59.0\" y1=\"48.0\" x2=\"88.0\" y2=\"48.0\" stroke=\"#137a45\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 88.0 48.0 L 79.5 50.8 L 79.5 45.2 z\" fill=\"#137a45\"/><text x=\"74.0\" y=\"40.0\" font-size=\"14\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">6,85</text><circle cx=\"254.0\" cy=\"62.0\" r=\"5.2\" fill=\"#b3261e\"/><text x=\"254.0\" y=\"82.0\" font-size=\"15\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">B</text><line x1=\"267.0\" y1=\"26.0\" x2=\"296.0\" y2=\"26.0\" stroke=\"#b3261e\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 296.0 26.0 L 287.5 28.8 L 287.5 23.2 z\" fill=\"#b3261e\"/><text x=\"282.0\" y=\"18.0\" font-size=\"14\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">7,5</text><line x1=\"46.0\" y1=\"98.0\" x2=\"254.0\" y2=\"98.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"46.0\" y1=\"93.0\" x2=\"46.0\" y2=\"103.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"254.0\" y1=\"93.0\" x2=\"254.0\" y2=\"103.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"150.0\" y=\"115.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">40 км</text></svg>"}, {"q": "Расстояние 32 км, скорости 12,5 км/ч и 15,78 км/ч. Едут навстречу. Сколько километров через 1 ч?", "ans": ["3,72"], "why": "12,5 + 15,78 = 28,28; 32 − 28,28 = 3,72.", "fig": "<svg viewBox=\"0 0 300 132\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"132\" rx=\"12\" fill=\"#ffffff\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"264.0\" y2=\"62.0\" stroke=\"#5b6270\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><circle cx=\"46.0\" cy=\"62.0\" r=\"5.2\" fill=\"#137a45\"/><text x=\"46.0\" y=\"82.0\" font-size=\"15\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">A</text><line x1=\"59.0\" y1=\"48.0\" x2=\"88.0\" y2=\"48.0\" stroke=\"#137a45\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 88.0 48.0 L 79.5 50.8 L 79.5 45.2 z\" fill=\"#137a45\"/><text x=\"74.0\" y=\"40.0\" font-size=\"14\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">12,5</text><circle cx=\"254.0\" cy=\"62.0\" r=\"5.2\" fill=\"#b3261e\"/><text x=\"254.0\" y=\"82.0\" font-size=\"15\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">B</text><line x1=\"241.0\" y1=\"26.0\" x2=\"212.0\" y2=\"26.0\" stroke=\"#b3261e\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M 212.0 26.0 L 220.5 23.2 L 220.5 28.8 z\" fill=\"#b3261e\"/><text x=\"226.0\" y=\"18.0\" font-size=\"14\" fill=\"#b3261e\" text-anchor=\"middle\" font-weight=\"600\">15,78</text><line x1=\"46.0\" y1=\"98.0\" x2=\"254.0\" y2=\"98.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"46.0\" y1=\"93.0\" x2=\"46.0\" y2=\"103.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><line x1=\"254.0\" y1=\"93.0\" x2=\"254.0\" y2=\"103.0\" stroke=\"#2f6bd8\" stroke-width=\"2.0\" stroke-linecap=\"round\"/><text x=\"150.0\" y=\"115.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">32 км</text></svg>"}, {"q": "Расстояние 32 км, скорости 12,5 км/ч и 15,78 км/ч. Едут в противоположных направлениях. Сколько через 1 ч?", "ans": ["60,28"], "why": "32 + 28,28 = 60,28."}, {"q": "Расстояние 32 км, скорости 12,5 км/ч и 15,78 км/ч. Едут в одном направлении, быстрый догоняет. Сколько через 1 ч?", "ans": ["28,72"], "why": "15,78 − 12,5 = 3,28; 32 − 3,28 = 28,72."}, {"q": "Расстояние 32 км, скорости 12,5 км/ч и 15,78 км/ч. Едут в одном направлении, медленный отстаёт. Сколько через 1 ч?", "ans": ["35,28"], "why": "32 + 3,28 = 35,28."}, {"q": "Расстояние 18 км, скорости 9,4 км/ч и 8,6 км/ч, идут навстречу. Сколько километров будет между ними через 1 ч?", "ans": ["0"], "why": "9,4 + 8,6 = 18; 18 − 18 = 0 — они как раз встретятся."}, {"q": "Расстояние 25 км, скорости 6,2 км/ч и 6,2 км/ч, едут в одном направлении. Сколько километров через 1 ч?", "ans": ["25"], "why": "Скорости равны, разность 0 — расстояние не меняется."}]);
+makeTrainer("ts6", [{"q": "Расстояние было 40 км, ехали навстречу, через 1 ч стало 25,65 км. На сколько километров они сблизились за час?", "ans": ["14,35"], "why": "40 − 25,65 = 14,35 — это сумма скоростей."}, {"q": "Сблизились за час на 14,35 км, скорость первого 7,5 км/ч. Какова скорость второго (км/ч)?", "ans": ["6,85"], "why": "14,35 − 7,5 = 6,85."}, {"q": "Расстояние было 32 км, ехали в разные стороны, через 1 ч стало 60,28 км. На сколько удалились за час?", "ans": ["28,28"], "why": "60,28 − 32 = 28,28."}, {"q": "Удалились за час на 28,28 км, скорость первого 12,5 км/ч. Какова скорость второго (км/ч)?", "ans": ["15,78"], "why": "28,28 − 12,5 = 15,78."}, {"q": "Расстояние между пешеходами 6,4 км, идут в одном направлении, через 1 ч стало 4,75 км. На сколько отличаются их скорости (км/ч)?", "ans": ["1,65"], "why": "6,4 − 4,75 = 1,65 — это разность скоростей."}, {"q": "Расстояние 12 км, едут в одном направлении, через 1 ч стало 14,3 км. На сколько отличаются скорости (км/ч)?", "ans": ["2,3"], "why": "14,3 − 12 = 2,3 — задний медленнее, расстояние выросло."}, {"q": "Скорости 9,4 км/ч и 8,6 км/ч. Чему равна скорость сближения при движении навстречу (км/ч)?", "ans": ["18"], "why": "9,4 + 8,6 = 18."}, {"q": "Скорости 9,4 км/ч и 8,6 км/ч. Чему равна скорость сближения при движении в одном направлении (км/ч)?", "ans": ["0,8"], "why": "9,4 − 8,6 = 0,8."}, {"q": "Расстояние 50 км, скорость сближения 12,45 км/ч. Сколько километров будет между ними через 1 ч?", "ans": ["37,55"], "why": "50 − 12,45 = 37,55."}, {"q": "Расстояние 7,2 км, скорость удаления 3,85 км/ч. Сколько километров будет между ними через 1 ч?", "ans": ["11,05"], "why": "7,2 + 3,85 = 11,05."}]);
+
+/* ============ живые чертежи: цепочка и движение ============ */
+(function(){
+var INK="#15181e", MUT="#5b6270", ACC="#2f6bd8", RED="#b3261e", GRN="#137a45",
+    VIO="#7a3fbf", AMB="#c07d10";
+var W=440, H=180;
+
+function f1(x){ return x.toFixed(1); }
+function ln(x1,y1,x2,y2,c,w,dash){
+  return '<line x1="'+f1(x1)+'" y1="'+f1(y1)+'" x2="'+f1(x2)+'" y2="'+f1(y2)+
+    '" stroke="'+c+'" stroke-width="'+(w||2.2)+'" stroke-linecap="round"'+
+    (dash?' stroke-dasharray="'+dash+'"':'')+'/>';
+}
+function dot(x,y,c,r){
+  return '<circle cx="'+f1(x)+'" cy="'+f1(y)+'" r="'+(r||4.2)+'" fill="'+c+'"/>';
+}
+function txt(x,y,t,c,s){
+  return '<text x="'+f1(x)+'" y="'+f1(y)+'" font-size="'+(s||16)+'" fill="'+c+
+    '" text-anchor="middle" font-weight="600">'+t+'</text>';
+}
+function arrow(x1,y1,x2,y2,c,w){
+  var a=Math.atan2(y2-y1,x2-x1);
+  return ln(x1,y1,x2,y2,c,w)+
+    '<path d="M '+f1(x2)+' '+f1(y2)+' L '+f1(x2-9*Math.cos(a-0.32))+' '+
+    f1(y2-9*Math.sin(a-0.32))+' L '+f1(x2-9*Math.cos(a+0.32))+' '+
+    f1(y2-9*Math.sin(a+0.32))+' z" fill="'+c+'"/>';
+}
+function rect(x,y,w,h,fill,col,dash){
+  return '<rect x="'+f1(x)+'" y="'+f1(y)+'" width="'+f1(w)+'" height="'+f1(h)+
+    '" rx="9" fill="'+fill+'" stroke="'+col+'" stroke-width="2"'+
+    (dash?' stroke-dasharray="5 4"':'')+'/>';
+}
+function svg(h, body){
+  return '<svg viewBox="0 0 '+W+' '+h+'"><rect x="0" y="0" width="'+W+'" height="'+h+
+    '" rx="12" fill="#ffffff"/>'+body+'</svg>';
+}
+function nums(x){
+  var v = Math.round(x*1000)/1000;
+  var s = String(v);
+  if (s.indexOf("e") >= 0) s = v.toFixed(3);
+  return s.replace(".", ",").replace("-", "−");
+}
+function cap2(x){ return Math.round(x*100)/100; }
+
+/* ---------- цепочка ---------- */
+var CH = [
+  {k:"t1", t:"увеличил, потом вычел", ops:["+","−"],
+   solve:function(a,b,c){ return c + b - a; },
+   text:function(a,b,c){
+     return "x + " + nums(a) + " − " + nums(b) + " = " + nums(c);
+   }},
+  {k:"t2", t:"вычел, потом прибавил", ops:["−","+"],
+   solve:function(a,b,c){ return c - b + a; },
+   text:function(a,b,c){
+     return "x − " + nums(a) + " + " + nums(b) + " = " + nums(c);
+   }},
+  {k:"t3", t:"два раза увеличил", ops:["+","+"],
+   solve:function(a,b,c){ return c - b - a; },
+   text:function(a,b,c){
+     return "x + " + nums(a) + " + " + nums(b) + " = " + nums(c);
+   }}
+];
+
+function drawChain(m, a, b, c){
+  var ops=[[m.ops[0], nums(a)], [m.ops[1], nums(b)]];
+  var n=ops.length+1, bw=78, gap=(W-20-bw*n)/(n-1), y=46, i, x1, x2, xs=[];
+  for(i=0;i<n;i++) xs.push(10+i*(bw+gap));
+  var labels=["x","?",nums(c)];
+  var s=[];
+  for(i=0;i<n;i++){
+    var last=(i===n-1);
+    var col=(i===0)?ACC:(last?GRN:MUT);
+    var fill=(i===0)?"#e8f0ff":(last?"#e7f6ee":"#ffffff");
+    s.push(rect(xs[i], y, bw, 40, fill, col, !(i===0||last)));
+    s.push(txt(xs[i]+bw/2, y+26, labels[i], col, 17));
+  }
+  for(i=0;i<ops.length;i++){
+    x1=xs[i]+bw; x2=xs[i+1];
+    s.push(arrow(x1+3, y+20, x2-3, y+20, VIO, 2.2));
+    s.push(txt((x1+x2)/2, y+11, ops[i][0]+" "+ops[i][1], VIO, 15));
+  }
+  var yb=y+84;
+  s.push(txt(W/2, yb-17, "обратный ход", RED, 15));
+  for(i=0;i<ops.length;i++){
+    var inv=(ops[i][0]==="+")?"−":"+";
+    x1=xs[i+1]; x2=xs[i]+bw;
+    s.push(arrow(x1-3, yb, x2+3, yb, RED, 2.2));
+    s.push(txt((x1+x2)/2, yb+19, inv+" "+ops[i][1], RED, 15));
+  }
+  s.push(ln(xs[0]+bw/2, y+42, xs[0]+bw/2, yb, RED, 1.4, "4 4"));
+  s.push(ln(xs[n-1]+bw/2, y+42, xs[n-1]+bw/2, yb-4, RED, 1.4, "4 4"));
+  return svg(180, s.join(""));
+}
+
+/* ---------- движение ---------- */
+var DIRS={vstrech:[1,-1], protiv:[-1,1], dogon:[1,1], otstaet:[1,1]};
+var MV=[
+  {k:"vstrech", t:"навстречу друг другу"},
+  {k:"protiv", t:"в противоположных направлениях"},
+  {k:"dogon", t:"в одном направлении, догоняет"},
+  {k:"otstaet", t:"в одном направлении, отстаёт"}
+];
+function sides(kind, v1, v2){
+  var lo=Math.min(v1,v2), hi=Math.max(v1,v2);
+  if(kind==="dogon") return [hi, lo];
+  if(kind==="otstaet") return [lo, hi];
+  return [v1, v2];
+}
+function rate(kind, v1, v2){
+  if(kind==="vstrech") return -(v1+v2);
+  if(kind==="protiv") return v1+v2;
+  if(kind==="dogon") return -Math.abs(v1-v2);
+  return Math.abs(v1-v2);
+}
+function drawMove(kind, S, v1, v2, t){
+  var d=DIRS[kind], sv=sides(kind,v1,v2);
+  var xl=0+d[0]*sv[0]*t, xr=S+d[1]*sv[1]*t;
+  var lo=Math.min(0,S,xl,xr), hi=Math.max(0,S,xl,xr), span=(hi-lo)||1;
+  var pad=52, k=(W-2*pad)/span;
+  function px(v){ return pad+(v-lo)*k; }
+  var s=[], y0=50, y1=182;
+  /* было */
+  s.push(ln(pad-12, y0, W-pad+12, y0, MUT, 2));
+  s.push(dot(px(0), y0, MUT, 5));
+  s.push(txt(px(0), y0+20, "A", MUT, 15));
+  s.push(dot(px(S), y0, MUT, 5));
+  s.push(txt(px(S), y0+20, "B", MUT, 15));
+  s.push(ln(px(0), y0-16, px(S), y0-16, MUT, 1.8));
+  s.push(ln(px(0), y0-21, px(0), y0-11, MUT, 1.8));
+  s.push(ln(px(S), y0-21, px(S), y0-11, MUT, 1.8));
+  s.push(txt((px(0)+px(S))/2, y0-25, nums(S)+" км", MUT, 14));
+  var ym=(y0+y1)/2;
+  s.push(txt(W/2, ym-2, "прошло "+nums(t)+" ч", VIO, 15));
+  s.push(arrow(24, ym-22, 24, ym+8, VIO, 2));
+  s.push(arrow(W-24, ym-22, W-24, ym+8, VIO, 2));
+  /* стало */
+  s.push(ln(pad-12, y1, W-pad+12, y1, MUT, 2));
+  var pts=[[px(xl), "A", sv[0], d[0], GRN], [px(xr), "B", sv[1], d[1], RED]];
+  var close=Math.abs(px(xr)-px(xl))<34;
+  for(var i=0;i<2;i++){
+    var p=pts[i], lev=(i===0)?0:22;
+    s.push(dot(p[0], y1, p[4], 5.4));
+    s.push(txt(p[0]+(close?(i===0?-11:11):0), y1+((i===0||!close)?20:36),
+               p[1], p[4], 15));
+    s.push(arrow(p[0]+p[3]*13, y1-15-lev, p[0]+p[3]*44, y1-15-lev, p[4], 2.2));
+    s.push(txt(p[0]+p[3]*29, y1-23-lev, nums(p[2]), p[4], 14));
+  }
+  var a=Math.min(px(xl), px(xr)), b=Math.max(px(xl), px(xr));
+  var dist=Math.abs(xr-xl);
+  s.push(ln(a, y1+50, b, y1+50, ACC, 2));
+  s.push(ln(a, y1+45, a, y1+55, ACC, 2));
+  s.push(ln(b, y1+45, b, y1+55, ACC, 2));
+  s.push(txt((a+b)/2, y1+68, nums(cap2(dist))+" км", ACC, 15));
+  return svg(264, s.join(""));
+}
+
+/* ---------- сборка ---------- */
+function build(host){
+  var id=host.id, kind=host.getAttribute("data-kind");
+  var bar=document.getElementById(id+"b"), figbox=document.getElementById(id+"f"),
+      msg=document.getElementById(id+"m"), ctl=document.getElementById(id+"c");
+  var modes=(kind==="move")?MV:CH, cur=0;
+  var st=(kind==="move") ? {S:40, v1:7.5, v2:6.85, t:1}
+                         : {a:7.2, b:0.63, c:13.4};
+
+  function renderChain(){
+    var m=modes[cur], x=m.solve(st.a, st.b, st.c);
+    figbox.innerHTML=drawChain(m, st.a, st.b, st.c);
+    var head='<span class="v">'+m.text(st.a, st.b, st.c)+'</span>';
+    if(x < 0){
+      msg.innerHTML=head+'<span class="warn2">При таких числах задуманное число вышло '+
+        'бы отрицательным ('+nums(cap2(x))+'). В пятом классе такие ответы ещё не '+
+        'берут — подвинь ползунки.</span>';
+      return;
+    }
+    var step1, step2, t1;
+    if(m.k==="t1"){ t1=st.c+st.b;
+      step1="x = "+nums(st.c)+" + "+nums(st.b)+" − "+nums(st.a);
+      step2=nums(cap2(t1))+" − "+nums(st.a)+" = "+nums(cap2(x)); }
+    else if(m.k==="t2"){ t1=st.c-st.b;
+      step1="x = "+nums(st.c)+" − "+nums(st.b)+" + "+nums(st.a);
+      step2=nums(cap2(t1))+" + "+nums(st.a)+" = "+nums(cap2(x)); }
+    else { t1=st.c-st.b;
+      step1="x = "+nums(st.c)+" − "+nums(st.b)+" − "+nums(st.a);
+      step2=nums(cap2(t1))+" − "+nums(st.a)+" = "+nums(cap2(x)); }
+    msg.innerHTML=head+
+      '<span class="num">Обратный ход: '+step1+'; &nbsp;'+step2+'.</span>'+
+      '<span class="num">Проверка: задуманное число '+nums(cap2(x))+
+      ', после всех действий получается '+nums(st.c)+'.</span>';
+  }
+  function renderMove(){
+    var m=modes[cur], r=rate(m.k, st.v1, st.v2);
+    figbox.innerHTML=drawMove(m.k, st.S, st.v1, st.v2, st.t);
+    var d=st.S+r*st.t, meets=(d<0);
+    var speed=Math.abs(r), word=(r<0)?"сближения":"удаления";
+    var res='<span class="v">Скорость '+word+': '+nums(cap2(speed))+' км/ч.</span>';
+    var calc, sg=(r<0)?" − ":" + ";
+    if(st.t===1) calc=nums(st.S)+sg+nums(cap2(speed))+" = "+nums(cap2(d));
+    else calc=nums(st.S)+sg+nums(cap2(speed))+" · "+nums(st.t)+
+              " = "+nums(cap2(d));
+    if(st.t===0){
+      msg.innerHTML=res+'<span class="num">Время ещё не пошло: между ними те же '+
+        nums(st.S)+' км.</span>';
+      return;
+    }
+    if(meets){
+      res+='<span class="warn2">Они уже встретились и разъехались: расстояние снова '+
+        'растёт и сейчас равно '+nums(cap2(Math.abs(d)))+' км.</span>';
+    } else {
+      res+='<span class="num">Через '+nums(st.t)+' ч между ними '+calc+' км.</span>';
+    }
+    msg.innerHTML=res;
+  }
+  function render(){
+    if(kind==="move") renderMove(); else renderChain();
+    var bs=bar.querySelectorAll("button"), i;
+    for(i=0;i<bs.length;i++) bs[i].className=(i===cur?"on":"");
+  }
+  var i, b;
+  for(i=0;i<modes.length;i++){
+    b=document.createElement("button");
+    b.type="button"; b.textContent=modes[i].t; b.setAttribute("data-i", i);
+    bar.appendChild(b);
+  }
+  bar.addEventListener("click", function(ev){
+    var el=ev.target;
+    while(el && el!==bar && el.tagName!=="BUTTON") el=el.parentNode;
+    if(!el || el===bar) return;
+    cur=parseInt(el.getAttribute("data-i"),10);
+    render();
+  });
+
+  var rows = (kind==="move")
+    ? [["S","расстояние","5","60","0.5","40"," км"],
+       ["v1","первая скорость","1","20","0.05","7.5"," км/ч"],
+       ["v2","вторая скорость","1","20","0.05","6.85"," км/ч"],
+       ["t","прошло времени","0","3","0.25","1"," ч"]]
+    : [["a","число a","0.1","15","0.1","7.2",""],
+       ["b","число b","0.01","5","0.01","0.63",""],
+       ["c","получили","1","30","0.1","13.4",""]];
+  var html="", k;
+  for(k=0;k<rows.length;k++){
+    html+='<label>'+rows[k][1]+
+      '<input type="range" id="'+id+'r'+rows[k][0]+'" min="'+rows[k][2]+
+      '" max="'+rows[k][3]+'" step="'+rows[k][4]+'" value="'+rows[k][5]+'">'+
+      '<span class="v" id="'+id+'v'+rows[k][0]+'">'+nums(parseFloat(rows[k][5]))+
+      rows[k][6]+'</span></label>';
+  }
+  ctl.innerHTML=html;
+  function sync(){
+    for(var k=0;k<rows.length;k++){
+      var key=rows[k][0];
+      var el=document.getElementById(id+"r"+key);
+      st[key]=parseFloat(el.value);
+      document.getElementById(id+"v"+key).textContent=nums(st[key])+rows[k][6];
+    }
+    render();
+  }
+  for(k=0;k<rows.length;k++)
+    document.getElementById(id+"r"+rows[k][0]).addEventListener("input", sync);
+  render();
+}
+
+window.MVLIVE = function(){
+  var hosts=document.querySelectorAll(".live[data-kind]"), i;
+  for(i=0;i<hosts.length;i++) build(hosts[i]);
+};
+})();
+MVLIVE();
+
+/* ---------- тренажёры и пропуски обязательны для отправки ---------- */
+var TRREQ = [
+  {id:"ts1", name:"Тренажёр 1. Столбик"},
+  {id:"ts2", name:"Тренажёр 2. Составь уравнение"},
+  {id:"ts3", name:"Тренажёр 3. Реши уравнение"},
+  {id:"gp1", name:"Пропуски 1. Уравнение обратным ходом"},
+  {id:"gp2", name:"Пропуски 2. Уравнение с минусом"},
+  {id:"ts4", name:"Тренажёр 4. Сближаются или удаляются"},
+  {id:"ts5", name:"Тренажёр 5. Расстояние через 1 ч"},
+  {id:"gp3", name:"Пропуски 3. Лыжники"},
+  {id:"gp4", name:"Пропуски 4. Велосипедисты"}
+];
+var TRDONE = {};
+window.trFinished = function(id, ok, total){
+  var prev = TRDONE[id];
+  if(!prev || ok > prev.ok) TRDONE[id] = {ok: ok, total: total};
+  trStatus();
+  if(window.saveWork) saveWork();
+};
+function trPending(){
+  var out = [], k;
+  for(k = 0; k < TRREQ.length; k++){ if(!TRDONE[TRREQ[k].id]) out.push(TRREQ[k]); }
+  return out;
+}
+function trSummary(){
+  var ok = 0, total = 0, parts = [], k, d;
+  for(k = 0; k < TRREQ.length; k++){
+    d = TRDONE[TRREQ[k].id];
+    parts.push({name: TRREQ[k].name, ok: d ? d.ok : null, total: d ? d.total : null});
+    if(d){ ok += d.ok; total += d.total; }
+  }
+  return {ok: ok, total: total, parts: parts, done: TRREQ.length - trPending().length};
+}
+function trReportHtml(){
+  var s = trSummary(), k, pt, h;
+  h = "<h2>Тренажёры и пропуски: " + s.done + " из " + TRREQ.length + " пройдено" +
+      (s.total ? " · верных ответов " + s.ok + " из " + s.total : "") + "</h2><table><tr>" +
+      "<th>Блок</th><th>Результат</th></tr>";
+  for(k = 0; k < s.parts.length; k++){
+    pt = s.parts[k];
+    h += "<tr><td style='text-align:left'>" + pt.name + "</td><td>" +
+         (pt.ok === null ? "не пройден" : pt.ok + " из " + pt.total) + "</td></tr>";
+  }
+  return h + "</table>";
+}
+function trJump(id){
+  var el = document.getElementById(id);
+  if(!el) return;
+  try{ el.scrollIntoView({behavior: "smooth", block: "center"}); }
+  catch(e){ el.scrollIntoView(); }
+  el.classList.add("need");
+  setTimeout(function(){ el.classList.remove("need"); }, 2600);
+}
+function trStatus(){
+  var g = document.getElementById("trgate");
+  if(!g) return;
+  var left = trPending(), s = trSummary(), h, k;
+  if(!left.length){
+    g.className = "trgate ready";
+    g.innerHTML = "<b>Все тренажёры и пропуски пройдены.</b> Верных ответов: " + s.ok +
+                  " из " + s.total + ". Работу можно отправлять.";
+    return;
+  }
+  g.className = "trgate";
+  h = "<b>Пройдено: " + s.done + " из " + TRREQ.length + ".</b> " +
+      "Работа отправится, когда пройдёшь всё. Осталось:<ul>";
+  for(k = 0; k < left.length; k++){
+    h += '<li><a data-jump="' + left[k].id + '">' + left[k].name + "</a></li>";
+  }
+  g.innerHTML = h + "</ul>";
+}
+document.addEventListener("click", function(ev){
+  var el = ev.target;
+  var id = (el && el.getAttribute) ? el.getAttribute("data-jump") : null;
+  if(id) trJump(id);
+});
+trStatus();
+
+/* ---------- память страницы ---------- */
+var SAVE_V = 1;
+var SKEY = "arttich:dvizh5:" + (STUDENT_CODE || "-");
+
+function spentMs(){ return spentBefore + (Date.now() - started); }
+
+var CAN_STORE = (function(){
+  try{
+    localStorage.setItem("arttich:probe", "1");
+    localStorage.removeItem("arttich:probe");
+    return true;
+  }catch(e){ return false; }
+})();
+
+var wiping = false;
+function saveWork(){
+  if(wiping) return;
+  try{
+    var box = {v: SAVE_V, at: Date.now(), spent: spentMs(), tr: TRDONE, gaps: (window.GAPSTATE || {}), tasks: {},
+               name: (document.getElementById("name").value || "")};
+    TASKS.forEach(function(t){
+      var x = state[t.id];
+      if(x.tries || x.hints || x.given || x.sel){
+        box.tasks[t.id] = {tries: x.tries, hints: x.hints, done: x.done,
+                           ok: x.ok, given: x.given, sel: x.sel};
+      }
+    });
+    localStorage.setItem(SKEY, JSON.stringify(box));
+    saveNote(box.at);
+  }catch(e){}
+}
+function loadWork(){
+  try{
+    var raw = localStorage.getItem(SKEY);
+    if(!raw) return null;
+    var box = JSON.parse(raw);
+    return (box && box.v === SAVE_V) ? box : null;
+  }catch(e){ return null; }
+}
+function clearWork(){
+  try{ localStorage.removeItem(SKEY); }catch(e){}
+}
+
+function saveNote(at){
+  var n = document.getElementById("savenote");
+  if(!n) return;
+  if(!CAN_STORE){
+    n.textContent = "Этот браузер не разрешает страницам ничего запоминать, поэтому " +
+      "при перезагрузке ответы пропадут. Решай за один заход или отправь работу до того, " +
+      "как закроешь вкладку.";
+    return;
+  }
+  var when = "";
+  if(at){
+    var d = new Date(at);
+    var two = function(x){ return (x < 10 ? "0" : "") + x; };
+    when = " Последнее сохранение: " + two(d.getDate()) + "." + two(d.getMonth() + 1) +
+           ", " + two(d.getHours()) + ":" + two(d.getMinutes()) + ".";
+  }
+  n.innerHTML = "Ответы, пропуски и пройденные тренажёры хранятся в этом браузере: можно закрыть " +
+    "страницу и вернуться позже." + when +
+    " Фото не сохраняются." +
+    (at ? ' <button type="button" id="wipe">Начать заново</button>' : "");
+  var w = document.getElementById("wipe");
+  if(w){
+    w.addEventListener("click", function(){
+      wiping = true;
+      clearWork();
+      location.reload();
+    });
+  }
+}
+
+function restoreTask(t, s){
+  var el = document.getElementById("t" + t.id);
+  if(!el) return;
+  if(t.type === "choice"){
+    if(s.sel){
+      el.querySelectorAll(".opt").forEach(function(l){
+        if(l.dataset.v === s.sel){
+          l.classList.add("sel");
+          var r = l.querySelector("input");
+          if(r) r.checked = true;
+        }
+      });
+    }
+  } else if(s.given){
+    var inp = document.getElementById("in" + t.id);
+    if(inp) inp.value = s.given;
+  }
+  var host = el.querySelector(".hints"), k, h;
+  for(k = 0; k < s.hints && k < t.hints.length; k++){
+    h = document.createElement("div");
+    h.className = "hint";
+    h.innerHTML = "Подсказка " + (k + 1) + ": " + t.hints[k];
+    host.appendChild(h);
+  }
+  if(s.tries > 0){
+    var v = el.querySelector(".verdict");
+    el.classList.add(s.ok ? "ok" : "bad");
+    v.className = "verdict " + (s.ok ? "ok" : "bad");
+    if(s.ok){
+      v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    } else if(s.tries === 1){
+      v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+    } else {
+      v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    }
+    if(s.done) showSol(el, t);
+  }
+}
+
+(function(){
+  var saved = loadWork(), k;
+  if(saved){
+    spentBefore = saved.spent || 0;
+    if(saved.name){
+      var nm = document.getElementById("name");
+      if(nm && !nm.value) nm.value = saved.name;
+    }
+    TASKS.forEach(function(t){
+      var s = saved.tasks && saved.tasks[t.id];
+      if(!s) return;
+      var cur = state[t.id];
+      cur.tries = s.tries || 0; cur.hints = s.hints || 0;
+      cur.done = !!s.done; cur.ok = !!s.ok;
+      cur.given = s.given || ""; cur.sel = s.sel || null;
+      restoreTask(t, cur);
+    });
+    if(saved.tr){ for(k in saved.tr){ TRDONE[k] = saved.tr[k]; } }
+    if(saved.gaps && window.gapRestore) window.gapRestore(saved.gaps);
+    progress();
+    trStatus();
+  }
+  saveNote(saved ? saved.at : 0);
+  var nm = document.getElementById("name");
+  if(nm) nm.addEventListener("change", saveWork);
+  window.addEventListener("beforeunload", saveWork);
+})();
+
+</script>
+</body>
+</html>
