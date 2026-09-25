@@ -1,0 +1,1368 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Параллелограмм: свойства и признаки — домашнее задание, 8 класс</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:800px;margin:0 auto;padding:16px 14px 60px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+.f-formula{font-size:19px}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.step{margin:6px 0}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.fig{margin:12px 0;text-align:center}
+
+.tr{border:1px solid var(--line);border-radius:12px;padding:14px;margin:16px 0;background:var(--bg)}
+.trhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;
+  margin-bottom:8px}
+.trhead b{font-size:17px}
+.trscore{color:var(--muted);font-size:15px;white-space:nowrap}
+.trq{font-size:17px;margin:8px 0}
+.trfig{text-align:center;margin:8px 0}
+.trfig svg{width:100%;max-width:330px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.tropts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
+.tropt{border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;
+  background:var(--card);font-size:16px;text-align:left;min-height:46px}
+.tropt:hover{border-color:var(--acc)}
+.tropt.right{border-color:var(--ok);background:var(--ok-soft);font-weight:600}
+.tropt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.tropts.done .tropt{cursor:default}
+.trnum{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.trnum input{font:inherit;font-size:18px;padding:9px 11px;border-radius:9px;
+  border:1.5px solid var(--line);background:var(--card);color:var(--ink);max-width:130px}
+.trmsg{font-size:16px;margin-top:8px}
+.trmsg .v{font-weight:700}
+.trmsg .v.ok{color:var(--ok)} .trmsg .v.bad{color:var(--bad)}
+.trmsg .why{color:var(--muted);font-size:15px;margin-top:4px}
+.trbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.trbar button{font-size:15px;padding:8px 13px;min-height:42px}
+.trdone{background:var(--acc-soft);border-radius:10px;padding:12px;font-size:17px;
+  text-align:center;font-weight:600}
+
+.gaps{border:1px solid var(--line);border-radius:12px;padding:14px;margin:16px 0;background:var(--bg)}
+.gaps .ghead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  flex-wrap:wrap;margin-bottom:6px}
+.gaps .ghead b{font-size:17px}
+.gscore{color:var(--muted);font-size:15px;white-space:nowrap}
+.gline{font-size:19px;line-height:2.5;margin:6px 0;text-align:center;
+  white-space:normal;overflow-wrap:break-word}
+.gline.l{text-align:left;font-size:17px;line-height:2.2}
+.gnote{color:var(--muted);font-size:15px;margin:6px 0 0;line-height:1.5}
+input.gp{font:inherit;font-size:17px;text-align:center;padding:3px 4px;border-radius:8px;
+  border:1.8px solid var(--acc);background:var(--card);color:inherit;min-width:38px;
+  vertical-align:baseline}
+@media (max-width:460px){
+  .gline{font-size:17px;line-height:2.3}
+  input.gp{font-size:16px;min-width:34px}
+}
+input.gp.ok{border-color:#137a45;background:#e9f7ef;color:#0f6b3c;font-weight:700}
+input.gp.bad{border-color:#b3261e;background:#fdecea}
+@media (prefers-color-scheme:dark){input.gp.ok{background:#12281d}input.gp.bad{background:#2a1618}}
+.gbar{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px;align-items:center}
+.gbar button{font-size:15px;padding:8px 13px;min-height:42px}
+.gbar button:disabled{opacity:.55;cursor:default}
+.gmsg{font-size:16px;margin-top:8px}
+.gmsg .v{font-weight:700}
+.gmsg .v.ok{color:#137a45} .gmsg .v.bad{color:#b3261e}
+.gtip{color:var(--muted);font-size:15px;margin-top:5px;line-height:1.5}
+.gaps.need{outline:2px solid #c99a2e;outline-offset:3px}
+@media print{input.gp{border:1px solid #999;background:#fff}}
+
+.pw{white-space:nowrap}
+.pw sup{font-size:0.68em;line-height:0;vertical-align:0.62em;padding-left:1px}
+.nw{white-space:nowrap}
+.fx{display:block;background:var(--acc-soft,var(--acc2,#e8f0ff));border:1px solid var(--line);
+  border-radius:10px;padding:12px 13px;margin:12px 0;text-align:center;font-size:21px;
+  line-height:2.2;font-weight:600;white-space:normal;overflow-wrap:break-word}
+.sol .fx,.ex .fx{font-size:19px;margin:9px 0}
+.def{border:1px solid var(--line);border-left:4px solid #2f6bd8;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#eef3fb}
+.def .n{font-size:14px;color:#2f6bd8;font-weight:700;letter-spacing:.4px}
+.rule2{border:1px solid var(--line);border-left:4px solid #c0397a;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdf0f6}
+.rule2 .n{font-size:14px;color:#a02a62;font-weight:700;letter-spacing:.4px}
+.hard{border:1px solid var(--line);border-left:4px solid #7a3fbf;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#f4efff}
+.hard .n{font-size:14px;color:#5f2ea0;font-weight:700;letter-spacing:.4px}
+.warn{border:1px solid var(--line);border-left:4px solid #b3261e;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdecea}
+.warn .n{font-size:14px;color:#b3261e;font-weight:700;letter-spacing:.4px}
+@media (prefers-color-scheme:dark){.rule2{background:#2a1b23}.def{background:#18212f}
+  .hard{background:#221a33}.warn{background:#2a1618}}
+.ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;background:var(--bg)}
+.ex h3{margin-top:0}
+.tohw{font-weight:700;margin:18px 0 0;font-size:18px}
+.tohw span{color:var(--muted);font-weight:400;font-size:15px;display:block;margin-top:3px}
+.small,.mini{color:var(--muted);font-size:15px}
+.fr{display:inline-block;vertical-align:middle;text-align:center;margin:0 3px}
+.fr b{display:block;border-bottom:1.7px solid currentColor;padding:0 6px;font-weight:400;
+  white-space:nowrap}
+.fr i{display:block;font-style:normal;padding:0 6px;white-space:nowrap}
+.opts .opt{font-size:18px;line-height:2.2}
+.task>div:first-child{line-height:2.3}
+.trq,.trmsg .why{line-height:2.2}
+.tropt{line-height:2.1}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.alg{margin:10px 0 0;padding-left:22px}
+.alg li{margin:6px 0;font-size:17px}
+.pam h3{font-size:18px;margin:18px 0 2px}
+.pam h3:first-of-type{margin-top:10px}
+.fgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));margin:9px 0}
+.fbox{border:1px solid var(--line);border-radius:12px;padding:9px 12px 11px;background:var(--bg)}
+.fbox h4{margin:0 0 3px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.fbox p{margin:6px 0 0;line-height:1.6;font-size:16px}
+.fbox p.small{font-size:15px}
+.ff{font-size:20px;line-height:2.3;text-align:center;margin:6px 0;font-weight:600;
+  white-space:normal;overflow-wrap:break-word}
+.fbox .ff{font-size:18px;line-height:2.1}
+.trnav{margin-top:12px;display:flex;gap:9px;flex-wrap:wrap}
+.trgate{margin-top:12px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;
+  font-size:16px;background:var(--bg)}
+.trgate.ready{border-color:#1f8a54;background:#e9f7ef}
+.trgate ul{margin:6px 0 0;padding-left:20px}
+.trgate li{margin:3px 0}
+.trgate a{color:var(--acc);text-decoration:none;border-bottom:1px solid currentColor;cursor:pointer}
+@media (prefers-color-scheme:dark){.trgate.ready{background:#12281d}}
+.tr.need,.gaps.need{outline:2px solid #c99a2e;outline-offset:3px}
+.savenote{margin-top:9px;color:var(--muted);font-size:14.5px;line-height:1.45}
+.savenote button{font-size:14px;padding:5px 10px;min-height:34px;margin-left:8px}
+.sheet .f-formula{margin:5px 0;font-size:14.5px;line-height:2}
+@media print{
+  .sheet>.meta{display:none}
+  .sheet h2{font-size:18px;margin:0 0 5px}
+  .sheet .f-formula{font-size:11.5px;line-height:1.8;margin:2px 0}
+  .sheet .fr{font-size:10.5px;vertical-align:middle}
+}
+
+.fig{text-align:center;margin:12px 0}
+.fig svg{width:100%;max-width:330px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.figrow{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));
+  margin:12px 0}
+.figrow .fig{margin:0}
+.figrow .fig svg{max-width:100%}
+.trfig svg{width:100%;max-width:300px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.def>div+div{margin-top:4px}
+.alg{margin:10px 0 0;padding-left:22px;list-style:disc}
+.alg li{margin:5px 0;font-size:17px}
+.fx sub{font-size:0.7em;vertical-align:-0.25em}
+
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+@media print{
+  body{background:#fff}
+  .bar{display:none !important}
+  .wrap>*{display:none !important}
+  .wrap>.sheet{display:block !important;border:none;margin:0;padding:0}
+  .sheet{font-size:13px}
+  .sheet h2{font-size:18px}
+  .sheet th,.sheet td{padding:4px 5px;font-size:12px}
+  @page{size:A4;margin:12mm}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card top">
+  <h1>Параллелограмм: свойства и признаки</h1>
+  <div class="meta">Геометрия · 8 класс · 7 тренажёров, 4 блока с пропусками, 18 задач</div>
+  <label class="f" for="name">Имя и фамилия</label>
+  <input type="text" id="name" placeholder="напиши, как в журнале" autocapitalize="words" spellcheck="false">
+  <div class="savenote" id="savenote"></div>
+  <div class="note" style="margin-top:14px">
+    <b>Как работать.</b> Страница идёт по кругу: короткая порция теории — разобранный
+    пример — тренажёр или блок с пропусками — задачи. Не перепрыгивай вперёд.
+    <div style="margin-top:8px">Главное правило темы: <b>свойства и признаки — разные
+    вещи</b>. Свойство отвечает на вопрос «что верно, если это параллелограмм».
+    Признак — на обратный: «когда четырёхугольник точно параллелограмм».</div>
+    <div style="margin-top:8px">Второе правило: <b>читай буквы, а не картинку</b>.
+    В записи ABCD противолежат AB и CD, BC и AD — и так же в KLMP, DEFH, MNPQ.</div>
+    <div style="margin-top:8px">Ответы пиши числом, без «см» и без значка градуса:
+    просто 110 или 14.</div>
+    <div style="margin-top:8px"><b>Шесть тренажёров и все четыре блока с пропусками
+    нужно пройти до конца</b> — без этого работа не отправится. Тренажёр 7 —
+    дополнительный, в отправку он не входит.</div>
+  </div>
+</div>
+
+<div class="card pam">
+
+<h2>Памятка: всё, что нужно для этой темы</h2>
+<div class="meta">Сюда возвращаться, когда застрял. Ниже то же самое, но подробно
+и с доказательствами.</div>
+<h3>Что такое параллелограмм</h3>
+<div class="fgrid"><div class="fbox"><h4>Определение</h4><p>Параллелограмм — четырёхугольник, у которого противолежащие стороны попарно параллельны.</p><p class="small">Для ABCD это значит <span class='nw'>AB ∥ CD</span> и <span class='nw'>BC ∥ AD</span>.</p></div><div class="fbox"><h4>Элементы</h4><p>Противолежащие стороны: AB и CD, BC и AD.</p><p class="small">Противолежащие углы: <span class='nw'>∠A</span> и <span class='nw'>∠C</span>, <span class='nw'>∠B</span> и <span class='nw'>∠D</span>. Диагонали: AC и BD.</p></div><div class="fbox"><h4>Сумма углов</h4><div class="ff"><span class='nw'><span class='nw'>∠A</span> + <span class='nw'>∠B</span> + <span class='nw'>∠C</span> + <span class='nw'>∠D</span></span> = <span class='nw'>360°</span></div><p class="small">У любого выпуклого четырёхугольника сумма углов равна <span class='nw'>360°</span>.</p></div></div>
+<h3>Свойства</h3>
+<div class="fgrid"><div class="fbox"><h4>Стороны и углы</h4><p>Противолежащие стороны равны и противолежащие углы равны.</p><p class="small"><span class='nw'>AB = CD</span>, <span class='nw'>BC = AD</span>, <span class='nw'>∠A</span> = <span class='nw'>∠C</span>, <span class='nw'>∠B</span> = <span class='nw'>∠D</span>.</p></div><div class="fbox"><h4>Углы при одной стороне</h4><div class="ff"><span class='nw'><span class='nw'>∠A</span> + <span class='nw'>∠B</span></span> = <span class='nw'>180°</span></div><p class="small">Соседние углы дополняют друг друга до развёрнутого — это односторонние углы при параллельных прямых.</p></div><div class="fbox"><h4>Диагонали</h4><p>Диагонали точкой пересечения делятся пополам.</p><p class="small"><span class='nw'>AO = OC</span>, <span class='nw'>BO = OD</span>. Точка O — середина каждой диагонали.</p></div><div class="fbox"><h4>Периметр</h4><div class="ff"><span class='nw'>P</span> = <span class='nw'>2(AB + BC)</span></div><p class="small">Достаточно знать две соседние стороны — противолежащие им равны.</p></div></div>
+<h3>Признаки</h3>
+<div class="fgrid"><div class="fbox"><h4>Признак 1: стороны</h4><p>Если противолежащие стороны попарно равны, четырёхугольник — параллелограмм.</p><p class="small"><span class='nw'>AB = CD</span> и <span class='nw'>BC = AD</span> ⟹ параллелограмм.</p></div><div class="fbox"><h4>Признак 2: сторона</h4><p>Если две противолежащие стороны равны <b>и</b> параллельны — параллелограмм.</p><p class="small"><span class='nw'>AB = CD</span> и <span class='nw'>AB ∥ CD</span> ⟹ параллелограмм.</p></div><div class="fbox"><h4>Признак 3: диагонали</h4><p>Если диагонали пересекаются и точкой пересечения делятся пополам — параллелограмм.</p><p class="small"><span class='nw'>AO = OC</span> и <span class='nw'>BO = OD</span> ⟹ параллелограмм.</p></div></div>
+<h3>Ключевые факты</h3>
+<div class="fgrid"><div class="fbox"><h4>Биссектриса</h4><p>Биссектриса угла параллелограмма отсекает равнобедренный треугольник.</p><p class="small">Если биссектриса из A встречает BC в точке K, то <span class='nw'>BK = AB</span>.</p></div><div class="fbox"><h4>Биссектрисы соседних углов</h4><p>Они пересекаются под прямым углом.</p><p class="small">Половины соседних углов дают <span class='nw'>90°</span>, на третий угол треугольника остаётся <span class='nw'>90°</span>.</p></div><div class="fbox"><h4>Высота и угол 30°</h4><p>Высота образует прямоугольный треугольник. Катет против угла <span class='nw'>30°</span> вдвое меньше гипотенузы.</p><p class="small">Если <span class='nw'>∠ABH = 30°</span> и <span class='nw'>AH = 4</span>, то <span class='nw'>AB = 8</span>.</p></div></div>
+
+</div>
+
+<div class="card">
+
+<h2>1. Четырёхугольник и параллелограмм</h2>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>
+<b>Параллелограмм</b> — четырёхугольник, у которого противолежащие стороны попарно
+параллельны.</div>
+<div class="fig"><svg viewBox="0 0 330 237"><rect x="0" y="0" width="330" height="237" rx="12" fill="#ffffff"/><polygon points="30.0,162.4 88.4,52.6 300.0,52.6 241.6,162.4" fill="#dce8fb" stroke="none"/><line x1="30.0" y1="162.4" x2="88.4" y2="52.6" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="88.4" y1="52.6" x2="300.0" y2="52.6" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="300.0" y1="52.6" x2="241.6" y2="162.4" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="241.6" y1="162.4" x2="30.0" y2="162.4" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="61.0" y1="104.1" x2="62.7" y2="112.9" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="61.0" y1="104.1" x2="52.8" y2="107.7" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="194.1" y1="52.6" x2="187.1" y2="58.2" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="194.1" y1="52.6" x2="187.1" y2="47.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="202.1" y1="52.6" x2="195.1" y2="58.2" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="202.1" y1="52.6" x2="195.1" y2="47.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="269.0" y1="110.9" x2="267.3" y2="102.1" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="269.0" y1="110.9" x2="277.2" y2="107.3" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="135.9" y1="162.4" x2="142.9" y2="156.8" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="135.9" y1="162.4" x2="142.9" y2="168.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="127.9" y1="162.4" x2="134.9" y2="156.8" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="127.9" y1="162.4" x2="134.9" y2="168.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><circle cx="30.0" cy="162.4" r="4.3" fill="#15181e"/><text x="12.4" y="174.6" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><circle cx="88.4" cy="52.6" r="4.3" fill="#15181e"/><text x="73.0" y="46.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><circle cx="300.0" cy="52.6" r="4.3" fill="#15181e"/><text x="317.6" y="50.4" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><circle cx="241.6" cy="162.4" r="4.3" fill="#15181e"/><text x="257.0" y="178.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><text x="165" y="231" font-size="14" fill="#5b6270" text-anchor="middle">ABCD — параллелограмм: AB ∥ CD и BC ∥ AD</text></svg></div>
+<p>В записи ABCD вершины идут подряд по контуру. Отсюда сразу читаются все элементы:</p>
+<ul class="alg">
+<li>стороны — AB, BC, CD, DA;</li>
+<li>противолежащие стороны — AB и CD, BC и AD;</li>
+<li>противолежащие углы — <span class='nw'>∠A</span> и <span class='nw'>∠C</span>, <span class='nw'>∠B</span> и <span class='nw'>∠D</span>;</li>
+<li>соседние (прилежащие к одной стороне) углы — <span class='nw'>∠A</span> и <span class='nw'>∠B</span>;</li>
+<li>диагонали — AC и BD.</li>
+</ul>
+<div class="rule2"><div class="n">ЧИТАЙ БУКВЫ, А НЕ КАРТИНКУ</div>
+В параллелограмме KLMP противолежат KL и MP, LM и PK, а диагонали — KM и LP.
+Названия элементов зависят только от порядка букв.</div>
+<p>Не всякий четырёхугольник — параллелограмм. Если параллельна только одна пара
+сторон, это трапеция; если ни одной — просто четырёхугольник.</p>
+<div class="figrow"><div class="fig"><svg viewBox="0 0 300 212"><rect x="0" y="0" width="300" height="212" rx="12" fill="#ffffff"/><polygon points="30.0,155.0 74.3,35.0 225.7,35.0 270.0,155.0" fill="#fde4ec" stroke="none"/><line x1="30.0" y1="155.0" x2="74.3" y2="35.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="74.3" y1="35.0" x2="225.7" y2="35.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="225.7" y1="35.0" x2="270.0" y2="155.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="270.0" y1="155.0" x2="30.0" y2="155.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="45.6" y1="92.6" x2="58.7" y2="97.4" stroke="#137a45" stroke-width="2.0" stroke-linecap="butt"/><line x1="153.8" y1="35.0" x2="146.8" y2="40.6" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="153.8" y1="35.0" x2="146.8" y2="29.4" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="254.4" y1="92.6" x2="241.3" y2="97.4" stroke="#137a45" stroke-width="2.0" stroke-linecap="butt"/><line x1="146.2" y1="155.0" x2="153.2" y2="149.4" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="146.2" y1="155.0" x2="153.2" y2="160.6" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><circle cx="30.0" cy="155.0" r="4.3" fill="#15181e"/><text x="13.0" y="168.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><circle cx="74.3" cy="35.0" r="4.3" fill="#15181e"/><text x="59.5" y="28.2" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><circle cx="225.7" cy="35.0" r="4.3" fill="#15181e"/><text x="240.5" y="28.2" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><circle cx="270.0" cy="155.0" r="4.3" fill="#15181e"/><text x="287.0" y="168.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><text x="150" y="206" font-size="14" fill="#5b6270" text-anchor="middle">трапеция: параллельна одна пара</text></svg></div><div class="fig"><svg viewBox="0 0 300 212"><rect x="0" y="0" width="300" height="212" rx="12" fill="#ffffff"/><polygon points="30.0,148.9 65.1,33.0 232.2,62.6 270.0,157.0" fill="#fde4ec" stroke="none"/><line x1="30.0" y1="148.9" x2="65.1" y2="33.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="65.1" y1="33.0" x2="232.2" y2="62.6" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="232.2" y1="62.6" x2="270.0" y2="157.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="270.0" y1="157.0" x2="30.0" y2="148.9" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><circle cx="30.0" cy="148.9" r="4.3" fill="#15181e"/><text x="12.4" y="161.1" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><circle cx="65.1" cy="33.0" r="4.3" fill="#15181e"/><text x="50.2" y="26.1" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><circle cx="232.2" cy="62.6" r="4.3" fill="#15181e"/><text x="249.5" y="59.8" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><circle cx="270.0" cy="157.0" r="4.3" fill="#15181e"/><text x="287.2" y="170.1" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><text x="150" y="206" font-size="14" fill="#5b6270" text-anchor="middle">произвольный четырёхугольник</text></svg></div></div>
+<div class="def"><div class="n">ПОМНИ ИЗ ПРОШЛОЙ ТЕМЫ</div>
+Сумма углов любого выпуклого четырёхугольника равна <span class='nw'>360°</span>: диагональ
+делит его на два треугольника, а в каждом по <span class='nw'>180°</span>.</div>
+
+</div>
+
+<div class="card">
+<div class="tr" id="ts1"><div class="trhead"><b>Тренажёр 1. Элементы параллелограмма</b><span class="trscore" id="ts1s"></span></div><div class="meta">Десять вопросов. Следи за порядком букв в названии фигуры.</div><div class="trq" id="ts1q"></div><div class="trfig" id="ts1f"></div><div id="ts1a"></div><div class="trmsg" id="ts1m"></div><div class="trbar" id="ts1b"></div></div>
+</div>
+
+<div class="card">
+
+<h2>2. Свойство 1: противолежащие стороны и углы равны</h2>
+<div class="rule2"><div class="n">ТЕОРЕМА</div>
+В параллелограмме противолежащие стороны равны и противолежащие углы равны.</div>
+<div class="fig"><svg viewBox="0 0 330 255"><rect x="0" y="0" width="330" height="255" rx="12" fill="#ffffff"/><polygon points="30.0,162.4 88.4,52.6 241.6,162.4" fill="#dce8fb" stroke="none"/><polygon points="88.4,52.6 300.0,52.6 241.6,162.4" fill="#fde4ec" stroke="none"/><line x1="30.0" y1="162.4" x2="88.4" y2="52.6" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="88.4" y1="52.6" x2="300.0" y2="52.6" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="300.0" y1="52.6" x2="241.6" y2="162.4" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="241.6" y1="162.4" x2="30.0" y2="162.4" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="88.4" y1="52.6" x2="241.6" y2="162.4" stroke="#7a3fbf" stroke-width="2.2" stroke-linecap="round"/><line x1="61.0" y1="104.1" x2="62.7" y2="112.9" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="61.0" y1="104.1" x2="52.8" y2="107.7" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="194.1" y1="52.6" x2="187.1" y2="58.2" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="194.1" y1="52.6" x2="187.1" y2="47.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="202.1" y1="52.6" x2="195.1" y2="58.2" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="202.1" y1="52.6" x2="195.1" y2="47.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="269.0" y1="110.9" x2="267.3" y2="102.1" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="269.0" y1="110.9" x2="277.2" y2="107.3" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="135.9" y1="162.4" x2="142.9" y2="156.8" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="135.9" y1="162.4" x2="142.9" y2="168.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="127.9" y1="162.4" x2="134.9" y2="156.8" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="127.9" y1="162.4" x2="134.9" y2="168.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><circle cx="30.0" cy="162.4" r="4.3" fill="#15181e"/><text x="12.4" y="174.6" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><circle cx="88.4" cy="52.6" r="4.3" fill="#15181e"/><text x="73.0" y="46.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><circle cx="300.0" cy="52.6" r="4.3" fill="#15181e"/><text x="317.6" y="50.4" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><circle cx="241.6" cy="162.4" r="4.3" fill="#15181e"/><text x="257.0" y="178.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><text x="165" y="231" font-size="14" fill="#5b6270" text-anchor="middle">Диагональ BD делит параллелограмм на два</text><text x="165" y="249" font-size="14" fill="#5b6270" text-anchor="middle">равных треугольника</text></svg></div>
+<p><b>Доказательство.</b> Проведём диагональ BD.</p>
+<div class='step'>1. <span class='nw'>∠ABD = ∠CDB</span> — накрест лежащие при <span class='nw'>AB ∥ CD</span> и секущей BD.</div><div class='step'>2. <span class='nw'>∠ADB = ∠CBD</span> — накрест лежащие при <span class='nw'>BC ∥ AD</span> и той же секущей.</div><div class='step'>3. Сторона BD у треугольников общая.</div><div class='step'>4. Значит <span class='nw'>△ABD = △CDB</span> по стороне и двум прилежащим к ней углам.</div><div class='fx'><span class='nw'>AB</span> = <span class='nw'>CD</span>, &nbsp; <span class='nw'>AD</span> = <span class='nw'>CB</span>, &nbsp; <span class='nw'>∠A</span> = <span class='nw'>∠C</span></div><div class='step'>5. Провести вторую диагональ AC и повторить рассуждение — получим <span class='nw'>∠B = ∠D</span>.</div><div class='step mini'>Попутно доказано ещё одно: <b>диагональ делит параллелограмм на два равных треугольника</b>. Это часто и есть ключ к задаче.</div>
+<div class="warn"><div class="n">ОБРАТНОЕ НЕ ЧИТАЕТСЯ АВТОМАТИЧЕСКИ</div>
+Из «стороны равны» параллельность ещё не следует сама собой — это отдельное
+утверждение, признак, и его доказывают отдельно. Об этом в блоке 7.</div>
+
+</div>
+
+<div class="card">
+
+<h2>3. Свойство 2: соседние углы и периметр</h2>
+<div class="rule2"><div class="n">СЛЕДСТВИЕ</div>
+Сумма двух углов параллелограмма, прилежащих к одной стороне, равна <span class='nw'>180°</span>.
+</div>
+<div class="fig"><svg viewBox="0 0 330 255"><rect x="0" y="0" width="330" height="255" rx="12" fill="#ffffff"/><polygon points="30.0,162.4 88.4,52.6 300.0,52.6 241.6,162.4" fill="#dce8fb" stroke="none"/><line x1="30.0" y1="162.4" x2="88.4" y2="52.6" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="88.4" y1="52.6" x2="300.0" y2="52.6" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="300.0" y1="52.6" x2="241.6" y2="162.4" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="241.6" y1="162.4" x2="30.0" y2="162.4" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><path d="M 56.0 162.4 A 26.0 26.0 0 0 0 42.2 139.5" fill="none" stroke="#2f6bd8" stroke-width="1.9"/><text x="67.7" y="144.8" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600"><span class='nw'>60°</span></text><path d="M 76.2 75.5 A 26.0 26.0 0 0 0 114.4 52.6" fill="none" stroke="#2f6bd8" stroke-width="1.9"/><text x="111.1" y="95.3" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600"><span class='nw'>120°</span></text><path d="M 274.0 52.6 A 26.0 26.0 0 0 0 287.8 75.5" fill="none" stroke="#2f6bd8" stroke-width="1.9"/><text x="262.3" y="80.2" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600"><span class='nw'>60°</span></text><path d="M 253.8 139.5 A 26.0 26.0 0 0 0 215.6 162.4" fill="none" stroke="#2f6bd8" stroke-width="1.9"/><text x="218.9" y="129.7" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600"><span class='nw'>120°</span></text><line x1="61.0" y1="104.1" x2="62.7" y2="112.9" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="61.0" y1="104.1" x2="52.8" y2="107.7" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="194.1" y1="52.6" x2="187.1" y2="58.2" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="194.1" y1="52.6" x2="187.1" y2="47.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="202.1" y1="52.6" x2="195.1" y2="58.2" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="202.1" y1="52.6" x2="195.1" y2="47.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="269.0" y1="110.9" x2="267.3" y2="102.1" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="269.0" y1="110.9" x2="277.2" y2="107.3" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="135.9" y1="162.4" x2="142.9" y2="156.8" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="135.9" y1="162.4" x2="142.9" y2="168.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="127.9" y1="162.4" x2="134.9" y2="156.8" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="127.9" y1="162.4" x2="134.9" y2="168.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><circle cx="30.0" cy="162.4" r="4.3" fill="#15181e"/><text x="12.4" y="174.6" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><circle cx="88.4" cy="52.6" r="4.3" fill="#15181e"/><text x="73.0" y="46.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><circle cx="300.0" cy="52.6" r="4.3" fill="#15181e"/><text x="317.6" y="50.4" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><circle cx="241.6" cy="162.4" r="4.3" fill="#15181e"/><text x="257.0" y="178.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><text x="165" y="231" font-size="14" fill="#5b6270" text-anchor="middle">Соседние углы дают 180°, противолежащие</text><text x="165" y="249" font-size="14" fill="#5b6270" text-anchor="middle">равны</text></svg></div>
+<p>Причина простая: <span class='nw'>∠A</span> и <span class='nw'>∠B</span> — односторонние углы при
+параллельных BC и AD с секущей AB.</p>
+<div class='fx'><span class='nw'><span class='nw'>∠A</span> + <span class='nw'>∠B</span></span> = <span class='nw'>180°</span></div>
+<p>Отсюда правило, которое закрывает почти все задачи на углы: <b>достаточно знать
+один угол</b>. Противолежащий ему равен, а два соседних получаются вычитанием
+из <span class='nw'>180°</span>.</p>
+<div class="ex"><h3>Пример 1</h3>
+<p>В параллелограмме ABCD <span class='nw'>∠C = 70°</span>. Найти остальные углы.</p>
+<div class='step'>1. <span class='nw'>∠A = ∠C = 70°</span> — противолежащие.</div><div class='step'>2. <span class='nw'>∠B = 180° − 70° = 110°</span> — соседний с <span class='nw'>∠A</span>.</div><div class='step'>3. <span class='nw'>∠D = ∠B = 110°</span>.</div><div class='fx'>70°, 110°, 70°, 110°</div>
+</div>
+<div class="ex"><h3>Пример 2</h3>
+<p>Сумма двух углов параллелограмма равна <span class='nw'>162°</span>. Найти все углы.</p>
+<div class='step'>1. Соседние углы дают <span class='nw'>180°</span>, а у нас <span class='nw'>162°</span>. Значит взяты <b>противолежащие</b> углы.</div><div class='step'>2. Они равны, поэтому каждый равен <span class='nw'>162° : 2 = 81°</span>.</div><div class='step'>3. Соседний с ними: <span class='nw'>180° − 81° = 99°</span>.</div><div class='fx'>81°, 99°, 81°, 99°</div><div class='step mini'>Проверка: 81 + 99 + 81 + 99 = 360. Сумма углов четырёхугольника сошлась.</div>
+</div>
+<div class="def"><div class="n">ПЕРИМЕТР</div>
+<div class="ff"><span class='nw'>P</span> = <span class='nw'>AB + BC + CD + DA</span> = <span class='nw'>2(AB + BC)</span></div>
+Две соседние стороны — и периметр готов.</div>
+<div class="ex"><h3>Пример 3</h3>
+<p>Периметр параллелограмма равен <span class='nw'>52 см</span>, а сторона BC на <span class='nw'>4 см</span> больше стороны AB. Найти стороны.</p>
+<div class='step'>1. <span class='nw'>AB + BC = 52 : 2 = 26</span>.</div><div class='step'>2. Пусть <span class='nw'>AB = x</span>, тогда <span class='nw'>BC = x + 4</span>.</div><div class='step'>3. <span class='nw'>x + x + 4 = 26</span>, отсюда <span class='nw'>2x = 22</span>, <span class='nw'>x = 11</span>.</div><div class='fx'><span class='nw'>AB</span> = <span class='nw'>CD</span> = <span class='nw'>11 см</span>, &nbsp; <span class='nw'>BC</span> = <span class='nw'>AD</span> = <span class='nw'>15 см</span></div><div class='step mini'>Проверка: 2 · (11 + 15) = 52. Сошлось.</div>
+</div>
+<div class="tohw">Задания 1-3<span>Девять задач: углы, стороны, периметр.</span></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts2"><div class="trhead"><b>Тренажёр 2. Углы</b><span class="trscore" id="ts2s"></span></div><div class="meta">Десять задач. Правило одно: противолежащие равны, соседние дают 180°.</div><div class="trq" id="ts2q"></div><div class="trfig" id="ts2f"></div><div id="ts2a"></div><div class="trmsg" id="ts2m"></div><div class="trbar" id="ts2b"></div></div>
+</div>
+<div id="tasks1"></div>
+
+<div class="card">
+<div class="gaps" id="gp1"><div class="ghead"><b>Пропуски 1. Углы по разности</b><span class="gscore" id="gp1s"></span></div><div class="meta">Семь пропусков. Один угол на 32° больше соседнего.</div><div class="gline">Дано: <span class='nw'>∠B − ∠A = 32°</span></div><div class="gline">соседние углы: <span class='nw'>∠A + ∠B = <input class="gp" data-k="a1" size="3" style="width:57px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a1">°</span></div><div class="gline">из условия: <span class='nw'>∠B = ∠A + <input class="gp" data-k="a2" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a2"></span></div><div class="gline"><span class='nw'>2∠A + 32 = 180</span> → <span class='nw'>2∠A = <input class="gp" data-k="a3" size="3" style="width:57px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a3"></span></div><div class="gline"><span class='nw'>∠A = <input class="gp" data-k="a4" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a4">°</span></div><div class="gline"><span class='nw'>∠B = <input class="gp" data-k="a5" size="3" style="width:57px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a5">°</span></div><div class="gline">противолежащие: <span class='nw'>∠C = <input class="gp" data-k="a6" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a6">°</span>, &nbsp; <span class='nw'>∠D = <input class="gp" data-k="a7" size="3" style="width:57px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a7">°</span></div><div class="gnote">Проверка: сумма всех четырёх углов должна дать 360°. Градусы в поля писать не нужно — только число.</div><div class="gbar"><button type="button" class="pri" id="gp1go">Проверить</button></div><div class="gmsg" id="gp1m"></div><div class="gtip" id="gp1t"></div></div>
+</div>
+<div id="tasks2"></div>
+
+<div class="card">
+<div class="tr" id="ts3"><div class="trhead"><b>Тренажёр 3. Стороны и периметр</b><span class="trscore" id="ts3s"></span></div><div class="meta">Десять задач. Сначала находим сумму двух соседних сторон.</div><div class="trq" id="ts3q"></div><div class="trfig" id="ts3f"></div><div id="ts3a"></div><div class="trmsg" id="ts3m"></div><div class="trbar" id="ts3b"></div></div>
+</div>
+
+<div class="card">
+<div class="gaps" id="gp2"><div class="ghead"><b>Пропуски 2. Стороны по периметру</b><span class="gscore" id="gp2s"></span></div><div class="meta">Семь пропусков. Периметр 52, одна сторона на 4 больше другой.</div><div class="gline">Дано: <span class='nw'>P = 52</span>, &nbsp; <span class='nw'>BC − AB = 4</span></div><div class="gline">сумма соседних сторон: <span class='nw'>AB + BC = 52 : 2 = <input class="gp" data-k="b1" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b1"></span></div><div class="gline">пусть <span class='nw'>AB = x</span>, тогда <span class='nw'>BC = x + <input class="gp" data-k="b2" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b2"></span></div><div class="gline"><span class='nw'>2x + 4 = 26</span> → <span class='nw'>2x = <input class="gp" data-k="b3" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b3"></span></div><div class="gline"><span class='nw'>AB = <input class="gp" data-k="b4" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b4"></span>, &nbsp; <span class='nw'>BC = <input class="gp" data-k="b5" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b5"></span></div><div class="gline">противолежащие стороны: <span class='nw'>CD = <input class="gp" data-k="b6" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b6"></span>, &nbsp; <span class='nw'>AD = <input class="gp" data-k="b7" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b7"></span></div><div class="gnote">Периметр всегда делят пополам первым действием: так сразу получается сумма двух соседних сторон.</div><div class="gbar"><button type="button" class="pri" id="gp2go">Проверить</button></div><div class="gmsg" id="gp2m"></div><div class="gtip" id="gp2t"></div></div>
+</div>
+<div id="tasks3"></div>
+
+<div class="card">
+
+<h2>4. Свойство 3: диагонали делятся пополам</h2>
+<div class="rule2"><div class="n">ТЕОРЕМА</div>
+Диагонали параллелограмма пересекаются и точкой пересечения делятся пополам.</div>
+<div class="fig"><svg viewBox="0 0 330 255"><rect x="0" y="0" width="330" height="255" rx="12" fill="#ffffff"/><line x1="30.0" y1="162.4" x2="88.4" y2="52.6" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="88.4" y1="52.6" x2="300.0" y2="52.6" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="300.0" y1="52.6" x2="241.6" y2="162.4" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="241.6" y1="162.4" x2="30.0" y2="162.4" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="30.0" y1="162.4" x2="300.0" y2="52.6" stroke="#7a3fbf" stroke-width="2.2" stroke-linecap="round"/><line x1="88.4" y1="52.6" x2="241.6" y2="162.4" stroke="#7a3fbf" stroke-width="2.2" stroke-linecap="round"/><circle cx="165.0" cy="107.5" r="4.4" fill="#7a3fbf"/><text x="168.0" y="97.5" font-size="16" fill="#7a3fbf" text-anchor="middle" font-weight="600">O</text><line x1="46.0" y1="117.5" x2="58.4" y2="124.0" stroke="#137a45" stroke-width="2.0" stroke-linecap="butt"/><line x1="68.1" y1="90.9" x2="69.7" y2="99.7" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="68.1" y1="90.9" x2="59.8" y2="94.4" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="194.1" y1="52.6" x2="187.1" y2="58.2" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="194.1" y1="52.6" x2="187.1" y2="47.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="202.1" y1="52.6" x2="195.1" y2="58.2" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="202.1" y1="52.6" x2="195.1" y2="47.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="284.0" y1="97.5" x2="271.6" y2="91.0" stroke="#137a45" stroke-width="2.0" stroke-linecap="butt"/><line x1="261.9" y1="124.1" x2="260.3" y2="115.3" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="261.9" y1="124.1" x2="270.2" y2="120.6" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="135.9" y1="162.4" x2="142.9" y2="156.8" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="135.9" y1="162.4" x2="142.9" y2="168.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="127.9" y1="162.4" x2="134.9" y2="156.8" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="127.9" y1="162.4" x2="134.9" y2="168.0" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><circle cx="30.0" cy="162.4" r="4.3" fill="#15181e"/><text x="12.4" y="174.6" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><circle cx="88.4" cy="52.6" r="4.3" fill="#15181e"/><text x="73.0" y="46.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><circle cx="300.0" cy="52.6" r="4.3" fill="#15181e"/><text x="317.6" y="50.4" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><circle cx="241.6" cy="162.4" r="4.3" fill="#15181e"/><text x="257.0" y="178.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><text x="165" y="231" font-size="14" fill="#5b6270" text-anchor="middle">O — середина и диагонали AC, и диагонали</text><text x="165" y="249" font-size="14" fill="#5b6270" text-anchor="middle">BD</text></svg></div>
+<p><b>Доказательство.</b> Пусть диагонали пересеклись в точке O.</p>
+<div class='step'>1. <span class='nw'>AB = CD</span> — по свойству 1.</div><div class='step'>2. <span class='nw'>∠BAO = ∠DCO</span> — накрест лежащие при <span class='nw'>AB ∥ CD</span> и секущей AC.</div><div class='step'>3. <span class='nw'>∠ABO = ∠CDO</span> — накрест лежащие при той же паре прямых и секущей BD.</div><div class='step'>4. Значит <span class='nw'>△AOB = △COD</span> по стороне и двум прилежащим углам.</div><div class='fx'><span class='nw'>AO</span> = <span class='nw'>OC</span>, &nbsp; <span class='nw'>BO</span> = <span class='nw'>OD</span></div><div class='step mini'>Отсюда <span class='nw'>AC = 2 · AO</span> и <span class='nw'>BD = 2 · BO</span>. В задачах чаще всего нужно именно это: половинки диагоналей.</div>
+<div class="def"><div class="n">ЧЕТЫРЕ МАЛЕНЬКИХ ТРЕУГОЛЬНИКА</div>
+Диагонали разрезают параллелограмм на треугольники AOB, BOC, COD, DOA. У каждого
+две стороны — половинки диагоналей, а третья — сторона параллелограмма.</div>
+<div class='fx'><span class='nw'>P<sub>AOB</sub></span> = <span class='nw'>AO + BO + AB</span></div>
+<div class="ex"><h3>Пример 4</h3>
+<p>Диагонали параллелограмма ABCD пересекаются в точке O, <span class='nw'>AC = 20 см</span>, <span class='nw'>BD = 16 см</span>, <span class='nw'>CD = 6 см</span>.
+Найти периметр треугольника AOB.</p>
+<div class='step'>1. <span class='nw'>AO = 20 : 2 = 10</span> — половина диагонали AC.</div><div class='step'>2. <span class='nw'>BO = 16 : 2 = 8</span> — половина диагонали BD.</div><div class='step'>3. <span class='nw'>AB = CD = 6</span> — противолежащие стороны равны.</div><div class='fx'><span class='nw'>P<sub>AOB</sub></span> = <span class='nw'>10 + 8 + 6</span> = <span class='nw'>24 см</span></div><div class='step mini'>Если бы спросили про треугольник BOC, вместо AB встала бы сторона BC — другая сторона параллелограмма, а половинки диагоналей те же.</div>
+</div>
+<div class="ex"><h3>Пример 5</h3>
+<p><span class='nw'>AC = 36 см</span>, <span class='nw'>BD = 24 см</span>, периметр треугольника
+AOB равен <span class='nw'>45 см</span>. Найти CD.</p>
+<div class='step'>1. <span class='nw'>AO = 18</span>, <span class='nw'>BO = 12</span>.</div><div class='step'>2. <span class='nw'>AB = 45 − 18 − 12 = 15</span>.</div><div class='step'>3. <span class='nw'>CD = AB</span> — противолежащие стороны.</div><div class='fx'><span class='nw'>CD</span> = <span class='nw'>15 см</span></div>
+</div>
+<div class="tohw">Задание 4<span>Три задачи на диагонали.</span></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts4"><div class="trhead"><b>Тренажёр 4. Диагонали</b><span class="trscore" id="ts4s"></span></div><div class="meta">Десять задач. В треугольнике с вершиной O две стороны — половинки диагоналей.</div><div class="trq" id="ts4q"></div><div class="trfig" id="ts4f"></div><div id="ts4a"></div><div class="trmsg" id="ts4m"></div><div class="trbar" id="ts4b"></div></div>
+</div>
+
+<div class="card">
+<div class="gaps" id="gp3"><div class="ghead"><b>Пропуски 3. Диагонали и периметры треугольников</b><span class="gscore" id="gp3s"></span></div><div class="meta">Семь пропусков. Диагонали 20 и 16.</div><div class="gline">Дано: <span class='nw'>AC = 20</span>, &nbsp; <span class='nw'>BD = 16</span>, &nbsp; <span class='nw'>CD = 6</span></div><div class="gline">диагонали делятся пополам: <span class='nw'>AO = OC = <input class="gp" data-k="c1" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c1"></span></div><div class="gline"><span class='nw'>BO = OD = <input class="gp" data-k="c2" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c2"></span></div><div class="gline">противолежащие стороны: <span class='nw'>AB = CD = <input class="gp" data-k="c3" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c3"></span></div><div class="gline"><span class='nw'>P<sub>AOB</sub> = 10 + 8 + 6 = <input class="gp" data-k="c4" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c4"></span></div><div class="gnote">Теперь тот же чертёж, но спрашивают другой треугольник: пусть ещё известно <span class='nw'>BC = 9</span>.</div><div class="gline"><span class='nw'>P<sub>BOC</sub> = <input class="gp" data-k="c5" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c5"> + <input class="gp" data-k="c6" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c6"> + 9 = <input class="gp" data-k="c7" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c7"></span></div><div class="gnote">В треугольнике BOC половинки диагоналей те же, а третья сторона уже BC, а не AB.</div><div class="gbar"><button type="button" class="pri" id="gp3go">Проверить</button></div><div class="gmsg" id="gp3m"></div><div class="gtip" id="gp3t"></div></div>
+</div>
+<div id="tasks4"></div>
+
+<div class="card">
+
+<h2>5. Биссектриса отсекает равнобедренный треугольник</h2>
+<p>Это не отдельная теорема из учебника, а ключевая задача: она разбирается один раз,
+а потом используется как готовый инструмент.</p>
+<div class="fig"><svg viewBox="0 0 330 237"><rect x="0" y="0" width="330" height="237" rx="12" fill="#ffffff"/><polygon points="30.0,162.4 88.4,52.6 300.0,52.6 241.6,162.4" fill="#dce8fb" stroke="none"/><line x1="30.0" y1="162.4" x2="88.4" y2="52.6" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="88.4" y1="52.6" x2="300.0" y2="52.6" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="300.0" y1="52.6" x2="241.6" y2="162.4" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="241.6" y1="162.4" x2="30.0" y2="162.4" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="30.0" y1="162.4" x2="212.9" y2="52.6" stroke="#b3261e" stroke-width="2.2" stroke-linecap="round"/><circle cx="212.9" cy="52.6" r="4.0" fill="#b3261e"/><text x="212.9" y="41.6" font-size="16" fill="#b3261e" text-anchor="middle" font-weight="600">K</text><path d="M 60.0 162.4 A 30.0 30.0 0 0 0 55.7 147.0" fill="none" stroke="#b3261e" stroke-width="1.7"/><path d="M 64.3 141.8 A 40.0 40.0 0 0 0 48.8 127.1" fill="none" stroke="#b3261e" stroke-width="1.7"/><circle cx="30.0" cy="162.4" r="4.3" fill="#15181e"/><text x="12.4" y="174.6" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><circle cx="88.4" cy="52.6" r="4.3" fill="#15181e"/><text x="73.0" y="46.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><circle cx="300.0" cy="52.6" r="4.3" fill="#15181e"/><text x="317.6" y="50.4" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><circle cx="241.6" cy="162.4" r="4.3" fill="#15181e"/><text x="257.0" y="178.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><text x="165" y="231" font-size="14" fill="#5b6270" text-anchor="middle">AK — биссектриса угла A, K на стороне BC</text></svg></div>
+<p><b>Доказательство.</b></p>
+<div class='step'>1. <span class='nw'>∠BAK = ∠KAD</span> — AK биссектриса.</div><div class='step'>2. <span class='nw'>∠KAD = ∠AKB</span> — накрест лежащие при <span class='nw'>AD ∥ BC</span> и секущей AK.</div><div class='step'>3. Значит <span class='nw'>∠BAK = ∠AKB</span>, и треугольник ABK равнобедренный.</div><div class='fx'><span class='nw'>BK</span> = <span class='nw'>AB</span></div><div class='step mini'>Вывод в одну строку: <b>отрезок, который биссектриса отсекает от стороны у своей вершины, равен соседней стороне</b>.</div>
+<div class="ex"><h3>Пример 6</h3>
+<p>Биссектриса угла A делит сторону BC на отрезки <span class='nw'>7 см</span> и <span class='nw'>14 см</span>, считая от вершины B. Найти периметр.</p>
+<div class='step'>1. <span class='nw'>BK = 7</span>, значит <span class='nw'>AB = 7</span>.</div><div class='step'>2. <span class='nw'>BC = 7 + 14 = 21</span>.</div><div class='fx'><span class='nw'>P</span> = <span class='nw'>2(7 + 21)</span> = <span class='nw'>56 см</span></div><div class='step mini'>Если бы отрезки шли в другом порядке (<span class='nw'>BK = 14</span>), ответ был бы другим: <span class='nw'>2(14 + 21) = 70</span>. Поэтому в условии всегда смотрят, от какой вершины отсчёт.</div>
+</div>
+<div class="rule2"><div class="n">БИССЕКТРИСЫ СОСЕДНИХ УГЛОВ</div>
+Они пересекаются под прямым углом: половины соседних углов дают <span class='nw'>180° : 2 = 90°</span>, значит на третий угол треугольника
+остаётся <span class='nw'>90°</span>.</div>
+<div class="ex"><h3>Пример 7</h3>
+<p>Биссектриса угла A образует со стороной BC угол <span class='nw'>21°</span>.
+Найти больший угол параллелограмма.</p>
+<div class='step'>1. Этот угол — <span class='nw'>∠AKB = 21°</span>.</div><div class='step'>2. <span class='nw'>∠KAD = ∠AKB = 21°</span> — накрест лежащие.</div><div class='step'>3. <span class='nw'>∠A = 2 · 21° = 42°</span>.</div><div class='step'>4. Больший угол — соседний: <span class='nw'>180° − 42° = 138°</span>.</div><div class='fx'>138°</div>
+</div>
+
+</div>
+
+<div class="card">
+<div class="tr" id="ts6"><div class="trhead"><b>Тренажёр 6. Биссектриса</b><span class="trscore" id="ts6s"></span></div><div class="meta">Десять задач. Ключ один: биссектриса отсекает равнобедренный треугольник.</div><div class="trq" id="ts6q"></div><div class="trfig" id="ts6f"></div><div id="ts6a"></div><div class="trmsg" id="ts6m"></div><div class="trbar" id="ts6b"></div></div>
+</div>
+
+<div class="card">
+<div class="gaps" id="gp4"><div class="ghead"><b>Пропуски 4. Биссектриса</b><span class="gscore" id="gp4s"></span></div><div class="meta">Шесть пропусков. Биссектриса угла A и сторона BC.</div><div class="gline">Дано: <span class='nw'>AB = 6</span>, &nbsp; <span class='nw'>BC = 10</span>, &nbsp; <span class='nw'>∠A = 70°</span>, AK — биссектриса, K на BC</div><div class="gline"><span class='nw'>∠BAK = ∠KAD = 70 : 2 = <input class="gp" data-k="d1" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d1"></span></div><div class="gline">накрест лежащие при <span class='nw'>AD ∥ BC</span>: <span class='nw'>∠AKB = <input class="gp" data-k="d2" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d2"></span></div><div class="gline">треугольник ABK равнобедренный: <span class='nw'>BK = AB = <input class="gp" data-k="d3" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d3"></span></div><div class="gline"><span class='nw'>KC = 10 − 6 = <input class="gp" data-k="d4" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d4"></span></div><div class="gline"><span class='nw'>∠B = 180 − 70 = <input class="gp" data-k="d5" size="3" style="width:57px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d5"></span></div><div class="gline"><span class='nw'>P = 2(6 + 10) = <input class="gp" data-k="d6" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d6"></span></div><div class="gnote">Равнобедренность получается из двух равенств углов подряд: сначала биссектриса, потом накрест лежащие.</div><div class="gbar"><button type="button" class="pri" id="gp4go">Проверить</button></div><div class="gmsg" id="gp4m"></div><div class="gtip" id="gp4t"></div></div>
+</div>
+
+<div class="card">
+
+<h2>6. Высота и угол 30°</h2>
+<div class="def"><div class="n">ВЫСОТА</div>
+Высота параллелограмма — перпендикуляр из вершины к прямой, содержащей противолежащую
+сторону.</div>
+<div class="fig"><svg viewBox="0 0 330 237"><rect x="0" y="0" width="330" height="237" rx="12" fill="#ffffff"/><polygon points="30.0,162.4 88.4,52.6 300.0,52.6 241.6,162.4" fill="#dce8fb" stroke="none"/><line x1="30.0" y1="162.4" x2="88.4" y2="52.6" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="88.4" y1="52.6" x2="300.0" y2="52.6" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="300.0" y1="52.6" x2="241.6" y2="162.4" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="241.6" y1="162.4" x2="30.0" y2="162.4" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="88.4" y1="52.6" x2="88.4" y2="162.4" stroke="#137a45" stroke-width="2.1" stroke-linecap="round" stroke-dasharray="5 4"/><line x1="101.4" y1="162.4" x2="101.4" y2="149.4" stroke="#137a45" stroke-width="1.8" stroke-linecap="butt"/><line x1="88.4" y1="149.4" x2="101.4" y2="149.4" stroke="#137a45" stroke-width="1.8" stroke-linecap="butt"/><circle cx="88.4" cy="162.4" r="3.8" fill="#137a45"/><text x="88.4" y="182.4" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">H</text><circle cx="30.0" cy="162.4" r="4.3" fill="#15181e"/><text x="12.4" y="174.6" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><circle cx="88.4" cy="52.6" r="4.3" fill="#15181e"/><text x="73.0" y="46.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><circle cx="300.0" cy="52.6" r="4.3" fill="#15181e"/><text x="317.6" y="50.4" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><circle cx="241.6" cy="162.4" r="4.3" fill="#15181e"/><text x="257.0" y="178.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><text x="165" y="231" font-size="14" fill="#5b6270" text-anchor="middle">BH — высота, опущенная на сторону AD</text></svg></div>
+<p>Высота отрезает прямоугольный треугольник ABH. А в прямоугольном треугольнике
+работает факт из 7 класса:</p>
+<div class="rule2"><div class="n">КАТЕТ ПРОТИВ УГЛА 30°</div>
+Катет, лежащий против угла <span class='nw'>30°</span>, вдвое меньше гипотенузы. И наоборот:
+если катет вдвое меньше гипотенузы, против него угол <span class='nw'>30°</span>.</div>
+<div class="ex"><h3>Пример 8</h3>
+<p>BH — высота параллелограмма ABCD, <span class='nw'>∠ABH = 30°</span>, <span class='nw'>AH = 4 см</span>, <span class='nw'>BC = 10 см</span>. Найти периметр.</p>
+<div class='step'>1. В треугольнике ABH угол H прямой, против угла <span class='nw'>30°</span> лежит катет AH.</div><div class='step'>2. Значит <span class='nw'>AB = 2 · AH = 8</span>.</div><div class='fx'><span class='nw'>P</span> = <span class='nw'>2(8 + 10)</span> = <span class='nw'>36 см</span></div><div class='step mini'>Частая ошибка — удвоить не ту сторону. Удваивают <b>гипотенузу от катета</b>, то есть меньший отрезок превращают в больший.</div>
+</div>
+<div class="ex"><h3>Пример 9</h3>
+<p>В параллелограмме MNPQ к стороне MQ проведён перпендикуляр NH, точка H лежит
+на MQ. Известно, что <span class='nw'>MH = 3 см</span>, <span class='nw'>HQ = 5 см</span>, <span class='nw'>∠MNH = 30°</span>. Найти углы и стороны.</p>
+<div class='step'>1. В треугольнике MNH угол H прямой, <span class='nw'>∠MNH = 30°</span>, значит <span class='nw'>∠M = 60°</span>.</div><div class='step'>2. Против угла <span class='nw'>30°</span> лежит MH, поэтому <span class='nw'>MN = 2 · 3 = 6</span>.</div><div class='step'>3. <span class='nw'>MQ = MH + HQ = 3 + 5 = 8</span>.</div><div class='step'>4. <span class='nw'>∠N = 180° − 60° = 120°</span>, <span class='nw'>∠P = 60°</span>, <span class='nw'>∠Q = 120°</span>.</div><div class='fx'><span class='nw'>MN</span> = <span class='nw'>PQ</span> = <span class='nw'>6 см</span>, &nbsp; <span class='nw'>MQ</span> = <span class='nw'>NP</span> = <span class='nw'>8 см</span></div>
+</div>
+<div class="tohw">Задание 6<span>Три задачи на биссектрису и высоту.</span></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts7"><div class="trhead"><b>Тренажёр 7. Высота и угол 30° · дополнительный</b><span class="trscore" id="ts7s"></span></div><div class="meta">Восемь задач на прямоугольный треугольник внутри параллелограмма. В отправку не входит — для тех, кто хочет больше.</div><div class="trq" id="ts7q"></div><div class="trfig" id="ts7f"></div><div id="ts7a"></div><div class="trmsg" id="ts7m"></div><div class="trbar" id="ts7b"></div></div>
+</div>
+<div id="tasks6"></div>
+
+<div class="card">
+
+<h2>7. Признаки: по сторонам</h2>
+<p>Свойства отвечают на вопрос «что верно, если это параллелограмм». Признаки отвечают
+на обратный: «когда четырёхугольник точно параллелограмм». Путать их нельзя.</p>
+<div class="rule2"><div class="n">ПРИЗНАК 1</div>
+Если в четырёхугольнике противолежащие стороны попарно равны, то это параллелограмм.
+</div>
+<div class="fig"><svg viewBox="0 0 330 237"><rect x="0" y="0" width="330" height="237" rx="12" fill="#ffffff"/><line x1="30.0" y1="162.4" x2="88.4" y2="52.6" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="88.4" y1="52.6" x2="300.0" y2="52.6" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="300.0" y1="52.6" x2="241.6" y2="162.4" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="241.6" y1="162.4" x2="30.0" y2="162.4" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="53.0" y1="104.2" x2="65.4" y2="110.8" stroke="#137a45" stroke-width="2.0" stroke-linecap="butt"/><line x1="191.2" y1="45.6" x2="191.2" y2="59.6" stroke="#137a45" stroke-width="2.0" stroke-linecap="butt"/><line x1="197.2" y1="45.6" x2="197.2" y2="59.6" stroke="#137a45" stroke-width="2.0" stroke-linecap="butt"/><line x1="277.0" y1="110.8" x2="264.6" y2="104.2" stroke="#137a45" stroke-width="2.0" stroke-linecap="butt"/><line x1="138.8" y1="169.4" x2="138.8" y2="155.4" stroke="#137a45" stroke-width="2.0" stroke-linecap="butt"/><line x1="132.8" y1="169.4" x2="132.8" y2="155.4" stroke="#137a45" stroke-width="2.0" stroke-linecap="butt"/><circle cx="30.0" cy="162.4" r="4.3" fill="#15181e"/><text x="12.4" y="174.6" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><circle cx="88.4" cy="52.6" r="4.3" fill="#15181e"/><text x="73.0" y="46.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><circle cx="300.0" cy="52.6" r="4.3" fill="#15181e"/><text x="317.6" y="50.4" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><circle cx="241.6" cy="162.4" r="4.3" fill="#15181e"/><text x="257.0" y="178.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><text x="165" y="231" font-size="14" fill="#5b6270" text-anchor="middle">AB = CD и BC = AD ⟹ ABCD — параллелограмм</text></svg></div>
+<p><b>Доказательство.</b></p>
+<div class='step'>1. Проведём диагональ BD.</div><div class='step'>2. <span class='nw'>△ABD = △CDB</span> по трём сторонам: <span class='nw'>AB = CD</span>, <span class='nw'>AD = CB</span>, BD общая.</div><div class='step'>3. Из равенства треугольников <span class='nw'>∠ABD = ∠CDB</span>.</div><div class='step'>4. Это накрест лежащие углы при прямых AB и CD с секущей BD, значит <span class='nw'>AB ∥ CD</span>.</div><div class='step'>5. Так же из <span class='nw'>∠ADB = ∠CBD</span> получаем <span class='nw'>BC ∥ AD</span>.</div><div class='fx'>Обе пары сторон параллельны — по определению это параллелограмм</div>
+<div class="rule2"><div class="n">ПРИЗНАК 2</div>
+Если в четырёхугольнике две противолежащие стороны равны и параллельны, то это
+параллелограмм.</div>
+<div class="fig"><svg viewBox="0 0 330 237"><rect x="0" y="0" width="330" height="237" rx="12" fill="#ffffff"/><line x1="30.0" y1="162.4" x2="88.4" y2="52.6" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="88.4" y1="52.6" x2="300.0" y2="52.6" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="300.0" y1="52.6" x2="241.6" y2="162.4" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="241.6" y1="162.4" x2="30.0" y2="162.4" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="46.0" y1="117.5" x2="58.4" y2="124.0" stroke="#137a45" stroke-width="2.0" stroke-linecap="butt"/><line x1="68.1" y1="90.9" x2="69.7" y2="99.7" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="68.1" y1="90.9" x2="59.8" y2="94.4" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="284.0" y1="97.5" x2="271.6" y2="91.0" stroke="#137a45" stroke-width="2.0" stroke-linecap="butt"/><line x1="261.9" y1="124.1" x2="260.3" y2="115.3" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="261.9" y1="124.1" x2="270.2" y2="120.6" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><circle cx="30.0" cy="162.4" r="4.3" fill="#15181e"/><text x="12.4" y="174.6" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><circle cx="88.4" cy="52.6" r="4.3" fill="#15181e"/><text x="73.0" y="46.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><circle cx="300.0" cy="52.6" r="4.3" fill="#15181e"/><text x="317.6" y="50.4" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><circle cx="241.6" cy="162.4" r="4.3" fill="#15181e"/><text x="257.0" y="178.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><text x="165" y="231" font-size="14" fill="#5b6270" text-anchor="middle">AB = CD и AB ∥ CD ⟹ ABCD — параллелограмм</text></svg></div>
+<div class='step'>1. Проведём диагональ BD.</div><div class='step'>2. <span class='nw'>∠ABD = ∠CDB</span> — накрест лежащие при <span class='nw'>AB ∥ CD</span>.</div><div class='step'>3. <span class='nw'>△ABD = △CDB</span> по двум сторонам и углу между ними: <span class='nw'>AB = CD</span>, BD общая, углы между ними равны.</div><div class='step'>4. Отсюда <span class='nw'>∠ADB = ∠CBD</span>, а это накрест лежащие при прямых BC и AD.</div><div class='fx'><span class='nw'>BC ∥ AD</span> — обе пары параллельны</div>
+<div class="warn"><div class="n">ОДНА ПАРА, А НЕ РАЗНЫЕ</div>
+Равенство и параллельность должны относиться к <b>одной и той же</b> паре сторон.
+Если одна пара равна, а другая параллельна — вывода нет.</div>
+<div class="fig"><svg viewBox="0 0 320 240"><rect x="0" y="0" width="320" height="240" rx="12" fill="#ffffff"/><polygon points="30.0,165.0 78.0,35.0 242.0,35.0 290.0,165.0" fill="#fde4ec" stroke="none"/><line x1="30.0" y1="165.0" x2="78.0" y2="35.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="78.0" y1="35.0" x2="242.0" y2="35.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="242.0" y1="35.0" x2="290.0" y2="165.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="290.0" y1="165.0" x2="30.0" y2="165.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="47.5" y1="97.6" x2="60.6" y2="102.4" stroke="#137a45" stroke-width="2.0" stroke-linecap="butt"/><line x1="163.8" y1="35.0" x2="156.8" y2="40.6" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="163.8" y1="35.0" x2="156.8" y2="29.4" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="272.5" y1="97.6" x2="259.4" y2="102.4" stroke="#137a45" stroke-width="2.0" stroke-linecap="butt"/><line x1="156.2" y1="165.0" x2="163.2" y2="159.4" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><line x1="156.2" y1="165.0" x2="163.2" y2="170.6" stroke="#2f6bd8" stroke-width="2.0" stroke-linecap="round"/><circle cx="30.0" cy="165.0" r="4.3" fill="#15181e"/><text x="13.0" y="178.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><circle cx="78.0" cy="35.0" r="4.3" fill="#15181e"/><text x="63.2" y="28.2" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><circle cx="242.0" cy="35.0" r="4.3" fill="#15181e"/><text x="256.8" y="28.2" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><circle cx="290.0" cy="165.0" r="4.3" fill="#15181e"/><text x="307.0" y="178.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><text x="160" y="216" font-size="14" fill="#5b6270" text-anchor="middle">AB = CD, но BC ∥ AD — это</text><text x="160" y="234" font-size="14" fill="#5b6270" text-anchor="middle">равнобедренная трапеция</text></svg></div>
+<p>На рисунке боковые стороны равны, вторая пара параллельна, а параллелограмма нет.
+Это и есть контрпример: <b>одного равенства сторон мало</b>.</p>
+
+</div>
+
+<div class="card">
+
+<h2>8. Признаки: по диагоналям и по углам</h2>
+<div class="rule2"><div class="n">ПРИЗНАК 3</div>
+Если диагонали четырёхугольника пересекаются и точкой пересечения делятся пополам,
+то это параллелограмм.</div>
+<div class="fig"><svg viewBox="0 0 330 237"><rect x="0" y="0" width="330" height="237" rx="12" fill="#ffffff"/><polygon points="30.0,162.4 88.4,52.6 300.0,52.6 241.6,162.4" fill="#dce8fb" stroke="none"/><line x1="30.0" y1="162.4" x2="88.4" y2="52.6" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="88.4" y1="52.6" x2="300.0" y2="52.6" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="300.0" y1="52.6" x2="241.6" y2="162.4" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="241.6" y1="162.4" x2="30.0" y2="162.4" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="30.0" y1="162.4" x2="300.0" y2="52.6" stroke="#7a3fbf" stroke-width="2.1" stroke-linecap="round"/><line x1="88.4" y1="52.6" x2="241.6" y2="162.4" stroke="#7a3fbf" stroke-width="2.1" stroke-linecap="round"/><circle cx="165.0" cy="107.5" r="4.3" fill="#7a3fbf"/><text x="169.0" y="97.5" font-size="16" fill="#7a3fbf" text-anchor="middle" font-weight="600">O</text><line x1="95.2" y1="129.4" x2="99.8" y2="140.5" stroke="#7a3fbf" stroke-width="2.0" stroke-linecap="butt"/><line x1="230.2" y1="74.5" x2="234.8" y2="85.6" stroke="#7a3fbf" stroke-width="2.0" stroke-linecap="butt"/><line x1="128.2" y1="73.7" x2="121.2" y2="83.4" stroke="#7a3fbf" stroke-width="2.0" stroke-linecap="butt"/><line x1="132.2" y1="76.6" x2="125.2" y2="86.4" stroke="#7a3fbf" stroke-width="2.0" stroke-linecap="butt"/><line x1="204.8" y1="128.6" x2="197.8" y2="138.4" stroke="#7a3fbf" stroke-width="2.0" stroke-linecap="butt"/><line x1="208.8" y1="131.6" x2="201.8" y2="141.3" stroke="#7a3fbf" stroke-width="2.0" stroke-linecap="butt"/><circle cx="30.0" cy="162.4" r="4.3" fill="#15181e"/><text x="12.4" y="174.6" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><circle cx="88.4" cy="52.6" r="4.3" fill="#15181e"/><text x="73.0" y="46.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><circle cx="300.0" cy="52.6" r="4.3" fill="#15181e"/><text x="317.6" y="50.4" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><circle cx="241.6" cy="162.4" r="4.3" fill="#15181e"/><text x="257.0" y="178.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><text x="165" y="231" font-size="14" fill="#5b6270" text-anchor="middle">AO = OC и BO = OD ⟹ ABCD — параллелограмм</text></svg></div>
+<p><b>Доказательство.</b></p>
+<div class='step'>1. <span class='nw'>AO = OC</span>, <span class='nw'>BO = OD</span> — по условию.</div><div class='step'>2. <span class='nw'>∠AOB = ∠COD</span> — вертикальные.</div><div class='step'>3. <span class='nw'>△AOB = △COD</span> по двум сторонам и углу между ними.</div><div class='step'>4. Отсюда <span class='nw'>AB = CD</span> и <span class='nw'>∠BAO = ∠DCO</span> — накрест лежащие, значит <span class='nw'>AB ∥ CD</span>.</div><div class='fx'>AB и CD равны и параллельны — дальше признак 2</div>
+<div class="rule2"><div class="n">ПРИЗНАК ПО УГЛАМ</div>
+Если противолежащие углы четырёхугольника попарно равны, то это параллелограмм.</div>
+<div class='step'>1. Пусть <span class='nw'>∠A = ∠C</span> и <span class='nw'>∠B = ∠D</span>.</div><div class='step'>2. Сумма всех четырёх углов равна <span class='nw'>360°</span>, значит <span class='nw'>2∠A + 2∠B = 360°</span>.</div><div class='step'>3. Отсюда <span class='nw'>∠A + ∠B = 180°</span> — это односторонние углы, значит <span class='nw'>BC ∥ AD</span>.</div><div class='step'>4. Так же <span class='nw'>∠B + ∠C = 180°</span> даёт <span class='nw'>AB ∥ CD</span>.</div><div class='fx'>Обе пары параллельны — параллелограмм</div>
+<div class="def"><div class="n">КАК ВЫБИРАТЬ ПРИЗНАК</div>
+Смотри, что дано в условии. Даны длины сторон — признак 1. Дана одна пара
+(равна и параллельна) — признак 2. Даны середины диагоналей или равные половинки —
+признак 3. Даны равные углы — признак по углам.</div>
+<div class="warn"><div class="n">ЧЕГО НЕ ХВАТАЕТ</div>
+Не признаки параллелограмма: «диагонали равны» (так бывает у равнобедренной трапеции),
+«две стороны параллельны» (трапеция), «диагональ делит на два равных треугольника»
+(так бывает у дельтоида).</div>
+<div class="figrow"><div class="fig"><svg viewBox="0 0 300 258"><rect x="0" y="0" width="300" height="258" rx="12" fill="#ffffff"/><polygon points="60.7,111.2 139.9,30.0 239.3,111.2 139.9,170.0" fill="#fde4ec" stroke="none"/><line x1="60.7" y1="111.2" x2="139.9" y2="30.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="139.9" y1="30.0" x2="239.3" y2="111.2" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="239.3" y1="111.2" x2="139.9" y2="170.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="139.9" y1="170.0" x2="60.7" y2="111.2" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="60.7" y1="111.2" x2="239.3" y2="111.2" stroke="#7a3fbf" stroke-width="2.1" stroke-linecap="round"/><line x1="95.3" y1="65.7" x2="105.3" y2="75.5" stroke="#137a45" stroke-width="2.0" stroke-linecap="butt"/><line x1="194.0" y1="65.2" x2="185.1" y2="76.0" stroke="#137a45" stroke-width="2.0" stroke-linecap="butt"/><line x1="195.7" y1="145.1" x2="188.6" y2="133.0" stroke="#137a45" stroke-width="2.0" stroke-linecap="butt"/><line x1="190.5" y1="148.1" x2="183.4" y2="136.1" stroke="#137a45" stroke-width="2.0" stroke-linecap="butt"/><line x1="98.5" y1="148.0" x2="106.9" y2="136.8" stroke="#137a45" stroke-width="2.0" stroke-linecap="butt"/><line x1="93.7" y1="144.4" x2="102.1" y2="133.2" stroke="#137a45" stroke-width="2.0" stroke-linecap="butt"/><circle cx="60.7" cy="111.2" r="4.3" fill="#15181e"/><text x="41.8" y="117.4" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><circle cx="139.9" cy="30.0" r="4.3" fill="#15181e"/><text x="138.6" y="16.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><circle cx="239.3" cy="111.2" r="4.3" fill="#15181e"/><text x="258.2" y="117.3" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><circle cx="139.9" cy="170.0" r="4.3" fill="#15181e"/><text x="138.4" y="193.9" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><text x="150" y="216" font-size="14" fill="#5b6270" text-anchor="middle">диагональ делит на два равных</text><text x="150" y="234" font-size="14" fill="#5b6270" text-anchor="middle">треугольника — но это не</text><text x="150" y="252" font-size="14" fill="#5b6270" text-anchor="middle">параллелограмм</text></svg></div><div class="fig"><svg viewBox="0 0 300 222"><rect x="0" y="0" width="300" height="222" rx="12" fill="#ffffff"/><polygon points="30.0,160.0 74.3,40.0 225.7,40.0 270.0,160.0" fill="#fde4ec" stroke="none"/><line x1="30.0" y1="160.0" x2="74.3" y2="40.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="74.3" y1="40.0" x2="225.7" y2="40.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="225.7" y1="40.0" x2="270.0" y2="160.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="270.0" y1="160.0" x2="30.0" y2="160.0" stroke="#15181e" stroke-width="2.6" stroke-linecap="round"/><line x1="30.0" y1="160.0" x2="225.7" y2="40.0" stroke="#7a3fbf" stroke-width="2.1" stroke-linecap="round"/><line x1="74.3" y1="40.0" x2="270.0" y2="160.0" stroke="#7a3fbf" stroke-width="2.1" stroke-linecap="round"/><circle cx="30.0" cy="160.0" r="4.3" fill="#15181e"/><text x="13.0" y="173.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">A</text><circle cx="74.3" cy="40.0" r="4.3" fill="#15181e"/><text x="59.5" y="33.2" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">B</text><circle cx="225.7" cy="40.0" r="4.3" fill="#15181e"/><text x="240.5" y="33.2" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">C</text><circle cx="270.0" cy="160.0" r="4.3" fill="#15181e"/><text x="287.0" y="173.5" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">D</text><text x="150" y="216" font-size="14" fill="#5b6270" text-anchor="middle">диагонали равны — но это трапеция</text></svg></div></div>
+<div class="tohw">Задание 5<span>Три задачи на признаки.</span></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts5"><div class="trhead"><b>Тренажёр 5. Признаки</b><span class="trscore" id="ts5s"></span></div><div class="meta">Десять ситуаций. В четырёх из них вывод сделать нельзя — не попадись.</div><div class="trq" id="ts5q"></div><div class="trfig" id="ts5f"></div><div id="ts5a"></div><div class="trmsg" id="ts5m"></div><div class="trbar" id="ts5b"></div></div>
+</div>
+<div id="tasks5"></div>
+<div id="tasks"></div>
+
+<div class="card sheet">
+  <h2>Шпаргалка</h2>
+  <div class="meta">Печатается на один лист A4: Ctrl+P (⌘+P) → печать.</div>
+  <p class="f-formula"><b>Определение.</b> Параллелограмм — четырёхугольник, у которого
+  противолежащие стороны попарно параллельны: AB ∥ CD, BC ∥ AD.</p>
+  <p class="f-formula"><b>Стороны и углы.</b> AB = CD, BC = AD; ∠A = ∠C, ∠B = ∠D.
+  Диагональ делит параллелограмм на два равных треугольника.</p>
+  <p class="f-formula"><b>Соседние углы.</b> ∠A + ∠B = 180°. Знаешь один угол — знаешь
+  все четыре.</p>
+  <p class="f-formula"><b>Сумма углов.</b> ∠A + ∠B + ∠C + ∠D = 360° — как у любого
+  выпуклого четырёхугольника.</p>
+  <p class="f-formula"><b>Диагонали.</b> Точкой пересечения делятся пополам:
+  AO = OC, BO = OD. Значит AC = 2·AO, BD = 2·BO.</p>
+  <p class="f-formula"><b>Периметр.</b> P = 2(AB + BC). Первым действием периметр делят
+  пополам — получается сумма двух соседних сторон.</p>
+  <p class="f-formula"><b>Треугольник с вершиной O.</b> P<sub>AOB</sub> = AO + BO + AB,
+  P<sub>BOC</sub> = BO + OC + BC. Половинки диагоналей те же, меняется только сторона.</p>
+  <p class="f-formula"><b>Биссектриса.</b> Отсекает равнобедренный треугольник: если
+  биссектриса из A встречает BC в точке K, то BK = AB. Биссектрисы соседних углов
+  пересекаются под прямым углом.</p>
+  <p class="f-formula"><b>Высота.</b> Перпендикуляр к прямой, содержащей сторону.
+  В прямоугольном треугольнике катет против угла 30° вдвое меньше гипотенузы.</p>
+  <p class="f-formula"><b>Признак 1.</b> AB = CD и BC = AD ⟹ параллелограмм.</p>
+  <p class="f-formula"><b>Признак 2.</b> AB = CD и AB ∥ CD (одна и та же пара!) ⟹
+  параллелограмм.</p>
+  <p class="f-formula"><b>Признак 3.</b> AO = OC и BO = OD ⟹ параллелограмм.</p>
+  <p class="f-formula"><b>Признак по углам.</b> ∠A = ∠C и ∠B = ∠D ⟹ параллелограмм.</p>
+  <p class="f-formula"><b>Не признаки.</b> «Диагонали равны» — бывает у равнобедренной
+  трапеции. «Две стороны параллельны» — трапеция. «Диагональ делит на два равных
+  треугольника» — бывает у дельтоида.</p>
+</div>
+
+<div class="card">
+  <h2>Шаг 1. Фото решений — по желанию</h2>
+  <div class="meta">В поле уходит только ответ, а я смотрю ещё и ход решения.
+  Фото прикладывать не обязательно, но с ними разбор будет точнее.</div>
+  <ol class="steps-list">
+    <li>Первой строкой пиши, что дано и что ищешь, — как в «Дано» и «Найти».</li>
+    <li>Каждый шаг объясняй словами: «противолежащие равны», «накрест лежащие», «соседние дают 180°».</li>
+    <li>В задачах на признаки обязательно называй признак, по которому делаешь вывод.</li>
+    <li>В конце проверяй: сумма углов 360°, периметр сходится с условием.</li>
+  </ol>
+  <input type="file" id="photos" accept="image/*" multiple style="margin-top:12px">
+  <div class="thumbs" id="thumbs"></div>
+</div>
+
+<div class="card">
+  <h2>Шаг 2. Отправь работу</h2>
+  <div class="meta">Проверь, что вверху написано твоё имя. По кнопке ответы и результат
+  уходят преподавателю. Вторая кнопка сохраняет копию тебе.</div>
+  <div class="trgate" id="trgate"></div>
+  <div class="row" style="margin-top:12px">
+    <button class="pri" id="send">Отправить на проверку</button>
+    <button id="report">Скачать копию себе</button>
+  </div>
+  <div id="repnote" class="meta" style="margin-top:8px"></div>
+</div>
+
+</div>
+
+<div class="bar">
+  <button class="pri" id="checkall">Проверить всё</button>
+  <span id="progress" class="meta">решено 0 из 18</span>
+</div>
+
+<script>
+var CF = {};
+var STUDENT_CODE = (function(){
+  try{ var m = /[#&?]code=([^&]+)/.exec(location.hash + location.search);
+       return m ? decodeURIComponent(m[1]) : ""; }catch(e){ return ""; }
+})();
+var TOPIC = "Параллелограмм: свойства и признаки (геометрия, 8 класс)";
+
+"use strict";
+var started = Date.now();
+var spentBefore = 0;
+
+/* ---------- данные задач; ответы закодированы, чтобы не читались в исходнике ---------- */
+function e(s){return btoa(unescape(encodeURIComponent(s)));}
+function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return s;}}
+
+var TASKS = [{"id": 1, "blk": "1", "lvl": "база", "img": "", "type": "num", "text": "В параллелограмме ABCD <span class='nw'>∠C = 70°</span>. Найди <span class='nw'>∠B</span> в градусах.", "ans": ["MTEw"], "hints": ["Углы B и C прилежат к одной стороне BC.", "Сумма таких углов равна <span class='nw'>180°</span>.", "<span class='nw'>180 − 70</span>."], "sol": "<div class='step'>1. B и C — соседние углы, их сумма <span class='nw'>180°</span>.</div><div class='step'>2. <span class='nw'>180° − 70° = 110°</span>.</div><div class='fx'><span class='nw'>∠B = 110°</span></div><div class='step mini'>Заодно <span class='nw'>∠A = 70°</span> и <span class='nw'>∠D = 110°</span>.</div>"}, {"id": 2, "blk": "1", "lvl": "база", "img": "", "type": "num", "text": "В параллелограмме ABCD <span class='nw'>∠A = 84°</span>. Найди сумму <span class='nw'>∠A + ∠C</span>.", "ans": ["MTY4"], "hints": ["Углы A и C противолежащие.", "Противолежащие углы равны.", "<span class='nw'>84 + 84</span>."], "sol": "<div class='step'>1. <span class='nw'>∠C = ∠A = 84°</span>.</div><div class='step'>2. <span class='nw'>84° + 84° = 168°</span>.</div><div class='fx'>168°</div>"}, {"id": 3, "blk": "1", "lvl": "средний", "img": "", "type": "num", "text": "Сумма трёх углов параллелограмма равна <span class='nw'>240°</span>. Найди сумму <span class='nw'>∠A + ∠C</span>.", "ans": ["MTIw"], "hints": ["Любые два соседних угла дают <span class='nw'>180°</span>.", "Вычти эти <span class='nw'>180°</span> из <span class='nw'>240°</span> — останется третий угол.", "А дальше противолежащий ему угол такой же."], "sol": "<div class='step'>1. Пусть даны <span class='nw'>∠A</span>, <span class='nw'>∠B</span>, <span class='nw'>∠C</span>.</div><div class='step'>2. <span class='nw'>∠A + ∠B = 180°</span>, значит <span class='nw'>∠C = 240° − 180° = 60°</span>.</div><div class='step'>3. <span class='nw'>∠A = ∠C = 60°</span>.</div><div class='fx'><span class='nw'>∠A + ∠C = 120°</span></div><div class='step mini'>Углы параллелограмма: 60°, 120°, 60°, 120°.</div>"}, {"id": 4, "blk": "2", "lvl": "средний", "img": "", "type": "num", "text": "В параллелограмме ABCD <span class='nw'>∠A : ∠B = 3 : 7</span>. Найди больший угол в градусах.", "ans": ["MTI2"], "hints": ["A и B соседние, их сумма <span class='nw'>180°</span>.", "Всего частей <span class='nw'>3 + 7 = 10</span>.", "Одна часть — <span class='nw'>180 : 10 = 18</span>."], "sol": "<div class='step'>1. <span class='nw'>∠A + ∠B = 180°</span>.</div><div class='step'>2. Одна часть: <span class='nw'>180° : 10 = 18°</span>.</div><div class='step'>3. <span class='nw'>∠A = 3 · 18° = 54°</span>, <span class='nw'>∠B = 7 · 18° = 126°</span>.</div><div class='fx'>126°</div><div class='step mini'>Проверка: <span class='nw'>54 + 126 = 180</span>. Сошлось.</div>"}, {"id": 5, "blk": "2", "lvl": "средний", "img": "", "type": "num", "text": "Сумма двух углов параллелограмма равна <span class='nw'>162°</span>. Найди тупой угол в градусах.", "ans": ["OTk="], "hints": ["Могли взять соседние углы или противолежащие.", "Соседние дают ровно <span class='nw'>180°</span>, а тут <span class='nw'>162°</span>.", "Значит взяты противолежащие — и они равны."], "sol": "<div class='step'>1. Соседние углы дают <span class='nw'>180°</span>, а у нас <span class='nw'>162°</span>. Значит это противолежащие.</div><div class='step'>2. Они равны: <span class='nw'>162° : 2 = 81°</span>.</div><div class='step'>3. Соседний с ними: <span class='nw'>180° − 81° = 99°</span>.</div><div class='fx'>99°</div><div class='step mini'>Углы: 81°, 99°, 81°, 99°. Тупой — 99°.</div>"}, {"id": 6, "blk": "2", "lvl": "сложный", "img": "", "type": "num", "text": "В параллелограмме ABCD проведена диагональ BD, причём <span class='nw'>∠ADB = 44°</span> и <span class='nw'>∠BDC = 72°</span>. Найди <span class='nw'>∠BAD</span> в градусах.", "ans": ["NjQ="], "hints": ["Диагональ BD разбила угол D на две части.", "<span class='nw'>∠ADC = 44° + 72°</span>.", "Углы A и D соседние."], "sol": "<div class='step'>1. <span class='nw'>∠ADC = 44° + 72° = 116°</span>.</div><div class='step'>2. A и D прилежат к стороне AD, значит их сумма <span class='nw'>180°</span>.</div><div class='step'>3. <span class='nw'>180° − 116° = 64°</span>.</div><div class='fx'><span class='nw'>∠BAD = 64°</span></div><div class='step mini'>Остальные углы: <span class='nw'>∠ABC = 116°</span>, <span class='nw'>∠BCD = 64°</span>.</div>"}, {"id": 7, "blk": "3", "lvl": "база", "img": "", "type": "num", "text": "В параллелограмме ABCD <span class='nw'>AB = 2 см</span>, <span class='nw'>BC = 5 см</span>. Найди периметр в сантиметрах.", "ans": ["MTQ="], "hints": ["Противолежащие стороны равны.", "<span class='nw'>P = 2(AB + BC)</span>.", "<span class='nw'>2 · 7</span>."], "sol": "<div class='step'>1. <span class='nw'>CD = AB = 2</span>, <span class='nw'>AD = BC = 5</span>.</div><div class='fx'><span class='nw'>P</span> = <span class='nw'>2(2 + 5)</span> = <span class='nw'>14 см</span></div>"}, {"id": 8, "blk": "3", "lvl": "база", "img": "", "type": "num", "text": "Периметр параллелограмма равен <span class='nw'>48 см</span>, одна из сторон равна <span class='nw'>16 см</span>. Найди меньшую сторону в сантиметрах.", "ans": ["OA=="], "hints": ["Раздели периметр пополам.", "Получишь сумму двух соседних сторон.", "<span class='nw'>24 − 16</span>."], "sol": "<div class='step'>1. <span class='nw'>48 : 2 = 24</span> — сумма соседних сторон.</div><div class='step'>2. <span class='nw'>24 − 16 = 8</span>.</div><div class='fx'>8 см</div><div class='step mini'>Стороны 16 и 8, периметр <span class='nw'>2 · 24 = 48</span>.</div>"}, {"id": 9, "blk": "3", "lvl": "средний", "img": "", "type": "num", "text": "Периметр параллелограмма ABCD равен <span class='nw'>40 см</span>, а <span class='nw'>AB : BC = 2 : 3</span>. Найди BC в сантиметрах.", "ans": ["MTI="], "hints": ["Сначала половина периметра.", "Раздели её на <span class='nw'>2 + 3 = 5</span> частей.", "Одна часть <span class='nw'>20 : 5 = 4</span>."], "sol": "<div class='step'>1. <span class='nw'>AB + BC = 40 : 2 = 20</span>.</div><div class='step'>2. Одна часть: <span class='nw'>20 : 5 = 4</span>.</div><div class='step'>3. <span class='nw'>AB = 2 · 4 = 8</span>, <span class='nw'>BC = 3 · 4 = 12</span>.</div><div class='fx'>BC = 12 см</div>"}, {"id": 10, "blk": "4", "lvl": "база", "img": "", "type": "num", "text": "Диагонали параллелограмма ABCD пересекаются в точке O, <span class='nw'>AC = 14 см</span>. Найди AO в сантиметрах.", "ans": ["Nw=="], "hints": ["Точка O — середина каждой диагонали.", "<span class='nw'>AO = OC</span>.", "<span class='nw'>14 : 2</span>."], "sol": "<div class='step'>1. Диагонали делятся точкой пересечения пополам.</div><div class='fx'><span class='nw'>AO</span> = <span class='nw'>14 : 2</span> = <span class='nw'>7 см</span></div>"}, {"id": 11, "blk": "4", "lvl": "средний", "img": "", "type": "num", "text": "Диагонали параллелограмма ABCD пересекаются в точке O, <span class='nw'>AC = 14 см</span>, <span class='nw'>BD = 12 см</span>, <span class='nw'>AD = 8 см</span>. Найди периметр треугольника BOC в сантиметрах.", "ans": ["MjE="], "hints": ["У треугольника BOC стороны BO, OC и BC.", "BO и OC — половинки диагоналей.", "<span class='nw'>BC = AD</span> — противолежащие стороны."], "sol": "<div class='step'>1. <span class='nw'>BO = 12 : 2 = 6</span>.</div><div class='step'>2. <span class='nw'>OC = 14 : 2 = 7</span>.</div><div class='step'>3. <span class='nw'>BC = AD = 8</span>.</div><div class='fx'><span class='nw'>P</span> = <span class='nw'>6 + 7 + 8</span> = <span class='nw'>21 см</span></div><div class='step mini'>Если бы спросили про треугольник AOB, вместо BC встала бы сторона AB, а половинки остались бы теми же.</div>"}, {"id": 12, "blk": "4", "lvl": "сложный", "img": "", "type": "num", "text": "Диагонали параллелограмма ABCD пересекаются в точке O, <span class='nw'>AC = 36 см</span>, <span class='nw'>BD = 24 см</span>, периметр треугольника AOB равен <span class='nw'>45 см</span>. Найди CD в сантиметрах.", "ans": ["MTU="], "hints": ["Сначала найди AO и BO.", "<span class='nw'>AB = P − AO − BO</span>.", "<span class='nw'>CD = AB</span>."], "sol": "<div class='step'>1. <span class='nw'>AO = 36 : 2 = 18</span>, <span class='nw'>BO = 24 : 2 = 12</span>.</div><div class='step'>2. <span class='nw'>AB = 45 − 18 − 12 = 15</span>.</div><div class='step'>3. <span class='nw'>CD = AB = 15</span> — противолежащие стороны равны.</div><div class='fx'>CD = 15 см</div>"}, {"id": 13, "blk": "5", "lvl": "база", "img": "", "type": "choice", "text": "В четырёхугольнике ABCD оказалось, что <span class='nw'>AB = CD</span> и <span class='nw'>BC = AD</span>. Что это за четырёхугольник?", "ans": ["0L/QsNGA0LDQu9C70LXQu9C+0LPRgNCw0LzQvA=="], "hints": ["Обе пары противолежащих сторон равны.", "Это в точности условие первого признака.", "Доказательство идёт через диагональ и равенство треугольников."], "sol": "<div class='step'>1. Обе пары противолежащих сторон попарно равны.</div><div class='step'>2. По признаку 1 это параллелограмм.</div><div class='fx'>Параллелограмм</div><div class='step mini'>Доказывают так: диагональ BD, треугольники равны по трём сторонам, накрест лежащие углы равны — значит стороны параллельны.</div>", "options": ["параллелограмм", "трапеция", "нельзя определить", "обязательно прямоугольник"], "optionsHtml": ["параллелограмм", "трапеция", "нельзя определить", "обязательно прямоугольник"]}, {"id": 14, "blk": "5", "lvl": "средний", "img": "", "type": "choice", "text": "В четырёхугольнике ABCD <span class='nw'>AB ∥ CD</span> и <span class='nw'>BC = AD</span>. Обязательно ли это параллелограмм?", "ans": ["0L3QtdGCLCDRjdGC0L4g0LzQvtC20LXRgiDQsdGL0YLRjCDRgNCw0LLQvdC+0LHQtdC00YDQtdC90L3QsNGPINGC0YDQsNC/0LXRhtC40Y8="], "hints": ["Параллельность и равенство относятся к разным парам сторон.", "Признак 2 требует, чтобы это была одна и та же пара.", "Вспомни фигуру с параллельными основаниями и равными боковыми."], "sol": "<div class='step'>1. Параллельна пара AB и CD, а равна пара BC и AD — разные пары.</div><div class='step'>2. Признак 2 требует равенства и параллельности у одной пары.</div><div class='step'>3. Контрпример — равнобедренная трапеция: основания параллельны, боковые стороны равны, а параллелограмма нет.</div><div class='fx'>Не обязательно</div>", "options": ["нет, это может быть равнобедренная трапеция", "да, по признаку о сторонах", "да, по признаку о диагоналях", "да, по определению"], "optionsHtml": ["нет, это может быть равнобедренная трапеция", "да, по признаку о сторонах", "да, по признаку о диагоналях", "да, по определению"]}, {"id": 15, "blk": "5", "lvl": "средний", "img": "", "type": "choice", "text": "Диагонали четырёхугольника пересекаются и точкой пересечения делятся пополам. Что можно утверждать?", "ans": ["0Y3RgtC+INC/0LDRgNCw0LvQu9C10LvQvtCz0YDQsNC80Lw="], "hints": ["Это ровно формулировка третьего признака.", "Доказательство: вертикальные углы и равные половинки диагоналей.", "Треугольники AOB и COD равны по двум сторонам и углу между ними."], "sol": "<div class='step'>1. <span class='nw'>AO = OC</span>, <span class='nw'>BO = OD</span>, углы при O вертикальные.</div><div class='step'>2. <span class='nw'>△AOB = △COD</span> по двум сторонам и углу между ними.</div><div class='step'>3. Отсюда <span class='nw'>AB = CD</span> и <span class='nw'>AB ∥ CD</span>.</div><div class='fx'>Это параллелограмм</div><div class='step mini'>А вот равенство диагоналей ничего не доказывает: так бывает и у равнобедренной трапеции.</div>", "options": ["это параллелограмм", "это трапеция", "нельзя утверждать", "это обязательно прямоугольник"], "optionsHtml": ["это параллелограмм", "это трапеция", "нельзя утверждать", "это обязательно прямоугольник"]}, {"id": 16, "blk": "6", "lvl": "средний", "img": "", "type": "num", "text": "Биссектриса угла A параллелограмма ABCD пересекает сторону BC в точке K, причём <span class='nw'>BK = 7 см</span> и <span class='nw'>KC = 14 см</span>. Найди периметр в сантиметрах.", "ans": ["NTY="], "hints": ["Треугольник ABK равнобедренный.", "<span class='nw'>AB = BK</span>.", "<span class='nw'>BC = 7 + 14</span>."], "sol": "<div class='step'>1. <span class='nw'>∠BAK = ∠KAD</span> (биссектриса) и <span class='nw'>∠KAD = ∠AKB</span> (накрест лежащие).</div><div class='step'>2. Значит треугольник ABK равнобедренный и <span class='nw'>AB = BK = 7</span>.</div><div class='step'>3. <span class='nw'>BC = 7 + 14 = 21</span>.</div><div class='fx'><span class='nw'>P</span> = <span class='nw'>2(7 + 21)</span> = <span class='nw'>56 см</span></div><div class='step mini'>Если бы отрезки шли наоборот (<span class='nw'>BK = 14</span>), вышло бы <span class='nw'>2(14 + 21) = 70</span>. Порядок в условии важен.</div>"}, {"id": 17, "blk": "6", "lvl": "сложный", "img": "", "type": "num", "text": "Биссектриса угла A параллелограмма ABCD образует со стороной BC угол, равный <span class='nw'>21°</span>. Найди больший угол параллелограмма в градусах.", "ans": ["MTM4"], "hints": ["Этот угол — <span class='nw'>∠AKB</span>, где K на BC.", "<span class='nw'>∠AKB = ∠KAD</span> как накрест лежащие.", "Значит <span class='nw'>∠A</span> вдвое больше <span class='nw'>21°</span>."], "sol": "<div class='step'>1. <span class='nw'>∠AKB = 21°</span>.</div><div class='step'>2. <span class='nw'>∠KAD = ∠AKB = 21°</span> — накрест лежащие при <span class='nw'>AD ∥ BC</span>.</div><div class='step'>3. AK — биссектриса, поэтому <span class='nw'>∠A = 2 · 21° = 42°</span>.</div><div class='step'>4. Больший угол — соседний: <span class='nw'>180° − 42° = 138°</span>.</div><div class='fx'>138°</div>"}, {"id": 18, "blk": "6", "lvl": "сложный", "img": "", "type": "num", "text": "В параллелограмме MNPQ к стороне MQ проведён перпендикуляр NH, точка H лежит на MQ. Известно, что <span class='nw'>MH = 3 см</span>, <span class='nw'>HQ = 5 см</span>, <span class='nw'>∠MNH = 30°</span>. Найди периметр MNPQ в сантиметрах.", "ans": ["Mjg="], "hints": ["Треугольник MNH прямоугольный.", "Против угла <span class='nw'>30°</span> лежит катет MH.", "Катет против <span class='nw'>30°</span> вдвое меньше гипотенузы."], "sol": "<div class='step'>1. В треугольнике MNH угол H прямой, <span class='nw'>∠MNH = 30°</span>.</div><div class='step'>2. Катет MH лежит против угла <span class='nw'>30°</span>, значит <span class='nw'>MN = 2 · 3 = 6</span>.</div><div class='step'>3. <span class='nw'>MQ = MH + HQ = 3 + 5 = 8</span>.</div><div class='fx'><span class='nw'>P</span> = <span class='nw'>2(6 + 8)</span> = <span class='nw'>28 см</span></div><div class='step mini'>Попутно: <span class='nw'>∠M = 60°</span>, <span class='nw'>∠N = 120°</span>.</div>"}];
+
+/* ---------- разбор ответа ---------- */
+function norm(s){
+  return String(s).toLowerCase().replace(/\s+/g,"")
+    .replace(/[\u2013\u2014\u2212]/g,"-")
+    .replace(/[\u00d7\u00b7]/g,"*")
+    .replace(/,/g,".")
+    .replace(/^(ответ:?|x=|y=|α=|a=)/,"");
+}
+function toNum(str){
+  var t = norm(str);
+  if(!t) return NaN;
+  t = t.replace(/\u221a/g,"sqrt").replace(/\u03c0/g,"pi");
+  t = t.replace(/sqrt(\d+(?:\.\d+)?)/g,"sqrt($1)");
+  t = t.replace(/(\d)sqrt/g,"$1*sqrt");
+  t = t.replace(/(\d)pi/g,"$1*pi");
+  t = t.replace(/(\d)\(/g,"$1*(").replace(/\)(\d)/g,")*$1").replace(/\)\(/g,")*(");
+  if(!/^[-+*/().0-9a-z]+$/.test(t)) return NaN;
+  if(t.replace(/sqrt|pi/g,"").match(/[a-z]/)) return NaN;
+  try{
+    var v = new Function("sqrt","pi","return ("+t+");")(Math.sqrt, Math.PI);
+    return (typeof v === "number" && isFinite(v)) ? v : NaN;
+  }catch(err){ return NaN; }
+}
+function same(given, right, tol){
+  var a = toNum(given), b = toNum(right);
+  if(!isNaN(a) && !isNaN(b)){
+    var t = tol || 1e-4;
+    return Math.abs(a-b) <= Math.max(t, Math.abs(b)*t);
+  }
+  return norm(given) === norm(right);
+}
+
+/* ---------- отрисовка ---------- */
+var state = {};
+function boxOf(t){
+  return document.getElementById("tasks" + (t.blk || "")) ||
+         document.getElementById("tasks");
+}
+
+TASKS.forEach(function(t){
+  state[t.id] = {tries:0, hints:0, done:false, ok:false, given:"", sel:null};
+  var el = document.createElement("div");
+  el.className = "task"; el.id = "t"+t.id;
+  var body = '<div><span class="tnum">'+t.id+'.</span>'+t.text+
+             '<span class="lvl">'+t.lvl+'</span></div>';
+  if(t.img){ body += '<div class="fig">'+t.img+'</div>'; }
+  if(t.type === "choice"){
+    body += '<div class="opts">'+t.options.map(function(o,i){
+      return '<label class="opt" data-v="'+o+'"><input type="radio" name="q'+t.id+'" value="'+o+'"> '+((t.optionsHtml && t.optionsHtml[i]) || o)+'</label>';
+    }).join("")+'</div>';
+  } else {
+    body += '<div class="keys">'+
+      [].map(function(k){
+        return '<button class="key" data-k="'+k+'" type="button">'+k+'</button>';}).join("")+
+      '</div><input type="text" id="in'+t.id+'" inputmode="text" autocapitalize="off" '+
+      'autocorrect="off" autocomplete="off" spellcheck="false" placeholder="ответ">';
+  }
+  body += '<div class="row" style="margin-top:10px">'+
+          '<button class="pri sm chk">Проверить</button>'+
+          '<button class="sm hnt">Подсказка</button></div>'+
+          '<div class="hints"></div><div class="verdict"></div><div class="sol"></div>';
+  el.innerHTML = body;
+  boxOf(t).appendChild(el);
+
+  el.querySelectorAll(".key").forEach(function(b){
+    b.addEventListener("click", function(){
+      var inp = document.getElementById("in"+t.id);
+      var k = b.dataset.k === "−" ? "-" : b.dataset.k;
+      var s = inp.selectionStart || inp.value.length;
+      inp.value = inp.value.slice(0,s) + k + inp.value.slice(inp.selectionEnd || s);
+      inp.focus(); inp.setSelectionRange(s+k.length, s+k.length);
+    });
+  });
+  if(t.type === "choice"){
+    el.querySelectorAll(".opt").forEach(function(l){
+      l.addEventListener("click", function(){
+        el.querySelectorAll(".opt").forEach(function(x){x.classList.remove("sel");});
+        l.classList.add("sel"); state[t.id].sel = l.dataset.v;
+      });
+    });
+  } else {
+    el.querySelector("#in"+t.id).addEventListener("keydown", function(ev){
+      if(ev.key === "Enter"){ ev.preventDefault(); check(t.id); }
+    });
+  }
+  el.querySelector(".chk").addEventListener("click", function(){ check(t.id); });
+  el.querySelector(".hnt").addEventListener("click", function(){ hint(t.id); });
+});
+
+function hint(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var host = document.querySelector("#t"+id+" .hints");
+  if(s.hints >= t.hints.length){
+    if(!host.querySelector(".last")){
+      var w = document.createElement("div");
+      w.className = "hint last"; w.textContent = "Подсказки закончились — нажми «Проверить», решение откроется после второй попытки.";
+      host.appendChild(w);
+    }
+    return;
+  }
+  var h = document.createElement("div");
+  h.className = "hint";
+  h.innerHTML = "Подсказка " + (s.hints+1) + ": " + t.hints[s.hints];
+  host.appendChild(h);
+  s.hints++;
+  saveWork();
+}
+
+function check(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var el = document.getElementById("t"+id);
+  var v = document.querySelector(".verdict");
+  v = el.querySelector(".verdict");
+  var given = (t.type === "choice") ? (s.sel || "") :
+              (document.getElementById("in"+id).value || "");
+  if(!given.trim()){ v.className = "verdict bad"; v.textContent = "Введи ответ."; return; }
+  s.given = given; s.tries++;
+  var ok = t.ans.some(function(a){ return same(given, d(a), t.tol); });
+  s.ok = ok; s.done = ok || s.tries >= 2;
+  el.classList.remove("ok","bad");
+  el.classList.add(ok ? "ok" : "bad");
+  v.className = "verdict " + (ok ? "ok" : "bad");
+  if(ok){
+    v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    showSol(el, t);
+  } else if(s.tries === 1){
+    v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+  } else {
+    v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    showSol(el, t);
+  }
+  progress();
+  saveWork();
+}
+function showSol(el, t){
+  var host = el.querySelector(".sol");
+  if(host.dataset.on) return;
+  host.dataset.on = "1";
+  var det = document.createElement("details");
+  det.open = true;
+  det.innerHTML = "<summary>Решение</summary><div class='step'>"+t.sol+"</div>";
+  host.appendChild(det);
+}
+function progress(){
+  var done = TASKS.filter(function(t){return state[t.id].done;}).length;
+  var ok = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  document.getElementById("progress").textContent =
+    "решено " + done + " из " + TASKS.length + " · верно " + ok;
+}
+document.getElementById("checkall").addEventListener("click", function(){
+  TASKS.forEach(function(t){
+    var s = state[t.id];
+    var given = (t.type === "choice") ? (s.sel || "") : (document.getElementById("in"+t.id).value || "");
+    if(given.trim() && !s.done) check(t.id);
+  });
+  var first = TASKS.find(function(t){ return !state[t.id].done; });
+  var note = first ? "Осталась задача " + first.id + "." : "Все задачи закрыты.";
+  document.getElementById("progress").textContent += " · " + note;
+});
+progress();
+
+/* ---------- фото ---------- */
+var photos = [];
+document.getElementById("photos").addEventListener("change", function(ev){
+  var files = Array.prototype.slice.call(ev.target.files || []);
+  files.forEach(function(f){
+    var r = new FileReader();
+    r.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var m = 1400, w = img.width, h = img.height;
+        if(Math.max(w,h) > m){ var k = m/Math.max(w,h); w = Math.round(w*k); h = Math.round(h*k); }
+        var c = document.createElement("canvas"); c.width = w; c.height = h;
+        c.getContext("2d").drawImage(img, 0, 0, w, h);
+        photos.push({url: c.toDataURL("image/jpeg", 0.7), task: ""});
+        drawThumbs();
+      };
+      img.src = r.result;
+    };
+    r.readAsDataURL(f);
+  });
+  ev.target.value = "";
+});
+function drawThumbs(){
+  var host = document.getElementById("thumbs");
+  host.innerHTML = "";
+  var total = 0;
+  photos.forEach(function(p, i){
+    total += p.url.length * 0.75;
+    var d0 = document.createElement("div"); d0.className = "thumb";
+    var opts = '<option value="">задача…</option>' + TASKS.map(function(t){
+      return '<option value="'+t.id+'"'+(p.task==String(t.id)?" selected":"")+'>№'+t.id+'</option>';
+    }).join("");
+    d0.innerHTML = '<img src="'+p.url+'" alt="фото решения"><button type="button">×</button>'+
+                   '<select>'+opts+'</select>';
+    d0.querySelector("button").addEventListener("click", function(){ photos.splice(i,1); drawThumbs(); });
+    d0.querySelector("select").addEventListener("change", function(ev){ p.task = ev.target.value; });
+    host.appendChild(d0);
+  });
+  var note = document.getElementById("repnote");
+  if(total > 15e6){ note.textContent = "Фото уже больше 15 МБ — отчёт может отправляться долго, лишние лучше удалить."; }
+  else if(photos.length){ note.textContent = "Фото в отчёте: " + photos.length + "."; }
+  else { note.textContent = ""; }
+}
+
+/* ---------- отчёт ---------- */
+var ENDPOINT = "https://script.google.com/macros/s/AKfycbwqIhgBtFnoUik3N1Lh_YRhNeEFAjmXWSxBNoX1a_Yxu-2dEKHFwo4Dd5Ch9UTOHH-X/exec";
+var SECRET = "artteach2026";
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function buildReport(){
+  var name = (document.getElementById("name").value || "").trim() || "без имени";
+  var now = new Date();
+  var mins = Math.max(1, Math.round(spentMs()/60000));
+  var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  var data = {tип:"дз", предмет:"математика", тема:"Параллелограмм: свойства и признаки (геометрия, 8 класс)",
+    ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
+    верно:okN, всего:TASKS.length, тренажёры:trSummary(), задачи:[]};
+  var rows = TASKS.map(function(t){
+    var s = state[t.id];
+    data.задачи.push({n:t.id, условие:t.text.replace(/<[^>]+>/g,""), ответ_ученика:s.given,
+      верный_ответ:t.ans.map(d).join(" или "), верно:s.ok, попыток:s.tries, подсказок:s.hints,
+      уровень:t.lvl});
+    return "<tr><td>"+t.id+"</td><td style='text-align:left'>"+esc(t.text.replace(/<[^>]+>/g,""))+
+      "</td><td>"+esc(s.given||"—")+"</td><td>"+esc(t.ans.map(d).join(" / "))+"</td><td>"+
+      (s.ok?"верно":(s.given?"неверно":"не решал"))+"</td><td>"+s.tries+"</td><td>"+s.hints+"</td></tr>";
+  }).join("");
+  var pics = photos.map(function(p,i){
+    return "<figure><img src='"+p.url+"'><figcaption>Фото "+(i+1)+
+      (p.task?" — к задаче №"+p.task:"")+"</figcaption></figure>";
+  }).join("");
+  var html = "<!doctype html><html lang='ru'><head><meta charset='utf-8'>"+
+    "<meta name='viewport' content='width=device-width,initial-scale=1'>"+
+    "<title>Отчёт — "+esc(name)+" — параллелограмм · геометрия 8</title><style>"+
+    "body{font:16px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;padding:20px;color:#16181d;background:#fff}"+
+    "h1{font-size:22px;margin:0 0 4px}.m{color:#5b6270;font-size:15px}"+
+    "table{border-collapse:collapse;width:100%;margin-top:14px;font-size:15px}"+
+    "th,td{border:1px solid #dfe3ea;padding:6px 8px;text-align:center}th{background:#eef3fb}"+
+    "figure{margin:14px 0}img{max-width:100%;border:1px solid #dfe3ea;border-radius:8px}"+
+    "figcaption{color:#5b6270;font-size:14px;margin-top:4px}</style></head><body>"+
+    "<h1>Отчёт по домашнему заданию</h1>"+
+    "<div class='m'>Тема: параллелограмм, свойства и признаки · 8 класс</div>"+
+    "<div class='m'>Ученик: <b>"+esc(name)+"</b> · сдано: "+esc(now.toLocaleString("ru-RU"))+
+    " · время работы: около "+mins+" мин</div>"+
+    "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)</h2>"+
+    "<table><tr><th>№</th><th>Задача</th><th>Ответ ученика</th><th>Верный ответ</th>"+
+    "<th>Итог</th><th>Попыток</th><th>Подсказок</th></tr>"+rows+"</table>"+
+    trReportHtml()+
+    (pics ? "<h2>Фото решений</h2>"+pics : "<p class='m'>Фото решений не прикреплены.</p>")+
+    "<script type='application/json' id='result-data'>"+
+    JSON.stringify(data).replace(/</g,"\\u003c")+"<\/script></body></html>";
+  var stamp = now.getDate()+"-"+(now.getMonth()+1);
+  return {
+    html: html,
+    name: name,
+    ok: okN,
+    total: TASKS.length,
+    file: "Отчёт_Параллелограмм_"+name.replace(/\s+/g,"_")+"_"+stamp+".html",
+    caption: name+" · параллелограмм · геометрия 8 · "+okN+" из "+TASKS.length+
+             " ("+Math.round(okN/TASKS.length*100)+"%)"+
+             " · тренажёры и пропуски "+trSummary().ok+" из "+trSummary().total
+  };
+}
+
+document.getElementById("send").addEventListener("click", function(){
+  var note = document.getElementById("repnote");
+  var who = (document.getElementById("name").value || "").trim();
+  if(!who){ note.className = "meta bad-note"; note.textContent = "Сначала впиши имя вверху страницы."; return; }
+  var left = trPending();
+  if(left.length){
+    note.className = "meta bad-note";
+    note.textContent = "Работа не отправлена: сначала пройди тренажёры " +
+      "и блоки с пропусками. Осталось " + left.length + " из " + TRREQ.length + ".";
+    trStatus();
+    trJump(left[0].id);
+    return;
+  }
+  note.className = "meta";
+  var r = buildReport();
+  note.textContent = "Отправляю…";
+  var payload = {
+    secret: SECRET,
+    code: STUDENT_CODE,
+    student: r.name,
+    topic: TOPIC,
+    ok: r.ok,
+    total: r.total,
+    name: r.file,
+    caption: r.caption,
+    trainers: trSummary().ok + " из " + trSummary().total,
+    file: btoa(unescape(encodeURIComponent(r.html)))
+  };
+  fetch(ENDPOINT, {method:"POST", mode:"no-cors", body: JSON.stringify(payload)})
+    .then(function(){
+      note.textContent = "Отправлено преподавателю." +
+        (photos.length ? "" : " Фото решений не приложены — если решал в тетради, приложи их и отправь ещё раз.") +
+        " Если хочешь, сохрани копию себе кнопкой ниже.";
+    })
+    .catch(function(){
+      note.textContent = "Не получилось отправить. Скачай файл кнопкой ниже и пришли его вручную.";
+    });
+});
+
+document.getElementById("report").addEventListener("click", function(){
+  var r = buildReport();
+  var blob = new Blob([r.html], {type:"text/html;charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = r.file;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  document.getElementById("repnote").textContent = "Файл скачан — он в папке загрузок.";
+});
+
+
+/* ============ заполни пропуски ============ */
+window.GAPSTATE = {};
+window.GAPSAPI = {};
+window.GAPS = function(id, data){
+  var host = document.getElementById(id);
+  if(!host) return null;
+  var btn = document.getElementById(id + "go"), msg = document.getElementById(id + "m"),
+      sc = document.getElementById(id + "s"), tip = document.getElementById(id + "t");
+  var inputs = host.querySelectorAll("input.gp");
+  var tries = 0, done = false;
+
+  function norm(s){
+    return String(s).toLowerCase().replace(/\s+/g, "")
+      .replace(/[–—−]/g, "-")
+      .replace(/[×·\*]/g, "*")
+      .replace(/,/g, ".");
+  }
+  function toNum(s){
+    var t = norm(s);
+    if(!t || !/^[-+*/().0-9]+$/.test(t)) return NaN;
+    try{
+      var v = new Function("return (" + t + ");")();
+      return (typeof v === "number" && isFinite(v)) ? v : NaN;
+    }catch(e){ return NaN; }
+  }
+  function same(given, right){
+    var a = toNum(given), b = toNum(right);
+    if(!isNaN(a) && !isNaN(b)) return Math.abs(a - b) <= Math.max(1e-9, Math.abs(b) * 1e-9);
+    return norm(given) === norm(right);
+  }
+  function record(){
+    var vals = {}, k;
+    for(k = 0; k < inputs.length; k++) vals[inputs[k].getAttribute("data-k")] = inputs[k].value;
+    window.GAPSTATE[id] = {vals: vals, done: done};
+    if(window.saveWork) window.saveWork();
+  }
+
+  function check(quiet){
+    var ok = 0, total = inputs.length, firstBad = null, k, el, key, good;
+    for(k = 0; k < total; k++){
+      el = inputs[k];
+      key = el.getAttribute("data-k");
+      good = (el.value || "").trim() !== "" &&
+             (data.ans[key] || []).some(function(a){ return same(el.value, a); });
+      if(good){
+        el.className = "gp ok";
+        el.readOnly = true;
+        ok++;
+      } else {
+        el.className = (el.value || "").trim() === "" ? "gp" : "gp bad";
+        if(firstBad === null) firstBad = key;
+      }
+    }
+    sc.textContent = "заполнено верно " + ok + " из " + total;
+    if(ok === total){
+      done = true;
+      btn.disabled = true;
+      msg.innerHTML = '<span class="v ok">Все пропуски заполнены верно.</span>';
+      tip.innerHTML = data.after || "";
+      if(window.trFinished) window.trFinished(id, ok, total);
+    } else if(!quiet){
+      tries++;
+      msg.innerHTML = '<span class="v bad">Пока не всё.</span> Красные поля поправь, ' +
+                      "зелёные уже засчитаны.";
+      if(tries >= 2 && data.tips && data.tips[firstBad])
+        tip.innerHTML = "Подсказка: " + data.tips[firstBad];
+    }
+    record();
+    return ok;
+  }
+
+  btn.addEventListener("click", function(){ check(false); });
+  host.addEventListener("keydown", function(ev){
+    if(ev.key === "Enter"){ ev.preventDefault(); check(false); }
+  });
+  sc.textContent = "заполнено верно 0 из " + inputs.length;
+  window.GAPSAPI[id] = {check: check, inputs: inputs};
+  return {check: check};
+};
+
+window.gapRestore = function(saved){
+  var id, api, k, vals, el;
+  for(id in saved){
+    api = window.GAPSAPI[id];
+    if(!api) continue;
+    vals = (saved[id] && saved[id].vals) || {};
+    for(k = 0; k < api.inputs.length; k++){
+      el = api.inputs[k];
+      if(vals[el.getAttribute("data-k")] !== undefined)
+        el.value = vals[el.getAttribute("data-k")];
+    }
+    api.check(true);
+  }
+};
+
+var GPD = {"gp1": {"ans": {"a1": ["180"], "a2": ["32"], "a3": ["148"], "a4": ["74"], "a5": ["106"], "a6": ["74"], "a7": ["106"]}, "tips": {"a1": "Углы при одной стороне дополняют друг друга до развёрнутого.", "a3": "180 − 32.", "a4": "148 : 2.", "a6": "Угол C противолежит углу A."}, "after": "Углы 74°, 106°, 74°, 106°. Сумма 360° — сошлось."}, "gp2": {"ans": {"b1": ["26"], "b2": ["4"], "b3": ["22"], "b4": ["11"], "b5": ["15"], "b6": ["11"], "b7": ["15"]}, "tips": {"b1": "52 : 2.", "b3": "26 − 4.", "b4": "22 : 2.", "b6": "CD противолежит AB."}, "after": "Стороны 11 и 15. Проверка: 2 · (11 + 15) = 52."}, "gp3": {"ans": {"c1": ["10"], "c2": ["8"], "c3": ["6"], "c4": ["24"], "c5": ["8"], "c6": ["10"], "c7": ["27"]}, "tips": {"c1": "20 : 2.", "c2": "16 : 2.", "c5": "BO — половина диагонали BD.", "c6": "OC — половина диагонали AC."}, "after": "P(AOB) = 24, P(BOC) = 27. Разница ровно в стороне параллелограмма."}, "gp4": {"ans": {"d1": ["35"], "d2": ["35"], "d3": ["6"], "d4": ["4"], "d5": ["110"], "d6": ["32"]}, "tips": {"d1": "70 : 2.", "d2": "Этот угол равен <span class='nw'>∠KAD</span>.", "d3": "Стороны против равных углов равны.", "d5": "Соседний с углом A."}, "after": "BK = 6, KC = 4. Отрезок у вершины B равен соседней стороне AB."}};
+for (var _g in GPD){ GAPS(_g, GPD[_g]); }
+
+
+/* ---------- движок тренажёров ---------- */
+function makeTrainer(id, items){
+  var q=document.getElementById(id+"q"), f=document.getElementById(id+"f"),
+      a=document.getElementById(id+"a"), m=document.getElementById(id+"m"),
+      b=document.getElementById(id+"b"), sc=document.getElementById(id+"s");
+  var order=[], perm=[], i=0, ok=0, answered=false;
+
+  function shuffle(n){
+    var arr=[], k, j, t;
+    for(k=0;k<n;k++) arr.push(k);
+    for(k=arr.length-1;k>0;k--){ j=Math.floor(Math.random()*(k+1)); t=arr[k]; arr[k]=arr[j]; arr[j]=t; }
+    return arr;
+  }
+  function norm(s){
+    return String(s).trim().toLowerCase().replace(/\s+/g,"").replace(/−/g,"-").replace(/,/g,".");
+  }
+  function same(x, y){
+    var p=parseFloat(norm(x)), r=parseFloat(norm(y));
+    if(isFinite(p) && isFinite(r)) return Math.abs(p-r) < 1e-9;
+    return norm(x) === norm(y);
+  }
+  function score(){
+    sc.textContent = "вопрос " + Math.min(i + 1, items.length) + " из " + items.length +
+                     " · верно " + ok;
+  }
+
+  function finish(){
+    q.innerHTML=""; f.innerHTML=""; a.innerHTML=""; m.innerHTML="";
+    var pct=Math.round(ok/items.length*100);
+    var word = pct===100 ? "Всё верно — тема закрыта." :
+               pct>=70 ? "Хорошо, но пару мест стоит перечитать." :
+               "Стоит вернуться к теории и пройти ещё раз.";
+    b.innerHTML='<div class="trdone" style="flex:1 1 100%">'+ok+" из "+items.length+
+      " ("+pct+" %) · "+word+'</div><button type="button" class="pri" data-go="1">Пройти заново</button>';
+    sc.textContent="готово";
+    if(window.trFinished) window.trFinished(id, ok, items.length);
+  }
+
+  function show(){
+    answered=false;
+    m.innerHTML=""; b.innerHTML="";
+    var t=items[order[i]];
+    q.innerHTML="<b>"+(i+1)+".</b> "+t.q;
+    f.innerHTML=t.fig || "";
+    f.style.display = t.fig ? "" : "none";
+    if(t.opts){
+      perm = shuffle(t.opts.length);          /* perm[позиция] = номер варианта в банке */
+      var html='<div class="tropts" id="'+id+'o">';
+      for(var k=0;k<perm.length;k++)
+        html+='<button type="button" class="tropt" data-k="'+perm[k]+'">'+t.opts[perm[k]]+'</button>';
+      a.innerHTML = html+"</div>";
+      var box=document.getElementById(id+"o");
+      box.addEventListener("click", function(ev){
+        var el=ev.target; while(el && el!==box && el.className.indexOf("tropt")<0) el=el.parentNode;
+        if(!el || el===box || answered) return;
+        pick(parseInt(el.getAttribute("data-k"),10), box);
+      });
+    } else {
+      a.innerHTML='<div class="trnum"><span>Ответ:</span>'+
+        '<input type="text" id="'+id+'i" inputmode="text" autocomplete="off" '+
+        'autocorrect="off" spellcheck="false" placeholder="число">'+
+        '<button type="button" class="pri" data-check="1">Проверить</button></div>';
+      var inp=document.getElementById(id+"i");
+      inp.addEventListener("keydown", function(ev){ if(ev.key==="Enter") check(); });
+    }
+    score();
+  }
+
+  function verdict(good, t){
+    answered=true;
+    if(good) ok++;
+    i++;
+    m.innerHTML='<div class="v '+(good?"ok":"bad")+'">'+(good?"Верно.":"Неверно.")+"</div>"+
+                '<div class="why">'+t.why+"</div>";
+    b.innerHTML = (i<items.length)
+      ? '<button type="button" class="pri" data-next="1">Дальше</button>'
+      : '<button type="button" class="pri" data-next="1">Показать итог</button>';
+    score();
+  }
+  function pick(k, box){
+    var t=items[order[i]], good = (k === t.ans);
+    var bs=box.querySelectorAll(".tropt");
+    for(var j=0;j<bs.length;j++){
+      var n=parseInt(bs[j].getAttribute("data-k"),10);
+      if(n===t.ans) bs[j].className="tropt right";
+      else if(n===k) bs[j].className="tropt wrong";
+    }
+    box.className="tropts done";
+    verdict(good, t);
+  }
+  function check(){
+    if(answered) return;
+    var t=items[order[i]], inp=document.getElementById(id+"i");
+    var v=(inp.value||"").trim();
+    if(!v){ m.innerHTML='<div class="why">Впиши ответ.</div>'; return; }
+    var good = t.ans.some(function(x){ return same(v, x); });
+    inp.disabled=true;
+    if(!good) m.innerHTML="";
+    verdict(good, t);
+    if(!good) m.innerHTML='<div class="v bad">Неверно. Правильный ответ: '+t.ans[0]+".</div>"+
+                          '<div class="why">'+t.why+"</div>";
+  }
+
+  b.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-next")){ if(i<items.length) show(); else finish(); }
+    if(el.getAttribute && el.getAttribute("data-go")){ start(); }
+  });
+  a.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-check")) check();
+  });
+
+  function start(){ order=shuffle(items.length); i=0; ok=0; show(); }
+  start();
+}
+
+makeTrainer("ts1", [{"q": "Какое определение параллелограмма верное?", "opts": ["четырёхугольник, у которого противолежащие стороны попарно параллельны", "четырёхугольник, у которого противолежащие стороны попарно равны", "четырёхугольник, у которого все углы равны", "четырёхугольник, у которого есть две параллельные стороны"], "ans": 0, "why": "Определение — только про параллельность обеих пар. Равенство сторон это уже свойство, а оно доказывается."}, {"q": "KLMP — параллелограмм. Какая сторона противолежит стороне KL?", "opts": ["MP", "LM", "KP", "KM"], "ans": 0, "why": "Вершины идут по контуру K, L, M, P. Противолежащие стороны — KL и MP, LM и PK. KM — это диагональ, а не сторона."}, {"q": "DEFH — параллелограмм. Какой угол противолежит углу D?", "opts": ["∠F", "∠E", "∠H", "такого нет"], "ans": 0, "why": "Противолежащие вершины в записи DEFH стоят через одну: D и F, E и H."}, {"q": "PQST — параллелограмм. Назови его диагонали.", "opts": ["PS и QT", "PQ и ST", "PT и QS", "PQ и QS"], "ans": 0, "why": "Диагональ соединяет несоседние вершины: P с S и Q с T. PQ, QS, ST, TP — это стороны."}, {"q": "MNPK — параллелограмм. Какие стороны параллельны?", "opts": ["MN ∥ KP и NP ∥ MK", "MN ∥ NP и MK ∥ KP", "MP ∥ NK", "никакие"], "ans": 0, "why": "Параллельны противолежащие стороны: MN и PK, NP и KM. MP и NK — диагонали."}, {"q": "В параллелограмме ABCD углы A и B — какие?", "opts": ["соседние, их сумма 180°", "противолежащие, они равны", "вертикальные", "смежные, их сумма 90°"], "ans": 0, "why": "A и B прилежат к одной стороне AB. Такие углы односторонние при параллельных BC и AD, их сумма <span class='nw'>180°</span>."}, {"q": "Чему равна сумма углов любого выпуклого четырёхугольника?", "opts": ["360°", "180°", "540°", "зависит от фигуры"], "ans": 0, "why": "Диагональ делит четырёхугольник на два треугольника: <span class='nw'>2 · 180° = 360°</span>."}, {"q": "ACNL — параллелограмм. Чему равна сторона AC?", "opts": ["NL", "CN", "LA", "AN"], "ans": 0, "why": "В записи ACNL противолежащие стороны — AC и NL, CN и LA. AN — диагональ."}, {"q": "В четырёхугольнике параллельна только одна пара сторон. Что это?", "opts": ["трапеция", "параллелограмм", "ромб", "любой четырёхугольник"], "ans": 0, "why": "Параллелограмм требует обе пары. Одна пара — это трапеция."}, {"q": "На сколько частей и каких делит параллелограмм одна диагональ?", "opts": ["на два равных треугольника", "на два разных треугольника", "на четыре треугольника", "на два четырёхугольника"], "ans": 0, "why": "Это доказано вместе с теоремой о сторонах: <span class='nw'>△ABD = △CDB</span>."}]);
+makeTrainer("ts2", [{"q": "В параллелограмме ABCD <span class='nw'>∠A = 84°</span>. Найди <span class='nw'>∠C</span> (в градусах).", "ans": ["84"], "why": "Противолежащие углы равны, поэтому <span class='nw'>∠C = 84°</span>."}, {"q": "В параллелограмме ABCD <span class='nw'>∠A = 84°</span>. Найди <span class='nw'>∠B</span>.", "ans": ["96"], "why": "<span class='nw'>180° − 84° = 96°</span> — соседние углы дают <span class='nw'>180°</span>."}, {"q": "В параллелограмме ABCD <span class='nw'>∠C = 70°</span>. Найди <span class='nw'>∠D</span>.", "ans": ["110"], "why": "<span class='nw'>180° − 70° = 110°</span>."}, {"q": "В параллелограмме ABCD <span class='nw'>∠D = 130°</span>. Найди <span class='nw'>∠A</span>.", "ans": ["50"], "why": "A и D прилежат к стороне AD: <span class='nw'>180° − 130° = 50°</span>."}, {"q": "В параллелограмме <span class='nw'>∠A + ∠C = 142°</span>. Найди <span class='nw'>∠A</span>.", "ans": ["71"], "why": "A и C противолежащие, они равны: <span class='nw'>142° : 2 = 71°</span>."}, {"q": "В параллелограмме <span class='nw'>∠A + ∠C = 140°</span>. Найди <span class='nw'>∠B</span>.", "ans": ["110"], "why": "<span class='nw'>∠A = 70°</span>, тогда <span class='nw'>∠B = 180° − 70° = 110°</span>."}, {"q": "В параллелограмме один угол на <span class='nw'>32°</span> больше соседнего. Найди тупой угол.", "ans": ["106"], "why": "Пусть меньший x: <span class='nw'>x + x + 32 = 180</span>, <span class='nw'>x = 74</span>. Тупой: <span class='nw'>74 + 32 = 106°</span>."}, {"q": "В параллелограмме <span class='nw'>∠A = 2∠B</span>. Найди <span class='nw'>∠A</span>.", "ans": ["120"], "why": "<span class='nw'>2∠B + ∠B = 180°</span>, <span class='nw'>∠B = 60°</span>, <span class='nw'>∠A = 120°</span>."}, {"q": "В параллелограмме <span class='nw'>∠A : ∠B = 3 : 7</span>. Найди <span class='nw'>∠B</span>.", "ans": ["126"], "why": "Всего 10 частей на <span class='nw'>180°</span>, одна часть <span class='nw'>18°</span>. <span class='nw'>7 · 18° = 126°</span>."}, {"q": "В параллелограмме <span class='nw'>∠A + ∠B + ∠C = 295°</span>. Найди <span class='nw'>∠A</span>.", "ans": ["115"], "why": "<span class='nw'>∠A + ∠B = 180°</span>, значит <span class='nw'>∠C = 295° − 180° = 115°</span>, а <span class='nw'>∠A = ∠C = 115°</span>."}]);
+makeTrainer("ts3", [{"q": "В параллелограмме ABCD <span class='nw'>AB = 6</span>, <span class='nw'>BC = 3</span>. Найди периметр.", "ans": ["18"], "why": "<span class='nw'>2 · (6 + 3) = 18</span>."}, {"q": "В параллелограмме ABCD <span class='nw'>AB = 2</span>, <span class='nw'>BC = 5</span>. Найди периметр.", "ans": ["14"], "why": "<span class='nw'>2 · (2 + 5) = 14</span>."}, {"q": "В параллелограмме ABCD <span class='nw'>AB = 11</span>, <span class='nw'>BC = 6</span>. Найди периметр.", "ans": ["34"], "why": "<span class='nw'>2 · (11 + 6) = 34</span>."}, {"q": "Периметр параллелограмма равен 36, одна из сторон равна 8. Найди большую сторону.", "ans": ["10"], "why": "<span class='nw'>36 : 2 = 18</span> — сумма соседних сторон, <span class='nw'>18 − 8 = 10</span>."}, {"q": "Периметр параллелограмма равен 48, одна из сторон равна 16. Найди меньшую сторону.", "ans": ["8"], "why": "<span class='nw'>48 : 2 = 24</span>, <span class='nw'>24 − 16 = 8</span>."}, {"q": "Периметр параллелограмма равен 30, стороны относятся как 2 : 3. Найди меньшую сторону.", "ans": ["6"], "why": "<span class='nw'>30 : 2 = 15</span> на 5 частей, одна часть 3. Меньшая: <span class='nw'>2 · 3 = 6</span>."}, {"q": "Периметр параллелограмма равен 54, стороны относятся как 4 : 5. Найди большую сторону.", "ans": ["15"], "why": "<span class='nw'>54 : 2 = 27</span> — это 9 частей, одна часть 3. Большая сторона: <span class='nw'>5 · 3 = 15</span>."}, {"q": "Периметр параллелограмма равен 52, а BC больше AB на 4. Найди AB.", "ans": ["11"], "why": "<span class='nw'>AB + BC = 26</span>, <span class='nw'>2 · AB + 4 = 26</span>, <span class='nw'>AB = 11</span>."}, {"q": "Периметр параллелограмма равен 40, <span class='nw'>AB : BC = 2 : 3</span>. Найди BC.", "ans": ["12"], "why": "<span class='nw'>40 : 2 = 20</span> на 5 частей, одна часть 4. <span class='nw'>BC = 3 · 4 = 12</span>."}, {"q": "Периметр параллелограмма равен 66, одна сторона на 5 больше другой. Найди меньшую сторону.", "ans": ["14"], "why": "<span class='nw'>66 : 2 = 33</span>, <span class='nw'>2x + 5 = 33</span>, <span class='nw'>x = 14</span>."}]);
+makeTrainer("ts4", [{"q": "Диагонали параллелограмма пересекаются в точке O, <span class='nw'>AC = 14</span>. Найди AO.", "ans": ["7"], "why": "Точка O делит диагональ пополам: <span class='nw'>14 : 2 = 7</span>."}, {"q": "Диагонали пересекаются в точке O, <span class='nw'>BO = 5</span>. Найди BD.", "ans": ["10"], "why": "<span class='nw'>BD = 2 · BO = 10</span>."}, {"q": "Диагонали пересекаются в точке O, <span class='nw'>AO = 8</span>. Найди AC.", "ans": ["16"], "why": "<span class='nw'>AC = 2 · 8 = 16</span>."}, {"q": "Диагонали пересекаются в точке O, <span class='nw'>BD = 14</span>. Найди OD.", "ans": ["7"], "why": "<span class='nw'>14 : 2 = 7</span>."}, {"q": "В параллелограмме ABCD <span class='nw'>AC = 14</span>, <span class='nw'>BD = 12</span>, <span class='nw'>AD = 8</span>. Найди периметр треугольника BOC.", "ans": ["21"], "why": "<span class='nw'>BO = 6</span>, <span class='nw'>OC = 7</span>, <span class='nw'>BC = AD = 8</span>. Сумма <span class='nw'>6 + 7 + 8 = 21</span>."}, {"q": "В параллелограмме ABCD <span class='nw'>AC = 20</span>, <span class='nw'>BD = 16</span>, <span class='nw'>CD = 6</span>. Найди периметр треугольника AOB.", "ans": ["24"], "why": "<span class='nw'>AO = 10</span>, <span class='nw'>BO = 8</span>, <span class='nw'>AB = CD = 6</span>. Сумма <span class='nw'>10 + 8 + 6 = 24</span>."}, {"q": "В параллелограмме ABCD <span class='nw'>AC = 36</span>, <span class='nw'>BD = 24</span>, периметр треугольника AOB равен 45. Найди CD.", "ans": ["15"], "why": "<span class='nw'>AO = 18</span>, <span class='nw'>BO = 12</span>, <span class='nw'>AB = 45 − 18 − 12 = 15</span>, <span class='nw'>CD = AB</span>."}, {"q": "В параллелограмме ABCD <span class='nw'>AC = 40</span>, <span class='nw'>BD = 20</span>, периметр треугольника BOC равен 55. Найди AD.", "ans": ["25"], "why": "<span class='nw'>OC = 20</span>, <span class='nw'>BO = 10</span>, <span class='nw'>BC = 55 − 20 − 10 = 25</span>, <span class='nw'>AD = BC</span>."}, {"q": "В параллелограмме ABCD <span class='nw'>BD = 14</span>, <span class='nw'>BC = 12</span>, <span class='nw'>AO = 8</span>. Найди периметр треугольника AOD.", "ans": ["27"], "why": "<span class='nw'>OD = 7</span>, <span class='nw'>AD = BC = 12</span>. Сумма <span class='nw'>8 + 7 + 12 = 27</span>."}, {"q": "В параллелограмме <span class='nw'>AO = 5</span>, <span class='nw'>BO = 4</span>, <span class='nw'>AB = 6</span>. Найди периметр треугольника AOB.", "ans": ["15"], "why": "<span class='nw'>5 + 4 + 6 = 15</span>."}]);
+makeTrainer("ts5", [{"q": "Можно ли утверждать, что ABCD — параллелограмм? <span class='nw'>AB = CD</span> и <span class='nw'>BC = AD</span>.", "opts": ["да, по сторонам (обе пары равны)", "да, по стороне (равна и параллельна)", "да, по диагоналям", "нельзя утверждать"], "ans": 0, "why": "Обе пары противолежащих сторон равны — это признак 1."}, {"q": "Можно ли утверждать, что ABCD — параллелограмм? <span class='nw'>AB ∥ CD</span> и <span class='nw'>AB = CD</span>.", "opts": ["да, по сторонам (обе пары равны)", "да, по стороне (равна и параллельна)", "да, по диагоналям", "нельзя утверждать"], "ans": 1, "why": "Одна пара сторон равна и параллельна — это признак 2."}, {"q": "Можно ли утверждать, что ABCD — параллелограмм? <span class='nw'>AO = OC</span> и <span class='nw'>BO = OD</span>, где O — точка пересечения диагоналей.", "opts": ["да, по сторонам (обе пары равны)", "да, по стороне (равна и параллельна)", "да, по диагоналям", "нельзя утверждать"], "ans": 2, "why": "Диагонали делятся точкой пересечения пополам — это признак 3."}, {"q": "Можно ли утверждать, что ABCD — параллелограмм? <span class='nw'>AC = BD</span>.", "opts": ["да, по сторонам (обе пары равны)", "да, по стороне (равна и параллельна)", "да, по диагоналям", "нельзя утверждать"], "ans": 3, "why": "Равные диагонали бывают и у равнобедренной трапеции. Признака нет."}, {"q": "Можно ли утверждать, что ABCD — параллелограмм? <span class='nw'>AB = CD</span> и <span class='nw'>BC ∥ AD</span>.", "opts": ["да, по сторонам (обе пары равны)", "да, по стороне (равна и параллельна)", "да, по диагоналям", "нельзя утверждать"], "ans": 3, "why": "Равенство у одной пары, параллельность у другой — так устроена равнобедренная трапеция."}, {"q": "Можно ли утверждать, что ABCD — параллелограмм? <span class='nw'>BC ∥ AD</span> и <span class='nw'>BC = AD</span>.", "opts": ["да, по сторонам (обе пары равны)", "да, по стороне (равна и параллельна)", "да, по диагоналям", "нельзя утверждать"], "ans": 1, "why": "Та же пара сторон и равна, и параллельна — признак 2."}, {"q": "Можно ли утверждать, что ABCD — параллелограмм? Диагональ AC делит четырёхугольник на два равных треугольника.", "opts": ["да, по сторонам (обе пары равны)", "да, по стороне (равна и параллельна)", "да, по диагоналям", "нельзя утверждать"], "ans": 3, "why": "Так бывает и у дельтоида, симметричного относительно AC."}, {"q": "Можно ли утверждать, что ABCD — параллелограмм? <span class='nw'>AB ∥ CD</span> и <span class='nw'>BC = AD</span>.", "opts": ["да, по сторонам (обе пары равны)", "да, по стороне (равна и параллельна)", "да, по диагоналям", "нельзя утверждать"], "ans": 3, "why": "Опять разные пары: параллельна одна, равна другая. Вывода нет."}, {"q": "Можно ли утверждать, что ABCD — параллелограмм? <span class='nw'>AB = CD</span>, а накрест лежащие углы при прямых AB, CD и секущей BD равны.", "opts": ["да, по сторонам (обе пары равны)", "да, по стороне (равна и параллельна)", "да, по диагоналям", "нельзя утверждать"], "ans": 1, "why": "Из равенства накрест лежащих углов следует <span class='nw'>AB ∥ CD</span>. Вместе с <span class='nw'>AB = CD</span> это признак 2."}, {"q": "Можно ли утверждать, что ABCD — параллелограмм? Диагонали пересекаются в точке O, причём <span class='nw'>AO = OC</span> и <span class='nw'>BO = OD</span>, но стороны не измеряли.", "opts": ["да, по сторонам (обе пары равны)", "да, по стороне (равна и параллельна)", "да, по диагоналям", "нельзя утверждать"], "ans": 2, "why": "Длины сторон и не нужны: признак 3 работает только по диагоналям."}]);
+makeTrainer("ts6", [{"q": "В параллелограмме <span class='nw'>∠A = 80°</span>, AK — биссектриса. Найди <span class='nw'>∠BAK</span> (в градусах).", "ans": ["40"], "why": "<span class='nw'>80° : 2 = 40°</span>."}, {"q": "Биссектриса угла A пересекает сторону BC в точке K, <span class='nw'>AB = 5</span>. Найди BK.", "ans": ["5"], "why": "Треугольник ABK равнобедренный, поэтому <span class='nw'>BK = AB = 5</span>."}, {"q": "Биссектриса угла A пересекает BC в точке K, <span class='nw'>AB = 6</span>, <span class='nw'>BC = 10</span>. Найди KC.", "ans": ["4"], "why": "<span class='nw'>BK = AB = 6</span>, значит <span class='nw'>KC = 10 − 6 = 4</span>."}, {"q": "Биссектриса угла A делит сторону BC на отрезки 7 и 14, считая от вершины B. Найди периметр параллелограмма.", "ans": ["56"], "why": "<span class='nw'>AB = BK = 7</span>, <span class='nw'>BC = 21</span>, <span class='nw'>P = 2(7 + 21) = 56</span>."}, {"q": "Биссектриса угла A образует со стороной BC угол <span class='nw'>21°</span>. Найди больший угол параллелограмма.", "ans": ["138"], "why": "<span class='nw'>∠A = 2 · 21° = 42°</span>, больший угол — соседний: <span class='nw'>180° − 42° = 138°</span>."}, {"q": "В параллелограмме <span class='nw'>∠A = 100°</span>. Под каким углом пересекаются биссектрисы углов A и B?", "ans": ["90"], "why": "Половины соседних углов дают <span class='nw'>180° : 2 = 90°</span>, значит третий угол треугольника — <span class='nw'>90°</span>."}, {"q": "Биссектриса угла A делит сторону BC пополам, <span class='nw'>AB = 9</span>. Найди BC.", "ans": ["18"], "why": "<span class='nw'>BK = AB = 9</span>, а K — середина, поэтому <span class='nw'>BC = 18</span>."}, {"q": "BH — биссектриса угла B, точка H лежит на AD, <span class='nw'>AH = 5</span>, <span class='nw'>HD = 6</span>. Найди периметр.", "ans": ["32"], "why": "<span class='nw'>AB = AH = 5</span>, <span class='nw'>AD = 11</span>, <span class='nw'>P = 2(5 + 11) = 32</span>."}, {"q": "BH — биссектриса угла B, H на AD, <span class='nw'>AH = 4</span>, <span class='nw'>HD = 1</span>. Найди периметр.", "ans": ["18"], "why": "<span class='nw'>AB = 4</span>, <span class='nw'>AD = 5</span>, <span class='nw'>P = 2(4 + 5) = 18</span>."}, {"q": "AH — биссектриса угла A, H на BC, <span class='nw'>BH = 7</span>, <span class='nw'>HC = 4</span>. Найди периметр.", "ans": ["36"], "why": "<span class='nw'>AB = BH = 7</span>, <span class='nw'>BC = 11</span>, <span class='nw'>P = 2(7 + 11) = 36</span>."}]);
+makeTrainer("ts7", [{"q": "BH — высота параллелограмма ABCD, H на AD, <span class='nw'>∠ABH = 30°</span>, <span class='nw'>AH = 4</span>. Найди AB.", "ans": ["8"], "why": "AH лежит против угла <span class='nw'>30°</span>, значит гипотенуза вдвое больше: <span class='nw'>AB = 8</span>."}, {"q": "BH — высота, H на AD, <span class='nw'>∠A = 30°</span>, <span class='nw'>AB = 10</span>. Найди BH.", "ans": ["5"], "why": "BH лежит против угла <span class='nw'>30°</span>: <span class='nw'>BH = 10 : 2 = 5</span>."}, {"q": "DH — высота, H на BC, <span class='nw'>∠HDC = 30°</span>, <span class='nw'>HC = 7</span>. Найди DC.", "ans": ["14"], "why": "<span class='nw'>DC = 2 · 7 = 14</span>."}, {"q": "В параллелограмме MNPQ <span class='nw'>NH ⊥ MQ</span>, H на MQ, <span class='nw'>MH = 3</span>, <span class='nw'>∠MNH = 30°</span>. Найди MN.", "ans": ["6"], "why": "MH лежит против <span class='nw'>30°</span>, поэтому <span class='nw'>MN = 6</span>."}, {"q": "В параллелограмме MNPQ <span class='nw'>MH = 3</span>, <span class='nw'>HQ = 5</span>, H на MQ. Найди MQ.", "ans": ["8"], "why": "<span class='nw'>MQ = 3 + 5 = 8</span>."}, {"q": "В прямоугольном треугольнике MNH <span class='nw'>∠H = 90°</span> и <span class='nw'>∠MNH = 30°</span>. Найди <span class='nw'>∠M</span>.", "ans": ["60"], "why": "<span class='nw'>180° − 90° − 30° = 60°</span>."}, {"q": "В параллелограмме MNPQ <span class='nw'>∠M = 60°</span>. Найди <span class='nw'>∠N</span>.", "ans": ["120"], "why": "<span class='nw'>180° − 60° = 120°</span>."}, {"q": "BH — высота, <span class='nw'>∠ABH = 30°</span>, <span class='nw'>AH = 4</span>, <span class='nw'>BC = 10</span>. Найди периметр параллелограмма.", "ans": ["36"], "why": "<span class='nw'>AB = 8</span>, <span class='nw'>P = 2(8 + 10) = 36</span>."}]);
+
+/* ---------- тренажёры и пропуски обязательны для отправки ---------- */
+var TRREQ = [
+  {id:"ts1", name:"Тренажёр 1. Элементы параллелограмма"},
+  {id:"ts2", name:"Тренажёр 2. Углы"},
+  {id:"gp1", name:"Пропуски 1. Углы по разности"},
+  {id:"ts3", name:"Тренажёр 3. Стороны и периметр"},
+  {id:"gp2", name:"Пропуски 2. Стороны по периметру"},
+  {id:"ts4", name:"Тренажёр 4. Диагонали"},
+  {id:"gp3", name:"Пропуски 3. Диагонали и периметры треугольников"},
+  {id:"ts6", name:"Тренажёр 6. Биссектриса"},
+  {id:"gp4", name:"Пропуски 4. Биссектриса"},
+  {id:"ts5", name:"Тренажёр 5. Признаки"}
+];
+var TRDONE = {};
+window.trFinished = function(id, ok, total){
+  var prev = TRDONE[id];
+  if(!prev || ok > prev.ok) TRDONE[id] = {ok: ok, total: total};
+  trStatus();
+  if(window.saveWork) saveWork();
+};
+function trPending(){
+  var out = [], k;
+  for(k = 0; k < TRREQ.length; k++){ if(!TRDONE[TRREQ[k].id]) out.push(TRREQ[k]); }
+  return out;
+}
+function trSummary(){
+  var ok = 0, total = 0, parts = [], k, d;
+  for(k = 0; k < TRREQ.length; k++){
+    d = TRDONE[TRREQ[k].id];
+    parts.push({name: TRREQ[k].name, ok: d ? d.ok : null, total: d ? d.total : null});
+    if(d){ ok += d.ok; total += d.total; }
+  }
+  return {ok: ok, total: total, parts: parts, done: TRREQ.length - trPending().length};
+}
+function trReportHtml(){
+  var s = trSummary(), k, pt, h;
+  h = "<h2>Тренажёры и пропуски: " + s.done + " из " + TRREQ.length + " пройдено" +
+      (s.total ? " · верных ответов " + s.ok + " из " + s.total : "") + "</h2><table><tr>" +
+      "<th>Блок</th><th>Результат</th></tr>";
+  for(k = 0; k < s.parts.length; k++){
+    pt = s.parts[k];
+    h += "<tr><td style='text-align:left'>" + pt.name + "</td><td>" +
+         (pt.ok === null ? "не пройден" : pt.ok + " из " + pt.total) + "</td></tr>";
+  }
+  return h + "</table>";
+}
+function trJump(id){
+  var el = document.getElementById(id);
+  if(!el) return;
+  try{ el.scrollIntoView({behavior: "smooth", block: "center"}); }
+  catch(e){ el.scrollIntoView(); }
+  el.classList.add("need");
+  setTimeout(function(){ el.classList.remove("need"); }, 2600);
+}
+function trStatus(){
+  var g = document.getElementById("trgate");
+  if(!g) return;
+  var left = trPending(), s = trSummary(), h, k;
+  if(!left.length){
+    g.className = "trgate ready";
+    g.innerHTML = "<b>Все тренажёры и пропуски пройдены.</b> Верных ответов: " + s.ok +
+                  " из " + s.total + ". Работу можно отправлять.";
+    return;
+  }
+  g.className = "trgate";
+  h = "<b>Пройдено: " + s.done + " из " + TRREQ.length + ".</b> " +
+      "Работа отправится, когда пройдёшь всё. Осталось:<ul>";
+  for(k = 0; k < left.length; k++){
+    h += '<li><a data-jump="' + left[k].id + '">' + left[k].name + "</a></li>";
+  }
+  g.innerHTML = h + "</ul>";
+}
+document.addEventListener("click", function(ev){
+  var el = ev.target;
+  var id = (el && el.getAttribute) ? el.getAttribute("data-jump") : null;
+  if(id) trJump(id);
+});
+trStatus();
+
+/* ---------- память страницы ---------- */
+var SAVE_V = 1;
+var SKEY = "arttich:pgram8:" + (STUDENT_CODE || "-");
+
+function spentMs(){ return spentBefore + (Date.now() - started); }
+
+var CAN_STORE = (function(){
+  try{
+    localStorage.setItem("arttich:probe", "1");
+    localStorage.removeItem("arttich:probe");
+    return true;
+  }catch(e){ return false; }
+})();
+
+var wiping = false;
+function saveWork(){
+  if(wiping) return;
+  try{
+    var box = {v: SAVE_V, at: Date.now(), spent: spentMs(), tr: TRDONE, gaps: (window.GAPSTATE || {}), tasks: {},
+               name: (document.getElementById("name").value || "")};
+    TASKS.forEach(function(t){
+      var x = state[t.id];
+      if(x.tries || x.hints || x.given || x.sel){
+        box.tasks[t.id] = {tries: x.tries, hints: x.hints, done: x.done,
+                           ok: x.ok, given: x.given, sel: x.sel};
+      }
+    });
+    localStorage.setItem(SKEY, JSON.stringify(box));
+    saveNote(box.at);
+  }catch(e){}
+}
+function loadWork(){
+  try{
+    var raw = localStorage.getItem(SKEY);
+    if(!raw) return null;
+    var box = JSON.parse(raw);
+    return (box && box.v === SAVE_V) ? box : null;
+  }catch(e){ return null; }
+}
+function clearWork(){
+  try{ localStorage.removeItem(SKEY); }catch(e){}
+}
+
+function saveNote(at){
+  var n = document.getElementById("savenote");
+  if(!n) return;
+  if(!CAN_STORE){
+    n.textContent = "Этот браузер не разрешает страницам ничего запоминать, поэтому " +
+      "при перезагрузке ответы пропадут. Решай за один заход или отправь работу до того, " +
+      "как закроешь вкладку.";
+    return;
+  }
+  var when = "";
+  if(at){
+    var d = new Date(at);
+    var two = function(x){ return (x < 10 ? "0" : "") + x; };
+    when = " Последнее сохранение: " + two(d.getDate()) + "." + two(d.getMonth() + 1) +
+           ", " + two(d.getHours()) + ":" + two(d.getMinutes()) + ".";
+  }
+  n.innerHTML = "Ответы, пропуски и пройденные тренажёры хранятся в этом браузере: можно закрыть " +
+    "страницу и вернуться позже." + when +
+    " Фото не сохраняются." +
+    (at ? ' <button type="button" id="wipe">Начать заново</button>' : "");
+  var w = document.getElementById("wipe");
+  if(w){
+    w.addEventListener("click", function(){
+      wiping = true;
+      clearWork();
+      location.reload();
+    });
+  }
+}
+
+function restoreTask(t, s){
+  var el = document.getElementById("t" + t.id);
+  if(!el) return;
+  if(t.type === "choice"){
+    if(s.sel){
+      el.querySelectorAll(".opt").forEach(function(l){
+        if(l.dataset.v === s.sel){
+          l.classList.add("sel");
+          var r = l.querySelector("input");
+          if(r) r.checked = true;
+        }
+      });
+    }
+  } else if(s.given){
+    var inp = document.getElementById("in" + t.id);
+    if(inp) inp.value = s.given;
+  }
+  var host = el.querySelector(".hints"), k, h;
+  for(k = 0; k < s.hints && k < t.hints.length; k++){
+    h = document.createElement("div");
+    h.className = "hint";
+    h.innerHTML = "Подсказка " + (k + 1) + ": " + t.hints[k];
+    host.appendChild(h);
+  }
+  if(s.tries > 0){
+    var v = el.querySelector(".verdict");
+    el.classList.add(s.ok ? "ok" : "bad");
+    v.className = "verdict " + (s.ok ? "ok" : "bad");
+    if(s.ok){
+      v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    } else if(s.tries === 1){
+      v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+    } else {
+      v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    }
+    if(s.done) showSol(el, t);
+  }
+}
+
+(function(){
+  var saved = loadWork(), k;
+  if(saved){
+    spentBefore = saved.spent || 0;
+    if(saved.name){
+      var nm = document.getElementById("name");
+      if(nm && !nm.value) nm.value = saved.name;
+    }
+    TASKS.forEach(function(t){
+      var s = saved.tasks && saved.tasks[t.id];
+      if(!s) return;
+      var cur = state[t.id];
+      cur.tries = s.tries || 0; cur.hints = s.hints || 0;
+      cur.done = !!s.done; cur.ok = !!s.ok;
+      cur.given = s.given || ""; cur.sel = s.sel || null;
+      restoreTask(t, cur);
+    });
+    if(saved.tr){ for(k in saved.tr){ TRDONE[k] = saved.tr[k]; } }
+    if(saved.gaps && window.gapRestore) window.gapRestore(saved.gaps);
+    progress();
+    trStatus();
+  }
+  saveNote(saved ? saved.at : 0);
+  var nm = document.getElementById("name");
+  if(nm) nm.addEventListener("change", saveWork);
+  window.addEventListener("beforeunload", saveWork);
+})();
+
+</script>
+</body>
+</html>
