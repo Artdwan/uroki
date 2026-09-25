@@ -1204,6 +1204,7 @@ function makeTrainer(id, items){
       ? '<button type="button" class="pri" data-next="1">Дальше</button>'
       : '<button type="button" class="pri" data-next="1">Показать итог</button>';
     score();
+    snap();
   }
   function pick(k, box){
     var t=items[order[i]], good = (k === t.ans);
@@ -1232,14 +1233,23 @@ function makeTrainer(id, items){
   b.addEventListener("click", function(ev){
     var el=ev.target;
     if(el.getAttribute && el.getAttribute("data-next")){ if(i<items.length) show(); else finish(); }
-    if(el.getAttribute && el.getAttribute("data-go")){ start(); }
+    if(el.getAttribute && el.getAttribute("data-go")){ start(true); }
   });
   a.addEventListener("click", function(ev){
     var el=ev.target;
     if(el.getAttribute && el.getAttribute("data-check")) check();
   });
 
-  function start(){ order=shuffle(items.length); i=0; ok=0; show(); }
+  function snap(){
+    if(window.trProgress) window.trProgress(id, {order: order, i: i, ok: ok});
+  }
+  window.TRAPI = window.TRAPI || {};
+  window.TRAPI[id] = {apply: function(st){
+    if(!st || !st.order || st.order.length !== items.length) return;
+    order = st.order; ok = st.ok || 0; i = st.i || 0;
+    if(i >= items.length){ finish(); } else { show(); }
+  }};
+  function start(fresh){ order=shuffle(items.length); i=0; ok=0; show(); if(fresh) snap(); }
   start();
 }
 
@@ -1328,8 +1338,9 @@ document.addEventListener("click", function(ev){
 trStatus();
 
 /* ---------- память страницы ---------- */
-var SAVE_V = 1;
-var SKEY = "arttich:trigf9:" + (STUDENT_CODE || "-");
+var SAVE_V = 2;
+var SKEY_BASE = "arttich:trigf9:";
+var SKEY = SKEY_BASE + (STUDENT_CODE || "-");
 
 function spentMs(){ return spentBefore + (Date.now() - started); }
 
@@ -1341,33 +1352,67 @@ var CAN_STORE = (function(){
   }catch(e){ return false; }
 })();
 
+var TRPROG = {};
+window.trProgress = function(id, st){ TRPROG[id] = st; saveSoon(); };
+
 var wiping = false;
+var saveTimer = null;
+function saveSoon(){
+  if(saveTimer) clearTimeout(saveTimer);
+  saveTimer = setTimeout(function(){ saveTimer = null; saveWork(); }, 400);
+}
+
 function saveWork(){
   if(wiping) return;
+  if(saveTimer){ clearTimeout(saveTimer); saveTimer = null; }
+  try{ if(window.GAPFLUSH) window.GAPFLUSH(); }catch(e){}
   try{
-    var box = {v: SAVE_V, at: Date.now(), spent: spentMs(), tr: TRDONE, tasks: {},
-               name: (document.getElementById("name").value || "")};
+    var nm = document.getElementById("name");
+    var box = {v: SAVE_V, at: Date.now(), spent: spentMs(), tr: TRDONE,
+               trp: TRPROG, gaps: (window.GAPSTATE || {}), tasks: {},
+               name: (nm ? nm.value : "") || ""};
     TASKS.forEach(function(t){
       var x = state[t.id];
-      if(x.tries || x.hints || x.given || x.sel){
+      var inp = document.getElementById("in" + t.id);
+      var draft = inp ? (inp.value || "") : "";
+      if(x.tries || x.hints || x.given || x.sel || draft){
         box.tasks[t.id] = {tries: x.tries, hints: x.hints, done: x.done,
-                           ok: x.ok, given: x.given, sel: x.sel};
+                           ok: x.ok, given: x.given, sel: x.sel, draft: draft};
       }
     });
     localStorage.setItem(SKEY, JSON.stringify(box));
     saveNote(box.at);
   }catch(e){}
 }
+
+/* работу могли начать по другой ссылке: с кодом ученика или без него */
 function loadWork(){
+  var best = null;
   try{
     var raw = localStorage.getItem(SKEY);
-    if(!raw) return null;
-    var box = JSON.parse(raw);
-    return (box && box.v === SAVE_V) ? box : null;
+    if(raw){
+      var own = JSON.parse(raw);
+      if(own && own.v === SAVE_V) best = own;
+    }
+    var i, k, b;
+    for(i = 0; i < localStorage.length; i++){
+      k = localStorage.key(i);
+      if(!k || k.indexOf(SKEY_BASE) !== 0 || k === SKEY) continue;
+      try{ b = JSON.parse(localStorage.getItem(k)); }catch(e2){ continue; }
+      if(b && b.v === SAVE_V && (!best || (b.at || 0) > (best.at || 0))) best = b;
+    }
   }catch(e){ return null; }
+  return best;
 }
 function clearWork(){
-  try{ localStorage.removeItem(SKEY); }catch(e){}
+  try{
+    var i, k, kill = [];
+    for(i = 0; i < localStorage.length; i++){
+      k = localStorage.key(i);
+      if(k && k.indexOf(SKEY_BASE) === 0) kill.push(k);
+    }
+    kill.forEach(function(x){ localStorage.removeItem(x); });
+  }catch(e){}
 }
 
 function saveNote(at){
@@ -1386,8 +1431,8 @@ function saveNote(at){
     when = " Последнее сохранение: " + two(d.getDate()) + "." + two(d.getMonth() + 1) +
            ", " + two(d.getHours()) + ":" + two(d.getMinutes()) + ".";
   }
-  n.innerHTML = "Ответы и пройденные тренажёры хранятся в этом браузере: можно закрыть " +
-    "страницу и вернуться позже." + when +
+  n.innerHTML = "Ответы, пропуски и пройденные тренажёры сохраняются сами, прямо " +
+    "во время работы: можно свернуть страницу или закрыть её и вернуться позже." + when +
     " Фото не сохраняются." +
     (at ? ' <button type="button" id="wipe">Начать заново</button>' : "");
   var w = document.getElementById("wipe");
@@ -1413,9 +1458,9 @@ function restoreTask(t, s){
         }
       });
     }
-  } else if(s.given){
+  } else {
     var inp = document.getElementById("in" + t.id);
-    if(inp) inp.value = s.given;
+    if(inp) inp.value = s.given || s.draft || "";
   }
   var host = el.querySelector(".hints"), k, h;
   for(k = 0; k < s.hints && k < t.hints.length; k++){
@@ -1454,15 +1499,43 @@ function restoreTask(t, s){
       cur.tries = s.tries || 0; cur.hints = s.hints || 0;
       cur.done = !!s.done; cur.ok = !!s.ok;
       cur.given = s.given || ""; cur.sel = s.sel || null;
-      restoreTask(t, cur);
+      s.draft = s.draft || "";
+      restoreTask(t, s);
     });
     if(saved.tr){ for(k in saved.tr){ TRDONE[k] = saved.tr[k]; } }
+    if(saved.trp){
+      TRPROG = saved.trp;
+      for(k in TRPROG){
+        if(window.TRAPI && window.TRAPI[k]) window.TRAPI[k].apply(TRPROG[k]);
+      }
+    }
+    if(saved.gaps && window.gapRestore) window.gapRestore(saved.gaps);
     progress();
     trStatus();
   }
   saveNote(saved ? saved.at : 0);
-  var nm = document.getElementById("name");
-  if(nm) nm.addEventListener("change", saveWork);
+  var nm2 = document.getElementById("name");
+  if(nm2){
+    nm2.addEventListener("change", saveWork);
+    nm2.addEventListener("input", saveSoon);
+  }
+  /* любой ввод в поле задачи или в пропуск — сохраняем черновик */
+  document.addEventListener("input", function(ev){
+    var el = ev.target;
+    if(!el || !el.tagName || el.tagName !== "INPUT") return;
+    var id = el.id || "", cls = el.className || "";
+    if(id.indexOf("in") === 0 || cls.indexOf("gp") >= 0) saveSoon();
+  }, true);
+  document.addEventListener("change", function(ev){
+    var el = ev.target;
+    if(el && el.type === "radio") saveSoon();
+  }, true);
+  /* на телефоне beforeunload часто не срабатывает — ловим сворачивание вкладки */
+  document.addEventListener("visibilitychange", function(){
+    if(document.visibilityState === "hidden") saveWork();
+  });
+  window.addEventListener("pagehide", saveWork);
+  window.addEventListener("blur", saveSoon);
   window.addEventListener("beforeunload", saveWork);
 })();
 
