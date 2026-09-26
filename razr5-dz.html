@@ -1,0 +1,1599 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Умножение и деление на разрядную единицу — домашнее задание, §5, 5 класс</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:800px;margin:0 auto;padding:16px 14px 60px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+.f-formula{font-size:19px}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.step{margin:6px 0}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.fig{margin:12px 0;text-align:center}
+
+.tr{border:1px solid var(--line);border-radius:12px;padding:14px;margin:16px 0;background:var(--bg)}
+.trhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;
+  margin-bottom:8px}
+.trhead b{font-size:17px}
+.trscore{color:var(--muted);font-size:15px;white-space:nowrap}
+.trq{font-size:17px;margin:8px 0}
+.trfig{text-align:center;margin:8px 0}
+.trfig svg{width:100%;max-width:330px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.tropts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
+.tropt{border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;
+  background:var(--card);font-size:16px;text-align:left;min-height:46px}
+.tropt:hover{border-color:var(--acc)}
+.tropt.right{border-color:var(--ok);background:var(--ok-soft);font-weight:600}
+.tropt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.tropts.done .tropt{cursor:default}
+.trnum{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.trnum input{font:inherit;font-size:18px;padding:9px 11px;border-radius:9px;
+  border:1.5px solid var(--line);background:var(--card);color:var(--ink);max-width:130px}
+.trmsg{font-size:16px;margin-top:8px}
+.trmsg .v{font-weight:700}
+.trmsg .v.ok{color:var(--ok)} .trmsg .v.bad{color:var(--bad)}
+.trmsg .why{color:var(--muted);font-size:15px;margin-top:4px}
+.trbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.trbar button{font-size:15px;padding:8px 13px;min-height:42px}
+.trdone{background:var(--acc-soft);border-radius:10px;padding:12px;font-size:17px;
+  text-align:center;font-weight:600}
+
+.gaps{border:1px solid var(--line);border-radius:12px;padding:14px;margin:16px 0;background:var(--bg)}
+.gaps .ghead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  flex-wrap:wrap;margin-bottom:6px}
+.gaps .ghead b{font-size:17px}
+.gscore{color:var(--muted);font-size:15px;white-space:nowrap}
+.gline{font-size:19px;line-height:2.5;margin:6px 0;text-align:center;
+  white-space:normal;overflow-wrap:break-word}
+.gline.l{text-align:left;font-size:17px;line-height:2.2}
+.gnote{color:var(--muted);font-size:15px;margin:6px 0 0;line-height:1.5}
+input.gp{font:inherit;font-size:17px;text-align:center;padding:3px 4px;border-radius:8px;
+  border:1.8px solid var(--acc);background:var(--card);color:inherit;min-width:38px;
+  vertical-align:baseline}
+@media (max-width:460px){
+  .gline{font-size:17px;line-height:2.3}
+  input.gp{font-size:16px;min-width:34px}
+}
+input.gp.ok{border-color:#137a45;background:#e9f7ef;color:#0f6b3c;font-weight:700}
+input.gp.bad{border-color:#b3261e;background:#fdecea}
+@media (prefers-color-scheme:dark){input.gp.ok{background:#12281d}input.gp.bad{background:#2a1618}}
+.gbar{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px;align-items:center}
+.gbar button{font-size:15px;padding:8px 13px;min-height:42px}
+.gbar button:disabled{opacity:.55;cursor:default}
+.gmsg{font-size:16px;margin-top:8px}
+.gmsg .v{font-weight:700}
+.gmsg .v.ok{color:#137a45} .gmsg .v.bad{color:#b3261e}
+.gtip{color:var(--muted);font-size:15px;margin-top:5px;line-height:1.5}
+.gaps.need{outline:2px solid #c99a2e;outline-offset:3px}
+@media print{input.gp{border:1px solid #999;background:#fff}}
+
+.pw{white-space:nowrap}
+.pw sup{font-size:0.68em;line-height:0;vertical-align:0.62em;padding-left:1px}
+.nw{white-space:nowrap}
+.fx{display:block;background:var(--acc-soft,var(--acc2,#e8f0ff));border:1px solid var(--line);
+  border-radius:10px;padding:12px 13px;margin:12px 0;text-align:center;font-size:21px;
+  line-height:2.2;font-weight:600;white-space:normal;overflow-wrap:break-word}
+.sol .fx,.ex .fx{font-size:19px;margin:9px 0}
+.def{border:1px solid var(--line);border-left:4px solid #2f6bd8;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#eef3fb}
+.def .n{font-size:14px;color:#2f6bd8;font-weight:700;letter-spacing:.4px}
+.rule2{border:1px solid var(--line);border-left:4px solid #c0397a;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdf0f6}
+.rule2 .n{font-size:14px;color:#a02a62;font-weight:700;letter-spacing:.4px}
+.hard{border:1px solid var(--line);border-left:4px solid #7a3fbf;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#f4efff}
+.hard .n{font-size:14px;color:#5f2ea0;font-weight:700;letter-spacing:.4px}
+.warn{border:1px solid var(--line);border-left:4px solid #b3261e;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdecea}
+.warn .n{font-size:14px;color:#b3261e;font-weight:700;letter-spacing:.4px}
+@media (prefers-color-scheme:dark){.rule2{background:#2a1b23}.def{background:#18212f}
+  .hard{background:#221a33}.warn{background:#2a1618}}
+.ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;background:var(--bg)}
+.ex h3{margin-top:0}
+.tohw{font-weight:700;margin:18px 0 0;font-size:18px}
+.tohw span{color:var(--muted);font-weight:400;font-size:15px;display:block;margin-top:3px}
+.small,.mini{color:var(--muted);font-size:15px}
+.fr{display:inline-block;vertical-align:middle;text-align:center;margin:0 3px}
+.fr b{display:block;border-bottom:1.7px solid currentColor;padding:0 6px;font-weight:400;
+  white-space:nowrap}
+.fr i{display:block;font-style:normal;padding:0 6px;white-space:nowrap}
+.opts .opt{font-size:18px;line-height:2.2}
+.task>div:first-child{line-height:2.3}
+.trq,.trmsg .why{line-height:2.2}
+.tropt{line-height:2.1}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.alg{margin:10px 0 0;padding-left:22px}
+.alg li{margin:6px 0;font-size:17px}
+.pam h3{font-size:18px;margin:18px 0 2px}
+.pam h3:first-of-type{margin-top:10px}
+.fgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));margin:9px 0}
+.fbox{border:1px solid var(--line);border-radius:12px;padding:9px 12px 11px;background:var(--bg)}
+.fbox h4{margin:0 0 3px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.fbox p{margin:6px 0 0;line-height:1.6;font-size:16px}
+.fbox p.small{font-size:15px}
+.ff{font-size:20px;line-height:2.3;text-align:center;margin:6px 0;font-weight:600;
+  white-space:normal;overflow-wrap:break-word}
+.fbox .ff{font-size:18px;line-height:2.1}
+.trnav{margin-top:12px;display:flex;gap:9px;flex-wrap:wrap}
+.trgate{margin-top:12px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;
+  font-size:16px;background:var(--bg)}
+.trgate.ready{border-color:#1f8a54;background:#e9f7ef}
+.trgate ul{margin:6px 0 0;padding-left:20px}
+.trgate li{margin:3px 0}
+.trgate a{color:var(--acc);text-decoration:none;border-bottom:1px solid currentColor;cursor:pointer}
+@media (prefers-color-scheme:dark){.trgate.ready{background:#12281d}}
+.tr.need,.gaps.need{outline:2px solid #c99a2e;outline-offset:3px}
+.savenote{margin-top:9px;color:var(--muted);font-size:14.5px;line-height:1.45}
+.savenote button{font-size:14px;padding:5px 10px;min-height:34px;margin-left:8px}
+.sheet .f-formula{margin:5px 0;font-size:14.5px;line-height:2}
+@media print{
+  .sheet>.meta{display:none}
+  .sheet h2{font-size:18px;margin:0 0 5px}
+  .sheet .f-formula{font-size:11.5px;line-height:1.8;margin:2px 0}
+  .sheet .fr{font-size:10.5px;vertical-align:middle}
+}
+
+.fig{text-align:center;margin:12px 0}
+.fig svg{width:100%;max-width:430px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.figrow{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  margin:12px 0}
+.figrow .fig{margin:0}
+.figrow .fig svg{max-width:100%}
+.def>div+div{margin-top:4px}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:12px 0}
+table.napr{border-collapse:collapse;width:100%;min-width:430px;font-size:16px}
+table.napr th,table.napr td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+table.napr th{background:var(--bg);font-weight:700;font-size:15px}
+table.napr td.r{color:#137a45;font-weight:700}
+table.napr td.l{color:#b3261e;font-weight:700}
+
+.live{border:1px solid var(--line);border-radius:12px;padding:12px 13px 13px;margin:14px 0;
+  background:var(--bg)}
+.live h4{margin:0 0 3px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.live .lhint{color:var(--muted);font-size:15px;margin:0 0 9px;line-height:1.5}
+.livebar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.livebar button{font-size:15px;padding:7px 10px;min-height:40px;border-radius:9px;
+  border:1.6px solid var(--line);background:var(--card);color:inherit;cursor:pointer;
+  line-height:1.2;font-variant-numeric:tabular-nums}
+.livebar button.on{border-color:var(--acc);background:var(--acc);color:#fff;font-weight:600}
+.livebar button.dv.on{border-color:#7a3fbf;background:#7a3fbf}
+.livefig{text-align:center}
+.livefig svg{width:100%;max-width:430px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.livemsg{font-size:16px;line-height:1.6;margin-top:9px;min-height:46px}
+.livemsg .v{font-weight:700}
+.livemsg .num{display:block;color:var(--muted);font-size:15px;margin-top:3px}
+.livectl{display:grid;gap:7px;margin-top:11px}
+.livectl label{display:flex;align-items:center;gap:9px;font-size:15px;color:var(--muted)}
+.livectl input[type=range]{flex:1;min-width:0}
+.livectl .v{font-variant-numeric:tabular-nums;min-width:78px;text-align:right;
+  color:inherit;font-weight:600}
+
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+@media print{
+  body{background:#fff}
+  .bar{display:none !important}
+  .wrap>*{display:none !important}
+  .wrap>.sheet{display:block !important;border:none;margin:0;padding:0}
+  .sheet{font-size:13px}
+  .sheet h2{font-size:18px}
+  .sheet th,.sheet td{padding:4px 5px;font-size:12px}
+  @page{size:A4;margin:12mm}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card top">
+  <h1>Умножение и деление на разрядную единицу</h1>
+  <div class="meta">Математика · 5 класс · §5 · живой чертёж, 6 тренажёров,
+  4 блока с пропусками, 18 задач</div>
+  <label class="f" for="name">Имя и фамилия</label>
+  <input type="text" id="name" placeholder="напиши, как в журнале" autocapitalize="words" spellcheck="false">
+  <div class="savenote" id="savenote"></div>
+  <div class="note" style="margin-top:14px">
+    <b>Как работать.</b> Страница идёт по кругу: короткая порция теории — разобранный
+    пример — тренажёр или блок с пропусками — задачи. Не перепрыгивай вперёд.
+    <div style="margin-top:8px">Вся тема — это один вопрос: <b>куда и на сколько цифр
+    переедет запятая</b>. Сами цифры не меняются.</div>
+    <div style="margin-top:8px">Умножаем на 10, 100, 1000 — вправо. Умножаем на
+    0,1; 0,01; 0,001 — влево. Делим — наоборот.</div>
+    <div style="margin-top:8px">Ответы пиши с запятой и без единиц измерения:
+    248,6 или 3247. Пробелы внутри числа не нужны.</div>
+    <div style="margin-top:8px"><b>Пять тренажёров и все четыре блока с пропусками
+    нужно пройти до конца</b> — без этого работа не отправится. Тренажёр 6 —
+    дополнительный, в отправку он не входит.</div>
+  </div>
+</div>
+
+<div class="card pam">
+
+<h2>Памятка: всё, что нужно для этой темы</h2>
+<div class="meta">Сюда возвращаться, когда застрял. Ниже то же самое, но подробно
+и с разобранными примерами.</div>
+<h3>О чём тема</h3>
+<div class="fgrid"><div class="fbox"><h4>Разрядные единицы</h4><p>Это 10, 100, 1000 и так далее, а также 0,1; 0,01; 0,001.</p><p class="small">В первых считают нули, во вторых — знаки после запятой.</p></div><div class="fbox"><h4>Всё сводится к одному</h4><p>Ни столбика, ни деления уголком: запятая просто переезжает на несколько цифр.</p><p class="small">Сами цифры при этом не меняются.</p></div><div class="fbox"><h4>Если цифр не хватает</h4><div class="ff"><span class='nw'>1,234 · 10 000</span> = <span class='nw'>12 340</span></div><p>Дописываем нули: справа при движении вправо, слева при движении влево.</p><p class="small"><span class='nw'>24 : 100 = 0,24</span> — слева появился нуль целых.</p></div></div>
+<h3>Куда едет запятая</h3>
+<div class="fgrid"><div class="fbox"><h4>Умножение на 10, 100, 1000</h4><p>Запятая едет <b>вправо</b> на столько цифр, сколько нулей.</p><p class="small"><span class='nw'>4,256 · 100 = 425,6</span> — два нуля, два шага.</p></div><div class="fbox"><h4>Умножение на 0,1; 0,01; 0,001</h4><p>Запятая едет <b>влево</b> на столько цифр, сколько знаков после запятой.</p><p class="small"><span class='nw'>145,6 · 0,1 = 14,56</span> — один знак, один шаг.</p></div><div class="fbox"><h4>Деление на 10, 100, 1000</h4><p>Это то же самое, что умножение на 0,1; 0,01; 0,001 — запятая <b>влево</b>.</p><p class="small"><span class='nw'>123,45 : 100 = 1,2345</span>.</p></div><div class="fbox"><h4>Деление на 0,1; 0,01; 0,001</h4><p>Это то же самое, что умножение на 10; 100; 1000 — запятая <b>вправо</b>.</p><p class="small"><span class='nw'>1,234 : 0,001 = 1234</span>.</p></div></div>
+<div class="fig"><svg viewBox="0 0 420 172"><rect x="0" y="0" width="420" height="172" rx="12" fill="#ffffff"/><line x1="30.0" y1="58.0" x2="390.0" y2="58.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><text x="210.0" y="32.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">запятая</text><line x1="224.0" y1="50.0" x2="374.0" y2="50.0" stroke="#137a45" stroke-width="2.4" stroke-linecap="round"/><path d="M 374.0 50.0 L 365.5 52.8 L 365.5 47.2 z" fill="#137a45"/><text x="299.0" y="42.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">вправо</text><line x1="196.0" y1="50.0" x2="46.0" y2="50.0" stroke="#b3261e" stroke-width="2.4" stroke-linecap="round"/><path d="M 46.0 50.0 L 54.5 47.2 L 54.5 52.8 z" fill="#b3261e"/><text x="121.0" y="42.0" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">влево</text><text x="299.0" y="80.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">· 10, · 100, · 1000</text><text x="299.0" y="100.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">: 0,1, : 0,01, : 0,001</text><text x="121.0" y="80.0" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">· 0,1, · 0,01, · 0,001</text><text x="121.0" y="100.0" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">: 10, : 100, : 1000</text><circle cx="210.0" cy="58.0" r="5.0" fill="#15181e"/><text x="210" y="166" font-size="14" fill="#5b6270" text-anchor="middle">одна картинка вместо четырёх правил</text></svg></div>
+<h3>Где это нужно</h3>
+<div class="fgrid"><div class="fbox"><h4>Во сколько раз</h4><p>Запятая вправо на 1, 2, 3 цифры — число выросло в 10, 100, 1000 раз.</p><p class="small">Влево — во столько же раз уменьшилось.</p></div><div class="fbox"><h4>Единицы измерения</h4><div class="ff"><span class='nw'>3,247 км</span> = <span class='nw'>3247 м</span></div><p>Переход к меньшей единице — умножение, к большей — деление.</p><p class="small">км → м это <span class='nw'>· 1000</span>, г → кг это <span class='nw'>: 1000</span>.</p></div><div class="fbox"><h4>Тысячи и миллионы</h4><div class="ff"><span class='nw'>0,2 млн</span> = <span class='nw'>200 000</span></div><p>«тыс.» — это <span class='nw'>· 1000</span>, «млн» — <span class='nw'>· 1 000 000</span>, «млрд» — <span class='nw'>· 1 000 000 000</span>.</p><p class="small">Слово заменяем на множитель и переносим запятую.</p></div></div>
+
+<div class="scroll"><table class="wrap-t napr">
+<tr><th>Перенос запятой</th><th>на 10, 100, 1000</th><th>на 0,1; 0,01; 0,001</th></tr>
+<tr><th>Действие</th><th>на количество нулей</th><th>на количество знаков после запятой</th></tr>
+<tr><td>Умножение</td><td class="r">вправо →</td><td class="l">← влево</td></tr>
+<tr><td>Деление</td><td class="l">← влево</td><td class="r">вправо →</td></tr>
+</table></div>
+
+</div>
+
+<div class="card">
+
+<h2>1. Откуда берётся правило</h2>
+<p>Разрядные единицы — это числа 10, 100, 1000 и так далее, а ещё 0,1; 0,01; 0,001.
+Умножать и делить на них можно вообще без вычислений. Сначала посмотрим, почему.</p>
+<div class="ex"><h3>Пример 1</h3>
+<p>Найти значение выражения <span class='nw'>4,256 · 100</span>.</p>
+<div class='step'>1. Запишем дробь как обыкновенную: <span class='nw'>4,256 = 4<span class='fr'><b>256</b><i>1000</i></span></span>.</div><div class='step'>2. Умножим на 100: <span class='nw'>4<span class='fr'><b>256</b><i>1000</i></span> · 100 = 400 + <span class='fr'><b>256</b><i>10</i></span></span>.</div><div class='step'>3. <span class='nw'><span class='fr'><b>256</b><i>10</i></span> = 25,6</span>, значит всего <span class='nw'>425,6</span>.</div><div class='fx'><span class='nw'>4,256 · 100</span> = <span class='nw'>425,6</span></div><div class='step mini'>Сравни исходное число и ответ: цифры 4, 2, 5, 6 остались на месте, переехала только запятая.</div>
+</div>
+<div class="fig"><svg viewBox="0 0 430 218"><rect x="0" y="0" width="430" height="218" rx="12" fill="#ffffff"/><text x="180.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">4</text><text x="203.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">2</text><text x="226.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">5</text><text x="249.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">6</text><text x="192.0" y="99.0" font-size="30" fill="#5b6270" text-anchor="middle" font-weight="600">,</text><text x="192.0" y="120.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">было</text><text x="238.0" y="99.0" font-size="30" fill="#2f6bd8" text-anchor="middle" font-weight="600">,</text><text x="238.0" y="120.0" font-size="14" fill="#2f6bd8" text-anchor="middle" font-weight="600">стало</text><path d="M 192.0 68.0 Q 215.0 34.0 238.0 68.0" fill="none" stroke="#2f6bd8" stroke-width="2.2"/><path d="M 238.0 68.0 L 229.0 59.0 L 229.0 71.0 z" fill="#2f6bd8"/><text x="215.0" y="28.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">на 2 вправо</text><line x1="163.0" y1="136.0" x2="267.0" y2="136.0" stroke="#dfe3ea" stroke-width="1.6" stroke-linecap="round"/><text x="215.0" y="166.0" font-size="24" fill="#137a45" text-anchor="middle" font-weight="600">= 425,6</text><text x="215" y="212" font-size="14" fill="#5b6270" text-anchor="middle">4,256 · 100 = 425,6</text></svg></div>
+<div class="def"><div class="n">ВЫВОД</div>
+Чтобы умножить десятичную дробь на 10, 100, 1000 и так далее, нужно перенести запятую
+в этой дроби <b>вправо</b> на 1, 2, 3 и так далее цифры — на столько, сколько нулей
+в разрядной единице.</div>
+
+</div>
+
+<div class="card">
+
+<h2>Живой чертёж: куда поедет запятая</h2>
+<div class="meta">Двенадцать кнопок — все случаи темы. Синие это умножение,
+фиолетовые деление. Ползунок меняет число. Внизу написано, почему шагов именно
+столько.</div>
+<div class="live" id="rz1"><h4>Запятая переезжает</h4><p class="lhint">Нажми пару кнопок подряд и заметь: · 10 и : 0,1 двигают запятую одинаково.</p><div class="livebar" id="rz1b"></div><div class="livefig" id="rz1f"></div><div class="livemsg" id="rz1m"></div><div class="livectl" id="rz1c"></div></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts1"><div class="trhead"><b>Тренажёр 1. Куда едет запятая</b><span class="trscore" id="ts1s"></span></div><div class="meta">Десять действий. Сначала посчитай нули или знаки после запятой.</div><div class="trq" id="ts1q"></div><div class="trfig" id="ts1f"></div><div id="ts1a"></div><div class="trmsg" id="ts1m"></div><div class="trbar" id="ts1b"></div></div>
+</div>
+
+<div class="card">
+
+<h2>2. Умножение на 10, 100, 1000</h2>
+<div class='fx'><span class='nw'>считаем нули</span> → <span class='nw'>столько шагов вправо</span></div>
+<div class="ex"><h3>Пример 2</h3>
+<p>Одно и то же число умножаем на разные разрядные единицы:</p>
+<div class='step'><span class='nw'>1,234 · 10</span> = <span class='nw'>12,34</span> — один нуль, один шаг.</div><div class='step'><span class='nw'>1,234 · 100</span> = <span class='nw'>123,4</span> — два нуля, два шага.</div><div class='step'><span class='nw'>1,234 · 1000</span> = <span class='nw'>1234</span> — три шага, запятая ушла в самый конец и её больше не пишут.</div><div class='step'><span class='nw'>1,234 · 10 000</span> = <span class='nw'>12 340</span> — четыре шага, а цифр не хватило: дописали нуль.</div>
+</div>
+<div class="figrow"><div class="fig"><svg viewBox="0 0 300 197"><rect x="0" y="0" width="300" height="197" rx="12" fill="#ffffff"/><text x="115.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">1</text><text x="138.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">2</text><text x="161.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">3</text><text x="184.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">4</text><text x="127.0" y="99.0" font-size="30" fill="#5b6270" text-anchor="middle" font-weight="600">,</text><text x="127.0" y="120.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">было</text><text x="196.0" y="99.0" font-size="30" fill="#2f6bd8" text-anchor="middle" font-weight="600">,</text><text x="196.0" y="120.0" font-size="14" fill="#2f6bd8" text-anchor="middle" font-weight="600">стало</text><path d="M 127.0 68.0 Q 161.5 34.0 196.0 68.0" fill="none" stroke="#2f6bd8" stroke-width="2.2"/><path d="M 196.0 68.0 L 187.0 59.0 L 187.0 71.0 z" fill="#2f6bd8"/><text x="161.5" y="28.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">на 3 вправо</text><line x1="98.0" y1="136.0" x2="202.0" y2="136.0" stroke="#dfe3ea" stroke-width="1.6" stroke-linecap="round"/><text x="150.0" y="166.0" font-size="24" fill="#137a45" text-anchor="middle" font-weight="600">= 1234</text><text x="150" y="191" font-size="14" fill="#5b6270" text-anchor="middle">1,234 · 1000 = 1234</text></svg></div><div class="fig"><svg viewBox="0 0 300 220"><rect x="0" y="0" width="300" height="220" rx="12" fill="#ffffff"/><text x="104.0" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">1</text><text x="127.0" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">2</text><text x="150.0" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">3</text><text x="173.0" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">4</text><text x="196.0" y="90.0" font-size="27" fill="#e0952a" text-anchor="middle" font-weight="600">0</text><text x="115.5" y="99.0" font-size="30" fill="#5b6270" text-anchor="middle" font-weight="600">,</text><text x="115.5" y="120.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">было</text><text x="207.5" y="99.0" font-size="30" fill="#2f6bd8" text-anchor="middle" font-weight="600">,</text><text x="207.5" y="120.0" font-size="14" fill="#2f6bd8" text-anchor="middle" font-weight="600">стало</text><path d="M 115.5 68.0 Q 161.5 34.0 207.5 68.0" fill="none" stroke="#2f6bd8" stroke-width="2.2"/><path d="M 207.5 68.0 L 198.5 59.0 L 198.5 71.0 z" fill="#2f6bd8"/><text x="161.5" y="28.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">на 4 вправо</text><line x1="86.5" y1="136.0" x2="213.5" y2="136.0" stroke="#dfe3ea" stroke-width="1.6" stroke-linecap="round"/><text x="150.0" y="166.0" font-size="24" fill="#137a45" text-anchor="middle" font-weight="600">= 12340</text><text x="150.0" y="190.0" font-size="14" fill="#e0952a" text-anchor="middle" font-weight="600">оранжевые нули дописали</text><text x="150" y="214" font-size="14" fill="#5b6270" text-anchor="middle">1,234 · 10 000 = 12 340</text></svg></div></div>
+<div class="warn"><div class="n">ГЛАВНАЯ ОШИБКА ТЕМЫ</div>
+Приписать нули вместо переноса запятой: <span class='nw'>0,23 · 10</span> это не 23,
+а 2,3. Нули дописывают только тогда, когда запятой некуда ехать.</div>
+
+</div>
+
+<div class="card">
+<div class="tr" id="ts2"><div class="trhead"><b>Тренажёр 2. Умножение на 10, 100, 1000</b><span class="trscore" id="ts2s"></span></div><div class="meta">Десять примеров. Где цифр не хватает — дописывай нули.</div><div class="trq" id="ts2q"></div><div class="trfig" id="ts2f"></div><div id="ts2a"></div><div class="trmsg" id="ts2m"></div><div class="trbar" id="ts2b"></div></div>
+</div>
+
+<div class="card">
+<div class="gaps" id="gp1"><div class="ghead"><b>Пропуски 1. Считаем шаги</b><span class="gscore" id="gp1s"></span></div><div class="meta">Шесть пропусков. Одно число, два разных множителя.</div><div class="gline">Дано: <span class='nw'>4,256 · 100</span></div><div class="gline">в числе 100 нулей: <input class="gp" data-k="a1" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a1"></div><div class="gline">значит запятая едет вправо на <input class="gp" data-k="a2" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a2"> цифры</div><div class="gline"><span class='nw'>4,256 · 100 = <input class="gp" data-k="a3" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a3"></span></div><div class="gnote">Теперь то же число, но умножаем на 0,01.</div><div class="gline">знаков после запятой в числе 0,01: <input class="gp" data-k="a4" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a4"></div><div class="gline">значит запятая едет влево на <input class="gp" data-k="a5" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a5"> цифры</div><div class="gline"><span class='nw'>4,256 · 0,01 = <input class="gp" data-k="a6" size="6" style="width:90px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a6"></span></div><div class="gnote">Числа пиши с запятой и без пробелов: 0,04256.</div><div class="gbar"><button type="button" class="pri" id="gp1go">Проверить</button></div><div class="gmsg" id="gp1m"></div><div class="gtip" id="gp1t"></div></div>
+</div>
+<div id="tasks1"></div>
+
+<div class="card">
+
+<h2>3. Умножение на 0,1; 0,01; 0,001</h2>
+<p>Проверим на обыкновенных дробях, как и в начале:</p>
+<div class='step'><span class='nw'>145,6 · 0,1</span> = <span class='nw'>145<span class='fr'><b>6</b><i>10</i></span> · <span class='fr'><b>1</b><i>10</i></span></span> = <span class='nw'><span class='fr'><b>1456</b><i>100</i></span></span> = <span class='nw'>14,56</span>.</div><div class='step'><span class='nw'>145,6 · 0,01</span> = <span class='nw'><span class='fr'><b>1456</b><i>1000</i></span></span> = <span class='nw'>1,456</span>.</div>
+<div class="def"><div class="n">ВЫВОД</div>
+Чтобы умножить десятичную дробь на 0,1; 0,01; 0,001 и так далее, нужно перенести
+запятую <b>влево</b> на 1, 2, 3 и так далее цифры — на столько, сколько знаков после
+запятой в разрядной единице.</div>
+<div class="fig"><svg viewBox="0 0 430 218"><rect x="0" y="0" width="430" height="218" rx="12" fill="#ffffff"/><text x="180.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">1</text><text x="203.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">4</text><text x="226.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">5</text><text x="249.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">6</text><text x="238.0" y="99.0" font-size="30" fill="#5b6270" text-anchor="middle" font-weight="600">,</text><text x="238.0" y="120.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">было</text><text x="215.0" y="99.0" font-size="30" fill="#2f6bd8" text-anchor="middle" font-weight="600">,</text><text x="215.0" y="138.0" font-size="14" fill="#2f6bd8" text-anchor="middle" font-weight="600">стало</text><path d="M 238.0 68.0 Q 226.5 34.0 215.0 68.0" fill="none" stroke="#2f6bd8" stroke-width="2.2"/><path d="M 215.0 68.0 L 224.0 59.0 L 224.0 71.0 z" fill="#2f6bd8"/><text x="226.5" y="28.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">на 1 влево</text><line x1="163.0" y1="154.0" x2="267.0" y2="154.0" stroke="#dfe3ea" stroke-width="1.6" stroke-linecap="round"/><text x="215.0" y="184.0" font-size="24" fill="#137a45" text-anchor="middle" font-weight="600">= 14,56</text><text x="215" y="212" font-size="14" fill="#5b6270" text-anchor="middle">145,6 · 0,1 = 14,56</text></svg></div>
+<div class="ex"><h3>Пример 3</h3>
+<div class='step'><span class='nw'>1,234 · 0,1</span> = <span class='nw'>0,1234</span>.</div><div class='step'><span class='nw'>1,234 · 0,01</span> = <span class='nw'>0,01234</span>.</div><div class='step'><span class='nw'>1,234 · 0,001</span> = <span class='nw'>0,001234</span>.</div><div class='step'><span class='nw'>1,234 · 0,0001</span> = <span class='nw'>0,0001234</span> — нули дописали слева.</div>
+</div>
+<div class="tohw">Задания 1-2<span>Шесть примеров на умножение.</span></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts3"><div class="trhead"><b>Тренажёр 3. Умножение на 0,1; 0,01; 0,001</b><span class="trscore" id="ts3s"></span></div><div class="meta">Десять примеров. Запятая едет влево.</div><div class="trq" id="ts3q"></div><div class="trfig" id="ts3f"></div><div id="ts3a"></div><div class="trmsg" id="ts3m"></div><div class="trbar" id="ts3b"></div></div>
+</div>
+<div id="tasks2"></div>
+
+<div class="card">
+
+<h2>4. Деление на 10, 100, 1000</h2>
+<p>Разделить на 10 — это то же самое, что умножить на <span class='fr'><b>1</b><i>10</i></span>,
+то есть на 0,1. Значит правило уже известно.</p>
+<div class='fx'><span class='nw'>делим на 10, 100, 1000</span> ⟺ <span class='nw'>умножаем на 0,1; 0,01; 0,001</span></div>
+<div class="def"><div class="n">ВЫВОД</div>
+При делении на 10, 100, 1000 запятая едет <b>влево</b> на столько цифр, сколько нулей
+в делителе.</div>
+<div class="ex"><h3>Пример 4</h3>
+<div class='step'><span class='nw'>123,45 : 10</span> = <span class='nw'>12,345</span>.</div><div class='step'><span class='nw'>123,45 : 100</span> = <span class='nw'>1,2345</span>.</div><div class='step'><span class='nw'>123,45 : 1000</span> = <span class='nw'>0,12345</span> — слева дописали нуль целых.</div>
+</div>
+<div class="fig"><svg viewBox="0 0 430 238"><rect x="0" y="0" width="430" height="238" rx="12" fill="#ffffff"/><text x="192.0" y="90.0" font-size="27" fill="#e0952a" text-anchor="middle" font-weight="600">0</text><text x="215.0" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">2</text><text x="238.0" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">4</text><text x="249.5" y="99.0" font-size="30" fill="#5b6270" text-anchor="middle" font-weight="600">,</text><text x="249.5" y="120.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">было</text><text x="203.5" y="99.0" font-size="30" fill="#2f6bd8" text-anchor="middle" font-weight="600">,</text><text x="203.5" y="120.0" font-size="14" fill="#2f6bd8" text-anchor="middle" font-weight="600">стало</text><path d="M 249.5 68.0 Q 226.5 34.0 203.5 68.0" fill="none" stroke="#2f6bd8" stroke-width="2.2"/><path d="M 203.5 68.0 L 212.5 59.0 L 212.5 71.0 z" fill="#2f6bd8"/><text x="226.5" y="28.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">на 2 влево</text><line x1="174.5" y1="136.0" x2="255.5" y2="136.0" stroke="#dfe3ea" stroke-width="1.6" stroke-linecap="round"/><text x="215.0" y="166.0" font-size="24" fill="#137a45" text-anchor="middle" font-weight="600">= 0,24</text><text x="215.0" y="190.0" font-size="14" fill="#e0952a" text-anchor="middle" font-weight="600">оранжевые нули дописали</text><text x="215" y="214" font-size="14" fill="#5b6270" text-anchor="middle">· 0,01 и : 100 — одно и то же</text><text x="215" y="232" font-size="14" fill="#5b6270" text-anchor="middle">у целого числа 24 запятую сначала ставят в конце</text></svg></div>
+<div class="tohw">Задание 3<span>Три примера на деление.</span></div>
+</div>
+
+<div class="card">
+
+<h2>5. Деление на 0,1; 0,01; 0,001</h2>
+<p>Разделить на 0,1 — это умножить на 10. Проверить легко: сколько раз 0,1 помещается
+в единице? Ровно 10 раз.</p>
+<div class='fx'><span class='nw'>делим на 0,1; 0,01; 0,001</span> ⟺ <span class='nw'>умножаем на 10; 100; 1000</span></div>
+<div class="def"><div class="n">ВЫВОД</div>
+При делении на 0,1; 0,01; 0,001 запятая едет <b>вправо</b> на столько цифр, сколько
+знаков после запятой в делителе.</div>
+<div class="ex"><h3>Пример 5</h3>
+<div class='step'><span class='nw'>1,234 : 0,1</span> = <span class='nw'>12,34</span>.</div><div class='step'><span class='nw'>1,234 : 0,01</span> = <span class='nw'>123,4</span>.</div><div class='step'><span class='nw'>1,234 : 0,001</span> = <span class='nw'>1234</span>.</div><div class='step mini'>Деление здесь увеличивает число — это не ошибка. Делим на число меньше единицы, поэтому результат больше делимого.</div>
+</div>
+<div class="fig"><svg viewBox="0 0 430 218"><rect x="0" y="0" width="430" height="218" rx="12" fill="#ffffff"/><text x="180.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">1</text><text x="203.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">2</text><text x="226.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">3</text><text x="249.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">4</text><text x="192.0" y="99.0" font-size="30" fill="#5b6270" text-anchor="middle" font-weight="600">,</text><text x="192.0" y="120.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">было</text><text x="261.0" y="99.0" font-size="30" fill="#2f6bd8" text-anchor="middle" font-weight="600">,</text><text x="261.0" y="120.0" font-size="14" fill="#2f6bd8" text-anchor="middle" font-weight="600">стало</text><path d="M 192.0 68.0 Q 226.5 34.0 261.0 68.0" fill="none" stroke="#2f6bd8" stroke-width="2.2"/><path d="M 261.0 68.0 L 252.0 59.0 L 252.0 71.0 z" fill="#2f6bd8"/><text x="226.5" y="28.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">на 3 вправо</text><line x1="163.0" y1="136.0" x2="267.0" y2="136.0" stroke="#dfe3ea" stroke-width="1.6" stroke-linecap="round"/><text x="215.0" y="166.0" font-size="24" fill="#137a45" text-anchor="middle" font-weight="600">= 1234</text><text x="215" y="212" font-size="14" fill="#5b6270" text-anchor="middle">· 1000 и : 0,001 — одно и то же</text></svg></div>
+<div class="rule2"><div class="n">ВСЯ ТЕМА В ОДНОЙ ТАБЛИЦЕ</div>
+Запомнить надо не четыре правила, а одно: куда едет запятая.</div>
+
+<div class="scroll"><table class="wrap-t napr">
+<tr><th>Перенос запятой</th><th>на 10, 100, 1000</th><th>на 0,1; 0,01; 0,001</th></tr>
+<tr><th>Действие</th><th>на количество нулей</th><th>на количество знаков после запятой</th></tr>
+<tr><td>Умножение</td><td class="r">вправо →</td><td class="l">← влево</td></tr>
+<tr><td>Деление</td><td class="l">← влево</td><td class="r">вправо →</td></tr>
+</table></div>
+
+
+</div>
+
+<div class="card">
+<div class="tr" id="ts4"><div class="trhead"><b>Тренажёр 4. Деление</b><span class="trscore" id="ts4s"></span></div><div class="meta">Десять примеров. Деление на 0,1 увеличивает число — это нормально.</div><div class="trq" id="ts4q"></div><div class="trfig" id="ts4f"></div><div id="ts4a"></div><div class="trmsg" id="ts4m"></div><div class="trbar" id="ts4b"></div></div>
+</div>
+<div id="tasks3"></div>
+
+<div class="card">
+
+<h2>6. Во сколько раз изменилось число</h2>
+<div class="rule2"><div class="n">ПРАВИЛО</div>
+Перенос запятой вправо на 1, 2, 3 цифры увеличивает число в 10, 100, 1000 раз.
+Перенос влево на 1, 2, 3 цифры во столько же раз его уменьшает.</div>
+<div class="ex"><h3>Пример 6</h3>
+<p>Во сколько раз 31,14 больше, чем 0,03114?</p>
+<div class='step'>1. Сравним запись: цифры одни и те же, 3114.</div><div class='step'>2. В числе 31,14 запятая стоит на три цифры правее.</div><div class='fx'>В 1000 раз</div><div class='step mini'>Обратный вопрос решается так же: 1,10303 меньше 110,303 в 100 раз — запятая на две цифры левее.</div>
+</div>
+<div class="ex"><h3>Пример 7</h3>
+<p>Увеличить число 7,65 в 10, 100 и 1000 раз.</p>
+<div class='step'><span class='nw'>7,65 · 10</span> = <span class='nw'>76,5</span>, <span class='nw'>7,65 · 100</span> = <span class='nw'>765</span>, <span class='nw'>7,65 · 1000</span> = <span class='nw'>7650</span>.</div>
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>7. Где это нужно каждый день</h2>
+<div class="def"><div class="n">ЕДИНИЦЫ ИЗМЕРЕНИЯ</div>
+<div>Переходим к <b>меньшей</b> единице — число растёт, значит умножаем.</div>
+<div>Переходим к <b>большей</b> единице — число уменьшается, значит делим.</div>
+</div>
+<div class='step'><span class='nw'>3,247 км</span> = <span class='nw'>3247 м</span> — в километре 1000 метров.</div><div class='step'><span class='nw'>35 см</span> = <span class='nw'>0,35 м</span> — в метре 100 сантиметров, значит делим.</div><div class='step'><span class='nw'>80 г</span> = <span class='nw'>0,08 кг</span> и <span class='nw'>0,2 кг</span> = <span class='nw'>200 г</span>.</div><div class='step'><span class='nw'>5,25 р.</span> = <span class='nw'>525 коп.</span> — в рубле 100 копеек.</div>
+<div class="def"><div class="n">ПЛОЩАДИ</div>
+<div>1 а = 100 м², 1 га = 10 000 м², 1 км² = 1 000 000 м².</div>
+</div>
+<div class='step'><span class='nw'>0,5 а</span> = <span class='nw'>50 м²</span>, <span class='nw'>0,05 га</span> = <span class='nw'>500 м²</span>, <span class='nw'>0,005 км²</span> = <span class='nw'>5000 м²</span>.</div>
+<div class="def"><div class="n">ТЫСЯЧИ, МИЛЛИОНЫ, МИЛЛИАРДЫ</div>
+<div>Слово заменяем множителем и переносим запятую вправо.</div>
+</div>
+<div class='step'><span class='nw'>3,4 тыс.</span> = <span class='nw'>3400</span>, <span class='nw'>0,2 млн</span> = <span class='nw'>200 000</span>, <span class='nw'>0,08 млрд</span> = <span class='nw'>80 000 000</span>.</div>
+<div class="ex"><h3>Пример 8</h3>
+<p>В коробке 100 пакетиков чая. Масса одного пакетика 1,8 г, масса пустой коробки
+0,025 кг. Чему равна масса полной коробки?</p>
+<div class='step'>1. Чай: <span class='nw'>1,8 · 100 = 180 г</span>.</div><div class='step'>2. Переводим в килограммы: <span class='nw'>180 г = 0,18 кг</span>.</div><div class='step'>3. С коробкой: <span class='nw'>0,18 + 0,025 = 0,205 кг</span>.</div><div class='fx'>0,205 кг</div><div class='step mini'>Складывать граммы с килограммами нельзя — сначала приводим к одной единице.</div>
+</div>
+<div class="tohw">Задание 4<span>Три задачи на единицы измерения.</span></div>
+</div>
+
+<div class="card">
+<div class="tr" id="ts5"><div class="trhead"><b>Тренажёр 5. Единицы измерения</b><span class="trscore" id="ts5s"></span></div><div class="meta">Десять переводов. Ответ пиши числом, без названия единицы.</div><div class="trq" id="ts5q"></div><div class="trfig" id="ts5f"></div><div id="ts5a"></div><div class="trmsg" id="ts5m"></div><div class="trbar" id="ts5b"></div></div>
+</div>
+<div id="tasks4"></div>
+
+<div class="card">
+
+<h2>8. Цепочки, выражения и уравнения</h2>
+<p>В длинной цепочке действия выполняют слева направо, и каждое — это просто шаг
+запятой. Можно даже посчитать итог сразу: сложить все шаги вправо и вычесть шаги
+влево.</p>
+<div class="ex"><h3>Пример 9</h3>
+<p>Найти значение выражения <span class='nw'>5,4 · 10 : 100 · 1000 : 10 000</span>.</p>
+<div class='step'>1. <span class='nw'>5,4 · 10 = 54</span>.</div><div class='step'>2. <span class='nw'>54 : 100 = 0,54</span>.</div><div class='step'>3. <span class='nw'>0,54 · 1000 = 540</span>.</div><div class='step'>4. <span class='nw'>540 : 10 000 = 0,054</span>.</div><div class='fx'>0,054</div><div class='step mini'>Короткий путь: шаги вправо 1 + 3 = 4, шаги влево 2 + 4 = 6. Итого два шага влево: <span class='nw'>5,4 → 0,054</span>.</div>
+</div>
+<div class="ex"><h3>Пример 10</h3>
+<p>Решить уравнение <span class='nw'>10 · x − 4,82 = 12,6</span>.</p>
+<div class='step'>1. <span class='nw'>10x = 12,6 + 4,82 = 17,42</span>.</div><div class='step'>2. <span class='nw'>x = 17,42 : 10 = 1,742</span>.</div><div class='fx'>x = 1,742</div><div class='step mini'>Проверка: <span class='nw'>1,742 · 10 = 17,42</span>, затем <span class='nw'>17,42 − 4,82 = 12,6</span>.</div>
+</div>
+<div class="ex"><h3>Пример 11</h3>
+<p>Решить уравнение <span class='nw'>100 : x + 8,699 = 8,7</span>.</p>
+<div class='step'>1. <span class='nw'>100 : x = 8,7 − 8,699 = 0,001</span>.</div><div class='step'>2. <span class='nw'>x = 100 : 0,001 = 100 000</span>.</div><div class='fx'>x = 100 000</div><div class='step mini'>Делитель ищут делением: <span class='nw'>x = делимое : частное</span>.</div>
+</div>
+<div class="tohw">Задания 5 и 6<span>Шесть задач: цепочки, выражения и уравнения.</span></div>
+</div>
+
+<div class="card">
+<div class="gaps" id="gp2"><div class="ghead"><b>Пропуски 2. Цепочка действий</b><span class="gscore" id="gp2s"></span></div><div class="meta">Семь пропусков. Действия идут слева направо.</div><div class="gline">Дано: <span class='nw'>5,4 · 10 : 100 · 1000 : 10 000</span></div><div class="gline"><span class='nw'>5,4 · 10 = <input class="gp" data-k="b1" size="3" style="width:57px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b1"></span></div><div class="gline"><span class='nw'><input class="gp" data-k="b2" size="3" style="width:57px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b2"> : 100 = <input class="gp" data-k="b3" size="4" style="width:68px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b3"></span></div><div class="gline"><span class='nw'><input class="gp" data-k="b4" size="4" style="width:68px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b4"> · 1000 = <input class="gp" data-k="b5" size="3" style="width:57px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b5"></span></div><div class="gline"><span class='nw'><input class="gp" data-k="b6" size="3" style="width:57px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b6"> : 10 000 = <input class="gp" data-k="b7" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b7"></span></div><div class="gnote">Короткий путь: шагов вправо 1 + 3 = 4, шагов влево 2 + 4 = 6. Разница — два шага влево.</div><div class="gbar"><button type="button" class="pri" id="gp2go">Проверить</button></div><div class="gmsg" id="gp2m"></div><div class="gtip" id="gp2t"></div></div>
+</div>
+<div id="tasks5"></div>
+
+<div class="card">
+<div class="gaps" id="gp3"><div class="ghead"><b>Пропуски 3. Уравнения</b><span class="gscore" id="gp3s"></span></div><div class="meta">Пять пропусков. Сначала находим, чему равна вся часть с x.</div><div class="gline">Дано: <span class='nw'>10 · x − 4,82 = 12,6</span></div><div class="gline">переносим: <span class='nw'>10x = 12,6 + 4,82 = <input class="gp" data-k="c1" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c1"></span></div><div class="gline"><span class='nw'>x = <input class="gp" data-k="c2" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c2"> : 10 = <input class="gp" data-k="c3" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c3"></span></div><div class="gnote">Второе уравнение: <span class='nw'>100 : x + 8,699 = 8,7</span>.</div><div class="gline"><span class='nw'>100 : x = 8,7 − 8,699 = <input class="gp" data-k="c4" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c4"></span></div><div class="gline"><span class='nw'>x = 100 : 0,001 = <input class="gp" data-k="c5" size="6" style="width:90px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c5"></span></div><div class="gnote">Пробелы внутри числа писать не нужно: 100000.</div><div class="gbar"><button type="button" class="pri" id="gp3go">Проверить</button></div><div class="gmsg" id="gp3m"></div><div class="gtip" id="gp3t"></div></div>
+</div>
+
+<div class="card">
+<div class="gaps" id="gp4"><div class="ghead"><b>Пропуски 4. Задачи</b><span class="gscore" id="gp4s"></span></div><div class="meta">Шесть пропусков. Чай и мёд.</div><div class="gline">В коробке 100 пакетиков чая по <span class='nw'>1,8 г</span>, пустая коробка весит <span class='nw'>0,025 кг</span></div><div class="gline">чай: <span class='nw'>1,8 · 100 = <input class="gp" data-k="d1" size="4" style="width:68px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d1"> г</span></div><div class="gline">переводим в килограммы: <span class='nw'><input class="gp" data-k="d2" size="4" style="width:68px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d2"> г = <input class="gp" data-k="d3" size="4" style="width:68px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d3"> кг</span></div><div class="gline">вся коробка: <span class='nw'><input class="gp" data-k="d4" size="4" style="width:68px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d4"> + 0,025 = <input class="gp" data-k="d5" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d5"> кг</span></div><div class="gnote">Чтобы получить 8 г мёда, пчеле надо облететь 100 000 цветков.</div><div class="gline">с одного цветка: <span class='nw'>8 : 100 000 = <input class="gp" data-k="d6" size="7" style="width:101px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск d6"> г</span></div><div class="gnote">Складывать граммы с килограммами нельзя — сначала приводим к одной единице.</div><div class="gbar"><button type="button" class="pri" id="gp4go">Проверить</button></div><div class="gmsg" id="gp4m"></div><div class="gtip" id="gp4t"></div></div>
+</div>
+<div id="tasks6"></div>
+
+<div class="card">
+<div class="tr" id="ts6"><div class="trhead"><b>Тренажёр 6. Цепочки и уравнения · дополнительный</b><span class="trscore" id="ts6s"></span></div><div class="meta">Десять заданий посложнее. В отправку не входит.</div><div class="trq" id="ts6q"></div><div class="trfig" id="ts6f"></div><div id="ts6a"></div><div class="trmsg" id="ts6m"></div><div class="trbar" id="ts6b"></div></div>
+</div>
+<div id="tasks"></div>
+
+<div class="card sheet">
+  <h2>Шпаргалка</h2>
+  <div class="meta">Печатается на один лист A4: Ctrl+P (⌘+P) → печать.</div>
+  <p class="f-formula"><b>Главная мысль.</b> Ни столбика, ни деления уголком: запятая
+  переезжает на несколько цифр, сами цифры не меняются.</p>
+  <p class="f-formula"><b>Умножение на 10, 100, 1000.</b> Запятая вправо на столько
+  цифр, сколько нулей: 4,256 · 100 = 425,6.</p>
+  <p class="f-formula"><b>Умножение на 0,1; 0,01; 0,001.</b> Запятая влево на столько
+  цифр, сколько знаков после запятой: 145,6 · 0,1 = 14,56.</p>
+  <p class="f-formula"><b>Деление на 10, 100, 1000.</b> То же, что умножение на
+  0,1; 0,01; 0,001 — запятая влево: 123,45 : 100 = 1,2345.</p>
+  <p class="f-formula"><b>Деление на 0,1; 0,01; 0,001.</b> То же, что умножение на
+  10; 100; 1000 — запятая вправо: 1,234 : 0,001 = 1234.</p>
+  <p class="f-formula"><b>Не хватает цифр.</b> Дописываем нули: 1,234 · 10 000 = 12 340;
+  24 : 100 = 0,24.</p>
+  <p class="f-formula"><b>У целого числа</b> запятую сначала ставят в конце: 24 = 24,0.</p>
+  <p class="f-formula"><b>Во сколько раз.</b> Запятая вправо на 1, 2, 3 — число больше
+  в 10, 100, 1000 раз. Влево — во столько же меньше.</p>
+  <p class="f-formula"><b>Длина.</b> 1 км = 1000 м, 1 м = 100 см = 1000 мм,
+  1 дм = 10 см.</p>
+  <p class="f-formula"><b>Масса и деньги.</b> 1 кг = 1000 г, 1 р. = 100 коп.</p>
+  <p class="f-formula"><b>Площадь.</b> 1 а = 100 м², 1 га = 10 000 м²,
+  1 км² = 1 000 000 м².</p>
+  <p class="f-formula"><b>Тысячи и миллионы.</b> тыс. = · 1000, млн = · 1 000 000,
+  млрд = · 1 000 000 000.</p>
+  <p class="f-formula"><b>Цепочка действий.</b> Сложи все шаги вправо, вычти все шаги
+  влево — получишь итоговый сдвиг за один раз.</p>
+  <p class="f-formula"><b>Ловушка.</b> 0,23 · 10 — это 2,3, а не 23: нули приписывают
+  только тогда, когда запятой некуда ехать.</p>
+</div>
+
+<div class="card">
+  <h2>Шаг 1. Фото решений — по желанию</h2>
+  <div class="meta">В поле уходит только ответ, а я смотрю ещё и ход решения.
+  Фото прикладывать не обязательно, но с ними разбор будет точнее.</div>
+  <ol class="steps-list">
+    <li>В примерах пиши, сколько шагов и в какую сторону едет запятая.</li>
+    <li>В переводах единиц первой строкой пиши, сколько меньших единиц в большей.</li>
+    <li>В цепочках считай шаги отдельно вправо и отдельно влево.</li>
+    <li>Уравнения заканчивай проверкой — подстановкой в условие.</li>
+  </ol>
+  <input type="file" id="photos" accept="image/*" multiple style="margin-top:12px">
+  <div class="thumbs" id="thumbs"></div>
+</div>
+
+<div class="card">
+  <h2>Шаг 2. Отправь работу</h2>
+  <div class="meta">Проверь, что вверху написано твоё имя. По кнопке ответы и результат
+  уходят преподавателю. Вторая кнопка сохраняет копию тебе.</div>
+  <div class="trgate" id="trgate"></div>
+  <div class="row" style="margin-top:12px">
+    <button class="pri" id="send">Отправить на проверку</button>
+    <button id="report">Скачать копию себе</button>
+  </div>
+  <div id="repnote" class="meta" style="margin-top:8px"></div>
+</div>
+
+</div>
+
+<div class="bar">
+  <button class="pri" id="checkall">Проверить всё</button>
+  <span id="progress" class="meta">решено 0 из 18</span>
+</div>
+
+<script>
+var CF = {};
+var STUDENT_CODE = (function(){
+  try{ var m = /[#&?]code=([^&]+)/.exec(location.hash + location.search);
+       return m ? decodeURIComponent(m[1]) : ""; }catch(e){ return ""; }
+})();
+var TOPIC = "Умножение и деление на разрядную единицу (§5, 5 класс)";
+
+"use strict";
+var started = Date.now();
+var spentBefore = 0;
+
+/* ---------- данные задач; ответы закодированы, чтобы не читались в исходнике ---------- */
+function e(s){return btoa(unescape(encodeURIComponent(s)));}
+function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return s;}}
+
+var TASKS = [{"id": 1, "blk": "1", "lvl": "база", "img": "<svg viewBox=\"0 0 380 192\"><rect x=\"0\" y=\"0\" width=\"380\" height=\"192\" rx=\"12\" fill=\"#ffffff\"/><text x=\"155.5\" y=\"90.0\" font-size=\"27\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">2</text><text x=\"178.5\" y=\"90.0\" font-size=\"27\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">4</text><text x=\"201.5\" y=\"90.0\" font-size=\"27\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">8</text><text x=\"224.5\" y=\"90.0\" font-size=\"27\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">6</text><text x=\"190.0\" y=\"99.0\" font-size=\"30\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">,</text><text x=\"190.0\" y=\"120.0\" font-size=\"14\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">было</text><text x=\"213.0\" y=\"99.0\" font-size=\"30\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">,</text><text x=\"213.0\" y=\"138.0\" font-size=\"14\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">стало</text><path d=\"M 190.0 68.0 Q 201.5 34.0 213.0 68.0\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\"/><path d=\"M 213.0 68.0 L 204.0 59.0 L 204.0 71.0 z\" fill=\"#2f6bd8\"/><text x=\"201.5\" y=\"28.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">на 1 вправо</text><line x1=\"138.0\" y1=\"154.0\" x2=\"242.0\" y2=\"154.0\" stroke=\"#dfe3ea\" stroke-width=\"1.6\" stroke-linecap=\"round\"/><text x=\"190.0\" y=\"184.0\" font-size=\"24\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">= 248,6</text></svg>", "type": "num", "text": "Вычисли <span class='nw'>24,86 · 10</span>.", "ans": ["MjQ4LDY="], "hints": ["В числе 10 один нуль.", "Значит один шаг вправо.", "Запятая встаёт между 8 и 6."], "sol": "<div class='step'>1. Один нуль — один шаг вправо.</div><div class='fx'>248,6</div>"}, {"id": 2, "blk": "1", "lvl": "база", "img": "<svg viewBox=\"0 0 380 198\"><rect x=\"0\" y=\"0\" width=\"380\" height=\"198\" rx=\"12\" fill=\"#ffffff\"/><text x=\"155.5\" y=\"90.0\" font-size=\"27\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">4</text><text x=\"178.5\" y=\"90.0\" font-size=\"27\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">6</text><text x=\"201.5\" y=\"90.0\" font-size=\"27\" fill=\"#e0952a\" text-anchor=\"middle\" font-weight=\"600\">0</text><text x=\"224.5\" y=\"90.0\" font-size=\"27\" fill=\"#e0952a\" text-anchor=\"middle\" font-weight=\"600\">0</text><text x=\"167.0\" y=\"99.0\" font-size=\"30\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">,</text><text x=\"167.0\" y=\"120.0\" font-size=\"14\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">было</text><text x=\"236.0\" y=\"99.0\" font-size=\"30\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">,</text><text x=\"236.0\" y=\"120.0\" font-size=\"14\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">стало</text><path d=\"M 167.0 68.0 Q 201.5 34.0 236.0 68.0\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\"/><path d=\"M 236.0 68.0 L 227.0 59.0 L 227.0 71.0 z\" fill=\"#2f6bd8\"/><text x=\"201.5\" y=\"28.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">на 3 вправо</text><line x1=\"138.0\" y1=\"136.0\" x2=\"242.0\" y2=\"136.0\" stroke=\"#dfe3ea\" stroke-width=\"1.6\" stroke-linecap=\"round\"/><text x=\"190.0\" y=\"166.0\" font-size=\"24\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">= 4600</text><text x=\"190.0\" y=\"190.0\" font-size=\"14\" fill=\"#e0952a\" text-anchor=\"middle\" font-weight=\"600\">оранжевые нули дописали</text></svg>", "type": "num", "text": "Вычисли <span class='nw'>4,6 · 1000</span>.", "ans": ["NDYwMA=="], "hints": ["Три нуля — три шага вправо.", "Цифр после запятой всего одна.", "Недостающие цифры дописывают нулями."], "sol": "<div class='step'>1. Три шага вправо, а цифра после запятой только одна.</div><div class='step'>2. Дописываем два нуля.</div><div class='fx'>4600</div>"}, {"id": 3, "blk": "1", "lvl": "средний", "img": "", "type": "num", "text": "Вычисли <span class='nw'>0,0045 · 100</span>.", "ans": ["MCw0NQ=="], "hints": ["Два нуля — два шага вправо.", "Запятая переезжает через два нуля.", "Лишние нули слева не пишут."], "sol": "<div class='step'>1. Два шага вправо: <span class='nw'>0,0045 → 0,45</span>.</div><div class='fx'>0,45</div>"}, {"id": 4, "blk": "2", "lvl": "база", "img": "", "type": "num", "text": "Вычисли <span class='nw'>10,1 · 0,1</span>.", "ans": ["MSwwMQ=="], "hints": ["В числе 0,1 один знак после запятой.", "Значит один шаг влево.", "10,1 → 1,01."], "sol": "<div class='step'>1. Один знак после запятой — один шаг влево.</div><div class='fx'>1,01</div>"}, {"id": 5, "blk": "2", "lvl": "средний", "img": "<svg viewBox=\"0 0 380 198\"><rect x=\"0\" y=\"0\" width=\"380\" height=\"198\" rx=\"12\" fill=\"#ffffff\"/><text x=\"132.5\" y=\"90.0\" font-size=\"27\" fill=\"#e0952a\" text-anchor=\"middle\" font-weight=\"600\">0</text><text x=\"155.5\" y=\"90.0\" font-size=\"27\" fill=\"#e0952a\" text-anchor=\"middle\" font-weight=\"600\">0</text><text x=\"178.5\" y=\"90.0\" font-size=\"27\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">1</text><text x=\"201.5\" y=\"90.0\" font-size=\"27\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">0</text><text x=\"224.5\" y=\"90.0\" font-size=\"27\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">0</text><text x=\"247.5\" y=\"90.0\" font-size=\"27\" fill=\"#15181e\" text-anchor=\"middle\" font-weight=\"600\">4</text><text x=\"190.0\" y=\"99.0\" font-size=\"30\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">,</text><text x=\"190.0\" y=\"120.0\" font-size=\"14\" fill=\"#5b6270\" text-anchor=\"middle\" font-weight=\"600\">было</text><text x=\"144.0\" y=\"99.0\" font-size=\"30\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">,</text><text x=\"144.0\" y=\"120.0\" font-size=\"14\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">стало</text><path d=\"M 190.0 68.0 Q 167.0 34.0 144.0 68.0\" fill=\"none\" stroke=\"#2f6bd8\" stroke-width=\"2.2\"/><path d=\"M 144.0 68.0 L 153.0 59.0 L 153.0 71.0 z\" fill=\"#2f6bd8\"/><text x=\"167.0\" y=\"28.0\" font-size=\"15\" fill=\"#2f6bd8\" text-anchor=\"middle\" font-weight=\"600\">на 2 влево</text><line x1=\"115.0\" y1=\"136.0\" x2=\"265.0\" y2=\"136.0\" stroke=\"#dfe3ea\" stroke-width=\"1.6\" stroke-linecap=\"round\"/><text x=\"190.0\" y=\"166.0\" font-size=\"24\" fill=\"#137a45\" text-anchor=\"middle\" font-weight=\"600\">= 0,01004</text><text x=\"190.0\" y=\"190.0\" font-size=\"14\" fill=\"#e0952a\" text-anchor=\"middle\" font-weight=\"600\">оранжевые нули дописали</text></svg>", "type": "num", "text": "Вычисли <span class='nw'>1,004 · 0,01</span>.", "ans": ["MCwwMTAwNA=="], "hints": ["Два знака после запятой — два шага влево.", "Целая часть всего одна цифра.", "Слева придётся дописать нули."], "sol": "<div class='step'>1. Два шага влево, цифр не хватает.</div><div class='step'>2. Дописываем нули: <span class='nw'>0,01004</span>.</div><div class='fx'>0,01004</div>"}, {"id": 6, "blk": "2", "lvl": "средний", "img": "", "type": "num", "text": "Вычисли <span class='nw'>479,2 · 0,001</span>.", "ans": ["MCw0Nzky"], "hints": ["Три знака после запятой — три шага влево.", "479,2 → 47,92 → 4,792 → 0,4792.", "Слева появится нуль целых."], "sol": "<div class='step'>1. Три шага влево.</div><div class='fx'>0,4792</div>"}, {"id": 7, "blk": "3", "lvl": "база", "img": "", "type": "num", "text": "Вычисли <span class='nw'>123,98 : 1000</span>.", "ans": ["MCwxMjM5OA=="], "hints": ["Деление на 1000 — это умножение на 0,001.", "Значит три шага влево.", "Слева дописываем нуль целых."], "sol": "<div class='step'>1. Три шага влево: <span class='nw'>123,98 → 0,12398</span>.</div><div class='fx'>0,12398</div>"}, {"id": 8, "blk": "3", "lvl": "средний", "img": "", "type": "num", "text": "Вычисли <span class='nw'>65,23 : 0,01</span>.", "ans": ["NjUyMw=="], "hints": ["Деление на 0,01 — это умножение на 100.", "Значит два шага вправо.", "Запятая уйдёт в конец числа."], "sol": "<div class='step'>1. Два шага вправо: <span class='nw'>65,23 → 6523</span>.</div><div class='fx'>6523</div><div class='step mini'>Результат больше делимого — так и должно быть, ведь делили на число меньше единицы.</div>"}, {"id": 9, "blk": "3", "lvl": "база", "img": "", "type": "num", "text": "Вычисли <span class='nw'>0,009 : 0,001</span>.", "ans": ["OQ=="], "hints": ["Деление на 0,001 — это умножение на 1000.", "Три шага вправо.", "0,009 → 0,09 → 0,9 → 9."], "sol": "<div class='step'>1. Три шага вправо.</div><div class='fx'>9</div>"}, {"id": 10, "blk": "4", "lvl": "база", "img": "", "type": "num", "text": "Сколько метров в <span class='nw'>3,247 км</span>? Ответ дай числом.", "ans": ["MzI0Nw=="], "hints": ["В одном километре 1000 метров.", "Значит умножаем на 1000.", "Три шага вправо."], "sol": "<div class='step'>1. <span class='nw'>3,247 · 1000 = 3247</span>.</div><div class='fx'>3247 м</div>"}, {"id": 11, "blk": "4", "lvl": "средний", "img": "", "type": "num", "text": "Сколько квадратных метров в <span class='nw'>0,005 км²</span>? Ответ дай числом.", "ans": ["NTAwMA=="], "hints": ["В одном квадратном километре 1 000 000 квадратных метров.", "Значит шесть шагов вправо.", "0,005 → 5000."], "sol": "<div class='step'>1. <span class='nw'>0,005 · 1 000 000 = 5000</span>.</div><div class='fx'>5000 м²</div>"}, {"id": 12, "blk": "4", "lvl": "средний", "img": "", "type": "num", "text": "Сколько копеек в <span class='nw'>10,1 р.</span>? Ответ дай числом.", "ans": ["MTAxMA=="], "hints": ["В рубле 100 копеек.", "Значит два шага вправо.", "10,1 → 101 → 1010."], "sol": "<div class='step'>1. <span class='nw'>10,1 · 100 = 1010</span>.</div><div class='fx'>1010 коп.</div>"}, {"id": 13, "blk": "5", "lvl": "средний", "img": "", "type": "num", "text": "Найди значение выражения <span class='nw'>5,4 · 10 : 100 · 1000 : 10 000</span>.", "ans": ["MCwwNTQ="], "hints": ["Действия идут слева направо.", "Посчитай отдельно все шаги вправо и все шаги влево.", "Вправо 1 + 3 = 4, влево 2 + 4 = 6."], "sol": "<div class='step'>1. Вправо: <span class='nw'>1 + 3 = 4</span> шага.</div><div class='step'>2. Влево: <span class='nw'>2 + 4 = 6</span> шагов.</div><div class='step'>3. Итого два шага влево: <span class='nw'>5,4 → 0,054</span>.</div><div class='fx'>0,054</div><div class='step mini'>По действиям выйдет то же самое: 54 → 0,54 → 540 → 0,054.</div>"}, {"id": 14, "blk": "5", "lvl": "сложный", "img": "", "type": "num", "text": "Найди значение выражения <span class='nw'>54,678 + 0,789 · 100</span>.", "ans": ["MTMzLDU3OA=="], "hints": ["Сначала умножение, потом сложение.", "<span class='nw'>0,789 · 100 = 78,9</span>.", "Дальше складываем в столбик."], "sol": "<div class='step'>1. <span class='nw'>0,789 · 100 = 78,9</span>.</div><div class='step'>2. <span class='nw'>54,678 + 78,900 = 133,578</span>.</div><div class='fx'>133,578</div>"}, {"id": 15, "blk": "5", "lvl": "сложный", "img": "", "type": "num", "text": "Найди значение выражения <span class='nw'>27,4 − 0,7 : 0,1</span>.", "ans": ["MjAsNA=="], "hints": ["Сначала деление, потом вычитание.", "<span class='nw'>0,7 : 0,1</span> — это шаг вправо.", "<span class='nw'>0,7 : 0,1 = 7</span>."], "sol": "<div class='step'>1. <span class='nw'>0,7 : 0,1 = 7</span>.</div><div class='step'>2. <span class='nw'>27,4 − 7 = 20,4</span>.</div><div class='fx'>20,4</div><div class='step mini'>Если сначала вычесть, получится 26,7 : 0,1 = 267 — и это уже другая задача.</div>"}, {"id": 16, "blk": "6", "lvl": "средний", "img": "", "type": "num", "text": "Реши уравнение <span class='nw'>10 · x − 4,82 = 12,6</span>. Чему равен x?", "ans": ["MSw3NDI="], "hints": ["Сначала найди, чему равно <span class='nw'>10x</span>.", "<span class='nw'>10x = 12,6 + 4,82</span>.", "<span class='nw'>17,42 : 10</span> — это шаг влево."], "sol": "<div class='step'>1. <span class='nw'>10x = 12,6 + 4,82 = 17,42</span>.</div><div class='step'>2. <span class='nw'>x = 17,42 : 10 = 1,742</span>.</div><div class='fx'>x = 1,742</div>"}, {"id": 17, "blk": "6", "lvl": "сложный", "img": "", "type": "num", "text": "Реши уравнение <span class='nw'>100 : x + 8,699 = 8,7</span>. Чему равен x?", "ans": ["MTAwMDAw"], "hints": ["Сначала найди, чему равно <span class='nw'>100 : x</span>.", "<span class='nw'>8,7 − 8,699 = 0,001</span>.", "Неизвестный делитель ищут делением."], "sol": "<div class='step'>1. <span class='nw'>100 : x = 8,7 − 8,699 = 0,001</span>.</div><div class='step'>2. <span class='nw'>x = 100 : 0,001 = 100 000</span>.</div><div class='fx'>x = 100 000</div><div class='step mini'>Ответ пиши без пробела: 100000.</div>"}, {"id": 18, "blk": "6", "lvl": "сложный", "img": "", "type": "num", "text": "Сумма двух чисел, одно из которых в 999 раз меньше другого, равна 4062,8. Найди меньшее число.", "ans": ["NCwwNjI4"], "hints": ["Обозначь меньшее число за x.", "Тогда большее равно <span class='nw'>999x</span>, а сумма — <span class='nw'>1000x</span>.", "<span class='nw'>1000x = 4062,8</span>."], "sol": "<div class='step'>1. Пусть меньшее число x, тогда большее <span class='nw'>999x</span>.</div><div class='step'>2. <span class='nw'>x + 999x = 1000x = 4062,8</span>.</div><div class='step'>3. <span class='nw'>x = 4062,8 : 1000 = 4,0628</span> — три шага влево.</div><div class='fx'>4,0628</div><div class='step mini'>Большее число: <span class='nw'>4062,8 − 4,0628 = 4058,7372</span>.</div>"}];
+
+/* ---------- разбор ответа ---------- */
+function norm(s){
+  return String(s).toLowerCase().replace(/\s+/g,"")
+    .replace(/[\u2013\u2014\u2212]/g,"-")
+    .replace(/[\u00d7\u00b7]/g,"*")
+    .replace(/,/g,".")
+    .replace(/^(ответ:?|x=|y=|α=|a=)/,"");
+}
+function toNum(str){
+  var t = norm(str);
+  if(!t) return NaN;
+  t = t.replace(/\u221a/g,"sqrt").replace(/\u03c0/g,"pi");
+  t = t.replace(/sqrt(\d+(?:\.\d+)?)/g,"sqrt($1)");
+  t = t.replace(/(\d)sqrt/g,"$1*sqrt");
+  t = t.replace(/(\d)pi/g,"$1*pi");
+  t = t.replace(/(\d)\(/g,"$1*(").replace(/\)(\d)/g,")*$1").replace(/\)\(/g,")*(");
+  if(!/^[-+*/().0-9a-z]+$/.test(t)) return NaN;
+  if(t.replace(/sqrt|pi/g,"").match(/[a-z]/)) return NaN;
+  try{
+    var v = new Function("sqrt","pi","return ("+t+");")(Math.sqrt, Math.PI);
+    return (typeof v === "number" && isFinite(v)) ? v : NaN;
+  }catch(err){ return NaN; }
+}
+function same(given, right, tol){
+  var a = toNum(given), b = toNum(right);
+  if(!isNaN(a) && !isNaN(b)){
+    var t = tol || 1e-9;
+    return Math.abs(a-b) <= Math.max(t, Math.abs(b)*t);
+  }
+  return norm(given) === norm(right);
+}
+
+/* ---------- отрисовка ---------- */
+var state = {};
+function boxOf(t){
+  return document.getElementById("tasks" + (t.blk || "")) ||
+         document.getElementById("tasks");
+}
+
+TASKS.forEach(function(t){
+  state[t.id] = {tries:0, hints:0, done:false, ok:false, given:"", sel:null};
+  var el = document.createElement("div");
+  el.className = "task"; el.id = "t"+t.id;
+  var body = '<div><span class="tnum">'+t.id+'.</span>'+t.text+
+             '<span class="lvl">'+t.lvl+'</span></div>';
+  if(t.img){ body += '<div class="fig">'+t.img+'</div>'; }
+  if(t.type === "choice"){
+    body += '<div class="opts">'+t.options.map(function(o,i){
+      return '<label class="opt" data-v="'+o+'"><input type="radio" name="q'+t.id+'" value="'+o+'"> '+((t.optionsHtml && t.optionsHtml[i]) || o)+'</label>';
+    }).join("")+'</div>';
+  } else {
+    body += '<div class="keys">'+
+      [","].map(function(k){
+        return '<button class="key" data-k="'+k+'" type="button">'+k+'</button>';}).join("")+
+      '</div><input type="text" id="in'+t.id+'" inputmode="text" autocapitalize="off" '+
+      'autocorrect="off" autocomplete="off" spellcheck="false" placeholder="ответ">';
+  }
+  body += '<div class="row" style="margin-top:10px">'+
+          '<button class="pri sm chk">Проверить</button>'+
+          '<button class="sm hnt">Подсказка</button></div>'+
+          '<div class="hints"></div><div class="verdict"></div><div class="sol"></div>';
+  el.innerHTML = body;
+  boxOf(t).appendChild(el);
+
+  el.querySelectorAll(".key").forEach(function(b){
+    b.addEventListener("click", function(){
+      var inp = document.getElementById("in"+t.id);
+      var k = b.dataset.k === "−" ? "-" : b.dataset.k;
+      var s = inp.selectionStart || inp.value.length;
+      inp.value = inp.value.slice(0,s) + k + inp.value.slice(inp.selectionEnd || s);
+      inp.focus(); inp.setSelectionRange(s+k.length, s+k.length);
+    });
+  });
+  if(t.type === "choice"){
+    el.querySelectorAll(".opt").forEach(function(l){
+      l.addEventListener("click", function(){
+        el.querySelectorAll(".opt").forEach(function(x){x.classList.remove("sel");});
+        l.classList.add("sel"); state[t.id].sel = l.dataset.v;
+      });
+    });
+  } else {
+    el.querySelector("#in"+t.id).addEventListener("keydown", function(ev){
+      if(ev.key === "Enter"){ ev.preventDefault(); check(t.id); }
+    });
+  }
+  el.querySelector(".chk").addEventListener("click", function(){ check(t.id); });
+  el.querySelector(".hnt").addEventListener("click", function(){ hint(t.id); });
+});
+
+function hint(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var host = document.querySelector("#t"+id+" .hints");
+  if(s.hints >= t.hints.length){
+    if(!host.querySelector(".last")){
+      var w = document.createElement("div");
+      w.className = "hint last"; w.textContent = "Подсказки закончились — нажми «Проверить», решение откроется после второй попытки.";
+      host.appendChild(w);
+    }
+    return;
+  }
+  var h = document.createElement("div");
+  h.className = "hint";
+  h.innerHTML = "Подсказка " + (s.hints+1) + ": " + t.hints[s.hints];
+  host.appendChild(h);
+  s.hints++;
+  saveWork();
+}
+
+function check(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var el = document.getElementById("t"+id);
+  var v = document.querySelector(".verdict");
+  v = el.querySelector(".verdict");
+  var given = (t.type === "choice") ? (s.sel || "") :
+              (document.getElementById("in"+id).value || "");
+  if(!given.trim()){ v.className = "verdict bad"; v.textContent = "Введи ответ."; return; }
+  s.given = given; s.tries++;
+  var ok = t.ans.some(function(a){ return same(given, d(a), t.tol); });
+  s.ok = ok; s.done = ok || s.tries >= 2;
+  el.classList.remove("ok","bad");
+  el.classList.add(ok ? "ok" : "bad");
+  v.className = "verdict " + (ok ? "ok" : "bad");
+  if(ok){
+    v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    showSol(el, t);
+  } else if(s.tries === 1){
+    v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+  } else {
+    v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    showSol(el, t);
+  }
+  progress();
+  saveWork();
+}
+function showSol(el, t){
+  var host = el.querySelector(".sol");
+  if(host.dataset.on) return;
+  host.dataset.on = "1";
+  var det = document.createElement("details");
+  det.open = true;
+  det.innerHTML = "<summary>Решение</summary><div class='step'>"+t.sol+"</div>";
+  host.appendChild(det);
+}
+function progress(){
+  var done = TASKS.filter(function(t){return state[t.id].done;}).length;
+  var ok = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  document.getElementById("progress").textContent =
+    "решено " + done + " из " + TASKS.length + " · верно " + ok;
+}
+document.getElementById("checkall").addEventListener("click", function(){
+  TASKS.forEach(function(t){
+    var s = state[t.id];
+    var given = (t.type === "choice") ? (s.sel || "") : (document.getElementById("in"+t.id).value || "");
+    if(given.trim() && !s.done) check(t.id);
+  });
+  var first = TASKS.find(function(t){ return !state[t.id].done; });
+  var note = first ? "Осталась задача " + first.id + "." : "Все задачи закрыты.";
+  document.getElementById("progress").textContent += " · " + note;
+});
+progress();
+
+/* ---------- фото ---------- */
+var photos = [];
+document.getElementById("photos").addEventListener("change", function(ev){
+  var files = Array.prototype.slice.call(ev.target.files || []);
+  files.forEach(function(f){
+    var r = new FileReader();
+    r.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var m = 1400, w = img.width, h = img.height;
+        if(Math.max(w,h) > m){ var k = m/Math.max(w,h); w = Math.round(w*k); h = Math.round(h*k); }
+        var c = document.createElement("canvas"); c.width = w; c.height = h;
+        c.getContext("2d").drawImage(img, 0, 0, w, h);
+        photos.push({url: c.toDataURL("image/jpeg", 0.7), task: ""});
+        drawThumbs();
+      };
+      img.src = r.result;
+    };
+    r.readAsDataURL(f);
+  });
+  ev.target.value = "";
+});
+function drawThumbs(){
+  var host = document.getElementById("thumbs");
+  host.innerHTML = "";
+  var total = 0;
+  photos.forEach(function(p, i){
+    total += p.url.length * 0.75;
+    var d0 = document.createElement("div"); d0.className = "thumb";
+    var opts = '<option value="">задача…</option>' + TASKS.map(function(t){
+      return '<option value="'+t.id+'"'+(p.task==String(t.id)?" selected":"")+'>№'+t.id+'</option>';
+    }).join("");
+    d0.innerHTML = '<img src="'+p.url+'" alt="фото решения"><button type="button">×</button>'+
+                   '<select>'+opts+'</select>';
+    d0.querySelector("button").addEventListener("click", function(){ photos.splice(i,1); drawThumbs(); });
+    d0.querySelector("select").addEventListener("change", function(ev){ p.task = ev.target.value; });
+    host.appendChild(d0);
+  });
+  var note = document.getElementById("repnote");
+  if(total > 15e6){ note.textContent = "Фото уже больше 15 МБ — отчёт может отправляться долго, лишние лучше удалить."; }
+  else if(photos.length){ note.textContent = "Фото в отчёте: " + photos.length + "."; }
+  else { note.textContent = ""; }
+}
+
+/* ---------- отчёт ---------- */
+var ENDPOINT = "https://script.google.com/macros/s/AKfycbwqIhgBtFnoUik3N1Lh_YRhNeEFAjmXWSxBNoX1a_Yxu-2dEKHFwo4Dd5Ch9UTOHH-X/exec";
+var SECRET = "artteach2026";
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function buildReport(){
+  var name = (document.getElementById("name").value || "").trim() || "без имени";
+  var now = new Date();
+  var mins = Math.max(1, Math.round(spentMs()/60000));
+  var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  var data = {tип:"дз", предмет:"математика", тема:"Умножение и деление на разрядную единицу (§5, 5 класс)",
+    ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
+    верно:okN, всего:TASKS.length, тренажёры:trSummary(), задачи:[]};
+  var rows = TASKS.map(function(t){
+    var s = state[t.id];
+    data.задачи.push({n:t.id, условие:t.text.replace(/<[^>]+>/g,""), ответ_ученика:s.given,
+      верный_ответ:t.ans.map(d).join(" или "), верно:s.ok, попыток:s.tries, подсказок:s.hints,
+      уровень:t.lvl});
+    return "<tr><td>"+t.id+"</td><td style='text-align:left'>"+esc(t.text.replace(/<[^>]+>/g,""))+
+      "</td><td>"+esc(s.given||"—")+"</td><td>"+esc(t.ans.map(d).join(" / "))+"</td><td>"+
+      (s.ok?"верно":(s.given?"неверно":"не решал"))+"</td><td>"+s.tries+"</td><td>"+s.hints+"</td></tr>";
+  }).join("");
+  var pics = photos.map(function(p,i){
+    return "<figure><img src='"+p.url+"'><figcaption>Фото "+(i+1)+
+      (p.task?" — к задаче №"+p.task:"")+"</figcaption></figure>";
+  }).join("");
+  var html = "<!doctype html><html lang='ru'><head><meta charset='utf-8'>"+
+    "<meta name='viewport' content='width=device-width,initial-scale=1'>"+
+    "<title>Отчёт — "+esc(name)+" — разрядная единица · 5 класс</title><style>"+
+    "body{font:16px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;padding:20px;color:#16181d;background:#fff}"+
+    "h1{font-size:22px;margin:0 0 4px}.m{color:#5b6270;font-size:15px}"+
+    "table{border-collapse:collapse;width:100%;margin-top:14px;font-size:15px}"+
+    "th,td{border:1px solid #dfe3ea;padding:6px 8px;text-align:center}th{background:#eef3fb}"+
+    "figure{margin:14px 0}img{max-width:100%;border:1px solid #dfe3ea;border-radius:8px}"+
+    "figcaption{color:#5b6270;font-size:14px;margin-top:4px}</style></head><body>"+
+    "<h1>Отчёт по домашнему заданию</h1>"+
+    "<div class='m'>Тема: умножение и деление на разрядную единицу · §5 · 5 класс</div>"+
+    "<div class='m'>Ученик: <b>"+esc(name)+"</b> · сдано: "+esc(now.toLocaleString("ru-RU"))+
+    " · время работы: около "+mins+" мин</div>"+
+    "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)</h2>"+
+    "<table><tr><th>№</th><th>Задача</th><th>Ответ ученика</th><th>Верный ответ</th>"+
+    "<th>Итог</th><th>Попыток</th><th>Подсказок</th></tr>"+rows+"</table>"+
+    trReportHtml()+
+    (pics ? "<h2>Фото решений</h2>"+pics : "<p class='m'>Фото решений не прикреплены.</p>")+
+    "<script type='application/json' id='result-data'>"+
+    JSON.stringify(data).replace(/</g,"\\u003c")+"<\/script></body></html>";
+  var stamp = now.getDate()+"-"+(now.getMonth()+1);
+  return {
+    html: html,
+    name: name,
+    ok: okN,
+    total: TASKS.length,
+    file: "Отчёт_Разрядная_единица_"+name.replace(/\s+/g,"_")+"_"+stamp+".html",
+    caption: name+" · разрядная единица · 5 класс · "+okN+" из "+TASKS.length+
+             " ("+Math.round(okN/TASKS.length*100)+"%)"+
+             " · тренажёры и пропуски "+trSummary().ok+" из "+trSummary().total
+  };
+}
+
+document.getElementById("send").addEventListener("click", function(){
+  var note = document.getElementById("repnote");
+  var who = (document.getElementById("name").value || "").trim();
+  if(!who){ note.className = "meta bad-note"; note.textContent = "Сначала впиши имя вверху страницы."; return; }
+  var left = trPending();
+  if(left.length){
+    note.className = "meta bad-note";
+    note.textContent = "Работа не отправлена: сначала пройди тренажёры " +
+      "и блоки с пропусками. Осталось " + left.length + " из " + TRREQ.length + ".";
+    trStatus();
+    trJump(left[0].id);
+    return;
+  }
+  note.className = "meta";
+  var r = buildReport();
+  note.textContent = "Отправляю…";
+  var payload = {
+    secret: SECRET,
+    code: STUDENT_CODE,
+    student: r.name,
+    topic: TOPIC,
+    ok: r.ok,
+    total: r.total,
+    name: r.file,
+    caption: r.caption,
+    trainers: trSummary().ok + " из " + trSummary().total,
+    file: btoa(unescape(encodeURIComponent(r.html)))
+  };
+  fetch(ENDPOINT, {method:"POST", mode:"no-cors", body: JSON.stringify(payload)})
+    .then(function(){
+      note.textContent = "Отправлено преподавателю." +
+        (photos.length ? "" : " Фото решений не приложены — если решал в тетради, приложи их и отправь ещё раз.") +
+        " Если хочешь, сохрани копию себе кнопкой ниже.";
+    })
+    .catch(function(){
+      note.textContent = "Не получилось отправить. Скачай файл кнопкой ниже и пришли его вручную.";
+    });
+});
+
+document.getElementById("report").addEventListener("click", function(){
+  var r = buildReport();
+  var blob = new Blob([r.html], {type:"text/html;charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = r.file;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  document.getElementById("repnote").textContent = "Файл скачан — он в папке загрузок.";
+});
+
+
+/* ============ заполни пропуски ============ */
+window.GAPSTATE = {};
+window.GAPSAPI = {};
+window.GAPS = function(id, data){
+  var host = document.getElementById(id);
+  if(!host) return null;
+  var btn = document.getElementById(id + "go"), msg = document.getElementById(id + "m"),
+      sc = document.getElementById(id + "s"), tip = document.getElementById(id + "t");
+  var inputs = host.querySelectorAll("input.gp");
+  var tries = 0, done = false;
+
+  function norm(s){
+    return String(s).toLowerCase().replace(/\s+/g, "")
+      .replace(/[–—−]/g, "-")
+      .replace(/[×·\*]/g, "*")
+      .replace(/,/g, ".");
+  }
+  function toNum(s){
+    var t = norm(s);
+    if(!t || !/^[-+*/().0-9]+$/.test(t)) return NaN;
+    try{
+      var v = new Function("return (" + t + ");")();
+      return (typeof v === "number" && isFinite(v)) ? v : NaN;
+    }catch(e){ return NaN; }
+  }
+  function same(given, right){
+    var a = toNum(given), b = toNum(right);
+    if(!isNaN(a) && !isNaN(b)) return Math.abs(a - b) <= Math.max(1e-9, Math.abs(b) * 1e-9);
+    return norm(given) === norm(right);
+  }
+  function record(quiet){
+    var vals = {}, k;
+    for(k = 0; k < inputs.length; k++) vals[inputs[k].getAttribute("data-k")] = inputs[k].value;
+    window.GAPSTATE[id] = {vals: vals, done: done};
+    if(!quiet && window.saveWork) window.saveWork();
+  }
+
+  function check(quiet){
+    var ok = 0, total = inputs.length, firstBad = null, k, el, key, good;
+    for(k = 0; k < total; k++){
+      el = inputs[k];
+      key = el.getAttribute("data-k");
+      good = (el.value || "").trim() !== "" &&
+             (data.ans[key] || []).some(function(a){ return same(el.value, a); });
+      if(good){
+        el.className = "gp ok";
+        el.readOnly = true;
+        ok++;
+      } else {
+        el.className = (el.value || "").trim() === "" ? "gp" : "gp bad";
+        if(firstBad === null) firstBad = key;
+      }
+    }
+    sc.textContent = "заполнено верно " + ok + " из " + total;
+    if(ok === total){
+      done = true;
+      btn.disabled = true;
+      msg.innerHTML = '<span class="v ok">Все пропуски заполнены верно.</span>';
+      tip.innerHTML = data.after || "";
+      if(window.trFinished) window.trFinished(id, ok, total);
+    } else if(!quiet){
+      tries++;
+      msg.innerHTML = '<span class="v bad">Пока не всё.</span> Красные поля поправь, ' +
+                      "зелёные уже засчитаны.";
+      if(tries >= 2 && data.tips && data.tips[firstBad])
+        tip.innerHTML = "Подсказка: " + data.tips[firstBad];
+    }
+    record();
+    return ok;
+  }
+
+  btn.addEventListener("click", function(){ check(false); });
+  host.addEventListener("keydown", function(ev){
+    if(ev.key === "Enter"){ ev.preventDefault(); check(false); }
+  });
+  /* черновик сохраняем прямо во время набора, не дожидаясь кнопки */
+  var recTimer = null;
+  host.addEventListener("input", function(){
+    if(recTimer) clearTimeout(recTimer);
+    recTimer = setTimeout(function(){ recTimer = null; record(); }, 400);
+  });
+  sc.textContent = "заполнено верно 0 из " + inputs.length;
+  window.GAPSAPI[id] = {check: check, inputs: inputs,
+                        flush: function(){ record(true); }};
+  return {check: check};
+};
+
+window.GAPFLUSH = function(){
+  var k;
+  for(k in window.GAPSAPI){
+    try{ window.GAPSAPI[k].flush(); }catch(e){}
+  }
+};
+
+window.gapRestore = function(saved){
+  var id, api, k, vals, el;
+  for(id in saved){
+    api = window.GAPSAPI[id];
+    if(!api) continue;
+    vals = (saved[id] && saved[id].vals) || {};
+    for(k = 0; k < api.inputs.length; k++){
+      el = api.inputs[k];
+      if(vals[el.getAttribute("data-k")] !== undefined)
+        el.value = vals[el.getAttribute("data-k")];
+    }
+    if(saved[id] && saved[id].done) api.check(true);
+  }
+};
+
+var GPD = {"gp1": {"ans": {"a1": ["2"], "a2": ["2"], "a3": ["425,6"], "a4": ["2"], "a5": ["2"], "a6": ["0,04256"]}, "tips": {"a1": "100 — это единица и два нуля.", "a3": "Запятая из 4,256 переезжает через 2 и 5.", "a6": "Слева придётся дописать нули."}, "after": "425,6 и 0,04256 — одно число, два направления."}, "gp2": {"ans": {"b1": ["54"], "b2": ["54"], "b3": ["0,54"], "b4": ["0,54"], "b5": ["540"], "b6": ["540"], "b7": ["0,054"]}, "tips": {"b1": "Шаг вправо.", "b3": "Два шага влево.", "b5": "Три шага вправо.", "b7": "Четыре шага влево."}, "after": "Ответ 0,054 — ровно два шага влево от 5,4."}, "gp3": {"ans": {"c1": ["17,42"], "c2": ["17,42"], "c3": ["1,742"], "c4": ["0,001"], "c5": ["100000", "100 000"]}, "tips": {"c1": "12,6 + 4,82.", "c3": "Шаг влево.", "c4": "Разность двух близких чисел.", "c5": "Три шага вправо от 100."}, "after": "x = 1,742 и x = 100 000. Проверка подстановкой сходится."}, "gp4": {"ans": {"d1": ["180"], "d2": ["180"], "d3": ["0,18"], "d4": ["0,18"], "d5": ["0,205"], "d6": ["0,00008"]}, "tips": {"d1": "Два шага вправо.", "d3": "Граммы в килограммы — три шага влево.", "d6": "Пять шагов влево от 8."}, "after": "0,205 кг и 0,00008 г — обе задачи решаются переносом запятой."}};
+for (var _g in GPD){ GAPS(_g, GPD[_g]); }
+
+
+/* ---------- движок тренажёров ---------- */
+function makeTrainer(id, items){
+  var q=document.getElementById(id+"q"), f=document.getElementById(id+"f"),
+      a=document.getElementById(id+"a"), m=document.getElementById(id+"m"),
+      b=document.getElementById(id+"b"), sc=document.getElementById(id+"s");
+  var order=[], perm=[], i=0, ok=0, answered=false;
+
+  function shuffle(n){
+    var arr=[], k, j, t;
+    for(k=0;k<n;k++) arr.push(k);
+    for(k=arr.length-1;k>0;k--){ j=Math.floor(Math.random()*(k+1)); t=arr[k]; arr[k]=arr[j]; arr[j]=t; }
+    return arr;
+  }
+  function norm(s){
+    return String(s).trim().toLowerCase().replace(/\s+/g,"").replace(/−/g,"-").replace(/,/g,".");
+  }
+  function same(x, y){
+    var p=parseFloat(norm(x)), r=parseFloat(norm(y));
+    if(isFinite(p) && isFinite(r)) return Math.abs(p-r) < 1e-9;
+    return norm(x) === norm(y);
+  }
+  function score(){
+    sc.textContent = "вопрос " + Math.min(i + 1, items.length) + " из " + items.length +
+                     " · верно " + ok;
+  }
+
+  function finish(){
+    q.innerHTML=""; f.innerHTML=""; a.innerHTML=""; m.innerHTML="";
+    var pct=Math.round(ok/items.length*100);
+    var word = pct===100 ? "Всё верно — тема закрыта." :
+               pct>=70 ? "Хорошо, но пару мест стоит перечитать." :
+               "Стоит вернуться к теории и пройти ещё раз.";
+    b.innerHTML='<div class="trdone" style="flex:1 1 100%">'+ok+" из "+items.length+
+      " ("+pct+" %) · "+word+'</div><button type="button" class="pri" data-go="1">Пройти заново</button>';
+    sc.textContent="готово";
+    if(window.trFinished) window.trFinished(id, ok, items.length);
+  }
+
+  function show(){
+    answered=false;
+    m.innerHTML=""; b.innerHTML="";
+    var t=items[order[i]];
+    q.innerHTML="<b>"+(i+1)+".</b> "+t.q;
+    f.innerHTML=t.fig || "";
+    f.style.display = t.fig ? "" : "none";
+    if(t.opts){
+      perm = shuffle(t.opts.length);          /* perm[позиция] = номер варианта в банке */
+      var html='<div class="tropts" id="'+id+'o">';
+      for(var k=0;k<perm.length;k++)
+        html+='<button type="button" class="tropt" data-k="'+perm[k]+'">'+t.opts[perm[k]]+'</button>';
+      a.innerHTML = html+"</div>";
+      var box=document.getElementById(id+"o");
+      box.addEventListener("click", function(ev){
+        var el=ev.target; while(el && el!==box && el.className.indexOf("tropt")<0) el=el.parentNode;
+        if(!el || el===box || answered) return;
+        pick(parseInt(el.getAttribute("data-k"),10), box);
+      });
+    } else {
+      a.innerHTML='<div class="trnum"><span>Ответ:</span>'+
+        '<input type="text" id="'+id+'i" inputmode="text" autocomplete="off" '+
+        'autocorrect="off" spellcheck="false" placeholder="число">'+
+        '<button type="button" class="pri" data-check="1">Проверить</button></div>';
+      var inp=document.getElementById(id+"i");
+      inp.addEventListener("keydown", function(ev){ if(ev.key==="Enter") check(); });
+    }
+    score();
+  }
+
+  function verdict(good, t){
+    answered=true;
+    if(good) ok++;
+    i++;
+    m.innerHTML='<div class="v '+(good?"ok":"bad")+'">'+(good?"Верно.":"Неверно.")+"</div>"+
+                '<div class="why">'+t.why+"</div>";
+    b.innerHTML = (i<items.length)
+      ? '<button type="button" class="pri" data-next="1">Дальше</button>'
+      : '<button type="button" class="pri" data-next="1">Показать итог</button>';
+    score();
+    snap();
+  }
+  function pick(k, box){
+    var t=items[order[i]], good = (k === t.ans);
+    var bs=box.querySelectorAll(".tropt");
+    for(var j=0;j<bs.length;j++){
+      var n=parseInt(bs[j].getAttribute("data-k"),10);
+      if(n===t.ans) bs[j].className="tropt right";
+      else if(n===k) bs[j].className="tropt wrong";
+    }
+    box.className="tropts done";
+    verdict(good, t);
+  }
+  function check(){
+    if(answered) return;
+    var t=items[order[i]], inp=document.getElementById(id+"i");
+    var v=(inp.value||"").trim();
+    if(!v){ m.innerHTML='<div class="why">Впиши ответ.</div>'; return; }
+    var good = t.ans.some(function(x){ return same(v, x); });
+    inp.disabled=true;
+    if(!good) m.innerHTML="";
+    verdict(good, t);
+    if(!good) m.innerHTML='<div class="v bad">Неверно. Правильный ответ: '+t.ans[0]+".</div>"+
+                          '<div class="why">'+t.why+"</div>";
+  }
+
+  b.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-next")){ if(i<items.length) show(); else finish(); }
+    if(el.getAttribute && el.getAttribute("data-go")){ start(true); }
+  });
+  a.addEventListener("click", function(ev){
+    var el=ev.target;
+    if(el.getAttribute && el.getAttribute("data-check")) check();
+  });
+
+  function snap(){
+    if(window.trProgress) window.trProgress(id, {order: order, i: i, ok: ok});
+  }
+  window.TRAPI = window.TRAPI || {};
+  window.TRAPI[id] = {apply: function(st){
+    if(!st || !st.order || st.order.length !== items.length) return;
+    order = st.order; ok = st.ok || 0; i = st.i || 0;
+    if(i >= items.length){ finish(); } else { show(); }
+  }};
+  function start(fresh){ order=shuffle(items.length); i=0; ok=0; show(); if(fresh) snap(); }
+  start();
+}
+
+makeTrainer("ts1", [{"q": "Куда и на сколько цифр переедет запятая при действии <span class='nw'>· 10</span>?", "opts": ["вправо на 1", "вправо на 2", "вправо на 3", "влево на 1", "влево на 2", "влево на 3"], "ans": 0, "why": "В числе 10 один нуль — один шаг вправо."}, {"q": "Куда и на сколько цифр переедет запятая при действии <span class='nw'>· 100</span>?", "opts": ["вправо на 1", "вправо на 2", "вправо на 3", "влево на 1", "влево на 2", "влево на 3"], "ans": 1, "why": "Два нуля — два шага вправо."}, {"q": "Куда и на сколько цифр переедет запятая при действии <span class='nw'>· 1000</span>?", "opts": ["вправо на 1", "вправо на 2", "вправо на 3", "влево на 1", "влево на 2", "влево на 3"], "ans": 2, "why": "Три нуля — три шага вправо."}, {"q": "Куда и на сколько цифр переедет запятая при действии <span class='nw'>· 0,1</span>?", "opts": ["вправо на 1", "вправо на 2", "вправо на 3", "влево на 1", "влево на 2", "влево на 3"], "ans": 3, "why": "Один знак после запятой — один шаг влево."}, {"q": "Куда и на сколько цифр переедет запятая при действии <span class='nw'>· 0,01</span>?", "opts": ["вправо на 1", "вправо на 2", "вправо на 3", "влево на 1", "влево на 2", "влево на 3"], "ans": 4, "why": "Два знака после запятой — два шага влево."}, {"q": "Куда и на сколько цифр переедет запятая при действии <span class='nw'>· 0,001</span>?", "opts": ["вправо на 1", "вправо на 2", "вправо на 3", "влево на 1", "влево на 2", "влево на 3"], "ans": 5, "why": "Три знака после запятой — три шага влево."}, {"q": "Куда и на сколько цифр переедет запятая при действии <span class='nw'>: 10</span>?", "opts": ["вправо на 1", "вправо на 2", "вправо на 3", "влево на 1", "влево на 2", "влево на 3"], "ans": 3, "why": "Деление на 10 — то же, что умножение на 0,1: шаг влево."}, {"q": "Куда и на сколько цифр переедет запятая при действии <span class='nw'>: 100</span>?", "opts": ["вправо на 1", "вправо на 2", "вправо на 3", "влево на 1", "влево на 2", "влево на 3"], "ans": 4, "why": "Деление на 100 — то же, что умножение на 0,01."}, {"q": "Куда и на сколько цифр переедет запятая при действии <span class='nw'>: 0,1</span>?", "opts": ["вправо на 1", "вправо на 2", "вправо на 3", "влево на 1", "влево на 2", "влево на 3"], "ans": 0, "why": "Деление на 0,1 — то же, что умножение на 10: шаг вправо."}, {"q": "Куда и на сколько цифр переедет запятая при действии <span class='nw'>: 0,001</span>?", "opts": ["вправо на 1", "вправо на 2", "вправо на 3", "влево на 1", "влево на 2", "влево на 3"], "ans": 2, "why": "Деление на 0,001 — то же, что умножение на 1000."}]);
+makeTrainer("ts2", [{"q": "Вычисли <span class='nw'>24,86 · 10</span>.", "ans": ["248,6"], "why": "Один шаг вправо."}, {"q": "Вычисли <span class='nw'>0,65 · 10</span>.", "ans": ["6,5"], "why": "Один шаг вправо, нуль целых исчезает."}, {"q": "Вычисли <span class='nw'>0,0045 · 100</span>.", "ans": ["0,45"], "why": "Два шага вправо."}, {"q": "Вычисли <span class='nw'>4,6 · 1000</span>.", "ans": ["4600"], "why": "Три шага вправо, цифр не хватило — дописали два нуля."}, {"q": "Вычисли <span class='nw'>5,62 · 10 000</span>.", "ans": ["56 200"], "why": "Четыре шага вправо, дописали два нуля."}, {"q": "Вычисли <span class='nw'>0,7 · 1000</span>.", "ans": ["700"], "why": "Три шага вправо."}, {"q": "Вычисли <span class='nw'>3,071 · 1000</span>.", "ans": ["3071"], "why": "Три шага вправо, запятая ушла в конец."}, {"q": "Вычисли <span class='nw'>8,07 · 10</span>.", "ans": ["80,7"], "why": "Один шаг вправо."}, {"q": "Вычисли <span class='nw'>0,00015 · 1000</span>.", "ans": ["0,15"], "why": "Три шага вправо."}, {"q": "Вычисли <span class='nw'>123,004 · 100</span>.", "ans": ["12 300,4"], "why": "Два шага вправо."}]);
+makeTrainer("ts3", [{"q": "Вычисли <span class='nw'>10,1 · 0,1</span>.", "ans": ["1,01"], "why": "Один шаг влево."}, {"q": "Вычисли <span class='nw'>1,004 · 0,01</span>.", "ans": ["0,01004"], "why": "Два шага влево, слева дописали нули."}, {"q": "Вычисли <span class='nw'>479,2 · 0,001</span>.", "ans": ["0,4792"], "why": "Три шага влево."}, {"q": "Вычисли <span class='nw'>3,1 · 0,01</span>.", "ans": ["0,031"], "why": "Два шага влево."}, {"q": "Вычисли <span class='nw'>0,47 · 0,01</span>.", "ans": ["0,0047"], "why": "Два шага влево."}, {"q": "Вычисли <span class='nw'>2,3 · 0,1</span>.", "ans": ["0,23"], "why": "Один шаг влево."}, {"q": "Вычисли <span class='nw'>26,4 · 0,001</span>.", "ans": ["0,0264"], "why": "Три шага влево."}, {"q": "Вычисли <span class='nw'>0,8 · 0,001</span>.", "ans": ["0,0008"], "why": "Три шага влево."}, {"q": "Вычисли <span class='nw'>6,22 · 0,1</span>.", "ans": ["0,622"], "why": "Один шаг влево."}, {"q": "Вычисли <span class='nw'>40,3 · 0,01</span>.", "ans": ["0,403"], "why": "Два шага влево."}]);
+makeTrainer("ts4", [{"q": "Вычисли <span class='nw'>63,9 : 10</span>.", "ans": ["6,39"], "why": "Шаг влево."}, {"q": "Вычисли <span class='nw'>0,015 : 10</span>.", "ans": ["0,0015"], "why": "Шаг влево."}, {"q": "Вычисли <span class='nw'>12 : 100</span>.", "ans": ["0,12"], "why": "Два шага влево, дописали нуль целых."}, {"q": "Вычисли <span class='nw'>123,98 : 1000</span>.", "ans": ["0,12398"], "why": "Три шага влево."}, {"q": "Вычисли <span class='nw'>820,9 : 0,1</span>.", "ans": ["8209"], "why": "Деление на 0,1 — шаг вправо."}, {"q": "Вычисли <span class='nw'>820,9 : 0,01</span>.", "ans": ["82 090"], "why": "Два шага вправо, дописали нуль."}, {"q": "Вычисли <span class='nw'>65,23 : 0,01</span>.", "ans": ["6523"], "why": "Два шага вправо."}, {"q": "Вычисли <span class='nw'>0,009 : 0,001</span>.", "ans": ["9"], "why": "Три шага вправо."}, {"q": "Вычисли <span class='nw'>100 : 0,1</span>.", "ans": ["1000"], "why": "Шаг вправо."}, {"q": "Вычисли <span class='nw'>456,004 : 10 000</span>.", "ans": ["0,0456004"], "why": "Четыре шага влево."}]);
+makeTrainer("ts5", [{"q": "Сколько метров в <span class='nw'>3,247 км</span>?", "ans": ["3247"], "why": "В километре 1000 метров: три шага вправо."}, {"q": "Сколько метров в <span class='nw'>35 см</span>?", "ans": ["0,35"], "why": "В метре 100 сантиметров: два шага влево."}, {"q": "Сколько миллиметров в <span class='nw'>3,2 см</span>?", "ans": ["32"], "why": "В сантиметре 10 миллиметров."}, {"q": "Сколько килограммов в <span class='nw'>80 г</span>?", "ans": ["0,08"], "why": "В килограмме 1000 граммов: три шага влево."}, {"q": "Сколько граммов в <span class='nw'>0,5 кг</span>?", "ans": ["500"], "why": "Три шага вправо."}, {"q": "Сколько копеек в <span class='nw'>5,25 р.</span>?", "ans": ["525"], "why": "В рубле 100 копеек: два шага вправо."}, {"q": "Сколько копеек в <span class='nw'>0,05 р.</span>?", "ans": ["5"], "why": "Два шага вправо."}, {"q": "Сколько квадратных метров в <span class='nw'>0,05 га</span>?", "ans": ["500"], "why": "В гектаре 10 000 квадратных метров."}, {"q": "Запиши цифрами <span class='nw'>0,2 млн</span>.", "ans": ["200 000"], "why": "Миллион — это 1 000 000, шесть шагов вправо."}, {"q": "Запиши цифрами <span class='nw'>3,4 тыс.</span>.", "ans": ["3400"], "why": "Три шага вправо."}]);
+makeTrainer("ts6", [{"q": "Найди значение выражения <span class='nw'>5,4 · 10 : 100 · 1000 : 10 000</span>.", "ans": ["0,054"], "why": "Вправо 1 + 3 = 4 шага, влево 2 + 4 = 6. Итого два шага влево."}, {"q": "Найди значение выражения <span class='nw'>13,51 · 100 : 1000 · 10 : 100</span>.", "ans": ["0,1351"], "why": "Вправо 2 + 1 = 3, влево 3 + 2 = 5. Итого два шага влево."}, {"q": "Найди значение выражения <span class='nw'>44,4 · 0,1 · 100 · 0,001</span>.", "ans": ["0,444"], "why": "Влево 1 + 3 = 4, вправо 2. Итого два шага влево."}, {"q": "Найди значение выражения <span class='nw'>382 · (4,2 : 0,1)</span>.", "ans": ["16 044"], "why": "В скобках 4,2 : 0,1 = 42, дальше 382 · 42 = 16 044."}, {"q": "Найди значение выражения <span class='nw'>54,678 + 0,789 · 100</span>.", "ans": ["133,578"], "why": "0,789 · 100 = 78,9, затем 54,678 + 78,9 = 133,578."}, {"q": "Найди значение выражения <span class='nw'>27,4 − 0,7 : 0,1</span>.", "ans": ["20,4"], "why": "0,7 : 0,1 = 7, затем 27,4 − 7 = 20,4."}, {"q": "Реши уравнение <span class='nw'>10x = 93,4</span>. Чему равен x?", "ans": ["9,34"], "why": "x = 93,4 : 10."}, {"q": "Реши уравнение <span class='nw'>0,01x = 0,7</span>. Чему равен x?", "ans": ["70"], "why": "x = 0,7 : 0,01 — два шага вправо."}, {"q": "Реши уравнение <span class='nw'>x : 0,1 = 36,52</span>. Чему равен x?", "ans": ["3,652"], "why": "x = 36,52 · 0,1 — шаг влево."}, {"q": "Реши уравнение <span class='nw'>x : 1000 = 0,05</span>. Чему равен x?", "ans": ["50"], "why": "x = 0,05 · 1000 — три шага вправо."}]);
+
+/* ============ живой чертёж: перенос запятой ============ */
+(function(){
+var INK="#15181e", MUT="#5b6270", ACC="#2f6bd8", GRN="#137a45", VIO="#7a3fbf",
+    AMB="#c07d10";
+var W=430, CW=23;
+
+function f1(x){ return x.toFixed(1); }
+function ln(x1,y1,x2,y2,c,w,dash){
+  return '<line x1="'+f1(x1)+'" y1="'+f1(y1)+'" x2="'+f1(x2)+'" y2="'+f1(y2)+
+    '" stroke="'+c+'" stroke-width="'+(w||2)+'" stroke-linecap="round"'+
+    (dash?' stroke-dasharray="'+dash+'"':'')+'/>';
+}
+function txt(x,y,t,c,s){
+  return '<text x="'+f1(x)+'" y="'+f1(y)+'" font-size="'+(s||16)+'" fill="'+c+
+    '" text-anchor="middle" font-weight="600">'+t+'</text>';
+}
+function svg(h, body){
+  return '<svg viewBox="0 0 '+W+' '+h+'"><rect x="0" y="0" width="'+W+'" height="'+h+
+    '" rx="12" fill="#ffffff"/>'+body+'</svg>';
+}
+
+/* ---------- перенос запятой ---------- */
+function parts(num, k){
+  var s = String(num).replace(".", ","), a, b, i = s.indexOf(",");
+  if(i < 0){ a = s; b = ""; } else { a = s.slice(0, i); b = s.slice(i + 1); }
+  var digits = a + b, pos = a.length, nw = pos + k;
+  var left = Math.max(0, 1 - nw), right = Math.max(0, nw - digits.length);
+  var full = new Array(left + 1).join("0") + digits + new Array(right + 1).join("0");
+  return {d: full, pos: pos + left, nw: nw + left, left: left, right: right,
+          own: digits.length};
+}
+function res(num, k){
+  var p = parts(num, k), a = p.d.slice(0, p.nw), b = p.d.slice(p.nw);
+  a = a.replace(/^0+/, ""); if(!a) a = "0";
+  b = b.replace(/0+$/, "");
+  return a + (b ? "," + b : "");
+}
+function draw(num, k){
+  var p = parts(num, k), d = p.d, n = d.length, total = n * CW;
+  var x0 = (W - total) / 2, y = 94, s = [], i, own, col;
+  for(i = 0; i < n; i++){
+    own = (i >= p.left && i < p.left + p.own);
+    col = own ? INK : AMB;
+    s.push(txt(x0 + (i + 0.5) * CW, y, d.charAt(i), col, 27));
+  }
+  var tight = Math.abs(k) < 2;
+  s.push(txt(x0 + p.pos * CW, y + 9, ",", MUT, 30));
+  s.push(txt(x0 + p.pos * CW, y + 30, "было", MUT, 14));
+  s.push(txt(x0 + p.nw * CW, y + 9, ",", ACC, 30));
+  s.push(txt(x0 + p.nw * CW, y + (tight ? 48 : 30), "стало", ACC, 14));
+  var xa = x0 + p.pos * CW, xb = x0 + p.nw * CW, top = y - 30;
+  if(k !== 0){
+    s.push('<path d="M '+f1(xa)+' '+f1(y-22)+' Q '+f1((xa+xb)/2)+' '+f1(top-26)+' '+
+           f1(xb)+' '+f1(y-22)+'" fill="none" stroke="'+ACC+'" stroke-width="2.2"/>');
+    var dx = (xb >= xa) ? 1 : -1;
+    s.push('<path d="M '+f1(xb)+' '+f1(y-22)+' L '+f1(xb-dx*9)+' '+f1(y-31)+' L '+
+           f1(xb-dx*9)+' '+f1(y-19)+' z" fill="'+ACC+'"/>');
+    s.push(txt((xa+xb)/2, top-32, "на "+Math.abs(k)+(k>0?" вправо":" влево"), ACC, 15));
+  } else {
+    s.push(txt(W/2, top-32, "запятая остаётся на месте", MUT, 15));
+  }
+  var base = y + (tight ? 64 : 46);
+  s.push(ln(x0-6, base, x0+total+6, base, "#dfe3ea", 1.6));
+  s.push(txt(W/2, base+30, "= " + res(num, k), GRN, 24));
+  var h = base + 44;
+  if(p.left || p.right){
+    s.push(txt(W/2, base+54, "оранжевые нули дописали", AMB, 14));
+    h = base + 68;
+  }
+  return svg(h, s.join(""));
+}
+
+/* ---------- случаи ---------- */
+var UNITS = [["10",1],["100",2],["1000",3],["0,1",1],["0,01",2],["0,001",3]];
+var MODES = [];
+(function(){
+  var i, u;
+  for(i = 0; i < UNITS.length; i++){
+    u = UNITS[i];
+    MODES.push({t: "· " + u[0], k: (i < 3 ? u[1] : -u[1]), op: "·", unit: u[0], n: u[1]});
+  }
+  for(i = 0; i < UNITS.length; i++){
+    u = UNITS[i];
+    MODES.push({t: ": " + u[0], k: (i < 3 ? -u[1] : u[1]), op: ":", unit: u[0], n: u[1],
+                dv: true});
+  }
+})();
+var NUMS = ["0,0075","0,8","1,04","1,234","4,256","13,456","24","145,6","802,28","1234"];
+
+function why(m){
+  var big = (m.unit.indexOf(",") < 0);
+  var count = big ? ("нулей в числе " + m.unit + " — " + m.n)
+                  : ("знаков после запятой в числе " + m.unit + " — " + m.n);
+  var side = (m.k > 0) ? "вправо" : "влево";
+  return count + ", значит запятая едет " + side + " на " + m.n;
+}
+function same(m){
+  var i, j, u = UNITS;
+  for(i = 0; i < MODES.length; i++){
+    if(MODES[i] !== m && MODES[i].k === m.k) return MODES[i].t;
+  }
+  return null;
+}
+
+function build(host){
+  var id = host.id;
+  var bar = document.getElementById(id+"b"), fig = document.getElementById(id+"f"),
+      msg = document.getElementById(id+"m"), ctl = document.getElementById(id+"c");
+  var cur = 1, ni = 4;
+
+  function render(){
+    var m = MODES[cur], num = NUMS[ni];
+    fig.innerHTML = draw(num, m.k);
+    var tw = same(m);
+    msg.innerHTML = '<span class="v">' + num + " " + m.op + " " + m.unit + " = " +
+      res(num, m.k) + '</span>' +
+      '<span class="num">' + why(m) + ".</span>" +
+      (tw ? '<span class="num">Запись «' + tw + '» даёт тот же результат.</span>' : "");
+    var bs = bar.querySelectorAll("button"), i;
+    for(i = 0; i < bs.length; i++)
+      bs[i].className = (MODES[i].dv ? "dv" : "") + (i === cur ? " on" : "");
+  }
+  var i, b;
+  for(i = 0; i < MODES.length; i++){
+    b = document.createElement("button");
+    b.type = "button"; b.textContent = MODES[i].t; b.setAttribute("data-i", i);
+    bar.appendChild(b);
+  }
+  bar.addEventListener("click", function(ev){
+    var el = ev.target;
+    while(el && el !== bar && el.tagName !== "BUTTON") el = el.parentNode;
+    if(!el || el === bar) return;
+    cur = parseInt(el.getAttribute("data-i"), 10);
+    render();
+  });
+  ctl.innerHTML = '<label>число<input type="range" id="'+id+'rn" min="0" max="' +
+    (NUMS.length-1) + '" step="1" value="4">' +
+    '<span class="v" id="'+id+'vn">'+NUMS[4]+'</span></label>';
+  var rn = document.getElementById(id+"rn");
+  rn.addEventListener("input", function(){
+    ni = parseInt(rn.value, 10);
+    document.getElementById(id+"vn").textContent = NUMS[ni];
+    render();
+  });
+  render();
+}
+
+window.RZLIVE = function(){
+  var hosts = document.querySelectorAll(".live[id]"), i;
+  for(i = 0; i < hosts.length; i++) build(hosts[i]);
+};
+})();
+RZLIVE();
+
+/* ---------- тренажёры и пропуски обязательны для отправки ---------- */
+var TRREQ = [
+  {id:"ts1", name:"Тренажёр 1. Куда едет запятая"},
+  {id:"ts2", name:"Тренажёр 2. Умножение на 10, 100, 1000"},
+  {id:"gp1", name:"Пропуски 1. Считаем шаги"},
+  {id:"ts3", name:"Тренажёр 3. Умножение на 0,1; 0,01; 0,001"},
+  {id:"ts4", name:"Тренажёр 4. Деление"},
+  {id:"gp2", name:"Пропуски 2. Цепочка действий"},
+  {id:"ts5", name:"Тренажёр 5. Единицы измерения"},
+  {id:"gp4", name:"Пропуски 4. Задачи"},
+  {id:"gp3", name:"Пропуски 3. Уравнения"}
+];
+var TRDONE = {};
+window.trFinished = function(id, ok, total){
+  var prev = TRDONE[id];
+  if(!prev || ok > prev.ok) TRDONE[id] = {ok: ok, total: total};
+  trStatus();
+  if(window.saveWork) saveWork();
+};
+function trPending(){
+  var out = [], k;
+  for(k = 0; k < TRREQ.length; k++){ if(!TRDONE[TRREQ[k].id]) out.push(TRREQ[k]); }
+  return out;
+}
+function trSummary(){
+  var ok = 0, total = 0, parts = [], k, d;
+  for(k = 0; k < TRREQ.length; k++){
+    d = TRDONE[TRREQ[k].id];
+    parts.push({name: TRREQ[k].name, ok: d ? d.ok : null, total: d ? d.total : null});
+    if(d){ ok += d.ok; total += d.total; }
+  }
+  return {ok: ok, total: total, parts: parts, done: TRREQ.length - trPending().length};
+}
+function trReportHtml(){
+  var s = trSummary(), k, pt, h;
+  h = "<h2>Тренажёры и пропуски: " + s.done + " из " + TRREQ.length + " пройдено" +
+      (s.total ? " · верных ответов " + s.ok + " из " + s.total : "") + "</h2><table><tr>" +
+      "<th>Блок</th><th>Результат</th></tr>";
+  for(k = 0; k < s.parts.length; k++){
+    pt = s.parts[k];
+    h += "<tr><td style='text-align:left'>" + pt.name + "</td><td>" +
+         (pt.ok === null ? "не пройден" : pt.ok + " из " + pt.total) + "</td></tr>";
+  }
+  return h + "</table>";
+}
+function trJump(id){
+  var el = document.getElementById(id);
+  if(!el) return;
+  try{ el.scrollIntoView({behavior: "smooth", block: "center"}); }
+  catch(e){ el.scrollIntoView(); }
+  el.classList.add("need");
+  setTimeout(function(){ el.classList.remove("need"); }, 2600);
+}
+function trStatus(){
+  var g = document.getElementById("trgate");
+  if(!g) return;
+  var left = trPending(), s = trSummary(), h, k;
+  if(!left.length){
+    g.className = "trgate ready";
+    g.innerHTML = "<b>Все тренажёры и пропуски пройдены.</b> Верных ответов: " + s.ok +
+                  " из " + s.total + ". Работу можно отправлять.";
+    return;
+  }
+  g.className = "trgate";
+  h = "<b>Пройдено: " + s.done + " из " + TRREQ.length + ".</b> " +
+      "Работа отправится, когда пройдёшь всё. Осталось:<ul>";
+  for(k = 0; k < left.length; k++){
+    h += '<li><a data-jump="' + left[k].id + '">' + left[k].name + "</a></li>";
+  }
+  g.innerHTML = h + "</ul>";
+}
+document.addEventListener("click", function(ev){
+  var el = ev.target;
+  var id = (el && el.getAttribute) ? el.getAttribute("data-jump") : null;
+  if(id) trJump(id);
+});
+trStatus();
+
+/* ---------- память страницы ---------- */
+var SAVE_V = 2;
+var SKEY_BASE = "arttich:razr5:";
+var SKEY = SKEY_BASE + (STUDENT_CODE || "-");
+
+function spentMs(){ return spentBefore + (Date.now() - started); }
+
+var CAN_STORE = (function(){
+  try{
+    localStorage.setItem("arttich:probe", "1");
+    localStorage.removeItem("arttich:probe");
+    return true;
+  }catch(e){ return false; }
+})();
+
+var TRPROG = {};
+window.trProgress = function(id, st){ TRPROG[id] = st; saveSoon(); };
+
+var wiping = false;
+var saveTimer = null;
+function saveSoon(){
+  if(saveTimer) clearTimeout(saveTimer);
+  saveTimer = setTimeout(function(){ saveTimer = null; saveWork(); }, 400);
+}
+
+function saveWork(){
+  if(wiping) return;
+  if(saveTimer){ clearTimeout(saveTimer); saveTimer = null; }
+  try{ if(window.GAPFLUSH) window.GAPFLUSH(); }catch(e){}
+  try{
+    var nm = document.getElementById("name");
+    var box = {v: SAVE_V, at: Date.now(), spent: spentMs(), tr: TRDONE,
+               trp: TRPROG, gaps: (window.GAPSTATE || {}), tasks: {},
+               name: (nm ? nm.value : "") || ""};
+    TASKS.forEach(function(t){
+      var x = state[t.id];
+      var inp = document.getElementById("in" + t.id);
+      var draft = inp ? (inp.value || "") : "";
+      if(x.tries || x.hints || x.given || x.sel || draft){
+        box.tasks[t.id] = {tries: x.tries, hints: x.hints, done: x.done,
+                           ok: x.ok, given: x.given, sel: x.sel, draft: draft};
+      }
+    });
+    localStorage.setItem(SKEY, JSON.stringify(box));
+    saveNote(box.at);
+  }catch(e){}
+}
+
+/* работу могли начать по другой ссылке: с кодом ученика или без него */
+function loadWork(){
+  var best = null;
+  try{
+    var raw = localStorage.getItem(SKEY);
+    if(raw){
+      var own = JSON.parse(raw);
+      if(own && own.v === SAVE_V) best = own;
+    }
+    var i, k, b;
+    for(i = 0; i < localStorage.length; i++){
+      k = localStorage.key(i);
+      if(!k || k.indexOf(SKEY_BASE) !== 0 || k === SKEY) continue;
+      try{ b = JSON.parse(localStorage.getItem(k)); }catch(e2){ continue; }
+      if(b && b.v === SAVE_V && (!best || (b.at || 0) > (best.at || 0))) best = b;
+    }
+  }catch(e){ return null; }
+  return best;
+}
+function clearWork(){
+  try{
+    var i, k, kill = [];
+    for(i = 0; i < localStorage.length; i++){
+      k = localStorage.key(i);
+      if(k && k.indexOf(SKEY_BASE) === 0) kill.push(k);
+    }
+    kill.forEach(function(x){ localStorage.removeItem(x); });
+  }catch(e){}
+}
+
+function saveNote(at){
+  var n = document.getElementById("savenote");
+  if(!n) return;
+  if(!CAN_STORE){
+    n.textContent = "Этот браузер не разрешает страницам ничего запоминать, поэтому " +
+      "при перезагрузке ответы пропадут. Решай за один заход или отправь работу до того, " +
+      "как закроешь вкладку.";
+    return;
+  }
+  var when = "";
+  if(at){
+    var d = new Date(at);
+    var two = function(x){ return (x < 10 ? "0" : "") + x; };
+    when = " Последнее сохранение: " + two(d.getDate()) + "." + two(d.getMonth() + 1) +
+           ", " + two(d.getHours()) + ":" + two(d.getMinutes()) + ".";
+  }
+  n.innerHTML = "Ответы, пропуски и пройденные тренажёры сохраняются сами, прямо " +
+    "во время работы: можно свернуть страницу или закрыть её и вернуться позже." + when +
+    " Фото не сохраняются." +
+    (at ? ' <button type="button" id="wipe">Начать заново</button>' : "");
+  var w = document.getElementById("wipe");
+  if(w){
+    w.addEventListener("click", function(){
+      wiping = true;
+      clearWork();
+      location.reload();
+    });
+  }
+}
+
+function restoreTask(t, s){
+  var el = document.getElementById("t" + t.id);
+  if(!el) return;
+  if(t.type === "choice"){
+    if(s.sel){
+      el.querySelectorAll(".opt").forEach(function(l){
+        if(l.dataset.v === s.sel){
+          l.classList.add("sel");
+          var r = l.querySelector("input");
+          if(r) r.checked = true;
+        }
+      });
+    }
+  } else {
+    var inp = document.getElementById("in" + t.id);
+    if(inp) inp.value = s.given || s.draft || "";
+  }
+  var host = el.querySelector(".hints"), k, h;
+  for(k = 0; k < s.hints && k < t.hints.length; k++){
+    h = document.createElement("div");
+    h.className = "hint";
+    h.innerHTML = "Подсказка " + (k + 1) + ": " + t.hints[k];
+    host.appendChild(h);
+  }
+  if(s.tries > 0){
+    var v = el.querySelector(".verdict");
+    el.classList.add(s.ok ? "ok" : "bad");
+    v.className = "verdict " + (s.ok ? "ok" : "bad");
+    if(s.ok){
+      v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    } else if(s.tries === 1){
+      v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+    } else {
+      v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    }
+    if(s.done) showSol(el, t);
+  }
+}
+
+(function(){
+  var saved = loadWork(), k;
+  if(saved){
+    spentBefore = saved.spent || 0;
+    if(saved.name){
+      var nm = document.getElementById("name");
+      if(nm && !nm.value) nm.value = saved.name;
+    }
+    TASKS.forEach(function(t){
+      var s = saved.tasks && saved.tasks[t.id];
+      if(!s) return;
+      var cur = state[t.id];
+      cur.tries = s.tries || 0; cur.hints = s.hints || 0;
+      cur.done = !!s.done; cur.ok = !!s.ok;
+      cur.given = s.given || ""; cur.sel = s.sel || null;
+      s.draft = s.draft || "";
+      restoreTask(t, s);
+    });
+    if(saved.tr){ for(k in saved.tr){ TRDONE[k] = saved.tr[k]; } }
+    if(saved.trp){
+      TRPROG = saved.trp;
+      for(k in TRPROG){
+        if(window.TRAPI && window.TRAPI[k]) window.TRAPI[k].apply(TRPROG[k]);
+      }
+    }
+    if(saved.gaps && window.gapRestore) window.gapRestore(saved.gaps);
+    progress();
+    trStatus();
+  }
+  saveNote(saved ? saved.at : 0);
+  var nm2 = document.getElementById("name");
+  if(nm2){
+    nm2.addEventListener("change", saveWork);
+    nm2.addEventListener("input", saveSoon);
+  }
+  /* любой ввод в поле задачи или в пропуск — сохраняем черновик */
+  document.addEventListener("input", function(ev){
+    var el = ev.target;
+    if(!el || !el.tagName || el.tagName !== "INPUT") return;
+    var id = el.id || "", cls = el.className || "";
+    if(id.indexOf("in") === 0 || cls.indexOf("gp") >= 0) saveSoon();
+  }, true);
+  document.addEventListener("change", function(ev){
+    var el = ev.target;
+    if(el && el.type === "radio") saveSoon();
+  }, true);
+  /* на телефоне beforeunload часто не срабатывает — ловим сворачивание вкладки */
+  document.addEventListener("visibilitychange", function(){
+    if(document.visibilityState === "hidden") saveWork();
+  });
+  window.addEventListener("pagehide", saveWork);
+  window.addEventListener("blur", saveSoon);
+  window.addEventListener("beforeunload", saveWork);
+})();
+
+</script>
+</body>
+</html>

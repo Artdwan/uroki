@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Умножение и деление на разрядную единицу — урок, §5, 5 класс</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:800px;margin:0 auto;padding:16px 14px 60px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+.f-formula{font-size:19px}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.step{margin:6px 0}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.fig{margin:12px 0;text-align:center}
+
+.nw{white-space:nowrap}
+.fig{text-align:center;margin:12px 0}
+.fig svg{width:100%;max-width:330px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.figrow{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  margin:12px 0}
+.figrow .fig{margin:0}
+.figrow .fig svg{max-width:100%}
+.fx{display:block;background:var(--acc-soft,var(--acc2,#e8f0ff));border:1px solid var(--line);
+  border-radius:10px;padding:11px 13px;margin:12px 0;text-align:center;font-size:20px;
+  line-height:2.1;font-weight:600;white-space:normal;overflow-wrap:break-word}
+.ex .fx,.zsol .fx{font-size:18px;margin:9px 0}
+.def{border:1px solid var(--line);border-left:4px solid #2f6bd8;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#eef3fb}
+.def .n{font-size:14px;color:#2f6bd8;font-weight:700;letter-spacing:.4px}
+.def>div+div{margin-top:4px}
+.rule2{border:1px solid var(--line);border-left:4px solid #c0397a;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdf0f6}
+.rule2 .n{font-size:14px;color:#a02a62;font-weight:700;letter-spacing:.4px}
+.hard{border:1px solid var(--line);border-left:4px solid #7a3fbf;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#f4efff}
+.hard .n{font-size:14px;color:#5f2ea0;font-weight:700;letter-spacing:.4px}
+.warn{border:1px solid var(--line);border-left:4px solid #b3261e;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdecea}
+.warn .n{font-size:14px;color:#b3261e;font-weight:700;letter-spacing:.4px}
+@media (prefers-color-scheme:dark){.rule2{background:#2a1b23}.def{background:#18212f}
+  .hard{background:#221a33}.warn{background:#2a1618}}
+.ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;
+  background:var(--bg)}
+.ex h3{margin-top:0}
+.zad{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;
+  background:var(--bg)}
+.zad .zh{font-weight:700;font-size:17px;margin-bottom:6px;color:var(--acc)}
+.zad .zh span{color:var(--muted);font-weight:400;font-size:15px}
+.zad .zt{font-size:17px;line-height:1.75}
+.zad ol,.zad ul{margin:7px 0 0;padding-left:22px}
+.zad li{margin:5px 0}
+.zs{margin-top:10px;border-top:1px dashed var(--line);padding-top:7px}
+.zs summary{cursor:pointer;color:var(--acc);font-weight:600;font-size:16px;
+  padding:5px 0;list-style:none}
+.zs summary::-webkit-details-marker{display:none}
+.zs summary::before{content:"▸ "}
+.zs[open] summary::before{content:"▾ "}
+.zsol{font-size:16px;line-height:1.7;padding-top:4px}
+.step{margin:7px 0}
+.step.mini,.mini,.small{color:var(--muted);font-size:15px}
+.tools{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.tools button{font-size:15px;padding:8px 13px;min-height:42px}
+.fr{display:inline-block;vertical-align:middle;text-align:center;margin:0 3px}
+.fr b{display:block;border-bottom:1.7px solid currentColor;padding:0 6px;font-weight:400;
+  white-space:nowrap}
+.fr i{display:block;font-style:normal;padding:0 6px;white-space:nowrap}
+.stol{width:100%;border-collapse:collapse;font-size:17px;margin:10px 0}
+.stol td{border:1px solid var(--line);padding:7px 9px}
+.stol td.r{text-align:right;font-variant-numeric:tabular-nums}
+@media (max-width:620px){
+  .stol,.stol tbody,.stol tr,.stol td{display:block;width:100%}
+  .stol{border-collapse:separate}
+  .stol tr{border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:5px 10px}
+  .stol td{border:none;padding:2px 0}
+  .stol td.r{text-align:left;color:var(--acc);font-weight:600}
+}
+.fgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));
+  margin:9px 0}
+.fbox{border:1px solid var(--line);border-radius:12px;padding:9px 12px 11px;
+  background:var(--bg)}
+.fbox h4{margin:0 0 3px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.fbox p{margin:6px 0 0;line-height:1.6;font-size:16px}
+.fbox p.small{font-size:15px}
+.pam h3{font-size:18px;margin:18px 0 2px}
+.pam h3:first-of-type{margin-top:10px}
+.qq{margin:10px 0 0;padding-left:22px}
+.qq li{margin:6px 0}
+@media print{
+  .tools{display:none !important}
+  .zad{break-inside:avoid}
+}
+
+.fig svg{max-width:430px}
+.figrow{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:12px 0}
+table.napr{border-collapse:collapse;width:100%;min-width:430px;font-size:16px}
+table.napr th,table.napr td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+table.napr th{background:var(--bg);font-weight:700;font-size:15px}
+table.napr td.r{color:#137a45;font-weight:700}
+table.napr td.l{color:#b3261e;font-weight:700}
+.fgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));margin:9px 0}
+.fbox{border:1px solid var(--line);border-radius:12px;padding:9px 12px 11px;background:var(--bg)}
+.fbox h4{margin:0 0 3px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.fbox p{margin:6px 0 0;line-height:1.6;font-size:16px}
+.fbox p.small{font-size:15px}
+.ff{font-size:20px;line-height:2.3;text-align:center;margin:6px 0;font-weight:600;
+  white-space:normal;overflow-wrap:break-word}
+.fbox .ff{font-size:18px;line-height:2.1}
+.pam h3{font-size:18px;margin:18px 0 2px}
+.pam h3:first-of-type{margin-top:10px}
+.tohw{display:none}
+
+.live{border:1px solid var(--line);border-radius:12px;padding:12px 13px 13px;margin:14px 0;
+  background:var(--bg)}
+.live h4{margin:0 0 3px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.live .lhint{color:var(--muted);font-size:15px;margin:0 0 9px;line-height:1.5}
+.livebar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.livebar button{font-size:15px;padding:7px 10px;min-height:40px;border-radius:9px;
+  border:1.6px solid var(--line);background:var(--card);color:inherit;cursor:pointer;
+  line-height:1.2;font-variant-numeric:tabular-nums}
+.livebar button.on{border-color:var(--acc);background:var(--acc);color:#fff;font-weight:600}
+.livebar button.dv.on{border-color:#7a3fbf;background:#7a3fbf}
+.livefig{text-align:center}
+.livefig svg{width:100%;max-width:430px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.livemsg{font-size:16px;line-height:1.6;margin-top:9px;min-height:46px}
+.livemsg .v{font-weight:700}
+.livemsg .num{display:block;color:var(--muted);font-size:15px;margin-top:3px}
+.livectl{display:grid;gap:7px;margin-top:11px}
+.livectl label{display:flex;align-items:center;gap:9px;font-size:15px;color:var(--muted)}
+.livectl input[type=range]{flex:1;min-width:0}
+.livectl .v{font-variant-numeric:tabular-nums;min-width:78px;text-align:right;
+  color:inherit;font-weight:600}
+
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+@media print{
+  body{background:#fff}
+  .tools{display:none !important}
+  .live{display:none !important}
+  .card{border:none;box-shadow:none;padding:0;margin:0 0 12px}
+  .zad{break-inside:avoid;background:#fff}
+  .sheet{font-size:13px}
+  .sheet h2{font-size:18px}
+  .sheet th,.sheet td{padding:4px 5px;font-size:12px}
+  @page{size:A4;margin:12mm}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card top">
+  <h1>Умножение и деление на разрядную единицу</h1>
+  <div class="meta">Математика · 5 класс · §5 · теория порциями, живой чертёж
+  и 41 задание с решениями</div>
+  <div class="note" style="margin-top:14px">
+    <b>Как работать.</b> Читаем порцию теории, разбираем пример, затем решаем задания
+    блока <b>в тетради</b> — и только потом открываем решение и сверяемся.
+    <div style="margin-top:8px">Главная мысль темы: умножение и деление на разрядную
+    единицу — это не вычисление, а переезд запятой. Цифры остаются те же.</div>
+    <div style="margin-top:8px">Считаем нули у 10, 100, 1000 и знаки после запятой
+    у 0,1; 0,01; 0,001 — это и есть число шагов.</div>
+    <div style="margin-top:8px">Тренажёров и отправки работы здесь нет: это урок.</div>
+  </div>
+  <div class="tools">
+    <button type="button" id="openall">Раскрыть все решения</button>
+    <button type="button" id="closeall">Свернуть все</button>
+  </div>
+</div>
+
+<div class="card pam">
+
+<h2>Памятка: всё, что нужно для этой темы</h2>
+<div class="meta">Сюда возвращаться, когда застрял. Ниже то же самое, но подробно
+и с разобранными примерами.</div>
+<h3>О чём тема</h3>
+<div class="fgrid"><div class="fbox"><h4>Разрядные единицы</h4><p>Это 10, 100, 1000 и так далее, а также 0,1; 0,01; 0,001.</p><p class="small">В первых считают нули, во вторых — знаки после запятой.</p></div><div class="fbox"><h4>Всё сводится к одному</h4><p>Ни столбика, ни деления уголком: запятая просто переезжает на несколько цифр.</p><p class="small">Сами цифры при этом не меняются.</p></div><div class="fbox"><h4>Если цифр не хватает</h4><div class="ff"><span class='nw'>1,234 · 10 000</span> = <span class='nw'>12 340</span></div><p>Дописываем нули: справа при движении вправо, слева при движении влево.</p><p class="small"><span class='nw'>24 : 100 = 0,24</span> — слева появился нуль целых.</p></div></div>
+<h3>Куда едет запятая</h3>
+<div class="fgrid"><div class="fbox"><h4>Умножение на 10, 100, 1000</h4><p>Запятая едет <b>вправо</b> на столько цифр, сколько нулей.</p><p class="small"><span class='nw'>4,256 · 100 = 425,6</span> — два нуля, два шага.</p></div><div class="fbox"><h4>Умножение на 0,1; 0,01; 0,001</h4><p>Запятая едет <b>влево</b> на столько цифр, сколько знаков после запятой.</p><p class="small"><span class='nw'>145,6 · 0,1 = 14,56</span> — один знак, один шаг.</p></div><div class="fbox"><h4>Деление на 10, 100, 1000</h4><p>Это то же самое, что умножение на 0,1; 0,01; 0,001 — запятая <b>влево</b>.</p><p class="small"><span class='nw'>123,45 : 100 = 1,2345</span>.</p></div><div class="fbox"><h4>Деление на 0,1; 0,01; 0,001</h4><p>Это то же самое, что умножение на 10; 100; 1000 — запятая <b>вправо</b>.</p><p class="small"><span class='nw'>1,234 : 0,001 = 1234</span>.</p></div></div>
+<div class="fig"><svg viewBox="0 0 420 172"><rect x="0" y="0" width="420" height="172" rx="12" fill="#ffffff"/><line x1="30.0" y1="58.0" x2="390.0" y2="58.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><text x="210.0" y="32.0" font-size="16" fill="#15181e" text-anchor="middle" font-weight="600">запятая</text><line x1="224.0" y1="50.0" x2="374.0" y2="50.0" stroke="#137a45" stroke-width="2.4" stroke-linecap="round"/><path d="M 374.0 50.0 L 365.5 52.8 L 365.5 47.2 z" fill="#137a45"/><text x="299.0" y="42.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">вправо</text><line x1="196.0" y1="50.0" x2="46.0" y2="50.0" stroke="#b3261e" stroke-width="2.4" stroke-linecap="round"/><path d="M 46.0 50.0 L 54.5 47.2 L 54.5 52.8 z" fill="#b3261e"/><text x="121.0" y="42.0" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">влево</text><text x="299.0" y="80.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">· 10, · 100, · 1000</text><text x="299.0" y="100.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">: 0,1, : 0,01, : 0,001</text><text x="121.0" y="80.0" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">· 0,1, · 0,01, · 0,001</text><text x="121.0" y="100.0" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">: 10, : 100, : 1000</text><circle cx="210.0" cy="58.0" r="5.0" fill="#15181e"/><text x="210" y="166" font-size="14" fill="#5b6270" text-anchor="middle">одна картинка вместо четырёх правил</text></svg></div>
+<h3>Где это нужно</h3>
+<div class="fgrid"><div class="fbox"><h4>Во сколько раз</h4><p>Запятая вправо на 1, 2, 3 цифры — число выросло в 10, 100, 1000 раз.</p><p class="small">Влево — во столько же раз уменьшилось.</p></div><div class="fbox"><h4>Единицы измерения</h4><div class="ff"><span class='nw'>3,247 км</span> = <span class='nw'>3247 м</span></div><p>Переход к меньшей единице — умножение, к большей — деление.</p><p class="small">км → м это <span class='nw'>· 1000</span>, г → кг это <span class='nw'>: 1000</span>.</p></div><div class="fbox"><h4>Тысячи и миллионы</h4><div class="ff"><span class='nw'>0,2 млн</span> = <span class='nw'>200 000</span></div><p>«тыс.» — это <span class='nw'>· 1000</span>, «млн» — <span class='nw'>· 1 000 000</span>, «млрд» — <span class='nw'>· 1 000 000 000</span>.</p><p class="small">Слово заменяем на множитель и переносим запятую.</p></div></div>
+
+<div class="scroll"><table class="wrap-t napr">
+<tr><th>Перенос запятой</th><th>на 10, 100, 1000</th><th>на 0,1; 0,01; 0,001</th></tr>
+<tr><th>Действие</th><th>на количество нулей</th><th>на количество знаков после запятой</th></tr>
+<tr><td>Умножение</td><td class="r">вправо →</td><td class="l">← влево</td></tr>
+<tr><td>Деление</td><td class="l">← влево</td><td class="r">вправо →</td></tr>
+</table></div>
+
+</div>
+
+<div class="card">
+
+<h2>1. Откуда берётся правило</h2>
+<p>Разрядные единицы — это числа 10, 100, 1000 и так далее, а ещё 0,1; 0,01; 0,001.
+Умножать и делить на них можно вообще без вычислений. Сначала посмотрим, почему.</p>
+<div class="ex"><h3>Пример 1</h3>
+<p>Найти значение выражения <span class='nw'>4,256 · 100</span>.</p>
+<div class='step'>1. Запишем дробь как обыкновенную: <span class='nw'>4,256 = 4<span class='fr'><b>256</b><i>1000</i></span></span>.</div><div class='step'>2. Умножим на 100: <span class='nw'>4<span class='fr'><b>256</b><i>1000</i></span> · 100 = 400 + <span class='fr'><b>256</b><i>10</i></span></span>.</div><div class='step'>3. <span class='nw'><span class='fr'><b>256</b><i>10</i></span> = 25,6</span>, значит всего <span class='nw'>425,6</span>.</div><div class='fx'><span class='nw'>4,256 · 100</span> = <span class='nw'>425,6</span></div><div class='step mini'>Сравни исходное число и ответ: цифры 4, 2, 5, 6 остались на месте, переехала только запятая.</div>
+</div>
+<div class="fig"><svg viewBox="0 0 430 218"><rect x="0" y="0" width="430" height="218" rx="12" fill="#ffffff"/><text x="180.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">4</text><text x="203.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">2</text><text x="226.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">5</text><text x="249.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">6</text><text x="192.0" y="99.0" font-size="30" fill="#5b6270" text-anchor="middle" font-weight="600">,</text><text x="192.0" y="120.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">было</text><text x="238.0" y="99.0" font-size="30" fill="#2f6bd8" text-anchor="middle" font-weight="600">,</text><text x="238.0" y="120.0" font-size="14" fill="#2f6bd8" text-anchor="middle" font-weight="600">стало</text><path d="M 192.0 68.0 Q 215.0 34.0 238.0 68.0" fill="none" stroke="#2f6bd8" stroke-width="2.2"/><path d="M 238.0 68.0 L 229.0 59.0 L 229.0 71.0 z" fill="#2f6bd8"/><text x="215.0" y="28.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">на 2 вправо</text><line x1="163.0" y1="136.0" x2="267.0" y2="136.0" stroke="#dfe3ea" stroke-width="1.6" stroke-linecap="round"/><text x="215.0" y="166.0" font-size="24" fill="#137a45" text-anchor="middle" font-weight="600">= 425,6</text><text x="215" y="212" font-size="14" fill="#5b6270" text-anchor="middle">4,256 · 100 = 425,6</text></svg></div>
+<div class="def"><div class="n">ВЫВОД</div>
+Чтобы умножить десятичную дробь на 10, 100, 1000 и так далее, нужно перенести запятую
+в этой дроби <b>вправо</b> на 1, 2, 3 и так далее цифры — на столько, сколько нулей
+в разрядной единице.</div>
+
+</div>
+
+<div class="card">
+
+<h2>Живой чертёж: куда поедет запятая</h2>
+<div class="meta">Двенадцать кнопок — все случаи темы. Синие это умножение,
+фиолетовые деление. Ползунок меняет число. Внизу написано, почему шагов именно
+столько.</div>
+<div class="live" id="rz1"><h4>Запятая переезжает</h4><p class="lhint">Нажми пару кнопок подряд и заметь: · 10 и : 0,1 двигают запятую одинаково.</p><div class="livebar" id="rz1b"></div><div class="livefig" id="rz1f"></div><div class="livemsg" id="rz1m"></div><div class="livectl" id="rz1c"></div></div>
+</div>
+
+<div class="card">
+
+<h2>2. Умножение на 10, 100, 1000</h2>
+<div class='fx'><span class='nw'>считаем нули</span> → <span class='nw'>столько шагов вправо</span></div>
+<div class="ex"><h3>Пример 2</h3>
+<p>Одно и то же число умножаем на разные разрядные единицы:</p>
+<div class='step'><span class='nw'>1,234 · 10</span> = <span class='nw'>12,34</span> — один нуль, один шаг.</div><div class='step'><span class='nw'>1,234 · 100</span> = <span class='nw'>123,4</span> — два нуля, два шага.</div><div class='step'><span class='nw'>1,234 · 1000</span> = <span class='nw'>1234</span> — три шага, запятая ушла в самый конец и её больше не пишут.</div><div class='step'><span class='nw'>1,234 · 10 000</span> = <span class='nw'>12 340</span> — четыре шага, а цифр не хватило: дописали нуль.</div>
+</div>
+<div class="figrow"><div class="fig"><svg viewBox="0 0 300 197"><rect x="0" y="0" width="300" height="197" rx="12" fill="#ffffff"/><text x="115.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">1</text><text x="138.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">2</text><text x="161.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">3</text><text x="184.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">4</text><text x="127.0" y="99.0" font-size="30" fill="#5b6270" text-anchor="middle" font-weight="600">,</text><text x="127.0" y="120.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">было</text><text x="196.0" y="99.0" font-size="30" fill="#2f6bd8" text-anchor="middle" font-weight="600">,</text><text x="196.0" y="120.0" font-size="14" fill="#2f6bd8" text-anchor="middle" font-weight="600">стало</text><path d="M 127.0 68.0 Q 161.5 34.0 196.0 68.0" fill="none" stroke="#2f6bd8" stroke-width="2.2"/><path d="M 196.0 68.0 L 187.0 59.0 L 187.0 71.0 z" fill="#2f6bd8"/><text x="161.5" y="28.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">на 3 вправо</text><line x1="98.0" y1="136.0" x2="202.0" y2="136.0" stroke="#dfe3ea" stroke-width="1.6" stroke-linecap="round"/><text x="150.0" y="166.0" font-size="24" fill="#137a45" text-anchor="middle" font-weight="600">= 1234</text><text x="150" y="191" font-size="14" fill="#5b6270" text-anchor="middle">1,234 · 1000 = 1234</text></svg></div><div class="fig"><svg viewBox="0 0 300 220"><rect x="0" y="0" width="300" height="220" rx="12" fill="#ffffff"/><text x="104.0" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">1</text><text x="127.0" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">2</text><text x="150.0" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">3</text><text x="173.0" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">4</text><text x="196.0" y="90.0" font-size="27" fill="#e0952a" text-anchor="middle" font-weight="600">0</text><text x="115.5" y="99.0" font-size="30" fill="#5b6270" text-anchor="middle" font-weight="600">,</text><text x="115.5" y="120.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">было</text><text x="207.5" y="99.0" font-size="30" fill="#2f6bd8" text-anchor="middle" font-weight="600">,</text><text x="207.5" y="120.0" font-size="14" fill="#2f6bd8" text-anchor="middle" font-weight="600">стало</text><path d="M 115.5 68.0 Q 161.5 34.0 207.5 68.0" fill="none" stroke="#2f6bd8" stroke-width="2.2"/><path d="M 207.5 68.0 L 198.5 59.0 L 198.5 71.0 z" fill="#2f6bd8"/><text x="161.5" y="28.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">на 4 вправо</text><line x1="86.5" y1="136.0" x2="213.5" y2="136.0" stroke="#dfe3ea" stroke-width="1.6" stroke-linecap="round"/><text x="150.0" y="166.0" font-size="24" fill="#137a45" text-anchor="middle" font-weight="600">= 12340</text><text x="150.0" y="190.0" font-size="14" fill="#e0952a" text-anchor="middle" font-weight="600">оранжевые нули дописали</text><text x="150" y="214" font-size="14" fill="#5b6270" text-anchor="middle">1,234 · 10 000 = 12 340</text></svg></div></div>
+<div class="warn"><div class="n">ГЛАВНАЯ ОШИБКА ТЕМЫ</div>
+Приписать нули вместо переноса запятой: <span class='nw'>0,23 · 10</span> это не 23,
+а 2,3. Нули дописывают только тогда, когда запятой некуда ехать.</div>
+
+<h3>Задания к блокам 1-2</h3>
+<div class="zad" id="z1"><div class="zh">Задание 1<span> · по образцу учебника</span></div><div class="zt">Определите, какой получится результат, если в числах 1,04; 0,0075; 24 перенести запятую на 1 цифру вправо.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Один шаг вправо у каждого числа.</div><div class='fx'>10,4 · 0,075 · 240</div></div></details></div><div class="zad" id="z2"><div class="zh">Задание 2<span></span></div><div class="zt">Определите результат, если в числах 13,456; 0,8; 0,0075; 24 перенести запятую на 1 цифру влево.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Один шаг влево, где надо — дописываем нуль целых.</div><div class='fx'>1,3456 · 0,08 · 0,00075 · 2,4</div></div></details></div><div class="zad" id="z3"><div class="zh">Задание 3<span></span></div><div class="zt">Определите результат, если в числах 802,28; 3; 125 перенести запятую на 2 цифры влево.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>У целых чисел запятую сначала ставят в конце: <span class='nw'>3 = 3,0</span>, <span class='nw'>125 = 125,0</span>.</div><div class='fx'>8,0228 · 0,03 · 1,25</div></div></details></div><div class="zad" id="z4"><div class="zh">Задание 4<span></span></div><div class="zt">Определите результат, если в числах 4,72; 0,1; 0,0009 перенести запятую на 3 цифры вправо.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Три шага вправо, недостающие цифры дописываем нулями.</div><div class='fx'>4720 · 100 · 0,9</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>3. Умножение на 0,1; 0,01; 0,001</h2>
+<p>Проверим на обыкновенных дробях, как и в начале:</p>
+<div class='step'><span class='nw'>145,6 · 0,1</span> = <span class='nw'>145<span class='fr'><b>6</b><i>10</i></span> · <span class='fr'><b>1</b><i>10</i></span></span> = <span class='nw'><span class='fr'><b>1456</b><i>100</i></span></span> = <span class='nw'>14,56</span>.</div><div class='step'><span class='nw'>145,6 · 0,01</span> = <span class='nw'><span class='fr'><b>1456</b><i>1000</i></span></span> = <span class='nw'>1,456</span>.</div>
+<div class="def"><div class="n">ВЫВОД</div>
+Чтобы умножить десятичную дробь на 0,1; 0,01; 0,001 и так далее, нужно перенести
+запятую <b>влево</b> на 1, 2, 3 и так далее цифры — на столько, сколько знаков после
+запятой в разрядной единице.</div>
+<div class="fig"><svg viewBox="0 0 430 218"><rect x="0" y="0" width="430" height="218" rx="12" fill="#ffffff"/><text x="180.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">1</text><text x="203.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">4</text><text x="226.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">5</text><text x="249.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">6</text><text x="238.0" y="99.0" font-size="30" fill="#5b6270" text-anchor="middle" font-weight="600">,</text><text x="238.0" y="120.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">было</text><text x="215.0" y="99.0" font-size="30" fill="#2f6bd8" text-anchor="middle" font-weight="600">,</text><text x="215.0" y="138.0" font-size="14" fill="#2f6bd8" text-anchor="middle" font-weight="600">стало</text><path d="M 238.0 68.0 Q 226.5 34.0 215.0 68.0" fill="none" stroke="#2f6bd8" stroke-width="2.2"/><path d="M 215.0 68.0 L 224.0 59.0 L 224.0 71.0 z" fill="#2f6bd8"/><text x="226.5" y="28.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">на 1 влево</text><line x1="163.0" y1="154.0" x2="267.0" y2="154.0" stroke="#dfe3ea" stroke-width="1.6" stroke-linecap="round"/><text x="215.0" y="184.0" font-size="24" fill="#137a45" text-anchor="middle" font-weight="600">= 14,56</text><text x="215" y="212" font-size="14" fill="#5b6270" text-anchor="middle">145,6 · 0,1 = 14,56</text></svg></div>
+<div class="ex"><h3>Пример 3</h3>
+<div class='step'><span class='nw'>1,234 · 0,1</span> = <span class='nw'>0,1234</span>.</div><div class='step'><span class='nw'>1,234 · 0,01</span> = <span class='nw'>0,01234</span>.</div><div class='step'><span class='nw'>1,234 · 0,001</span> = <span class='nw'>0,001234</span>.</div><div class='step'><span class='nw'>1,234 · 0,0001</span> = <span class='nw'>0,0001234</span> — нули дописали слева.</div>
+</div>
+<div class="tohw">Задания 1-2<span>Шесть примеров на умножение.</span></div>
+<h3>Задания к блоку 3</h3>
+<div class="zad" id="z5"><div class="zh">Задание 5<span></span></div><div class="zt">Примените правило умножения на разрядную единицу: <span class='nw'>5,62 · 10</span>, <span class='nw'>56,2 · 10</span>, <span class='nw'>0,562 · 10</span>, <span class='nw'>5,62 · 100</span>, <span class='nw'>5,62 · 10 000</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Считаем нули и делаем столько шагов вправо.</div><div class='fx'>56,2 · 562 · 5,62 · 562 · 56 200</div></div></details></div><div class="zad" id="z6"><div class="zh">Задание 6<span></span></div><div class="zt">Примените правило умножения: <span class='nw'>3,1 · 0,01</span>, <span class='nw'>0,47 · 0,01</span>, <span class='nw'>2,3 · 0,1</span>, <span class='nw'>0,04 · 0,1</span>, <span class='nw'>26,4 · 0,001</span>, <span class='nw'>7,3 · 0,001</span>, <span class='nw'>0,8 · 0,001</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Считаем знаки после запятой и делаем столько шагов влево.</div><div class='fx'>0,031 · 0,0047 · 0,23 · 0,004 · 0,0264 · 0,0073 · 0,0008</div></div></details></div><div class="zad" id="z7"><div class="zh">Задание 7<span> · ловушка</span></div><div class="zt">Найдите ошибки в вычислениях: а) <span class='nw'>0,23 · 10 = 23</span>; б) <span class='nw'>75,3 : 10 = 0,735</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>а) Один шаг вправо даёт 2,3, а не 23: здесь приписали нуль вместо переноса запятой.</div><div class='step'>б) Один шаг влево даёт 7,53, а не 0,735: сдвинули на две цифры.</div><div class='fx'>2,3 и 7,53</div></div></details></div><div class="zad" id="z8"><div class="zh">Задание 8<span> · выбор</span></div><div class="zt">Укажите верное равенство: а) <span class='nw'>3,2 · 0,1 = 32</span>; б) <span class='nw'>6,4 · 0,1 = 0,64</span>; в) <span class='nw'>40,05 · 0,01 = 4,005</span>; г) <span class='nw'>2,1 · 0,01 = 210</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Умножение на 0,1 и 0,01 уменьшает число, значит варианты а) и г) неверны сразу.</div><div class='step'>в) два шага влево дают 0,4005, а не 4,005.</div><div class='fx'>Верно только б)</div></div></details></div><div class="zad" id="z9"><div class="zh">Задание 9<span></span></div><div class="zt">Увеличьте каждое из чисел 123,004; 7,65; 1,8 в 10, 100 и 1000 раз.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Увеличить в 10, 100, 1000 раз — сдвинуть запятую вправо на 1, 2, 3.</div><div class='fx'>1230,04 · 12 300,4 · 123 004</div><div class='fx'>76,5 · 765 · 7650</div><div class='fx'>18 · 180 · 1800</div></div></details></div><div class="zad" id="z10"><div class="zh">Задание 10<span></span></div><div class="zt">Уменьшите каждое из чисел 15,026; 0,4; 625 в 10, 100 и 1000 раз.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Уменьшить — сдвинуть запятую влево.</div><div class='fx'>1,5026 · 0,15026 · 0,015026</div><div class='fx'>0,04 · 0,004 · 0,0004</div><div class='fx'>62,5 · 6,25 · 0,625</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>4. Деление на 10, 100, 1000</h2>
+<p>Разделить на 10 — это то же самое, что умножить на <span class='fr'><b>1</b><i>10</i></span>,
+то есть на 0,1. Значит правило уже известно.</p>
+<div class='fx'><span class='nw'>делим на 10, 100, 1000</span> ⟺ <span class='nw'>умножаем на 0,1; 0,01; 0,001</span></div>
+<div class="def"><div class="n">ВЫВОД</div>
+При делении на 10, 100, 1000 запятая едет <b>влево</b> на столько цифр, сколько нулей
+в делителе.</div>
+<div class="ex"><h3>Пример 4</h3>
+<div class='step'><span class='nw'>123,45 : 10</span> = <span class='nw'>12,345</span>.</div><div class='step'><span class='nw'>123,45 : 100</span> = <span class='nw'>1,2345</span>.</div><div class='step'><span class='nw'>123,45 : 1000</span> = <span class='nw'>0,12345</span> — слева дописали нуль целых.</div>
+</div>
+<div class="fig"><svg viewBox="0 0 430 238"><rect x="0" y="0" width="430" height="238" rx="12" fill="#ffffff"/><text x="192.0" y="90.0" font-size="27" fill="#e0952a" text-anchor="middle" font-weight="600">0</text><text x="215.0" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">2</text><text x="238.0" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">4</text><text x="249.5" y="99.0" font-size="30" fill="#5b6270" text-anchor="middle" font-weight="600">,</text><text x="249.5" y="120.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">было</text><text x="203.5" y="99.0" font-size="30" fill="#2f6bd8" text-anchor="middle" font-weight="600">,</text><text x="203.5" y="120.0" font-size="14" fill="#2f6bd8" text-anchor="middle" font-weight="600">стало</text><path d="M 249.5 68.0 Q 226.5 34.0 203.5 68.0" fill="none" stroke="#2f6bd8" stroke-width="2.2"/><path d="M 203.5 68.0 L 212.5 59.0 L 212.5 71.0 z" fill="#2f6bd8"/><text x="226.5" y="28.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">на 2 влево</text><line x1="174.5" y1="136.0" x2="255.5" y2="136.0" stroke="#dfe3ea" stroke-width="1.6" stroke-linecap="round"/><text x="215.0" y="166.0" font-size="24" fill="#137a45" text-anchor="middle" font-weight="600">= 0,24</text><text x="215.0" y="190.0" font-size="14" fill="#e0952a" text-anchor="middle" font-weight="600">оранжевые нули дописали</text><text x="215" y="214" font-size="14" fill="#5b6270" text-anchor="middle">· 0,01 и : 100 — одно и то же</text><text x="215" y="232" font-size="14" fill="#5b6270" text-anchor="middle">у целого числа 24 запятую сначала ставят в конце</text></svg></div>
+<div class="tohw">Задание 3<span>Три примера на деление.</span></div>
+</div>
+
+<div class="card">
+
+<h2>5. Деление на 0,1; 0,01; 0,001</h2>
+<p>Разделить на 0,1 — это умножить на 10. Проверить легко: сколько раз 0,1 помещается
+в единице? Ровно 10 раз.</p>
+<div class='fx'><span class='nw'>делим на 0,1; 0,01; 0,001</span> ⟺ <span class='nw'>умножаем на 10; 100; 1000</span></div>
+<div class="def"><div class="n">ВЫВОД</div>
+При делении на 0,1; 0,01; 0,001 запятая едет <b>вправо</b> на столько цифр, сколько
+знаков после запятой в делителе.</div>
+<div class="ex"><h3>Пример 5</h3>
+<div class='step'><span class='nw'>1,234 : 0,1</span> = <span class='nw'>12,34</span>.</div><div class='step'><span class='nw'>1,234 : 0,01</span> = <span class='nw'>123,4</span>.</div><div class='step'><span class='nw'>1,234 : 0,001</span> = <span class='nw'>1234</span>.</div><div class='step mini'>Деление здесь увеличивает число — это не ошибка. Делим на число меньше единицы, поэтому результат больше делимого.</div>
+</div>
+<div class="fig"><svg viewBox="0 0 430 218"><rect x="0" y="0" width="430" height="218" rx="12" fill="#ffffff"/><text x="180.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">1</text><text x="203.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">2</text><text x="226.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">3</text><text x="249.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">4</text><text x="192.0" y="99.0" font-size="30" fill="#5b6270" text-anchor="middle" font-weight="600">,</text><text x="192.0" y="120.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">было</text><text x="261.0" y="99.0" font-size="30" fill="#2f6bd8" text-anchor="middle" font-weight="600">,</text><text x="261.0" y="120.0" font-size="14" fill="#2f6bd8" text-anchor="middle" font-weight="600">стало</text><path d="M 192.0 68.0 Q 226.5 34.0 261.0 68.0" fill="none" stroke="#2f6bd8" stroke-width="2.2"/><path d="M 261.0 68.0 L 252.0 59.0 L 252.0 71.0 z" fill="#2f6bd8"/><text x="226.5" y="28.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">на 3 вправо</text><line x1="163.0" y1="136.0" x2="267.0" y2="136.0" stroke="#dfe3ea" stroke-width="1.6" stroke-linecap="round"/><text x="215.0" y="166.0" font-size="24" fill="#137a45" text-anchor="middle" font-weight="600">= 1234</text><text x="215" y="212" font-size="14" fill="#5b6270" text-anchor="middle">· 1000 и : 0,001 — одно и то же</text></svg></div>
+<div class="rule2"><div class="n">ВСЯ ТЕМА В ОДНОЙ ТАБЛИЦЕ</div>
+Запомнить надо не четыре правила, а одно: куда едет запятая.</div>
+
+<div class="scroll"><table class="wrap-t napr">
+<tr><th>Перенос запятой</th><th>на 10, 100, 1000</th><th>на 0,1; 0,01; 0,001</th></tr>
+<tr><th>Действие</th><th>на количество нулей</th><th>на количество знаков после запятой</th></tr>
+<tr><td>Умножение</td><td class="r">вправо →</td><td class="l">← влево</td></tr>
+<tr><td>Деление</td><td class="l">← влево</td><td class="r">вправо →</td></tr>
+</table></div>
+
+
+<h3>Задания к блокам 4-5</h3>
+<div class="zad" id="z11"><div class="zh">Задание 11<span></span></div><div class="zt">Примените правило деления: <span class='nw'>820,9 : 0,1</span>, <span class='nw'>820,9 : 0,01</span>, <span class='nw'>820,9 : 0,001</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Деление на 0,1; 0,01; 0,001 — это шаги вправо.</div><div class='fx'>8209 · 82 090 · 820 900</div></div></details></div><div class="zad" id="z12"><div class="zh">Задание 12<span></span></div><div class="zt">Примените правило деления: <span class='nw'>63,9 : 10</span>, <span class='nw'>2,81 : 10</span>, <span class='nw'>0,015 : 10</span>, <span class='nw'>1 : 10</span>, <span class='nw'>12 : 100</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Деление на 10 и 100 — шаги влево.</div><div class='fx'>6,39 · 0,281 · 0,0015 · 0,1 · 0,12</div></div></details></div><div class="zad" id="z13"><div class="zh">Задание 13<span></span></div><div class="zt">Выполните действия: <span class='nw'>6,22 · 10</span>, <span class='nw'>6,22 : 10</span>, <span class='nw'>40,3 · 100</span>, <span class='nw'>40,3 : 100</span>, <span class='nw'>0,7 · 1000</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Умножение — вправо, деление — влево.</div><div class='fx'>62,2 · 0,622 · 4030 · 0,403 · 700</div></div></details></div><div class="zad" id="z14"><div class="zh">Задание 14<span> · во сколько раз</span></div><div class="zt">Во сколько раз 31,14 больше 0,03114? Во сколько раз 1,10303 меньше 110,303?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Цифры одинаковые, смотрим только на положение запятой.</div><div class='step'>В первом случае запятая правее на три цифры, во втором левее на две.</div><div class='fx'>В 1000 раз и в 100 раз</div></div></details></div><div class="zad" id="z15"><div class="zh">Задание 15<span></span></div><div class="zt">Решите уравнения: а) <span class='nw'>10x = 93,4</span>; б) <span class='nw'>0,1x = 93,4</span>; в) <span class='nw'>100x = 0,7</span>; г) <span class='nw'>0,01x = 0,7</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Неизвестный множитель находят делением.</div><div class='fx'>9,34 · 934 · 0,007 · 70</div></div></details></div><div class="zad" id="z16"><div class="zh">Задание 16<span></span></div><div class="zt">Решите уравнения: а) <span class='nw'>x : 10 = 36,52</span>; б) <span class='nw'>x : 0,1 = 36,52</span>; в) <span class='nw'>x : 1000 = 0,05</span>; г) <span class='nw'>x : 0,01 = 0,3</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Неизвестное делимое находят умножением.</div><div class='fx'>365,2 · 3,652 · 50 · 0,003</div></div></details></div><div class="zad" id="z17"><div class="zh">Задание 17<span> · закономерность</span></div><div class="zt">Установите закономерность и продолжите: а) 320; 32; 3,2; … б) 0,70605; 70,605; 7060,5; …</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>а) каждое следующее меньше в 10 раз.</div><div class='step'>б) каждое следующее больше в 100 раз.</div><div class='fx'>0,32 и 706 050</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>6. Во сколько раз изменилось число</h2>
+<div class="rule2"><div class="n">ПРАВИЛО</div>
+Перенос запятой вправо на 1, 2, 3 цифры увеличивает число в 10, 100, 1000 раз.
+Перенос влево на 1, 2, 3 цифры во столько же раз его уменьшает.</div>
+<div class="ex"><h3>Пример 6</h3>
+<p>Во сколько раз 31,14 больше, чем 0,03114?</p>
+<div class='step'>1. Сравним запись: цифры одни и те же, 3114.</div><div class='step'>2. В числе 31,14 запятая стоит на три цифры правее.</div><div class='fx'>В 1000 раз</div><div class='step mini'>Обратный вопрос решается так же: 1,10303 меньше 110,303 в 100 раз — запятая на две цифры левее.</div>
+</div>
+<div class="ex"><h3>Пример 7</h3>
+<p>Увеличить число 7,65 в 10, 100 и 1000 раз.</p>
+<div class='step'><span class='nw'>7,65 · 10</span> = <span class='nw'>76,5</span>, <span class='nw'>7,65 · 100</span> = <span class='nw'>765</span>, <span class='nw'>7,65 · 1000</span> = <span class='nw'>7650</span>.</div>
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>7. Где это нужно каждый день</h2>
+<div class="def"><div class="n">ЕДИНИЦЫ ИЗМЕРЕНИЯ</div>
+<div>Переходим к <b>меньшей</b> единице — число растёт, значит умножаем.</div>
+<div>Переходим к <b>большей</b> единице — число уменьшается, значит делим.</div>
+</div>
+<div class='step'><span class='nw'>3,247 км</span> = <span class='nw'>3247 м</span> — в километре 1000 метров.</div><div class='step'><span class='nw'>35 см</span> = <span class='nw'>0,35 м</span> — в метре 100 сантиметров, значит делим.</div><div class='step'><span class='nw'>80 г</span> = <span class='nw'>0,08 кг</span> и <span class='nw'>0,2 кг</span> = <span class='nw'>200 г</span>.</div><div class='step'><span class='nw'>5,25 р.</span> = <span class='nw'>525 коп.</span> — в рубле 100 копеек.</div>
+<div class="def"><div class="n">ПЛОЩАДИ</div>
+<div>1 а = 100 м², 1 га = 10 000 м², 1 км² = 1 000 000 м².</div>
+</div>
+<div class='step'><span class='nw'>0,5 а</span> = <span class='nw'>50 м²</span>, <span class='nw'>0,05 га</span> = <span class='nw'>500 м²</span>, <span class='nw'>0,005 км²</span> = <span class='nw'>5000 м²</span>.</div>
+<div class="def"><div class="n">ТЫСЯЧИ, МИЛЛИОНЫ, МИЛЛИАРДЫ</div>
+<div>Слово заменяем множителем и переносим запятую вправо.</div>
+</div>
+<div class='step'><span class='nw'>3,4 тыс.</span> = <span class='nw'>3400</span>, <span class='nw'>0,2 млн</span> = <span class='nw'>200 000</span>, <span class='nw'>0,08 млрд</span> = <span class='nw'>80 000 000</span>.</div>
+<div class="ex"><h3>Пример 8</h3>
+<p>В коробке 100 пакетиков чая. Масса одного пакетика 1,8 г, масса пустой коробки
+0,025 кг. Чему равна масса полной коробки?</p>
+<div class='step'>1. Чай: <span class='nw'>1,8 · 100 = 180 г</span>.</div><div class='step'>2. Переводим в килограммы: <span class='nw'>180 г = 0,18 кг</span>.</div><div class='step'>3. С коробкой: <span class='nw'>0,18 + 0,025 = 0,205 кг</span>.</div><div class='fx'>0,205 кг</div><div class='step mini'>Складывать граммы с килограммами нельзя — сначала приводим к одной единице.</div>
+</div>
+<div class="tohw">Задание 4<span>Три задачи на единицы измерения.</span></div>
+<h3>Задания к блокам 6-7</h3>
+<div class="zad" id="z18"><div class="zh">Задание 18<span></span></div><div class="zt">Выразите в сантиметрах: 8,3 дм; 1,5 м; 0,02 м. Выразите в метрах: 4,2 км; 0,07 км; 0,033 км.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>В дециметре 10 см, в метре 100 см, в километре 1000 м.</div><div class='fx'>83 см · 150 см · 2 см</div><div class='fx'>4200 м · 70 м · 33 м</div></div></details></div><div class="zad" id="z19"><div class="zh">Задание 19<span></span></div><div class="zt">Выразите в квадратных метрах: 5 а; 0,5 а; 5 га; 0,05 га; 5 км²; 0,005 км².</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>1 а = 100 м², 1 га = 10 000 м², 1 км² = 1 000 000 м².</div><div class='fx'>500 · 50 · 50 000 · 500 · 5 000 000 · 5000</div></div></details></div><div class="zad" id="z20"><div class="zh">Задание 20<span></span></div><div class="zt">Выразите в копейках: 2 р.; 0,3 р.; 1,7 р.; 0,05 р.; 5,25 р.; 10,1 р.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>В рубле 100 копеек — два шага вправо.</div><div class='fx'>200 · 30 · 170 · 5 · 525 · 1010</div></div></details></div><div class="zad" id="z21"><div class="zh">Задание 21<span></span></div><div class="zt">Представьте в виде натуральных чисел: 3,4 тыс.; 0,2 млн; 0,08 млрд; 0,8 тыс.; 4,1 млн; 0,505 млрд.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Заменяем слово множителем и переносим запятую вправо.</div><div class='fx'>3400 · 200 000 · 80 000 000</div><div class='fx'>800 · 4 100 000 · 505 000 000</div></div></details></div><div class="zad" id="z22"><div class="zh">Задание 22<span> · задача</span></div><div class="zt">Водитель такси на 1000 км расходует 79 л бензина. Сколько литров потребуется на 100 км?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>100 км в 10 раз меньше, чем 1000 км.</div><div class='step'><span class='nw'>79 : 10 = 7,9</span>.</div><div class='fx'>7,9 л</div></div></details></div><div class="zad" id="z23"><div class="zh">Задание 23<span> · задача</span></div><div class="zt">За 100 учебников школа заплатила 265,6 р. Сколько надо заплатить за 1000 таких учебников?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Один учебник: <span class='nw'>265,6 : 100 = 2,656 р.</span>.</div><div class='step'>Тысяча: <span class='nw'>2,656 · 1000 = 2656 р.</span>.</div><div class='fx'>2656 р.</div><div class='step mini'>Короче: учебников в 10 раз больше, значит и цена в 10 раз больше — просто <span class='nw'>265,6 · 10</span>.</div></div></details></div><div class="zad" id="z24"><div class="zh">Задание 24<span> · задача</span></div><div class="zt">Площадь прямоугольного участка 124,88 м², одна из сторон 10 м. Найдите длину забора вокруг участка.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>1. Вторая сторона: <span class='nw'>124,88 : 10 = 12,488 м</span>.</div><div class='step'>2. Периметр: <span class='nw'>2 · (10 + 12,488) = 44,976 м</span>.</div><div class='fx'>44,976 м</div></div></details></div><div class="zad" id="z25"><div class="zh">Задание 25<span> · задача</span></div><div class="zt">За 10 мин улитка проползла 0,49 м. Найдите скорость улитки.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>0,49 : 10 = 0,049</span> м в минуту.</div><div class='fx'>0,049 м/мин</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>8. Цепочки, выражения и уравнения</h2>
+<p>В длинной цепочке действия выполняют слева направо, и каждое — это просто шаг
+запятой. Можно даже посчитать итог сразу: сложить все шаги вправо и вычесть шаги
+влево.</p>
+<div class="ex"><h3>Пример 9</h3>
+<p>Найти значение выражения <span class='nw'>5,4 · 10 : 100 · 1000 : 10 000</span>.</p>
+<div class='step'>1. <span class='nw'>5,4 · 10 = 54</span>.</div><div class='step'>2. <span class='nw'>54 : 100 = 0,54</span>.</div><div class='step'>3. <span class='nw'>0,54 · 1000 = 540</span>.</div><div class='step'>4. <span class='nw'>540 : 10 000 = 0,054</span>.</div><div class='fx'>0,054</div><div class='step mini'>Короткий путь: шаги вправо 1 + 3 = 4, шаги влево 2 + 4 = 6. Итого два шага влево: <span class='nw'>5,4 → 0,054</span>.</div>
+</div>
+<div class="ex"><h3>Пример 10</h3>
+<p>Решить уравнение <span class='nw'>10 · x − 4,82 = 12,6</span>.</p>
+<div class='step'>1. <span class='nw'>10x = 12,6 + 4,82 = 17,42</span>.</div><div class='step'>2. <span class='nw'>x = 17,42 : 10 = 1,742</span>.</div><div class='fx'>x = 1,742</div><div class='step mini'>Проверка: <span class='nw'>1,742 · 10 = 17,42</span>, затем <span class='nw'>17,42 − 4,82 = 12,6</span>.</div>
+</div>
+<div class="ex"><h3>Пример 11</h3>
+<p>Решить уравнение <span class='nw'>100 : x + 8,699 = 8,7</span>.</p>
+<div class='step'>1. <span class='nw'>100 : x = 8,7 − 8,699 = 0,001</span>.</div><div class='step'>2. <span class='nw'>x = 100 : 0,001 = 100 000</span>.</div><div class='fx'>x = 100 000</div><div class='step mini'>Делитель ищут делением: <span class='nw'>x = делимое : частное</span>.</div>
+</div>
+<div class="tohw">Задания 5 и 6<span>Шесть задач: цепочки, выражения и уравнения.</span></div>
+<h3>Задания к блоку 8</h3>
+<div class="zad" id="z26"><div class="zh">Задание 26<span> · цепочка</span></div><div class="zt">Найдите значение выражения: а) <span class='nw'>5,4 · 10 : 100 · 1000 : 10 000</span>; б) <span class='nw'>13,51 · 100 : 1000 · 10 : 100</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>а) вправо 1 + 3 = 4, влево 2 + 4 = 6 → два шага влево.</div><div class='step'>б) вправо 2 + 1 = 3, влево 3 + 2 = 5 → два шага влево.</div><div class='fx'>0,054 и 0,1351</div></div></details></div><div class="zad" id="z27"><div class="zh">Задание 27<span> · цепочка</span></div><div class="zt">Найдите значение выражения: в) <span class='nw'>44,4 · 0,1 · 100 · 0,001</span>; г) <span class='nw'>1,752 : 0,01 · 10 · 0,01 · 1000</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>в) влево 1 + 3 = 4, вправо 2 → два шага влево.</div><div class='step'>г) вправо 2 + 1 + 3 = 6, влево 2 → четыре шага вправо.</div><div class='fx'>0,444 и 17 520</div></div></details></div><div class="zad" id="z28"><div class="zh">Задание 28<span></span></div><div class="zt">Найдите значение выражения: а) <span class='nw'>382 · (4,2 : 0,1)</span>; б) <span class='nw'>(20,02 : 0,01) · 77</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>а) <span class='nw'>4,2 : 0,1 = 42</span>, затем <span class='nw'>382 · 42 = 16 044</span>.</div><div class='step'>б) <span class='nw'>20,02 : 0,01 = 2002</span>, затем <span class='nw'>2002 · 77 = 154 154</span>.</div><div class='fx'>16 044 и 154 154</div></div></details></div><div class="zad" id="z29"><div class="zh">Задание 29<span></span></div><div class="zt">Найдите значение выражения: в) <span class='nw'>54,678 + 0,789 · 100</span>; г) <span class='nw'>27,4 − 0,7 : 0,1</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Сначала умножение и деление, потом сложение и вычитание.</div><div class='step'>в) <span class='nw'>78,9 + 54,678 = 133,578</span>.</div><div class='step'>г) <span class='nw'>27,4 − 7 = 20,4</span>.</div><div class='fx'>133,578 и 20,4</div></div></details></div><div class="zad" id="z30"><div class="zh">Задание 30<span></span></div><div class="zt">Найдите значение выражения с переменными: а) <span class='nw'>23,5x + 7,65y</span> при <span class='nw'>x = 0,01</span> и <span class='nw'>y = 0,1</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>23,5 · 0,01 = 0,235</span>, <span class='nw'>7,65 · 0,1 = 0,765</span>.</div><div class='step'><span class='nw'>0,235 + 0,765 = 1</span>.</div><div class='fx'>1</div></div></details></div><div class="zad" id="z31"><div class="zh">Задание 31<span></span></div><div class="zt">Найдите значение выражения: б) <span class='nw'>0,0175a − 0,625b + 2,03c</span> при <span class='nw'>a = 1000</span>, <span class='nw'>b = 10</span>, <span class='nw'>c = 100</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>0,0175 · 1000 = 17,5</span>, <span class='nw'>0,625 · 10 = 6,25</span>, <span class='nw'>2,03 · 100 = 203</span>.</div><div class='step'><span class='nw'>17,5 − 6,25 + 203 = 214,25</span>.</div><div class='fx'>214,25</div></div></details></div><div class="zad" id="z32"><div class="zh">Задание 32<span></span></div><div class="zt">Запишите обыкновенную дробь в виде десятичной: <span class='fr'><b>29</b><i>10</i></span>, <span class='fr'><b>137</b><i>100</i></span>, <span class='fr'><b>7063</b><i>10</i></span>, <span class='fr'><b>873</b><i>100</i></span>, <span class='fr'><b>2149</b><i>100</i></span>, <span class='fr'><b>259 083</b><i>1000</i></span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Делить на 10, 100, 1000 — переносить запятую влево.</div><div class='fx'>2,9 · 1,37 · 706,3 · 8,73 · 21,49 · 259,083</div></div></details></div><div class="zad" id="z33"><div class="zh">Задание 33<span> · рассуждение</span></div><div class="zt">Вставьте знак действия и число, чтобы получилось верное равенство, и скажите, сколько способов: а) <span class='nw'>13,14 ○ □ = 131,4</span>; б) <span class='nw'>13,14 ○ □ = 1,314</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>а) запятая уехала вправо на 1 — значит <span class='nw'>· 10</span> или <span class='nw'>: 0,1</span>.</div><div class='step'>б) запятая уехала влево на 1 — значит <span class='nw'>: 10</span> или <span class='nw'>· 0,1</span>.</div><div class='fx'>По два способа в каждом случае</div></div></details></div>
+</div>
+
+<div class="card">
+  <h2>9. Задачи на всю тему</h2>
+  <p>Здесь уже не сказано, что делать, — правило надо узнать самому.</p>
+<div class="zad" id="z34"><div class="zh">Задание 34<span></span></div><div class="zt">Решите уравнение: а) <span class='nw'>10 · x − 4,82 = 12,6</span>; б) <span class='nw'>0,394 + 100 · x = 5</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>а) <span class='nw'>10x = 17,42</span>, значит <span class='nw'>x = 1,742</span>.</div><div class='step'>б) <span class='nw'>100x = 4,606</span>, значит <span class='nw'>x = 0,04606</span>.</div><div class='fx'>1,742 и 0,04606</div></div></details></div><div class="zad" id="z35"><div class="zh">Задание 35<span></span></div><div class="zt">Решите уравнение: в) <span class='nw'>1,625 − x : 1000 = 0,98</span>; г) <span class='nw'>100 : x + 8,699 = 8,7</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>в) <span class='nw'>x : 1000 = 0,645</span>, значит <span class='nw'>x = 645</span>.</div><div class='step'>г) <span class='nw'>100 : x = 0,001</span>, значит <span class='nw'>x = 100 000</span>.</div><div class='fx'>645 и 100 000</div></div></details></div><div class="zad" id="z36"><div class="zh">Задание 36<span> · задача</span></div><div class="zt">В коробке 100 пакетиков чая. Масса одного пакетика 1,8 г, масса пустой коробки 0,025 кг. Чему равна масса полной коробки?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>1. <span class='nw'>1,8 · 100 = 180 г = 0,18 кг</span>.</div><div class='step'>2. <span class='nw'>0,18 + 0,025 = 0,205 кг</span>.</div><div class='fx'>0,205 кг</div></div></details></div><div class="zad" id="z37"><div class="zh">Задание 37<span> · задача</span></div><div class="zt">Чтобы получить 8 г мёда, пчеле надо облететь 100 000 цветков. Сколько граммов мёда пчела собирает в среднем с одного цветка?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>8 : 100 000 = 0,00008 г</span> — пять шагов влево.</div><div class='fx'>0,00008 г</div></div></details></div><div class="zad" id="z38"><div class="zh">Задание 38<span> · задача</span></div><div class="zt">Сумма двух чисел, одно из которых в 999 раз меньше другого, равна 4062,8. Найдите эти числа.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>1. Меньшее число x, большее <span class='nw'>999x</span>, сумма <span class='nw'>1000x</span>.</div><div class='step'>2. <span class='nw'>x = 4062,8 : 1000 = 4,0628</span>.</div><div class='step'>3. Большее: <span class='nw'>4062,8 − 4,0628 = 4058,7372</span>.</div><div class='fx'>4,0628 и 4058,7372</div></div></details></div><div class="zad" id="z39"><div class="zh">Задание 39<span> · задача</span></div><div class="zt">Разность двух чисел, одно из которых в 101 раз больше другого, равна 508,46. Найдите эти числа.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>1. Меньшее x, большее <span class='nw'>101x</span>, разность <span class='nw'>100x</span>.</div><div class='step'>2. <span class='nw'>x = 508,46 : 100 = 5,0846</span>.</div><div class='step'>3. Большее: <span class='nw'>5,0846 + 508,46 = 513,5446</span>.</div><div class='fx'>5,0846 и 513,5446</div></div></details></div><div class="zad" id="z40"><div class="zh">Задание 40<span> · задача</span></div><div class="zt">Два мотоциклиста выехали из одного города в противоположных направлениях. Скорость одного 38,9 км/ч, другого на 4,6 км/ч больше. Какое расстояние будет между ними через 10 ч?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>1. Вторая скорость: <span class='nw'>38,9 + 4,6 = 43,5 км/ч</span>.</div><div class='step'>2. Скорость удаления: <span class='nw'>38,9 + 43,5 = 82,4 км/ч</span>.</div><div class='step'>3. За 10 часов: <span class='nw'>82,4 · 10 = 824 км</span>.</div><div class='fx'>824 км</div></div></details></div><div class="zad" id="z41"><div class="zh">Задание 41<span> · задача</span></div><div class="zt">Орехи расфасовали в пакеты по 0,1 кг: мускатные в 28 пакетов, грецкие в 32, миндаль в 12. Сколько килограммов орехов расфасовали?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>1. Всего пакетов: <span class='nw'>28 + 32 + 12 = 72</span>.</div><div class='step'>2. <span class='nw'>72 · 0,1 = 7,2 кг</span>.</div><div class='fx'>7,2 кг</div></div></details></div>
+</div>
+
+<div class="card">
+  <h2>Что забрать с урока</h2>
+  <div class="def"><div class="n">ОДНО ПРАВИЛО ВМЕСТО ЧЕТЫРЁХ</div>
+  <div>Умножение на 10, 100, 1000 и деление на 0,1; 0,01; 0,001 — запятая вправо.</div>
+  <div>Деление на 10, 100, 1000 и умножение на 0,1; 0,01; 0,001 — запятая влево.</div>
+  <div>Число шагов: нули или знаки после запятой.</div>
+  </div>
+
+<div class="scroll"><table class="wrap-t napr">
+<tr><th>Перенос запятой</th><th>на 10, 100, 1000</th><th>на 0,1; 0,01; 0,001</th></tr>
+<tr><th>Действие</th><th>на количество нулей</th><th>на количество знаков после запятой</th></tr>
+<tr><td>Умножение</td><td class="r">вправо →</td><td class="l">← влево</td></tr>
+<tr><td>Деление</td><td class="l">← влево</td><td class="r">вправо →</td></tr>
+</table></div>
+
+  <p>Если цифр не хватает — дописываем нули. У целого числа запятую сначала ставят
+  в конце. В цепочке действий шаги можно сложить и сделать один общий переезд.</p>
+</div>
+
+</div>
+
+<script>
+
+/* ============ живой чертёж: перенос запятой ============ */
+(function(){
+var INK="#15181e", MUT="#5b6270", ACC="#2f6bd8", GRN="#137a45", VIO="#7a3fbf",
+    AMB="#c07d10";
+var W=430, CW=23;
+
+function f1(x){ return x.toFixed(1); }
+function ln(x1,y1,x2,y2,c,w,dash){
+  return '<line x1="'+f1(x1)+'" y1="'+f1(y1)+'" x2="'+f1(x2)+'" y2="'+f1(y2)+
+    '" stroke="'+c+'" stroke-width="'+(w||2)+'" stroke-linecap="round"'+
+    (dash?' stroke-dasharray="'+dash+'"':'')+'/>';
+}
+function txt(x,y,t,c,s){
+  return '<text x="'+f1(x)+'" y="'+f1(y)+'" font-size="'+(s||16)+'" fill="'+c+
+    '" text-anchor="middle" font-weight="600">'+t+'</text>';
+}
+function svg(h, body){
+  return '<svg viewBox="0 0 '+W+' '+h+'"><rect x="0" y="0" width="'+W+'" height="'+h+
+    '" rx="12" fill="#ffffff"/>'+body+'</svg>';
+}
+
+/* ---------- перенос запятой ---------- */
+function parts(num, k){
+  var s = String(num).replace(".", ","), a, b, i = s.indexOf(",");
+  if(i < 0){ a = s; b = ""; } else { a = s.slice(0, i); b = s.slice(i + 1); }
+  var digits = a + b, pos = a.length, nw = pos + k;
+  var left = Math.max(0, 1 - nw), right = Math.max(0, nw - digits.length);
+  var full = new Array(left + 1).join("0") + digits + new Array(right + 1).join("0");
+  return {d: full, pos: pos + left, nw: nw + left, left: left, right: right,
+          own: digits.length};
+}
+function res(num, k){
+  var p = parts(num, k), a = p.d.slice(0, p.nw), b = p.d.slice(p.nw);
+  a = a.replace(/^0+/, ""); if(!a) a = "0";
+  b = b.replace(/0+$/, "");
+  return a + (b ? "," + b : "");
+}
+function draw(num, k){
+  var p = parts(num, k), d = p.d, n = d.length, total = n * CW;
+  var x0 = (W - total) / 2, y = 94, s = [], i, own, col;
+  for(i = 0; i < n; i++){
+    own = (i >= p.left && i < p.left + p.own);
+    col = own ? INK : AMB;
+    s.push(txt(x0 + (i + 0.5) * CW, y, d.charAt(i), col, 27));
+  }
+  var tight = Math.abs(k) < 2;
+  s.push(txt(x0 + p.pos * CW, y + 9, ",", MUT, 30));
+  s.push(txt(x0 + p.pos * CW, y + 30, "было", MUT, 14));
+  s.push(txt(x0 + p.nw * CW, y + 9, ",", ACC, 30));
+  s.push(txt(x0 + p.nw * CW, y + (tight ? 48 : 30), "стало", ACC, 14));
+  var xa = x0 + p.pos * CW, xb = x0 + p.nw * CW, top = y - 30;
+  if(k !== 0){
+    s.push('<path d="M '+f1(xa)+' '+f1(y-22)+' Q '+f1((xa+xb)/2)+' '+f1(top-26)+' '+
+           f1(xb)+' '+f1(y-22)+'" fill="none" stroke="'+ACC+'" stroke-width="2.2"/>');
+    var dx = (xb >= xa) ? 1 : -1;
+    s.push('<path d="M '+f1(xb)+' '+f1(y-22)+' L '+f1(xb-dx*9)+' '+f1(y-31)+' L '+
+           f1(xb-dx*9)+' '+f1(y-19)+' z" fill="'+ACC+'"/>');
+    s.push(txt((xa+xb)/2, top-32, "на "+Math.abs(k)+(k>0?" вправо":" влево"), ACC, 15));
+  } else {
+    s.push(txt(W/2, top-32, "запятая остаётся на месте", MUT, 15));
+  }
+  var base = y + (tight ? 64 : 46);
+  s.push(ln(x0-6, base, x0+total+6, base, "#dfe3ea", 1.6));
+  s.push(txt(W/2, base+30, "= " + res(num, k), GRN, 24));
+  var h = base + 44;
+  if(p.left || p.right){
+    s.push(txt(W/2, base+54, "оранжевые нули дописали", AMB, 14));
+    h = base + 68;
+  }
+  return svg(h, s.join(""));
+}
+
+/* ---------- случаи ---------- */
+var UNITS = [["10",1],["100",2],["1000",3],["0,1",1],["0,01",2],["0,001",3]];
+var MODES = [];
+(function(){
+  var i, u;
+  for(i = 0; i < UNITS.length; i++){
+    u = UNITS[i];
+    MODES.push({t: "· " + u[0], k: (i < 3 ? u[1] : -u[1]), op: "·", unit: u[0], n: u[1]});
+  }
+  for(i = 0; i < UNITS.length; i++){
+    u = UNITS[i];
+    MODES.push({t: ": " + u[0], k: (i < 3 ? -u[1] : u[1]), op: ":", unit: u[0], n: u[1],
+                dv: true});
+  }
+})();
+var NUMS = ["0,0075","0,8","1,04","1,234","4,256","13,456","24","145,6","802,28","1234"];
+
+function why(m){
+  var big = (m.unit.indexOf(",") < 0);
+  var count = big ? ("нулей в числе " + m.unit + " — " + m.n)
+                  : ("знаков после запятой в числе " + m.unit + " — " + m.n);
+  var side = (m.k > 0) ? "вправо" : "влево";
+  return count + ", значит запятая едет " + side + " на " + m.n;
+}
+function same(m){
+  var i, j, u = UNITS;
+  for(i = 0; i < MODES.length; i++){
+    if(MODES[i] !== m && MODES[i].k === m.k) return MODES[i].t;
+  }
+  return null;
+}
+
+function build(host){
+  var id = host.id;
+  var bar = document.getElementById(id+"b"), fig = document.getElementById(id+"f"),
+      msg = document.getElementById(id+"m"), ctl = document.getElementById(id+"c");
+  var cur = 1, ni = 4;
+
+  function render(){
+    var m = MODES[cur], num = NUMS[ni];
+    fig.innerHTML = draw(num, m.k);
+    var tw = same(m);
+    msg.innerHTML = '<span class="v">' + num + " " + m.op + " " + m.unit + " = " +
+      res(num, m.k) + '</span>' +
+      '<span class="num">' + why(m) + ".</span>" +
+      (tw ? '<span class="num">Запись «' + tw + '» даёт тот же результат.</span>' : "");
+    var bs = bar.querySelectorAll("button"), i;
+    for(i = 0; i < bs.length; i++)
+      bs[i].className = (MODES[i].dv ? "dv" : "") + (i === cur ? " on" : "");
+  }
+  var i, b;
+  for(i = 0; i < MODES.length; i++){
+    b = document.createElement("button");
+    b.type = "button"; b.textContent = MODES[i].t; b.setAttribute("data-i", i);
+    bar.appendChild(b);
+  }
+  bar.addEventListener("click", function(ev){
+    var el = ev.target;
+    while(el && el !== bar && el.tagName !== "BUTTON") el = el.parentNode;
+    if(!el || el === bar) return;
+    cur = parseInt(el.getAttribute("data-i"), 10);
+    render();
+  });
+  ctl.innerHTML = '<label>число<input type="range" id="'+id+'rn" min="0" max="' +
+    (NUMS.length-1) + '" step="1" value="4">' +
+    '<span class="v" id="'+id+'vn">'+NUMS[4]+'</span></label>';
+  var rn = document.getElementById(id+"rn");
+  rn.addEventListener("input", function(){
+    ni = parseInt(rn.value, 10);
+    document.getElementById(id+"vn").textContent = NUMS[ni];
+    render();
+  });
+  render();
+}
+
+window.RZLIVE = function(){
+  var hosts = document.querySelectorAll(".live[id]"), i;
+  for(i = 0; i < hosts.length; i++) build(hosts[i]);
+};
+})();
+RZLIVE();
+
+
+function allSol(open){
+  var ds = document.querySelectorAll("details.zs"), k;
+  for(k = 0; k < ds.length; k++) ds[k].open = open;
+}
+document.getElementById("openall").addEventListener("click", function(){ allSol(true); });
+document.getElementById("closeall").addEventListener("click", function(){ allSol(false); });
+
+</script>
+</body>
+</html>
