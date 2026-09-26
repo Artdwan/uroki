@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Числовые выражения и выражения с переменными — урок, §4, 7 класс</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:800px;margin:0 auto;padding:16px 14px 60px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+.f-formula{font-size:19px}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.step{margin:6px 0}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.fig{margin:12px 0;text-align:center}
+
+.nw{white-space:nowrap}
+.fig{text-align:center;margin:12px 0}
+.fig svg{width:100%;max-width:330px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.figrow{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  margin:12px 0}
+.figrow .fig{margin:0}
+.figrow .fig svg{max-width:100%}
+.fx{display:block;background:var(--acc-soft,var(--acc2,#e8f0ff));border:1px solid var(--line);
+  border-radius:10px;padding:11px 13px;margin:12px 0;text-align:center;font-size:20px;
+  line-height:2.1;font-weight:600;white-space:normal;overflow-wrap:break-word}
+.ex .fx,.zsol .fx{font-size:18px;margin:9px 0}
+.def{border:1px solid var(--line);border-left:4px solid #2f6bd8;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#eef3fb}
+.def .n{font-size:14px;color:#2f6bd8;font-weight:700;letter-spacing:.4px}
+.def>div+div{margin-top:4px}
+.rule2{border:1px solid var(--line);border-left:4px solid #c0397a;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdf0f6}
+.rule2 .n{font-size:14px;color:#a02a62;font-weight:700;letter-spacing:.4px}
+.hard{border:1px solid var(--line);border-left:4px solid #7a3fbf;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#f4efff}
+.hard .n{font-size:14px;color:#5f2ea0;font-weight:700;letter-spacing:.4px}
+.warn{border:1px solid var(--line);border-left:4px solid #b3261e;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdecea}
+.warn .n{font-size:14px;color:#b3261e;font-weight:700;letter-spacing:.4px}
+@media (prefers-color-scheme:dark){.rule2{background:#2a1b23}.def{background:#18212f}
+  .hard{background:#221a33}.warn{background:#2a1618}}
+.ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;
+  background:var(--bg)}
+.ex h3{margin-top:0}
+.zad{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;
+  background:var(--bg)}
+.zad .zh{font-weight:700;font-size:17px;margin-bottom:6px;color:var(--acc)}
+.zad .zh span{color:var(--muted);font-weight:400;font-size:15px}
+.zad .zt{font-size:17px;line-height:1.75}
+.zad ol,.zad ul{margin:7px 0 0;padding-left:22px}
+.zad li{margin:5px 0}
+.zs{margin-top:10px;border-top:1px dashed var(--line);padding-top:7px}
+.zs summary{cursor:pointer;color:var(--acc);font-weight:600;font-size:16px;
+  padding:5px 0;list-style:none}
+.zs summary::-webkit-details-marker{display:none}
+.zs summary::before{content:"▸ "}
+.zs[open] summary::before{content:"▾ "}
+.zsol{font-size:16px;line-height:1.7;padding-top:4px}
+.step{margin:7px 0}
+.step.mini,.mini,.small{color:var(--muted);font-size:15px}
+.tools{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.tools button{font-size:15px;padding:8px 13px;min-height:42px}
+.fr{display:inline-block;vertical-align:middle;text-align:center;margin:0 3px}
+.fr b{display:block;border-bottom:1.7px solid currentColor;padding:0 6px;font-weight:400;
+  white-space:nowrap}
+.fr i{display:block;font-style:normal;padding:0 6px;white-space:nowrap}
+.stol{width:100%;border-collapse:collapse;font-size:17px;margin:10px 0}
+.stol td{border:1px solid var(--line);padding:7px 9px}
+.stol td.r{text-align:right;font-variant-numeric:tabular-nums}
+@media (max-width:620px){
+  .stol,.stol tbody,.stol tr,.stol td{display:block;width:100%}
+  .stol{border-collapse:separate}
+  .stol tr{border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:5px 10px}
+  .stol td{border:none;padding:2px 0}
+  .stol td.r{text-align:left;color:var(--acc);font-weight:600}
+}
+.fgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));
+  margin:9px 0}
+.fbox{border:1px solid var(--line);border-radius:12px;padding:9px 12px 11px;
+  background:var(--bg)}
+.fbox h4{margin:0 0 3px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.fbox p{margin:6px 0 0;line-height:1.6;font-size:16px}
+.fbox p.small{font-size:15px}
+.pam h3{font-size:18px;margin:18px 0 2px}
+.pam h3:first-of-type{margin-top:10px}
+.qq{margin:10px 0 0;padding-left:22px}
+.qq li{margin:6px 0}
+@media print{
+  .tools{display:none !important}
+  .zad{break-inside:avoid}
+}
+
+.fig svg{max-width:430px}
+.figrow{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:12px 0}
+table.napr{border-collapse:collapse;width:100%;min-width:430px;font-size:16px}
+table.napr th,table.napr td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+table.napr th{background:var(--bg);font-weight:700;font-size:15px}
+table.napr td.r{color:#137a45;font-weight:700}
+table.napr td.l{color:#b3261e;font-weight:700}
+.fgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));margin:9px 0}
+.fbox{border:1px solid var(--line);border-radius:12px;padding:9px 12px 11px;background:var(--bg)}
+.fbox h4{margin:0 0 3px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.fbox p{margin:6px 0 0;line-height:1.6;font-size:16px}
+.fbox p.small{font-size:15px}
+.ff{font-size:20px;line-height:2.3;text-align:center;margin:6px 0;font-weight:600;
+  white-space:normal;overflow-wrap:break-word}
+.fbox .ff{font-size:18px;line-height:2.1}
+.pam h3{font-size:18px;margin:18px 0 2px}
+.pam h3:first-of-type{margin-top:10px}
+.def>div+div{margin-top:4px}
+.tohw{display:none}
+
+.live{border:1px solid var(--line);border-radius:12px;padding:12px 13px 13px;margin:14px 0;
+  background:var(--bg)}
+.live h4{margin:0 0 3px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.live .lhint{color:var(--muted);font-size:15px;margin:0 0 9px;line-height:1.5}
+.livebar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.livebar button{font-size:16px;padding:7px 11px;min-height:40px;border-radius:9px;
+  border:1.6px solid var(--line);background:var(--card);color:inherit;cursor:pointer;
+  line-height:1.2;font-variant-numeric:tabular-nums}
+.livebar button.on{border-color:var(--acc);background:var(--acc);color:#fff;font-weight:600}
+.livefig{text-align:center}
+.livefig svg{width:100%;max-width:430px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.livemsg{font-size:16px;line-height:1.6;margin-top:9px;min-height:46px}
+.livemsg .v{font-weight:700}
+.livemsg .v.bad{color:#b3261e}
+.livemsg .v.ok{color:#137a45}
+.livemsg .num{display:block;color:var(--muted);font-size:15px;margin-top:3px}
+.livectl{display:grid;gap:7px;margin-top:11px}
+.livectl label{display:flex;align-items:center;gap:9px;font-size:15px;color:var(--muted)}
+.livectl input[type=range]{flex:1;min-width:0}
+.livectl .v{font-variant-numeric:tabular-nums;min-width:58px;text-align:right;
+  color:inherit;font-weight:600}
+
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+@media print{
+  body{background:#fff}
+  .tools{display:none !important}
+  .live{display:none !important}
+  .card{border:none;box-shadow:none;padding:0;margin:0 0 12px}
+  .zad{break-inside:avoid;background:#fff}
+  .sheet{font-size:13px}
+  .sheet h2{font-size:18px}
+  .sheet th,.sheet td{padding:4px 5px;font-size:12px}
+  @page{size:A4;margin:12mm}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card top">
+  <h1>Числовые выражения и выражения с переменными</h1>
+  <div class="meta">Алгебра · 7 класс · §4 · теория порциями, два живых чертежа
+  и 41 задание с решениями</div>
+  <div class="note" style="margin-top:14px">
+    <b>Как работать.</b> Читаем порцию теории, разбираем пример, затем решаем задания
+    блока <b>в тетради</b> — и только потом открываем решение и сверяемся.
+    <div style="margin-top:8px">Три разных вопроса темы: что это за запись, какое
+    у неё значение и какие числа подставлять нельзя. Их всё время путают.</div>
+    <div style="margin-top:8px">Область определения ищут по одному правилу:
+    делитель приравнивают к нулю и найденное значение выбрасывают.</div>
+    <div style="margin-top:8px">Тренажёров и отправки работы здесь нет: это урок.</div>
+  </div>
+  <div class="tools">
+    <button type="button" id="openall">Раскрыть все решения</button>
+    <button type="button" id="closeall">Свернуть все</button>
+  </div>
+</div>
+
+<div class="card pam">
+<h2>Памятка</h2><h3>Выражения и их значения</h3><div class="fgrid"><div class="fbox"><h4>Числовое выражение</h4><p>Запись из чисел, соединённых знаками действий; могут быть скобки.</p><p class="small"><span class='nw'>12 + 3 · (7 − 5)</span> — числовое выражение.</p></div><div class="fbox"><h4>Значение выражения</h4><p>Число, которое получается, когда все действия выполнены.</p><p class="small">У выражения <span class='nw'>12 + 3 · (7 − 5)</span> значение равно 18.</p></div><div class="fbox"><h4>Когда смысла нет</h4><p>Если при вычислении приходится делить на нуль, выражение <b>не имеет смысла</b>.</p><p class="small"><span class='nw'>15 : (8 − 8)</span> — смысла нет.</p></div></div><h3>Переменные</h3><div class="fgrid"><div class="fbox"><h4>Выражение с переменными</h4><p>Та же запись, но есть буквы. Буквы называют переменными.</p><p class="small"><span class='nw'>3a − 4</span>, <span class='nw'>2(a + b)</span>, <span class='nw'>x : (x + 5)</span>.</p></div><div class="fbox"><h4>Значение при данном значении переменной</h4><p>Подставили числа вместо букв — получили числовое выражение — посчитали.</p><p class="small">При <span class='nw'>a = −2</span> значение <span class='nw'>3a − 4</span> равно <span class='nw'>−10</span>.</p></div><div class="fbox"><h4>Область определения</h4><p>Все значения переменных, при которых выражение имеет смысл.</p><p class="small">Записывают так: <span class='nw'>x ≠ 3</span> — то есть годится любое число, кроме 3.</p></div></div><h3>Как искать область определения</h3><div class="fgrid"><div class="fbox"><h4>Деления на букву нет</h4><div class="ff"><span class='nw'>7a − 4</span></div><p>Область определения — <b>любое число</b>: выбрасывать нечего.</p></div><div class="fbox"><h4>Деление на букву есть</h4><div class="ff"><span class='nw'>105 − 20 : (x − 3)</span></div><p>Приравниваем делитель к нулю, решаем, найденное значение выбрасываем.</p><p class="small"><span class='nw'>x − 3 = 0</span>, значит <span class='nw'>x = 3</span>, ответ <span class='nw'>x ≠ 3</span>.</p></div><div class="fbox"><h4>Две главные ловушки</h4><p><span class='nw'>0 : 5 = 0</span> — смысл есть. <span class='nw'>5 : 0</span> — смысла нет. Это разные вещи.</p><p class="small"><span class='nw'>(−2)² = 4</span>, а <span class='nw'>−2² = −4</span>.</p></div></div>
+</div>
+
+<div class="card">
+
+<h2>1. Числовое выражение и его значение</h2>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>
+<div><b>Числовое выражение</b> — это запись, составленная из чисел, знаков действий
+и скобок, которая имеет смысл.</div>
+<div><b>Значение числового выражения</b> — число, которое получается, когда все
+действия выполнены.</div></div>
+<div class="fig"><svg viewBox="0 0 430 204"><rect x="0" y="0" width="430" height="204" rx="12" fill="#ffffff"/><rect x="69.0" y="42.0" width="42.2" height="40" rx="9" fill="#ffffff" stroke="#2f6bd8" stroke-width="1.8"/><text x="90.1" y="70.0" font-size="26" fill="#2f6bd8" text-anchor="middle" font-weight="600">12</text><rect x="116.1" y="42.0" width="28.6" height="40" rx="9" fill="#ffffff" stroke="#e0952a" stroke-width="1.8"/><text x="130.5" y="70.0" font-size="26" fill="#e0952a" text-anchor="middle" font-weight="600">+</text><rect x="149.8" y="42.0" width="27.1" height="40" rx="9" fill="#ffffff" stroke="#2f6bd8" stroke-width="1.8"/><text x="163.3" y="70.0" font-size="26" fill="#2f6bd8" text-anchor="middle" font-weight="600">3</text><rect x="181.9" y="42.0" width="28.6" height="40" rx="9" fill="#ffffff" stroke="#e0952a" stroke-width="1.8"/><text x="196.2" y="70.0" font-size="26" fill="#e0952a" text-anchor="middle" font-weight="600">·</text><rect x="215.5" y="42.0" width="21.4" height="40" rx="9" fill="#ffffff" stroke="#7a3fbf" stroke-width="1.8"/><text x="226.2" y="70.0" font-size="26" fill="#7a3fbf" text-anchor="middle" font-weight="600">(</text><rect x="241.9" y="42.0" width="27.1" height="40" rx="9" fill="#ffffff" stroke="#2f6bd8" stroke-width="1.8"/><text x="255.4" y="70.0" font-size="26" fill="#2f6bd8" text-anchor="middle" font-weight="600">7</text><rect x="273.9" y="42.0" width="28.6" height="40" rx="9" fill="#ffffff" stroke="#e0952a" stroke-width="1.8"/><text x="288.3" y="70.0" font-size="26" fill="#e0952a" text-anchor="middle" font-weight="600">−</text><rect x="307.6" y="42.0" width="27.1" height="40" rx="9" fill="#ffffff" stroke="#2f6bd8" stroke-width="1.8"/><text x="321.1" y="70.0" font-size="26" fill="#2f6bd8" text-anchor="middle" font-weight="600">5</text><rect x="339.7" y="42.0" width="21.4" height="40" rx="9" fill="#ffffff" stroke="#7a3fbf" stroke-width="1.8"/><text x="350.3" y="70.0" font-size="26" fill="#7a3fbf" text-anchor="middle" font-weight="600">)</text><rect x="26.0" y="104.0" width="15" height="15" rx="4" fill="#ffffff" stroke="#2f6bd8" stroke-width="2"/><text x="48.0" y="117.0" font-size="14" fill="#2f6bd8" text-anchor="start" font-weight="600">числа</text><rect x="109.2" y="104.0" width="15" height="15" rx="4" fill="#ffffff" stroke="#e0952a" stroke-width="2"/><text x="131.2" y="117.0" font-size="14" fill="#e0952a" text-anchor="start" font-weight="600">знаки действий</text><rect x="259.9" y="104.0" width="15" height="15" rx="4" fill="#ffffff" stroke="#7a3fbf" stroke-width="2"/><text x="281.9" y="117.0" font-size="14" fill="#7a3fbf" text-anchor="start" font-weight="600">скобки</text><text x="215.0" y="152.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">всё вместе — числовое выражение</text><text x="215" y="198" font-size="14" fill="#5b6270" text-anchor="middle">одно выражение: числа, знаки действий и скобки</text></svg></div>
+<p>Отдельное число — тоже числовое выражение. А вот запись
+<span class='nw'>12 + 3 ·</span> выражением не является: после знака действия должно
+стоять число.</p>
+<div class="ex"><h3>Пример 1</h3>
+<p>Найти значение выражения <span class='nw'>12 + 3 · (7 − 5)</span>.</p>
+<div class='step'>1. Сначала скобка: <span class='nw'>7 − 5 = 2</span>.</div><div class='step'>2. Потом умножение: <span class='nw'>3 · 2 = 6</span>.</div><div class='step'>3. В конце сложение: <span class='nw'>12 + 6 = 18</span>.</div><div class='fx'><span class='nw'>12 + 3 · (7 − 5)</span> = <span class='nw'>18</span></div><div class='step mini'>Порядок действий не выбирают: сначала скобки, потом умножение и деление, в конце сложение и вычитание.</div>
+</div>
+<div class="figrow"><div class="fig"><svg viewBox="0 0 340 146"><rect x="0" y="0" width="340" height="146" rx="12" fill="#ffffff"/><text x="81.2" y="62.0" font-size="25" fill="#15181e" text-anchor="start" font-weight="600">12</text><text x="116.2" y="62.0" font-size="25" fill="#2f6bd8" text-anchor="start" font-weight="600">+</text><circle cx="124.2" cy="31.0" r="11.5" fill="#ffffff" stroke="#2f6bd8" stroke-width="2"/><text x="124.2" y="36.0" font-size="14" fill="#2f6bd8" text-anchor="middle" font-weight="600">3</text><text x="138.2" y="62.0" font-size="25" fill="#15181e" text-anchor="start" font-weight="600">3</text><text x="158.8" y="62.0" font-size="25" fill="#2f6bd8" text-anchor="start" font-weight="600">·</text><circle cx="166.8" cy="31.0" r="11.5" fill="#ffffff" stroke="#2f6bd8" stroke-width="2"/><text x="166.8" y="36.0" font-size="14" fill="#2f6bd8" text-anchor="middle" font-weight="600">2</text><text x="180.8" y="62.0" font-size="25" fill="#15181e" text-anchor="start" font-weight="600">(</text><text x="191.2" y="62.0" font-size="25" fill="#15181e" text-anchor="start" font-weight="600">7</text><text x="211.8" y="62.0" font-size="25" fill="#2f6bd8" text-anchor="start" font-weight="600">−</text><circle cx="219.8" cy="31.0" r="11.5" fill="#ffffff" stroke="#2f6bd8" stroke-width="2"/><text x="219.8" y="36.0" font-size="14" fill="#2f6bd8" text-anchor="middle" font-weight="600">1</text><text x="233.8" y="62.0" font-size="25" fill="#15181e" text-anchor="start" font-weight="600">5</text><text x="249.8" y="62.0" font-size="25" fill="#15181e" text-anchor="start" font-weight="600">)</text><line x1="73.2" y1="78.0" x2="266.8" y2="78.0" stroke="#dfe3ea" stroke-width="1.6" stroke-linecap="round"/><text x="170.0" y="110.0" font-size="24" fill="#137a45" text-anchor="middle" font-weight="600">= 18</text><text x="170" y="140" font-size="14" fill="#5b6270" text-anchor="middle">12 + 3 · (7 − 5)</text></svg></div><div class="fig"><svg viewBox="0 0 340 146"><rect x="0" y="0" width="340" height="146" rx="12" fill="#ffffff"/><text x="81.2" y="62.0" font-size="25" fill="#15181e" text-anchor="start" font-weight="600">(</text><text x="91.8" y="62.0" font-size="25" fill="#15181e" text-anchor="start" font-weight="600">48</text><text x="126.8" y="62.0" font-size="25" fill="#2f6bd8" text-anchor="start" font-weight="600">−</text><circle cx="134.8" cy="31.0" r="11.5" fill="#ffffff" stroke="#2f6bd8" stroke-width="2"/><text x="134.8" y="36.0" font-size="14" fill="#2f6bd8" text-anchor="middle" font-weight="600">2</text><text x="148.8" y="62.0" font-size="25" fill="#15181e" text-anchor="start" font-weight="600">6</text><text x="169.2" y="62.0" font-size="25" fill="#2f6bd8" text-anchor="start" font-weight="600">·</text><circle cx="177.2" cy="31.0" r="11.5" fill="#ffffff" stroke="#2f6bd8" stroke-width="2"/><text x="177.2" y="36.0" font-size="14" fill="#2f6bd8" text-anchor="middle" font-weight="600">1</text><text x="191.2" y="62.0" font-size="25" fill="#15181e" text-anchor="start" font-weight="600">4</text><text x="207.2" y="62.0" font-size="25" fill="#15181e" text-anchor="start" font-weight="600">)</text><text x="222.2" y="62.0" font-size="25" fill="#2f6bd8" text-anchor="start" font-weight="600">:</text><circle cx="230.2" cy="31.0" r="11.5" fill="#ffffff" stroke="#2f6bd8" stroke-width="2"/><text x="230.2" y="36.0" font-size="14" fill="#2f6bd8" text-anchor="middle" font-weight="600">3</text><text x="244.2" y="62.0" font-size="25" fill="#15181e" text-anchor="start" font-weight="600">2</text><line x1="73.2" y1="78.0" x2="266.8" y2="78.0" stroke="#dfe3ea" stroke-width="1.6" stroke-linecap="round"/><text x="170.0" y="110.0" font-size="24" fill="#137a45" text-anchor="middle" font-weight="600">= 12</text><text x="170" y="140" font-size="14" fill="#5b6270" text-anchor="middle">(48 − 6 · 4) : 2</text></svg></div></div>
+
+<h3>Задания к блоку 1</h3>
+<div class="zad" id="z1"><div class="zh">Задание 1<span></span></div><div class="zt">Найдите значение числового выражения: <span class='nw'>36 : 4 + 5 · 3</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Деление и умножение раньше сложения: <span class='nw'>9 + 15</span>.</div><div class='fx'>24</div></div></details></div><div class="zad" id="z2"><div class="zh">Задание 2<span></span></div><div class="zt">Найдите значение числового выражения: <span class='nw'>(17 − 9) · 5</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Сначала скобка: <span class='nw'>17 − 9 = 8</span>.</div><div class='fx'>40</div></div></details></div><div class="zad" id="z3"><div class="zh">Задание 3<span> · разобрано в примере 1</span></div><div class="zt">Найдите значение числового выражения: <span class='nw'>12 + 3 · (7 − 5)</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Скобка 2, умножение 6, сложение 18.</div><div class='fx'>18</div></div></details></div><div class="zad" id="z4"><div class="zh">Задание 4<span></span></div><div class="zt">Найдите значение числового выражения: <span class='nw'>(48 − 6 · 4) : 2</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>В скобке сначала умножение: <span class='nw'>48 − 24 = 24</span>.</div><div class='step'>Затем <span class='nw'>24 : 2 = 12</span>.</div><div class='fx'>12</div></div></details></div><div class="zad" id="z5"><div class="zh">Задание 5<span></span></div><div class="zt">Найдите значение числового выражения: <span class='nw'>100 − 5 · 4²</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Степень раньше умножения: <span class='nw'>4² = 16</span>.</div><div class='step'><span class='nw'>5 · 16 = 80</span>, затем <span class='nw'>100 − 80 = 20</span>.</div><div class='fx'>20</div></div></details></div><div class="zad" id="z6"><div class="zh">Задание 6<span></span></div><div class="zt">Найдите значение числового выражения: <span class='nw'>7 − 2 · (3 − 5)</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>3 − 5 = −2</span>, затем <span class='nw'>2 · (−2) = −4</span>.</div><div class='step'><span class='nw'>7 − (−4) = 11</span>.</div><div class='fx'>11</div></div></details></div><div class="zad" id="z7"><div class="zh">Задание 7<span></span></div><div class="zt">Найдите значение числового выражения: <span class='nw'>(2,4 + 3,6) : 3</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>6 : 3 = 2</span>.</div><div class='fx'>2</div></div></details></div><div class="zad" id="z8"><div class="zh">Задание 8<span></span></div><div class="zt">Найдите значение числового выражения: <span class='nw'>0,2 · (30 − 5)</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>0,2 · 25 = 5</span>.</div><div class='fx'>5</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>2. Когда выражение не имеет смысла</h2>
+<p>Делить на нуль нельзя — и это не запрет ради запрета. Посмотри, почему.</p>
+<div class="fig"><svg viewBox="0 0 430 172"><rect x="0" y="0" width="430" height="172" rx="12" fill="#ffffff"/><text x="215.0" y="40.0" font-size="18" fill="#15181e" text-anchor="middle" font-weight="600">12 : 4 = 3, потому что 3 · 4 = 12</text><text x="215.0" y="76.0" font-size="18" fill="#b3261e" text-anchor="middle" font-weight="600">12 : 0 = ?, потому что ? · 0 = 12</text><text x="215.0" y="108.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">любое число, умноженное на 0, даёт 0</text><text x="215.0" y="130.0" font-size="15" fill="#b3261e" text-anchor="middle" font-weight="600">такого числа нет — делить на нуль нельзя</text><text x="215" y="166" font-size="14" fill="#5b6270" text-anchor="middle">деления на нуль не существует</text></svg></div>
+<div class="def"><div class="n">ПРАВИЛО</div>
+Если при вычислении значения приходится делить на нуль, то выражение
+<b>не имеет смысла</b>. Значения у него нет.</div>
+<div class="ex"><h3>Пример 2</h3>
+<p>Имеют ли смысл выражения <span class='nw'>15 : (8 − 5)</span> и
+<span class='nw'>15 : (8 − 8)</span>?</p>
+<div class='step'>1. <span class='nw'>8 − 5 = 3</span>, делим на 3 — всё в порядке: <span class='nw'>15 : 3 = 5</span>.</div><div class='step'>2. <span class='nw'>8 − 8 = 0</span>, делить на нуль нельзя — смысла нет.</div><div class='fx'>первое имеет смысл, второе — нет</div>
+</div>
+<div class="fig"><svg viewBox="0 0 430 196"><rect x="0" y="0" width="430" height="196" rx="12" fill="#ffffff"/><rect x="12.0" y="18.0" width="198.0" height="150.0" rx="12" fill="#e9f7ef" stroke="#137a45" stroke-width="2"/><text x="111.0" y="64.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">15 : (8 − 5)</text><text x="111.0" y="132.0" font-size="16" fill="#137a45" text-anchor="middle" font-weight="600">имеет смысл</text><text x="111.0" y="156.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">значение 5</text><rect x="220.0" y="18.0" width="198.0" height="150.0" rx="12" fill="#fdecea" stroke="#b3261e" stroke-width="2"/><text x="319.0" y="64.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">15 : (8 − 8)</text><text x="319.0" y="132.0" font-size="16" fill="#b3261e" text-anchor="middle" font-weight="600">не имеет смысла</text><text x="319.0" y="156.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">делитель равен нулю</text></svg></div>
+<div class="warn"><div class="n">ГЛАВНАЯ ПУТАНИЦА ТЕМЫ</div>
+«Не имеет смысла» и «равно нулю» — совершенно разные вещи.
+<span class='nw'>0 : 5 = 0</span> — значение есть, оно равно нулю.
+<span class='nw'>5 : 0</span> — значения нет вообще. Нуль может стоять под чертой деления
+только в первом случае: нуль делят на что угодно, а на нуль не делят.</div>
+
+<h3>Задания к блоку 2</h3>
+<div class="zad" id="z9"><div class="zh">Задание 9<span></span></div><div class="zt">Имеет ли смысл выражение <span class='nw'>24 : (5 − 5)</span>?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>5 − 5 = 0</span>, делить на нуль нельзя.</div><div class='fx'>не имеет смысла</div></div></details></div><div class="zad" id="z10"><div class="zh">Задание 10<span> · сравните с предыдущим</span></div><div class="zt">Имеет ли смысл выражение <span class='nw'>(5 − 5) : 24</span>?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Нуль делят на 24 — это разрешено.</div><div class='fx'>имеет смысл, значение 0</div></div></details></div><div class="zad" id="z11"><div class="zh">Задание 11<span></span></div><div class="zt">Имеет ли смысл выражение <span class='nw'>18 : (3 · 0)</span>?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>3 · 0 = 0</span>.</div><div class='fx'>не имеет смысла</div></div></details></div><div class="zad" id="z12"><div class="zh">Задание 12<span></span></div><div class="zt">Имеет ли смысл выражение <span class='nw'>15 : (2,5 · 4 − 10)</span>?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>2,5 · 4 = 10</span>, значит делитель <span class='nw'>10 − 10 = 0</span>.</div><div class='fx'>не имеет смысла</div></div></details></div><div class="zad" id="z13"><div class="zh">Задание 13<span></span></div><div class="zt">Имеет ли смысл выражение <span class='nw'>(3 + 5) : (3 − 5)</span>?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Делитель равен −2, это не нуль.</div><div class='fx'>имеет смысл, значение −4</div></div></details></div><div class="zad" id="z14"><div class="zh">Задание 14<span></span></div><div class="zt">Из выражений <span class='nw'>6 : (0,5 − 0,5)</span>, <span class='nw'>(0,2 · 5 − 1) : 4</span>, <span class='nw'>7 · (0 : 9)</span> выберите то, которое не имеет смысла.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>В первом делитель <span class='nw'>0,5 − 0,5 = 0</span>.</div><div class='step'>Во втором и третьем нуль стоит в делимом — это разрешено.</div><div class='fx'><span class='nw'>6 : (0,5 − 0,5)</span></div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>3. Выражение с переменными</h2>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>
+Если в записи, кроме чисел и знаков действий, есть буквы, то это
+<b>выражение с переменными</b>. Буквы называют <b>переменными</b>, потому что
+вместо них можно подставлять разные числа.</div>
+<p>Примеры: <span class='nw'>3a − 4</span>, <span class='nw'>2(a + b)</span>, <span class='nw'>x² − 4x</span>, <span class='nw'>x : (x + 5)</span>.
+Числовое выражение — частный случай: просто букв в нём нет.</p>
+<div class="ex"><h3>Пример 3. Как выражение читают</h3>
+<div class='step'>Выражение читают по <b>последнему</b> действию.</div><div class='step'><span class='nw'>a² − b²</span> — последнее действие вычитание, значит это <b>разность квадратов</b> чисел a и b.</div><div class='step'><span class='nw'>(a − b)²</span> — последнее действие возведение в квадрат, значит это <b>квадрат разности</b> чисел a и b.</div><div class='step mini'>Слова «сумма», «разность», «произведение», «частное» всегда говорят про последнее действие.</div>
+</div>
+<div class="fig"><svg viewBox="0 0 430 198"><rect x="0" y="0" width="430" height="198" rx="12" fill="#ffffff"/><rect x="12.0" y="18.0" width="198.0" height="116.0" rx="12" fill="#eef3fd" stroke="#2f6bd8" stroke-width="2"/><text x="111.0" y="54.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">разность квадратов</text><text x="111.0" y="102.0" font-size="23" fill="#2f6bd8" text-anchor="middle" font-weight="600">a² − b²</text><rect x="220.0" y="18.0" width="198.0" height="116.0" rx="12" fill="#f3edfb" stroke="#7a3fbf" stroke-width="2"/><text x="319.0" y="54.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">квадрат разности</text><text x="319.0" y="102.0" font-size="23" fill="#7a3fbf" text-anchor="middle" font-weight="600">(a − b)²</text><text x="215.0" y="146.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">это разные выражения</text><text x="215" y="192" font-size="14" fill="#5b6270" text-anchor="middle">при a = 5 и b = 3 получится 16 и 4</text></svg></div>
+
+</div>
+
+<div class="card">
+
+<h2>4. Значение выражения с переменными</h2>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>
+Чтобы найти <b>значение выражения с переменными</b>, надо подставить вместо букв
+данные числа и выполнить все действия. Получится числовое выражение, а у него —
+значение.</div>
+<div class="fig"><svg viewBox="0 0 430 276"><rect x="0" y="0" width="430" height="276" rx="12" fill="#ffffff"/><rect x="14.0" y="16.0" width="402.0" height="54.0" rx="12" fill="#eef3fd" stroke="#2f6bd8" stroke-width="2"/><text x="215.0" y="50.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">3a − 4</text><text x="215.0" y="14.0" font-size="13" fill="#5b6270" text-anchor="middle" font-weight="600">выражение с переменными</text><line x1="215.0" y1="72.0" x2="215.0" y2="90.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><path d="M 215.0 90.0 L 212.2 81.5 L 217.8 81.5 z" fill="#5b6270"/><rect x="14.0" y="100.0" width="402.0" height="54.0" rx="12" fill="#eef3fd" stroke="#2f6bd8" stroke-width="2"/><text x="215.0" y="134.0" font-size="21" fill="#2f6bd8" text-anchor="middle" font-weight="600">3 · (−2) − 4</text><text x="215.0" y="98.0" font-size="13" fill="#5b6270" text-anchor="middle" font-weight="600">подставили a = −2</text><line x1="215.0" y1="156.0" x2="215.0" y2="174.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><path d="M 215.0 174.0 L 212.2 165.5 L 217.8 165.5 z" fill="#5b6270"/><rect x="14.0" y="184.0" width="402.0" height="54.0" rx="12" fill="#e9f7ef" stroke="#137a45" stroke-width="2"/><text x="215.0" y="218.0" font-size="21" fill="#137a45" text-anchor="middle" font-weight="600">−10</text><text x="215.0" y="182.0" font-size="13" fill="#5b6270" text-anchor="middle" font-weight="600">значение выражения</text><text x="215" y="270" font-size="14" fill="#5b6270" text-anchor="middle">подставили — получили числовое выражение — посчитали</text></svg></div>
+<div class="ex"><h3>Пример 4</h3>
+<p>Найти значение выражения <span class='nw'>3x² − 5x</span>
+при <span class='nw'>x = −2</span> и при <span class='nw'>x = 0,5</span>.</p>
+<div class='step'>1. <span class='nw'>x = −2</span>: <span class='nw'>3 · (−2)² − 5 · (−2)</span> = <span class='nw'>3 · 4 + 10</span> = <span class='nw'>22</span>.</div><div class='step'>2. <span class='nw'>x = 0,5</span>: <span class='nw'>3 · 0,5² − 5 · 0,5</span> = <span class='nw'>0,75 − 2,5</span> = <span class='nw'>−1,75</span>.</div><div class='fx'>22 и −1,75</div><div class='step mini'>Отрицательное число подставляют <b>в скобках</b>: так видно, что в квадрат идёт всё число целиком.</div>
+</div>
+<div class="fig"><svg viewBox="0 0 430 224"><rect x="0" y="0" width="430" height="224" rx="12" fill="#ffffff"/><rect x="16.0" y="18.0" width="132.7" height="34.0" fill="#eef2f8" stroke="#dfe3ea" stroke-width="1.4"/><text x="82.3" y="41.0" font-size="17" fill="#15181e" text-anchor="middle" font-weight="600">x</text><rect x="148.7" y="18.0" width="265.3" height="34.0" fill="#eef2f8" stroke="#dfe3ea" stroke-width="1.4"/><text x="281.3" y="41.0" font-size="17" fill="#15181e" text-anchor="middle" font-weight="600">3x² − 5x</text><rect x="16.0" y="52.0" width="132.7" height="34.0" fill="#ffffff" stroke="#dfe3ea" stroke-width="1.4"/><text x="82.3" y="75.0" font-size="17" fill="#15181e" text-anchor="middle" font-weight="600">−2</text><rect x="148.7" y="52.0" width="265.3" height="34.0" fill="#ffffff" stroke="#dfe3ea" stroke-width="1.4"/><text x="281.3" y="75.0" font-size="17" fill="#137a45" text-anchor="middle" font-weight="600">22</text><rect x="16.0" y="86.0" width="132.7" height="34.0" fill="#ffffff" stroke="#dfe3ea" stroke-width="1.4"/><text x="82.3" y="109.0" font-size="17" fill="#15181e" text-anchor="middle" font-weight="600">0</text><rect x="148.7" y="86.0" width="265.3" height="34.0" fill="#ffffff" stroke="#dfe3ea" stroke-width="1.4"/><text x="281.3" y="109.0" font-size="17" fill="#137a45" text-anchor="middle" font-weight="600">0</text><rect x="16.0" y="120.0" width="132.7" height="34.0" fill="#ffffff" stroke="#dfe3ea" stroke-width="1.4"/><text x="82.3" y="143.0" font-size="17" fill="#15181e" text-anchor="middle" font-weight="600">0,5</text><rect x="148.7" y="120.0" width="265.3" height="34.0" fill="#ffffff" stroke="#dfe3ea" stroke-width="1.4"/><text x="281.3" y="143.0" font-size="17" fill="#137a45" text-anchor="middle" font-weight="600">−1,75</text><rect x="16.0" y="154.0" width="132.7" height="34.0" fill="#ffffff" stroke="#dfe3ea" stroke-width="1.4"/><text x="82.3" y="177.0" font-size="17" fill="#15181e" text-anchor="middle" font-weight="600">2</text><rect x="148.7" y="154.0" width="265.3" height="34.0" fill="#ffffff" stroke="#dfe3ea" stroke-width="1.4"/><text x="281.3" y="177.0" font-size="17" fill="#137a45" text-anchor="middle" font-weight="600">2</text><text x="215" y="218" font-size="14" fill="#5b6270" text-anchor="middle">одно выражение — разные значения</text></svg></div>
+<div class="warn"><div class="n">ЛОВУШКА СО ЗНАКОМ</div>
+<span class='nw'>(−2)² = 4</span>, а
+<span class='nw'>−2² = −4</span>. В первом случае в квадрат
+возводят число −2, во втором — только двойку, а минус остаётся снаружи.</div>
+
+</div>
+
+<div class="card">
+
+<h2>Живой чертёж: значение выражения</h2>
+<div class="meta">Кнопка выбирает выражение, ползунок — значение переменной.
+Видно каждый шаг: подстановку, действия и результат.</div>
+<div class="live" id="vl1" data-kind="val"><h4>Подставляем и считаем</h4><p class="lhint">Посмотри, что делает выражение <span class='nw'>−x²</span> при отрицательном x — знак не меняется.</p><div class="livebar" id="vl1b"></div><div class="livefig" id="vl1f"></div><div class="livemsg" id="vl1m"></div><div class="livectl" id="vl1c"></div></div>
+</div>
+
+<div class="card">
+  <h3>Задания к блокам 3-4</h3>
+<div class="zad" id="z15"><div class="zh">Задание 15<span></span></div><div class="zt">Найдите значение выражения <span class='nw'>3a + 7</span> при <span class='nw'>a = 4</span> и при <span class='nw'>a = −2</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>3 · 4 + 7 = 19</span>.</div><div class='step'><span class='nw'>3 · (−2) + 7 = 1</span>.</div><div class='fx'>19 и 1</div></div></details></div><div class="zad" id="z16"><div class="zh">Задание 16<span></span></div><div class="zt">Найдите значение выражения <span class='nw'>x² − 4x</span> при <span class='nw'>x = 3</span>, <span class='nw'>x = −1</span>, <span class='nw'>x = 0</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>9 − 12 = −3</span>.</div><div class='step'><span class='nw'>1 − (−4) = 5</span>.</div><div class='step'><span class='nw'>0 − 0 = 0</span>.</div><div class='fx'>−3; 5; 0</div></div></details></div><div class="zad" id="z17"><div class="zh">Задание 17<span> · разобрано в примере 4</span></div><div class="zt">Найдите значение выражения <span class='nw'>3x² − 5x</span> при <span class='nw'>x = −2</span> и при <span class='nw'>x = 0,5</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>3 · 4 + 10 = 22</span>.</div><div class='step'><span class='nw'>0,75 − 2,5 = −1,75</span>.</div><div class='fx'>22 и −1,75</div></div></details></div><div class="zad" id="z18"><div class="zh">Задание 18<span></span></div><div class="zt">Найдите значение выражения <span class='nw'>2(x − 3) + 5</span> при <span class='nw'>x = 0</span> и при <span class='nw'>x = 3</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>2 · (−3) + 5 = −1</span>.</div><div class='step'><span class='nw'>2 · 0 + 5 = 5</span>.</div><div class='fx'>−1 и 5</div></div></details></div><div class="zad" id="z19"><div class="zh">Задание 19<span></span></div><div class="zt">Найдите значение выражения <span class='nw'>10 − x²</span> при <span class='nw'>x = −4</span> и при <span class='nw'>x = 1</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>(−4)² = 16</span>, значит <span class='nw'>10 − 16 = −6</span>.</div><div class='step'><span class='nw'>10 − 1 = 9</span>.</div><div class='fx'>−6 и 9</div></div></details></div><div class="zad" id="z20"><div class="zh">Задание 20<span> · ловушка со знаком</span></div><div class="zt">Сравните значения выражений <span class='nw'>−x²</span> и <span class='nw'>(−x)²</span> при <span class='nw'>x = −5</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>−(−5)² = −25</span>.</div><div class='step'><span class='nw'>(−(−5))² = 5² = 25</span>.</div><div class='fx'>−25 и 25 — это разные выражения</div></div></details></div><div class="zad" id="z21"><div class="zh">Задание 21<span></span></div><div class="zt">Найдите значение выражения <span class='nw'>ab − b</span> при <span class='nw'>a = 3, b = −2</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>3 · (−2) = −6</span>, затем <span class='nw'>−6 + 2 = −4</span>.</div><div class='fx'>−4</div></div></details></div><div class="zad" id="z22"><div class="zh">Задание 22<span></span></div><div class="zt">Заполните таблицу значений выражения <span class='nw'>5x − x²</span> при <span class='nw'>x = 0</span>; <span class='nw'>x = 0,5</span>; <span class='nw'>x = 5</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>0 − 0 = 0</span>.</div><div class='step'><span class='nw'>2,5 − 0,25 = 2,25</span>.</div><div class='step'><span class='nw'>25 − 25 = 0</span>.</div><div class='fx'>0; 2,25; 0</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>5. Область определения</h2>
+<p>Подставлять можно не всякое число: иногда выражение теряет смысл.
+Например, в <span class='nw'>105 − 20 : (x − 3)</span> при
+<span class='nw'>x = 3</span> пришлось бы делить на нуль.</p>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>
+<b>Область определения выражения с переменными</b> — это все значения переменных,
+при которых выражение имеет смысл.</div>
+<div class="ex"><h3>Пример 5</h3>
+<p>Найти область определения выражения <span class='nw'>7a − 4</span>.</p>
+<div class='step'>1. В записи есть умножение и вычитание, деления на букву нет.</div><div class='step'>2. Значит подставить можно любое число: смысл будет всегда.</div><div class='fx'>область определения: любое число</div>
+</div>
+<div class="fig"><svg viewBox="0 0 430 152"><rect x="0" y="0" width="430" height="152" rx="12" fill="#ffffff"/><line x1="26.0" y1="66.0" x2="394.0" y2="66.0" stroke="#137a45" stroke-width="3.0" stroke-linecap="round"/><line x1="386.0" y1="66.0" x2="406.0" y2="66.0" stroke="#137a45" stroke-width="3.0" stroke-linecap="round"/><path d="M 406.0 66.0 L 397.5 68.8 L 397.5 63.2 z" fill="#137a45"/><line x1="42.0" y1="60.0" x2="42.0" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><text x="42.0" y="92.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">−6</text><line x1="70.8" y1="60.0" x2="70.8" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><line x1="99.7" y1="60.0" x2="99.7" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><text x="99.7" y="92.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">−4</text><line x1="128.5" y1="60.0" x2="128.5" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><line x1="157.3" y1="60.0" x2="157.3" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><text x="157.3" y="92.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">−2</text><line x1="186.2" y1="60.0" x2="186.2" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><line x1="215.0" y1="60.0" x2="215.0" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><text x="215.0" y="92.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">0</text><line x1="243.8" y1="60.0" x2="243.8" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><line x1="272.7" y1="60.0" x2="272.7" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><text x="272.7" y="92.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">2</text><line x1="301.5" y1="60.0" x2="301.5" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><line x1="330.3" y1="60.0" x2="330.3" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><text x="330.3" y="92.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">4</text><line x1="359.2" y1="60.0" x2="359.2" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><line x1="388.0" y1="60.0" x2="388.0" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><text x="388.0" y="92.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">6</text><text x="215.0" y="116.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">подходит любое число</text><text x="215" y="146" font-size="14" fill="#5b6270" text-anchor="middle">7a − 4: выбрасывать нечего</text></svg></div>
+<div class="def"><div class="n">КАК ЗАПИСЫВАЮТ ОТВЕТ</div>
+Если подходят все числа — так и пишут: «любое число». Если одно значение не
+подходит — пишут неравенство: <span class='nw'>x ≠ 3</span>, то есть «икс не
+равен трём».</div>
+
+</div>
+
+<div class="card">
+
+<h2>6. Как искать область определения</h2>
+<div class='fx'><span class='nw'>делитель = 0</span> → <span class='nw'>решаем</span> → <span class='nw'>значение выбрасываем</span></div>
+<div class="ex"><h3>Пример 6</h3>
+<p>Найти область определения выражения <span class='nw'>105 − 20 : (x − 3)</span>.</p>
+<div class='step'>1. Делить приходится на <span class='nw'>x − 3</span>.</div><div class='step'>2. Приравниваем к нулю: <span class='nw'>x − 3 = 0</span>, отсюда <span class='nw'>x = 3</span>.</div><div class='step'>3. Это значение выбрасываем, остальные годятся.</div><div class='fx'><span class='nw'>x ≠ 3</span></div>
+</div>
+<div class="fig"><svg viewBox="0 0 430 152"><rect x="0" y="0" width="430" height="152" rx="12" fill="#ffffff"/><line x1="26.0" y1="66.0" x2="394.0" y2="66.0" stroke="#137a45" stroke-width="3.0" stroke-linecap="round"/><line x1="386.0" y1="66.0" x2="406.0" y2="66.0" stroke="#137a45" stroke-width="3.0" stroke-linecap="round"/><path d="M 406.0 66.0 L 397.5 68.8 L 397.5 63.2 z" fill="#137a45"/><line x1="42.0" y1="60.0" x2="42.0" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><text x="42.0" y="92.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">−6</text><line x1="70.8" y1="60.0" x2="70.8" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><line x1="99.7" y1="60.0" x2="99.7" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><text x="99.7" y="92.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">−4</text><line x1="128.5" y1="60.0" x2="128.5" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><line x1="157.3" y1="60.0" x2="157.3" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><text x="157.3" y="92.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">−2</text><line x1="186.2" y1="60.0" x2="186.2" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><line x1="215.0" y1="60.0" x2="215.0" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><text x="215.0" y="92.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">0</text><line x1="243.8" y1="60.0" x2="243.8" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><line x1="272.7" y1="60.0" x2="272.7" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><text x="272.7" y="92.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">2</text><line x1="301.5" y1="60.0" x2="301.5" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><line x1="330.3" y1="60.0" x2="330.3" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><text x="330.3" y="92.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">4</text><line x1="359.2" y1="60.0" x2="359.2" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><line x1="388.0" y1="60.0" x2="388.0" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><text x="388.0" y="92.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">6</text><circle cx="301.5" cy="66.0" r="7" fill="#ffffff" stroke="#b3261e" stroke-width="3"/><text x="301.5" y="48.0" font-size="16" fill="#b3261e" text-anchor="middle" font-weight="600">x ≠ 3</text><text x="215.0" y="116.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">все числа, кроме 3</text><text x="215" y="146" font-size="14" fill="#5b6270" text-anchor="middle">105 − 20 : (x − 3)</text></svg></div>
+<div class="ex"><h3>Пример 7</h3>
+<p>Найти область определения выражения <span class='nw'>(4 + x) : (2 − x)</span>.</p>
+<div class='step'>1. Делитель — <span class='nw'>2 − x</span>.</div><div class='step'>2. <span class='nw'>2 − x = 0</span>, отсюда <span class='nw'>x = 2</span>.</div><div class='fx'><span class='nw'>x ≠ 2</span></div><div class='step mini'>Числитель на область определения не влияет: при <span class='nw'>x = −4</span> выражение равно нулю, но смысл у него есть.</div>
+</div>
+<div class="ex"><h3>Пример 8. Две переменные</h3>
+<p>Найти область определения выражения <span class='nw'>(a + b) : (a − b)</span>.</p>
+<div class='step'>1. Делитель — <span class='nw'>a − b</span>.</div><div class='step'>2. <span class='nw'>a − b = 0</span>, то есть <span class='nw'>a = b</span>.</div><div class='step'>3. Значит числа a и b могут быть любыми, лишь бы они не совпадали.</div><div class='fx'><span class='nw'>a ≠ b</span></div>
+</div>
+<div class="fig"><svg viewBox="0 0 430 152"><rect x="0" y="0" width="430" height="152" rx="12" fill="#ffffff"/><line x1="26.0" y1="66.0" x2="394.0" y2="66.0" stroke="#137a45" stroke-width="3.0" stroke-linecap="round"/><line x1="386.0" y1="66.0" x2="406.0" y2="66.0" stroke="#137a45" stroke-width="3.0" stroke-linecap="round"/><path d="M 406.0 66.0 L 397.5 68.8 L 397.5 63.2 z" fill="#137a45"/><line x1="42.0" y1="60.0" x2="42.0" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><text x="42.0" y="92.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">−6</text><line x1="70.8" y1="60.0" x2="70.8" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><line x1="99.7" y1="60.0" x2="99.7" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><text x="99.7" y="92.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">−4</text><line x1="128.5" y1="60.0" x2="128.5" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><line x1="157.3" y1="60.0" x2="157.3" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><text x="157.3" y="92.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">−2</text><line x1="186.2" y1="60.0" x2="186.2" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><line x1="215.0" y1="60.0" x2="215.0" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><text x="215.0" y="92.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">0</text><line x1="243.8" y1="60.0" x2="243.8" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><line x1="272.7" y1="60.0" x2="272.7" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><text x="272.7" y="92.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">2</text><line x1="301.5" y1="60.0" x2="301.5" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><line x1="330.3" y1="60.0" x2="330.3" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><text x="330.3" y="92.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">4</text><line x1="359.2" y1="60.0" x2="359.2" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><line x1="388.0" y1="60.0" x2="388.0" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><text x="388.0" y="92.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">6</text><circle cx="70.8" cy="66.0" r="7" fill="#ffffff" stroke="#b3261e" stroke-width="3"/><text x="70.8" y="48.0" font-size="16" fill="#b3261e" text-anchor="middle" font-weight="600">x ≠ −5</text><text x="215.0" y="116.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">все числа, кроме −5</text><text x="215" y="146" font-size="14" fill="#5b6270" text-anchor="middle">x : (x + 5)</text></svg></div>
+<div class="warn"><div class="n">НЕ СПЕШИ</div>
+Смотри именно на делитель, а не на всю запись.
+В <span class='nw'>b² − b(b − 3)</span> деления нет вообще —
+область определения любое число, хотя букв много.</div>
+
+</div>
+
+<div class="card">
+
+<h2>Живой чертёж: область определения</h2>
+<div class="meta">Кнопка выбирает выражение, ползунок двигает x по числовой прямой.
+Красный кружок — выколотое значение.</div>
+<div class="live" id="vl2" data-kind="dom"><h4>Где выражение теряет смысл</h4><p class="lhint">Доведи ползунок до красного кружка и посмотри, что происходит с делителем.</p><div class="livebar" id="vl2b"></div><div class="livefig" id="vl2f"></div><div class="livemsg" id="vl2m"></div><div class="livectl" id="vl2c"></div></div>
+</div>
+
+<div class="card">
+  <h3>Задания к блокам 5-6</h3>
+<div class="zad" id="z23"><div class="zh">Задание 23<span></span></div><div class="zt">Найдите область определения выражения <span class='nw'>7a − 4</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Деления на букву нет.</div><div class='fx'>любое число</div></div></details></div><div class="zad" id="z24"><div class="zh">Задание 24<span> · не дайте себя запутать</span></div><div class="zt">Найдите область определения выражения <span class='nw'>b² − b(b − 3)</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Есть умножение и вычитание, деления на букву нет.</div><div class='fx'>любое число</div></div></details></div><div class="zad" id="z25"><div class="zh">Задание 25<span></span></div><div class="zt">Найдите область определения выражения <span class='nw'>12 : x</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Делитель — сам x.</div><div class='fx'><span class='nw'>x ≠ 0</span></div></div></details></div><div class="zad" id="z26"><div class="zh">Задание 26<span> · разобрано в примере 6</span></div><div class="zt">Найдите область определения выражения <span class='nw'>105 − 20 : (x − 3)</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>x − 3 = 0</span> при <span class='nw'>x = 3</span>.</div><div class='fx'><span class='nw'>x ≠ 3</span></div></div></details></div><div class="zad" id="z27"><div class="zh">Задание 27<span></span></div><div class="zt">Найдите область определения выражения <span class='nw'>(4 + x) : (2 − x)</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>2 − x = 0</span> при <span class='nw'>x = 2</span>.</div><div class='fx'><span class='nw'>x ≠ 2</span></div></div></details></div><div class="zad" id="z28"><div class="zh">Задание 28<span></span></div><div class="zt">Найдите область определения выражения <span class='nw'>x : (x + 5)</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>x + 5 = 0</span> при <span class='nw'>x = −5</span>.</div><div class='fx'><span class='nw'>x ≠ −5</span></div></div></details></div><div class="zad" id="z29"><div class="zh">Задание 29<span></span></div><div class="zt">Найдите область определения выражения <span class='nw'>(x + 3) : (2x − 8)</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>2x − 8 = 0</span>, значит <span class='nw'>2x = 8</span> и <span class='nw'>x = 4</span>.</div><div class='fx'><span class='nw'>x ≠ 4</span></div></div></details></div><div class="zad" id="z30"><div class="zh">Задание 30<span> · две переменные</span></div><div class="zt">Найдите область определения выражения <span class='nw'>(a + b) : (a − b)</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>a − b = 0</span> означает <span class='nw'>a = b</span>.</div><div class='fx'><span class='nw'>a ≠ b</span></div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>7. Как составить выражение по условию</h2>
+<p>Половина задач по алгебре начинается с того, что условие переводят в выражение.
+Правило простое: обозначаем буквой то, что неизвестно, и дальше пишем ровно то,
+что сказано словами.</p>
+<div class="scroll"><table class="wrap-t napr">
+<tr><th>Сказано словами</th><th>Записано выражением</th></tr>
+<tr><td>число a увеличили на 7</td><td class="r">a + 7</td></tr>
+<tr><td>число a увеличили в 7 раз</td><td class="r">7a</td></tr>
+<tr><td>число b уменьшили на 3</td><td class="r">b − 3</td></tr>
+<tr><td>из числа 3 вычли b</td><td class="r">3 − b</td></tr>
+<tr><td>половина суммы x и y</td><td class="r">(x + y) : 2</td></tr>
+<tr><td>квадрат суммы a и b</td><td class="r">(a + b)²</td></tr>
+<tr><td>сумма квадратов a и b</td><td class="r">a² + b²</td></tr>
+</table></div>
+<div class="ex"><h3>Пример 9</h3>
+<p>В первой пачке a тетрадей, во второй на 5 больше, в третьей в 2 раза больше,
+чем в первой. Сколько тетрадей всего?</p>
+<div class='step'>1. Вторая пачка: <span class='nw'>a + 5</span>.</div><div class='step'>2. Третья пачка: <span class='nw'>2a</span>.</div><div class='step'>3. Всего: <span class='nw'>a + (a + 5) + 2a</span> = <span class='nw'>4a + 5</span>.</div><div class='fx'><span class='nw'>4a + 5</span></div><div class='step mini'>Проверь на числе: при <span class='nw'>a = 12</span> пачки дают 12, 17 и 24 — всего 53, и <span class='nw'>4 · 12 + 5 = 53</span>.</div>
+</div>
+<div class="ex"><h3>Пример 10</h3>
+<p>Турист шёл 2 ч со скоростью v км/ч, а потом 3 ч со скоростью на 1 км/ч больше.
+Какой путь он прошёл?</p>
+<div class='step'>1. Первая часть пути: <span class='nw'>2v</span>.</div><div class='step'>2. Вторая скорость: <span class='nw'>v + 1</span>, вторая часть пути: <span class='nw'>3(v + 1)</span>.</div><div class='step'>3. Всего: <span class='nw'>2v + 3(v + 1)</span>.</div><div class='fx'><span class='nw'>2v + 3(v + 1)</span></div>
+</div>
+<div class="fig"><svg viewBox="0 0 430 190"><rect x="0" y="0" width="430" height="190" rx="12" fill="#ffffff"/><rect x="16.0" y="18.0" width="132.7" height="34.0" fill="#eef2f8" stroke="#dfe3ea" stroke-width="1.4"/><text x="82.3" y="41.0" font-size="17" fill="#15181e" text-anchor="middle" font-weight="600">v, км/ч</text><rect x="148.7" y="18.0" width="265.3" height="34.0" fill="#eef2f8" stroke="#dfe3ea" stroke-width="1.4"/><text x="281.3" y="41.0" font-size="17" fill="#15181e" text-anchor="middle" font-weight="600">2v + 3(v + 1)</text><rect x="16.0" y="52.0" width="132.7" height="34.0" fill="#ffffff" stroke="#dfe3ea" stroke-width="1.4"/><text x="82.3" y="75.0" font-size="17" fill="#15181e" text-anchor="middle" font-weight="600">2</text><rect x="148.7" y="52.0" width="265.3" height="34.0" fill="#ffffff" stroke="#dfe3ea" stroke-width="1.4"/><text x="281.3" y="75.0" font-size="17" fill="#137a45" text-anchor="middle" font-weight="600">13</text><rect x="16.0" y="86.0" width="132.7" height="34.0" fill="#ffffff" stroke="#dfe3ea" stroke-width="1.4"/><text x="82.3" y="109.0" font-size="17" fill="#15181e" text-anchor="middle" font-weight="600">4</text><rect x="148.7" y="86.0" width="265.3" height="34.0" fill="#ffffff" stroke="#dfe3ea" stroke-width="1.4"/><text x="281.3" y="109.0" font-size="17" fill="#137a45" text-anchor="middle" font-weight="600">23</text><rect x="16.0" y="120.0" width="132.7" height="34.0" fill="#ffffff" stroke="#dfe3ea" stroke-width="1.4"/><text x="82.3" y="143.0" font-size="17" fill="#15181e" text-anchor="middle" font-weight="600">6</text><rect x="148.7" y="120.0" width="265.3" height="34.0" fill="#ffffff" stroke="#dfe3ea" stroke-width="1.4"/><text x="281.3" y="143.0" font-size="17" fill="#137a45" text-anchor="middle" font-weight="600">33</text><text x="215" y="184" font-size="14" fill="#5b6270" text-anchor="middle">одно выражение — путь при разной скорости</text></svg></div>
+
+<h3>Задания к блоку 7</h3>
+<div class="zad" id="z31"><div class="zh">Задание 31<span></span></div><div class="zt">Запишите выражением: число a увеличили на 7; число a увеличили в 7 раз; из числа 7 вычли a.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>«На» — сложение, «в раз» — умножение, порядок вычитания важен.</div><div class='fx'><span class='nw'>a + 7</span> · <span class='nw'>7a</span> · <span class='nw'>7 − a</span></div></div></details></div><div class="zad" id="z32"><div class="zh">Задание 32<span></span></div><div class="zt">Запишите выражением: квадрат суммы чисел a и b; сумма квадратов чисел a и b.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>В первом последнее действие — возведение в квадрат, во втором — сложение.</div><div class='fx'><span class='nw'>(a + b)²</span> · <span class='nw'>a² + b²</span></div></div></details></div><div class="zad" id="z33"><div class="zh">Задание 33<span></span></div><div class="zt">Запишите выражением половину суммы чисел x и y.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Сначала сумма, потом деление на 2 — скобки обязательны.</div><div class='fx'><span class='nw'>(x + y) : 2</span></div></div></details></div><div class="zad" id="z34"><div class="zh">Задание 34<span></span></div><div class="zt">Тетрадь стоит p рублей, ручка — 2 рубля. Запишите выражением стоимость 5 тетрадей и 3 ручек.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>За тетради <span class='nw'>5p</span>, за ручки <span class='nw'>3 · 2 = 6</span>.</div><div class='fx'><span class='nw'>5p + 6</span></div></div></details></div><div class="zad" id="z35"><div class="zh">Задание 35<span> · разобрано в примере 9</span></div><div class="zt">В первой пачке a тетрадей, во второй на 5 больше, в третьей вдвое больше первой. Запишите выражением общее число тетрадей и найдите его при <span class='nw'>a = 12</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>a + (a + 5) + 2a = 4a + 5</span>.</div><div class='step'>При <span class='nw'>a = 12</span>: <span class='nw'>4 · 12 + 5 = 53</span>.</div><div class='fx'><span class='nw'>4a + 5</span>, 53 тетради</div></div></details></div><div class="zad" id="z36"><div class="zh">Задание 36<span></span></div><div class="zt">Турист шёл 2 ч со скоростью v км/ч, потом 3 ч со скоростью на 1 км/ч больше. Запишите путь выражением и найдите его при <span class='nw'>v = 4</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>2v + 3(v + 1)</span>.</div><div class='step'>При <span class='nw'>v = 4</span>: <span class='nw'>8 + 15 = 23</span> км.</div><div class='fx'><span class='nw'>2v + 3(v + 1)</span>, 23 км</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>8. Выражение, значение, область определения — вместе</h2>
+<p>В задании обычно спрашивают одно из трёх. Важно не перепутать, что именно.</p>
+<div class="def"><div class="n">ТРИ РАЗНЫХ ВОПРОСА</div>
+<div><b>Составить выражение</b> — перевести условие в запись с буквами.</div>
+<div><b>Найти значение</b> — подставить числа и посчитать.</div>
+<div><b>Найти область определения</b> — понять, какие числа подставлять нельзя.</div></div>
+<div class="ex"><h3>Пример 11</h3>
+<p>Дано выражение <span class='nw'>(x + 4) : (x − 1)</span>. Найти его область
+определения и значение при <span class='nw'>x = 5</span>.</p>
+<div class='step'>1. Делитель <span class='nw'>x − 1</span> обращается в нуль при <span class='nw'>x = 1</span>, значит <span class='nw'>x ≠ 1</span>.</div><div class='step'>2. Число 5 не запрещено, подставляем: <span class='nw'>(5 + 4) : (5 − 1)</span> = <span class='nw'>9 : 4</span> = <span class='nw'>2,25</span>.</div><div class='fx'><span class='nw'>x ≠ 1</span>, значение 2,25</div>
+</div>
+<div class="ex"><h3>Пример 12</h3>
+<p>При каких значениях x выражение <span class='nw'>(x + 4) : (x − 1) + 6 : x</span> не имеет смысла?</p>
+<div class='step'>1. Делителей два: <span class='nw'>x − 1</span> и <span class='nw'>x</span>.</div><div class='step'>2. <span class='nw'>x − 1 = 0</span> даёт <span class='nw'>x = 1</span>; <span class='nw'>x = 0</span> запрещено само по себе.</div><div class='step'>3. Выбрасываем оба числа.</div><div class='fx'><span class='nw'>x ≠ 0</span> и <span class='nw'>x ≠ 1</span></div><div class='step mini'>Если делителей несколько, проверяют каждый и выбрасывают все найденные значения.</div>
+</div>
+<div class="fig"><svg viewBox="0 0 430 152"><rect x="0" y="0" width="430" height="152" rx="12" fill="#ffffff"/><line x1="26.0" y1="66.0" x2="394.0" y2="66.0" stroke="#137a45" stroke-width="3.0" stroke-linecap="round"/><line x1="386.0" y1="66.0" x2="406.0" y2="66.0" stroke="#137a45" stroke-width="3.0" stroke-linecap="round"/><path d="M 406.0 66.0 L 397.5 68.8 L 397.5 63.2 z" fill="#137a45"/><line x1="42.0" y1="60.0" x2="42.0" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><text x="42.0" y="92.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">−4</text><line x1="76.6" y1="60.0" x2="76.6" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><line x1="111.2" y1="60.0" x2="111.2" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><text x="111.2" y="92.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">−2</text><line x1="145.8" y1="60.0" x2="145.8" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><line x1="180.4" y1="60.0" x2="180.4" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><text x="180.4" y="92.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">0</text><line x1="215.0" y1="60.0" x2="215.0" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><line x1="249.6" y1="60.0" x2="249.6" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><text x="249.6" y="92.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">2</text><line x1="284.2" y1="60.0" x2="284.2" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><line x1="318.8" y1="60.0" x2="318.8" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><text x="318.8" y="92.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">4</text><line x1="353.4" y1="60.0" x2="353.4" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><line x1="388.0" y1="60.0" x2="388.0" y2="72.0" stroke="#5b6270" stroke-width="1.6" stroke-linecap="round"/><text x="388.0" y="92.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">6</text><circle cx="180.4" cy="66.0" r="7" fill="#ffffff" stroke="#b3261e" stroke-width="3"/><text x="180.4" y="48.0" font-size="16" fill="#b3261e" text-anchor="middle" font-weight="600">x ≠ 0</text><circle cx="215.0" cy="66.0" r="7" fill="#ffffff" stroke="#b3261e" stroke-width="3"/><text x="215.0" y="48.0" font-size="16" fill="#b3261e" text-anchor="middle" font-weight="600">x ≠ 1</text><text x="215.0" y="116.0" font-size="15" fill="#137a45" text-anchor="middle" font-weight="600">выбросили два числа</text><text x="215" y="146" font-size="14" fill="#5b6270" text-anchor="middle">(x + 4) : (x − 1) + 6 : x</text></svg></div>
+
+<h3>Задания к блоку 8</h3>
+<div class="zad" id="z37"><div class="zh">Задание 37<span></span></div><div class="zt">Найдите область определения выражения <span class='nw'>(x + 4) : (x − 1)</span> и его значение при <span class='nw'>x = 5</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>x − 1 = 0</span> при <span class='nw'>x = 1</span>, значит <span class='nw'>x ≠ 1</span>.</div><div class='step'><span class='nw'>9 : 4 = 2,25</span>.</div><div class='fx'><span class='nw'>x ≠ 1</span>, значение 2,25</div></div></details></div><div class="zad" id="z38"><div class="zh">Задание 38<span> · разобрано в примере 12</span></div><div class="zt">При каких значениях x выражение <span class='nw'>(x + 4) : (x − 1) + 6 : x</span> не имеет смысла?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Делителей два: <span class='nw'>x − 1</span> и <span class='nw'>x</span>.</div><div class='step'>Запретные значения 1 и 0.</div><div class='fx'><span class='nw'>x ≠ 0</span> и <span class='nw'>x ≠ 1</span></div></div></details></div><div class="zad" id="z39"><div class="zh">Задание 39<span></span></div><div class="zt">Найдите значение выражения <span class='nw'>(a − b)² − (a² − b²)</span> при <span class='nw'>a = 5, b = 3</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>(5 − 3)² = 4</span>, <span class='nw'>25 − 9 = 16</span>.</div><div class='step'><span class='nw'>4 − 16 = −12</span>.</div><div class='fx'>−12</div></div></details></div><div class="zad" id="z40"><div class="zh">Задание 40<span></span></div><div class="zt">Найдите значение выражения <span class='nw'>105 − 20 : (x − 3)</span> при <span class='nw'>x = 7</span> и при <span class='nw'>x = 1</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>При <span class='nw'>x = 7</span>: <span class='nw'>20 : 4 = 5</span>, значит <span class='nw'>105 − 5 = 100</span>.</div><div class='step'>При <span class='nw'>x = 1</span>: <span class='nw'>20 : (−2) = −10</span>, значит <span class='nw'>105 + 10 = 115</span>.</div><div class='fx'>100 и 115</div></div></details></div><div class="zad" id="z41"><div class="zh">Задание 41<span> · рассуждение, а не подстановка</span></div><div class="zt">Докажите, что значение выражения <span class='nw'>−x² + (−x)²</span> равно нулю при любом x.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>(−x)² = x²</span> — минус в квадрате исчезает.</div><div class='step'>Значит выражение равно <span class='nw'>−x² + x²</span> = 0 при любом x.</div><div class='fx'>0 при любом x</div></div></details></div>
+</div>
+
+<div class="card">
+  <h2>Что забрать с урока</h2>
+  <div class="def"><div class="n">ТРИ ВОПРОСА, КОТОРЫЕ ПУТАЮТ</div>
+  <div>Составить выражение — перевести слова в запись с буквами.</div>
+  <div>Найти значение — подставить числа и посчитать.</div>
+  <div>Найти область определения — понять, что подставлять нельзя.</div>
+  </div>
+
+<div class="scroll"><table class="wrap-t napr">
+<tr><th>Что в записи</th><th>Числовое выражение</th><th>Выражение с переменными</th></tr>
+<tr><td>из чего состоит</td><td>числа, знаки действий, скобки</td>
+<td>то же самое плюс буквы</td></tr>
+<tr><td>что находят</td><td>значение выражения</td>
+<td>значение при данных значениях переменных</td></tr>
+<tr><td>когда смысла нет</td><td class="l">делят на нуль</td>
+<td class="l">делитель обращается в нуль</td></tr>
+<tr><td>что такое область определения</td><td>—</td>
+<td class="r">все значения переменных, при которых смысл есть</td></tr>
+</table></div>
+
+  <p>Делить на нуль нельзя — из этого запрета и вырастает вся область определения.
+  Если деления на выражение с буквой нет, подходит любое число. Если есть —
+  приравниваем делитель к нулю, решаем и выбрасываем найденное значение.</p>
+</div>
+
+</div>
+
+<script>
+
+/* ============ живые чертежи: значение выражения и область определения ============ */
+(function(){
+var INK="#15181e", MUT="#5b6270", ACC="#2f6bd8", GRN="#137a45", RED="#b3261e",
+    VIO="#7a3fbf";
+var W=430;
+
+function f1(x){ return x.toFixed(1); }
+function ln(x1,y1,x2,y2,c,w){
+  return '<line x1="'+f1(x1)+'" y1="'+f1(y1)+'" x2="'+f1(x2)+'" y2="'+f1(y2)+
+    '" stroke="'+c+'" stroke-width="'+(w||2)+'" stroke-linecap="round"/>';
+}
+function txt(x,y,t,c,s){
+  return '<text x="'+f1(x)+'" y="'+f1(y)+'" font-size="'+(s||16)+'" fill="'+c+
+    '" text-anchor="middle" font-weight="600">'+t+'</text>';
+}
+function box(x,y,w,h,c,fill){
+  return '<rect x="'+f1(x)+'" y="'+f1(y)+'" width="'+f1(w)+'" height="'+f1(h)+
+    '" rx="12" fill="'+fill+'" stroke="'+c+'" stroke-width="2"/>';
+}
+function svg(h, body){
+  return '<svg viewBox="0 0 '+W+' '+h+'"><rect x="0" y="0" width="'+W+'" height="'+h+
+    '" rx="12" fill="#ffffff"/>'+body+'</svg>';
+}
+function num(v){
+  var s = String(Math.round(v * 1e9) / 1e9);
+  return s.replace(".", ",").replace("-", "−");
+}
+function brk(v){                      /* число в скобках, если оно отрицательное */
+  return (v < 0) ? "(" + num(v) + ")" : num(v);
+}
+
+/* ---------- 1. значение выражения с переменной ---------- */
+var VALS = [-3, -2, -1, 0, 0.5, 1, 2, 3, 4, 5];
+var EX = [
+ {t:"3x + 7", f:function(x){ return 3*x + 7; },
+  sub:function(x){ return "3 · " + brk(x) + " + 7"; },
+  mid:function(x){ return num(3*x) + " + 7"; },
+  why:"Подставили значение вместо x и сделали действия по порядку."},
+ {t:"x² − 4x", f:function(x){ return x*x - 4*x; },
+  sub:function(x){ return brk(x) + "² − 4 · " + brk(x); },
+  mid:function(x){ return num(x*x) + " − " + brk(4*x); },
+  why:"Сначала степень, потом умножение, в конце вычитание."},
+ {t:"2(x − 3) + 5", f:function(x){ return 2*(x-3) + 5; },
+  sub:function(x){ return "2 · (" + num(x) + " − 3) + 5"; },
+  mid:function(x){ return "2 · " + brk(x-3) + " + 5"; },
+  why:"Первым делом считаем скобку."},
+ {t:"10 − x²", f:function(x){ return 10 - x*x; },
+  sub:function(x){ return "10 − " + brk(x) + "²"; },
+  mid:function(x){ return "10 − " + num(x*x); },
+  why:"Квадрат любого числа неотрицателен, поэтому из 10 всегда вычитаем."},
+ {t:"−x²", f:function(x){ return -(x*x); },
+  sub:function(x){ return "−" + brk(x) + "²"; },
+  mid:function(x){ return "−" + num(x*x); },
+  why:"Сначала возводим в квадрат, и только потом ставим минус."}
+];
+
+function drawVal(m, x){
+  var s = [], y = 16, i;
+  var rows = [["выражение с переменной", m.t, INK, "#eef3fd", ACC],
+              ["подставили x = " + num(x), m.sub(x), ACC, "#eef3fd", ACC],
+              ["считаем по действиям", m.mid(x), INK, "#eef3fd", ACC],
+              ["значение выражения", num(m.f(x)), GRN, "#e9f7ef", GRN]];
+  for(i = 0; i < rows.length; i++){
+    s.push(box(14, y, W - 28, 50, rows[i][4], rows[i][3]));
+    s.push(txt(W/2, y + 32, rows[i][1], rows[i][2], 21));
+    s.push(txt(W/2, y - 2, rows[i][0], MUT, 13));
+    if(i < rows.length - 1) s.push(ln(W/2, y + 52, W/2, y + 66, MUT, 1.8));
+    y += 76;
+  }
+  return svg(y - 8, s.join(""));
+}
+
+/* ---------- 2. область определения ---------- */
+var DM = [
+ {t:"105 − 20 : (x − 3)", d:"x − 3", f:function(x){ return x - 3; }, bad:3,
+  sub:function(x){ return num(x) + " − 3"; }},
+ {t:"(4 + x) : (2 − x)", d:"2 − x", f:function(x){ return 2 - x; }, bad:2,
+  sub:function(x){ return "2 − " + brk(x); }},
+ {t:"x : (x + 5)", d:"x + 5", f:function(x){ return x + 5; }, bad:-5,
+  sub:function(x){ return num(x) + " + 5"; }},
+ {t:"12 : x", d:"x", f:function(x){ return x; }, bad:0,
+  sub:function(x){ return num(x); }},
+ {t:"5x − 7", d:null, f:null, bad:null, sub:null}
+];
+
+function numline(y, bad, cur){
+  var lo = -6, hi = 6, x1 = 46, x2 = W - 46, k = (x2 - x1) / (hi - lo);
+  var s = [ln(x1 - 14, y, x2 + 14, y, GRN, 3)], v, x;
+  s.push('<path d="M '+f1(x2+16)+' '+f1(y)+' L '+f1(x2+4)+' '+f1(y-6)+' L '+
+         f1(x2+4)+' '+f1(y+6)+' z" fill="'+GRN+'"/>');
+  for(v = lo; v <= hi; v++){
+    x = x1 + (v - lo) * k;
+    s.push(ln(x, y - 5, x, y + 5, MUT, 1.4));
+    if(v % 2 === 0) s.push(txt(x, y + 24, num(v), MUT, 13));
+  }
+  if(bad !== null){
+    x = x1 + (bad - lo) * k;
+    s.push('<circle cx="'+f1(x)+'" cy="'+f1(y)+'" r="7" fill="#ffffff" stroke="'+RED+
+           '" stroke-width="3"/>');
+    s.push(txt(x, y - 32, "x ≠ " + num(bad), RED, 15));
+  }
+  x = x1 + (cur - lo) * k;
+  var c = (bad !== null && cur === bad) ? RED : ACC;
+  s.push('<path d="M '+f1(x)+' '+f1(y-11)+' L '+f1(x-7)+' '+f1(y-24)+' L '+f1(x+7)+' '+
+         f1(y-24)+' z" fill="'+c+'"/>');
+  s.push(txt(x, y + 44, "x = " + num(cur), c, 15));
+  return s.join("");
+}
+
+function drawDom(m, x){
+  var s = [], bad = (m.bad !== null && x === m.bad);
+  s.push(box(14, 16, W - 28, 50, ACC, "#eef3fd"));
+  s.push(txt(W/2, 48, m.t, INK, 21));
+  s.push(txt(W/2, 14, "выражение", MUT, 13));
+  if(m.d === null){
+    s.push(txt(W/2, 96, "деления нет — подходит любое число", GRN, 17));
+  } else {
+    s.push(txt(W/2, 96, "делитель: " + m.d + " = " + m.sub(x) + " = " +
+               num(m.f(x)), bad ? RED : INK, 17));
+    s.push(txt(W/2, 122, bad ? "делитель равен нулю — смысла нет"
+                              : "делитель не равен нулю — смысл есть",
+               bad ? RED : GRN, 16));
+  }
+  s.push(numline(186, m.bad, x));
+  return svg(244, s.join(""));
+}
+
+/* ---------- сборка ---------- */
+function build(host){
+  var id = host.id, kind = host.getAttribute("data-kind");
+  var bar = document.getElementById(id+"b"), fig = document.getElementById(id+"f"),
+      msg = document.getElementById(id+"m"), ctl = document.getElementById(id+"c");
+  var list = (kind === "dom") ? DM : EX;
+  var cur = 0, vi = (kind === "dom") ? 6 : 1;
+  var xs = (kind === "dom")
+    ? [-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6] : VALS;
+
+  function render(){
+    var m = list[cur], x = xs[vi], i, bs;
+    if(kind === "dom"){
+      fig.innerHTML = drawDom(m, x);
+      if(m.d === null){
+        msg.innerHTML = '<span class="v ok">Область определения: любое число.</span>' +
+          '<span class="num">Здесь нет деления, значит запретных значений нет.</span>';
+      } else if(x === m.bad){
+        msg.innerHTML = '<span class="v bad">При x = ' + num(x) +
+          ' выражение не имеет смысла.</span>' +
+          '<span class="num">Делитель ' + m.d + ' обращается в нуль. Это значение ' +
+          'выбрасывают из области определения.</span>';
+      } else {
+        msg.innerHTML = '<span class="v ok">При x = ' + num(x) +
+          ' выражение имеет смысл.</span>' +
+          '<span class="num">Область определения: все числа, кроме ' +
+          num(m.bad) + '. Пишут так: x ≠ ' + num(m.bad) + '.</span>';
+      }
+    } else {
+      fig.innerHTML = drawVal(m, x);
+      msg.innerHTML = '<span class="v">При x = ' + num(x) + ' значение выражения ' +
+        m.t + ' равно ' + num(m.f(x)) + '.</span>' +
+        '<span class="num">' + m.why + '</span>';
+    }
+    bs = bar.querySelectorAll("button");
+    for(i = 0; i < bs.length; i++) bs[i].className = (i === cur) ? "on" : "";
+  }
+
+  var i, b;
+  for(i = 0; i < list.length; i++){
+    b = document.createElement("button");
+    b.type = "button"; b.textContent = list[i].t; b.setAttribute("data-i", i);
+    bar.appendChild(b);
+  }
+  bar.addEventListener("click", function(ev){
+    var el = ev.target;
+    while(el && el !== bar && el.tagName !== "BUTTON") el = el.parentNode;
+    if(!el || el === bar) return;
+    cur = parseInt(el.getAttribute("data-i"), 10);
+    render();
+  });
+  ctl.innerHTML = '<label>значение x<input type="range" id="'+id+'rx" min="0" max="' +
+    (xs.length - 1) + '" step="1" value="' + vi + '">' +
+    '<span class="v" id="'+id+'vx"></span></label>';
+  var rx = document.getElementById(id+"rx");
+  rx.addEventListener("input", function(){
+    vi = parseInt(rx.value, 10);
+    document.getElementById(id+"vx").textContent = num(xs[vi]);
+    render();
+  });
+  document.getElementById(id+"vx").textContent = num(xs[vi]);
+  render();
+}
+
+window.VRLIVE = function(){
+  var hosts = document.querySelectorAll(".live[id]"), i;
+  for(i = 0; i < hosts.length; i++) build(hosts[i]);
+};
+})();
+VRLIVE();
+
+
+function allSol(open){
+  var ds = document.querySelectorAll("details.zs"), k;
+  for(k = 0; k < ds.length; k++) ds[k].open = open;
+}
+document.getElementById("openall").addEventListener("click", function(){ allSol(true); });
+document.getElementById("closeall").addEventListener("click", function(){ allSol(false); });
+
+</script>
+</body>
+</html>
