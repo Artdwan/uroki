@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Умножение десятичных дробей — урок, §6, 5 класс</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:800px;margin:0 auto;padding:16px 14px 60px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+.f-formula{font-size:19px}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.step{margin:6px 0}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.fig{margin:12px 0;text-align:center}
+
+.nw{white-space:nowrap}
+.fig{text-align:center;margin:12px 0}
+.fig svg{width:100%;max-width:330px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.figrow{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  margin:12px 0}
+.figrow .fig{margin:0}
+.figrow .fig svg{max-width:100%}
+.fx{display:block;background:var(--acc-soft,var(--acc2,#e8f0ff));border:1px solid var(--line);
+  border-radius:10px;padding:11px 13px;margin:12px 0;text-align:center;font-size:20px;
+  line-height:2.1;font-weight:600;white-space:normal;overflow-wrap:break-word}
+.ex .fx,.zsol .fx{font-size:18px;margin:9px 0}
+.def{border:1px solid var(--line);border-left:4px solid #2f6bd8;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#eef3fb}
+.def .n{font-size:14px;color:#2f6bd8;font-weight:700;letter-spacing:.4px}
+.def>div+div{margin-top:4px}
+.rule2{border:1px solid var(--line);border-left:4px solid #c0397a;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdf0f6}
+.rule2 .n{font-size:14px;color:#a02a62;font-weight:700;letter-spacing:.4px}
+.hard{border:1px solid var(--line);border-left:4px solid #7a3fbf;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#f4efff}
+.hard .n{font-size:14px;color:#5f2ea0;font-weight:700;letter-spacing:.4px}
+.warn{border:1px solid var(--line);border-left:4px solid #b3261e;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdecea}
+.warn .n{font-size:14px;color:#b3261e;font-weight:700;letter-spacing:.4px}
+@media (prefers-color-scheme:dark){.rule2{background:#2a1b23}.def{background:#18212f}
+  .hard{background:#221a33}.warn{background:#2a1618}}
+.ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;
+  background:var(--bg)}
+.ex h3{margin-top:0}
+.zad{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;
+  background:var(--bg)}
+.zad .zh{font-weight:700;font-size:17px;margin-bottom:6px;color:var(--acc)}
+.zad .zh span{color:var(--muted);font-weight:400;font-size:15px}
+.zad .zt{font-size:17px;line-height:1.75}
+.zad ol,.zad ul{margin:7px 0 0;padding-left:22px}
+.zad li{margin:5px 0}
+.zs{margin-top:10px;border-top:1px dashed var(--line);padding-top:7px}
+.zs summary{cursor:pointer;color:var(--acc);font-weight:600;font-size:16px;
+  padding:5px 0;list-style:none}
+.zs summary::-webkit-details-marker{display:none}
+.zs summary::before{content:"▸ "}
+.zs[open] summary::before{content:"▾ "}
+.zsol{font-size:16px;line-height:1.7;padding-top:4px}
+.step{margin:7px 0}
+.step.mini,.mini,.small{color:var(--muted);font-size:15px}
+.tools{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.tools button{font-size:15px;padding:8px 13px;min-height:42px}
+.fr{display:inline-block;vertical-align:middle;text-align:center;margin:0 3px}
+.fr b{display:block;border-bottom:1.7px solid currentColor;padding:0 6px;font-weight:400;
+  white-space:nowrap}
+.fr i{display:block;font-style:normal;padding:0 6px;white-space:nowrap}
+.stol{width:100%;border-collapse:collapse;font-size:17px;margin:10px 0}
+.stol td{border:1px solid var(--line);padding:7px 9px}
+.stol td.r{text-align:right;font-variant-numeric:tabular-nums}
+@media (max-width:620px){
+  .stol,.stol tbody,.stol tr,.stol td{display:block;width:100%}
+  .stol{border-collapse:separate}
+  .stol tr{border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:5px 10px}
+  .stol td{border:none;padding:2px 0}
+  .stol td.r{text-align:left;color:var(--acc);font-weight:600}
+}
+.fgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));
+  margin:9px 0}
+.fbox{border:1px solid var(--line);border-radius:12px;padding:9px 12px 11px;
+  background:var(--bg)}
+.fbox h4{margin:0 0 3px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.fbox p{margin:6px 0 0;line-height:1.6;font-size:16px}
+.fbox p.small{font-size:15px}
+.pam h3{font-size:18px;margin:18px 0 2px}
+.pam h3:first-of-type{margin-top:10px}
+.qq{margin:10px 0 0;padding-left:22px}
+.qq li{margin:6px 0}
+@media print{
+  .tools{display:none !important}
+  .zad{break-inside:avoid}
+}
+
+.fig svg{max-width:430px}
+.figrow{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:12px 0}
+table.napr{border-collapse:collapse;width:100%;min-width:430px;font-size:16px}
+table.napr th,table.napr td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+table.napr th{background:var(--bg);font-weight:700;font-size:15px}
+table.napr td.r{color:#137a45;font-weight:700}
+table.napr td.l{color:#b3261e;font-weight:700}
+.fgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));margin:9px 0}
+.fbox{border:1px solid var(--line);border-radius:12px;padding:9px 12px 11px;background:var(--bg)}
+.fbox h4{margin:0 0 3px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.fbox p{margin:6px 0 0;line-height:1.6;font-size:16px}
+.fbox p.small{font-size:15px}
+.ff{font-size:20px;line-height:2.3;text-align:center;margin:6px 0;font-weight:600;
+  white-space:normal;overflow-wrap:break-word}
+.fbox .ff{font-size:18px;line-height:2.1}
+.pam h3{font-size:18px;margin:18px 0 2px}
+.pam h3:first-of-type{margin-top:10px}
+.def>div+div{margin-top:4px}
+.tohw{display:none}
+
+.live{border:1px solid var(--line);border-radius:12px;padding:12px 13px 13px;margin:14px 0;
+  background:var(--bg)}
+.live h4{margin:0 0 3px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.live .lhint{color:var(--muted);font-size:15px;margin:0 0 9px;line-height:1.5}
+.livebar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.livebar button{font-size:16px;padding:7px 11px;min-height:40px;border-radius:9px;
+  border:1.6px solid var(--line);background:var(--card);color:inherit;cursor:pointer;
+  line-height:1.2;font-variant-numeric:tabular-nums}
+.livebar button.on{border-color:var(--acc);background:var(--acc);color:#fff;font-weight:600}
+.livefig{text-align:center}
+.livefig svg{width:100%;max-width:430px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.livemsg{font-size:16px;line-height:1.6;margin-top:9px;min-height:46px}
+.livemsg .v{font-weight:700}
+.livemsg .num{display:block;color:var(--muted);font-size:15px;margin-top:3px}
+.livectl{display:grid;gap:7px;margin-top:11px}
+.livectl label{display:flex;align-items:center;gap:9px;font-size:15px;color:var(--muted)}
+.livectl input[type=range]{flex:1;min-width:0}
+.livectl .v{font-variant-numeric:tabular-nums;min-width:66px;text-align:right;
+  color:inherit;font-weight:600}
+
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+@media print{
+  body{background:#fff}
+  .tools{display:none !important}
+  .live{display:none !important}
+  .card{border:none;box-shadow:none;padding:0;margin:0 0 12px}
+  .zad{break-inside:avoid;background:#fff}
+  .sheet{font-size:13px}
+  .sheet h2{font-size:18px}
+  .sheet th,.sheet td{padding:4px 5px;font-size:12px}
+  @page{size:A4;margin:12mm}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card top">
+  <h1>Умножение десятичных дробей</h1>
+  <div class="meta">Математика · 5 класс · §6 · теория порциями, два живых чертежа
+  и 56 заданий с решениями</div>
+  <div class="note" style="margin-top:14px">
+    <b>Как работать.</b> Читаем порцию теории, разбираем пример, затем решаем задания
+    блока <b>в тетради</b> — и только потом открываем решение и сверяемся.
+    <div style="margin-top:8px">Главная мысль темы: цифры произведения находят
+    обычным столбиком один раз. Вся новизна — в том, куда поставить запятую.</div>
+    <div style="margin-top:8px">Знаки после запятой у множителей складываются —
+    столько знаков и будет в ответе.</div>
+    <div style="margin-top:8px">Тренажёров и отправки работы здесь нет: это урок.</div>
+  </div>
+  <div class="tools">
+    <button type="button" id="openall">Раскрыть все решения</button>
+    <button type="button" id="closeall">Свернуть все</button>
+  </div>
+</div>
+
+<div class="card pam">
+<h2>Памятка</h2><h3>Как умножать</h3><div class="fgrid"><div class="fbox"><h4>Правило в два шага</h4><p>1. Умножить как натуральные числа, на запятые не глядя.</p><p class="small">2. Отделить справа налево столько знаков, сколько их в обоих множителях вместе.</p></div><div class="fbox"><h4>Сколько знаков</h4><div class="ff"><span class='nw'>3,45 · 0,015</span> → <span class='nw'>2 + 3 = 5</span></div><p>Знаки множителей складываются. Сказать это можно, ничего не вычисляя.</p></div><div class="fbox"><h4>Если цифр не хватает</h4><div class="ff"><span class='nw'>345 · 15 = 5175</span> → <span class='nw'>0,05175</span></div><p>Слева дописываем нули, пока не наберётся нужное число знаков.</p></div></div><h3>Как себя проверить</h3><div class="fgrid"><div class="fbox"><h4>Нуль в конце</h4><div class="ff"><span class='nw'>0,60750 = 0,6075</span></div><p>Сначала отсчитываем все знаки, и только потом убираем хвостовой нуль.</p></div><div class="fbox"><h4>Цифры всегда те же</h4><p><span class='nw'>813 · 34 = 27 642</span> — значит <span class='nw'>8,13 · 3,4 = 27,642</span> и <span class='nw'>81,3 · 0,034 = 2,7642</span>.</p><p class="small">Меняется только место запятой.</p></div><div class="fbox"><h4>Прикидка</h4><div class="ff"><span class='nw'>27,817 · 0,42 ≈ 30 · 0,4 = 12</span></div><p>Округли до наивысшего разряда и посмотри, похож ли ответ на правду.</p></div></div><h3>Законы и часть от числа</h3><div class="fgrid"><div class="fbox"><h4>Законы умножения</h4><p><span class='nw'>ab = ba</span>, <span class='nw'>(ab)c = a(bc)</span>,</p><p class="small"><span class='nw'>(a + b)c = ac + bc</span>, <span class='nw'>(a − b)c = ac − bc</span>, <span class='nw'>a · 1 = a</span>, <span class='nw'>a · 0 = 0</span>.</p></div><div class="fbox"><h4>Удобные пары</h4><p>Ищи множители, дающие круглое число:</p><p class="small"><span class='nw'>0,4 · 25 = 10</span>, <span class='nw'>0,5 · 2 = 1</span>, <span class='nw'>0,2 · 5 = 1</span>, <span class='nw'>12,5 · 0,8 = 10</span>.</p></div><div class="fbox"><h4>Часть от числа</h4><div class="ff"><span class='nw'>0,3 от 8 = 8 · 0,3 = 2,4</span></div><p>Слово «от» — это знак умножения.</p></div></div>
+</div>
+
+<div class="card">
+
+<h2>1. Откуда берётся правило</h2>
+<p>Умножать десятичные дроби столбиком напрямую мы не умеем. Зато умеем умножать
+натуральные числа. Значит надо избавиться от запятых, а потом вернуть их на место.</p>
+<div class="ex"><h3>Пример 1</h3>
+<p>Вычислить <span class='nw'>2,34 · 1,2</span>.</p>
+<div class='step'>1. Увеличим первый множитель в 100 раз, второй — в 10 раз: <span class='nw'>234</span> и <span class='nw'>12</span>.</div><div class='step'>2. Перемножим натуральные числа: <span class='nw'>234 · 12 = 2808</span>.</div><div class='step'>3. Произведение выросло в <span class='nw'>100 · 10 = 1000</span> раз, значит его надо разделить на 1000: <span class='nw'>2808 : 1000 = 2,808</span>.</div><div class='fx'><span class='nw'>2,34 · 1,2</span> = <span class='nw'>2,808</span></div><div class='step mini'>Сравни: в множителях было 2 и 1 знака после запятой, в ответе стало 3. Это не совпадение.</div>
+</div>
+<div class="figrow"><div class="fig"><svg viewBox="0 0 300 276"><rect x="0" y="0" width="300" height="276" rx="12" fill="#ffffff"/><rect x="14.0" y="20.0" width="272.0" height="52.0" rx="12" fill="#eef3fd" stroke="#2f6bd8" stroke-width="2"/><text x="150.0" y="54.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">2,34 · 1,2</text><text x="150.0" y="17.0" font-size="13" fill="#5b6270" text-anchor="middle" font-weight="600">надо найти</text><line x1="150.0" y1="74.0" x2="150.0" y2="92.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><path d="M 150.0 92.0 L 147.2 83.5 L 152.8 83.5 z" fill="#5b6270"/><rect x="14.0" y="102.0" width="272.0" height="52.0" rx="12" fill="#eef3fd" stroke="#2f6bd8" stroke-width="2"/><text x="150.0" y="136.0" font-size="21" fill="#2f6bd8" text-anchor="middle" font-weight="600">234 · 12 = 2808</text><text x="150.0" y="99.0" font-size="13" fill="#5b6270" text-anchor="middle" font-weight="600">убрали запятые: ×100 и ×10</text><line x1="150.0" y1="156.0" x2="150.0" y2="174.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><path d="M 150.0 174.0 L 147.2 165.5 L 152.8 165.5 z" fill="#5b6270"/><rect x="14.0" y="184.0" width="272.0" height="52.0" rx="12" fill="#e9f7ef" stroke="#137a45" stroke-width="2"/><text x="150.0" y="218.0" font-size="21" fill="#137a45" text-anchor="middle" font-weight="600">2808 : 1000 = 2,808</text><text x="150.0" y="181.0" font-size="13" fill="#5b6270" text-anchor="middle" font-weight="600">произведение выросло в 1000 раз</text><text x="150" y="270" font-size="14" fill="#5b6270" text-anchor="middle">2,34 · 1,2 = 2,808</text></svg></div><div class="fig"><svg viewBox="0 0 300 214"><rect x="0" y="0" width="300" height="214" rx="12" fill="#ffffff"/><text x="175.5" y="43.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">4</text><text x="158.5" y="43.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">3</text><text x="141.5" y="43.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">2</text><text x="175.5" y="71.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">2</text><text x="158.5" y="71.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">1</text><text x="105.8" y="71.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">×</text><line x1="110.0" y1="82.0" x2="188.0" y2="82.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><text x="175.5" y="111.0" font-size="21" fill="#5b6270" text-anchor="middle" font-weight="600">8</text><text x="158.5" y="111.0" font-size="21" fill="#5b6270" text-anchor="middle" font-weight="600">6</text><text x="141.5" y="111.0" font-size="21" fill="#5b6270" text-anchor="middle" font-weight="600">4</text><text x="158.5" y="139.0" font-size="21" fill="#5b6270" text-anchor="middle" font-weight="600">4</text><text x="141.5" y="139.0" font-size="21" fill="#5b6270" text-anchor="middle" font-weight="600">3</text><text x="124.5" y="139.0" font-size="21" fill="#5b6270" text-anchor="middle" font-weight="600">2</text><text x="105.8" y="139.0" font-size="21" fill="#5b6270" text-anchor="middle" font-weight="600">+</text><line x1="110.0" y1="150.0" x2="188.0" y2="150.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><text x="175.5" y="179.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">8</text><text x="158.5" y="179.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">0</text><text x="141.5" y="179.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">8</text><text x="124.5" y="179.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">2</text><text x="150" y="208" font-size="14" fill="#5b6270" text-anchor="middle">натуральные числа умножаем столбиком</text></svg></div></div>
+<div class="def"><div class="n">ВЫВОД</div>
+Цифры произведения находятся один раз — обычным столбиком. Вся работа с запятой
+сводится к тому, чтобы понять, куда её поставить.</div>
+
+</div>
+
+<div class="card">
+
+<h2>Живой чертёж: столбик и запятая</h2>
+<div class="meta">Кнопка выбирает пару чисел, ползунки двигают запятые в множителях.
+Столбик при этом не меняется — меняется только место запятой в ответе.</div>
+<div class="live" id="ml1" data-kind="col"><h4>Одни и те же цифры</h4><p class="lhint">Поставь ползунки так, чтобы получилось <span class='nw'>1,125 · 0,54</span>, и посмотри на хвостовой нуль.</p><div class="livebar" id="ml1b"></div><div class="livefig" id="ml1f"></div><div class="livemsg" id="ml1m"></div><div class="livectl" id="ml1c"></div></div>
+</div>
+
+<div class="card">
+
+<h2>2. Правило умножения десятичных дробей</h2>
+<div class="def"><div class="n">ПРАВИЛО</div>
+<div>Чтобы умножить две десятичные дроби, нужно:</div>
+<div>1. Выполнить умножение, как умножают натуральные числа, не обращая внимания
+на запятые в множителях.</div>
+<div>2. В полученном произведении поставить запятую, отделив ею справа налево
+столько знаков, сколько их содержится в обоих множителях вместе после запятой.</div></div>
+<div class="ex"><h3>Пример 2</h3>
+<p>Вычислить <span class='nw'>3,45 · 0,015</span>.</p>
+<div class='step'>1. Умножаем натуральные числа: <span class='nw'>345 · 15 = 5175</span>.</div><div class='step'>2. Знаков после запятой: в первом множителе 2, во втором 3, всего 5.</div><div class='step'>3. Отсчитываем 5 знаков справа налево. Цифр всего четыре — пришлось дописать нуль.</div><div class='fx'><span class='nw'>3,45 · 0,015</span> = <span class='nw'>0,05175</span></div>
+</div>
+<div class="figrow"><div class="fig"><svg viewBox="0 0 300 214"><rect x="0" y="0" width="300" height="214" rx="12" fill="#ffffff"/><text x="175.5" y="43.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">5</text><text x="158.5" y="43.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">4</text><text x="141.5" y="43.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">3</text><text x="175.5" y="71.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">5</text><text x="158.5" y="71.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">1</text><text x="105.8" y="71.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">×</text><line x1="110.0" y1="82.0" x2="188.0" y2="82.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><text x="175.5" y="111.0" font-size="21" fill="#5b6270" text-anchor="middle" font-weight="600">5</text><text x="158.5" y="111.0" font-size="21" fill="#5b6270" text-anchor="middle" font-weight="600">2</text><text x="141.5" y="111.0" font-size="21" fill="#5b6270" text-anchor="middle" font-weight="600">7</text><text x="124.5" y="111.0" font-size="21" fill="#5b6270" text-anchor="middle" font-weight="600">1</text><text x="158.5" y="139.0" font-size="21" fill="#5b6270" text-anchor="middle" font-weight="600">5</text><text x="141.5" y="139.0" font-size="21" fill="#5b6270" text-anchor="middle" font-weight="600">4</text><text x="124.5" y="139.0" font-size="21" fill="#5b6270" text-anchor="middle" font-weight="600">3</text><text x="105.8" y="139.0" font-size="21" fill="#5b6270" text-anchor="middle" font-weight="600">+</text><line x1="110.0" y1="150.0" x2="188.0" y2="150.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><text x="175.5" y="179.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">5</text><text x="158.5" y="179.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">7</text><text x="141.5" y="179.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">1</text><text x="124.5" y="179.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">5</text><text x="150" y="208" font-size="14" fill="#5b6270" text-anchor="middle">345 · 15 = 5175</text></svg></div><div class="fig"><svg viewBox="0 0 300 222"><rect x="0" y="0" width="300" height="222" rx="12" fill="#ffffff"/><text x="150.0" y="46.0" font-size="24" fill="#15181e" text-anchor="middle" font-weight="600">3,45 · 0,015</text><text x="150.0" y="72.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">знаков после запятой: 2 и 3</text><text x="150.0" y="96.0" font-size="19" fill="#2f6bd8" text-anchor="middle" font-weight="600">2 + 3 = 5</text><line x1="30.0" y1="112.0" x2="270.0" y2="112.0" stroke="#dfe3ea" stroke-width="1.6" stroke-linecap="round"/><text x="150.0" y="142.0" font-size="20" fill="#15181e" text-anchor="middle" font-weight="600">345 · 15 = 5175</text><text x="105.4" y="182.0" font-size="24" fill="#15181e" text-anchor="middle" font-weight="600">0</text><text x="120.2" y="182.0" font-size="24" fill="#2f6bd8" text-anchor="middle" font-weight="600">,</text><text x="135.1" y="182.0" font-size="24" fill="#b3261e" text-anchor="middle" font-weight="600">0</text><text x="150.0" y="182.0" font-size="24" fill="#b3261e" text-anchor="middle" font-weight="600">5</text><text x="164.9" y="182.0" font-size="24" fill="#b3261e" text-anchor="middle" font-weight="600">1</text><text x="179.8" y="182.0" font-size="24" fill="#b3261e" text-anchor="middle" font-weight="600">7</text><text x="194.6" y="182.0" font-size="24" fill="#b3261e" text-anchor="middle" font-weight="600">5</text><text x="150.0" y="208.0" font-size="14" fill="#b3261e" text-anchor="middle" font-weight="600">отсчитали 5 знаков справа налево</text></svg></div></div>
+<div class="warn"><div class="n">ГЛАВНАЯ ОШИБКА ТЕМЫ</div>
+Отсчитать знаки не с того конца или забыть дописать нули слева.
+<span class='nw'>0,4 · 0,004</span> — это не 0,016, а
+<span class='nw'>0,0016</span>: знаков нужно <span class='nw'>1 + 3 = 4</span>,
+а цифр в произведении всего две, поэтому слева дописали два нуля.</div>
+<div class="ex"><h3>Пример 3</h3>
+<p>Вычислить <span class='nw'>1,125 · 0,54</span>.</p>
+<div class='step'>1. <span class='nw'>1125 · 54 = 60 750</span>.</div><div class='step'>2. Знаков: <span class='nw'>3 + 2 = 5</span>, значит <span class='nw'>0,60750</span>.</div><div class='step'>3. Нуль в конце ничего не значит, его отбрасывают.</div><div class='fx'><span class='nw'>1,125 · 0,54</span> = <span class='nw'>0,6075</span></div><div class='step mini'>Сначала отсчитай все пять знаков и только потом убирай хвостовой нуль — если убрать его раньше, запятая встанет не туда.</div>
+</div>
+<div class="figrow"><div class="fig"><svg viewBox="0 0 300 214"><rect x="0" y="0" width="300" height="214" rx="12" fill="#ffffff"/><text x="184.0" y="43.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">5</text><text x="167.0" y="43.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">2</text><text x="150.0" y="43.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">1</text><text x="133.0" y="43.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">1</text><text x="184.0" y="71.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">4</text><text x="167.0" y="71.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">5</text><text x="97.3" y="71.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">×</text><line x1="101.5" y1="82.0" x2="196.5" y2="82.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><text x="184.0" y="111.0" font-size="21" fill="#5b6270" text-anchor="middle" font-weight="600">0</text><text x="167.0" y="111.0" font-size="21" fill="#5b6270" text-anchor="middle" font-weight="600">0</text><text x="150.0" y="111.0" font-size="21" fill="#5b6270" text-anchor="middle" font-weight="600">5</text><text x="133.0" y="111.0" font-size="21" fill="#5b6270" text-anchor="middle" font-weight="600">4</text><text x="167.0" y="139.0" font-size="21" fill="#5b6270" text-anchor="middle" font-weight="600">5</text><text x="150.0" y="139.0" font-size="21" fill="#5b6270" text-anchor="middle" font-weight="600">2</text><text x="133.0" y="139.0" font-size="21" fill="#5b6270" text-anchor="middle" font-weight="600">6</text><text x="116.0" y="139.0" font-size="21" fill="#5b6270" text-anchor="middle" font-weight="600">5</text><text x="97.3" y="139.0" font-size="21" fill="#5b6270" text-anchor="middle" font-weight="600">+</text><line x1="101.5" y1="150.0" x2="196.5" y2="150.0" stroke="#15181e" stroke-width="2.0" stroke-linecap="round"/><text x="184.0" y="179.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">0</text><text x="167.0" y="179.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">5</text><text x="150.0" y="179.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">7</text><text x="133.0" y="179.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">0</text><text x="116.0" y="179.0" font-size="21" fill="#15181e" text-anchor="middle" font-weight="600">6</text><text x="150" y="208" font-size="14" fill="#5b6270" text-anchor="middle">1125 · 54</text></svg></div><div class="fig"><svg viewBox="0 0 300 250"><rect x="0" y="0" width="300" height="250" rx="12" fill="#ffffff"/><text x="150.0" y="46.0" font-size="24" fill="#15181e" text-anchor="middle" font-weight="600">1,125 · 0,54</text><text x="150.0" y="72.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">знаков после запятой: 3 и 2</text><text x="150.0" y="96.0" font-size="19" fill="#2f6bd8" text-anchor="middle" font-weight="600">3 + 2 = 5</text><line x1="30.0" y1="112.0" x2="270.0" y2="112.0" stroke="#dfe3ea" stroke-width="1.6" stroke-linecap="round"/><text x="150.0" y="142.0" font-size="20" fill="#15181e" text-anchor="middle" font-weight="600">1125 · 54 = 60750</text><text x="105.4" y="182.0" font-size="24" fill="#15181e" text-anchor="middle" font-weight="600">0</text><text x="120.2" y="182.0" font-size="24" fill="#2f6bd8" text-anchor="middle" font-weight="600">,</text><text x="135.1" y="182.0" font-size="24" fill="#b3261e" text-anchor="middle" font-weight="600">6</text><text x="150.0" y="182.0" font-size="24" fill="#b3261e" text-anchor="middle" font-weight="600">0</text><text x="164.9" y="182.0" font-size="24" fill="#b3261e" text-anchor="middle" font-weight="600">7</text><text x="179.8" y="182.0" font-size="24" fill="#b3261e" text-anchor="middle" font-weight="600">5</text><text x="194.6" y="182.0" font-size="24" fill="#b3261e" text-anchor="middle" font-weight="600">0</text><text x="150.0" y="208.0" font-size="14" fill="#b3261e" text-anchor="middle" font-weight="600">отсчитали 5 знаков справа налево</text><text x="150.0" y="236.0" font-size="16" fill="#137a45" text-anchor="middle" font-weight="600">нуль в конце отбрасываем: 0,6075</text></svg></div></div>
+
+<h3>Задания к блокам 1-2</h3>
+<div class="zad" id="z1"><div class="zh">Задание 1<span> · №181 а</span></div><div class="zt">Примените правило умножения десятичных дробей: <span class='nw'>7,6 · 4,5</span>, <span class='nw'>2,06 · 3,08</span>, <span class='nw'>0,65 · 0,0796</span>, <span class='nw'>2,6 · 7</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Каждый раз: умножаем как натуральные, потом складываем знаки.</div><div class='fx'><span class='nw'>7,6·4,5 = 34,2</span> · <span class='nw'>2,06·3,08 = 6,3448</span> · <span class='nw'>0,65·0,0796 = 0,05174</span> · <span class='nw'>2,6·7 = 18,2</span></div></div></details></div><div class="zad" id="z2"><div class="zh">Задание 2<span> · №181 б</span></div><div class="zt">Выполните умножение: <span class='nw'>0,8 · 4,35</span>, <span class='nw'>60,7 · 2,03</span>, <span class='nw'>0,038 · 0,465</span>, <span class='nw'>3,4 · 8</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>В третьем примере знаков <span class='nw'>3 + 3 = 6</span> — нули слева дописать придётся.</div><div class='fx'><span class='nw'>0,8·4,35 = 3,48</span> · <span class='nw'>60,7·2,03 = 123,221</span> · <span class='nw'>0,038·0,465 = 0,01767</span> · <span class='nw'>3,4·8 = 27,2</span></div></div></details></div><div class="zad" id="z3"><div class="zh">Задание 3<span> · тетрадь, №1 а-в</span></div><div class="zt">Выполните умножение: <span class='nw'>3,1 · 0,1</span>, <span class='nw'>2,32 · 8,5</span>, <span class='nw'>0,4 · 0,004</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Первый пример можно сделать переносом запятой — это §5.</div><div class='fx'><span class='nw'>3,1·0,1 = 0,31</span> · <span class='nw'>2,32·8,5 = 19,72</span> · <span class='nw'>0,4·0,004 = 0,0016</span></div></div></details></div><div class="zad" id="z4"><div class="zh">Задание 4<span> · тетрадь, №1 г-е</span></div><div class="zt">Выполните умножение: <span class='nw'>0,015 · 9,34</span>, <span class='nw'>15,01 · 4,8</span>, <span class='nw'>0,371 · 12,85</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Считаем столбиком, потом отсчитываем знаки.</div><div class='fx'><span class='nw'>0,015·9,34 = 0,1401</span> · <span class='nw'>15,01·4,8 = 72,048</span> · <span class='nw'>0,371·12,85 = 4,76735</span></div></div></details></div><div class="zad" id="z5"><div class="zh">Задание 5<span> · тетрадь, №4 а-в</span></div><div class="zt">Вычислите: <span class='nw'>1,2 · 0,7</span>, <span class='nw'>3,17 · 6,5</span>, <span class='nw'>0,2 · 0,002</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>В третьем примере знаков <span class='nw'>1 + 3 = 4</span>.</div><div class='fx'><span class='nw'>1,2·0,7 = 0,84</span> · <span class='nw'>3,17·6,5 = 20,605</span> · <span class='nw'>0,2·0,002 = 0,0004</span></div></div></details></div><div class="zad" id="z6"><div class="zh">Задание 6<span> · тетрадь, №4 г-е</span></div><div class="zt">Вычислите: <span class='nw'>0,025 · 6,28</span>, <span class='nw'>26,95 · 2,4</span>, <span class='nw'>1,045 · 27,79</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>В первом примере в конце получится нуль — его отбрасываем.</div><div class='fx'><span class='nw'>0,025·6,28 = 0,157</span> · <span class='nw'>26,95·2,4 = 64,68</span> · <span class='nw'>1,045·27,79 = 29,04055</span></div></div></details></div><div class="zad" id="z7"><div class="zh">Задание 7<span> · №182</span></div><div class="zt">Найдите квадрат и куб каждого числа: 0,1; 0,3; 0,02; 0,5.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Квадрат — умножить число само на себя, куб — ещё раз на это же число.</div><div class='fx'>квадраты: <span class='nw'>0,1² = 0,01</span> · <span class='nw'>0,3² = 0,09</span> · <span class='nw'>0,02² = 0,0004</span> · <span class='nw'>0,5² = 0,25</span></div><div class='fx'>кубы: <span class='nw'>0,1³ = 0,001</span> · <span class='nw'>0,3³ = 0,027</span> · <span class='nw'>0,02³ = 0,000008</span> · <span class='nw'>0,5³ = 0,125</span></div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>3. Сколько знаков — видно заранее</h2>
+<p>Число знаков после запятой в произведении можно назвать, не считая само
+произведение: это сумма знаков обоих множителей.</p>
+<div class='fx'><span class='nw'>знаки первого</span> + <span class='nw'>знаки второго</span> = <span class='nw'>знаки произведения</span></div>
+<div class="ex"><h3>Пример 4</h3>
+<div class='step'><span class='nw'>8,6 · 0,91</span>: <span class='nw'>1 + 2 = 3</span> знака.</div><div class='step'><span class='nw'>24,5793 · 6,401</span>: <span class='nw'>4 + 3 = 7</span> знаков.</div><div class='step'><span class='nw'>0,37 · 108</span>: <span class='nw'>2 + 0 = 2</span> знака, ведь у натурального числа знаков после запятой нет.</div>
+</div>
+<div class="ex"><h3>Пример 5</h3>
+<p>Известно, что <span class='nw'>813 · 34 = 27 642</span>. Найти
+<span class='nw'>8,13 · 3,4</span>, <span class='nw'>8,13 · 34</span> и <span class='nw'>81,3 · 0,034</span>.</p>
+<div class='step'>Цифры произведения во всех трёх случаях одни и те же: 27 642.</div><div class='step'><span class='nw'>8,13 · 3,4</span>: знаков <span class='nw'>2 + 1 = 3</span> → <span class='nw'>27,642</span>.</div><div class='step'><span class='nw'>8,13 · 34</span>: знаков <span class='nw'>2 + 0 = 2</span> → <span class='nw'>276,42</span>.</div><div class='step'><span class='nw'>81,3 · 0,034</span>: знаков <span class='nw'>1 + 3 = 4</span> → <span class='nw'>2,7642</span>.</div><div class='fx'><span class='nw'>8,13 · 3,4 = 27,642</span> · <span class='nw'>8,13 · 34 = 276,42</span> · <span class='nw'>81,3 · 0,034 = 2,7642</span></div>
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>4. Восстановить запятую</h2>
+<p>Часто произведение натуральных чисел уже посчитано, и остаётся только поставить
+запятую. Это то же правило, но с конца.</p>
+<div class="ex"><h3>Пример 6</h3>
+<p>Известно, что <span class='nw'>625 · 4 = 2500</span>. Поставить запятую
+в равенстве <span class='nw'>6,25 · 0,4 = 2500</span>.</p>
+<div class='step'>1. Знаков после запятой: <span class='nw'>2 + 1 = 3</span>.</div><div class='step'>2. Отсчитываем три знака справа: <span class='nw'>2,500</span>.</div><div class='step'>3. Убираем хвостовые нули: <span class='nw'>2,5</span>.</div><div class='fx'><span class='nw'>6,25 · 0,4</span> = <span class='nw'>2,5</span></div>
+</div>
+<div class="fig"><svg viewBox="0 0 430 272"><rect x="0" y="0" width="430" height="272" rx="12" fill="#ffffff"/><text x="215.0" y="46.0" font-size="24" fill="#15181e" text-anchor="middle" font-weight="600">6,25 · 0,4</text><text x="215.0" y="72.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">знаков после запятой: 2 и 1</text><text x="215.0" y="96.0" font-size="19" fill="#2f6bd8" text-anchor="middle" font-weight="600">2 + 1 = 3</text><line x1="30.0" y1="112.0" x2="400.0" y2="112.0" stroke="#dfe3ea" stroke-width="1.6" stroke-linecap="round"/><text x="215.0" y="142.0" font-size="20" fill="#15181e" text-anchor="middle" font-weight="600">625 · 4 = 2500</text><text x="185.2" y="182.0" font-size="24" fill="#15181e" text-anchor="middle" font-weight="600">2</text><text x="200.1" y="182.0" font-size="24" fill="#2f6bd8" text-anchor="middle" font-weight="600">,</text><text x="215.0" y="182.0" font-size="24" fill="#b3261e" text-anchor="middle" font-weight="600">5</text><text x="229.9" y="182.0" font-size="24" fill="#b3261e" text-anchor="middle" font-weight="600">0</text><text x="244.8" y="182.0" font-size="24" fill="#b3261e" text-anchor="middle" font-weight="600">0</text><text x="215.0" y="208.0" font-size="14" fill="#b3261e" text-anchor="middle" font-weight="600">отсчитали 3 знака справа налево</text><text x="215.0" y="236.0" font-size="16" fill="#137a45" text-anchor="middle" font-weight="600">нуль в конце отбрасываем: 2,5</text><text x="215" y="266" font-size="14" fill="#5b6270" text-anchor="middle">сначала все знаки, потом уборка нулей</text></svg></div>
+<div class="def"><div class="n">КАК ПРОВЕРИТЬ СЕБЯ</div>
+Умножение на число больше единицы увеличивает, на число меньше единицы — уменьшает.
+<span class='nw'>6,25 · 0,4</span> обязано быть меньше 6,25, и 2,5 этому не
+противоречит.</div>
+
+<h3>Задания к блокам 3-4</h3>
+<div class="zad" id="z8"><div class="zh">Задание 8<span> · №177 а</span></div><div class="zt">Какие натуральные числа нужно умножить, чтобы выполнить умножение: <span class='nw'>3,4 · 5,8</span>, <span class='nw'>0,7 · 0,09</span>, <span class='nw'>1,07 · 2,9</span>, <span class='nw'>0,0777 · 0,22</span>?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Просто убираем запятые и нули слева.</div><div class='fx'><span class='nw'>34 · 58</span> · <span class='nw'>7 · 9</span> · <span class='nw'>107 · 29</span> · <span class='nw'>777 · 22</span></div></div></details></div><div class="zad" id="z9"><div class="zh">Задание 9<span> · №177 б</span></div><div class="zt">Какие натуральные числа нужно умножить: <span class='nw'>16,23 · 2,4</span>, <span class='nw'>0,5 · 0,8</span>, <span class='nw'>80,2 · 5,003</span>, <span class='nw'>0,25 · 0,008</span>?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Нули слева в записи натурального числа не пишут.</div><div class='fx'><span class='nw'>1623 · 24</span> · <span class='nw'>5 · 8</span> · <span class='nw'>802 · 5003</span> · <span class='nw'>25 · 8</span></div></div></details></div><div class="zad" id="z10"><div class="zh">Задание 10<span> · №178</span></div><div class="zt">Ученик забыл поставить запятую в результате. Сколько знаков справа налево надо отделить и какой получится ответ: <span class='nw'>5,3 · 6,5 = 3445</span>, <span class='nw'>43,7 · 1,07 = 46 759</span>, <span class='nw'>0,718 · 0,11 = 7898</span>, <span class='nw'>0,0296 · 0,064 = 18 944</span>?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Складываем знаки множителей: <span class='nw'>1 + 1 = 2</span>, <span class='nw'>1 + 2 = 3</span>, <span class='nw'>3 + 2 = 5</span>, <span class='nw'>4 + 3 = 7</span>.</div><div class='fx'><span class='nw'>5,3·6,5 = 34,45</span> · <span class='nw'>43,7·1,07 = 46,759</span> · <span class='nw'>0,718·0,11 = 0,07898</span> · <span class='nw'>0,0296·0,064 = 0,0018944</span></div></div></details></div><div class="zad" id="z11"><div class="zh">Задание 11<span> · №179</span></div><div class="zt">Известно, что <span class='nw'>813 · 34 = 27 642</span>. Вычислите: <span class='nw'>8,13 · 3,4</span>, <span class='nw'>8,13 · 34</span>, <span class='nw'>81,3 · 0,34</span>, <span class='nw'>81,3 · 0,034</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Цифры везде одни и те же, считаем только знаки.</div><div class='fx'><span class='nw'>8,13·3,4 = 27,642</span> · <span class='nw'>8,13·34 = 276,42</span> · <span class='nw'>81,3·0,34 = 27,642</span> · <span class='nw'>81,3·0,034 = 2,7642</span></div></div></details></div><div class="zad" id="z12"><div class="zh">Задание 12<span> · тетрадь, №2</span></div><div class="zt">Сколько цифр после запятой должно быть в произведении чисел: <span class='nw'>8,6 и 0,91</span>, <span class='nw'>24,5793 и 6,401</span>, <span class='nw'>0,81 и 2,309</span>, <span class='nw'>0,37 и 108</span>?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Складываем знаки множителей; у натурального числа их нуль.</div><div class='fx'><span class='nw'>1 + 2 = 3</span> · <span class='nw'>4 + 3 = 7</span> · <span class='nw'>2 + 3 = 5</span> · <span class='nw'>2 + 0 = 2</span></div></div></details></div><div class="zad" id="z13"><div class="zh">Задание 13<span> · тетрадь, №3</span></div><div class="zt">Поставьте правильно запятую в произведении: <span class='nw'>6,25 · 0,4 = 2500</span>, <span class='nw'>0,8 · 1,92 = 1536</span>, <span class='nw'>8,75 · 0,17 = 14 875</span>, <span class='nw'>8,5 · 0,3 = 255</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Знаков соответственно <span class='nw'>3</span>, <span class='nw'>3</span>, <span class='nw'>4</span>, <span class='nw'>2</span>.</div><div class='step'>В первом и последнем примерах хвостовые нули потом убираем.</div><div class='fx'><span class='nw'>6,25·0,4 = 2,5</span> · <span class='nw'>0,8·1,92 = 1,536</span> · <span class='nw'>8,75·0,17 = 1,4875</span> · <span class='nw'>8,5·0,3 = 2,55</span></div></div></details></div><div class="zad" id="z14"><div class="zh">Задание 14<span> · тетрадь, №5</span></div><div class="zt">Восстановите пропущенные запятые, зная, что <span class='nw'>782 · 156 = 121 992</span>: <span class='nw'>78,2 · 156 = 121 992</span>, <span class='nw'>78,2 · 0,156 = 121 992</span>, <span class='nw'>0,782 · 1,56 = 121 992</span>, <span class='nw'>7,82 · 156 = 121 992</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Знаков <span class='nw'>1</span>, <span class='nw'>4</span>, <span class='nw'>5</span>, <span class='nw'>2</span> — столько и отсчитываем справа.</div><div class='fx'><span class='nw'>78,2·156 = 12 199,2</span> · <span class='nw'>78,2·0,156 = 12,1992</span> · <span class='nw'>0,782·1,56 = 1,21992</span> · <span class='nw'>7,82·156 = 1219,92</span></div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>5. Прикидка: каким должен быть ответ</h2>
+<p>Чтобы не поверить в неправильный ответ, полезно заранее прикинуть его в уме.
+Для этого каждый множитель округляют до наивысшего разряда.</p>
+<div class="ex"><h3>Пример 7</h3>
+<p>Прикинуть значение <span class='nw'>27,817 · 0,42</span>.</p>
+<div class='step'>1. <span class='nw'>27,817 ≈ 30</span>, <span class='nw'>0,42 ≈ 0,4</span>.</div><div class='step'>2. <span class='nw'>30 · 0,4 = 12</span>.</div><div class='step'>3. Значит ответ должен быть где-то около 12, а точный ответ — <span class='nw'>11,68314</span>.</div><div class='fx'><span class='nw'>27,817 · 0,42 ≈ 12</span></div>
+</div>
+<div class="figrow"><div class="fig"><svg viewBox="0 0 300 178"><rect x="0" y="0" width="300" height="178" rx="12" fill="#ffffff"/><text x="150.0" y="42.0" font-size="22" fill="#15181e" text-anchor="middle" font-weight="600">27,817 · 0,42</text><line x1="150.0" y1="54.0" x2="150.0" y2="74.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><path d="M 150.0 74.0 L 147.2 65.5 L 152.8 65.5 z" fill="#5b6270"/><text x="150.0" y="100.0" font-size="22" fill="#e0952a" text-anchor="middle" font-weight="600">≈ 30 · 0,4 = 12</text><line x1="40.0" y1="116.0" x2="260.0" y2="116.0" stroke="#dfe3ea" stroke-width="1.6" stroke-linecap="round"/><text x="150.0" y="142.0" font-size="20" fill="#137a45" text-anchor="middle" font-weight="600">точный ответ 11,68314</text><text x="150" y="172" font-size="14" fill="#5b6270" text-anchor="middle">образец учебника</text></svg></div><div class="fig"><svg viewBox="0 0 300 156"><rect x="0" y="0" width="300" height="156" rx="12" fill="#ffffff"/><text x="150.0" y="42.0" font-size="22" fill="#15181e" text-anchor="middle" font-weight="600">9,7 · 5,12</text><line x1="150.0" y1="54.0" x2="150.0" y2="74.0" stroke="#5b6270" stroke-width="2.0" stroke-linecap="round"/><path d="M 150.0 74.0 L 147.2 65.5 L 152.8 65.5 z" fill="#5b6270"/><text x="150.0" y="100.0" font-size="22" fill="#e0952a" text-anchor="middle" font-weight="600">≈ 10 · 5 = 50</text><line x1="40.0" y1="116.0" x2="260.0" y2="116.0" stroke="#dfe3ea" stroke-width="1.6" stroke-linecap="round"/><text x="150.0" y="142.0" font-size="20" fill="#137a45" text-anchor="middle" font-weight="600">точный ответ 49,664</text></svg></div></div>
+<div class="def"><div class="n">ЗАЧЕМ ЭТО НУЖНО</div>
+Прикидка ловит главную ошибку темы — запятую не на своём месте. Если по прикидке
+ответ около 12, а получилось 1,2 или 120, значит знаков отсчитали не столько.</div>
+
+<h3>Задания к блоку 5</h3>
+<div class="zad" id="z15"><div class="zh">Задание 15<span> · №180 а, б</span></div><div class="zt">Округлите числа до наивысшего разряда и выполните умножение: <span class='nw'>9,7 · 5,12</span>, <span class='nw'>8,09 · 0,206</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>9,7 ≈ 10</span>, <span class='nw'>5,12 ≈ 5</span>, прикидка <span class='nw'>10 · 5 = 50</span>, точный ответ <span class='nw'>49,664</span>.</div><div class='step'><span class='nw'>8,09 ≈ 8</span>, <span class='nw'>0,206 ≈ 0,2</span>, прикидка <span class='nw'>8 · 0,2 = 1,6</span>, точный ответ <span class='nw'>1,66654</span>.</div><div class='fx'><span class='nw'>9,7 · 5,12 = 49,664</span> · <span class='nw'>8,09 · 0,206 = 1,66654</span></div></div></details></div><div class="zad" id="z16"><div class="zh">Задание 16<span> · №180 в, г</span></div><div class="zt">Округлите и выполните умножение: <span class='nw'>67,8 · 4,234</span>, <span class='nw'>0,057 · 621,8</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>67,8 ≈ 70</span>, <span class='nw'>4,234 ≈ 4</span>, прикидка <span class='nw'>70 · 4 = 280</span>, точный ответ <span class='nw'>287,0652</span>.</div><div class='step'><span class='nw'>0,057 ≈ 0,06</span>, <span class='nw'>621,8 ≈ 600</span>, прикидка <span class='nw'>0,06 · 600 = 36</span>, точный ответ <span class='nw'>35,4426</span>.</div><div class='fx'><span class='nw'>67,8 · 4,234 = 287,0652</span> · <span class='nw'>0,057 · 621,8 = 35,4426</span></div></div></details></div><div class="zad" id="z17"><div class="zh">Задание 17<span> · прикидка ловит запятую</span></div><div class="zt">Ученик получил <span class='nw'>2,06 · 3,08 = 63,448</span>. Не считая точно, объясните, почему это неверно.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Прикидка: <span class='nw'>2 · 3 = 6</span>, значит ответ должен быть около шести, а не около шестидесяти.</div><div class='step'>Знаков после запятой должно быть <span class='nw'>2 + 2 = 4</span>, а в записи 63,448 их три.</div><div class='fx'>верный ответ <span class='nw'>6,3448</span></div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>6. Законы умножения</h2>
+<p>Все законы умножения, которые работали для натуральных чисел, справедливы
+и для десятичных дробей.</p>
+<div class="figrow"><div class="fig"><svg viewBox="0 0 300 112"><rect x="0" y="0" width="300" height="112" rx="12" fill="#ffffff"/><text x="150.0" y="34.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">переместительный</text><rect x="12.0" y="48.0" width="276.0" height="46.0" rx="12" fill="#eef3fd" stroke="#2f6bd8" stroke-width="2"/><text x="150.0" y="78.0" font-size="20" fill="#15181e" text-anchor="middle" font-weight="600">a · b = b · a</text></svg></div><div class="fig"><svg viewBox="0 0 300 112"><rect x="0" y="0" width="300" height="112" rx="12" fill="#ffffff"/><text x="150.0" y="34.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">сочетательный</text><rect x="12.0" y="48.0" width="276.0" height="46.0" rx="12" fill="#eef3fd" stroke="#2f6bd8" stroke-width="2"/><text x="150.0" y="78.0" font-size="20" fill="#15181e" text-anchor="middle" font-weight="600">(a · b) · c = a · (b · c)</text></svg></div></div><div class="figrow"><div class="fig"><svg viewBox="0 0 300 112"><rect x="0" y="0" width="300" height="112" rx="12" fill="#ffffff"/><text x="150.0" y="34.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">распределительный к сложению</text><rect x="12.0" y="48.0" width="276.0" height="46.0" rx="12" fill="#eef3fd" stroke="#2f6bd8" stroke-width="2"/><text x="150.0" y="78.0" font-size="20" fill="#15181e" text-anchor="middle" font-weight="600">(a + b) · c = a · c + b · c</text></svg></div><div class="fig"><svg viewBox="0 0 300 112"><rect x="0" y="0" width="300" height="112" rx="12" fill="#ffffff"/><text x="150.0" y="34.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">распределительный к вычитанию</text><rect x="12.0" y="48.0" width="276.0" height="46.0" rx="12" fill="#eef3fd" stroke="#2f6bd8" stroke-width="2"/><text x="150.0" y="78.0" font-size="20" fill="#15181e" text-anchor="middle" font-weight="600">(a − b) · c = a · c − b · c</text></svg></div></div>
+<div class='fx'><span class='nw'>a · 1 = a</span> и <span class='nw'>a · 0 = 0</span></div>
+<div class="def"><div class="n">ЗАЧЕМ ОНИ НУЖНЫ</div>
+Законы не для того, чтобы их заучивать, а для того, чтобы считать меньше.
+Переместительный и сочетательный позволяют менять порядок множителей,
+распределительный — выносить общий множитель за скобки.</div>
+
+</div>
+
+<div class="card">
+
+<h2>7. Считаем удобным способом</h2>
+<div class="ex"><h3>Пример 8</h3>
+<p>Найти произведение <span class='nw'>0,4 · 8 · 11 · 25</span>.</p>
+<div class='step'>1. Ищем пару, дающую круглое число: <span class='nw'>0,4 · 25 = 10</span>.</div><div class='step'>2. Остальное: <span class='nw'>8 · 11 = 88</span>.</div><div class='step'>3. <span class='nw'>10 · 88 = 880</span>.</div><div class='fx'><span class='nw'>0,4 · 8 · 11 · 25</span> = <span class='nw'>880</span></div>
+</div>
+<div class="ex"><h3>Пример 9</h3>
+<p>Вычислить удобным способом <span class='nw'>61 · 2,3</span>.</p>
+<div class='step'>1. <span class='nw'>61 = 60 + 1</span>.</div><div class='step'>2. <span class='nw'>(60 + 1) · 2,3 = 60 · 2,3 + 1 · 2,3</span>.</div><div class='step'>3. <span class='nw'>138 + 2,3 = 140,3</span>.</div><div class='fx'><span class='nw'>61 · 2,3</span> = <span class='nw'>140,3</span></div>
+</div>
+<div class="ex"><h3>Пример 10</h3>
+<p>Вычислить <span class='nw'>4,3 · 7,8 + 5,7 · 7,8</span>.</p>
+<div class='step'>1. Общий множитель 7,8 выносим за скобки.</div><div class='step'>2. <span class='nw'>(4,3 + 5,7) · 7,8 = 10 · 7,8</span>.</div><div class='fx'><span class='nw'>4,3 · 7,8 + 5,7 · 7,8</span> = <span class='nw'>78</span></div><div class='step mini'>Пары, которые стоит помнить: <span class='nw'>0,4 и 25</span>, <span class='nw'>0,5 и 2</span>, <span class='nw'>0,2 и 5</span>, <span class='nw'>12,5 и 0,8</span>, <span class='nw'>0,25 и 4</span>.</div>
+</div>
+
+<h3>Задания к блокам 6-7</h3>
+<div class="zad" id="z18"><div class="zh">Задание 18<span> · №189</span></div><div class="zt">Выполните действия, используя переместительный и сочетательный законы: <span class='nw'>0,2 · 6,34 · 5</span>, <span class='nw'>25 · 18,75 · 0,4</span>, <span class='nw'>0,02 · (2,94 · 0,5)</span>, <span class='nw'>(0,8 · 5,125) · 12,5</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Ищем пары: <span class='nw'>0,2 · 5 = 1</span>, <span class='nw'>25 · 0,4 = 10</span>, <span class='nw'>0,02 · 0,5 = 0,01</span>, <span class='nw'>0,8 · 12,5 = 10</span>.</div><div class='fx'><span class='nw'>0,2·6,34·5 = 6,34</span> · <span class='nw'>25·18,75·0,4 = 187,5</span> · <span class='nw'>0,02·(2,94·0,5) = 0,0294</span> · <span class='nw'>(0,8·5,125)·12,5 = 51,25</span></div></div></details></div><div class="zad" id="z19"><div class="zh">Задание 19<span> · №190 а, б</span></div><div class="zt">Выполните действия, используя распределительный закон: <span class='nw'>4,3 · 7,8 + 5,7 · 7,8</span>, <span class='nw'>27,5 · 16,9 − 27,5 · 6,9</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Общий множитель выносим за скобки: <span class='nw'>(4,3 + 5,7) · 7,8 = 10 · 7,8</span>.</div><div class='step'><span class='nw'>27,5 · (16,9 − 6,9) = 27,5 · 10</span>.</div><div class='fx'><span class='nw'>4,3 · 7,8 + 5,7 · 7,8 = 78</span> · <span class='nw'>27,5 · 16,9 − 27,5 · 6,9 = 275</span></div></div></details></div><div class="zad" id="z20"><div class="zh">Задание 20<span> · №190 в, г</span></div><div class="zt">Выполните действия: <span class='nw'>35,11 · 9,09 + 9,09 · 64,89</span>, <span class='nw'>5,14 · 3,14 − 3,14²</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>В первом общий множитель 9,09: <span class='nw'>9,09 · (35,11 + 64,89) = 9,09 · 100</span>.</div><div class='step'>Во втором <span class='nw'>3,14² = 3,14 · 3,14</span>, общий множитель 3,14: <span class='nw'>3,14 · (5,14 − 3,14) = 3,14 · 2</span>.</div><div class='fx'><span class='nw'>35,11 · 9,09 + 9,09 · 64,89 = 909</span> · <span class='nw'>5,14 · 3,14 − 3,14² = 6,28</span></div></div></details></div><div class="zad" id="z21"><div class="zh">Задание 21<span> · №191</span></div><div class="zt">Найдите значение выражения, используя законы умножения: <span class='nw'>0,02 · 7,08 · 2,5 · 0,5 · 0,004</span>, <span class='nw'>12,5 · 52,1 · 0,4 · 0,08 · 0,25</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Первое: <span class='nw'>0,02 · 2,5 = 0,05</span>, <span class='nw'>0,5 · 0,004 = 0,002</span>, <span class='nw'>0,05 · 0,002 = 0,0001</span>.</div><div class='step'>Второе: <span class='nw'>12,5 · 0,4 = 5</span>, <span class='nw'>0,08 · 0,25 = 0,02</span>, <span class='nw'>5 · 0,02 = 0,1</span>.</div><div class='fx'><span class='nw'>0,02·7,08·2,5·0,5·0,004 = 0,000708</span> · <span class='nw'>12,5·52,1·0,4·0,08·0,25 = 5,21</span></div></div></details></div><div class="zad" id="z22"><div class="zh">Задание 22<span> · №192</span></div><div class="zt">Известно, что <span class='nw'>m · n = 180,351</span>. Найдите значение выражения: <span class='nw'>m · 100 · n</span>, <span class='nw'>1000 · m · n</span>, <span class='nw'>0,01 · m · 10 · n</span>, <span class='nw'>m · n : 1000</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Во всех четырёх выражениях спрятано <span class='nw'>m · n</span>, остаётся перенести запятую.</div><div class='fx'><span class='nw'>m · 100 · n = 18 035,1</span> · <span class='nw'>1000 · m · n = 180 351</span> · <span class='nw'>0,01 · m · 10 · n = 18,0351</span> · <span class='nw'>m · n : 1000 = 0,180351</span></div></div></details></div><div class="zad" id="z23"><div class="zh">Задание 23<span> · №193</span></div><div class="zt">Известно, что <span class='nw'>x · y = 6,35</span> и <span class='nw'>x · z = 4,35</span>. Найдите <span class='nw'>(y + z) · x</span> и <span class='nw'>(y − z) · x</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Раскрываем скобки: <span class='nw'>(y + z)x = xy + xz</span> и <span class='nw'>(y − z)x = xy − xz</span>.</div><div class='fx'><span class='nw'>(y + z) · x = 10,7</span> · <span class='nw'>(y − z) · x = 2</span></div></div></details></div><div class="zad" id="z24"><div class="zh">Задание 24<span> · №212</span></div><div class="zt">Упростите выражение, применяя законы умножения: <span class='nw'>2 · k · 7</span>, <span class='nw'>5 · 5x</span>, <span class='nw'>x · 0,6y</span>, <span class='nw'>4a · 7b · 3</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Числа собираем вместе, буквы — вместе.</div><div class='fx'><span class='nw'>14k</span> · <span class='nw'>25x</span> · <span class='nw'>0,6xy</span> · <span class='nw'>84ab</span></div></div></details></div><div class="zad" id="z25"><div class="zh">Задание 25<span> · №211</span></div><div class="zt">Произведение двух чисел равно 3,14. Один множитель умножили на 0,25, другой — на 0,4. Найдите новое произведение.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Новое произведение — это старое, умноженное на <span class='nw'>0,25 · 0,4 = 0,1</span>.</div><div class='step'><span class='nw'>3,14 · 0,1 = 0,314</span>.</div><div class='fx'>0,314</div></div></details></div>
+</div>
+
+<div class="card">
+  <h2>8. Порядок действий и выражения</h2>
+  <p>Здесь всё вместе: и правило умножения, и законы, и обычный порядок действий.
+  Сначала скобки, потом умножение и деление, в конце сложение и вычитание.</p>
+<div class="zad" id="z26"><div class="zh">Задание 26<span> · №183 а</span></div><div class="zt">Найдите значение выражения: <span class='nw'>5,2 · 11,2 − 7,2 · 0,56 + 7,8 · 1,09</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Сначала все умножения: <span class='nw'>5,2 · 11,2 = 58,24</span>, <span class='nw'>7,2 · 0,56 = 4,032</span>, <span class='nw'>7,8 · 1,09 = 8,502</span>.</div><div class='step'>Потом слева направо: <span class='nw'>58,24 − 4,032 = 54,208</span>, затем <span class='nw'>+ 8,502</span>.</div><div class='fx'>62,71</div></div></details></div><div class="zad" id="z27"><div class="zh">Задание 27<span> · №183 б</span></div><div class="zt">Найдите значение выражения: <span class='nw'>70 − (10,2 − 3,38) · 4,4 + 10,008</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Скобка: <span class='nw'>10,2 − 3,38 = 6,82</span>.</div><div class='step'>Умножение: <span class='nw'>6,82 · 4,4 = 30,008</span>.</div><div class='step'>Дальше по порядку: <span class='nw'>70 − 30,008 = 39,992</span>, затем <span class='nw'>+ 10,008</span>.</div><div class='fx'>50</div></div></details></div><div class="zad" id="z28"><div class="zh">Задание 28<span> · №184</span></div><div class="zt">Вычислите: сумму числа 58,06 и произведения чисел 3,194 и 10; произведение числа 0,002 и разности чисел 13,1 и 3,03.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>3,194 · 10 = 31,94</span>, затем <span class='nw'>58,06 + 31,94 = 90</span>.</div><div class='step'><span class='nw'>13,1 − 3,03 = 10,07</span>, затем <span class='nw'>0,002 · 10,07 = 0,02014</span>.</div><div class='fx'><span class='nw'>сумма = 90</span> · <span class='nw'>произведение = 0,02014</span></div></div></details></div><div class="zad" id="z29"><div class="zh">Задание 29<span> · тетрадь, №7 а</span></div><div class="zt">Укажите порядок действий и найдите значение выражения: <span class='nw'>2,7 · 3,5 − 1,1 · 3,5 + 1,6 · 4,2 + 1,6 · 2,3</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Удобнее вынести общие множители: <span class='nw'>3,5 · (2,7 − 1,1) = 3,5 · 1,6</span> и <span class='nw'>1,6 · (4,2 + 2,3) = 1,6 · 6,5</span>.</div><div class='step'>Теперь общий множитель 1,6: <span class='nw'>1,6 · (3,5 + 6,5) = 1,6 · 10</span>.</div><div class='fx'>16</div></div></details></div><div class="zad" id="z30"><div class="zh">Задание 30<span> · тетрадь, №7 б</span></div><div class="zt">Найдите значение выражения: <span class='nw'>(4 − 1,55) · (0,6 + 1,8)</span> + <span class='nw'>2 · (45,36 − 12,45)</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Скобки: <span class='nw'>4 − 1,55 = 2,45</span>, <span class='nw'>0,6 + 1,8 = 2,4</span>, <span class='nw'>45,36 − 12,45 = 32,91</span>.</div><div class='step'>Умножения: <span class='nw'>2,45 · 2,4 = 5,88</span> и <span class='nw'>2 · 32,91 = 65,82</span>.</div><div class='fx'>71,7</div></div></details></div><div class="zad" id="z31"><div class="zh">Задание 31<span> · тетрадь, №12</span></div><div class="zt">Первое число равно q, второе на 20 больше, а третье в 5 раз больше первого. Составьте выражение для суммы этих чисел и найдите его значение при <span class='nw'>q = 7</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>q + (q + 20) + 5q = 7q + 20</span>.</div><div class='step'>При <span class='nw'>q = 7</span>: <span class='nw'>7 · 7 + 20 = 69</span>.</div><div class='fx'><span class='nw'>7q + 20</span>, значение 69</div></div></details></div>
+</div>
+
+<div class="card">
+
+<h2>9. Часть от числа</h2>
+<p>Часть числа часто задают десятичной дробью: «0,3 от восьми», «0,25 часа»,
+«0,6 всего картофеля».</p>
+<div class="def"><div class="n">ПРАВИЛО</div>
+Чтобы найти часть числа, выраженную десятичной дробью, надо умножить это число
+на данную дробь.</div>
+<div class="ex"><h3>Пример 11</h3>
+<p>Найти 0,3 от числа 8.</p>
+<div class='step'>1. «От» — это знак умножения: <span class='nw'>8 · 0,3</span>.</div><div class='step'>2. <span class='nw'>8 · 0,3 = 2,4</span>.</div><div class='fx'><span class='nw'>0,3 от 8 = 2,4</span></div>
+</div>
+<div class="fig"><svg viewBox="0 0 430 222"><rect x="0" y="0" width="430" height="222" rx="12" fill="#ffffff"/><text x="215.0" y="32.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">всё число: 8</text><rect x="30.0" y="58.0" width="370.0" height="40.0" rx="8" fill="#ffffff" stroke="#5b6270" stroke-width="2"/><rect x="30.0" y="58.0" width="111.0" height="40.0" rx="8" fill="#cfe0fb" stroke="#2f6bd8" stroke-width="2"/><text x="270.5" y="84.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">остаток</text><text x="85.5" y="84.0" font-size="19" fill="#2f6bd8" text-anchor="middle" font-weight="600">2,4</text><text x="215.0" y="154.0" font-size="18" fill="#137a45" text-anchor="middle" font-weight="600">0,3 от 8 = 8 · 0,3 = 2,4</text><text x="215.0" y="178.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">«от» — это знак умножения</text><text x="215" y="216" font-size="14" fill="#5b6270" text-anchor="middle">0,3 от 8</text></svg></div>
+<div class="ex"><h3>Пример 12</h3>
+<p>Сколько минут в 0,2 ч?</p>
+<div class='step'>1. В часе 60 минут, значит нужна часть от 60.</div><div class='step'>2. <span class='nw'>60 · 0,2 = 12</span>.</div><div class='fx'><span class='nw'>0,2 ч = 12 мин</span></div><div class='step mini'>Порядок множителей не важен: <span class='nw'>0,8 от 0,15</span> и <span class='nw'>0,15 от 0,8</span> дают одно и то же число <span class='nw'>0,12</span>.</div>
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Живой чертёж: часть от числа</h2>
+<div class="meta">Кнопка выбирает число, ползунок — какую часть от него берём.
+Синяя полоска показывает, сколько это.</div>
+<div class="live" id="ml2" data-kind="part"><h4>Сколько это в числах</h4><p class="lhint">Поставь часть 1 — полоска закрасится целиком. Поставь 1,5 — часть окажется больше целого.</p><div class="livebar" id="ml2b"></div><div class="livefig" id="ml2f"></div><div class="livemsg" id="ml2m"></div><div class="livectl" id="ml2c"></div></div>
+</div>
+
+<div class="card">
+  <h3>Задания к блоку 9</h3>
+<div class="zad" id="z32"><div class="zh">Задание 32<span> · №202</span></div><div class="zt">Найдите часть от числа, выраженную десятичной дробью: 0,3 от 8; 0,04 от 1,2; 0,5 от 0,05; 0,001 от 700.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Каждый раз умножаем число на дробь.</div><div class='fx'><span class='nw'>0,3 от 8 = 2,4</span> · <span class='nw'>0,04 от 1,2 = 0,048</span> · <span class='nw'>0,5 от 0,05 = 0,025</span> · <span class='nw'>0,001 от 700 = 0,7</span></div></div></details></div><div class="zad" id="z33"><div class="zh">Задание 33<span> · №203</span></div><div class="zt">Найдите значение величины: 0,2 от 5,4 т; 0,06 от 5 м; 0,25 от 30 км²; 0,1 от 12 л.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Единицу измерения переписываем в ответ без изменений.</div><div class='fx'><span class='nw'>0,2 от 5,4 т = 1,08 т</span> · <span class='nw'>0,06 от 5 м = 0,3 м</span> · <span class='nw'>0,25 от 30 км² = 7,5 км²</span> · <span class='nw'>0,1 от 12 л = 1,2 л</span></div></div></details></div><div class="zad" id="z34"><div class="zh">Задание 34<span> · №204</span></div><div class="zt">Выразите в минутах: 0,2 ч; 0,25 ч; 0,5 ч; 1,5 ч.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>В часе 60 минут, значит умножаем 60 на данную часть.</div><div class='fx'><span class='nw'>0,2 ч = 12 мин</span> · <span class='nw'>0,25 ч = 15 мин</span> · <span class='nw'>0,5 ч = 30 мин</span> · <span class='nw'>1,5 ч = 90 мин</span></div></div></details></div><div class="zad" id="z35"><div class="zh">Задание 35<span> · №205</span></div><div class="zt">Что больше: 0,8 от 0,15 или 0,15 от 0,8? 0,5 от 1,2 или 0,12 от 0,5?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Первая пара — это одно и то же произведение, только множители переставлены: <span class='nw'>0,12</span>.</div><div class='step'>Вторая пара: <span class='nw'>1,2 · 0,5 = 0,6</span> и <span class='nw'>0,5 · 0,12 = 0,06</span>.</div><div class='fx'>в первой паре поровну, во второй больше <span class='nw'>0,5 от 1,2 = 0,6</span></div></div></details></div><div class="zad" id="z36"><div class="zh">Задание 36<span> · №206</span></div><div class="zt">В журнале «Юный спасатель» 24 страницы. Володя прочитал 0,5 этого журнала. Сколько страниц прочитал Володя?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>24 · 0,5 = 12</span>.</div><div class='fx'>12 страницы</div></div></details></div><div class="zad" id="z37"><div class="zh">Задание 37<span> · №209</span></div><div class="zt">В первый день ярмарки продали 0,6 всего привезённого картофеля, а во второй — 0,5 того количества, что продали в первый день. Какая часть картофеля продана во второй день?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Второй день — это 0,5 от 0,6, то есть <span class='nw'>0,6 · 0,5 = 0,3</span>.</div><div class='fx'>0,3 всего картофеля</div></div></details></div><div class="zad" id="z38"><div class="zh">Задание 38<span> · №207</span></div><div class="zt">Фабрика выпустила 5520 м ткани трёх цветов. Голубая составляла 0,3 количества всей ткани, зелёная — 0,5 количества остальной ткани. Сколько метров чёрной ткани выпустила фабрика?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Голубая: <span class='nw'>5520 · 0,3 = 1656</span> м.</div><div class='step'>Остальная: <span class='nw'>5520 − 1656 = 3864</span> м.</div><div class='step'>Зелёная: <span class='nw'>3864 · 0,5 = 1932</span> м, столько же остаётся на чёрную.</div><div class='fx'>1932 м</div></div></details></div><div class="zad" id="z39"><div class="zh">Задание 39<span> · №208</span></div><div class="zt">При размоле 3 т пшеницы мука составила 0,3 всей массы, манной крупы получилось в 40 раз меньше, чем муки, а остальное — отруби. Сколько муки, манной крупы и отрубей получилось в отдельности?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Мука: <span class='nw'>3 · 0,3 = 0,9</span> т.</div><div class='step'>Манная крупа: <span class='nw'>0,9 : 40 = 0,0225</span> т.</div><div class='step'>Отруби: <span class='nw'>3 − 0,9 − 0,0225 = 2,0775</span> т.</div><div class='fx'><span class='nw'>мука = 0,9 т</span> · <span class='nw'>манная крупа = 0,0225 т</span> · <span class='nw'>отруби = 2,0775 т</span></div></div></details></div><div class="zad" id="z40"><div class="zh">Задание 40<span> · №194 а, б</span></div><div class="zt">Решите уравнения, используя зависимости между компонентами действий: <span class='nw'>a : 23 = 11,6</span>, <span class='nw'>m · 0,16 = 240</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Делимое — это частное, умноженное на делитель: <span class='nw'>a = 11,6 · 23 = 266,8</span>.</div><div class='step'>Неизвестный множитель — произведение, делённое на известный множитель: <span class='nw'>m = 240 : 0,16 = 1500</span>.</div><div class='fx'><span class='nw'>a = 266,8</span> · <span class='nw'>m = 1500</span></div></div></details></div><div class="zad" id="z41"><div class="zh">Задание 41<span> · №194 в, г</span></div><div class="zt">Решите уравнения: <span class='nw'>(y + 0,4) : 8 = 0,4</span>, <span class='nw'>(a − 0,5) : 9 = 0,6</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>y + 0,4 = 0,4 · 8 = 3,2</span>, значит <span class='nw'>y = 3,2 − 0,4 = 2,8</span>.</div><div class='step'><span class='nw'>a − 0,5 = 0,6 · 9 = 5,4</span>, значит <span class='nw'>a = 5,4 + 0,5 = 5,9</span>.</div><div class='fx'><span class='nw'>y = 2,8</span> · <span class='nw'>a = 5,9</span></div></div></details></div><div class="zad" id="z42"><div class="zh">Задание 42<span> · №195 а, б</span></div><div class="zt">Решите уравнения, используя законы умножения: <span class='nw'>0,2 · x · 50 = 36,27</span>, <span class='nw'>2,5 · y · 0,4 = 7,02</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Сначала перемножаем числа: <span class='nw'>0,2 · 50 = 10</span>, значит <span class='nw'>10x = 36,27</span> и <span class='nw'>x = 3,627</span>.</div><div class='step'><span class='nw'>2,5 · 0,4 = 1</span>, значит <span class='nw'>y = 7,02</span>.</div><div class='fx'><span class='nw'>x = 3,627</span> · <span class='nw'>y = 7,02</span></div></div></details></div><div class="zad" id="z43"><div class="zh">Задание 43<span> · №195 в, г</span></div><div class="zt">Решите уравнения: <span class='nw'>0,05 · n · 0,2 = 4</span>, <span class='nw'>x · 0,04 · 0,25 = 3,1</span>.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>0,05 · 0,2 = 0,01</span>, значит <span class='nw'>0,01n = 4</span> и <span class='nw'>n = 4 : 0,01 = 400</span>.</div><div class='step'><span class='nw'>0,04 · 0,25 = 0,01</span>, значит <span class='nw'>x = 3,1 : 0,01 = 310</span>.</div><div class='fx'><span class='nw'>n = 400</span> · <span class='nw'>x = 310</span></div></div></details></div>
+</div>
+
+<div class="card">
+  <h2>10. Задачи на всю тему</h2>
+  <p>В задачах никто не подскажет, что надо умножать. Правило узнаём сами.</p>
+<div class="zad" id="z44"><div class="zh">Задание 44<span> · №185</span></div><div class="zt">Сколько километров пролетит самолёт за 4,8 ч со скоростью 960,9 км/ч?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Путь — это скорость, умноженная на время.</div><div class='step'><span class='nw'>960,9 · 4,8 = 4612,32</span>.</div><div class='fx'>4612,32 км</div></div></details></div><div class="zad" id="z45"><div class="zh">Задание 45<span> · №186</span></div><div class="zt">Найдите массу железной детали объёмом 5,6 см³, если масса 1 см³ железа равна 7,9 г.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>7,9 · 5,6 = 44,24</span>.</div><div class='fx'>44,24 г</div></div></details></div><div class="zad" id="z46"><div class="zh">Задание 46<span> · №187</span></div><div class="zt">Длина школьного коридора 60,8 м, а ширина — 4,32 м. Найдите его площадь и округлите ответ до десятых.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'><span class='nw'>60,8 · 4,32 = 262,656</span> м².</div><div class='step'>Округляем до десятых: смотрим на сотые, там 5 и больше, значит округляем в большую сторону.</div><div class='fx'>≈ 262,7 м²</div></div></details></div><div class="zad" id="z47"><div class="zh">Задание 47<span> · №188</span></div><div class="zt">Водоём имеет форму прямоугольного параллелепипеда длиной 10,6 м, шириной 5,2 м и глубиной 3 м. Найдите вместимость водоёма.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Объём — произведение трёх измерений.</div><div class='step'><span class='nw'>10,6 · 5,2 = 55,12</span>, затем <span class='nw'>55,12 · 3 = 165,36</span>.</div><div class='fx'>165,36 м³</div></div></details></div><div class="zad" id="z48"><div class="zh">Задание 48<span> · тетрадь, №6</span></div><div class="zt">Скорость движения Земли вокруг Солнца 29,8 км/с, а скорость движения Марса на 5,7 км/с меньше. Какой путь пройдёт каждая планета за 35,4 с?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Скорость Марса: <span class='nw'>29,8 − 5,7 = 24,1</span> км/с.</div><div class='step'>Земля: <span class='nw'>29,8 · 35,4 = 1054,92</span> км.</div><div class='step'>Марс: <span class='nw'>24,1 · 35,4 = 853,14</span> км.</div><div class='fx'><span class='nw'>Земля = 1054,92 км</span> · <span class='nw'>Марс = 853,14 км</span></div></div></details></div><div class="zad" id="z49"><div class="zh">Задание 49<span> · тетрадь, №9</span></div><div class="zt">Найдите площадь прямоугольника, ширина которого равна 8,2 см, а длина в 5,5 раза больше его ширины.</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Длина: <span class='nw'>8,2 · 5,5 = 45,1</span> см.</div><div class='step'>Площадь: <span class='nw'>8,2 · 45,1 = 369,82</span> см².</div><div class='fx'>369,82 см²</div></div></details></div><div class="zad" id="z50"><div class="zh">Задание 50<span> · №196</span></div><div class="zt">Длина дачного участка прямоугольной формы 50,4 м, ширина — 12,8 м. Сколько стоит установка забора вокруг участка, если один погонный метр забора стоит 7,5 р., а установка одного метра — 1,2 р.?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Периметр: <span class='nw'>2 · (50,4 + 12,8) = 126,4</span> м.</div><div class='step'>Один метр под ключ: <span class='nw'>7,5 + 1,2 = 8,7</span> р.</div><div class='step'><span class='nw'>126,4 · 8,7 = 1099,68</span> р.</div><div class='fx'>1099,68 р.</div></div></details></div><div class="zad" id="z51"><div class="zh">Задание 51<span> · №199</span></div><div class="zt">На одном грузовике 8 ящиков по 0,35 т каждый, а на другом 4 ящика по 0,68 т. На каком грузовике и на сколько тонн масса груза больше?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Первый: <span class='nw'>8 · 0,35 = 2,8</span> т.</div><div class='step'>Второй: <span class='nw'>4 · 0,68 = 2,72</span> т.</div><div class='step'>Разность: <span class='nw'>2,8 − 2,72 = 0,08</span> т.</div><div class='fx'>на первом больше на 0,08 т</div></div></details></div><div class="zad" id="z52"><div class="zh">Задание 52<span> · №200</span></div><div class="zt">Товарный и пассажирский поезда движутся в противоположных направлениях, удаляясь друг от друга. Скорость товарного 44,8 км/ч, скорость пассажирского на 32,6 км/ч больше. Какое расстояние будет между поездами через 1,2 ч, если сейчас они находятся на расстоянии 50,9 км?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Скорость пассажирского: <span class='nw'>44,8 + 32,6 = 77,4</span> км/ч.</div><div class='step'>Скорость удаления: <span class='nw'>44,8 + 77,4 = 122,2</span> км/ч.</div><div class='step'>За 1,2 ч удалятся на <span class='nw'>122,2 · 1,2 = 146,64</span> км.</div><div class='fx'><span class='nw'>50,9 + 146,64 = 197,54</span> км</div></div></details></div><div class="zad" id="z53"><div class="zh">Задание 53<span> · №201</span></div><div class="zt">Школьный автобус затрачивает на 10 км пути по загородной трассе 1,8 л бензина, по грунтовой дороге — 2,1 л, по городу — 2,6 л. По пути к школе автобус проехал по грунтовой дороге 6,4 км, по трассе 22,7 км, затем по городу 3,2 км. Сколько литров бензина затрачено на весь путь?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Расход на 1 км: <span class='nw'>0,18</span>, <span class='nw'>0,21</span> и <span class='nw'>0,26</span> л.</div><div class='step'>Грунтовая: <span class='nw'>6,4 · 0,21 = 1,344</span> л. Трасса: <span class='nw'>22,7 · 0,18 = 4,086</span> л. Город: <span class='nw'>3,2 · 0,26 = 0,832</span> л.</div><div class='fx'>6,262 л</div></div></details></div><div class="zad" id="z54"><div class="zh">Задание 54<span> · №197</span></div><div class="zt">Форма сарая — прямоугольный параллелепипед. Его ширина 5,5 м, длина в 1,7 раза больше, а высота на 6,05 м меньше длины. Сарай заполнен сеном так, что до потолка осталось 0,9 м. Какова масса сена, если масса 1 м³ равна 0,7 ц?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Длина: <span class='nw'>5,5 · 1,7 = 9,35</span> м.</div><div class='step'>Высота сарая: <span class='nw'>9,35 − 6,05 = 3,3</span> м, высота сена: <span class='nw'>3,3 − 0,9 = 2,4</span> м.</div><div class='step'>Объём сена: <span class='nw'>5,5 · 9,35 · 2,4 = 123,42</span> м³.</div><div class='step'>Масса: <span class='nw'>123,42 · 0,7 = 86,394</span> ц.</div><div class='fx'>86,394 ц</div></div></details></div><div class="zad" id="z55"><div class="zh">Задание 55<span> · №198</span></div><div class="zt">Контейнер без крышки имеет форму куба с ребром 0,8 м. Сколько краски потребуется, чтобы покрасить контейнер снаружи и изнутри, если на покраску 1 м² расходуется 0,25 кг краски?</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>У куба 6 граней, но крышки нет — красим 5 граней снаружи и 5 изнутри, всего 10.</div><div class='step'>Площадь грани: <span class='nw'>0,8 · 0,8 = 0,64</span> м². Вся площадь: <span class='nw'>10 · 0,64 = 6,4</span> м².</div><div class='step'>Краска: <span class='nw'>6,4 · 0,25 = 1,6</span> кг.</div><div class='fx'>1,6 кг</div></div></details></div><div class="zad" id="z56"><div class="zh">Задание 56<span> · №210</span></div><div class="zt">Установите закономерность и продолжите последовательность, записав ещё два числа: 0,4; 0,6; 1; 1,8; 3,4; 6,6; ... .</div><details class="zs"><summary>Показать решение</summary><div class="zsol"><div class='step'>Разности удваиваются: <span class='nw'>0,2</span>, <span class='nw'>0,4</span>, <span class='nw'>0,8</span>, <span class='nw'>1,6</span>, <span class='nw'>3,2</span>.</div><div class='step'>То же правило короче: каждое следующее равно <span class='nw'>2a − 0,2</span>. Проверка: <span class='nw'>2 · 3,4 − 0,2 = 6,6</span>.</div><div class='step'>Дальше: <span class='nw'>2 · 6,6 − 0,2 = 13</span> и <span class='nw'>2 · 13 − 0,2 = 25,8</span>.</div><div class='fx'>13 и 25,8</div></div></details></div>
+</div>
+
+<div class="card">
+  <h2>Что забрать с урока</h2>
+  <div class="def"><div class="n">ПРАВИЛО В ДВА ШАГА</div>
+  <div>1. Умножаем как натуральные числа, запятые не смотрим.</div>
+  <div>2. Отделяем справа налево столько знаков, сколько их в обоих множителях
+  вместе.</div>
+  </div>
+
+<div class="scroll"><table class="wrap-t napr">
+<tr><th>Что делаем</th><th>С цифрами</th><th>С запятой</th></tr>
+<tr><td>умножаем как натуральные</td><td class="r">цифры произведения находим один раз</td>
+<td>запятые пока не смотрим</td></tr>
+<tr><td>считаем знаки</td><td>цифры не меняются</td>
+<td class="r">складываем знаки обоих множителей</td></tr>
+<tr><td>ставим запятую</td><td>цифр может не хватить — дописываем нули слева</td>
+<td class="r">отсчитываем справа налево</td></tr>
+<tr><td>прибираем ответ</td><td class="l">нуль в конце отбрасываем</td>
+<td>0,60750 = 0,6075</td></tr>
+</table></div>
+
+  <p>Если цифр не хватает — дописываем нули слева. Хвостовой нуль в ответе
+  отбрасываем, но только после того, как отсчитали все знаки. Прикидка по
+  округлённым множителям проверяет, туда ли встала запятая. Часть числа,
+  выраженную десятичной дробью, находят умножением.</p>
+</div>
+
+</div>
+
+<script>
+
+/* ============ живые чертежи: столбик и часть от числа ============ */
+(function(){
+var INK="#15181e", MUT="#5b6270", ACC="#2f6bd8", GRN="#137a45", RED="#b3261e";
+var W=430;
+
+function f1(x){ return x.toFixed(1); }
+function ln(x1,y1,x2,y2,c,w,dash){
+  return '<line x1="'+f1(x1)+'" y1="'+f1(y1)+'" x2="'+f1(x2)+'" y2="'+f1(y2)+
+    '" stroke="'+c+'" stroke-width="'+(w||2)+'" stroke-linecap="round"'+
+    (dash?' stroke-dasharray="'+dash+'"':'')+'/>';
+}
+function txt(x,y,t,c,s,anchor){
+  return '<text x="'+f1(x)+'" y="'+f1(y)+'" font-size="'+(s||16)+'" fill="'+c+
+    '" text-anchor="'+(anchor||"middle")+'" font-weight="600">'+t+'</text>';
+}
+function rect(x,y,w,h,c,fill,r){
+  return '<rect x="'+f1(x)+'" y="'+f1(y)+'" width="'+f1(w)+'" height="'+f1(h)+
+    '" rx="'+(r||8)+'" fill="'+fill+'" stroke="'+c+'" stroke-width="2"/>';
+}
+function svg(h, body){
+  return '<svg viewBox="0 0 '+W+' '+h+'"><rect x="0" y="0" width="'+W+'" height="'+h+
+    '" rx="12" fill="#ffffff"/>'+body+'</svg>';
+}
+
+/* ---------- точная десятичная арифметика на строках ---------- */
+function nd(s){ var i = String(s).indexOf(","); return i < 0 ? 0 : String(s).length - i - 1; }
+function dig(s){ var d = String(s).replace(/,/g, "").replace(/^0+/, ""); return d || "0"; }
+function place(nat, k){
+  var s = String(nat);
+  if(k <= 0) return s;
+  while(s.length < k + 1) s = "0" + s;
+  return s.slice(0, s.length - k) + "," + s.slice(s.length - k);
+}
+function strip0(s){
+  if(String(s).indexOf(",") < 0) return String(s);
+  var p = String(s).split(","), b = p[1].replace(/0+$/, "");
+  return p[0] + (b ? "," + b : "");
+}
+function mulDec(a, b){
+  var k = nd(a) + nd(b);
+  return strip0(place(parseInt(dig(a), 10) * parseInt(dig(b), 10), k));
+}
+
+/* ---------- 1. столбик с подвижной запятой ---------- */
+var PAIRS = [["234","12"], ["345","15"], ["1125","54"], ["782","156"], ["65","28"]];
+
+function partsOf(A, B){
+  var out = [], i, d;
+  for(i = 0; i < B.length; i++){
+    d = B.charAt(B.length - 1 - i);
+    if(d === "0") continue;
+    out.push([parseInt(d, 10) * parseInt(A, 10), i]);
+  }
+  return out;
+}
+
+function drawCol(A, B, p, q){
+  var P = parseInt(A, 10) * parseInt(B, 10), k = p + q;
+  var full = place(P, k), shrt = strip0(full);
+  var a = place(A, p), b = place(B, q);
+  var pr = partsOf(A, B), cw = 17, size = 21, s = [], i, j, x, ch;
+  var rows = [["", A], ["×", B], ["rule", ""]];
+  if(pr.length > 1){
+    for(i = 0; i < pr.length; i++) rows.push([i ? "+" : "", String(pr[i][0]), pr[i][1]]);
+    rows.push(["rule", ""]);
+  }
+  rows.push(["", String(P)]);
+  var width = Math.max(String(P).length, A.length, B.length + 1);
+  for(i = 0; i < rows.length; i++)
+    if(rows[i][0] !== "rule")
+      width = Math.max(width, rows[i][1].length + (rows[i][2] || 0));
+  var xr = (W + width * cw) / 2;
+  s.push(txt(W/2, 30, a + " · " + b, INK, 22));
+  var y = 62 + size;
+  for(i = 0; i < rows.length; i++){
+    if(rows[i][0] === "rule"){
+      s.push(ln(xr - width*cw - 6, y - size + 4, xr + 4, y - size + 4, INK, 2));
+      y += 12; continue;
+    }
+    var t = rows[i][1], sh = rows[i][2] || 0;
+    for(j = 0; j < t.length; j++){
+      ch = t.charAt(t.length - 1 - j);
+      x = xr - (j + sh + 0.5) * cw;
+      s.push(txt(x, y, ch, (i === rows.length - 1) ? INK : MUT, size));
+    }
+    if(rows[i][0]) s.push(txt(xr - (width + 0.6) * cw, y, rows[i][0], INK, size));
+    y += size + 7;
+  }
+  y += 6;
+  s.push(txt(W/2, y, "знаков после запятой: " + p + " + " + q + " = " + k, ACC, 16));
+  y += 30;
+  /* результат: хвост из k цифр красный */
+  var cw2 = 15, tot = full.length * cw2, x0 = (W - tot) / 2, pos;
+  for(j = 0; j < full.length; j++){
+    ch = full.charAt(j);
+    pos = full.length - 1 - j;
+    var col = INK;
+    if(ch === ",") col = ACC;
+    else if(pos < k) col = RED;
+    s.push(txt(x0 + (j + 0.5) * cw2, y, ch, col, 24));
+  }
+  y += 24;
+  if(shrt !== full){
+    s.push(txt(W/2, y, "нуль в конце отбрасываем: " + shrt, GRN, 16));
+    y += 22;
+  }
+  return {svg: svg(y + 6, s.join("")), a: a, b: b, res: shrt, nat: P, k: k};
+}
+
+/* ---------- 2. часть от числа ---------- */
+var NUMS = ["8", "1,2", "0,05", "700", "5,4", "24"];
+var FRACS = ["0,001", "0,01", "0,04", "0,1", "0,2", "0,25", "0,3", "0,5", "0,6",
+             "0,8", "1", "1,5"];
+
+function drawBar(total, frac){
+  var val = mulDec(total, frac);
+  var x1 = 30, x2 = W - 30, y = 58, bh = 40;
+  var share = parseFloat(String(frac).replace(",", "."));
+  var scale = Math.max(1, share);
+  var full = x1 + (x2 - x1) / scale;
+  var cut = x1 + (x2 - x1) * share / scale;
+  var s = [txt(W/2, 32, "всё число: " + total, MUT, 15)];
+  s.push(rect(x1, y, full - x1, bh, MUT, "#ffffff"));
+  s.push(rect(x1, y, Math.max(cut - x1, 2), bh, ACC, "#cfe0fb"));
+  if(share > 1){
+    s.push(ln(full, y - 8, full, y + bh + 8, MUT, 1.8, "5 4"));
+    s.push(txt(full, y + bh + 24, "целое", MUT, 14));
+  } else if(x2 - cut > 66){
+    s.push(txt((cut + x2) / 2, y + 26, "остаток", MUT, 15));
+  }
+  if(cut - x1 > 62){
+    s.push(txt((x1 + cut) / 2, y + 26, val, ACC, 19));
+  } else {
+    s.push(ln(cut, y + bh, cut, y + bh + 14, ACC, 1.8));
+    var lx = Math.min(cut + 6, x2 - 40);
+    s.push(txt(lx, y + bh + 30, val, ACC, 18, (cut + 6 < x2 - 40) ? "start" : "middle"));
+  }
+  s.push(txt(W/2, y + 96, frac + " от " + total + " = " + total + " · " + frac +
+             " = " + val, GRN, 18));
+  s.push(txt(W/2, y + 120, "«от» — это знак умножения", MUT, 14));
+  return {svg: svg(y + 134, s.join("")), val: val};
+}
+
+/* ---------- сборка ---------- */
+function build(host){
+  var id = host.id, kind = host.getAttribute("data-kind");
+  var bar = document.getElementById(id+"b"), fig = document.getElementById(id+"f"),
+      msg = document.getElementById(id+"m"), ctl = document.getElementById(id+"c");
+  var list = (kind === "part") ? NUMS : PAIRS;
+  var cur = 0, p = 2, q = 1, fi = 6;
+
+  function labels(){
+    var i, bs = bar.querySelectorAll("button");
+    for(i = 0; i < bs.length; i++) bs[i].className = (i === cur) ? "on" : "";
+  }
+
+  function render(){
+    var i, bs;
+    if(kind === "part"){
+      var tot = NUMS[cur], fr = FRACS[fi], r = drawBar(tot, fr);
+      fig.innerHTML = r.svg;
+      msg.innerHTML = '<span class="v">' + fr + " от " + tot + " = " + r.val +
+        '</span><span class="num">Чтобы найти часть числа, выраженную десятичной ' +
+        'дробью, число умножают на эту дробь.</span>';
+    } else {
+      var A = PAIRS[cur][0], B = PAIRS[cur][1];
+      if(p > A.length - 1) p = A.length - 1;
+      if(q > B.length - 1) q = B.length - 1;
+      var d = drawCol(A, B, p, q);
+      fig.innerHTML = d.svg;
+      msg.innerHTML = '<span class="v">' + d.a + " · " + d.b + " = " + d.res +
+        '</span><span class="num">Столбик один и тот же: ' + A + " · " + B + " = " +
+        d.nat + '. Двигаешь запятую в множителях — двигается запятая в ответе, ' +
+        'а цифры остаются те же.</span>';
+    }
+    bs = bar.querySelectorAll("button");
+    for(i = 0; i < bs.length; i++) bs[i].className = (i === cur) ? "on" : "";
+    sync();
+  }
+
+  function sync(){
+    if(kind === "part"){
+      document.getElementById(id+"vf").textContent = FRACS[fi];
+      return;
+    }
+    var A = PAIRS[cur][0], B = PAIRS[cur][1];
+    var ra = document.getElementById(id+"ra"), rb = document.getElementById(id+"rb");
+    ra.max = A.length - 1; rb.max = B.length - 1;
+    ra.value = p; rb.value = q;
+    document.getElementById(id+"va").textContent = place(A, p);
+    document.getElementById(id+"vb").textContent = place(B, q);
+  }
+
+  var i, b;
+  for(i = 0; i < list.length; i++){
+    b = document.createElement("button");
+    b.type = "button";
+    b.textContent = (kind === "part") ? list[i] : (list[i][0] + " · " + list[i][1]);
+    b.setAttribute("data-i", i);
+    bar.appendChild(b);
+  }
+  bar.addEventListener("click", function(ev){
+    var el = ev.target;
+    while(el && el !== bar && el.tagName !== "BUTTON") el = el.parentNode;
+    if(!el || el === bar) return;
+    cur = parseInt(el.getAttribute("data-i"), 10);
+    render();
+  });
+
+  if(kind === "part"){
+    ctl.innerHTML = '<label>часть<input type="range" id="'+id+'rf" min="0" max="' +
+      (FRACS.length - 1) + '" step="1" value="' + fi + '">' +
+      '<span class="v" id="'+id+'vf"></span></label>';
+    document.getElementById(id+"rf").addEventListener("input", function(ev){
+      fi = parseInt(ev.target.value, 10); render();
+    });
+  } else {
+    ctl.innerHTML =
+      '<label>запятая в первом<input type="range" id="'+id+'ra" min="0" max="3" ' +
+      'step="1" value="'+p+'"><span class="v" id="'+id+'va"></span></label>' +
+      '<label>запятая во втором<input type="range" id="'+id+'rb" min="0" max="2" ' +
+      'step="1" value="'+q+'"><span class="v" id="'+id+'vb"></span></label>';
+    document.getElementById(id+"ra").addEventListener("input", function(ev){
+      p = parseInt(ev.target.value, 10); render();
+    });
+    document.getElementById(id+"rb").addEventListener("input", function(ev){
+      q = parseInt(ev.target.value, 10); render();
+    });
+  }
+  render();
+}
+
+window.MLLIVE = function(){
+  var hosts = document.querySelectorAll(".live[id]"), i;
+  for(i = 0; i < hosts.length; i++) build(hosts[i]);
+};
+})();
+MLLIVE();
+
+
+function allSol(open){
+  var ds = document.querySelectorAll("details.zs"), k;
+  for(k = 0; k < ds.length; k++) ds[k].open = open;
+}
+document.getElementById("openall").addEventListener("click", function(){ allSol(true); });
+document.getElementById("closeall").addEventListener("click", function(){ allSol(false); });
+
+</script>
+</body>
+</html>
