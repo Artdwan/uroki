@@ -292,9 +292,24 @@ button:disabled,button.pri:disabled{opacity:.42;filter:none}
 
 /* ================= тренажёр ================= */
 .tr{border:1px solid var(--line);border-radius:16px;background:#131b2c}
+.trhead{align-items:center}
 .trhead b{font-size:17px}
-.trscore{font-family:var(--mono);font-size:15px;color:var(--cyan)}
+.trscore{display:none}
+.trcount{font-family:var(--mono);font-size:16px;font-weight:800;color:var(--cyan);
+  border:1.6px solid var(--line);border-radius:99px;padding:3px 11px;white-space:nowrap}
+.trcount.done{color:var(--neon);border-color:var(--neon)}
+.trstate{font-size:14px;color:var(--muted);margin-top:2px}
+.trstate.done{color:var(--neon)}
+.trline{height:4px;border-radius:99px;background:#1b2439;margin:9px 0 2px;overflow:hidden}
+.trline i{display:block;height:100%;border-radius:99px;
+  background:linear-gradient(90deg,#4ad6ff,#b9f227);transition:width .25s}
 .trq{font-size:18px}
+/* кнопка «Дальше» — главное действие после ответа */
+.trbar{margin-top:12px}
+.trbar button[data-next],.trbar button[data-go]{width:100%;min-height:54px;
+  font-size:18px;font-weight:800}
+.trbar button[data-next]::after{content:" →"}
+.trnum button[data-check]{min-height:48px;font-size:17px}
 .tropt{border-radius:12px;background:#1b2439;border:1.6px solid var(--line);
   min-height:52px;display:flex;align-items:center;justify-content:space-between;
   gap:8px;color:var(--ink);font-size:17px}
@@ -315,6 +330,9 @@ input.gp{background:#0f1626;border:1.8px solid var(--line);color:var(--ink);
 input.gp:focus{border-color:var(--cyan);outline:none}
 input.gp.ok{border-color:var(--neon);background:#1b2a13;color:var(--neon)}
 input.gp.bad{border-color:var(--pink);background:#2b1223;color:var(--pink)}
+.gstate{font-size:14px;color:var(--muted);margin:2px 0 6px}
+.gstate.done{color:var(--neon)}
+.gbar button{width:100%;min-height:50px;font-size:17px}
 .gmsg .v.ok{color:var(--neon)}
 .gmsg .v.bad{color:var(--pink)}
 
@@ -1327,6 +1345,8 @@ function paint(){
       btn.textContent = isDone(d.n) ? ("LV" + d.n + " сдан") : ("Сдать LV" + d.n);
     }
   }
+  dressTrainers();
+  dressGaps();
   var fin = document.getElementById("send");
   if(fin) fin.disabled = (G.done.length < GDAYS.length);
   var sum = document.getElementById("gsum");
@@ -1482,6 +1502,77 @@ function checkGate(){
 }
 
 /* ---------- косметика ---------- */
+function two(n){ return (n < 10 ? "0" : "") + n; }
+function dressTrainers(){
+  var trs = document.querySelectorAll(".tr"), k;
+  for(k = 0; k < trs.length; k++){
+    var tr = trs[k], id = tr.id;
+    var head = tr.querySelector(".trhead");
+    var sc = document.getElementById(id + "s");
+    if(!head || !sc) continue;
+    var cnt = head.querySelector(".trcount");
+    if(!cnt){
+      cnt = document.createElement("span");
+      cnt.className = "trcount";
+      head.appendChild(cnt);
+      var line = document.createElement("div");
+      line.className = "trline";
+      line.innerHTML = "<i style='width:0%'></i>";
+      head.parentNode.insertBefore(line, head.nextSibling);
+      var st = document.createElement("div");
+      st.className = "trstate";
+      line.parentNode.insertBefore(st, line);
+    }
+    var line2 = tr.querySelector(".trline i"), st2 = tr.querySelector(".trstate");
+    var txt = sc.textContent || "";
+    var m = /вопрос\s+(\d+)\s+из\s+(\d+)/.exec(txt);
+    var fin = txt.indexOf("готово") >= 0;
+    var total = m ? parseInt(m[2], 10) : 10;
+    var now = m ? parseInt(m[1], 10) : 1;
+    /* движок печатает номер ТЕКУЩЕГО вопроса, значит отвечено на один меньше */
+    var answered = Math.max(0, now - 1);
+    if(fin) answered = total;
+    cnt.textContent = two(Math.min(answered, total)) + " / " + two(total);
+    cnt.className = "trcount" + (fin ? " done" : "");
+    if(line2) line2.style.width = Math.round(answered / total * 100) + "%";
+    if(st2){
+      st2.className = "trstate" + (fin ? " done" : "");
+      st2.textContent = fin ? "пройден — можно перепройти для XP"
+        : (answered ? "осталось вопросов: " + (total - answered)
+                    : "нужно пройти до конца — это часть уровня");
+    }
+    /* кнопка «Дальше» появилась — подведём к ней, если её не видно */
+    var nb = tr.querySelector(".trbar button[data-next]");
+    if(nb && !nb.getAttribute("data-seen")){
+      nb.setAttribute("data-seen", "1");
+      var r = nb.getBoundingClientRect();
+      if(r.bottom > window.innerHeight - 8)
+        nb.scrollIntoView({behavior: "smooth", block: "center"});
+    }
+  }
+}
+function dressGaps(){
+  var gs = document.querySelectorAll(".gaps"), k;
+  for(k = 0; k < gs.length; k++){
+    var g = gs[k], head = g.querySelector(".ghead");
+    if(!head) continue;
+    var st = g.querySelector(".gstate");
+    if(!st){
+      st = document.createElement("div");
+      st.className = "gstate";
+      head.parentNode.insertBefore(st, head.nextSibling);
+    }
+    var s = (window.GAPSTATE || {})[g.id];
+    var done = !!(s && s.done);
+    var fields = g.querySelectorAll("input.gp"), filled = 0, i;
+    for(i = 0; i < fields.length; i++) if((fields[i].value || "").trim()) filled++;
+    st.className = "gstate" + (done ? " done" : "");
+    st.textContent = done ? "пройден"
+      : (filled ? "заполнено " + filled + " из " + fields.length +
+                  " — заполни всё и нажми «Проверить»"
+                : "нужно заполнить до конца — это часть уровня");
+  }
+}
 function dressTasks(){
   var i, j, d, el, inp, keys, rowEl, num;
   for(i = 0; i < GDAYS.length; i++){
@@ -1549,6 +1640,8 @@ window.trFinished = function(id, ok, tot){
     if(host) host.scrollIntoView({behavior: "smooth", block: "start"});
   });
   dressTasks();
+  dressTrainers();
+  dressGaps();
   document.addEventListener("click", function(){ setTimeout(paint, 30); }, true);
   document.addEventListener("input", function(){ setTimeout(paint, 60); }, true);
   paint();
