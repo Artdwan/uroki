@@ -194,49 +194,230 @@ input.gp.bad{border-color:#b3261e;background:#fdecea}
 .def>div+div{margin-top:4px}
 #checkall,#progress,.bar{display:none !important}
 
-.gpanel{position:sticky;top:0;z-index:30;background:var(--card);border-bottom:1px solid var(--line);
-  padding:9px 12px;margin:0 -14px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.gpanel .pts{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
-.gpanel .pts span{color:var(--muted);font-size:15px;font-weight:400}
-.gpanel .rank{font-size:15px;color:var(--muted);flex:1;min-width:120px}
-.gdots{display:flex;gap:6px}
-.gdots i{width:26px;height:26px;border-radius:50%;border:2px solid var(--line);
-  display:flex;align-items:center;justify-content:center;font-style:normal;font-size:13px;
-  font-weight:700;color:var(--muted);background:var(--bg)}
-.gdots i.now{border-color:var(--acc);color:var(--acc)}
-.gdots i.ok{border-color:#137a45;background:#137a45;color:#fff}
+/* ================= тема ================= */
+:root, :root:not([data-theme]){
+  --bg:#0d1220; --card:#161d2f; --ink:#eef2ff; --muted:#7f8aa6;
+  --line:#242e48; --acc:#b9f227; --acc-soft:#1a2340;
+  --ok:#b9f227; --ok-soft:#1b2a13; --bad:#ff4d8d; --bad-soft:#2b1223;
+  --warn-soft:#2a2415;
+  --neon:#b9f227; --pink:#ff3db4; --cyan:#4ad6ff;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+}
+@media (prefers-color-scheme:light){
+  :root{
+    --bg:#0d1220; --card:#161d2f; --ink:#eef2ff; --muted:#7f8aa6;
+    --line:#242e48; --acc:#b9f227; --acc-soft:#1a2340;
+    --ok:#b9f227; --ok-soft:#1b2a13; --bad:#ff4d8d; --bad-soft:#2b1223;
+  }
+}
+body{background:var(--bg);color:var(--ink)}
+.wrap{max-width:660px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;
+  box-shadow:none}
+h1{letter-spacing:-.4px}
+h2,h3{color:var(--ink)}
+a{color:var(--cyan)}
+.meta,.small,.mini{color:var(--muted)}
 
-.day{border:1px solid var(--line);border-radius:14px;padding:0;margin:16px 0;
-  background:var(--card);overflow:hidden}
-.day>.dhead{padding:13px 15px;background:var(--bg);border-bottom:1px solid var(--line)}
-.day>.dhead b{font-size:19px;display:block}
-.day>.dhead .when{color:var(--muted);font-size:15px;margin-top:2px}
-.day>.dbody{padding:2px 15px 15px}
+/* кнопки */
+button{border-radius:12px;border:1.6px solid var(--line);background:#1b2439;
+  color:var(--ink)}
+button:hover{border-color:var(--neon)}
+button.pri,.pri{background:var(--neon);border-color:var(--neon);color:#0d1220;
+  font-weight:700}
+button.pri:hover{filter:brightness(1.08)}
+button:disabled,button.pri:disabled{opacity:.42;filter:none}
+
+/* ================= шапка ================= */
+.kicker{color:var(--muted);font-size:15px;letter-spacing:.2px}
+.hrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.hrow .kicker{flex:1;min-width:120px}
+.chip{border-radius:999px;padding:5px 13px;font-family:var(--mono);font-size:15px;
+  font-weight:700;border:2px solid var(--neon);color:var(--neon);white-space:nowrap}
+.chip.mul{border-color:var(--pink);color:var(--pink)}
+.chip.mul.one{border-color:var(--line);color:var(--muted)}
+.card.top h1{margin:10px 0 2px;font-size:29px}
+.card.top .sub{color:var(--muted);font-size:15px;margin-bottom:4px}
+
+/* уровни */
+.lvbar{display:flex;gap:6px;margin:14px 0 0}
+.lvbar button{flex:1 1 0;min-width:0;min-height:46px;font-family:var(--mono);
+  font-size:16px;font-weight:800;letter-spacing:.3px;padding:8px 6px;background:#1b2439;
+  color:var(--muted);border-color:transparent;cursor:pointer}
+.lvbar button.now{background:var(--neon);color:#0d1220;border-color:var(--neon);
+  box-shadow:0 0 18px rgba(185,242,39,.25)}
+.lvbar button.ok{background:#1b2a13;color:var(--neon);border-color:var(--neon)}
+.lvbar button.lock{opacity:.55}
+.lvline{height:5px;border-radius:99px;background:#1b2439;margin-top:10px;overflow:hidden}
+.lvline i{display:block;height:100%;border-radius:99px;
+  background:linear-gradient(90deg,#4ad6ff,#b9f227);transition:width .3s}
+.grank{color:var(--muted);font-size:15px;margin-top:8px}
+
+/* липкая полоска */
+.gpanel{position:sticky;top:0;z-index:30;background:rgba(13,18,32,.93);
+  backdrop-filter:blur(6px);border-bottom:1px solid var(--line);
+  padding:9px 14px;margin:0 -14px 14px;display:flex;align-items:center;gap:9px}
+.gpanel .pts{font-family:var(--mono);font-size:18px;font-weight:800;color:var(--neon)}
+.gpanel .who{flex:1;min-width:0;color:var(--muted);font-size:15px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ================= уровень ================= */
+.day{border:1px solid var(--line);border-radius:18px;margin:16px 0;
+  background:var(--card);overflow:hidden;scroll-margin-top:62px}
+.day>.dhead{padding:14px 16px;background:#1b2439;border-bottom:1px solid var(--line)}
+.day>.dhead b{font-size:19px;display:block;color:var(--ink)}
+.day>.dhead .when{color:var(--muted);font-size:14px;margin-top:3px;
+  font-family:var(--mono)}
+.day>.dbody{padding:4px 16px 16px}
 .day.lock>.dbody{display:none}
-.day.lock>.dhead{opacity:.6}
-.dlock{padding:14px 15px;color:var(--muted);font-size:16px;line-height:1.5;
-  border-top:1px dashed var(--line);background:var(--bg)}
+.day.lock>.dhead{opacity:.5}
+.dlock{padding:15px 16px;color:var(--muted);font-size:16px;line-height:1.5}
 .day:not(.lock)>.dlock{display:none}
-.day.done>.dhead{background:#e9f7ef;border-color:#137a45}
-@media (prefers-color-scheme:dark){.day.done>.dhead{background:#12281d}}
+.day.done>.dhead{background:#1b2a13;border-color:var(--neon)}
+.day.now>.dhead b::after{content:" ●";color:var(--neon);font-size:13px;
+  vertical-align:middle}
 
-.dfoot{margin-top:16px;border-top:1px solid var(--line);padding-top:13px}
-.dfoot .need{color:var(--muted);font-size:15px;line-height:1.6;margin-bottom:10px}
-.dfoot .need b{color:#b3261e;font-weight:600}
-.dfoot .need b.ok{color:#137a45}
-.dfoot button{font-size:17px;padding:12px 18px;min-height:48px;width:100%}
-.dfoot button:disabled{opacity:.5;cursor:default}
-.dnote{margin-top:10px;font-size:16px;line-height:1.6}
-.dnote.good{color:#137a45;font-weight:600}
-.dnote.warn{color:#b3261e}
-.dpts{display:inline-block;background:#e9f7ef;color:#0f6b3c;border-radius:9px;
-  padding:3px 9px;font-weight:700;font-size:15px;margin-left:6px}
-@media (prefers-color-scheme:dark){.dpts{background:#12281d;color:#7fd6a6}}
-.badge{display:inline-block;border:1.6px solid var(--acc);color:var(--acc);border-radius:9px;
-  padding:3px 9px;font-size:14px;font-weight:600;margin:4px 6px 0 0}
-.badge.gold{border-color:#c07d10;color:#c07d10}
-.gfinal .big{font-size:26px;font-weight:700;margin:6px 0}
-@media print{.gpanel{position:static}.day.lock>.dbody{display:block}.dlock{display:none}}
+/* правило уровня */
+.def{border:1px solid var(--line);border-left:3px solid var(--cyan);
+  border-radius:14px;background:#131b2c}
+.def .n{font-family:var(--mono);font-size:12px;letter-spacing:1.4px;color:var(--cyan)}
+.def .n::before{content:"// "}
+.warn{border:1px solid var(--line);border-left:3px solid var(--pink);
+  border-radius:14px;background:#1e1428}
+.warn .n{font-family:var(--mono);font-size:12px;letter-spacing:1.4px;color:var(--pink)}
+.warn .n::before{content:"// "}
+.fx{background:#131b2c;border:1px solid var(--line);border-radius:14px;
+  color:var(--ink)}
+.ex{background:#131b2c;border:1px solid var(--line);border-radius:14px}
+
+/* ================= тренажёр ================= */
+.tr{border:1px solid var(--line);border-radius:16px;background:#131b2c}
+.trhead b{font-size:17px}
+.trscore{font-family:var(--mono);font-size:15px;color:var(--cyan)}
+.trq{font-size:18px}
+.tropt{border-radius:12px;background:#1b2439;border:1.6px solid var(--line);
+  min-height:52px;display:flex;align-items:center;justify-content:space-between;
+  gap:8px;color:var(--ink);font-size:17px}
+.tropt:hover{border-color:var(--neon)}
+.tropt.right{border-color:var(--neon);background:#1b2a13;color:var(--neon)}
+.tropt.right::after{content:"+2";font-family:var(--mono);font-size:14px;
+  color:var(--neon);font-weight:700}
+.tropt.wrong{border-color:var(--pink);background:#2b1223;color:var(--pink)}
+.trdone{background:#1b2a13;border:1px solid var(--neon);color:var(--neon);
+  border-radius:14px;font-weight:700}
+.trmsg .v.ok{color:var(--neon)}
+.trmsg .v.bad{color:var(--pink)}
+
+/* ================= пропуски ================= */
+.gaps{border:1px solid var(--line);border-radius:16px;background:#131b2c}
+input.gp{background:#0f1626;border:1.8px solid var(--line);color:var(--ink);
+  border-radius:10px}
+input.gp:focus{border-color:var(--cyan);outline:none}
+input.gp.ok{border-color:var(--neon);background:#1b2a13;color:var(--neon)}
+input.gp.bad{border-color:var(--pink);background:#2b1223;color:var(--pink)}
+.gmsg .v.ok{color:var(--neon)}
+.gmsg .v.bad{color:var(--pink)}
+
+/* ================= задача ================= */
+.task{border:1px solid var(--line);border-radius:16px;background:#131b2c}
+.task.ok{border-color:var(--neon);background:#131b2c}
+.task.bad{border-color:var(--pink);background:#131b2c}
+.tnum{font-family:var(--mono);color:var(--pink);font-weight:800;margin-right:8px}
+.lvl{font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--muted);
+  border:1px solid var(--line);border-radius:99px;padding:2px 9px}
+.inrow{display:flex;gap:9px;align-items:stretch;margin-top:10px}
+.inrow input[type=text]{flex:1;min-width:0;margin:0;background:#0f1626;
+  border:1.8px solid var(--line);border-radius:12px;color:var(--ink);
+  font-size:19px;padding:12px 13px}
+.inrow input[type=text]:focus{border-color:var(--cyan);outline:none}
+.task.bad .inrow input[type=text]{border-color:var(--pink)}
+.task.ok .inrow input[type=text]{border-color:var(--neon)}
+.inrow .keys{display:flex;gap:6px;margin:0}
+.inrow .keys .key{min-width:52px;font-family:var(--mono);font-size:20px;
+  background:#1b2439;border:1.6px solid var(--line);border-radius:12px}
+.verdict.ok{color:var(--neon)}
+.verdict.bad{color:var(--pink)}
+.hint{background:#1e2233;border:1px solid var(--line);border-radius:12px;
+  color:var(--ink)}
+.sol details{background:#131b2c}
+
+/* ================= подвал уровня ================= */
+.dfoot{margin-top:18px;border-top:1px solid var(--line);padding-top:14px}
+.dfoot .need{color:var(--muted);font-size:15px;line-height:1.6;margin-bottom:11px}
+.dfoot .need b{color:var(--pink);font-weight:700}
+.dfoot .need b.ok{color:var(--neon)}
+.dfoot button{font-size:18px;padding:14px 18px;min-height:54px;width:100%}
+.dnote{margin-top:11px;font-size:16px;line-height:1.6}
+.dnote.good{color:var(--neon);font-weight:600}
+.dnote.warn{color:var(--pink)}
+.dpts{display:inline-block;background:#1b2a13;color:var(--neon);
+  border:1px solid var(--neon);border-radius:9px;padding:2px 9px;font-weight:700;
+  font-family:var(--mono);font-size:15px;margin-left:7px}
+.badge{display:inline-block;border:1.6px solid var(--cyan);color:var(--cyan);
+  border-radius:99px;padding:3px 11px;font-size:14px;font-weight:600;
+  margin:5px 6px 0 0;font-family:var(--mono)}
+.badge.gold{border-color:var(--pink);color:var(--pink)}
+.gfinal .big{font-size:27px;font-weight:800;margin:8px 0;color:var(--neon)}
+
+/* ================= вход ================= */
+.gate{position:fixed;inset:0;z-index:200;background:var(--bg);
+  display:flex;align-items:center;justify-content:center;padding:22px}
+.gate.off{display:none}
+.gate .box{width:100%;max-width:420px;background:var(--card);
+  border:1px solid var(--line);border-radius:20px;padding:24px 22px}
+.gate .kicker{font-family:var(--mono);font-size:13px;letter-spacing:1.4px;
+  color:var(--cyan)}
+.gate .kicker::before{content:"// "}
+.gate h2{margin:10px 0 6px;font-size:25px}
+.gate p{color:var(--muted);font-size:16px;line-height:1.6;margin:0 0 16px}
+.gate label{display:block;font-size:15px;color:var(--muted);margin-bottom:6px}
+.gate input{width:100%;box-sizing:border-box;background:#0f1626;
+  border:1.8px solid var(--line);border-radius:12px;color:var(--ink);
+  font-size:19px;padding:13px 14px;margin:0 0 12px}
+.gate input:focus{border-color:var(--cyan);outline:none}
+.gate button{width:100%;min-height:54px;font-size:18px}
+.gate .err{color:var(--pink);font-size:15px;margin-top:10px;min-height:20px}
+body.gated{overflow:hidden}
+.rename{background:none;border:none;color:var(--cyan);font-size:14px;
+  padding:0;min-height:0;text-decoration:underline;cursor:pointer}
+.rename:hover{border:none;color:var(--neon)}
+
+/* пояснения и списки */
+.note{background:#131b2c;border:1px solid var(--line);border-left:3px solid var(--neon);
+  border-radius:14px;color:var(--ink)}
+.note b{color:var(--neon)}
+.savenote{color:var(--muted)}
+.savenote button{font-size:14px;padding:6px 11px;min-height:36px}
+.thumbs img{border-color:var(--line)}
+input[type=file]{color:var(--muted)}
+.steps-list li::before{background:var(--neon);color:#0d1220}
+
+/* варианты тренажёра в две колонки даже на телефоне */
+.tropts{grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:7px}
+
+/* чертежи остаются светлыми — это «лист бумаги» внутри тёмного экрана */
+.fig svg{border:1px solid var(--line);box-shadow:0 0 0 1px rgba(255,255,255,.04)}
+
+@media (max-width:420px){
+  .card.top h1{font-size:24px}
+  .lvbar button{font-size:15px;padding:8px 4px}
+  .tropt{font-size:16px;min-height:48px}
+}
+@media print{
+  :root{--bg:#fff;--card:#fff;--ink:#16181d;--muted:#5b6270;--line:#dfe3ea;
+    --neon:#137a45;--pink:#b3261e;--cyan:#2f6bd8;--acc:#137a45}
+  body{background:#fff;color:#16181d}
+  .wrap>*{display:block !important}
+  .gate{display:none !important}
+  .gpanel{display:none !important}
+  .lvbar,.lvline{display:none !important}
+  .day.lock>.dbody{display:block !important}
+  .dlock,.dfoot{display:none !important}
+  .card,.day{border:1px solid #dfe3ea;box-shadow:none;background:#fff}
+  .day>.dhead{background:#f2f4f8}
+  .tropt,.task,.tr,.gaps,.def,.warn,.fx,.ex,.note{background:#fff}
+  .task{break-inside:avoid}
+}
 
 .task.ok{border-color:var(--ok);background:var(--ok-soft)}
 .task.bad{border-color:var(--bad);background:var(--bad-soft)}
@@ -267,8 +448,7 @@ input.gp.bad{border-color:#b3261e;background:#fdecea}
 .sheet{background:var(--card)}
 @media print{
   body{background:#fff}
-  .wrap>*{display:none !important}
-  .wrap>.sheet{display:block !important;border:none;margin:0;padding:0}
+  .wrap>*{display:block !important}
   .sheet{font-size:13px}
   .sheet h2{font-size:18px}
   .sheet th,.sheet td{padding:4px 5px;font-size:12px}
@@ -278,39 +458,38 @@ input.gp.bad{border-color:#b3261e;background:#fdecea}
 </head>
 <body>
 
+<div class="gate" id="gate"><div class="box"><div class="kicker">вход</div><h2>Как тебя записать?</h2><p>Имя нужно, чтобы работа пришла преподавателю подписанной. Пиши так, как записан в журнале.</p><label for="name">Имя и фамилия</label><input type="text" id="name" placeholder="например, Рома Ковалёв" autocapitalize="words" autocomplete="name" spellcheck="false"><button type="button" class="pri" id="gatego">Начать</button><div class="err" id="gateerr"></div></div></div>
 <div class="wrap">
-
+<div class="gpanel"><div class="pts" id="gpts">0 XP</div><div class="chip mul one" id="gmul">×1</div><div class="who" id="gwho"></div><button type="button" class="rename" id="grename">сменить</button></div>
 <div class="card top">
+  <div class="kicker">5 класс · математика · §5-§6</div>
   <h1>Пятидневка: умножение десятичных дробей</h1>
-  <div class="meta">Математика · 5 класс · §5-§6 · пять дней, 40 задач,
-  7 тренажёров, 3 блока с пропусками</div>
-  <label class="f" for="name">Имя и фамилия</label>
-  <input type="text" id="name" placeholder="напиши, как в журнале" autocapitalize="words" spellcheck="false">
-  <div class="savenote" id="savenote"></div>
-  <div class="note" style="margin-top:14px">
-    <b>Как это работает.</b> Работа разбита на пять дней. Открыт только один —
+  <div class="sub">пять уровней, 40 задач, 7 тренажёров, 3 блока с пропусками</div>
+<div class="lvbar" id="glv"><button type="button" data-lv="1">LV1</button><button type="button" data-lv="2">LV2</button><button type="button" data-lv="3">LV3</button><button type="button" data-lv="4">LV4</button><button type="button" data-lv="5">LV5</button></div><div class="lvline"><i id="glvline" style="width:0%"></i></div><div class="grank" id="grank"></div>
+  <div class="note" style="margin-top:16px">
+    <b>Как это работает.</b> Работа разбита на пять уровней. Открыт только один —
     следующий появится, когда сдашь текущий.
-    <div style="margin-top:8px">В каждом дне: короткое напоминание правила, два
-    блока на отработку и восемь задач. Когда всё сделано, кнопка внизу дня
-    оживает — нажимаешь её, и день уходит преподавателю.</div>
-    <div style="margin-top:8px"><b>Очки.</b> Задача с первой попытки — 10 очков,
-    со второй — 6. Каждая подсказка стоит 2 очка. За тренажёр по 2 очка
-    за верный ответ, за блок с пропусками 15. За сданный день +20, а если весь
-    день без единой ошибки и без подсказок — ещё +15.</div>
+    <div style="margin-top:8px">В каждом уровне: короткое напоминание правила, два
+    блока на отработку и восемь задач. Когда всё сделано, кнопка внизу оживает —
+    жмёшь её, и уровень уходит преподавателю.</div>
+    <div style="margin-top:8px"><b>XP.</b> Задача с первой попытки — 10, со второй —
+    6. Подсказка стоит 2. Тренажёр даёт по 2 за верный ответ, блок с пропусками 15.
+    За сданный уровень +20, а если весь уровень без ошибок и без подсказок —
+    ещё +15.</div>
+    <div style="margin-top:8px"><b>Серия.</b> Три верных ответа подряд — множитель
+    ×2, шесть подряд — ×3. XP за задачу умножается на него. Ошибка сбрасывает
+    серию на ×1.</div>
     <div style="margin-top:8px">Ответы пиши числом, с запятой и без единиц
     измерения: 248,6 или 3247. Пробелы внутри числа не нужны.</div>
-    <div style="margin-top:8px">Всё сохраняется само. Можно закрыть страницу
-    и вернуться назавтра — очки и сданные дни останутся.</div>
   </div>
 </div>
-<div class="gpanel"><div class="pts" id="gpts">0 <span>очков</span></div><div class="gdots" id="gdots"></div><div class="rank" id="grank"></div></div>
-<section class="day lock" id="day1" data-day="1"><div class="dhead"><b>День 1. Перенос запятой</b><div class="when">вторник, 29 сентября</div></div><div class="dlock" id="lock1"></div><div class="dbody">
+<section class="day lock" id="day1" data-day="1"><div class="dhead"><b>LV1. Перенос запятой</b><div class="when">вторник, 29 сентября</div></div><div class="dlock" id="lock1"></div><div class="dbody">
 <div class="def"><div class="n">ЧТО НУЖНО ПОМНИТЬ СЕГОДНЯ</div>
 <div>Умножаем на 10, 100, 1000 — запятая вправо на столько цифр, сколько нулей.</div>
 <div>Умножаем на 0,1; 0,01; 0,001 — влево на столько цифр, сколько знаков
 после запятой.</div>
 <div>Делим — наоборот. Цифры не меняются, переезжает только запятая.</div></div>
-<div class="fig"><svg viewBox="0 0 430 218"><rect x="0" y="0" width="430" height="218" rx="12" fill="#ffffff"/><text x="180.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">4</text><text x="203.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">2</text><text x="226.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">5</text><text x="249.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">6</text><text x="192.0" y="99.0" font-size="30" fill="#5b6270" text-anchor="middle" font-weight="600">,</text><text x="192.0" y="120.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">было</text><text x="238.0" y="99.0" font-size="30" fill="#2f6bd8" text-anchor="middle" font-weight="600">,</text><text x="238.0" y="120.0" font-size="14" fill="#2f6bd8" text-anchor="middle" font-weight="600">стало</text><path d="M 192.0 68.0 Q 215.0 34.0 238.0 68.0" fill="none" stroke="#2f6bd8" stroke-width="2.2"/><path d="M 238.0 68.0 L 229.0 59.0 L 229.0 71.0 z" fill="#2f6bd8"/><text x="215.0" y="28.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">на 2 вправо</text><line x1="163.0" y1="136.0" x2="267.0" y2="136.0" stroke="#dfe3ea" stroke-width="1.6" stroke-linecap="round"/><text x="215.0" y="166.0" font-size="24" fill="#137a45" text-anchor="middle" font-weight="600">= 425,6</text><text x="215" y="212" font-size="14" fill="#5b6270" text-anchor="middle">4,256 · 100 = 425,6</text></svg></div><div class="tr" id="ts1"><div class="trhead"><b>Тренажёр 1. Куда едет запятая</b><span class="trscore" id="ts1s"></span></div><div class="meta">Десять действий. Считай нули или знаки после запятой.</div><div class="trq" id="ts1q"></div><div class="trfig" id="ts1f"></div><div id="ts1a"></div><div class="trmsg" id="ts1m"></div><div class="trbar" id="ts1b"></div></div><div class="tr" id="ts2"><div class="trhead"><b>Тренажёр 2. Разрядная единица</b><span class="trscore" id="ts2s"></span></div><div class="meta">Десять примеров. Где цифр не хватает — дописывай нули.</div><div class="trq" id="ts2q"></div><div class="trfig" id="ts2f"></div><div id="ts2a"></div><div class="trmsg" id="ts2m"></div><div class="trbar" id="ts2b"></div></div><h3>Задачи дня 1 — их 8</h3><div id="tasks1"></div><div class="dfoot"><div class="need" id="need1"></div><button class="pri" id="send1" disabled>Сдать день 1</button><div class="dnote" id="note1"></div></div></div></section><section class="day lock" id="day2" data-day="2"><div class="dhead"><b>День 2. Единицы, уравнения, задачи</b><div class="when">среда, 30 сентября</div></div><div class="dlock" id="lock2"></div><div class="dbody">
+<div class="fig"><svg viewBox="0 0 430 218"><rect x="0" y="0" width="430" height="218" rx="12" fill="#ffffff"/><text x="180.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">4</text><text x="203.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">2</text><text x="226.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">5</text><text x="249.5" y="90.0" font-size="27" fill="#15181e" text-anchor="middle" font-weight="600">6</text><text x="192.0" y="99.0" font-size="30" fill="#5b6270" text-anchor="middle" font-weight="600">,</text><text x="192.0" y="120.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">было</text><text x="238.0" y="99.0" font-size="30" fill="#2f6bd8" text-anchor="middle" font-weight="600">,</text><text x="238.0" y="120.0" font-size="14" fill="#2f6bd8" text-anchor="middle" font-weight="600">стало</text><path d="M 192.0 68.0 Q 215.0 34.0 238.0 68.0" fill="none" stroke="#2f6bd8" stroke-width="2.2"/><path d="M 238.0 68.0 L 229.0 59.0 L 229.0 71.0 z" fill="#2f6bd8"/><text x="215.0" y="28.0" font-size="15" fill="#2f6bd8" text-anchor="middle" font-weight="600">на 2 вправо</text><line x1="163.0" y1="136.0" x2="267.0" y2="136.0" stroke="#dfe3ea" stroke-width="1.6" stroke-linecap="round"/><text x="215.0" y="166.0" font-size="24" fill="#137a45" text-anchor="middle" font-weight="600">= 425,6</text><text x="215" y="212" font-size="14" fill="#5b6270" text-anchor="middle">4,256 · 100 = 425,6</text></svg></div><div class="tr" id="ts1"><div class="trhead"><b>Тренажёр 1. Куда едет запятая</b><span class="trscore" id="ts1s"></span></div><div class="meta">Десять действий. Считай нули или знаки после запятой.</div><div class="trq" id="ts1q"></div><div class="trfig" id="ts1f"></div><div id="ts1a"></div><div class="trmsg" id="ts1m"></div><div class="trbar" id="ts1b"></div></div><div class="tr" id="ts2"><div class="trhead"><b>Тренажёр 2. Разрядная единица</b><span class="trscore" id="ts2s"></span></div><div class="meta">Десять примеров. Где цифр не хватает — дописывай нули.</div><div class="trq" id="ts2q"></div><div class="trfig" id="ts2f"></div><div id="ts2a"></div><div class="trmsg" id="ts2m"></div><div class="trbar" id="ts2b"></div></div><h3>Задачи дня 1 — их 8</h3><div id="tasks1"></div><div class="dfoot"><div class="need" id="need1"></div><button class="pri" id="send1" disabled>Сдать LV1</button><div class="dnote" id="note1"></div></div></div></section><section class="day lock" id="day2" data-day="2"><div class="dhead"><b>LV2. Единицы, уравнения, задачи</b><div class="when">среда, 30 сентября</div></div><div class="dlock" id="lock2"></div><div class="dbody">
 <div class="def"><div class="n">ЧТО НУЖНО ПОМНИТЬ СЕГОДНЯ</div>
 <div>1 км = 1000 м, 1 м = 100 см = 1000 мм, 1 дм = 10 см.</div>
 <div>1 кг = 1000 г, 1 р. = 100 коп.</div>
@@ -318,7 +497,7 @@ input.gp.bad{border-color:#b3261e;background:#fdecea}
 <div>тыс. = · 1000, млн = · 1 000 000, млрд = · 1 000 000 000.</div></div>
 <p>В уравнениях сначала находим, чему равна вся часть с иксом, и только потом
 сам икс.</p>
-<div class="gaps" id="gp1"><div class="ghead"><b>Пропуски 1. Цепочка действий</b><span class="gscore" id="gp1s"></span></div><div class="meta">Четыре пропуска. Считаем шаги, а не значения.</div><div class="gline">Дано: <span class='nw'>5,4 · 10 : 100 · 1000 : 10 000</span></div><div class="gline">шагов вправо: <span class='nw'>1 + 3 = <input class="gp" data-k="a1" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a1"></span></div><div class="gline">шагов влево: <span class='nw'>2 + 4 = <input class="gp" data-k="a2" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a2"></span></div><div class="gline">итого сдвиг влево на <input class="gp" data-k="a3" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a3"> цифры</div><div class="gline"><span class='nw'>5,4 → <input class="gp" data-k="a4" size="6" style="width:90px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a4"></span></div><div class="gnote">Шаги можно сложить и сделать один общий переезд.</div><div class="gbar"><button type="button" class="pri" id="gp1go">Проверить</button></div><div class="gmsg" id="gp1m"></div><div class="gtip" id="gp1t"></div></div><div class="tr" id="ts3"><div class="trhead"><b>Тренажёр 3. Единицы измерения</b><span class="trscore" id="ts3s"></span></div><div class="meta">Десять переводов. Ответ пиши числом, без названия единицы.</div><div class="trq" id="ts3q"></div><div class="trfig" id="ts3f"></div><div id="ts3a"></div><div class="trmsg" id="ts3m"></div><div class="trbar" id="ts3b"></div></div><h3>Задачи дня 2 — их 8</h3><div id="tasks2"></div><div class="dfoot"><div class="need" id="need2"></div><button class="pri" id="send2" disabled>Сдать день 2</button><div class="dnote" id="note2"></div></div></div></section><section class="day lock" id="day3" data-day="3"><div class="dhead"><b>День 3. Правило умножения</b><div class="when">четверг, 1 октября</div></div><div class="dlock" id="lock3"></div><div class="dbody">
+<div class="gaps" id="gp1"><div class="ghead"><b>Пропуски 1. Цепочка действий</b><span class="gscore" id="gp1s"></span></div><div class="meta">Четыре пропуска. Считаем шаги, а не значения.</div><div class="gline">Дано: <span class='nw'>5,4 · 10 : 100 · 1000 : 10 000</span></div><div class="gline">шагов вправо: <span class='nw'>1 + 3 = <input class="gp" data-k="a1" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a1"></span></div><div class="gline">шагов влево: <span class='nw'>2 + 4 = <input class="gp" data-k="a2" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a2"></span></div><div class="gline">итого сдвиг влево на <input class="gp" data-k="a3" size="2" style="width:46px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a3"> цифры</div><div class="gline"><span class='nw'>5,4 → <input class="gp" data-k="a4" size="6" style="width:90px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск a4"></span></div><div class="gnote">Шаги можно сложить и сделать один общий переезд.</div><div class="gbar"><button type="button" class="pri" id="gp1go">Проверить</button></div><div class="gmsg" id="gp1m"></div><div class="gtip" id="gp1t"></div></div><div class="tr" id="ts3"><div class="trhead"><b>Тренажёр 3. Единицы измерения</b><span class="trscore" id="ts3s"></span></div><div class="meta">Десять переводов. Ответ пиши числом, без названия единицы.</div><div class="trq" id="ts3q"></div><div class="trfig" id="ts3f"></div><div id="ts3a"></div><div class="trmsg" id="ts3m"></div><div class="trbar" id="ts3b"></div></div><h3>Задачи дня 2 — их 8</h3><div id="tasks2"></div><div class="dfoot"><div class="need" id="need2"></div><button class="pri" id="send2" disabled>Сдать LV2</button><div class="dnote" id="note2"></div></div></div></section><section class="day lock" id="day3" data-day="3"><div class="dhead"><b>LV3. Правило умножения</b><div class="when">четверг, 1 октября</div></div><div class="dlock" id="lock3"></div><div class="dbody">
 <div class="def"><div class="n">ПРАВИЛО В ДВА ШАГА</div>
 <div>1. Умножить как натуральные числа, на запятые не глядя.</div>
 <div>2. Отделить справа налево столько знаков, сколько их в обоих множителях
@@ -327,7 +506,7 @@ input.gp.bad{border-color:#b3261e;background:#fdecea}
 <div class="warn"><div class="n">НЕ ЗАБУДЬ</div>
 Если цифр не хватает, слева дописывают нули. Хвостовой нуль в ответе
 отбрасывают, но только после того, как отсчитали все знаки.</div>
-<div class="tr" id="ts4"><div class="trhead"><b>Тренажёр 4. Сколько знаков</b><span class="trscore" id="ts4s"></span></div><div class="meta">Десять пар множителей. Вычислять не надо — только считать знаки.</div><div class="trq" id="ts4q"></div><div class="trfig" id="ts4f"></div><div id="ts4a"></div><div class="trmsg" id="ts4m"></div><div class="trbar" id="ts4b"></div></div><div class="tr" id="ts5"><div class="trhead"><b>Тренажёр 5. Умножение десятичных</b><span class="trscore" id="ts5s"></span></div><div class="meta">Десять примеров. Сначала как натуральные, потом запятая.</div><div class="trq" id="ts5q"></div><div class="trfig" id="ts5f"></div><div id="ts5a"></div><div class="trmsg" id="ts5m"></div><div class="trbar" id="ts5b"></div></div><h3>Задачи дня 3 — их 8</h3><div id="tasks3"></div><div class="dfoot"><div class="need" id="need3"></div><button class="pri" id="send3" disabled>Сдать день 3</button><div class="dnote" id="note3"></div></div></div></section><section class="day lock" id="day4" data-day="4"><div class="dhead"><b>День 4. Законы и выражения</b><div class="when">пятница, 2 октября</div></div><div class="dlock" id="lock4"></div><div class="dbody">
+<div class="tr" id="ts4"><div class="trhead"><b>Тренажёр 4. Сколько знаков</b><span class="trscore" id="ts4s"></span></div><div class="meta">Десять пар множителей. Вычислять не надо — только считать знаки.</div><div class="trq" id="ts4q"></div><div class="trfig" id="ts4f"></div><div id="ts4a"></div><div class="trmsg" id="ts4m"></div><div class="trbar" id="ts4b"></div></div><div class="tr" id="ts5"><div class="trhead"><b>Тренажёр 5. Умножение десятичных</b><span class="trscore" id="ts5s"></span></div><div class="meta">Десять примеров. Сначала как натуральные, потом запятая.</div><div class="trq" id="ts5q"></div><div class="trfig" id="ts5f"></div><div id="ts5a"></div><div class="trmsg" id="ts5m"></div><div class="trbar" id="ts5b"></div></div><h3>Задачи дня 3 — их 8</h3><div id="tasks3"></div><div class="dfoot"><div class="need" id="need3"></div><button class="pri" id="send3" disabled>Сдать LV3</button><div class="dnote" id="note3"></div></div></div></section><section class="day lock" id="day4" data-day="4"><div class="dhead"><b>LV4. Законы и выражения</b><div class="when">пятница, 2 октября</div></div><div class="dlock" id="lock4"></div><div class="dbody">
 <div class="def"><div class="n">ЗАКОНЫ УМНОЖЕНИЯ</div>
 <div><span class='nw'>ab = ba</span> и <span class='nw'>(ab)c = a(bc)</span> — множители можно
 переставлять и группировать.</div>
@@ -336,14 +515,18 @@ input.gp.bad{border-color:#b3261e;background:#fdecea}
 <p>Удобные пары, которые стоит помнить: <span class='nw'>0,4 и 25</span>,
 <span class='nw'>0,5 и 2</span>, <span class='nw'>0,2 и 5</span>, <span class='nw'>12,5 и 0,8</span>,
 <span class='nw'>0,25 и 4</span>.</p>
-<div class="gaps" id="gp2"><div class="ghead"><b>Пропуски 2. Удобный способ</b><span class="gscore" id="gp2s"></span></div><div class="meta">Семь пропусков. Ищем пары, дающие круглое число.</div><div class="gline">Дано: <span class='nw'>0,79 · 4,13 + 4,13 · 1,21</span></div><div class="gline">общий множитель: <input class="gp" data-k="b1" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b1"></div><div class="gline">выносим за скобки: <span class='nw'>4,13 · (0,79 + 1,21)</span></div><div class="gline">в скобках получается <input class="gp" data-k="b2" size="3" style="width:57px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b2"></div><div class="gline">значит всё выражение равно <input class="gp" data-k="b3" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b3"></div><div class="gnote">Второе выражение: <span class='nw'>12,5 · 52,1 · 0,4 · 0,08 · 0,25</span></div><div class="gline"><span class='nw'>12,5 · 0,4 = <input class="gp" data-k="b4" size="3" style="width:57px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b4"></span></div><div class="gline"><span class='nw'>0,08 · 0,25 = <input class="gp" data-k="b5" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b5"></span></div><div class="gline"><span class='nw'>5 · 0,02 = <input class="gp" data-k="b6" size="4" style="width:68px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b6"></span>, значит ответ <input class="gp" data-k="b7" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b7"></div><div class="gnote">Числа в ответ пиши с запятой, без пробелов.</div><div class="gbar"><button type="button" class="pri" id="gp2go">Проверить</button></div><div class="gmsg" id="gp2m"></div><div class="gtip" id="gp2t"></div></div><div class="tr" id="ts6"><div class="trhead"><b>Тренажёр 6. Удобный способ</b><span class="trscore" id="ts6s"></span></div><div class="meta">Десять выражений. Ищи пары, дающие круглое число.</div><div class="trq" id="ts6q"></div><div class="trfig" id="ts6f"></div><div id="ts6a"></div><div class="trmsg" id="ts6m"></div><div class="trbar" id="ts6b"></div></div><h3>Задачи дня 4 — их 8</h3><div id="tasks4"></div><div class="dfoot"><div class="need" id="need4"></div><button class="pri" id="send4" disabled>Сдать день 4</button><div class="dnote" id="note4"></div></div></div></section><section class="day lock" id="day5" data-day="5"><div class="dhead"><b>День 5. Задачи и самостоятельная</b><div class="when">суббота, 3 октября</div></div><div class="dlock" id="lock5"></div><div class="dbody">
+<div class="gaps" id="gp2"><div class="ghead"><b>Пропуски 2. Удобный способ</b><span class="gscore" id="gp2s"></span></div><div class="meta">Семь пропусков. Ищем пары, дающие круглое число.</div><div class="gline">Дано: <span class='nw'>0,79 · 4,13 + 4,13 · 1,21</span></div><div class="gline">общий множитель: <input class="gp" data-k="b1" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b1"></div><div class="gline">выносим за скобки: <span class='nw'>4,13 · (0,79 + 1,21)</span></div><div class="gline">в скобках получается <input class="gp" data-k="b2" size="3" style="width:57px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b2"></div><div class="gline">значит всё выражение равно <input class="gp" data-k="b3" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b3"></div><div class="gnote">Второе выражение: <span class='nw'>12,5 · 52,1 · 0,4 · 0,08 · 0,25</span></div><div class="gline"><span class='nw'>12,5 · 0,4 = <input class="gp" data-k="b4" size="3" style="width:57px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b4"></span></div><div class="gline"><span class='nw'>0,08 · 0,25 = <input class="gp" data-k="b5" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b5"></span></div><div class="gline"><span class='nw'>5 · 0,02 = <input class="gp" data-k="b6" size="4" style="width:68px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b6"></span>, значит ответ <input class="gp" data-k="b7" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск b7"></div><div class="gnote">Числа в ответ пиши с запятой, без пробелов.</div><div class="gbar"><button type="button" class="pri" id="gp2go">Проверить</button></div><div class="gmsg" id="gp2m"></div><div class="gtip" id="gp2t"></div></div><div class="tr" id="ts6"><div class="trhead"><b>Тренажёр 6. Удобный способ</b><span class="trscore" id="ts6s"></span></div><div class="meta">Десять выражений. Ищи пары, дающие круглое число.</div><div class="trq" id="ts6q"></div><div class="trfig" id="ts6f"></div><div id="ts6a"></div><div class="trmsg" id="ts6m"></div><div class="trbar" id="ts6b"></div></div><h3>Задачи дня 4 — их 8</h3><div id="tasks4"></div><div class="dfoot"><div class="need" id="need4"></div><button class="pri" id="send4" disabled>Сдать LV4</button><div class="dnote" id="note4"></div></div></div></section><section class="day lock" id="day5" data-day="5"><div class="dhead"><b>LV5. Задачи и самостоятельная</b><div class="when">суббота, 3 октября</div></div><div class="dlock" id="lock5"></div><div class="dbody">
 <div class="def"><div class="n">ПОСЛЕДНИЙ ДЕНЬ</div>
 <div>Часть числа, выраженную десятичной дробью, находят умножением:
 «0,3 от 8» — это <span class='nw'>8 · 0,3</span>.</div>
 <div>В задачах сначала записывают действие, потом считают.</div>
 <div>Прикидка по округлённым числам проверяет, туда ли встала запятая.</div></div>
-<div class="fig"><svg viewBox="0 0 430 222"><rect x="0" y="0" width="430" height="222" rx="12" fill="#ffffff"/><text x="215.0" y="32.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">всё число: 8</text><rect x="30.0" y="58.0" width="370.0" height="40.0" rx="8" fill="#ffffff" stroke="#5b6270" stroke-width="2"/><rect x="30.0" y="58.0" width="111.0" height="40.0" rx="8" fill="#cfe0fb" stroke="#2f6bd8" stroke-width="2"/><text x="270.5" y="84.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">остаток</text><text x="85.5" y="84.0" font-size="19" fill="#2f6bd8" text-anchor="middle" font-weight="600">2,4</text><text x="215.0" y="154.0" font-size="18" fill="#137a45" text-anchor="middle" font-weight="600">0,3 от 8 = 8 · 0,3 = 2,4</text><text x="215.0" y="178.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">«от» — это знак умножения</text><text x="215" y="216" font-size="14" fill="#5b6270" text-anchor="middle">0,3 от 8</text></svg></div><div class="tr" id="ts7"><div class="trhead"><b>Тренажёр 7. Часть от числа</b><span class="trscore" id="ts7s"></span></div><div class="meta">Десять заданий. «От» — это знак умножения.</div><div class="trq" id="ts7q"></div><div class="trfig" id="ts7f"></div><div id="ts7a"></div><div class="trmsg" id="ts7m"></div><div class="trbar" id="ts7b"></div></div><div class="gaps" id="gp3"><div class="ghead"><b>Пропуски 3. Задача про катер</b><span class="gscore" id="gp3s"></span></div><div class="meta">Четыре пропуска. Это задача 4 из самостоятельной.</div><div class="gline l">Катер шёл 1,5 ч против течения и 3 ч по озеру.</div><div class="gline l">собственная скорость 12,8 км/ч, течение 1,5 км/ч</div><div class="gline">скорость против течения: <span class='nw'>12,8 − 1,5 = <input class="gp" data-k="c1" size="4" style="width:68px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c1"></span></div><div class="gline">путь по реке: <span class='nw'>11,3 · 1,5 = <input class="gp" data-k="c2" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c2"></span></div><div class="gline">путь по озеру: <span class='nw'>12,8 · 3 = <input class="gp" data-k="c3" size="4" style="width:68px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c3"></span></div><div class="gline">разница: <span class='nw'>38,4 − 16,95 = <input class="gp" data-k="c4" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c4"></span></div><div class="gnote">В озере течения нет, поэтому там работает собственная скорость.</div><div class="gbar"><button type="button" class="pri" id="gp3go">Проверить</button></div><div class="gmsg" id="gp3m"></div><div class="gtip" id="gp3t"></div></div><h3>Задачи дня 5 — их 8</h3><div id="tasks5"></div><div class="dfoot"><div class="need" id="need5"></div><button class="pri" id="send5" disabled>Сдать день 5</button><div class="dnote" id="note5"></div></div></div></section>
-<div class="card gfinal" id="gfinal"><h2>Итог недели</h2><div class="meta">Здесь появится результат, когда будут сданы все пять дней.</div><div id="gsum"></div><div class="row" style="margin-top:12px"><button class="pri" id="send" disabled>Отправить всю неделю</button><button id="report">Скачать копию себе</button></div><div id="repnote" class="meta" style="margin-top:8px"></div></div>
+<div class="fig"><svg viewBox="0 0 430 222"><rect x="0" y="0" width="430" height="222" rx="12" fill="#ffffff"/><text x="215.0" y="32.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">всё число: 8</text><rect x="30.0" y="58.0" width="370.0" height="40.0" rx="8" fill="#ffffff" stroke="#5b6270" stroke-width="2"/><rect x="30.0" y="58.0" width="111.0" height="40.0" rx="8" fill="#cfe0fb" stroke="#2f6bd8" stroke-width="2"/><text x="270.5" y="84.0" font-size="15" fill="#5b6270" text-anchor="middle" font-weight="600">остаток</text><text x="85.5" y="84.0" font-size="19" fill="#2f6bd8" text-anchor="middle" font-weight="600">2,4</text><text x="215.0" y="154.0" font-size="18" fill="#137a45" text-anchor="middle" font-weight="600">0,3 от 8 = 8 · 0,3 = 2,4</text><text x="215.0" y="178.0" font-size="14" fill="#5b6270" text-anchor="middle" font-weight="600">«от» — это знак умножения</text><text x="215" y="216" font-size="14" fill="#5b6270" text-anchor="middle">0,3 от 8</text></svg></div><div class="tr" id="ts7"><div class="trhead"><b>Тренажёр 7. Часть от числа</b><span class="trscore" id="ts7s"></span></div><div class="meta">Десять заданий. «От» — это знак умножения.</div><div class="trq" id="ts7q"></div><div class="trfig" id="ts7f"></div><div id="ts7a"></div><div class="trmsg" id="ts7m"></div><div class="trbar" id="ts7b"></div></div><div class="gaps" id="gp3"><div class="ghead"><b>Пропуски 3. Задача про катер</b><span class="gscore" id="gp3s"></span></div><div class="meta">Четыре пропуска. Это задача 4 из самостоятельной.</div><div class="gline l">Катер шёл 1,5 ч против течения и 3 ч по озеру.</div><div class="gline l">собственная скорость 12,8 км/ч, течение 1,5 км/ч</div><div class="gline">скорость против течения: <span class='nw'>12,8 − 1,5 = <input class="gp" data-k="c1" size="4" style="width:68px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c1"></span></div><div class="gline">путь по реке: <span class='nw'>11,3 · 1,5 = <input class="gp" data-k="c2" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c2"></span></div><div class="gline">путь по озеру: <span class='nw'>12,8 · 3 = <input class="gp" data-k="c3" size="4" style="width:68px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c3"></span></div><div class="gline">разница: <span class='nw'>38,4 − 16,95 = <input class="gp" data-k="c4" size="5" style="width:79px" inputmode="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="пропуск c4"></span></div><div class="gnote">В озере течения нет, поэтому там работает собственная скорость.</div><div class="gbar"><button type="button" class="pri" id="gp3go">Проверить</button></div><div class="gmsg" id="gp3m"></div><div class="gtip" id="gp3t"></div></div><h3>Задачи дня 5 — их 8</h3><div id="tasks5"></div><div class="dfoot"><div class="need" id="need5"></div><button class="pri" id="send5" disabled>Сдать LV5</button><div class="dnote" id="note5"></div></div></div></section>
+<div class="card gfinal" id="gfinal"><h2>Итог недели</h2><div class="meta">Появится, когда будут сданы все пять уровней.</div><div id="gsum"></div><div class="row" style="margin-top:14px"><button class="pri" id="send" disabled>Отправить всю неделю</button><button id="report">Скачать копию себе</button></div><div id="repnote" class="meta" style="margin-top:8px"></div></div>
+
+<div class="card">
+  <div class="savenote" id="savenote"></div>
+</div>
 
 <div class="card">
   <h2>Фото решений — по желанию</h2>
@@ -943,13 +1126,15 @@ var GDAYS = [{"n": 1, "title": "Перенос запятой", "tasks": [1, 2, 
 var GTOPIC = "пятидневка §5-§6 · 5 класс";
 var GKEY = "week5";
 
-/* ============ пятидневка: очки, замки, сдача по дням ============ */
+/* ============ пятидневка: вход, XP, серия, уровни ============ */
 (function(){
 var PTS_FIRST = 10, PTS_SECOND = 6, PTS_MIN = 3, PTS_HINT = 2;
 var PTS_TR = 2, PTS_GAP_FIRST = 15, PTS_GAP_LATE = 8;
 var BONUS_DAY = 20, BONUS_CLEAN = 15;
+var STREAK_STEP = 3, MUL_MAX = 3;
 
-window.GAMESTATE = {done: [], sent: {}, pts: {}};
+window.GAMESTATE = {done: [], sent: {}, xp: {}, seen: {}, fixed: {},
+                    streak: 0, best: 0};
 var G = window.GAMESTATE;
 
 function dayOf(n){
@@ -957,38 +1142,37 @@ function dayOf(n){
   return null;
 }
 function isDone(n){ return G.done.indexOf(n) >= 0; }
+function open_(n){ return n <= 1 || isDone(n - 1); }
+function mul(){ return Math.min(MUL_MAX, 1 + Math.floor(G.streak / STREAK_STEP)); }
 
-/* ---------- очки ---------- */
-function taskPts(id){
+/* ---------- XP ---------- */
+function basePts(id){
   var s = state[id];
   if(!s || !s.ok) return 0;
   var base = (s.tries <= 1) ? PTS_FIRST : PTS_SECOND;
   base -= PTS_HINT * (s.hints || 0);
   return Math.max(PTS_MIN, base);
 }
-function trPts(id){
-  var r = TRDONE[id];
-  return r ? PTS_TR * r.ok : 0;
-}
+function trPts(id){ var r = TRDONE[id]; return r ? PTS_TR * r.ok : 0; }
 function gapPts(id){
   var g = (window.GAPSTATE || {})[id];
   if(!g || !g.done) return 0;
-  return g.tries && g.tries > 1 ? PTS_GAP_LATE : PTS_GAP_FIRST;
+  return (g.tries && g.tries > 1) ? PTS_GAP_LATE : PTS_GAP_FIRST;
 }
-function blockPts(id){
-  return (id.indexOf("gp") === 0) ? gapPts(id) : trPts(id);
-}
-function dayPts(d){
+function blockPts(id){ return (id.indexOf("gp") === 0) ? gapPts(id) : trPts(id); }
+function dayXP(d){
   var p = 0, i;
-  for(i = 0; i < d.tasks.length; i++) p += taskPts(d.tasks[i]);
+  for(i = 0; i < d.tasks.length; i++) p += (G.xp[d.tasks[i]] || 0);
   for(i = 0; i < d.req.length; i++) p += blockPts(d.req[i][0]);
-  if(isDone(d.n)){
-    p += BONUS_DAY;
-    if(clean(d)) p += BONUS_CLEAN;
-  }
+  if(isDone(d.n)) p += BONUS_DAY + (clean(d) ? BONUS_CLEAN : 0);
   return p;
 }
-function maxPts(){
+function totalXP(){
+  var p = 0, i;
+  for(i = 0; i < GDAYS.length; i++) p += dayXP(GDAYS[i]);
+  return p;
+}
+function basePlan(){
   var m = 0, i, j;
   for(i = 0; i < GDAYS.length; i++){
     m += GDAYS[i].tasks.length * PTS_FIRST + BONUS_DAY + BONUS_CLEAN;
@@ -996,11 +1180,6 @@ function maxPts(){
       m += (GDAYS[i].req[j][0].indexOf("gp") === 0) ? PTS_GAP_FIRST : PTS_TR * 10;
   }
   return m;
-}
-function total(){
-  var p = 0, i;
-  for(i = 0; i < GDAYS.length; i++) p += dayPts(GDAYS[i]);
-  return p;
 }
 function clean(d){
   var i, s;
@@ -1011,18 +1190,31 @@ function clean(d){
   return true;
 }
 
-/* ---------- готовность дня ---------- */
-function ready(d){
-  var i, s, left = 0, blocks = [];
-  for(i = 0; i < d.tasks.length; i++){
-    s = state[d.tasks[i]];
-    if(!s || !s.done) left++;
+/* ---------- серия ---------- */
+function award(id){
+  var s = state[id];
+  if(!s) return;
+  if(G.fixed[id]) return;               /* задача уже закрыта — XP не пересчитываем */
+  var was = G.seen[id] || 0;
+  if(s.tries <= was) return;            /* новых попыток не было */
+  G.seen[id] = s.tries;
+  if(s.ok){
+    G.xp[id] = basePts(id) * mul();
+    G.fixed[id] = 1;
+    G.streak++;
+    if(G.streak > (G.best || 0)) G.best = G.streak;
+  } else {
+    if(s.done) G.fixed[id] = 1;
+    G.xp[id] = 0;
+    G.streak = 0;
+    var el = document.getElementById("t" + id);
+    var v = el && el.querySelector(".verdict");
+    if(v && s.tries === 1) v.textContent = "Мимо. Серия сброшена — попробуй ещё раз.";
+    else if(v) v.textContent = "Мимо. Смотри решение и разберись, где разошлось.";
   }
-  for(i = 0; i < d.req.length; i++){
-    if(!blockDone(d.req[i][0])) blocks.push(d.req[i][1]);
-  }
-  return {left: left, blocks: blocks, ok: (left === 0 && blocks.length === 0)};
 }
+
+/* ---------- готовность ---------- */
 function blockDone(id){
   if(id.indexOf("gp") === 0){
     var g = (window.GAPSTATE || {})[id];
@@ -1031,33 +1223,79 @@ function blockDone(id){
   var r = TRDONE[id];
   return !!(r && r.total && r.ok >= Math.ceil(r.total * 0.6));
 }
+function ready(d){
+  var i, s, left = 0, blocks = [];
+  for(i = 0; i < d.tasks.length; i++){
+    s = state[d.tasks[i]];
+    if(!s || !s.done) left++;
+  }
+  for(i = 0; i < d.req.length; i++)
+    if(!blockDone(d.req[i][0])) blocks.push(d.req[i][1]);
+  return {left: left, blocks: blocks, ok: (left === 0 && blocks.length === 0)};
+}
 
 /* ---------- отрисовка ---------- */
-function rank(p){
-  var m = maxPts(), d = m ? p / m : 0;
-  if(d >= 0.9) return "отлично — тема закрыта";
-  if(d >= 0.75) return "уверенно";
-  if(d >= 0.6) return "хорошо, есть шероховатости";
-  if(d >= 0.4) return "половина пути";
-  if(p > 0) return "надо повторить теорию";
-  return "неделя ещё не начата";
+function rank(){
+  /* ранг считаем по доле верных, а не по XP: множитель не должен красить итог */
+  var done = 0, ok = 0, first = 0, i, j, d, s;
+  for(i = 0; i < GDAYS.length; i++){
+    d = GDAYS[i];
+    for(j = 0; j < d.tasks.length; j++){
+      s = state[d.tasks[j]];
+      if(!s || !s.done) continue;
+      done++;
+      if(s.ok) ok++;
+      if(s.ok && s.tries <= 1 && !s.hints) first++;
+    }
+  }
+  if(!done) return "неделя ещё не начата";
+  var k = ok / done, f = first / done;
+  if(k >= 0.95 && f >= 0.9) return "отлично — тема закрыта";
+  if(k >= 0.9) return "уверенно";
+  if(k >= 0.75) return "хорошо, есть шероховатости";
+  if(k >= 0.5) return "половина пути";
+  return "надо вернуться к правилу";
+}
+function curLevel(){
+  for(var i = 0; i < GDAYS.length; i++)
+    if(!isDone(GDAYS[i].n)) return GDAYS[i].n;
+  return GDAYS.length;
 }
 function paint(){
-  var p = total(), i, d, st, el, r;
+  var p = totalXP(), i, d, el, r;
   var pts = document.getElementById("gpts");
-  if(pts) pts.innerHTML = p + ' <span>из ' + maxPts() + " очков</span>";
-  var rk = document.getElementById("grank");
-  if(rk) rk.textContent = rank(p);
-  var dots = document.getElementById("gdots");
-  if(dots){
-    var h = "";
-    for(i = 0; i < GDAYS.length; i++){
-      d = GDAYS[i];
-      st = isDone(d.n) ? "ok" : (open_(d.n) ? "now" : "");
-      h += '<i class="' + st + '">' + d.n + "</i>";
-    }
-    dots.innerHTML = h;
+  if(pts) pts.textContent = p + " XP";
+  var mm = document.getElementById("gmul");
+  if(mm){
+    mm.textContent = "×" + mul();
+    mm.className = "chip mul" + (mul() === 1 ? " one" : "");
   }
+  var who = document.getElementById("gwho");
+  var nm = document.getElementById("name");
+  if(who && nm) who.textContent = nm.value || "";
+  var rk = document.getElementById("grank");
+  if(rk) rk.textContent = rank();
+
+  var bar = document.getElementById("glv");
+  if(bar){
+    var bs = bar.querySelectorAll("button"), cur = curLevel();
+    for(i = 0; i < bs.length; i++){
+      d = GDAYS[i];
+      bs[i].className = isDone(d.n) ? "ok"
+        : (open_(d.n) && d.n === cur ? "now" : (open_(d.n) ? "" : "lock"));
+    }
+  }
+  var line = document.getElementById("glvline");
+  if(line){
+    var frac = G.done.length / GDAYS.length, cd = dayOf(curLevel());
+    if(cd && !isDone(cd.n)){
+      var rr = ready(cd), tot = cd.tasks.length + cd.req.length;
+      var got = (cd.tasks.length - rr.left) + (cd.req.length - rr.blocks.length);
+      frac += (got / tot) / GDAYS.length;
+    }
+    line.style.width = Math.round(Math.min(1, frac) * 100) + "%";
+  }
+
   for(i = 0; i < GDAYS.length; i++){
     d = GDAYS[i];
     el = document.getElementById("day" + d.n);
@@ -1065,53 +1303,46 @@ function paint(){
     var op = open_(d.n);
     el.classList.toggle("lock", !op);
     el.classList.toggle("done", isDone(d.n));
+    el.classList.toggle("now", op && !isDone(d.n));
     var lk = document.getElementById("lock" + d.n);
-    if(lk && !op){
-      lk.textContent = "Откроется, когда будет сдан день " + (d.n - 1) + ".";
-    }
+    if(lk && !op) lk.textContent = "Откроется, когда будет сдан LV" + (d.n - 1) + ".";
     r = ready(d);
     var need = document.getElementById("need" + d.n);
     var btn = document.getElementById("send" + d.n);
     if(need){
       if(isDone(d.n)){
-        need.innerHTML = "День сдан." +
-          '<span class="dpts">+' + dayPts(d) + "</span>";
+        need.innerHTML = "Уровень сдан." + '<span class="dpts">' + dayXP(d) + " XP</span>";
       } else if(r.ok){
-        need.innerHTML = '<b class="ok">Всё готово.</b> Можно сдавать: наберёшь ' +
-          dayPts(d) + " + " + (BONUS_DAY + (clean(d) ? BONUS_CLEAN : 0)) +
-          " очков за сдачу.";
+        need.innerHTML = '<b class="ok">Всё готово.</b> Жми кнопку: за сдачу ещё ' +
+          (BONUS_DAY + (clean(d) ? BONUS_CLEAN : 0)) + " XP.";
       } else {
         var parts = [];
-        if(r.left) parts.push("осталось решить задач: <b>" + r.left + "</b>");
+        if(r.left) parts.push("осталось задач: <b>" + r.left + "</b>");
         if(r.blocks.length) parts.push("не пройдено: <b>" + r.blocks.join(", ") + "</b>");
         need.innerHTML = parts.join("; ") + ".";
       }
     }
     if(btn){
       btn.disabled = !(r.ok && !isDone(d.n) && op);
-      btn.textContent = isDone(d.n) ? ("День " + d.n + " сдан") : ("Сдать день " + d.n);
+      btn.textContent = isDone(d.n) ? ("LV" + d.n + " сдан") : ("Сдать LV" + d.n);
     }
   }
   var fin = document.getElementById("send");
   if(fin) fin.disabled = (G.done.length < GDAYS.length);
   var sum = document.getElementById("gsum");
   if(sum && G.done.length === GDAYS.length){
-    var bs = "";
+    var bs2 = "";
     for(i = 0; i < GDAYS.length; i++)
-      if(clean(GDAYS[i])) bs += '<span class="badge">день ' + GDAYS[i].n + " без ошибок</span>";
-    if(G.done.length === GDAYS.length) bs += '<span class="badge gold">все пять дней</span>';
-    sum.innerHTML = '<div class="big">' + p + " из " + maxPts() + " очков — " +
-      rank(p) + "</div>" + bs +
-      '<p class="meta" style="margin-top:8px">Нажми «Отправить всю неделю», ' +
-      "чтобы прислать полный отчёт.</p>";
+      if(clean(GDAYS[i])) bs2 += '<span class="badge">LV' + GDAYS[i].n + " без ошибок</span>";
+    bs2 += '<span class="badge gold">все пять уровней</span>';
+    if(G.best >= 10) bs2 += '<span class="badge gold">серия ' + G.best + "</span>";
+    sum.innerHTML = '<div class="big">' + p + " XP — " + rank() + "</div>" + bs2 +
+      '<p class="meta" style="margin-top:10px">Лучшая серия за неделю: ' +
+      (G.best || 0) + ". Нажми «Отправить всю неделю», чтобы прислать полный отчёт.</p>";
   }
 }
-function open_(n){
-  if(n <= 1) return true;
-  return isDone(n - 1);
-}
 
-/* ---------- сдача дня ---------- */
+/* ---------- сдача уровня ---------- */
 function esc2(s){
   return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
@@ -1127,21 +1358,21 @@ function praise(d){
   for(i = 0; i < d.tasks.length; i++){
     s = state[d.tasks[i]];
     if(!s) continue;
-    if(s.ok && s.tries > 1) late++;
-    if(!s.ok) late++;
+    if(!s.ok || s.tries > 1) late++;
     hints += s.hints || 0;
   }
   if(late === 0 && hints === 0)
-    return ["good", "Весь день с первой попытки и без подсказок. Это редкость."];
+    return ["good", "Весь уровень с первой попытки и без подсказок. Это редкость."];
   if(late === 0)
     return ["good", "Все задачи верно. Подсказками пользовался — это нормально, " +
             "главное, что разобрался."];
   if(late <= 2)
-    return ["good", "День закрыт. " + zadach(late) + " — посмотри " +
-            (late === 1 ? "её" : "их") + " разбор ещё раз, и можно двигаться дальше."];
-  return ["warn", "День закрыт, но " + zadach(late) + ". Перед следующим днём " +
-          "перечитай их разбор — иначе дальше будет тяжелее."];
+    return ["good", "Уровень закрыт. " + zadach(late) + " — посмотри " +
+            (late === 1 ? "её" : "их") + " разбор ещё раз, и дальше."];
+  return ["warn", "Уровень закрыт, но " + zadach(late) + ". Перед следующим " +
+          "перечитай их разбор — иначе будет тяжелее."];
 }
+function d2(a){ try{ return decodeURIComponent(escape(atob(a))); }catch(e){ return a; } }
 function dayReport(d){
   var name = (document.getElementById("name").value || "").trim() || "без имени";
   var okN = 0, rows = "", i, id, t, s;
@@ -1154,53 +1385,49 @@ function dayReport(d){
       esc2(t.text.replace(/<[^>]+>/g, "")) + "</td><td>" + esc2(s.given || "—") +
       "</td><td>" + esc2(t.ans.map(d2).join(" / ")) + "</td><td>" +
       (s.ok ? "верно" : "неверно") + "</td><td>" + s.tries + "</td><td>" +
-      s.hints + "</td></tr>";
+      s.hints + "</td><td>" + (G.xp[id] || 0) + "</td></tr>";
   }
   var blocks = "";
   for(i = 0; i < d.req.length; i++){
     var bid = d.req[i][0], bn = d.req[i][1], info = "";
     if(bid.indexOf("gp") === 0){
       var g = (window.GAPSTATE || {})[bid];
-      info = g && g.done ? "пройден" : "не пройден";
+      info = (g && g.done) ? "пройден" : "не пройден";
     } else {
       var r = TRDONE[bid];
       info = r ? (r.ok + " из " + r.total) : "не пройден";
     }
     blocks += "<tr><td colspan='2' style='text-align:left'>" + esc2(bn) +
-      "</td><td colspan='5'>" + esc2(info) + "</td></tr>";
+      "</td><td colspan='6'>" + esc2(info) + "</td></tr>";
   }
-  var p = dayPts(d) + BONUS_DAY + (clean(d) ? BONUS_CLEAN : 0);
+  var xp = dayXP(d) + BONUS_DAY + (clean(d) ? BONUS_CLEAN : 0);
   var now = new Date();
   var html = "<!doctype html><html lang='ru'><head><meta charset='utf-8'>" +
-    "<title>День " + d.n + " — " + esc2(name) + "</title><style>" +
+    "<title>LV" + d.n + " — " + esc2(name) + "</title><style>" +
     "body{font:16px/1.5 system-ui,Arial,sans-serif;margin:0;padding:18px;color:#16181d}" +
     "table{border-collapse:collapse;width:100%;margin-top:12px;font-size:15px}" +
     "th,td{border:1px solid #dfe3ea;padding:6px 8px;text-align:center}th{background:#eef3fb}" +
-    "</style></head><body><h1>День " + d.n + ". " + esc2(d.title) + "</h1>" +
+    "</style></head><body><h1>LV" + d.n + ". " + esc2(d.title) + "</h1>" +
     "<div>Ученик: <b>" + esc2(name) + "</b> · " + esc2(now.toLocaleString("ru-RU")) +
-    "</div><h2>" + okN + " из " + d.tasks.length + " верно · " + p + " очков</h2>" +
+    "</div><h2>" + okN + " из " + d.tasks.length + " верно · " + xp + " XP · " +
+    "лучшая серия " + (G.best || 0) + "</h2>" +
     "<table><tr><th>№</th><th>Задача</th><th>Ответ</th><th>Верный</th><th>Итог</th>" +
-    "<th>Попыток</th><th>Подсказок</th></tr>" + rows + blocks + "</table></body></html>";
-  return {html: html, okN: okN, pts: p, name: name,
-          file: "День" + d.n + "_" + name.replace(/\s+/g, "_") + ".html",
-          caption: name + " · " + GTOPIC + " · день " + d.n + " из " + GDAYS.length +
-            " · " + okN + " из " + d.tasks.length + " верно · " + p + " очков"};
+    "<th>Попыток</th><th>Подсказок</th><th>XP</th></tr>" + rows + blocks +
+    "</table></body></html>";
+  return {html: html, okN: okN, xp: xp, name: name,
+          file: "LV" + d.n + "_" + name.replace(/\s+/g, "_") + ".html",
+          caption: name + " · " + GTOPIC + " · LV" + d.n + " из " + GDAYS.length +
+            " · " + okN + " из " + d.tasks.length + " верно · " + xp + " XP"};
 }
-function d2(a){ try{ return decodeURIComponent(escape(atob(a))); }catch(e){ return a; } }
-
 function submitDay(n){
   var d = dayOf(n), note = document.getElementById("note" + n);
   var who = (document.getElementById("name").value || "").trim();
-  if(!who){
-    note.className = "dnote warn";
-    note.textContent = "Сначала впиши имя вверху страницы.";
-    return;
-  }
+  if(!who){ showGate(); return; }
   var r = dayReport(d);
   note.className = "dnote";
   note.textContent = "Отправляю…";
   var payload = {secret: SECRET, code: STUDENT_CODE, student: r.name,
-                 topic: GTOPIC + " · день " + n, ok: r.okN, total: d.tasks.length,
+                 topic: GTOPIC + " · LV" + n, ok: r.okN, total: d.tasks.length,
                  name: r.file, caption: r.caption,
                  file: btoa(unescape(encodeURIComponent(r.html)))};
   var finish = function(sentOk){
@@ -1209,11 +1436,11 @@ function submitDay(n){
     var pr = praise(d);
     note.className = "dnote " + pr[0];
     note.innerHTML = pr[1] + '<span class="dpts">+' +
-      (BONUS_DAY + (clean(d) ? BONUS_CLEAN : 0)) + "</span>" +
-      (sentOk ? "" : "<br><span class='warn'>Отправить не получилось — покажи " +
-       "страницу преподавателю или отправь отчёт в конце недели.</span>") +
-      (n < GDAYS.length ? "<br>День " + (n + 1) + " открыт." :
-       "<br>Все пять дней пройдены. Осталось отправить итоговый отчёт.");
+      (BONUS_DAY + (clean(d) ? BONUS_CLEAN : 0)) + " XP</span>" +
+      (sentOk ? "" : "<br>Отправить не получилось — покажи страницу преподавателю " +
+       "или отправь отчёт в конце недели.") +
+      (n < GDAYS.length ? "<br>LV" + (n + 1) + " открыт." :
+       "<br>Все пять уровней пройдены. Осталось отправить итоговый отчёт.");
     paint();
     try{ saveWork(); }catch(e){}
     var nx = document.getElementById("day" + (n + 1));
@@ -1224,12 +1451,70 @@ function submitDay(n){
     .catch(function(){ finish(false); });
 }
 
+/* ---------- экран входа ---------- */
+function showGate(){
+  var g = document.getElementById("gate");
+  if(g){ g.classList.remove("off"); document.body.classList.add("gated"); }
+  var nm = document.getElementById("name");
+  if(nm) setTimeout(function(){ try{ nm.focus(); }catch(e){} }, 60);
+}
+function hideGate(){
+  var g = document.getElementById("gate");
+  if(g){ g.classList.add("off"); document.body.classList.remove("gated"); }
+}
+function tryEnter(){
+  var nm = document.getElementById("name"), err = document.getElementById("gateerr");
+  var v = (nm.value || "").trim();
+  if(v.length < 2){
+    err.textContent = "Впиши имя — хотя бы две буквы.";
+    return;
+  }
+  err.textContent = "";
+  hideGate();
+  paint();
+  try{ saveWork(); }catch(e){}
+}
+function checkGate(){
+  var nm = document.getElementById("name");
+  if(nm && (nm.value || "").trim().length >= 2) hideGate();
+  else showGate();
+  paint();
+}
+
+/* ---------- косметика ---------- */
+function dressTasks(){
+  var i, j, d, el, inp, keys, rowEl, num;
+  for(i = 0; i < GDAYS.length; i++){
+    d = GDAYS[i];
+    for(j = 0; j < d.tasks.length; j++){
+      el = document.getElementById("t" + d.tasks[j]);
+      if(!el) continue;
+      num = el.querySelector(".tnum");
+      if(num) num.textContent = "#" + (j + 1 < 10 ? "0" : "") + (j + 1);
+      inp = el.querySelector("input[type=text]");
+      keys = el.querySelector(".keys");
+      if(inp && keys && !el.querySelector(".inrow")){
+        rowEl = document.createElement("div");
+        rowEl.className = "inrow";
+        inp.parentNode.insertBefore(rowEl, keys);
+        rowEl.appendChild(inp);
+        rowEl.appendChild(keys);
+      }
+    }
+  }
+}
+
 /* ---------- связь с движком ---------- */
-window.gameTask = function(){ paint(); try{ saveWork(); }catch(e){} };
+window.gameTask = function(id){ award(id); paint(); };
 window.gameRestore = function(g){
   if(!g) return;
   G.done = g.done || [];
   G.sent = g.sent || {};
+  G.xp = g.xp || {};
+  G.seen = g.seen || {};
+  G.fixed = g.fixed || {};
+  G.streak = g.streak || 0;
+  G.best = g.best || 0;
   paint();
 };
 var oldTrFinished = window.trFinished;
@@ -1239,16 +1524,35 @@ window.trFinished = function(id, ok, tot){
 };
 
 (function init(){
-  var i, n;
+  var i;
   for(i = 0; i < GDAYS.length; i++){
     (function(n){
       var b = document.getElementById("send" + n);
       if(b) b.addEventListener("click", function(){ submitDay(n); });
     })(GDAYS[i].n);
   }
+  var go = document.getElementById("gatego");
+  if(go) go.addEventListener("click", tryEnter);
+  var nm = document.getElementById("name");
+  if(nm) nm.addEventListener("keydown", function(ev){
+    if(ev.key === "Enter"){ ev.preventDefault(); tryEnter(); }
+  });
+  var rn = document.getElementById("grename");
+  if(rn) rn.addEventListener("click", showGate);
+  var lv = document.getElementById("glv");
+  if(lv) lv.addEventListener("click", function(ev){
+    var el = ev.target;
+    while(el && el !== lv && el.tagName !== "BUTTON") el = el.parentNode;
+    if(!el || el === lv) return;
+    var n = parseInt(el.getAttribute("data-lv"), 10);
+    var host = document.getElementById("day" + n);
+    if(host) host.scrollIntoView({behavior: "smooth", block: "start"});
+  });
+  dressTasks();
   document.addEventListener("click", function(){ setTimeout(paint, 30); }, true);
   document.addEventListener("input", function(){ setTimeout(paint, 60); }, true);
   paint();
+  setTimeout(checkGate, 0);
 })();
 })();
 
