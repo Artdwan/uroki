@@ -731,6 +731,7 @@ function check(id){
     showSol(el, t);
   }
   progress();
+  if(window.gameTask) window.gameTask(id);
   saveWork();
 }
 function showSol(el, t){
@@ -1425,6 +1426,7 @@ function saveWork(){
     var nm = document.getElementById("name");
     var box = {v: SAVE_V, at: Date.now(), spent: spentMs(), tr: TRDONE,
                trp: TRPROG, gaps: (window.GAPSTATE || {}), tasks: {},
+               game: (window.GAMESTATE || null),
                name: (nm ? nm.value : "") || ""};
     TASKS.forEach(function(t){
       var x = state[t.id];
@@ -1565,6 +1567,7 @@ function restoreTask(t, s){
       }
     }
     if(saved.gaps && window.gapRestore) window.gapRestore(saved.gaps);
+    if(saved.game && window.gameRestore) window.gameRestore(saved.game);
     progress();
     trStatus();
   }
