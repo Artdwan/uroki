@@ -124,6 +124,25 @@ details[open] summary{margin-bottom:8px}
   border:1.5px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
 .row button.askb{font-size:14px}
 
+/* список незакрытого и переход к нему */
+.trgate{border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;margin:0 0 14px;
+  background:var(--bg)}
+.trgate.done{border-color:var(--ok)}
+.trgate>b{display:block;font-size:16px;margin-bottom:8px}
+.jumps{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:8px}
+a.jump{display:inline-block;font:inherit;font-size:15px;line-height:1.2;padding:6px 10px;
+  border:1.5px solid var(--line);border-radius:20px;background:var(--card);color:var(--acc);
+  text-decoration:none;cursor:pointer}
+a.jump:hover{border-color:var(--acc)}
+.bad-note .jumps{margin-top:8px}
+.bad-note a.jump{color:var(--bad);border-color:var(--bad)}
+.need{outline:3px solid var(--acc);outline-offset:3px;border-radius:12px;
+  animation:needpulse 2.6s ease-out}
+input.need{outline-offset:1px}
+@keyframes needpulse{0%{outline-color:var(--acc)}70%{outline-color:var(--acc)}
+  100%{outline-color:transparent}}
+@media (prefers-reduced-motion:reduce){.need{animation:none}}
+
 /* тренажёры */
 .tr{border:1px solid var(--line);border-radius:12px;padding:14px;margin:16px 0;background:var(--bg)}
 .trhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;
@@ -345,6 +364,20 @@ details{background:var(--nest);border-color:var(--line)}
 .thumb select{background:var(--field);border-color:var(--line);color:var(--ink)}
 .sheet{background:var(--card)}
 
+/* список незакрытого: на тёмном фоне подсветка перехода обязана быть видна */
+.trgate{background:var(--nest);border-color:var(--line);border-radius:3px}
+.trgate>b{color:var(--acc);letter-spacing:1px;font-weight:400;text-transform:uppercase;
+  font-size:13px}
+.trgate.done{border-color:var(--ok)}
+.trgate.done>b{color:var(--ok);text-transform:none;font-size:16px;letter-spacing:0}
+a.jump{background:var(--field);border-color:var(--line);color:var(--acc);border-radius:3px;
+  font-family:inherit}
+a.jump:hover{border-color:var(--acc);background:var(--nest)}
+.bad-note a.jump{color:var(--terra);border-color:var(--terra)}
+.need{outline:2px solid var(--acc);outline-offset:4px;border-radius:3px;background:var(--field)}
+input.need{outline-offset:2px}
+.task.need{background:var(--field)}
+
 @media (max-width:420px){
   body{font-size:17px}
   .gphead h1{font-size:27px}
@@ -502,6 +535,7 @@ body.gated .wrap,body.gated .bar{visibility:hidden}
 <div class="card"><h2>Отправь работу</h2>
 <p class="meta">Отправка откроется, когда отвечены все 18 задач, пройдены до конца обязательные тренажёры и проверен блок «Собери формулу» в повторении. Дополнительный тренажёр, карточки «вспомни сам» и задача из прошлого не требуются.</p>
 <p class="meta">Если задача не пошла - жми «Не понял, разберём на занятии». Она засчитается закрытой, ответ не откроется, а номер уйдёт преподавателю: с этих задач и начнём занятие. Писать наугад ради галочки не нужно.</p>
+<div class="trgate" id="trgate"></div>
 <div class="row"><button class="pri" id="send" type="button">Отправить на проверку</button><button id="report" type="button">Скачать копию себе</button></div>
 <div id="repnote" class="meta" style="margin-top:8px"></div></div>
 </div>
@@ -695,6 +729,7 @@ function makeGap(id, data){
   });
   host.querySelector(".gchk").addEventListener("click", function(){
     st.checked = true; paint(); SAVE.touch(true);
+    if(window.gateDraw) window.gateDraw();
   });
   function paint(){
     var bad = 0;
@@ -977,6 +1012,7 @@ function progress(){
   if(el) el.textContent = "задачи: " + done + " из " + TASKS.length + " · верно " + ok +
       (ask ? " · на разбор " + ask : "") +
       " · тренажёры: " + trDoneCount() + " из " + REQ_TR.length;
+  if(window.gateDraw) window.gateDraw();
 }
 document.getElementById("checkall").addEventListener("click", function(){
   TASKS.forEach(function(t){
@@ -1157,20 +1193,71 @@ function drawThumbs(){
 var ENDPOINT = "https://script.google.com/macros/s/AKfycbztH9c-wQuKC7pSfD8AcFfnOcGpSHxoeqovulmvLMp9W23SgFx9dDQ2JTlWcIJDMN6W/exec";
 var SECRET = "artteach2026";
 
+function trJump(id){
+  var el = document.getElementById(id);
+  if(!el) return false;
+  el.scrollIntoView({behavior:"smooth", block:"center"});
+  el.classList.add("need");
+  if(el.needTimer) clearTimeout(el.needTimer);
+  el.needTimer = setTimeout(function(){ el.classList.remove("need"); }, 2600);
+  return true;
+}
+window.trJump = trJump;
+
 function gateCheck(){
   var miss = [];
   var who = ((document.getElementById("name")||{}).value || "").trim();
-  if(!who) miss.push("впиши имя вверху страницы");
-  var left = TASKS.filter(function(t){ return !state[t.id].done; });
-  if(left.length) miss.push("ответь на задачи: " + left.map(function(t){return t.id;}).join(", "));
-  var trLeft = REQ_TR.filter(function(id){ return !(window.TRAPI[id] && window.TRAPI[id].isDone()); });
-  if(trLeft.length) miss.push("пройди тренажёры до конца: " + trLeft.map(function(id){return TR_NAMES[id];}).join(", "));
-  var gLeft = (typeof REQ_GAP === "undefined" ? [] : REQ_GAP).filter(function(id){
-    return !(window.GAPST[id] && window.GAPST[id].get().checked);
+  if(!who) miss.push({label:"Имя и фамилия", jump:"name"});
+  TASKS.forEach(function(t){
+    if(!state[t.id].done) miss.push({label:"Задача "+t.id, jump:"t"+t.id});
   });
-  if(gLeft.length) miss.push("проверь блок «Собери формулу» в повторении");
+  REQ_TR.forEach(function(id){
+    if(!(window.TRAPI[id] && window.TRAPI[id].isDone()))
+      miss.push({label:"Тренажёр: "+TR_NAMES[id], jump:"tr_"+id});
+  });
+  (typeof REQ_GAP === "undefined" ? [] : REQ_GAP).forEach(function(id){
+    if(!(window.GAPST[id] && window.GAPST[id].get().checked))
+      miss.push({label:"Собери формулу", jump:"gap_"+id});
+  });
+  miss = miss.filter(function(it){ return !!document.getElementById(it.jump); });
+  miss.sort(function(a, b){
+    var r = document.getElementById(a.jump)
+              .compareDocumentPosition(document.getElementById(b.jump));
+    if(r & 4) return -1;
+    if(r & 2) return 1;
+    return 0;
+  });
   return miss;
 }
+
+function gateLinks(miss){
+  return miss.map(function(it){
+    return '<a href="#" class="jump" data-jump="'+it.jump+'">'+esc(it.label)+'</a>';
+  }).join("");
+}
+
+function gateDraw(){
+  var host = document.getElementById("trgate");
+  if(!host) return;
+  var miss = gateCheck();
+  if(!miss.length){
+    host.className = "trgate done";
+    host.innerHTML = "<b>Всё закрыто - можно отправлять.</b>";
+    return;
+  }
+  host.className = "trgate";
+  host.innerHTML = "<b>Осталось закрыть: "+miss.length+"</b>"+
+    '<div class="jumps">'+gateLinks(miss)+'</div>'+
+    '<div class="mini">Нажми на пункт - страница перенесёт к нему.</div>';
+}
+window.gateDraw = gateDraw;
+
+document.addEventListener("click", function(ev){
+  var a = ev.target && ev.target.closest ? ev.target.closest("[data-jump]") : null;
+  if(!a) return;
+  ev.preventDefault();
+  trJump(a.getAttribute("data-jump"));
+});
 
 function buildReport(){
   var name = ((document.getElementById("name")||{}).value || "").trim() || "без имени";
@@ -1270,7 +1357,11 @@ document.getElementById("send").addEventListener("click", function(){
   var miss = gateCheck();
   if(miss.length){
     note.className = "meta bad-note";
-    note.innerHTML = "Перед отправкой: " + miss.join("; ") + ".";
+    note.innerHTML = "Осталось закрыть: " + gateLinks(miss) +
+      '<div class="mini">' + (miss.length > 1 ? "Переношу к первому." : "Переношу к нему.") +
+      " Если задача не идёт - отметь «разберём на занятии».</div>";
+    gateDraw();
+    trJump(miss[0].jump);
     return;
   }
   note.className = "meta";
@@ -1324,6 +1415,10 @@ BUILD_GAPS();
 BUILD_ERRS();
 restore();
 bindSave();
+(function(){
+  var nm = document.getElementById("name");
+  if(nm) nm.addEventListener("input", function(){ gateDraw(); });
+})();
 progress();
 SAVE.write();
 
