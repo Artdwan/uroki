@@ -1545,15 +1545,50 @@ SAVE.write();
   var FILE = (location.pathname.split("/").pop() || "page").replace(/\.html?$/i, "");
   var MK = "arttich:meta:" + FILE;
 
+  var DAY = 864e5, T2020 = 16e11, LONG = 6 * 36e5;
+
+  /* Всё, что пришло из localStorage, проходит через чистку и сразу
+     перезаписывается: иначе одна кривая запись живёт в отчётах вечно -
+     код давно починен, а цифра приходит снова, потому что лежит у ученика. */
+  function pos(x, max){
+    x = +x;
+    if(!isFinite(x) || x < 0) return 0;
+    return (max && x > max) ? 0 : x;
+  }
+  function stamp(x){
+    x = +x;
+    if(!isFinite(x) || x < T2020 || x > Date.now() + DAY) return 0;
+    return x;
+  }
+  function clean(o){
+    var d = {v:1, first:0, visits:0, sessions:[], totalMs:0, aways:0, awayMs:0,
+             awayMax:0, long:0, blurs:0, quick:[], sent:null};
+    if(!o || typeof o !== "object"){ d.first = Date.now(); return d; }
+    d.first = stamp(o.first) || Date.now();
+    d.sent = stamp(o.sent) || null;
+    d.visits = Math.round(pos(o.visits, 1e4));
+    d.totalMs = pos(o.totalMs, DAY);
+    d.aways = Math.round(pos(o.aways, 1e4));
+    d.awayMs = pos(o.awayMs, DAY);
+    d.awayMax = pos(o.awayMax, DAY);
+    d.long = Math.round(pos(o.long, 1e4));
+    d.blurs = Math.round(pos(o.blurs, 1e5));
+    if(d.awayMax > d.awayMs) d.awayMax = d.awayMs;
+    if(!d.aways){ d.awayMs = 0; d.awayMax = 0; }
+    d.quick = Array.isArray(o.quick) ? o.quick.slice(0, 40).map(String) : [];
+    d.sessions = Array.isArray(o.sessions) ? o.sessions.slice(-40) : [];
+    return d;
+  }
   function load(){
-    try{ var o = JSON.parse(localStorage.getItem(MK)); if(o && o.v === 1) return o; }catch(e){}
-    return {v:1, first:Date.now(), visits:0, sessions:[], totalMs:0,
-            aways:0, awayMs:0, awayMax:0, blurs:0, quick:[], sent:null};
+    var o = null;
+    try{ o = JSON.parse(localStorage.getItem(MK)); }catch(e){}
+    return clean(o);
   }
   function save(){ try{ localStorage.setItem(MK, JSON.stringify(M)); }catch(e){} }
 
   var M = load();
   M.visits += 1;
+  save();
   var sessionMs = 0;
 
   /* Время считаем по СВОЕМУ флагу: visibilitychange приходит уже после смены
@@ -1572,15 +1607,24 @@ SAVE.write();
     accrue(); visible = false; hiddenAt = Date.now(); save();
   }
   function goVisible(){
-    if(visible){ mark = Date.now(); return; }
-    /* отлучку засчитываем при ВОЗВРАЩЕНИИ, иначе каждая перезагрузка даёт лишнюю */
-    var away = Date.now() - hiddenAt;
-    if(away > 1500){
-      M.aways += 1; M.awayMs += away;
-      if(away > M.awayMax) M.awayMax = away;
-      lastReturn = Date.now();
+    var now = Date.now();
+    if(visible){ mark = now; return; }
+    /* отлучку засчитываем при ВОЗВРАЩЕНИИ, иначе каждая перезагрузка даёт лишнюю,
+       и мерим только от НАСТОЯЩЕЙ метки ухода: при hiddenAt = 0 разность даёт
+       сам Date.now(), то есть «29 846 306 минут» в подписи. */
+    if(hiddenAt > T2020){
+      var away = now - hiddenAt;
+      if(away > LONG){
+        /* это не отлучка, а перерыв между днями: ноутбук закрыли на ночь */
+        M.long += 1;
+      } else if(away > 1500){
+        M.aways += 1; M.awayMs += away;
+        if(away > M.awayMax) M.awayMax = away;
+        lastReturn = now;
+      }
     }
-    visible = true; mark = Date.now(); save();
+    hiddenAt = 0;
+    visible = true; mark = now; save();
   }
   document.addEventListener("visibilitychange", function(){
     if(document.visibilityState === "hidden") goHidden(); else goVisible();
@@ -1618,7 +1662,19 @@ SAVE.write();
     return kind + " · " + os + " · " + br + " · " +
            (screen.width || "?") + "×" + (screen.height || "?");
   }
-  function mins(ms){ return Math.max(0, Math.round(ms/60000)); }
+  /* «всего 0 мин» - такая же бессмыслица, как миллион: короткое пишем секундами,
+     а потерянное при чистке время называем потерянным, а не нулём. */
+  function dur(ms){
+    if(!(ms > 0)) return "";
+    if(ms < 90000) return Math.max(1, Math.round(ms/1000)) + " с";
+    return Math.round(ms/60000) + " мин";
+  }
+  function plural(n, one, few, many){
+    var d = n % 10, h = n % 100;
+    if(d === 1 && h !== 11) return one;
+    if(d >= 2 && d <= 4 && (h < 10 || h >= 20)) return few;
+    return many;
+  }
   function hhmm(ts){
     var d = new Date(ts);
     return ("0"+d.getDate()).slice(-2) + "." + ("0"+(d.getMonth()+1)).slice(-2) + " " +
@@ -1632,12 +1688,20 @@ SAVE.write();
       M.sent = Date.now(); save();
       var p = [];
       p.push(dev());
-      p.push("заходов " + M.visits + ", всего " + mins(M.totalMs) + " мин" +
-             (sessionMs ? " (этот заход " + mins(sessionMs) + ")" : ""));
+      var tot = dur(M.totalMs), ses = dur(sessionMs);
+      p.push("заходов " + M.visits + ", всего " + (tot || "время не сохранилось") +
+             (ses ? " (этот заход " + ses + ")" : ""));
       p.push("открыл " + hhmm(M.first) + ", сдал " + hhmm(M.sent));
-      p.push("отлучек " + M.aways +
-             (M.aways ? " (" + mins(M.awayMs) + " мин, дольше всего " + mins(M.awayMax) + ")" : "") +
-             ", потерь фокуса " + M.blurs);
+      var aw = "отлучек " + M.aways;
+      if(M.aways){
+        var t = dur(M.awayMs);
+        aw += t ? " (" + t + ", дольше всего " + (dur(M.awayMax) || t) + ")"
+                : " (время отлучек не сохранилось)";
+      }
+      if(M.long) aw += ", плюс " + M.long + " " +
+        plural(M.long, "долгий перерыв", "долгих перерыва", "долгих перерывов");
+      aw += ", потерь фокуса " + M.blurs;
+      p.push(aw);
       if(M.quick.length) p.push("верно сразу после возвращения: задачи " + M.quick.join(", "));
       return p.join(" · ");
     }
