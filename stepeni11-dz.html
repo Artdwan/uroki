@@ -36,6 +36,7 @@ label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
 input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
   background:var(--card);color:var(--ink);width:100%;max-width:340px}
 input[type=text]:focus{outline:none;border-color:var(--acc)}
+input[type=text]:disabled{opacity:.45}
 button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
   background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
 button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
@@ -115,9 +116,13 @@ details[open] summary{margin-bottom:8px}
 .steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
   border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
   display:flex;align-items:center;justify-content:center}
-.aim{display:flex;gap:8px;align-items:flex-start;margin-top:10px;font-size:15px;color:var(--muted)}
-.aim input{width:20px;height:20px;margin:1px 0 0;flex:none}
-.aim label{cursor:pointer}
+.task.ask{border-color:#c0397a;background:var(--warn-soft)}
+.verdict.ask{color:#a02a62}
+.askbox{margin-top:10px}
+.askbox .askmark{font-size:15px;color:var(--muted);margin-bottom:8px}
+.askbox input.asknote{font:inherit;font-size:16px;width:100%;max-width:420px;padding:9px 11px;
+  border:1.5px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
+.row button.askb{font-size:14px}
 
 /* тренажёры */
 .tr{border:1px solid var(--line);border-radius:12px;padding:14px;margin:16px 0;background:var(--bg)}
@@ -308,7 +313,10 @@ details{background:var(--nest);border-color:var(--line)}
 .hint{background:var(--nest);border:1px solid var(--line);border-radius:3px}
 .opt{background:var(--nest);border-color:var(--line);border-radius:3px}
 .opt.sel{border-color:var(--acc);background:var(--field)}
-.aim{color:var(--muted)}
+.task.ask{border-color:var(--terra);background:var(--nest)}
+.verdict.ask{color:var(--terra)}
+.askbox .askmark{color:var(--muted)}
+.askbox input.asknote{background:var(--field);border-color:var(--line);color:var(--ink)}
 .steps-list li::before{background:var(--acc);color:#1a1008}
 
 /* тренажёры, пропуски, поиск ошибки */
@@ -493,6 +501,7 @@ body.gated .wrap,body.gated .bar{visibility:hidden}
 <div class="thumbs" id="thumbs"></div></div>
 <div class="card"><h2>Отправь работу</h2>
 <p class="meta">Отправка откроется, когда отвечены все 18 задач, пройдены до конца обязательные тренажёры и проверен блок «Собери формулу» в повторении. Дополнительный тренажёр, карточки «вспомни сам» и задача из прошлого не требуются.</p>
+<p class="meta">Если задача не пошла - жми «Не понял, разберём на занятии». Она засчитается закрытой, ответ не откроется, а номер уйдёт преподавателю: с этих задач и начнём занятие. Писать наугад ради галочки не нужно.</p>
 <div class="row"><button class="pri" id="send" type="button">Отправить на проверку</button><button id="report" type="button">Скачать копию себе</button></div>
 <div id="repnote" class="meta" style="margin-top:8px"></div></div>
 </div>
@@ -775,7 +784,7 @@ function makeErr(id, data){
 var state = {};
 TASKS.forEach(function(t){
   state[t.id] = {tries:0, hints:0, done:false, ok:false, given:"", sel:null,
-                 t0:0, secs:0, qn:false};
+                 t0:0, secs:0, ask:false, asknote:""};
   var box = document.getElementById("tasks"+(t.blk||"1")) || document.getElementById("tasks1");
   var el = document.createElement("div");
   el.className = "task"; el.id = "t"+t.id;
@@ -795,9 +804,9 @@ TASKS.forEach(function(t){
   }
   body += '<div class="row" style="margin-top:10px">'+
           '<button class="pri sm chk" type="button">Проверить</button>'+
-          '<button class="sm hnt" type="button">Подсказка</button></div>'+
-          '<div class="aim"><input type="checkbox" id="qn'+t.id+'">'+
-          '<label for="qn'+t.id+'">по этой задаче остались вопросы - разобрать на занятии</label></div>'+
+          '<button class="sm hnt" type="button">Подсказка</button>'+
+          '<button class="sm askb" type="button">Не понял, разберём на занятии</button></div>'+
+          '<div class="askbox"></div>'+
           '<div class="hints"></div><div class="verdict"></div><div class="sol"></div>';
   el.innerHTML = body;
   box.appendChild(el);
@@ -830,12 +839,61 @@ TASKS.forEach(function(t){
     inp.addEventListener("focus", touchTask);
     inp.addEventListener("input", function(){ touchTask(); SAVE.touch(); });
   }
-  el.querySelector("#qn"+t.id).addEventListener("change", function(ev){
-    state[t.id].qn = ev.target.checked; SAVE.touch(true);
-  });
+  el.querySelector(".askb").addEventListener("click", function(){ markAsk(t.id); });
   el.querySelector(".chk").addEventListener("click", function(){ check(t.id); });
   el.querySelector(".hnt").addEventListener("click", function(){ hint(t.id); });
 });
+
+function markAsk(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var el = document.getElementById("t"+id);
+  if(el.querySelector(".sol").dataset.on) return;   // решение уже открыто - отмечать нечего
+  if(!s.t0) s.t0 = Date.now();
+  if(!s.tries && s.t0) s.secs = Math.round((Date.now() - s.t0)/1000);
+  s.ask = true; s.done = true; s.ok = false;
+  paintTask(t, s);
+  progress();
+  SAVE.touch(true);
+}
+function unmarkAsk(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  s.ask = false; s.asknote = "";
+  s.done = s.ok || s.tries >= 2;
+  paintTask(t, s);
+  progress();
+  SAVE.touch(true);
+}
+function renderAsk(t, s){
+  var el = document.getElementById("t"+t.id);
+  var box = el.querySelector(".askbox");
+  var btn = el.querySelector(".askb");
+  var inp = document.getElementById("in"+t.id);
+  if(!s.ask){
+    box.innerHTML = "";
+    if(btn) btn.style.display = el.querySelector(".sol").dataset.on ? "none" : "";
+    if(inp) inp.disabled = false;
+    el.querySelectorAll(".opt").forEach(function(l){ l.style.pointerEvents = ""; });
+    return;
+  }
+  if(btn) btn.style.display = "none";
+  if(inp) inp.disabled = true;
+  el.querySelectorAll(".opt").forEach(function(l){ l.style.pointerEvents = "none"; });
+  if(box.dataset.on) return;
+  box.dataset.on = "1";
+  box.innerHTML = '<div class="askmark">Отмечено на разбор - задача засчитана как закрытая, '+
+    'ответ не показываем.</div>'+
+    '<input type="text" class="asknote" maxlength="200" '+
+    'placeholder="что именно непонятно - по желанию">'+
+    '<div class="trbar"><button class="sm askoff" type="button">Вернуть задачу</button></div>';
+  var note = box.querySelector(".asknote");
+  note.value = s.asknote || "";
+  note.addEventListener("input", function(){
+    s.asknote = note.value.slice(0, 200); SAVE.touch();
+  });
+  box.querySelector(".askoff").addEventListener("click", function(){
+    box.dataset.on = ""; box.innerHTML = ""; unmarkAsk(t.id);
+  });
+}
 
 function hint(id){
   var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
@@ -862,6 +920,7 @@ function drawHint(host, t, i){
 }
 function check(id){
   var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  if(s.ask) return;
   var el = document.getElementById("t"+id);
   var v = el.querySelector(".verdict");
   var given = (t.type === "choice") ? (s.sel || "") :
@@ -878,8 +937,15 @@ function check(id){
 function paintTask(t, s){
   var el = document.getElementById("t"+t.id);
   var v = el.querySelector(".verdict");
-  el.classList.remove("ok","bad");
-  if(!s.tries) return;
+  el.classList.remove("ok","bad","ask");
+  renderAsk(t, s);
+  if(s.ask){
+    el.classList.add("ask");
+    v.className = "verdict ask";
+    v.textContent = "На разбор с преподавателем.";
+    return;
+  }
+  if(!s.tries){ v.className = "verdict"; v.textContent = ""; return; }
   el.classList.add(s.ok ? "ok" : "bad");
   v.className = "verdict " + (s.ok ? "ok" : "bad");
   if(s.ok){
@@ -896,6 +962,8 @@ function showSol(el, t){
   var host = el.querySelector(".sol");
   if(host.dataset.on) return;
   host.dataset.on = "1";
+  var ab = el.querySelector(".askb");
+  if(ab) ab.style.display = "none";
   var det = document.createElement("details");
   det.open = true;
   det.innerHTML = "<summary>Решение</summary><div>"+t.sol+"</div>";
@@ -904,13 +972,16 @@ function showSol(el, t){
 function progress(){
   var done = TASKS.filter(function(t){return state[t.id].done;}).length;
   var ok = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  var ask = TASKS.filter(function(t){return state[t.id].ask;}).length;
   var el = document.getElementById("progress");
   if(el) el.textContent = "задачи: " + done + " из " + TASKS.length + " · верно " + ok +
+      (ask ? " · на разбор " + ask : "") +
       " · тренажёры: " + trDoneCount() + " из " + REQ_TR.length;
 }
 document.getElementById("checkall").addEventListener("click", function(){
   TASKS.forEach(function(t){
     var s = state[t.id];
+    if(s.ask) return;
     var given = (t.type === "choice") ? (s.sel || "") : ((document.getElementById("in"+t.id)||{}).value || "");
     if(String(given).trim() && !s.done) check(t.id);
   });
@@ -932,7 +1003,7 @@ var SAVE = (function(){
       var s = state[t.id];
       var live = (t.type === "choice") ? (s.sel||"") : ((document.getElementById("in"+t.id)||{}).value || "");
       tasks[t.id] = {given:s.given, live:live, sel:s.sel, tries:s.tries, hints:s.hints,
-                     done:s.done, ok:s.ok, secs:s.secs, qn:s.qn};
+                     done:s.done, ok:s.ok, secs:s.secs, ask:s.ask, asknote:s.asknote};
     });
     var trs = {};
     Object.keys(window.TRAPI).forEach(function(k){ trs[k] = window.TRAPI[k].get(); });
@@ -993,7 +1064,8 @@ function restore(){
       var st = state[t.id];
       st.given = saved.given||""; st.tries = saved.tries||0; st.hints = saved.hints||0;
       st.done = !!saved.done; st.ok = !!saved.ok; st.sel = saved.sel||null;
-      st.secs = saved.secs||0; st.qn = !!saved.qn;
+      st.secs = saved.secs||0;
+      st.ask = !!saved.ask; st.asknote = saved.asknote || "";
       var el = document.getElementById("t"+t.id);
       if(t.type === "choice"){
         if(st.sel){
@@ -1005,8 +1077,6 @@ function restore(){
         var inp = document.getElementById("in"+t.id);
         if(inp) inp.value = saved.live || saved.given || "";
       }
-      var qb = document.getElementById("qn"+t.id);
-      if(qb) qb.checked = st.qn;
       var hb = el.querySelector(".hints");
       for(var i=0;i<st.hints && i<t.hints.length;i++) drawHint(hb, t, i);
       paintTask(t, st);
@@ -1107,7 +1177,8 @@ function buildReport(){
   var now = new Date();
   var mins = Math.max(1, Math.round((Date.now()-started)/60000));
   var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
-  var qN = TASKS.filter(function(t){return state[t.id].qn;}).length;
+  var askList = TASKS.filter(function(t){return state[t.id].ask;});
+  var badN = TASKS.length - okN - askList.length;
   var trs = REQ_TR.concat(EXTRA_TR).map(function(id){
     var a = window.TRAPI[id] ? window.TRAPI[id].get() : {right:0, done:false};
     return {тренажёр:TR_NAMES[id], верно:a.right, всего:TR_SIZE[id], пройден:!!a.done,
@@ -1119,17 +1190,21 @@ function buildReport(){
   });
   var data = {тип:"дз", предмет:"математика", тема:TOPIC,
     ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
-    верно:okN, всего:TASKS.length, с_вопросами:qN,
+    верно:okN, всего:TASKS.length, на_разбор:askList.map(function(t){return t.id;}),
     задачи:[], тренажёры:trs, поиск_ошибки:errs};
   var rows = TASKS.map(function(t){
     var s = state[t.id];
-    data.задачи.push({n:t.id, условие:t.text.replace(/<[^>]+>/g," "), ответ_ученика:s.given,
-      верный_ответ:t.ans.map(d).join(" или "), верно:s.ok, попыток:s.tries, подсказок:s.hints,
-      секунд:s.secs, вопросы:s.qn, уровень:t.lvl, блок:t.blk});
+    var row = {n:t.id, условие:t.text.replace(/<[^>]+>/g," "), ответ_ученика:s.given,
+      верно:s.ok, попыток:s.tries, подсказок:s.hints,
+      секунд:s.secs, уровень:t.lvl, блок:t.blk};
+    if(s.ask){ row.на_разбор = true; if(s.asknote) row.вопрос = s.asknote; }
+    else { row.верный_ответ = t.ans.map(d).join(" или "); }
+    data.задачи.push(row);
     return "<tr><td>"+t.id+"</td><td style='text-align:left'>"+esc(t.text.replace(/<[^>]+>/g," "))+
-      "</td><td>"+esc(s.given||"—")+"</td><td>"+esc(t.ans.map(d).join(" / "))+"</td><td>"+
-      (s.ok?"верно":(s.given?"неверно":"не решал"))+"</td><td>"+s.tries+"</td><td>"+s.hints+
-      "</td><td>"+(s.secs||"—")+"</td><td>"+(s.qn?"да":"")+"</td></tr>";
+      "</td><td>"+esc(s.given||"—")+"</td><td>"+
+      (s.ask ? "—" : esc(t.ans.map(d).join(" / ")))+"</td><td>"+
+      (s.ask?"на разбор":(s.ok?"верно":(s.given?"неверно":"не решал")))+"</td><td>"+s.tries+
+      "</td><td>"+s.hints+"</td><td>"+(s.secs||"—")+"</td></tr>";
   }).join("");
   var trRows = trs.map(function(a){
     return "<tr><td style='text-align:left'>"+esc(a.тренажёр)+(a.обязательный?"":" (доп.)")+
@@ -1143,10 +1218,10 @@ function buildReport(){
     return "<figure><img src='"+p.url+"'><figcaption>Фото "+(i+1)+
       (p.task?" — к задаче №"+p.task:"")+"</figcaption></figure>";
   }).join("");
-  var machine = "№\tверно\tпопыток\tподсказок\tсекунд\tвопросы\tуровень\tблок\n" +
+  var machine = "№\tверно\tпопыток\tподсказок\tсекунд\tразбор\tуровень\tблок\n" +
     TASKS.map(function(t){
       var s = state[t.id];
-      return [t.id, s.ok?1:0, s.tries, s.hints, s.secs||0, s.qn?1:0, t.lvl, t.blk].join("\t");
+      return [t.id, s.ok?1:0, s.tries, s.hints, s.secs||0, s.ask?1:0, t.lvl, t.blk].join("\t");
     }).join("\n");
   var html = "<!doctype html><html lang='ru'><head><meta charset='utf-8'>"+
     "<meta name='viewport' content='width=device-width,initial-scale=1'>"+
@@ -1157,16 +1232,22 @@ function buildReport(){
     "th,td{border:1px solid #dfe3ea;padding:6px 8px;text-align:center}th{background:#eef3fb}"+
     "figure{margin:14px 0}img{max-width:100%;border:1px solid #dfe3ea;border-radius:8px}"+
     "figcaption{color:#5b6270;font-size:14px;margin-top:4px}"+
+    ".ask{background:#fff3e6;border:1px solid #e8b878;border-radius:8px;padding:10px 12px;"+
+    "margin-top:12px;font-size:15px}"+
     "pre{background:#f5f6f8;border:1px solid #dfe3ea;border-radius:8px;padding:10px;"+
     "font-size:13px;overflow-x:auto}</style></head><body>"+
     "<h1>Отчёт по домашнему заданию</h1>"+
     "<div class='m'>Тема: "+esc(TOPIC)+" · подготовка к ЦТ/ЦЭ, 11 класс</div>"+
     "<div class='m'>Ученик: <b>"+esc(name)+"</b> · сдано: "+esc(now.toLocaleString("ru-RU"))+
     " · время работы: около "+mins+" мин</div>"+
-    "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)"+
-    (qN ? " · отмечено задач с вопросами: "+qN : "")+"</h2>"+
+    "<h2>Итог: "+okN+" верно · "+askList.length+" на разбор · "+badN+" неверно из "+
+    TASKS.length+"</h2>"+
+    (askList.length ? "<div class='ask'><b>На разбор: "+
+      askList.map(function(t){return t.id;}).join(", ")+"</b>"+
+      askList.filter(function(t){return state[t.id].asknote;}).map(function(t){
+        return "<div>№"+t.id+": "+esc(state[t.id].asknote)+"</div>"; }).join("")+"</div>" : "")+
     "<table><tr><th>№</th><th>Задача</th><th>Ответ ученика</th><th>Верный ответ</th>"+
-    "<th>Итог</th><th>Попыток</th><th>Подсказок</th><th>Секунд</th><th>Вопросы</th></tr>"+rows+"</table>"+
+    "<th>Итог</th><th>Попыток</th><th>Подсказок</th><th>Секунд</th></tr>"+rows+"</table>"+
     "<h2>Тренажёры</h2><table><tr><th>Тренажёр</th><th>Верных</th><th>Статус</th></tr>"+trRows+"</table>"+
     (errRows ? "<h2>Поиск ошибки</h2><table><tr><th>Блок</th><th>Выбран шаг</th><th>Верный шаг</th>"+
       "<th>Итог</th></tr>"+errRows+"</table>" : "")+
@@ -1179,7 +1260,8 @@ function buildReport(){
     html: html, name: name,
     file: "Отчёт_"+FILEKEY+"_"+name.replace(/\s+/g,"_")+"_"+stamp+".html",
     caption: name+" · "+TOPIC+" · "+okN+" из "+TASKS.length+
-             " ("+Math.round(okN/TASKS.length*100)+"%)"
+             " ("+Math.round(okN/TASKS.length*100)+"%)"+
+             (askList.length ? "\nна разбор: "+askList.map(function(t){return t.id;}).join(", ") : "")
   };
 }
 
