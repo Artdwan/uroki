@@ -9,25 +9,24 @@
   --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
   --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
   --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
-  --warn-soft:#fff6e0; --warn-line:#e8c86a;
+  --warn-soft:#fff6e0;
 }
 @media (prefers-color-scheme: dark){
   :root{
     --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
     --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
     --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
-    --warn-soft:#2a2415; --warn-line:#5c4a1c;
+    --warn-soft:#2a2415;
   }
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);
   font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
   -webkit-text-size-adjust:100%;overflow-x:hidden}
-.wrap{max-width:820px;margin:0 auto;padding:16px 14px 90px}
-h1{font-size:25px;line-height:1.25;margin:0 0 6px;overflow-wrap:break-word}
+.wrap{max-width:800px;margin:0 auto;padding:16px 14px 60px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px;overflow-wrap:break-word}
 h2{font-size:21px;margin:0 0 12px}
 h3{font-size:17px;margin:18px 0 6px}
-h4{font-size:16px;margin:14px 0 4px}
 p{margin:8px 0;overflow-wrap:break-word}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
 .top{border-top:4px solid var(--acc)}
@@ -42,95 +41,143 @@ button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--l
 button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
 button.sm{padding:7px 11px;min-height:38px;font-size:15px}
 button:active{transform:translateY(1px)}
-button[disabled]{opacity:.5;cursor:default}
 
-/* формулы */
+/* формулы и дроби */
 .f-formula{font-size:19px}
-.fx{background:var(--acc-soft);border-radius:10px;padding:10px 12px;margin:9px 0;
-  font-size:18px;text-align:center;overflow-x:auto}
+.fx{display:block;background:var(--acc-soft);border:1px solid var(--line);border-radius:10px;
+  padding:11px 13px;margin:12px 0;text-align:center;font-size:21px;line-height:1.95;
+  font-weight:600;overflow-x:auto}
+.sol .fx,.ex .fx,.err .fx{font-size:19px;margin:9px 0;font-weight:500}
 .frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
 .frac>span{display:block;padding:0 5px;white-space:nowrap}
 .frac>span:first-child{border-bottom:1.5px solid currentColor}
 .rt{white-space:nowrap}
-.rt>span{border-top:1.4px solid currentColor;padding:0 3px 0 2px;margin-left:-2px}
+.rt>span{border-top:1.7px solid currentColor;padding:0 3px 0 2px;margin-left:-1px;
+  display:inline-block;line-height:1.15}
 
-/* памятка */
-.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:10px 0}
-.fbox{border:1px solid var(--line);border-radius:12px;padding:11px 13px;background:var(--bg)}
-.fbox>b{display:block;margin-bottom:4px;color:var(--acc)}
-.fbox .s b{color:inherit}
-.fbox .s{font-size:16px}
-
-/* теория */
-.def{border-left:4px solid var(--acc);background:var(--acc-soft);border-radius:0 10px 10px 0;
-  padding:10px 12px;margin:10px 0}
-.rule2{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
-.warn{background:var(--warn-soft);border:1px solid var(--warn-line);border-radius:10px;
-  padding:10px 12px;margin:10px 0;font-size:16px}
-.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
-.ex{border:1px dashed var(--line);border-radius:12px;padding:12px 13px;margin:12px 0}
-.ex>b.t{display:block;color:var(--acc);margin-bottom:6px}
-.step{margin:6px 0}
-.step.mini{font-size:15px;color:var(--muted);border-top:1px dashed var(--line);padding-top:7px;margin-top:9px}
+/* таблицы */
 table{border-collapse:collapse;width:100%;font-size:16px}
 th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
 th{background:var(--acc-soft);font-weight:600}
-table.wrap-t th,table.wrap-t td{white-space:normal}
+.wrap-t th,.wrap-t td{white-space:normal;text-align:left;vertical-align:top}
 .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
 details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
 summary{cursor:pointer;font-weight:600;color:var(--acc)}
 details[open] summary{margin-bottom:8px}
-.fig{margin:12px 0;text-align:center}
-.fig svg{width:100%;max-width:330px;height:auto}
-.figrow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
-.figrow .fig{flex:1 1 210px;margin:6px 0}
+
+/* блоки теории */
+.def{border:1px solid var(--line);border-left:4px solid #2f6bd8;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#eef3fb}
+.def .n{font-size:14px;color:#2f6bd8;font-weight:700;letter-spacing:.4px}
+.rule{border:1px solid var(--line);border-left:4px solid #c0397a;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdf0f6}
+.rule .n{font-size:14px;color:#a02a62;font-weight:700;letter-spacing:.4px}
+@media (prefers-color-scheme:dark){.rule{background:#2a1b23}.def{background:#18212f}}
+.ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;background:var(--bg)}
+.ex h3{margin-top:0}
+.step{margin:6px 0}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.small,.mini{color:var(--muted);font-size:15px}
+.bad{color:#b3261e;font-weight:700}
+.good{color:#137a45;font-weight:700}
+.tohw{font-weight:700;margin:18px 0 0;font-size:18px}
+.tohw span{color:var(--muted);font-weight:400;font-size:15px;display:block;margin-top:3px}
+
+/* памятка */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin:10px 0}
+.fbox{border:1px solid var(--line);border-radius:12px;padding:11px 13px;background:var(--bg)}
+.fbox>b{display:block;margin-bottom:4px;color:var(--acc)}
+.fbox .s{font-size:16px}
+.fbox .s b{color:inherit}
+
+/* схемы */
+.fig{text-align:center;margin:14px 0}
+.fig svg{width:100%;max-width:420px;height:auto}
 
 /* задачи */
 .task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
 .task.ok{border-color:var(--ok);background:var(--ok-soft)}
 .task.bad{border-color:var(--bad);background:var(--bad-soft)}
 .tnum{font-weight:700;margin-right:6px}
-.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px;white-space:nowrap}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;
+  padding:2px 9px;margin-left:6px;white-space:nowrap}
 .keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
 .keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
 .verdict{margin-top:10px;font-weight:600}
 .verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
 .hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
 .bad-note{color:var(--bad);font-weight:600}
-.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);
+  border-radius:10px;cursor:pointer}
 .opt.sel{border-color:var(--acc);background:var(--acc-soft)}
 .steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
 .steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
 .steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
   border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
   display:flex;align-items:center;justify-content:center}
+.aim{display:flex;gap:8px;align-items:flex-start;margin-top:10px;font-size:15px;color:var(--muted)}
+.aim input{width:20px;height:20px;margin:1px 0 0;flex:none}
+.aim label{cursor:pointer}
 
 /* тренажёры */
-.tr{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--bg)}
-.tr .trhead{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline;justify-content:space-between}
-.tr .trhead b{font-size:16px}
-.tr .trq{margin:10px 0;font-size:17px}
-.tr .tropts label{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);
-  border-radius:10px;cursor:pointer;background:var(--card)}
-.tr .tropts label.sel{border-color:var(--acc);background:var(--acc-soft)}
-.tr .tropts label.good{border-color:var(--ok);background:var(--ok-soft)}
-.tr .tropts label.miss{border-color:var(--bad);background:var(--bad-soft)}
-.tr .trwhy{margin-top:10px;font-size:16px;background:var(--acc-soft);border-radius:10px;padding:9px 12px}
-.tr .trdone{font-weight:600;color:var(--ok)}
-.tr input[type=text]{max-width:260px}
-.trbar{font-size:14px;color:var(--muted)}
+.tr{border:1px solid var(--line);border-radius:12px;padding:14px;margin:16px 0;background:var(--bg)}
+.trhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;
+  margin-bottom:8px}
+.trhead b{font-size:17px}
+.trscore{color:var(--muted);font-size:15px;white-space:nowrap}
+.trq{font-size:17px;margin:8px 0}
+.trfig{text-align:center;margin:8px 0}
+.trfig svg{width:100%;max-width:300px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.tropts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
+.tropt{border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;
+  background:var(--card);font-size:16px;text-align:left;min-height:46px;color:var(--ink);
+  font-family:inherit;line-height:1.4}
+.tropt:hover{border-color:var(--acc)}
+.tropt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.tropt.right{border-color:var(--ok);background:var(--ok-soft);font-weight:600}
+.tropt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.tropts.done .tropt{cursor:default}
+.trnum{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.trnum input{font:inherit;font-size:18px;padding:9px 11px;border-radius:9px;
+  border:1.5px solid var(--line);background:var(--card);color:var(--ink);max-width:170px}
+.trnum input.ok{border-color:var(--ok);background:var(--ok-soft)}
+.trnum input.bad{border-color:var(--bad);background:var(--bad-soft)}
+.trmsg{font-size:16px;margin-top:8px}
+.trmsg .v{font-weight:700}
+.trmsg .v.ok{color:var(--ok)} .trmsg .v.bad{color:var(--bad)}
+.trmsg .why{color:var(--muted);font-size:15px;margin-top:4px}
+.trbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.trbar button{font-size:15px;padding:8px 13px;min-height:42px}
+.trdone{background:var(--acc-soft);border-radius:10px;padding:12px;font-size:17px;
+  text-align:center;font-weight:600}
 
 /* пропуски */
-.gap{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--bg)}
+.gap{border:1px solid var(--line);border-radius:12px;padding:14px;margin:16px 0;background:var(--bg)}
 .gap .gline{margin:9px 0;font-size:17px;overflow-x:auto}
-.gap input.gi{font:inherit;width:88px;padding:6px 8px;border:1.5px solid var(--line);
+.gap input.gi{font:inherit;width:92px;padding:6px 8px;border:1.5px solid var(--line);
   border-radius:8px;background:var(--card);color:var(--ink);text-align:center}
 .gap input.gi.ok{border-color:var(--ok);background:var(--ok-soft)}
 .gap input.gi.bad{border-color:var(--bad);background:var(--bad-soft)}
 .gap .gv{margin-top:10px;font-weight:600}
 
-.bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);
-  padding:9px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+/* найди ошибку */
+.err{border:1px solid var(--line);border-left:4px solid #c0397a;border-radius:12px;
+  padding:14px;margin:16px 0;background:var(--card)}
+.err .n{font-size:14px;color:#a02a62;font-weight:700;letter-spacing:.4px;margin-bottom:6px}
+.err ol{margin:8px 0 0;padding-left:0;list-style:none;counter-reset:e}
+.err ol li{counter-increment:e;position:relative;padding:9px 10px 9px 38px;margin:6px 0;
+  border:1.5px solid var(--line);border-radius:10px;background:var(--bg);cursor:pointer}
+.err ol li::before{content:"шаг " counter(e);position:absolute;left:8px;top:9px;font-size:12px;
+  color:var(--muted);writing-mode:horizontal-tb}
+.err ol li{padding-left:10px;padding-top:24px}
+.err ol li.sel{border-color:var(--acc);background:var(--acc-soft)}
+.err ol li.right{border-color:var(--ok);background:var(--ok-soft)}
+.err ol li.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.err .ev{margin-top:10px;font-weight:600}
+
+.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
 .thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
 .thumb{position:relative;width:110px}
 .thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
@@ -140,11 +187,12 @@ details[open] summary{margin-bottom:8px}
   border:1px solid var(--line);background:var(--card);color:var(--ink)}
 .sheet{background:var(--card)}
 .sheet .fgrid{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.sheet .f-formula{margin:5px 0;font-size:14.5px;line-height:1.4}
 @media print{
   body{background:#fff}
+  .bar{display:none !important}
   .wrap>*{display:none !important}
   .wrap>.sheet{display:block !important;border:none;margin:0;padding:0}
-  .bar{display:none !important}
   .sheet{font-size:10.5px;line-height:1.3}
   .sheet h2{font-size:15px;margin:0 0 4px}
   .sheet h4{font-size:11.5px;margin:6px 0 2px}
@@ -152,15 +200,17 @@ details[open] summary{margin-bottom:8px}
   .sheet .fgrid{gap:5px;grid-template-columns:repeat(3,1fr)}
   .sheet .fbox{padding:5px 6px;border-radius:6px}
   .sheet .fbox .s{font-size:10.5px}
-  .sheet .fx{font-size:11px;padding:4px 6px;margin:4px 0}
+  .sheet .fx{font-size:11px;padding:4px 6px;margin:4px 0;line-height:1.4}
+  .sheet .f-formula{font-size:12.5px;line-height:1.33;margin:3px 0}
   .sheet th,.sheet td{padding:2px 3px;font-size:10px}
   @page{size:A4;margin:9mm}
 }
 @media (max-width:400px){
   body{font-size:16px}
-  .wrap{padding:12px 12px 90px}
+  .wrap{padding:12px 12px 60px}
   h1{font-size:22px}
   .card{padding:14px 12px}
+  .fx{font-size:18px;line-height:1.8}
 }
 </style>
 </head>
@@ -187,55 +237,54 @@ details[open] summary{margin-bottom:8px}
 </div></div>
 <div class="card">
 <h2>1. Пять основных свойств</h2>
-<div class="def">Степень числа a с натуральным показателем n - это произведение n одинаковых множителей: a<sup>n</sup> = a·a·…·a. Число a - основание, n - показатель.</div><div class="rule2"><b>1.</b> (abc)<sup>n</sup> = a<sup>n</sup>b<sup>n</sup>c<sup>n</sup> и наоборот<br><b>2.</b> (<span class="frac"><span>a</span><span>b</span></span>)<sup>n</sup> = <span class="frac"><span>a<sup>n</sup></span><span>b<sup>n</sup></span></span><br><b>3.</b> a<sup>m</sup> · a<sup>n</sup> = a<sup>m+n</sup><br><b>4.</b> <span class="frac"><span>a<sup>m</sup></span><span>a<sup>n</sup></span></span> = a<sup>m−n</sup><br><b>5.</b> (a<sup>m</sup>)<sup>n</sup> = a<sup>mn</sup></div><div class="warn"><b>ЗАПОМНИ:</b> свойств, связанных с <b>суммой или разностью оснований</b>, не существует. 2<sup>3</sup> + 3<sup>3</sup> = 8 + 27 = 35, а (2+3)<sup>3</sup> = 125. Это совершенно разные числа.</div><div class="ex"><b class="t">Пример 1. 2<sup>3</sup> · 2<sup>5</sup> : 2<sup>6</sup></b><div class="step">Основание одно - складываем и вычитаем показатели: 3 + 5 − 6 = 2.</div><div class="fx">2<sup>2</sup> = 4</div><div class="step mini">Проверка «в лоб»: 8·32 : 64 = 256 : 64 = 4. Сходится, но на показателях вроде 25 такой проверки уже не сделать.</div></div><div class="ex"><b class="t">Пример 2. Путаница свойств 3 и 5</b><div class="step">2<sup>3</sup>·2<sup>4</sup> = 2<sup>7</sup> - показатели <b>складываются</b>.</div><div class="step">(2<sup>3</sup>)⁴ = 2<sup>12</sup> - показатели <b>перемножаются</b>.</div><div class="step mini">Отличить просто: скобка со степенью снаружи - умножение показателей. Точка между степенями - сложение.</div></div>
-<h3>Тренажёр: свойства степеней</h3>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>Степень числа a с натуральным показателем n - это произведение n одинаковых множителей: a<sup>n</sup> = a·a·…·a. Число a - основание, n - показатель.</div><div class="rule"><div class="n">ПРАВИЛО</div><b>1.</b> (abc)<sup>n</sup> = a<sup>n</sup>b<sup>n</sup>c<sup>n</sup> и наоборот<br><b>2.</b> (<span class="frac"><span>a</span><span>b</span></span>)<sup>n</sup> = <span class="frac"><span>a<sup>n</sup></span><span>b<sup>n</sup></span></span><br><b>3.</b> a<sup>m</sup> · a<sup>n</sup> = a<sup>m+n</sup><br><b>4.</b> <span class="frac"><span>a<sup>m</sup></span><span>a<sup>n</sup></span></span> = a<sup>m−n</sup><br><b>5.</b> (a<sup>m</sup>)<sup>n</sup> = a<sup>mn</sup></div><div class="rule"><div class="n">ГЛАВНАЯ ЛОВУШКА</div><b>ЗАПОМНИ:</b> свойств, связанных с <b>суммой или разностью оснований</b>, не существует. 2<sup>3</sup> + 3<sup>3</sup> = 8 + 27 = 35, а (2+3)<sup>3</sup> = 125. Это совершенно разные числа.</div><div class="ex"><b class="t">Пример 1. 2<sup>3</sup> · 2<sup>5</sup> : 2<sup>6</sup></b><div class="step">Основание одно - складываем и вычитаем показатели: 3 + 5 − 6 = 2.</div><div class="fx">2<sup>2</sup> = 4</div><div class="step mini">Проверка «в лоб»: 8·32 : 64 = 256 : 64 = 4. Сходится, но на показателях вроде 25 такой проверки уже не сделать.</div></div><div class="ex"><h3>Пример 2. Путаница свойств 3 и 5</h3><div class="step">2<sup>3</sup>·2<sup>4</sup> = 2<sup>7</sup> - показатели <b>складываются</b>.</div><div class="step">(2<sup>3</sup>)⁴ = 2<sup>12</sup> - показатели <b>перемножаются</b>.</div><div class="step mini">Отличить просто: скобка со степенью снаружи - умножение показателей. Точка между степенями - сложение.</div></div>
+<div class="tohw">Тренажёр: свойства степеней<span>Отвечай до конца - результат уходит в отчёт.</span></div>
 <div class="tr" id="tr_sprop" data-title="свойства степеней"></div>
-<h3>Задачи к этому блоку</h3>
+<div class="tohw">Задание 1<span>Пять свойств. Скобка со степенью снаружи - показатели умножаются, точка между степенями - складываются.</span></div>
 <div id="tasks1"></div>
 </div>
 <div class="card">
 <h2>2. Нулевой и отрицательный показатель</h2>
-<div class="fx">a<sup>0</sup> = 1 (a ≠ 0) &nbsp;·&nbsp; a<sup>1</sup> = a &nbsp;·&nbsp; a<sup>−n</sup> = <span class="frac"><span>1</span><span>a<sup>n</sup></span></span> &nbsp;·&nbsp; <span class="frac"><span>1</span><span>a<sup>−n</sup></span></span> = a<sup>n</sup></div><p>Откуда берётся a<sup>0</sup> = 1: по свойству деления <span class="frac"><span>a<sup>n</sup></span><span>a<sup>n</sup></span></span> = a<sup>n−n</sup> = a<sup>0</sup>, но эта дробь очевидно равна 1.</p><div class="warn"><b>Отрицательный показатель не делает число отрицательным.</b> 2<sup>−3</sup> = <span class="frac"><span>1</span><span>8</span></span> = 0,125, а вовсе не −8. Минус в показателе означает «перевернуть», а не «поменять знак».</div><div class="rule2">Для дроби это особенно удобно: (<span class="frac"><span>a</span><span>b</span></span>)<sup>−n</sup> = (<span class="frac"><span>b</span><span>a</span></span>)<sup>n</sup> - дробь просто переворачивается.</div><div class="ex"><b class="t">Пример 3. (<span class="frac"><span>2</span><span>3</span></span>)<sup>−2</sup></b><div class="step">Переворачиваем дробь и убираем минус: (<span class="frac"><span>3</span><span>2</span></span>)².</div><div class="fx"><span class="frac"><span>9</span><span>4</span></span> = 2,25</div><div class="step mini">Прикидка: основание меньше 1, а показатель отрицательный - значит результат должен быть больше 1. 2,25 > 1, сходится.</div></div>
-<h3>Тренажёр: ноль и минус в показателе</h3>
+<div class="fx">a<sup>0</sup> = 1 (a ≠ 0) &nbsp;·&nbsp; a<sup>1</sup> = a &nbsp;·&nbsp; a<sup>−n</sup> = <span class="frac"><span>1</span><span>a<sup>n</sup></span></span> &nbsp;·&nbsp; <span class="frac"><span>1</span><span>a<sup>−n</sup></span></span> = a<sup>n</sup></div><p>Откуда берётся a<sup>0</sup> = 1: по свойству деления <span class="frac"><span>a<sup>n</sup></span><span>a<sup>n</sup></span></span> = a<sup>n−n</sup> = a<sup>0</sup>, но эта дробь очевидно равна 1.</p><div class="rule"><div class="n">ГЛАВНАЯ ЛОВУШКА</div><b>Отрицательный показатель не делает число отрицательным.</b> 2<sup>−3</sup> = <span class="frac"><span>1</span><span>8</span></span> = 0,125, а вовсе не −8. Минус в показателе означает «перевернуть», а не «поменять знак».</div><div class="rule"><div class="n">ПРАВИЛО</div>Для дроби это особенно удобно: (<span class="frac"><span>a</span><span>b</span></span>)<sup>−n</sup> = (<span class="frac"><span>b</span><span>a</span></span>)<sup>n</sup> - дробь просто переворачивается.</div><div class="ex"><h3>Пример 3. (<span class="frac"><span>2</span><span>3</span></span>)<sup>−2</sup></h3><div class="step">Переворачиваем дробь и убираем минус: (<span class="frac"><span>3</span><span>2</span></span>)².</div><div class="fx"><span class="frac"><span>9</span><span>4</span></span> = 2,25</div><div class="step mini">Прикидка: основание меньше 1, а показатель отрицательный - значит результат должен быть больше 1. 2,25 > 1, сходится.</div></div>
+<div class="tohw">Тренажёр: ноль и минус в показателе<span>Отвечай до конца - результат уходит в отчёт.</span></div>
 <div class="tr" id="tr_sneg" data-title="ноль и минус в показателе"></div>
 <div class="gap" id="gap_g2"></div>
-<h3>Задачи к этому блоку</h3>
+<div class="tohw">Задание 2<span>Ноль и минус в показателе. Минус переворачивает, а не меняет знак.</span></div>
 <div id="tasks2"></div>
 </div>
 <div class="card">
 <h2>3. Приведение к общему основанию</h2>
-<div class="rule2"><b>Главный приём темы.</b> Пока основания разные, ни одно свойство не работает. Поэтому первым делом все основания приводят к одному - обычно к самому маленькому.</div><div class="fx">4 = 2<sup>2</sup> · 8 = 2<sup>3</sup> · 16 = 2<sup>4</sup> · 0,5 = 2<sup>−1</sup> · 0,25 = 2<sup>−2</sup></div><div class="fx">25 = 5<sup>2</sup> · 125 = 5<sup>3</sup> · 0,2 = 5<sup>−1</sup> &nbsp;&nbsp;|&nbsp;&nbsp; 9 = 3<sup>2</sup> · 27 = 3<sup>3</sup> · 81 = 3<sup>4</sup></div><div class="ex"><b class="t">Пример 4. 25<sup>3</sup> : 5<sup>4</sup></b><div class="step">1. 25 = 5<sup>2</sup>, значит 25<sup>3</sup> = (5<sup>2</sup>)³ = 5<sup>6</sup>.</div><div class="step">2. Теперь основания одинаковые: 6 − 4 = 2.</div><div class="fx">5<sup>2</sup> = 25</div><div class="step mini">Считать 25<sup>3</sup> = 15625 и 5<sup>4</sup> = 625 не нужно - на ЦТ показатели бывают такие, что это физически невозможно.</div></div><div class="ex"><b class="t">Пример 5. Десятичные основания</b><div class="step">0,5<sup>4</sup> · 2<sup>6</sup>: здесь 0,5 = 2<sup>−1</sup>.</div><div class="step">0,5<sup>4</sup> = 2<sup>−4</sup>, дальше −4 + 6 = 2.</div><div class="fx">2<sup>2</sup> = 4</div><div class="step mini">Дробное или десятичное основание - почти всегда отрицательная степень чего-то простого. Ищи это первым делом.</div></div>
-<h3>Тренажёр: общее основание</h3>
+<div class="rule"><div class="n">ПРАВИЛО</div><b>Главный приём темы.</b> Пока основания разные, ни одно свойство не работает. Поэтому первым делом все основания приводят к одному - обычно к самому маленькому.</div><div class="fx">4 = 2<sup>2</sup> · 8 = 2<sup>3</sup> · 16 = 2<sup>4</sup> · 0,5 = 2<sup>−1</sup> · 0,25 = 2<sup>−2</sup></div><div class="fx">25 = 5<sup>2</sup> · 125 = 5<sup>3</sup> · 0,2 = 5<sup>−1</sup> &nbsp;&nbsp;|&nbsp;&nbsp; 9 = 3<sup>2</sup> · 27 = 3<sup>3</sup> · 81 = 3<sup>4</sup></div><div class="ex"><h3>Пример 4. 25<sup>3</sup> : 5<sup>4</sup></h3><div class="step">1. 25 = 5<sup>2</sup>, значит 25<sup>3</sup> = (5<sup>2</sup>)³ = 5<sup>6</sup>.</div><div class="step">2. Теперь основания одинаковые: 6 − 4 = 2.</div><div class="fx">5<sup>2</sup> = 25</div><div class="step mini">Считать 25<sup>3</sup> = 15625 и 5<sup>4</sup> = 625 не нужно - на ЦТ показатели бывают такие, что это физически невозможно.</div></div><div class="ex"><h3>Пример 5. Десятичные основания</h3><div class="step">0,5<sup>4</sup> · 2<sup>6</sup>: здесь 0,5 = 2<sup>−1</sup>.</div><div class="step">0,5<sup>4</sup> = 2<sup>−4</sup>, дальше −4 + 6 = 2.</div><div class="fx">2<sup>2</sup> = 4</div><div class="step mini">Дробное или десятичное основание - почти всегда отрицательная степень чего-то простого. Ищи это первым делом.</div></div>
+<div class="tohw">Тренажёр: общее основание<span>Отвечай до конца - результат уходит в отчёт.</span></div>
 <div class="tr" id="tr_sbase" data-title="общее основание"></div>
 <div class="gap" id="gap_g1"></div>
-<h3>Задачи к этому блоку</h3>
+<div class="tohw">Задание 3<span>Приведение к общему основанию - главный приём темы.</span></div>
 <div id="tasks3"></div>
 </div>
 <div class="card">
 <h2>4. Дробный показатель</h2>
-<div class="def">a<sup>m/n</sup> = <sup>n</sup><span class="rt">√<span>a<sup>m</sup></span></span> при a > 0. Показатель степени идёт в числитель, показатель корня - в знаменатель.</div><div class="fx">a<sup>1/2</sup> = <span class="rt">√<span>a</span></span> &nbsp;·&nbsp; a<sup>1/3</sup> = <sup>3</sup><span class="rt">√<span>a</span></span> &nbsp;·&nbsp; a<sup>−1/2</sup> = <span class="frac"><span>1</span><span><span class="rt">√<span>a</span></span></span></span></div><p>Все свойства степеней остаются верными и для дробных показателей - именно поэтому корни удобно переписывать степенями.</p><div class="ex"><b class="t">Пример 6. 27<sup>2/3</sup></b><div class="step">1. 27 = 3<sup>3</sup>.</div><div class="step">2. (3<sup>3</sup>)<sup>2/3</sup>: показатели перемножаются, 3 · <span class="frac"><span>2</span><span>3</span></span> = 2.</div><div class="fx">3<sup>2</sup> = 9</div><div class="step mini">Через корень вышло бы <sup>3</sup><span class="rt">√<span>27<sup>2</sup></span></span> = <sup>3</sup><span class="rt">√<span>729</span></span> - тот же ответ, но с трёхзначным числом под корнем.</div></div><div class="ex"><b class="t">Пример 7. Смешанная запись</b><div class="step">В одном выражении могут стоять и корень, и дробная степень: <sup>4</sup><span class="rt">√<span>5</span></span> и 5<sup>1/4</sup> - это одно и то же.</div><div class="step">Поэтому в дроби <span class="frac"><span>5<sup>1/4</sup> · 5</span><span><sup>4</sup><span class="rt">√<span>5</span></span> · 5<sup>−1</sup></span></span> одинаковые множители сокращаются.</div><div class="fx">5 : 5<sup>−1</sup> = 5<sup>2</sup> = 25</div><div class="step mini">Первым делом приводи всё к одной записи - либо везде корни, либо везде степени. Смешанная запись прячет сокращения.</div></div>
-<h3>Тренажёр: дробный показатель</h3>
+<div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>a<sup>m/n</sup> = <sup>n</sup><span class="rt">√<span>a<sup>m</sup></span></span> при a > 0. Показатель степени идёт в числитель, показатель корня - в знаменатель.</div><div class="fx">a<sup>1/2</sup> = <span class="rt">√<span>a</span></span> &nbsp;·&nbsp; a<sup>1/3</sup> = <sup>3</sup><span class="rt">√<span>a</span></span> &nbsp;·&nbsp; a<sup>−1/2</sup> = <span class="frac"><span>1</span><span><span class="rt">√<span>a</span></span></span></span></div><p>Все свойства степеней остаются верными и для дробных показателей - именно поэтому корни удобно переписывать степенями.</p><div class="ex"><h3>Пример 6. 27<sup>2/3</sup></h3><div class="step">1. 27 = 3<sup>3</sup>.</div><div class="step">2. (3<sup>3</sup>)<sup>2/3</sup>: показатели перемножаются, 3 · <span class="frac"><span>2</span><span>3</span></span> = 2.</div><div class="fx">3<sup>2</sup> = 9</div><div class="step mini">Через корень вышло бы <sup>3</sup><span class="rt">√<span>27<sup>2</sup></span></span> = <sup>3</sup><span class="rt">√<span>729</span></span> - тот же ответ, но с трёхзначным числом под корнем.</div></div><div class="ex"><h3>Пример 7. Смешанная запись</h3><div class="step">В одном выражении могут стоять и корень, и дробная степень: <sup>4</sup><span class="rt">√<span>5</span></span> и 5<sup>1/4</sup> - это одно и то же.</div><div class="step">Поэтому в дроби <span class="frac"><span>5<sup>1/4</sup> · 5</span><span><sup>4</sup><span class="rt">√<span>5</span></span> · 5<sup>−1</sup></span></span> одинаковые множители сокращаются.</div><div class="fx">5 : 5<sup>−1</sup> = 5<sup>2</sup> = 25</div><div class="step mini">Первым делом приводи всё к одной записи - либо везде корни, либо везде степени. Смешанная запись прячет сокращения.</div></div>
+<div class="tohw">Тренажёр: дробный показатель<span>Отвечай до конца - результат уходит в отчёт.</span></div>
 <div class="tr" id="tr_sfrac" data-title="дробный показатель"></div>
 <div class="gap" id="gap_g3"></div>
-<h3>Задачи к этому блоку</h3>
+<div class="tohw">Задание 4<span>Дробный показатель. Основание сначала приводим к простому числу.</span></div>
 <div id="tasks4"></div>
 </div>
 <div class="card">
 <h2>5. Большие числа: раскладывай, а не считай</h2>
-<div class="rule2">Если основание большое и составное - разложи его на множители. Свойство (ab)<sup>n</sup> = a<sup>n</sup>b<sup>n</sup> превращает страшную степень в произведение простых.</div><div class="fx">35<sup>6</sup> = (5·7)⁶ = 5<sup>6</sup>·7<sup>6</sup> &nbsp;·&nbsp; 48<sup>6</sup> = (3·2<sup>4</sup>)⁶ = 3<sup>6</sup>·2<sup>24</sup></div><div class="ex"><b class="t">Пример 8. <span class="frac"><span>35<sup>6</sup></span><span>5<sup>6</sup> · 7<sup>4</sup></span></span></b><div class="step">1. 35<sup>6</sup> = 5<sup>6</sup>·7<sup>6</sup>.</div><div class="step">2. Пятёрки сокращаются полностью, у семёрок 6 − 4 = 2.</div><div class="fx">7<sup>2</sup> = 49</div><div class="step mini">35<sup>6</sup> = 1 838 265 625. Никто не считает это на экзамене - и не должен.</div></div><div class="ex"><b class="t">Пример 9. Одинаковые показатели</b><div class="step">В дроби <span class="frac"><span>12<sup>5</sup> · 45<sup>2</sup></span><span>6<sup>5</sup> · 15<sup>2</sup></span></span> показатели сверху и снизу попарно совпадают.</div><div class="step">Значит можно делить сами основания: (12:6)⁵ и (45:15)².</div><div class="fx">2<sup>5</sup>·3<sup>2</sup> = 32·9 = 288</div><div class="step mini">Совпадающие показатели - всегда намёк, что задача решается в одно действие. Если начал перемножать - скорее всего, свернул не туда.</div></div>
-<h3>Тренажёр: большие числа</h3>
+<div class="rule"><div class="n">ПРАВИЛО</div>Если основание большое и составное - разложи его на множители. Свойство (ab)<sup>n</sup> = a<sup>n</sup>b<sup>n</sup> превращает страшную степень в произведение простых.</div><div class="fx">35<sup>6</sup> = (5·7)⁶ = 5<sup>6</sup>·7<sup>6</sup> &nbsp;·&nbsp; 48<sup>6</sup> = (3·2<sup>4</sup>)⁶ = 3<sup>6</sup>·2<sup>24</sup></div><div class="ex"><h3>Пример 8. <span class="frac"><span>35<sup>6</sup></span><span>5<sup>6</sup> · 7<sup>4</sup></span></span></h3><div class="step">1. 35<sup>6</sup> = 5<sup>6</sup>·7<sup>6</sup>.</div><div class="step">2. Пятёрки сокращаются полностью, у семёрок 6 − 4 = 2.</div><div class="fx">7<sup>2</sup> = 49</div><div class="step mini">35<sup>6</sup> = 1 838 265 625. Никто не считает это на экзамене - и не должен.</div></div><div class="ex"><h3>Пример 9. Одинаковые показатели</h3><div class="step">В дроби <span class="frac"><span>12<sup>5</sup> · 45<sup>2</sup></span><span>6<sup>5</sup> · 15<sup>2</sup></span></span> показатели сверху и снизу попарно совпадают.</div><div class="step">Значит можно делить сами основания: (12:6)⁵ и (45:15)².</div><div class="fx">2<sup>5</sup>·3<sup>2</sup> = 32·9 = 288</div><div class="step mini">Совпадающие показатели - всегда намёк, что задача решается в одно действие. Если начал перемножать - скорее всего, свернул не туда.</div></div>
+<div class="tohw">Тренажёр: большие числа<span>Отвечай до конца - результат уходит в отчёт.</span></div>
 <div class="tr" id="tr_sbig" data-title="большие числа"></div>
-<h3>Задачи к этому блоку</h3>
+<div class="tohw">Задание 5<span>Большие числа: раскладывай, а не считай.</span></div>
 <div id="tasks5"></div>
 </div>
 <div class="card">
 <h2>6. Буквенные выражения</h2>
-<p>С буквами работают те же пять свойств. Разница только в том, что ответ - выражение, а не число; и если просят вычислить, число подставляют <b>в самом конце</b>.</p><div class="ex"><b class="t">Пример 10. <span class="frac"><span>a<sup>5</sup> · a<sup>3</sup></span><span>a<sup>6</sup></span></span> при a = 2</b><div class="step">1. Сначала упрощаем: 5 + 3 − 6 = 2, то есть a<sup>2</sup>.</div><div class="step">2. Теперь подставляем: 2<sup>2</sup> = 4.</div><div class="step mini">Если подставить сразу, получится 32·8 : 64 - то же самое, но втрое дольше. На больших показателях это уже не вариант.</div></div><div class="ex"><b class="t">Пример 11. Множители внутри скобки</b><div class="step"><span class="frac"><span>(2a)<sup>3</sup></span><span>a<sup>2</sup></span></span>: двойка тоже возводится в куб. (2a)<sup>3</sup> = 8a<sup>3</sup>.</div><div class="fx"><span class="frac"><span>8a<sup>3</sup></span><span>a<sup>2</sup></span></span> = 8a</div><div class="step mini">Забыть возвести числовой множитель - частая потеря. Скобка возводится в степень целиком.</div></div><div class="rule2">Полезная проверка: подставь в исходное и в упрощённое выражение какое-нибудь простое число (2 или 3). Если результаты разошлись - ошибка в упрощении.</div>
-<h3>Тренажёр: буквенные выражения (дополнительный)</h3>
-<p class="meta">Дополнительный - для отправки работы он не нужен.</p>
+<p>С буквами работают те же пять свойств. Разница только в том, что ответ - выражение, а не число; и если просят вычислить, число подставляют <b>в самом конце</b>.</p><div class="ex"><b class="t">Пример 10. <span class="frac"><span>a<sup>5</sup> · a<sup>3</sup></span><span>a<sup>6</sup></span></span> при a = 2</b><div class="step">1. Сначала упрощаем: 5 + 3 − 6 = 2, то есть a<sup>2</sup>.</div><div class="step">2. Теперь подставляем: 2<sup>2</sup> = 4.</div><div class="step mini">Если подставить сразу, получится 32·8 : 64 - то же самое, но втрое дольше. На больших показателях это уже не вариант.</div></div><div class="ex"><h3>Пример 11. Множители внутри скобки</h3><div class="step"><span class="frac"><span>(2a)<sup>3</sup></span><span>a<sup>2</sup></span></span>: двойка тоже возводится в куб. (2a)<sup>3</sup> = 8a<sup>3</sup>.</div><div class="fx"><span class="frac"><span>8a<sup>3</sup></span><span>a<sup>2</sup></span></span> = 8a</div><div class="step mini">Забыть возвести числовой множитель - частая потеря. Скобка возводится в степень целиком.</div></div><div class="rule"><div class="n">ПРАВИЛО</div>Полезная проверка: подставь в исходное и в упрощённое выражение какое-нибудь простое число (2 или 3). Если результаты разошлись - ошибка в упрощении.</div>
+<div class="tohw">Тренажёр: буквенные выражения (дополнительный)<span>Дополнительный: для отправки работы он не нужен.</span></div>
 <div class="tr" id="tr_slit" data-title="буквенные выражения (дополнительный)"></div>
-<div class="gap" id="gap_g4"></div>
-<h3>Задачи к этому блоку</h3>
+<div class="err" id="err_e1"></div>
+<div class="tohw">Задание 6<span>Буквенные выражения. Число подставляй в самом конце.</span></div>
 <div id="tasks6"></div>
 </div>
 <div class="card sheet"><h2>Шпаргалка</h2>
@@ -306,23 +355,30 @@ var KEYPAD = ["−", ",", "/", "√", "(", ")"];
 var REQ_TR = ["sprop", "sneg", "sbase", "sfrac", "sbig"];
 var EXTRA_TR = ["slit"];
 var TR_NAMES = {"sprop": "свойства степеней", "sneg": "ноль и минус в показателе", "sbase": "общее основание", "sfrac": "дробный показатель", "sbig": "большие числа", "slit": "буквенные выражения (дополнительный)"};
+var TR_SIZE = {"sprop": 10, "sneg": 9, "sbase": 9, "sfrac": 9, "sbig": 9, "slit": 8};
+var ERR_NAMES = {"e1": "Скобка со степенью"};
+var ERR_BAD = {"e1": 1};
 var TASKS = [{"id": 1, "blk": "1", "lvl": "база", "type": "num", "text": "Вычисли 2<sup>3</sup> · 2<sup>5</sup> : 2<sup>6</sup>.", "ans": ["NA=="], "hints": ["Основание везде одно и то же - работают свойства степеней.", "При умножении показатели складываются, при делении вычитаются.", "3 + 5 − 6 = 2."], "sol": "2<sup>3+5−6</sup> = 2<sup>2</sup> = <b>4</b>. Считать 8·32 : 64 тоже можно, но на больших показателях это уже нереально."}, {"id": 2, "blk": "1", "lvl": "база", "type": "num", "text": "Вычисли (3<sup>2</sup>)³ : 3<sup>4</sup>.", "ans": ["OQ=="], "hints": ["При возведении степени в степень показатели перемножаются.", "(3<sup>2</sup>)³ = 3<sup>6</sup>.", "6 − 4 = 2."], "sol": "(3<sup>2</sup>)³ = 3<sup>6</sup>; 3<sup>6</sup> : 3<sup>4</sup> = 3<sup>2</sup> = <b>9</b>."}, {"id": 3, "blk": "1", "lvl": "средний", "type": "num", "text": "Вычисли (2 · 5)⁴ : 10<sup>2</sup>.", "ans": ["MTAw"], "hints": ["Степень произведения равна произведению степеней - и наоборот.", "2·5 = 10, значит (2·5)⁴ = 10<sup>4</sup>.", "4 − 2 = 2."], "sol": "(2·5)⁴ = 10<sup>4</sup>; 10<sup>4</sup> : 10<sup>2</sup> = 10<sup>2</sup> = <b>100</b>. Умножать 2<sup>4</sup>·5<sup>4</sup> по отдельности не нужно."}, {"id": 4, "blk": "2", "lvl": "база", "type": "num", "text": "Вычисли 7<sup>0</sup> + 5<sup>−1</sup> · 5.", "ans": ["Mg=="], "hints": ["Любое ненулевое число в нулевой степени равно 1.", "5<sup>−1</sup> = <span class=\"frac\"><span>1</span><span>5</span></span>.", "<span class=\"frac\"><span>1</span><span>5</span></span> · 5 = 1."], "sol": "1 + <span class=\"frac\"><span>1</span><span>5</span></span>·5 = 1 + 1 = <b>2</b>. Короче: 5<sup>−1</sup>·5<sup>1</sup> = 5<sup>0</sup> = 1."}, {"id": 5, "blk": "2", "lvl": "база", "type": "num", "text": "Вычисли 2<sup>−3</sup>.", "ans": ["MCwxMjU=", "MS84"], "hints": ["Отрицательный показатель не делает число отрицательным.", "a<sup>−n</sup> = <span class=\"frac\"><span>1</span><span>a<sup>n</sup></span></span>.", "2<sup>3</sup> = 8."], "sol": "2<sup>−3</sup> = <span class=\"frac\"><span>1</span><span>2<sup>3</sup></span></span> = <span class=\"frac\"><span>1</span><span>8</span></span> = <b>0,125</b>. Ответ −8 - самая частая ошибка темы."}, {"id": 6, "blk": "2", "lvl": "средний", "type": "num", "text": "Вычисли (<span class=\"frac\"><span>2</span><span>3</span></span>)<sup>−2</sup>.", "ans": ["MiwyNQ==", "OS80"], "hints": ["Отрицательный показатель переворачивает дробь.", "(<span class=\"frac\"><span>2</span><span>3</span></span>)<sup>−2</sup> = (<span class=\"frac\"><span>3</span><span>2</span></span>)².", "(<span class=\"frac\"><span>3</span><span>2</span></span>)² = <span class=\"frac\"><span>9</span><span>4</span></span>."], "sol": "(<span class=\"frac\"><span>2</span><span>3</span></span>)<sup>−2</sup> = (<span class=\"frac\"><span>3</span><span>2</span></span>)² = <span class=\"frac\"><span>9</span><span>4</span></span> = <b>2,25</b>."}, {"id": 7, "blk": "3", "lvl": "база", "type": "num", "text": "Вычисли 4<sup>2,5</sup> : 4<sup>1,5</sup>.", "ans": ["NA=="], "hints": ["Основания одинаковые - показатели вычитаются.", "2,5 − 1,5 = 1.", "4<sup>1</sup> = 4."], "sol": "4<sup>2,5−1,5</sup> = 4<sup>1</sup> = <b>4</b>. Десятичные показатели ведут себя точно так же, как целые."}, {"id": 8, "blk": "3", "lvl": "средний", "type": "num", "text": "Вычисли 25<sup>3</sup> : 5<sup>4</sup>.", "ans": ["MjU="], "hints": ["Основания разные - приведи их к одному.", "25 = 5<sup>2</sup>, значит 25<sup>3</sup> = 5<sup>6</sup>.", "6 − 4 = 2."], "sol": "25<sup>3</sup> = (5<sup>2</sup>)³ = 5<sup>6</sup>; 5<sup>6</sup> : 5<sup>4</sup> = 5<sup>2</sup> = <b>25</b>."}, {"id": 9, "blk": "3", "lvl": "средний", "type": "num", "text": "Вычисли 0,5<sup>4</sup> · 2<sup>6</sup>.", "ans": ["NA=="], "hints": ["0,5 - это тоже степень двойки.", "0,5 = <span class=\"frac\"><span>1</span><span>2</span></span> = 2<sup>−1</sup>, значит 0,5<sup>4</sup> = 2<sup>−4</sup>.", "−4 + 6 = 2."], "sol": "0,5<sup>4</sup> = 2<sup>−4</sup>; 2<sup>−4</sup>·2<sup>6</sup> = 2<sup>2</sup> = <b>4</b>."}, {"id": 10, "blk": "4", "lvl": "средний", "type": "num", "text": "Вычисли 27<sup>2/3</sup>.", "ans": ["OQ=="], "hints": ["Приведи основание к тройке: 27 = 3<sup>3</sup>.", "(3<sup>3</sup>)<sup>2/3</sup> - показатели перемножаются.", "3 · <span class=\"frac\"><span>2</span><span>3</span></span> = 2."], "sol": "27<sup>2/3</sup> = (3<sup>3</sup>)<sup>2/3</sup> = 3<sup>2</sup> = <b>9</b>. Через корень: <sup>3</sup><span class=\"rt\">√<span>27<sup>2</sup></span></span> = <sup>3</sup><span class=\"rt\">√<span>729</span></span> = 9."}, {"id": 11, "blk": "4", "lvl": "средний", "type": "num", "text": "Вычисли 81<sup>−1/4</sup> · 3<sup>2</sup>.", "ans": ["Mw=="], "hints": ["81 = 3<sup>4</sup>.", "(3<sup>4</sup>)<sup>−1/4</sup> = 3<sup>−1</sup>.", "−1 + 2 = 1."], "sol": "81<sup>−1/4</sup> = 3<sup>−1</sup>; 3<sup>−1</sup>·3<sup>2</sup> = 3<sup>1</sup> = <b>3</b>."}, {"id": 12, "blk": "4", "lvl": "сложный", "type": "num", "text": "Вычисли <span class=\"frac\"><span>5<sup>1/4</sup> · 625 : 125</span><span><sup>4</sup><span class=\"rt\">√<span>5</span></span> · 25<sup>−1/2</sup></span></span>.", "ans": ["MjU="], "hints": ["625 : 125 = 5, это первое, что стоит сделать.", "<sup>4</sup><span class=\"rt\">√<span>5</span></span> - это то же самое, что 5<sup>1/4</sup>, значит сверху и снизу он одинаковый и сокращается.", "25<sup>−1/2</sup> = 5<sup>−1</sup>."], "sol": "Числитель: 5<sup>1/4</sup>·5. Знаменатель: 5<sup>1/4</sup>·5<sup>−1</sup>. Сокращаем 5<sup>1/4</sup> и получаем 5 : 5<sup>−1</sup> = 5<sup>2</sup> = <b>25</b>."}, {"id": 13, "blk": "5", "lvl": "база", "type": "num", "text": "Вычисли <span class=\"frac\"><span>35<sup>6</sup></span><span>5<sup>6</sup> · 7<sup>4</sup></span></span>.", "ans": ["NDk="], "hints": ["Не возводи 35 в шестую степень - разложи основание.", "35 = 5·7, значит 35<sup>6</sup> = 5<sup>6</sup>·7<sup>6</sup>.", "Пятёрки сокращаются полностью, у семёрок 6 − 4 = 2."], "sol": "35<sup>6</sup> = 5<sup>6</sup>·7<sup>6</sup>. После сокращения остаётся 7<sup>2</sup> = <b>49</b>."}, {"id": 14, "blk": "5", "lvl": "средний", "type": "num", "text": "Вычисли <span class=\"frac\"><span>12<sup>5</sup> · 45<sup>2</sup></span><span>6<sup>5</sup> · 15<sup>2</sup></span></span>.", "ans": ["Mjg4"], "hints": ["Показатели сверху и снизу попарно одинаковые - это подсказка.", "Произведение одинаковых степеней = степень произведения, поэтому можно делить основания.", "(12:6)⁵ = 2<sup>5</sup> и (45:15)² = 3<sup>2</sup>."], "sol": "(<span class=\"frac\"><span>12</span><span>6</span></span>)⁵ · (<span class=\"frac\"><span>45</span><span>15</span></span>)² = 2<sup>5</sup> · 3<sup>2</sup> = 32·9 = <b>288</b>."}, {"id": 15, "blk": "5", "lvl": "сложный", "type": "num", "text": "Вычисли <span class=\"frac\"><span>48<sup>6</sup></span><span>16<sup>6</sup> · 3<sup>5</sup></span></span>.", "ans": ["Mw=="], "hints": ["48 раскладывается на 16 и 3.", "48<sup>6</sup> = 16<sup>6</sup> · 3<sup>6</sup>.", "Шестнадцатые сокращаются целиком, у троек 6 − 5 = 1."], "sol": "48<sup>6</sup> = (16·3)⁶ = 16<sup>6</sup>·3<sup>6</sup>. После сокращения 3<sup>6−5</sup> = <b>3</b>."}, {"id": 16, "blk": "6", "lvl": "средний", "type": "num", "text": "Упрости <span class=\"frac\"><span>a<sup>5</sup> · a<sup>3</sup></span><span>a<sup>6</sup></span></span> и вычисли при a = 2.", "ans": ["NA=="], "hints": ["Сначала упрости буквенное выражение, только потом подставляй число.", "5 + 3 − 6 = 2.", "Получилось a<sup>2</sup>, а 2<sup>2</sup> = 4."], "sol": "<span class=\"frac\"><span>a<sup>5</sup>·a<sup>3</sup></span><span>a<sup>6</sup></span></span> = a<sup>5+3−6</sup> = a<sup>2</sup>. При a = 2 получаем <b>4</b>. Подставлять двойку в исходное выражение (32·8 : 64) тоже можно, но это лишняя работа."}, {"id": 17, "blk": "6", "lvl": "сложный", "type": "num", "text": "Вычисли <span class=\"frac\"><span>2<sup>11</sup> · 3<sup>7</sup></span><span>6<sup>7</sup> · 2<sup>4</sup></span></span>.", "ans": ["MQ=="], "hints": ["6 - составное число, разложи его.", "6<sup>7</sup> = 2<sup>7</sup> · 3<sup>7</sup>.", "Тройки сокращаются целиком, у двоек 11 − 7 − 4 = 0."], "sol": "Знаменатель: 2<sup>7</sup>·3<sup>7</sup>·2<sup>4</sup> = 2<sup>11</sup>·3<sup>7</sup> - ровно то же, что в числителе. Ответ <b>1</b>."}, {"id": 18, "blk": "6", "lvl": "сложный", "type": "num", "text": "Вычисли 0,2<sup>−3</sup> · 5<sup>−4</sup> · 25.", "ans": ["NQ=="], "hints": ["Приведи всё к основанию 5.", "0,2 = <span class=\"frac\"><span>1</span><span>5</span></span> = 5<sup>−1</sup>, значит 0,2<sup>−3</sup> = 5<sup>3</sup>.", "25 = 5<sup>2</sup>, складываем показатели: 3 − 4 + 2."], "sol": "0,2<sup>−3</sup> = (5<sup>−1</sup>)<sup>−3</sup> = 5<sup>3</sup>. Дальше 5<sup>3−4+2</sup> = 5<sup>1</sup> = <b>5</b>."}];
 var TR_ITEMS = {"sprop":[{"q": "Чему равно a<sup>m</sup> · a<sup>n</sup>?", "opts": ["a<sup>m+n</sup>", "a<sup>mn</sup>", "a<sup>m−n</sup>", "2a<sup>m+n</sup>"], "ans": "a<sup>m+n</sup>", "why": "При умножении степеней с одинаковым основанием показатели складываются: x<sup>10</sup>·x<sup>9</sup> = x<sup>19</sup>."}, {"q": "Чему равно (a<sup>m</sup>)<sup>n</sup><sup>n</sup>?", "opts": ["a<sup>mn</sup>", "a<sup>m+n</sup>", "a<sup>m−n</sup>", "a<sup>m</sup>"], "ans": "a<sup>mn</sup>", "why": "При возведении степени в степень показатели перемножаются: (2<sup>3</sup>)⁴ = 2<sup>12</sup>."}, {"q": "Есть ли формула для a<sup>n</sup> + b<sup>n</sup>?", "opts": ["нет, для суммы оснований формул не существует", "да, это (a+b)<sup>n</sup>", "да, это (ab)<sup>n</sup>", "да, это 2(ab)<sup>n</sup>"], "ans": "нет, для суммы оснований формул не существует", "why": "Свойства есть только для произведения и частного оснований. 2<sup>3</sup> + 3<sup>3</sup> = 8 + 27 = 35, а (2+3)<sup>3</sup> = 125 - совсем другое число."}, {"q": "Чему равно <span class=\"frac\"><span>x<sup>7</sup></span><span>x<sup>2</sup></span></span> ?", "opts": ["x<sup>5</sup>", "x<sup>9</sup>", "x<sup>3,5</sup>", "x<sup>14</sup>"], "ans": "x<sup>5</sup>", "why": "При делении степеней с одинаковым основанием показатель делителя вычитается: 7 − 2 = 5."}, {"q": "Вычисли 2<sup>3</sup> · 2<sup>5</sup> : 2<sup>6</sup>.", "ans": ["4"], "why": "3 + 5 − 6 = 2, значит 2<sup>2</sup> = 4."}, {"q": "Вычисли (3<sup>2</sup>)³ : 3<sup>4</sup>.", "ans": ["9"], "why": "(3<sup>2</sup>)³ = 3<sup>6</sup>, дальше 6 − 4 = 2, то есть 9."}, {"q": "Вычисли (2 · 5)⁴ : 10<sup>2</sup>.", "ans": ["100"], "why": "(2·5)⁴ = 10<sup>4</sup>, дальше 4 − 2 = 2, то есть 100."}, {"q": "Вычисли <span class=\"frac\"><span>6<sup>5</sup></span><span>6<sup>3</sup></span></span>.", "ans": ["36"], "why": "5 − 3 = 2, значит 6<sup>2</sup> = 36."}, {"q": "Вычисли 10<sup>3</sup> · 10<sup>−5</sup> · 10<sup>4</sup>.", "ans": ["100"], "why": "3 − 5 + 4 = 2, то есть 10<sup>2</sup> = 100."}, {"q": "Вычисли (2<sup>2</sup> · 5<sup>2</sup>)².", "ans": ["10000"], "why": "(2·5)⁴ = 10<sup>4</sup> = 10000, потому что 2<sup>2</sup>·5<sup>2</sup> = 10<sup>2</sup>."}],"sneg":[{"q": "Чему равно a<sup>0</sup> при a ≠ 0?", "opts": ["1", "0", "a", "не существует"], "ans": "1", "why": "Любое ненулевое число в нулевой степени равно 1. Это следует из деления: <span class=\"frac\"><span>a<sup>n</sup></span><span>a<sup>n</sup></span></span> = a<sup>0</sup> = 1."}, {"q": "Чему равно a<sup>−n</sup>?", "opts": ["<span class=\"frac\"><span>1</span><span>a<sup>n</sup></span></span>", "−a<sup>n</sup>", "a<sup>n</sup>", "0"], "ans": "<span class=\"frac\"><span>1</span><span>a<sup>n</sup></span></span>", "why": "Отрицательный показатель переворачивает: 2<sup>−3</sup> = <span class=\"frac\"><span>1</span><span>2<sup>3</sup></span></span> = <span class=\"frac\"><span>1</span><span>8</span></span>. Знак степени и знак числа - разные вещи."}, {"q": "Чему равно <span class=\"frac\"><span>1</span><span>a<sup>−n</sup></span></span>?", "opts": ["a<sup>n</sup>", "<span class=\"frac\"><span>1</span><span>a<sup>n</sup></span></span>", "−a<sup>n</sup>", "1"], "ans": "a<sup>n</sup>", "why": "Переворачиваем дважды и возвращаемся обратно: <span class=\"frac\"><span>1</span><span>a<sup>−n</sup></span></span> = a<sup>n</sup>."}, {"q": "Вычисли 2<sup>−3</sup>.", "ans": ["0,125", "1/8"], "why": "2<sup>−3</sup> = <span class=\"frac\"><span>1</span><span>2<sup>3</sup></span></span> = <span class=\"frac\"><span>1</span><span>8</span></span> = 0,125."}, {"q": "Вычисли 7<sup>0</sup> + 5<sup>−1</sup> · 5.", "ans": ["2"], "why": "1 + 1 = 2."}, {"q": "Вычисли (<span class=\"frac\"><span>2</span><span>3</span></span>)<sup>−2</sup><sup>−2</sup>.", "ans": ["2,25", "9/4"], "why": "Отрицательный показатель переворачивает дробь: (<span class=\"frac\"><span>3</span><span>2</span></span>)² = <span class=\"frac\"><span>9</span><span>4</span></span> = 2,25."}, {"q": "Вычисли 10<sup>−2</sup> · 10<sup>4</sup>.", "ans": ["100"], "why": "−2 + 4 = 2, то есть 100."}, {"q": "Вычисли 0,5<sup>−3</sup>.", "ans": ["8"], "why": "0,5 = 2<sup>−1</sup>, значит 0,5<sup>−3</sup> = 2<sup>3</sup> = 8."}, {"q": "Вычисли (3<sup>−2</sup>)<sup>−1</sup>.", "ans": ["9"], "why": "Показатели перемножаются: (−2)·(−1) = 2, значит 3<sup>2</sup> = 9."}],"sbase":[{"q": "К какому основанию удобно привести 4, 8 и 16?", "opts": ["к 2", "к 4", "к 8", "к 10"], "ans": "к 2", "why": "4 = 2<sup>2</sup>, 8 = 2<sup>3</sup>, 16 = 2<sup>4</sup>. Общее основание превращает выражение в одну степень."}, {"q": "К какому основанию удобно привести 25, 125 и 0,2?", "opts": ["к 5", "к 25", "к 2", "к 10"], "ans": "к 5", "why": "25 = 5<sup>2</sup>, 125 = 5<sup>3</sup>, 0,2 = <span class=\"frac\"><span>1</span><span>5</span></span> = 5<sup>−1</sup>."}, {"q": "Как записать 0,25 степенью двойки?", "opts": ["2<sup>−2</sup>", "2<sup>2</sup>", "2<sup>−4</sup>", "2<sup>4</sup>"], "ans": "2<sup>−2</sup>", "why": "0,25 = <span class=\"frac\"><span>1</span><span>4</span></span> = <span class=\"frac\"><span>1</span><span>2<sup>2</sup></span></span> = 2<sup>−2</sup>."}, {"q": "Вычисли 25<sup>3</sup> : 5<sup>4</sup>.", "ans": ["25"], "why": "25 = 5<sup>2</sup>, значит 25<sup>3</sup> = 5<sup>6</sup>. Дальше 6 − 4 = 2."}, {"q": "Вычисли 0,5<sup>4</sup> · 2<sup>6</sup>.", "ans": ["4"], "why": "0,5 = 2<sup>−1</sup>, значит 0,5<sup>4</sup> = 2<sup>−4</sup>. Дальше −4 + 6 = 2."}, {"q": "Вычисли 8<sup>4</sup> : 16<sup>2</sup>.", "ans": ["16"], "why": "8 = 2<sup>3</sup>, 16 = 2<sup>4</sup>. Получаем 2<sup>12</sup> : 2<sup>8</sup> = 2<sup>4</sup> = 16."}, {"q": "Вычисли <span class=\"frac\"><span>9<sup>3</sup></span><span>27<sup>2</sup></span></span>.", "ans": ["1"], "why": "9<sup>3</sup> = 3<sup>6</sup>, 27<sup>2</sup> = 3<sup>6</sup>. Частное равно 1."}, {"q": "Вычисли 4<sup>2,5</sup> : 4<sup>1,5</sup>.", "ans": ["4"], "why": "2,5 − 1,5 = 1, значит 4."}, {"q": "Вычисли 0,2<sup>−2</sup>.", "ans": ["25"], "why": "0,2 = 5<sup>−1</sup>, значит 0,2<sup>−2</sup> = 5<sup>2</sup> = 25."}],"sfrac":[{"q": "Чему равно a<sup>1/2</sup> при a ≥ 0?", "opts": ["<span class=\"rt\">√<span>a</span></span>", "a<sup>2</sup>", "<span class=\"frac\"><span>1</span><span>a<sup>2</sup></span></span>", "<sup>3</sup><span class=\"rt\">√<span>a</span></span>"], "ans": "<span class=\"rt\">√<span>a</span></span>", "why": "Дробный показатель - это корень: a<sup>m/n</sup> = <sup>n</sup><span class=\"rt\">√<span>a<sup>m</sup></span></span>."}, {"q": "Как записать <sup>3</sup><span class=\"rt\">√<span>a<sup>5</sup></span></span> степенью?", "opts": ["a<sup>5/3</sup>", "a<sup>3/5</sup>", "a<sup>15</sup>", "a<sup>2</sup>"], "ans": "a<sup>5/3</sup>", "why": "Показатель степени - в числитель, показатель корня - в знаменатель."}, {"q": "Чему равно a<sup>−1/2</sup> при a > 0?", "opts": ["<span class=\"frac\"><span>1</span><span><span class=\"rt\">√<span>a</span></span></span></span>", "<span class=\"rt\">√<span>a</span></span>", "−<span class=\"rt\">√<span>a</span></span>", "<span class=\"frac\"><span>1</span><span>a<sup>2</sup></span></span>"], "ans": "<span class=\"frac\"><span>1</span><span><span class=\"rt\">√<span>a</span></span></span></span>", "why": "Минус переворачивает, дробь даёт корень: a<sup>−1/2</sup> = <span class=\"frac\"><span>1</span><span>a<sup>1/2</sup></span></span> = <span class=\"frac\"><span>1</span><span><span class=\"rt\">√<span>a</span></span></span></span>."}, {"q": "Вычисли 27<sup>2/3</sup>.", "ans": ["9"], "why": "27 = 3<sup>3</sup>, значит 27<sup>2/3</sup> = 3<sup>2</sup> = 9."}, {"q": "Вычисли 16<sup>3/4</sup>.", "ans": ["8"], "why": "16 = 2<sup>4</sup>, значит 16<sup>3/4</sup> = 2<sup>3</sup> = 8."}, {"q": "Вычисли 81<sup>−1/4</sup> · 3<sup>2</sup>.", "ans": ["3"], "why": "81 = 3<sup>4</sup>, значит 81<sup>−1/4</sup> = 3<sup>−1</sup>. Дальше −1 + 2 = 1."}, {"q": "Вычисли 32<sup>2/5</sup>.", "ans": ["4"], "why": "32 = 2<sup>5</sup>, значит 32<sup>2/5</sup> = 2<sup>2</sup> = 4."}, {"q": "Вычисли 8<sup>−2/3</sup>.", "ans": ["0,25", "1/4"], "why": "8 = 2<sup>3</sup>, значит 8<sup>−2/3</sup> = 2<sup>−2</sup> = <span class=\"frac\"><span>1</span><span>4</span></span> = 0,25."}, {"q": "Вычисли 64<sup>1/2</sup> · 64<sup>−1/3</sup>.", "ans": ["2"], "why": "64 = 2<sup>6</sup>. Показатели: 6·(1/2) = 3 и 6·(−1/3) = −2, в сумме 1. Значит 2."}],"sbig":[{"q": "Как удобно записать 35<sup>6</sup> ?", "opts": ["5<sup>6</sup> · 7<sup>6</sup>", "5<sup>6</sup> + 7<sup>6</sup>", "35<sup>3</sup> · 2", "30<sup>6</sup> + 5<sup>6</sup>"], "ans": "5<sup>6</sup> · 7<sup>6</sup>", "why": "Степень произведения равна произведению степеней: 35 = 5·7, значит 35<sup>6</sup> = 5<sup>6</sup>·7<sup>6</sup>. Считать 35 в шестой степени не нужно вообще."}, {"q": "Чему равно 48<sup>6</sup> в виде степеней двойки и тройки?", "opts": ["3<sup>6</sup> · 2<sup>24</sup>", "3<sup>6</sup> · 2<sup>4</sup>", "3<sup>6</sup> · 2<sup>10</sup>", "3<sup>6</sup> + 2<sup>24</sup>"], "ans": "3<sup>6</sup> · 2<sup>24</sup>", "why": "48 = 3·16 = 3·2<sup>4</sup>, значит 48<sup>6</sup> = 3<sup>6</sup>·(2<sup>4</sup>)⁶ = 3<sup>6</sup>·2<sup>24</sup>."}, {"q": "Зачем раскладывать основание на множители?", "opts": ["чтобы привести всё к общим основаниям и сократить", "чтобы число стало больше", "чтобы избавиться от показателя", "чтобы можно было складывать степени"], "ans": "чтобы привести всё к общим основаниям и сократить", "why": "Пока основания разные, свойства степеней не работают. После разложения числитель и знаменатель почти всегда сокращаются."}, {"q": "Вычисли <span class=\"frac\"><span>35<sup>6</sup></span><span>5<sup>6</sup> · 7<sup>4</sup></span></span>.", "ans": ["49"], "why": "35<sup>6</sup> = 5<sup>6</sup>·7<sup>6</sup>. Пятёрки уходят целиком, остаётся 7<sup>2</sup> = 49."}, {"q": "Вычисли <span class=\"frac\"><span>12<sup>5</sup> · 45<sup>2</sup></span><span>6<sup>5</sup> · 15<sup>2</sup></span></span>.", "ans": ["288"], "why": "Показатели одинаковые, поэтому делим основания: (12:6)⁵·(45:15)² = 2<sup>5</sup>·3<sup>2</sup> = 32·9 = 288."}, {"q": "Вычисли <span class=\"frac\"><span>48<sup>6</sup></span><span>16<sup>6</sup> · 3<sup>5</sup></span></span>.", "ans": ["3"], "why": "48 = 16·3, значит 48<sup>6</sup> = 16<sup>6</sup>·3<sup>6</sup>. Шестнадцатые уходят, остаётся 3."}, {"q": "Вычисли <span class=\"frac\"><span>2<sup>11</sup> · 3<sup>7</sup></span><span>6<sup>7</sup> · 2<sup>4</sup></span></span>.", "ans": ["1"], "why": "6<sup>7</sup> = 2<sup>7</sup>·3<sup>7</sup>. В знаменателе 2<sup>11</sup>·3<sup>7</sup> - ровно то же, что сверху. Ответ 1."}, {"q": "Вычисли <span class=\"frac\"><span>6<sup>4</sup></span><span>2<sup>4</sup> · 3<sup>2</sup></span></span>.", "ans": ["9"], "why": "6<sup>4</sup> = 2<sup>4</sup>·3<sup>4</sup>, сокращаем и остаётся 3<sup>2</sup> = 9."}, {"q": "Вычисли <span class=\"frac\"><span>10<sup>6</sup></span><span>5<sup>4</sup> · 2<sup>6</sup></span></span>.", "ans": ["25"], "why": "10<sup>6</sup> = 2<sup>6</sup>·5<sup>6</sup>, остаётся 5<sup>2</sup> = 25."}],"slit":[{"q": "Упрости и вычисли при значении переменной, равном 2: <span class=\"frac\"><span>a<sup>5</sup> · a<sup>3</sup></span><span>a<sup>6</sup></span></span>.", "ans": ["4"], "why": "5 + 3 − 6 = 2, значит выражение равно a<sup>2</sup>. При значении 2 получаем 4."}, {"q": "Упрости и вычисли при значении переменной, равном 3: <span class=\"frac\"><span>x<sup>7</sup></span><span>x<sup>2</sup> · x<sup>3</sup></span></span>.", "ans": ["9"], "why": "7 − 2 − 3 = 2, значит x<sup>2</sup>. При значении 3 получаем 9."}, {"q": "Упрости и вычисли при значении переменной, равном 5: (a<sup>2</sup>)³ : a<sup>4</sup>.", "ans": ["25"], "why": "2·3 − 4 = 2, значит a<sup>2</sup>. При значении 5 получаем 25."}, {"q": "Упрости и вычисли при значении переменной, равном 3: <span class=\"frac\"><span>(2a)<sup>3</sup></span><span>a<sup>2</sup></span></span>.", "ans": ["24"], "why": "(2a)<sup>3</sup> = 8a<sup>3</sup>, делим: 8a. При a = 3 это 24. При значении 3 получаем 24."}, {"q": "Упрости и вычисли при значении переменной, равном 2: a<sup>−2</sup> · a<sup>5</sup>.", "ans": ["8"], "why": "−2 + 5 = 3, значит a<sup>3</sup>. При значении 2 получаем 8."}, {"q": "Упрости и вычисли при значении переменной, равном 4: <span class=\"frac\"><span>a<sup>6</sup> · b<sup>2</sup></span><span>a<sup>4</sup> · b<sup>2</sup></span></span>.", "ans": ["16"], "why": "b сокращается полностью, остаётся a<sup>2</sup>. При значении 4 получаем 16."}, {"q": "Упрости и вычисли при значении переменной, равном 2: (a<sup>1/2</sup>)⁶.", "ans": ["8"], "why": "Показатели перемножаются: (1/2)·6 = 3, значит a<sup>3</sup>. При значении 2 получаем 8."}, {"q": "Упрости и вычисли при значении переменной, равном 7: <span class=\"frac\"><span>a<sup>9</sup></span><span>(a<sup>2</sup>)⁴</span></span>.", "ans": ["7"], "why": "9 − 8 = 1, значит просто a. При значении 7 получаем 7."}]};
-var GAP_DATA = {"g2":{"title": "Заполни пропуски: отрицательный показатель", "html": "<p class=\"meta\">Вычисляем 0,5<sup>4</sup> · 2<sup>6</sup>.</p><div class=\"gline\">1) 0,5 = <span class=\"frac\"><span>1</span><span>2</span></span> = 2 в степени <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">2) Тогда 0,5<sup>4</sup> = 2 в степени <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">3) При умножении показатели складываются: −4 + 6 = <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">4) Ответ: <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">5) Проверка: 0,5<sup>4</sup> = 0,0625, и 0,0625 · 64 = <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div>", "ans": ["-1", "-4", "2", "4", "4"]},"g1":{"title": "Заполни пропуски: приведение к общему основанию", "html": "<p class=\"meta\">Вычисляем <span class=\"frac\"><span>25<sup>3</sup></span><span>5<sup>4</sup></span></span>.</p><div class=\"gline\">1) Общее основание здесь равно <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">2) 25 = 5 в степени <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">3) Значит 25<sup>3</sup> = 5 в степени <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">4) При делении показатели вычитаются: 6 − 4 = <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">5) Ответ: <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div>", "ans": ["5", "2", "6", "2", "25"]},"g3":{"title": "Заполни пропуски: дробный показатель", "html": "<p class=\"meta\">Вычисляем 27<sup>2/3</sup>.</p><div class=\"gline\">1) 27 = 3 в степени <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">2) При возведении степени в степень показатели <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\"> (впиши: перемножаются или складываются).</div><div class=\"gline\">3) Новый показатель: 3 · 2/3 = <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">4) Ответ: <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">5) Через корень: <sup>3</sup><span class=\"rt\">√<span>27<sup>2</sup></span></span> = <sup>3</sup><span class=\"rt\">√<span>729</span></span> = <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div>", "ans": ["3", "перемножаются", "2", "9", "9"]},"g4":{"title": "Заполни пропуски: большие числа через разложение", "html": "<p class=\"meta\">Вычисляем <span class=\"frac\"><span>48<sup>6</sup></span><span>16<sup>6</sup> · 3<sup>5</sup></span></span>.</p><div class=\"gline\">1) Раскладываем основание: 48 = 16 · <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">2) Тогда 48<sup>6</sup> = 16<sup>6</sup> · 3 в степени <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">3) Множитель 16<sup>6</sup> сокращается, остаётся 3 в степени <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\"> − 5.</div><div class=\"gline\">4) Показатель равен <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">5) Ответ: <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div>", "ans": ["3", "6", "6", "1", "3"]}};
-var GAP_ANS = {"g2":["-1", "-4", "2", "4", "4"],"g1":["5", "2", "6", "2", "25"],"g3":["3", "перемножаются", "2", "9", "9"],"g4":["3", "6", "6", "1", "3"]};
+var GAP_DATA = {"g2":{"title": "Заполни пропуски: отрицательный показатель", "html": "<p class=\"meta\">Вычисляем 0,5<sup>4</sup> · 2<sup>6</sup>.</p><div class=\"gline\">1) 0,5 = <span class=\"frac\"><span>1</span><span>2</span></span> = 2 в степени <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">2) Тогда 0,5<sup>4</sup> = 2 в степени <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">3) При умножении показатели складываются: −4 + 6 = <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">4) Ответ: <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">5) Проверка: 0,5<sup>4</sup> = 0,0625, и 0,0625 · 64 = <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div>", "ans": ["-1", "-4", "2", "4", "4"]},"g1":{"title": "Заполни пропуски: приведение к общему основанию", "html": "<p class=\"meta\">Вычисляем <span class=\"frac\"><span>25<sup>3</sup></span><span>5<sup>4</sup></span></span>.</p><div class=\"gline\">1) Общее основание здесь равно <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">2) 25 = 5 в степени <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">3) Значит 25<sup>3</sup> = 5 в степени <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">4) При делении показатели вычитаются: 6 − 4 = <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">5) Ответ: <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div>", "ans": ["5", "2", "6", "2", "25"]},"g3":{"title": "Заполни пропуски: дробный показатель", "html": "<p class=\"meta\">Вычисляем 27<sup>2/3</sup>.</p><div class=\"gline\">1) 27 = 3 в степени <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">2) При возведении степени в степень показатели <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\"> (впиши: перемножаются или складываются).</div><div class=\"gline\">3) Новый показатель: 3 · 2/3 = <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">4) Ответ: <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">5) Через корень: <sup>3</sup><span class=\"rt\">√<span>27<sup>2</sup></span></span> = <sup>3</sup><span class=\"rt\">√<span>729</span></span> = <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div>", "ans": ["3", "перемножаются", "2", "9", "9"]}};
+var GAP_ANS = {"g2":["-1", "-4", "2", "4", "4"],"g1":["5", "2", "6", "2", "25"],"g3":["3", "перемножаются", "2", "9", "9"]};
+var ERR_DATA = {"e1":{"title": "Скобка со степенью", "lead": "Ученик упрощал <span class=\"frac\"><span>(2a)<sup>3</sup></span><span>a<sup>2</sup></span></span> и получил 2a. Нажми на шаг, на котором решение сломалось.", "steps": ["(2a)<sup>3</sup> = 2a<sup>3</sup>.", "Делим: 2a<sup>3</sup> : a<sup>2</sup> = 2a.", "Ответ: 2a."], "bad": 1, "why": "В скобке два множителя, и в куб возводится <b>каждый</b>: (2a)<sup>3</sup> = 2<sup>3</sup>a<sup>3</sup> = 8a<sup>3</sup>. Верный ответ 8a. Проверка подстановкой ловит это сразу: при a = 1 исходное выражение равно 8, а «2a» даёт 2."}};
 
 window.TRAPI = {};
 function makeTrainer(id, items){
   var host = document.getElementById("tr_"+id);
   if(!host) return;
-  var st = {order: shuffle(items.map(function(_,i){return i;})), cur:0, right:0, answered:false, done:false};
+  var st = {order: shuffle(items.map(function(_,i){return i;})), cur:0, right:0,
+            answered:false, done:false};
+  function head(main, right){
+    return '<div class="trhead"><b>'+main+'</b><span class="trscore">'+right+'</span></div>';
+  }
   function render(){
     if(st.cur >= items.length){
       st.done = true;
-      host.innerHTML = '<div class="trhead"><b>Тренажёр пройден</b>'+
-        '<span class="trbar">'+host.dataset.title+'</span></div>'+
-        '<p class="trdone">Готово: верно '+st.right+' из '+items.length+'.</p>'+
-        '<button class="sm again" type="button">Пройти заново</button>';
+      host.innerHTML = head("Тренажёр пройден", host.dataset.title) +
+        '<div class="trdone">Верно '+st.right+' из '+items.length+'</div>'+
+        '<div class="trbar"><button class="again" type="button">Пройти заново</button></div>';
       host.querySelector(".again").addEventListener("click", function(){
         st.order = shuffle(items.map(function(_,i){return i;}));
         st.cur = 0; st.right = 0; st.answered = false; st.done = false;
@@ -332,28 +388,27 @@ function makeTrainer(id, items){
       return;
     }
     var it = items[st.order[st.cur]];
-    var h = '<div class="trhead"><b>Вопрос '+(st.cur+1)+' из '+items.length+'</b>'+
-            '<span class="trbar">верно '+st.right+'</span></div>'+
+    var h = head("Вопрос "+(st.cur+1)+" из "+items.length, "верно "+st.right) +
             '<div class="trq">'+it.q+'</div>';
-    if(it.fig){ h += '<div class="fig">'+it.fig+'</div>'; }
+    if(it.fig){ h += '<div class="trfig">'+it.fig+'</div>'; }
     if(it.opts){
       var opts = shuffle(it.opts);
       h += '<div class="tropts">'+opts.map(function(o){
-        return '<label data-k="'+e(o)+'">'+o+'</label>';}).join("")+'</div>';
+        return '<button type="button" class="tropt" data-k="'+e(o)+'">'+o+'</button>';}).join("")+'</div>';
     } else {
       h += '<div class="keys">'+KEYPAD.map(function(k){
              return '<button class="key" data-k="'+k+'" type="button">'+k+'</button>';}).join("")+'</div>'+
-           '<input type="text" class="tri" inputmode="text" autocapitalize="off" autocorrect="off" '+
-           'autocomplete="off" spellcheck="false" placeholder="ответ">';
+           '<div class="trnum"><input type="text" class="tri" inputmode="text" autocapitalize="off" '+
+           'autocorrect="off" autocomplete="off" spellcheck="false" placeholder="ответ"></div>';
     }
-    h += '<div class="row" style="margin-top:10px"><button class="pri sm go" type="button">Ответить</button></div>'+
+    h += '<div class="trbar"><button class="pri go" type="button">Ответить</button></div>'+
          '<div class="whybox"></div>';
     host.innerHTML = h;
     var picked = null;
-    host.querySelectorAll(".tropts label").forEach(function(l){
+    host.querySelectorAll(".tropt").forEach(function(l){
       l.addEventListener("click", function(){
         if(st.answered) return;
-        host.querySelectorAll(".tropts label").forEach(function(x){x.classList.remove("sel");});
+        host.querySelectorAll(".tropt").forEach(function(x){x.classList.remove("sel");});
         l.classList.add("sel"); picked = d(l.dataset.k);
       });
     });
@@ -383,17 +438,19 @@ function makeTrainer(id, items){
       st.answered = true;
       if(ok) st.right++;
       if(it.opts){
-        host.querySelectorAll(".tropts label").forEach(function(x){
+        host.querySelector(".tropts").classList.add("done");
+        host.querySelectorAll(".tropt").forEach(function(x){
           var val = d(x.dataset.k);
-          if(norm(val) === norm(it.ans)) x.classList.add("good");
-          else if(x.classList.contains("sel")) x.classList.add("miss");
+          if(norm(val) === norm(it.ans)) x.classList.add("right");
+          else if(x.classList.contains("sel")) x.classList.add("wrong");
         });
       } else {
         host.querySelector(".tri").classList.add(ok ? "ok" : "bad");
       }
       host.querySelector(".whybox").innerHTML =
-        '<div class="trwhy"><b>'+(ok?"Верно.":"Неверно, правильный ответ: "+esc(it.opts?it.ans:it.ans[0])+".")+
-        '</b> '+it.why+'</div>';
+        '<div class="trmsg"><span class="v '+(ok?"ok":"bad")+'">'+
+        (ok ? "Верно." : "Неверно. Правильный ответ: "+esc(it.opts?it.ans:it.ans[0])+".")+
+        '</span><div class="why">'+it.why+'</div></div>';
       btn.textContent = (st.cur+1 >= items.length) ? "Завершить" : "Дальше";
       SAVE.touch(true);
     });
@@ -421,10 +478,9 @@ function makeGap(id, data){
   if(!host) return;
   var st = {vals: data.ans.map(function(){return "";}), checked:false};
   window.GAPST[id] = st;
-  var html = '<div class="trhead"><b>'+data.title+'</b></div>' + data.html +
-             '<div class="row" style="margin-top:10px">'+
-             '<button class="pri sm gchk" type="button">Проверить</button></div><div class="gv"></div>';
-  host.innerHTML = html;
+  host.innerHTML = '<div class="trhead"><b>'+data.title+'</b></div>' + data.html +
+                   '<div class="trbar"><button class="pri gchk" type="button">Проверить</button></div>'+
+                   '<div class="gv"></div>';
   var inputs = host.querySelectorAll("input.gi");
   inputs.forEach(function(inp, i){
     inp.addEventListener("input", function(){ st.vals[i] = inp.value; SAVE.touch(); });
@@ -433,9 +489,7 @@ function makeGap(id, data){
     });
   });
   host.querySelector(".gchk").addEventListener("click", function(){
-    st.checked = true;
-    paint();
-    SAVE.touch(true);
+    st.checked = true; paint(); SAVE.touch(true);
   });
   function paint(){
     var bad = 0;
@@ -453,14 +507,14 @@ function makeGap(id, data){
     v.textContent = bad ? ("Красным отмечены "+bad+" неверных ответа - поправь и проверь ещё раз.")
                         : "Всё верно, шаги сходятся.";
   }
-  window.GAPST[id].apply = function(s){
+  st.apply = function(s){
     if(!s || !s.vals) return;
     st.vals = s.vals.slice(0, inputs.length);
     st.checked = !!s.checked;
     inputs.forEach(function(inp,i){ inp.value = st.vals[i] || ""; });
     paint();
   };
-  window.GAPST[id].get = function(){ return {vals: st.vals, checked: st.checked}; };
+  st.get = function(){ return {vals: st.vals, checked: st.checked}; };
 }
 window.GAPFLUSH = function(){
   Object.keys(window.GAPST).forEach(function(id){
@@ -472,9 +526,60 @@ window.GAPFLUSH = function(){
 };
 
 
+window.ERRST = {};
+function makeErr(id, data){
+  var host = document.getElementById("err_"+id);
+  if(!host) return;
+  var st = {pick:null, checked:false};
+  window.ERRST[id] = st;
+  host.innerHTML = '<div class="n">НАЙДИ ОШИБКУ</div>'+
+    '<div><b>'+data.title+'</b></div>'+
+    '<p class="meta">'+data.lead+'</p>'+
+    '<ol>'+data.steps.map(function(s){return '<li>'+s+'</li>';}).join("")+'</ol>'+
+    '<div class="trbar"><button class="pri echk" type="button">Проверить</button></div>'+
+    '<div class="ev"></div>';
+  var lis = host.querySelectorAll("ol li");
+  lis.forEach(function(li, i){
+    li.addEventListener("click", function(){
+      if(st.checked) return;
+      lis.forEach(function(x){x.classList.remove("sel");});
+      li.classList.add("sel"); st.pick = i+1; SAVE.touch(true);
+    });
+  });
+  host.querySelector(".echk").addEventListener("click", function(){
+    if(!st.pick){
+      host.querySelector(".ev").className = "ev bad-note";
+      host.querySelector(".ev").textContent = "Выбери шаг, на котором решение сломалось.";
+      return;
+    }
+    st.checked = true; paint(); SAVE.touch(true);
+  });
+  function paint(){
+    var v = host.querySelector(".ev");
+    lis.forEach(function(x){ x.classList.remove("sel","right","wrong"); });
+    if(!st.checked){
+      if(st.pick) lis[st.pick-1].classList.add("sel");
+      v.textContent = ""; v.className = "ev"; return;
+    }
+    lis[data.bad-1].classList.add("right");
+    if(st.pick !== data.bad) lis[st.pick-1].classList.add("wrong");
+    v.className = "ev";
+    v.style.color = (st.pick === data.bad) ? "var(--ok)" : "";
+    v.innerHTML = (st.pick === data.bad ? "<b>Верно.</b> " : "<b>Нет.</b> Сломалось на шаге "+data.bad+". ")
+                  + data.why;
+  }
+  st.apply = function(s){
+    if(!s) return;
+    st.pick = s.pick || null; st.checked = !!s.checked; paint();
+  };
+  st.get = function(){ return {pick: st.pick, checked: st.checked}; };
+}
+
+
 var state = {};
 TASKS.forEach(function(t){
-  state[t.id] = {tries:0, hints:0, done:false, ok:false, given:"", sel:null};
+  state[t.id] = {tries:0, hints:0, done:false, ok:false, given:"", sel:null,
+                 t0:0, secs:0, ai:false};
   var box = document.getElementById("tasks"+(t.blk||"1")) || document.getElementById("tasks1");
   var el = document.createElement("div");
   el.className = "task"; el.id = "t"+t.id;
@@ -495,9 +600,13 @@ TASKS.forEach(function(t){
   body += '<div class="row" style="margin-top:10px">'+
           '<button class="pri sm chk" type="button">Проверить</button>'+
           '<button class="sm hnt" type="button">Подсказка</button></div>'+
+          '<div class="aim"><input type="checkbox" id="ai'+t.id+'">'+
+          '<label for="ai'+t.id+'">решал с ИИ, калькулятором или подсмотрел готовое</label></div>'+
           '<div class="hints"></div><div class="verdict"></div><div class="sol"></div>';
   el.innerHTML = body;
   box.appendChild(el);
+
+  function touchTask(){ if(!state[t.id].t0) state[t.id].t0 = Date.now(); }
 
   el.querySelectorAll(".key").forEach(function(b){
     b.addEventListener("click", function(){
@@ -507,14 +616,14 @@ TASKS.forEach(function(t){
       var f = inp.selectionEnd; if(f===null||f===undefined) f = s;
       inp.value = inp.value.slice(0,s) + k + inp.value.slice(f);
       inp.focus(); inp.setSelectionRange(s+k.length, s+k.length);
-      SAVE.touch();
+      touchTask(); SAVE.touch();
     });
   });
   if(t.type === "choice"){
     el.querySelectorAll(".opt").forEach(function(l){
       l.addEventListener("click", function(){
         el.querySelectorAll(".opt").forEach(function(x){x.classList.remove("sel");});
-        l.classList.add("sel"); state[t.id].sel = l.dataset.v; SAVE.touch();
+        l.classList.add("sel"); state[t.id].sel = l.dataset.v; touchTask(); SAVE.touch();
       });
     });
   } else {
@@ -522,8 +631,12 @@ TASKS.forEach(function(t){
     inp.addEventListener("keydown", function(ev){
       if(ev.key === "Enter"){ ev.preventDefault(); check(t.id); }
     });
-    inp.addEventListener("input", function(){ SAVE.touch(); });
+    inp.addEventListener("focus", touchTask);
+    inp.addEventListener("input", function(){ touchTask(); SAVE.touch(); });
   }
+  el.querySelector("#ai"+t.id).addEventListener("change", function(ev){
+    state[t.id].ai = ev.target.checked; SAVE.touch(true);
+  });
   el.querySelector(".chk").addEventListener("click", function(){ check(t.id); });
   el.querySelector(".hnt").addEventListener("click", function(){ hint(t.id); });
 });
@@ -531,6 +644,7 @@ TASKS.forEach(function(t){
 function hint(id){
   var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
   var host = document.querySelector("#t"+id+" .hints");
+  if(!s.t0) s.t0 = Date.now();
   if(s.hints >= t.hints.length){
     if(!host.querySelector(".last")){
       var w = document.createElement("div");
@@ -557,6 +671,7 @@ function check(id){
   var given = (t.type === "choice") ? (s.sel || "") :
               (document.getElementById("in"+id).value || "");
   if(!String(given).trim()){ v.className = "verdict bad"; v.textContent = "Введи ответ."; return; }
+  if(!s.tries && s.t0) s.secs = Math.round((Date.now() - s.t0)/1000);
   s.given = given; s.tries++;
   var ok = t.ans.some(function(a){ return same(given, d(a), t.tol); });
   s.ok = ok; s.done = ok || s.tries >= 2;
@@ -609,7 +724,7 @@ document.getElementById("checkall").addEventListener("click", function(){
 });
 
 
-var SAVE_V = 1;
+var SAVE_V = 2;
 var KEY_BASE = "arttich:stepeni11:";
 var KEY_MAIN = KEY_BASE + "work";
 var SAVE = (function(){
@@ -620,14 +735,17 @@ var SAVE = (function(){
     TASKS.forEach(function(t){
       var s = state[t.id];
       var live = (t.type === "choice") ? (s.sel||"") : ((document.getElementById("in"+t.id)||{}).value || "");
-      tasks[t.id] = {given:s.given, live:live, sel:s.sel, tries:s.tries, hints:s.hints, done:s.done, ok:s.ok};
+      tasks[t.id] = {given:s.given, live:live, sel:s.sel, tries:s.tries, hints:s.hints,
+                     done:s.done, ok:s.ok, secs:s.secs, ai:s.ai};
     });
     var trs = {};
     Object.keys(window.TRAPI).forEach(function(k){ trs[k] = window.TRAPI[k].get(); });
     var gaps = {};
     Object.keys(window.GAPST).forEach(function(k){ gaps[k] = window.GAPST[k].get(); });
+    var errs = {};
+    Object.keys(window.ERRST).forEach(function(k){ errs[k] = window.ERRST[k].get(); });
     return {v:SAVE_V, ts:Date.now(), name:(document.getElementById("name")||{}).value || "",
-            tasks:tasks, trs:trs, gaps:gaps, started:started};
+            tasks:tasks, trs:trs, gaps:gaps, errs:errs, started:started};
   }
   function write(){
     if(!on) return;
@@ -679,6 +797,7 @@ function restore(){
       var st = state[t.id];
       st.given = saved.given||""; st.tries = saved.tries||0; st.hints = saved.hints||0;
       st.done = !!saved.done; st.ok = !!saved.ok; st.sel = saved.sel||null;
+      st.secs = saved.secs||0; st.ai = !!saved.ai;
       var el = document.getElementById("t"+t.id);
       if(t.type === "choice"){
         if(st.sel){
@@ -690,6 +809,8 @@ function restore(){
         var inp = document.getElementById("in"+t.id);
         if(inp) inp.value = saved.live || saved.given || "";
       }
+      var aib = document.getElementById("ai"+t.id);
+      if(aib) aib.checked = st.ai;
       var hb = el.querySelector(".hints");
       for(var i=0;i<st.hints && i<t.hints.length;i++) drawHint(hb, t, i);
       paintTask(t, st);
@@ -699,6 +820,9 @@ function restore(){
     });
     if(s.gaps) Object.keys(s.gaps).forEach(function(k){
       if(window.GAPST[k] && window.GAPST[k].apply) window.GAPST[k].apply(s.gaps[k]);
+    });
+    if(s.errs) Object.keys(s.errs).forEach(function(k){
+      if(window.ERRST[k] && window.ERRST[k].apply) window.ERRST[k].apply(s.errs[k]);
     });
   }catch(err){}
   return true;
@@ -783,30 +907,47 @@ function buildReport(){
   var now = new Date();
   var mins = Math.max(1, Math.round((Date.now()-started)/60000));
   var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  var aiN = TASKS.filter(function(t){return state[t.id].ai;}).length;
   var trs = REQ_TR.concat(EXTRA_TR).map(function(id){
     var a = window.TRAPI[id] ? window.TRAPI[id].get() : {right:0, done:false};
-    return {тренажёр:TR_NAMES[id], верно:a.right, пройден:!!a.done};
+    return {тренажёр:TR_NAMES[id], верно:a.right, всего:TR_SIZE[id], пройден:!!a.done,
+            обязательный: REQ_TR.indexOf(id) >= 0};
+  });
+  var errs = Object.keys(window.ERRST).map(function(k){
+    var a = window.ERRST[k].get();
+    return {блок:ERR_NAMES[k], выбран_шаг:a.pick, верный_шаг:ERR_BAD[k], проверен:!!a.checked};
   });
   var data = {тип:"дз", предмет:"математика", тема:TOPIC,
     ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
-    верно:okN, всего:TASKS.length, задачи:[], тренажёры:trs};
+    верно:okN, всего:TASKS.length, отмечено_ии:aiN,
+    задачи:[], тренажёры:trs, поиск_ошибки:errs};
   var rows = TASKS.map(function(t){
     var s = state[t.id];
     data.задачи.push({n:t.id, условие:t.text.replace(/<[^>]+>/g," "), ответ_ученика:s.given,
       верный_ответ:t.ans.map(d).join(" или "), верно:s.ok, попыток:s.tries, подсказок:s.hints,
-      уровень:t.lvl});
+      секунд:s.secs, ии:s.ai, уровень:t.lvl, блок:t.blk});
     return "<tr><td>"+t.id+"</td><td style='text-align:left'>"+esc(t.text.replace(/<[^>]+>/g," "))+
       "</td><td>"+esc(s.given||"—")+"</td><td>"+esc(t.ans.map(d).join(" / "))+"</td><td>"+
-      (s.ok?"верно":(s.given?"неверно":"не решал"))+"</td><td>"+s.tries+"</td><td>"+s.hints+"</td></tr>";
+      (s.ok?"верно":(s.given?"неверно":"не решал"))+"</td><td>"+s.tries+"</td><td>"+s.hints+
+      "</td><td>"+(s.secs||"—")+"</td><td>"+(s.ai?"да":"")+"</td></tr>";
   }).join("");
   var trRows = trs.map(function(a){
-    return "<tr><td style='text-align:left'>"+esc(a.тренажёр)+"</td><td>"+a.верно+
-           "</td><td>"+(a.пройден?"пройден":"не закончен")+"</td></tr>";
+    return "<tr><td style='text-align:left'>"+esc(a.тренажёр)+(a.обязательный?"":" (доп.)")+
+           "</td><td>"+a.верно+" из "+a.всего+"</td><td>"+(a.пройден?"пройден":"не закончен")+"</td></tr>";
+  }).join("");
+  var errRows = errs.map(function(a){
+    return "<tr><td style='text-align:left'>"+esc(a.блок)+"</td><td>"+(a.выбран_шаг||"—")+
+           "</td><td>"+a.верный_шаг+"</td><td>"+(a.проверен ? (a.выбран_шаг===a.верный_шаг?"верно":"неверно") : "не проверял")+"</td></tr>";
   }).join("");
   var pics = photos.map(function(p,i){
     return "<figure><img src='"+p.url+"'><figcaption>Фото "+(i+1)+
       (p.task?" — к задаче №"+p.task:"")+"</figcaption></figure>";
   }).join("");
+  var machine = "№\tверно\tпопыток\tподсказок\tсекунд\tИИ\tуровень\tблок\n" +
+    TASKS.map(function(t){
+      var s = state[t.id];
+      return [t.id, s.ok?1:0, s.tries, s.hints, s.secs||0, s.ai?1:0, t.lvl, t.blk].join("\t");
+    }).join("\n");
   var html = "<!doctype html><html lang='ru'><head><meta charset='utf-8'>"+
     "<meta name='viewport' content='width=device-width,initial-scale=1'>"+
     "<title>Отчёт — "+esc(name)+" — "+esc(TOPIC)+"</title><style>"+
@@ -815,16 +956,22 @@ function buildReport(){
     "table{border-collapse:collapse;width:100%;margin-top:14px;font-size:15px}"+
     "th,td{border:1px solid #dfe3ea;padding:6px 8px;text-align:center}th{background:#eef3fb}"+
     "figure{margin:14px 0}img{max-width:100%;border:1px solid #dfe3ea;border-radius:8px}"+
-    "figcaption{color:#5b6270;font-size:14px;margin-top:4px}</style></head><body>"+
+    "figcaption{color:#5b6270;font-size:14px;margin-top:4px}"+
+    "pre{background:#f5f6f8;border:1px solid #dfe3ea;border-radius:8px;padding:10px;"+
+    "font-size:13px;overflow-x:auto}</style></head><body>"+
     "<h1>Отчёт по домашнему заданию</h1>"+
     "<div class='m'>Тема: "+esc(TOPIC)+" · подготовка к ЦТ/ЦЭ, 11 класс</div>"+
     "<div class='m'>Ученик: <b>"+esc(name)+"</b> · сдано: "+esc(now.toLocaleString("ru-RU"))+
     " · время работы: около "+mins+" мин</div>"+
-    "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)</h2>"+
+    "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)"+
+    (aiN ? " · с ИИ или калькулятором отмечено задач: "+aiN : "")+"</h2>"+
     "<table><tr><th>№</th><th>Задача</th><th>Ответ ученика</th><th>Верный ответ</th>"+
-    "<th>Итог</th><th>Попыток</th><th>Подсказок</th></tr>"+rows+"</table>"+
+    "<th>Итог</th><th>Попыток</th><th>Подсказок</th><th>Секунд</th><th>ИИ</th></tr>"+rows+"</table>"+
     "<h2>Тренажёры</h2><table><tr><th>Тренажёр</th><th>Верных</th><th>Статус</th></tr>"+trRows+"</table>"+
+    (errRows ? "<h2>Поиск ошибки</h2><table><tr><th>Блок</th><th>Выбран шаг</th><th>Верный шаг</th>"+
+      "<th>Итог</th></tr>"+errRows+"</table>" : "")+
     (pics ? "<h2>Фото решений</h2>"+pics : "<p class='m'>Фото решений не прикреплены.</p>")+
+    "<h2>Машинный блок</h2><pre>"+esc(machine)+"</pre>"+
     "<script type='application/json' id='result-data'>"+
     JSON.stringify(data).replace(/</g,"\\u003c")+"<\/script></body></html>";
   var stamp = now.getDate()+"-"+(now.getMonth()+1);
@@ -882,11 +1029,14 @@ function BUILD_GAPS(){
 makeGap("g2", GAP_DATA["g2"]);
 makeGap("g1", GAP_DATA["g1"]);
 makeGap("g3", GAP_DATA["g3"]);
-makeGap("g4", GAP_DATA["g4"]);
+}
+function BUILD_ERRS(){
+makeErr("e1", ERR_DATA["e1"]);
 }
 
 BUILD_TRAINERS();
 BUILD_GAPS();
+BUILD_ERRS();
 restore();
 bindSave();
 progress();
