@@ -1,0 +1,897 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Счёт с процентами — подготовка к ЦТ/ЦЭ</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0; --warn-line:#e8c86a;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415; --warn-line:#5c4a1c;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%;overflow-x:hidden}
+.wrap{max-width:820px;margin:0 auto;padding:16px 14px 90px}
+h1{font-size:25px;line-height:1.25;margin:0 0 6px;overflow-wrap:break-word}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+h4{font-size:16px;margin:14px 0 4px}
+p{margin:8px 0;overflow-wrap:break-word}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+button[disabled]{opacity:.5;cursor:default}
+
+/* формулы */
+.f-formula{font-size:19px}
+.fx{background:var(--acc-soft);border-radius:10px;padding:10px 12px;margin:9px 0;
+  font-size:18px;text-align:center;overflow-x:auto}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px;white-space:nowrap}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+.rt{white-space:nowrap}
+.rt>span{border-top:1.4px solid currentColor;padding:0 3px 0 2px;margin-left:-2px}
+
+/* памятка */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:10px 0}
+.fbox{border:1px solid var(--line);border-radius:12px;padding:11px 13px;background:var(--bg)}
+.fbox>b{display:block;margin-bottom:4px;color:var(--acc)}
+.fbox .s b{color:inherit}
+.fbox .s{font-size:16px}
+
+/* теория */
+.def{border-left:4px solid var(--acc);background:var(--acc-soft);border-radius:0 10px 10px 0;
+  padding:10px 12px;margin:10px 0}
+.rule2{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+.warn{background:var(--warn-soft);border:1px solid var(--warn-line);border-radius:10px;
+  padding:10px 12px;margin:10px 0;font-size:16px}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.ex{border:1px dashed var(--line);border-radius:12px;padding:12px 13px;margin:12px 0}
+.ex>b.t{display:block;color:var(--acc);margin-bottom:6px}
+.step{margin:6px 0}
+.step.mini{font-size:15px;color:var(--muted);border-top:1px dashed var(--line);padding-top:7px;margin-top:9px}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+table.wrap-t th,table.wrap-t td{white-space:normal}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.fig{margin:12px 0;text-align:center}
+.fig svg{width:100%;max-width:330px;height:auto}
+.figrow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.figrow .fig{flex:1 1 210px;margin:6px 0}
+
+/* задачи */
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px;white-space:nowrap}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+
+/* тренажёры */
+.tr{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--bg)}
+.tr .trhead{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline;justify-content:space-between}
+.tr .trhead b{font-size:16px}
+.tr .trq{margin:10px 0;font-size:17px}
+.tr .tropts label{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);
+  border-radius:10px;cursor:pointer;background:var(--card)}
+.tr .tropts label.sel{border-color:var(--acc);background:var(--acc-soft)}
+.tr .tropts label.good{border-color:var(--ok);background:var(--ok-soft)}
+.tr .tropts label.miss{border-color:var(--bad);background:var(--bad-soft)}
+.tr .trwhy{margin-top:10px;font-size:16px;background:var(--acc-soft);border-radius:10px;padding:9px 12px}
+.tr .trdone{font-weight:600;color:var(--ok)}
+.tr input[type=text]{max-width:260px}
+.trbar{font-size:14px;color:var(--muted)}
+
+/* пропуски */
+.gap{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--bg)}
+.gap .gline{margin:9px 0;font-size:17px;overflow-x:auto}
+.gap input.gi{font:inherit;width:88px;padding:6px 8px;border:1.5px solid var(--line);
+  border-radius:8px;background:var(--card);color:var(--ink);text-align:center}
+.gap input.gi.ok{border-color:var(--ok);background:var(--ok-soft)}
+.gap input.gi.bad{border-color:var(--bad);background:var(--bad-soft)}
+.gap .gv{margin-top:10px;font-weight:600}
+
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:9px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+.sheet .fgrid{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+@media print{
+  body{background:#fff}
+  .wrap>*{display:none !important}
+  .wrap>.sheet{display:block !important;border:none;margin:0;padding:0}
+  .bar{display:none !important}
+  .sheet{font-size:10.5px;line-height:1.3}
+  .sheet h2{font-size:15px;margin:0 0 4px}
+  .sheet h4{font-size:11.5px;margin:6px 0 2px}
+  .sheet p{margin:3px 0}
+  .sheet .fgrid{gap:5px;grid-template-columns:repeat(3,1fr)}
+  .sheet .fbox{padding:5px 6px;border-radius:6px}
+  .sheet .fbox .s{font-size:10.5px}
+  .sheet .fx{font-size:11px;padding:4px 6px;margin:4px 0}
+  .sheet th,.sheet td{padding:2px 3px;font-size:10px}
+  @page{size:A4;margin:9mm}
+}
+@media (max-width:400px){
+  body{font-size:16px}
+  .wrap{padding:12px 12px 90px}
+  h1{font-size:22px}
+  .card{padding:14px 12px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="card top">
+<h1>Счёт с процентами</h1>
+<div class="meta">Математика · подготовка к ЦТ/ЦЭ · 11 класс · день 2 · тема 4.02</div>
+<label class="f" for="name">Имя и фамилия</label>
+<input type="text" id="name" placeholder="напиши, как в журнале" autocapitalize="words" spellcheck="false">
+<div class="note" style="margin-top:14px"><b>Как работать.</b> Здесь только <b>счёт</b> с процентами - текстовых задач про товары и смеси в этой домашке нет, они будут отдельно. Задача этого дня - чтобы три основные операции с процентами делались не думая.<br>- процент от числа - <b>умножаем</b>;<br>- число по его проценту - <b>делим</b>;<br>- сколько процентов одно от другого - <b>делим и умножаем на 100</b>.<br><b>Формат ответа:</b> число без знака %, дробь через «/». Уменьшение в вопросах «на сколько процентов изменилось» пиши со знаком минус: <b>-62,5</b>.</div>
+<div class="row" style="margin-top:12px"><button class="sm" id="reset" type="button">Начать заново</button><span class="meta">работа сохраняется сама - можно закрыть страницу и вернуться</span></div>
+</div>
+<div class="card"><h2>Памятка</h2>
+<p class="meta">Сюда возвращайся, когда застрял.</p><div class="fgrid">
+<div class="fbox"><b>Что такое процент</b><div class="s">1 % = <span class="frac"><span>1</span><span>100</span></span> = 0,01 - сотая часть числа. Проценты больше 100 - нормально: 125 % = 1,25.</div></div>
+<div class="fbox"><b>Наизусть</b><div class="s">50 % = <span class="frac"><span>1</span><span>2</span></span> · 25 % = <span class="frac"><span>1</span><span>4</span></span> · 75 % = <span class="frac"><span>3</span><span>4</span></span><br>20 % = <span class="frac"><span>1</span><span>5</span></span> · 10 % = <span class="frac"><span>1</span><span>10</span></span> · 5 % = <span class="frac"><span>1</span><span>20</span></span><br>12,5 % = <span class="frac"><span>1</span><span>8</span></span> · 4 % = <span class="frac"><span>1</span><span>25</span></span> · 1 % = <span class="frac"><span>1</span><span>100</span></span></div></div>
+<div class="fbox"><b>Три основные задачи</b><div class="s">1) p % от a: <b>a · p/100</b><br>2) число по его p %: <b>часть : (p/100)</b><br>3) сколько % a от b: <b>(a/b) · 100</b></div></div>
+<div class="fbox"><b>Пропорция</b><div class="s">a — 100 %<br>x — p %<br>Отсюда x = <span class="frac"><span>a · p</span><span>100</span></span>. Надёжнее всего: пропорция сама подсказывает, что на что делить.</div></div>
+<div class="fbox"><b>Множитель изменения</b><div class="s">увеличить на p % → · (1 + p/100)<br>уменьшить на p % → · (1 − p/100)<br>на 100 % больше = в 2 раза · на 300 % больше = в 4 раза</div></div>
+<div class="fbox"><b>Изменения подряд</b><div class="s">Множители <b>перемножаются</b>, проценты <b>не складываются</b>. +10 % и ещё +10 % дают 1,1·1,1 = 1,21, то есть +21 %.</div></div>
+<div class="fbox"><b>Произведение и дробь</b><div class="s">ab: множители перемножаются.<br><span class="frac"><span>a</span><span>b</span></span>: множитель числителя делим на множитель знаменателя.</div></div>
+<div class="fbox"><b>Частые потери</b><div class="s">«25 % числа равны 34» - это не 25 % от 34.<br>Обратно от уменьшения на 20 % - деление на 0,8, а не прибавление 20 %.<br>«a больше b на p %» - эталон всегда b.</div></div>
+</div></div>
+<div class="card">
+<h2>1. Процент - это сотая часть</h2>
+<div class="def">Процент (лат. <i>pro centum</i> - с сотни) - это сотая часть целого: 1 % = <span class="frac"><span>1</span><span>100</span></span> = 0,01. Записать процент дробью значит поделить его на 100.</div><div class="fx">p % = <span class="frac"><span>p</span><span>100</span></span> &nbsp;·&nbsp; 25 % = <span class="frac"><span>25</span><span>100</span></span> = <span class="frac"><span>1</span><span>4</span></span> &nbsp;·&nbsp; 140 % = <span class="frac"><span>140</span><span>100</span></span> = 1,4</div><p>Обратно: чтобы из десятичной дроби получить проценты, умножь на 100. 0,07 = 7 %, 1,25 = 125 %, <span class="frac"><span>3</span><span>5</span></span> = 0,6 = 60 %.</p><div class="rule2"><b>Что выгодно помнить наизусть.</b> 50 % - половина, 25 % - четверть, 20 % - пятая часть, 10 % - десятая, 5 % - двадцатая, 12,5 % - восьмая, 4 % - двадцать пятая. Тогда многие проценты считаются устно.</div><div class="ex"><b class="t">Пример 1. Найти 1 % от 4500</b><div class="step">Один процент - сотая часть, значит просто делим на 100.</div><div class="fx">4500 : 100 = 45</div><div class="step mini">Один процент удобно находить первым действием: зная его, любой другой процент получаешь умножением. 7 % от 4500 = 45·7 = 315.</div></div><div class="warn">100 % - это всё число целиком, а не сто. 100 % от 46 равны 46. Ответ «100» здесь - типичная невнимательность.</div>
+<h3>Тренажёр: процент, дробь, десятичная</h3>
+<div class="tr" id="tr_pconv" data-title="процент, дробь, десятичная"></div>
+<h3>Задачи к этому блоку</h3>
+<div id="tasks1"></div>
+</div>
+<div class="card">
+<h2>2. Задача 1: процент от числа</h2>
+<div class="rule2"><b>Чтобы найти p % от числа a, надо умножить a на дробь, выражающую процент:</b> a · <span class="frac"><span>p</span><span>100</span></span>.</div><p>Есть три равноправных способа, выбирай тот, в котором меньше ошибаешься.</p><div class="ex"><b class="t">Пример 2. Найти 2 % от 25</b><div class="step">1. Через дробь: <span class="frac"><span>2</span><span>100</span></span> · 25 = 0,5.</div><div class="step">2. Через один процент: 25 : 100 = 0,25, и 0,25 · 2 = 0,5.</div><div class="step">3. Через пропорцию: 25 — 100 %, x — 2 %, откуда x = <span class="frac"><span>25 · 2</span><span>100</span></span> = 0,5.</div><div class="step mini">Пропорция длиннее, но в ней почти невозможно перепутать, что на что делить. На сложных процентах это окупается.</div></div><div class="ex"><b class="t">Пример 3. Найти 18<span class="frac"><span>1</span><span>3</span></span> % от 330</b><div class="step">1. Дробный процент не округляем: 18<span class="frac"><span>1</span><span>3</span></span> = <span class="frac"><span>55</span><span>3</span></span>.</div><div class="step">2. Значит нужно 330 · <span class="frac"><span>55</span><span>300</span></span>.</div><div class="step">3. Сокращаем 330 и 300 на 30: <span class="frac"><span>11 · 55</span><span>10</span></span>.</div><div class="fx"><span class="frac"><span>605</span><span>10</span></span> = 60,5</div><div class="step mini">Если бы взяли 18,33 %, получилось бы 60,489 - и ответ не совпал бы ни с одним вариантом. Дробные проценты всегда держим обыкновенной дробью.</div></div>
+<h3>Тренажёр: процент от числа</h3>
+<div class="tr" id="tr_pof" data-title="процент от числа"></div>
+<div class="gap" id="gap_g1"></div>
+<h3>Задачи к этому блоку</h3>
+<div id="tasks2"></div>
+</div>
+<div class="card">
+<h2>3. Задача 2: число по его проценту</h2>
+<div class="warn"><b>Самая частая ошибка темы.</b> «Найти число, 25 % которого равны 34» - это <b>не</b> «найти 25 % от 34». В первом случае ответ больше 34, во втором - меньше.</div><div class="rule2">Если известно, что p % числа равны b, то само число равно b : <span class="frac"><span>p</span><span>100</span></span>. То есть <b>делим</b>, а не умножаем.</div><div class="ex"><b class="t">Пример 4. 25 % числа равны 34</b><div class="step">Пропорция: 25 % — 34, 100 % — x.</div><div class="fx">x = <span class="frac"><span>100 · 34</span><span>25</span></span> = 136</div><div class="step">Устно: 25 % - это четверть, значит всё число в 4 раза больше.</div><div class="step mini">Проверка обязательна и занимает секунду: 136 · 0,25 = 34. Сошлось.</div></div><div class="ex"><b class="t">Пример 5. 156 % числа равны 21,84</b><div class="step">x = 21,84 : 1,56 = 2184 : 156 = 14.</div><div class="step mini">Процент больше 100 - значит искомое число <b>меньше</b> известной части. Это хороший способ проверить себя до вычислений.</div></div>
+<h3>Тренажёр: число по его проценту</h3>
+<div class="tr" id="tr_pfrom" data-title="число по его проценту"></div>
+<div class="gap" id="gap_g2"></div>
+<h3>Задачи к этому блоку</h3>
+<div id="tasks3"></div>
+</div>
+<div class="card">
+<h2>4. Задача 3: сколько процентов одно число от другого</h2>
+<div class="rule2">Одно из чисел берём за 100 % - то, <b>от</b> которого считаем. Второе - за x %. Тогда x = <span class="frac"><span>a</span><span>b</span></span> · 100.</div><div class="ex"><b class="t">Пример 6. Сколько процентов составляет 5 от 20</b><div class="step">20 — 100 %, 5 — x %.</div><div class="fx">x = <span class="frac"><span>5 · 100</span><span>20</span></span> = 25 %</div><div class="step mini">Устно: 5 - четверть от 20, а четверть это 25 %.</div></div><div class="ex"><b class="t">Пример 7. Сколько процентов составляет 12 от 6</b><div class="step">6 — 100 %, 12 — x %, откуда x = 200 %.</div><div class="step mini">12 вдвое больше 6 - значит 200 %. Ответ больше 100 пугать не должен.</div></div><div class="warn"><b>«Больше на сколько процентов» - это про разность.</b> 12 больше 8 на (12 − 8) : 8 = 50 %. А 8 меньше 12 на (12 − 8) : 12 = 33<span class="frac"><span>1</span><span>3</span></span> %. Числа те же, ответы разные, потому что эталон разный: за 100 % берём то, с чем сравниваем.</div>
+<h3>Тренажёр: сколько процентов</h3>
+<div class="tr" id="tr_pshare" data-title="сколько процентов"></div>
+<h3>Задачи к этому блоку</h3>
+<div id="tasks4"></div>
+</div>
+<div class="card">
+<h2>5. Увеличение и уменьшение: множитель изменения</h2>
+<div class="def">Увеличить величину на p % - значит умножить её на (1 + <span class="frac"><span>p</span><span>100</span></span>). Уменьшить на p % - умножить на (1 − <span class="frac"><span>p</span><span>100</span></span>).</div><div class="fx">+20 % → · 1,2 &nbsp;·&nbsp; −30 % → · 0,7 &nbsp;·&nbsp; +100 % → · 2 &nbsp;·&nbsp; +300 % → · 4</div><p>Множитель - главный рабочий инструмент темы. Он превращает любые разговоры про проценты в обычное умножение.</p><div class="ex"><b class="t">Пример 8. Два изменения подряд</b><div class="step">Число увеличили на 25 %, потом результат уменьшили на 20 %.</div><div class="step">1. Первый множитель 1,25, второй 0,8.</div><div class="step">2. Изменения идут подряд, значит множители перемножаются: 1,25 · 0,8 = 1.</div><div class="fx">Число вернулось к исходному: изменение 0 %</div><div class="step mini">Соблазн сказать «25 − 20 = 5 % роста» очень силён - и он неверен. Второй процент берётся уже от нового, большего числа.</div></div><div class="ex"><b class="t">Пример 9. Обратный ход</b><div class="step">Число уменьшили на 20 % и получили 96. Каким оно было?</div><div class="step">x · 0,8 = 96, значит x = 96 : 0,8 = 120.</div><div class="step mini">Прибавить к 96 двадцать процентов нельзя: получилось бы 115,2. Обратная операция к умножению - деление, а не «прибавить столько же процентов».</div></div>
+<h3>Тренажёр: множитель изменения</h3>
+<div class="tr" id="tr_pchange" data-title="множитель изменения"></div>
+<div class="gap" id="gap_g3"></div>
+<h3>Задачи к этому блоку</h3>
+<div id="tasks5"></div>
+</div>
+<div class="card">
+<h2>6. Изменение произведения и дроби</h2>
+<p>Задачи вида «одно число увеличили, другое уменьшили - что стало с произведением» решаются теми же множителями, без всяких конкретных чисел.</p><div class="rule2">Произведение: множители <b>перемножаются</b>. Дробь: множитель числителя <b>делится</b> на множитель знаменателя.</div><div class="ex"><b class="t">Пример 10. Произведение</b><div class="step">Одно число увеличили на 40 %, другое уменьшили на 10 %.</div><div class="step">Было ab, стало 1,4a · 0,9b = 1,26ab.</div><div class="fx">1,26 = 126 % ⇒ произведение выросло на 26 %</div><div class="step mini">Ответ не зависит от самих чисел - буквы a и b сократились. Если в условии чисел нет, их и не нужно придумывать.</div></div><div class="ex"><b class="t">Пример 11. Дробь</b><div class="step">Числитель уменьшили на 20 %, знаменатель увеличили на 60 %.</div><div class="step">Было <span class="frac"><span>a</span><span>b</span></span>, стало <span class="frac"><span>0,8a</span><span>1,6b</span></span> = 0,5 · <span class="frac"><span>a</span><span>b</span></span>.</div><div class="fx">0,5 = 50 % ⇒ дробь уменьшилась на 50 %</div><div class="step mini">Проверь знак ответа словами: дробь стала <b>меньше</b>, значит в ответе «уменьшилась». Числа 0,5 и «−50 %» - это разные ответы на разные вопросы.</div></div>
+<h3>Тренажёр: произведение и дробь (дополнительный)</h3>
+<p class="meta">Дополнительный - для отправки работы он не нужен.</p>
+<div class="tr" id="tr_pprod" data-title="произведение и дробь (дополнительный)"></div>
+<div class="gap" id="gap_g4"></div>
+<h3>Задачи к этому блоку</h3>
+<div id="tasks6"></div>
+</div>
+<div class="card sheet"><h2>Шпаргалка</h2>
+<p class="meta" style="font-size:14px">Печатается отдельно на один лист A4: Ctrl+P (⌘+P) → печать.</p>
+<h4>Три основные задачи</h4><div class="fgrid"><div class="fbox"><b>% от числа</b><div class="s">a · <span class="frac"><span>p</span><span>100</span></span><br>4 % от 75 = 75·0,04 = 3</div></div><div class="fbox"><b>Число по %</b><div class="s">часть : <span class="frac"><span>p</span><span>100</span></span><br>8 % = 24 ⇒ 24 : 0,08 = 300</div></div><div class="fbox"><b>Сколько % a от b</b><div class="s"><span class="frac"><span>a</span><span>b</span></span> · 100<br>5 от 20 = 25 %</div></div><div class="fbox"><b>Наизусть</b><div class="s">50 % = <span class="frac"><span>1</span><span>2</span></span> · 25 % = <span class="frac"><span>1</span><span>4</span></span> · 20 % = <span class="frac"><span>1</span><span>5</span></span> · 10 % = <span class="frac"><span>1</span><span>10</span></span> · 5 % = <span class="frac"><span>1</span><span>20</span></span> · 12,5 % = <span class="frac"><span>1</span><span>8</span></span></div></div><div class="fbox"><b>Множитель</b><div class="s">+p % → ·(1 + p/100)<br>−p % → ·(1 − p/100)<br>+100 % = ·2 · +300 % = ·4</div></div><div class="fbox"><b>Подряд</b><div class="s">Множители перемножаются.<br>1,1·1,1 = 1,21 ⇒ +21 %, а не +20 %</div></div><div class="fbox"><b>Произведение</b><div class="s">k = k₁·k₂<br>1,4·0,9 = 1,26 ⇒ +26 %</div></div><div class="fbox"><b>Дробь</b><div class="s">k = k₁ : k₂<br>0,8 : 1,6 = 0,5 ⇒ −50 %</div></div></div><h4>Пропорция на все случаи</h4><p>a — 100 %, x — p % ⇒ x = <span class="frac"><span>a · p</span><span>100</span></span>. Известны любые два - третье находится крест-накрест.</p><h4>Где теряют баллы</h4><p>«25 % числа равны 34» ≠ «25 % от 34» · обратно от −20 % - деление на 0,8 · проценты подряд не складываются · «a больше b на p %»: за 100 % берём b · 100 % от числа - это само число.</p>
+</div>
+<div class="card"><h2>Фото решений - по желанию</h2>
+<p class="meta">В полях виден только ответ, а преподаватель смотрит ещё и ход решения. Фото тетради прикладывать не обязательно, но с ними разбор будет точнее.</p>
+<ol class="steps-list"><li>Решай в тетради с полной записью, как на ЦТ.</li><li>Сфотографируй страницы при дневном свете, чтобы текст читался.</li><li>Нажми кнопку ниже: с телефона - «Камера» или «Фото», с компьютера - файл из папки.</li><li>Фото можно приложить несколько и отметить у каждого номер задачи.</li></ol>
+<input type="file" id="photos" accept="image/*" multiple style="margin-top:12px">
+<div class="thumbs" id="thumbs"></div></div>
+<div class="card"><h2>Отправь работу</h2>
+<p class="meta">Отправка откроется, когда будет вписано имя, отвечены все 18 задач и пройдены до конца обязательные тренажёры. Дополнительный тренажёр не требуется.</p>
+<div class="row"><button class="pri" id="send" type="button">Отправить на проверку</button><button id="report" type="button">Скачать копию себе</button></div>
+<div id="repnote" class="meta" style="margin-top:8px"></div></div>
+</div>
+<div class="bar"><button class="pri" id="checkall" type="button">Проверить все задачи</button><span id="progress" class="meta"></span></div>
+<script>
+
+"use strict";
+var started = Date.now();
+function e(s){return btoa(unescape(encodeURIComponent(s)));}
+function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return s;}}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function norm(s){
+  return String(s).toLowerCase().replace(/\s+/g,"")
+    .replace(/[\u2013\u2014\u2212]/g,"-")
+    .replace(/[\u00d7\u00b7]/g,"*")
+    .replace(/,/g,".")
+    .replace(/^(ответ:?|x=|y=|a=|n=)/,"");
+}
+function toNum(str){
+  var t = norm(str);
+  if(!t) return NaN;
+  t = t.replace(/\u221b/g,"cbrt").replace(/\u221a/g,"sqrt").replace(/\u03c0/g,"pi")
+       .replace(/\u00b2/g,"^2").replace(/\u00b3/g,"^3");
+  t = t.replace(/sqrt(\d+(?:\.\d+)?)/g,"sqrt($1)");
+  t = t.replace(/cbrt(\d+(?:\.\d+)?)/g,"cbrt($1)");
+  t = t.replace(/(\d)sqrt/g,"$1*sqrt").replace(/(\d)cbrt/g,"$1*cbrt");
+  t = t.replace(/(\))sqrt/g,"$1*sqrt").replace(/(\))cbrt/g,"$1*cbrt");
+  t = t.replace(/(\d)pi/g,"$1*pi");
+  t = t.replace(/(\d)\(/g,"$1*(").replace(/\)(\d)/g,")*$1").replace(/\)\(/g,")*(");
+  t = t.replace(/\^/g,"**");
+  if(!/^[-+*/().0-9a-z]+$/.test(t)) return NaN;
+  if(t.replace(/sqrt|cbrt|pi/g,"").match(/[a-z]/)) return NaN;
+  try{
+    var v = new Function("sqrt","cbrt","pi","return ("+t+");")(Math.sqrt, Math.cbrt, Math.PI);
+    return (typeof v === "number" && isFinite(v)) ? v : NaN;
+  }catch(err){ return NaN; }
+}
+function same(given, right, tol){
+  var a = toNum(given), b = toNum(right);
+  if(!isNaN(a) && !isNaN(b)){
+    var t = tol || 1e-4;
+    return Math.abs(a-b) <= Math.max(t, Math.abs(b)*t);
+  }
+  return norm(given) === norm(right);
+}
+function shuffle(arr){
+  var a = arr.slice();
+  for(var i=a.length-1;i>0;i--){ var j = Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+
+var TOPIC = "Счёт с процентами";
+var FILEKEY = "проценты11";
+var KEYPAD = [",", "−", "/"];
+var REQ_TR = ["pconv", "pof", "pfrom", "pshare", "pchange"];
+var EXTRA_TR = ["pprod"];
+var TR_NAMES = {"pconv": "процент, дробь, десятичная", "pof": "процент от числа", "pfrom": "число по его проценту", "pshare": "сколько процентов", "pchange": "множитель изменения", "pprod": "произведение и дробь (дополнительный)"};
+var TASKS = [{"id": 1, "blk": "1", "lvl": "база", "type": "num", "text": "Вычисли 1 % от 4500.", "ans": ["NDU="], "hints": ["Один процент - это сотая часть числа.", "Чтобы найти сотую часть, раздели на 100.", "4500 : 100 - просто убери два нуля."], "sol": "1 % от 4500 = 4500 : 100 = <b>45</b>. Один процент удобно находить первым: дальше любой другой процент - это умножение на его номер."}, {"id": 2, "blk": "1", "lvl": "база", "type": "num", "text": "Вычисли 4 % от 75.", "ans": ["Mw=="], "hints": ["4 % = <span class=\"frac\"><span>4</span><span>100</span></span> = 0,04.", "Умножь 75 на 0,04.", "Или так: 1 % от 75 равен 0,75, значит 4 % - это 0,75·4."], "sol": "75 · 0,04 = <b>3</b>. Через один процент: 0,75 · 4 = 3."}, {"id": 3, "blk": "1", "lvl": "средний", "type": "num", "text": "Вычисли 18<span class=\"frac\"><span>1</span><span>3</span></span> % от 330.", "ans": ["NjAsNQ==", "MTIxLzI="], "hints": ["Переведи 18<span class=\"frac\"><span>1</span><span>3</span></span> в неправильную дробь: <span class=\"frac\"><span>55</span><span>3</span></span>.", "Значит надо умножить 330 на <span class=\"frac\"><span>55</span><span>300</span></span>.", "330 и 300 сократятся на 30."], "sol": "330 · <span class=\"frac\"><span>55</span><span>300</span></span> = <span class=\"frac\"><span>11 · 55</span><span>10</span></span> = <span class=\"frac\"><span>605</span><span>10</span></span> = <b>60,5</b>. Десятичную 18,333… брать нельзя - ответ будет неточным."}, {"id": 4, "blk": "2", "lvl": "база", "type": "num", "text": "Найди число, если 3 % его равны 1,5.", "ans": ["NTA="], "hints": ["Мы ищем само число, а не 3 % от 1,5.", "Пропорция: 3 % - это 1,5, а 100 % - это x.", "x = 1,5 : 0,03."], "sol": "1,5 : 0,03 = 150 : 3 = <b>50</b>. Проверка: 3 % от 50 = 1,5."}, {"id": 5, "blk": "2", "lvl": "база", "type": "num", "text": "Найди число, если 8 % его равны 24.", "ans": ["MzAw"], "hints": ["8 % = 0,08.", "Если x · 0,08 = 24, то x = 24 : 0,08.", "24 : 0,08 = 2400 : 8."], "sol": "24 : 0,08 = 2400 : 8 = <b>300</b>. Проверка: 300 · 0,08 = 24."}, {"id": 6, "blk": "2", "lvl": "средний", "type": "num", "text": "Найди число, если 5 % его составляют 23 % от 15,5.", "ans": ["NzEsMw==", "NzEzLzEw"], "hints": ["Сначала посчитай правую часть: 23 % от 15,5.", "15,5 · 0,23 = 3,565.", "Теперь ищем число, 5 % которого равны 3,565: делим на 0,05."], "sol": "23 % от 15,5 = 15,5·0,23 = 3,565. Дальше 3,565 : 0,05 = 356,5 : 5 = <b>71,3</b>. Делить на 0,05 - то же самое, что умножать на 20."}, {"id": 7, "blk": "3", "lvl": "база", "type": "num", "text": "Сколько процентов составляет число 5 от числа 20? Ответ числом, без знака %.", "ans": ["MjU="], "hints": ["За 100 % берём то число, <b>от</b> которого считаем, то есть 20.", "5 : 20 = 0,25.", "0,25 - это 25 сотых, то есть 25 %."], "sol": "5 : 20 = 0,25 = <b>25</b> %. Устно: 5 - это четверть от 20, а четверть - 25 %."}, {"id": 8, "blk": "3", "lvl": "средний", "type": "num", "text": "Сколько процентов составляет число 34 от числа 25? Ответ числом, без знака %.", "ans": ["MTM2"], "hints": ["За 100 % берём 25.", "34 : 25 = 1,36.", "Больше единицы - значит процентов больше 100."], "sol": "34 : 25 = 1,36 = <b>136</b> %. Ответ больше 100 - это нормально, 34 просто больше эталона."}, {"id": 9, "blk": "3", "lvl": "средний", "type": "num", "text": "На сколько процентов число 12 больше числа 8? Ответ числом, без знака %.", "ans": ["NTA="], "hints": ["За 100 % берём то, с чем сравниваем, то есть 8.", "Разность 12 − 8 = 4, и её надо сравнить с 8.", "4 : 8 = 0,5."], "sol": "(12 − 8) : 8 = 4 : 8 = 0,5 = <b>50</b> %. Обрати внимание: 8 меньше 12 не на 50 %, а на 33<span class=\"frac\"><span>1</span><span>3</span></span> % - эталон другой."}, {"id": 10, "blk": "4", "lvl": "база", "type": "num", "text": "Число 80 увеличили на 35 %. Что получилось?", "ans": ["MTA4"], "hints": ["Увеличение на 35 % - это умножение на 1,35.", "80 · 1,35.", "Или так: 80 + 35 % от 80 = 80 + 28."], "sol": "80 · 1,35 = <b>108</b>. Через слагаемое: 35 % от 80 = 28, и 80 + 28 = 108."}, {"id": 11, "blk": "4", "lvl": "средний", "type": "num", "text": "Число уменьшили на 20 % и получили 96. Каким было число?", "ans": ["MTIw"], "hints": ["Уменьшение на 20 % - это умножение на 0,8.", "Значит x · 0,8 = 96.", "x = 96 : 0,8."], "sol": "96 : 0,8 = 960 : 8 = <b>120</b>. Проверка: 120 · 0,8 = 96. Прибавлять 20 % к 96 нельзя - получилось бы 115,2, а это неверно."}, {"id": 12, "blk": "4", "lvl": "сложный", "type": "num", "text": "Число увеличили на 25 %, а потом результат уменьшили на 20 %. На сколько процентов изменилось число по сравнению с началом? Ответ числом, уменьшение - со знаком минус.", "ans": ["MA=="], "hints": ["Каждое изменение - это свой множитель: 1,25 и 0,8.", "Изменения идут подряд, значит множители перемножаются.", "1,25 · 0,8 = 1."], "sol": "1,25 · 0,8 = 1, то есть число вернулось к исходному: изменение <b>0</b> %. Проценты нельзя складывать: 25 − 20 = 5 здесь неверно, потому что второй процент берётся уже от другого числа."}, {"id": 13, "blk": "5", "lvl": "средний", "type": "num", "text": "Цена выросла на 10 %, а потом ещё на 10 %. На сколько процентов она выросла по сравнению с первоначальной? Ответ числом, без знака %.", "ans": ["MjE="], "hints": ["Два подряд идущих изменения - два множителя 1,1.", "1,1 · 1,1 = 1,21.", "1,21 - это 121 % от начальной цены."], "sol": "1,1·1,1 = 1,21 = 121 %, значит рост на <b>21</b> %, а не на 20. Лишний процент - это «процент от процента»."}, {"id": 14, "blk": "5", "lvl": "средний", "type": "num", "text": "Вычисли 20 % от 30 % от 500.", "ans": ["MzA="], "hints": ["Считай изнутри: сначала 30 % от 500.", "30 % от 500 = 150.", "Теперь 20 % от 150."], "sol": "30 % от 500 = 150; 20 % от 150 = <b>30</b>. Одним действием: 500 · 0,3 · 0,2 = 500 · 0,06 = 30, то есть это просто 6 % от 500."}, {"id": 15, "blk": "5", "lvl": "сложный", "type": "num", "text": "Число 400 дважды уменьшили на один и тот же процент и получили 324. На сколько процентов уменьшали каждый раз? Ответ числом, без знака %.", "ans": ["MTA="], "hints": ["Пусть множитель одного уменьшения равен k. Тогда 400 · k² = 324.", "k² = 324 : 400 = 0,81.", "k = 0,9, а это уменьшение на 10 %."], "sol": "400k² = 324 ⇒ k² = 0,81 ⇒ k = 0,9. Множитель 0,9 - это уменьшение на <b>10</b> %. Проверка: 400·0,9 = 360, 360·0,9 = 324."}, {"id": 16, "blk": "6", "lvl": "средний", "type": "num", "text": "Одно из двух чисел увеличили на 40 %, другое уменьшили на 10 %. На сколько процентов изменилось произведение? Ответ числом, уменьшение - со знаком минус.", "ans": ["MjY="], "hints": ["Обозначь числа a и b, произведение ab.", "Стало 1,4a и 0,9b.", "1,4 · 0,9 = 1,26, то есть 126 % от прежнего."], "sol": "1,4a · 0,9b = 1,26ab = 126 % от ab, значит произведение выросло на <b>26</b> %."}, {"id": 17, "blk": "6", "lvl": "сложный", "type": "num", "text": "Одно из двух чисел уменьшили на 25 %, другое - на 50 %. На сколько процентов изменилось произведение? Ответ числом, уменьшение - со знаком минус.", "ans": ["LTYyLDU=", "LTEyNS8y"], "hints": ["Множители: 0,75 и 0,5.", "0,75 · 0,5 = 0,375.", "Осталось 37,5 % от прежнего произведения."], "sol": "0,75 · 0,5 = 0,375 = 37,5 %. Значит произведение уменьшилось на 100 − 37,5 = <b>62,5</b> %, ответ −62,5."}, {"id": 18, "blk": "6", "lvl": "сложный", "type": "num", "text": "Числитель дроби уменьшили на 20 %, а знаменатель увеличили на 60 %. На сколько процентов изменилась дробь? Ответ числом, уменьшение - со знаком минус.", "ans": ["LTUw"], "hints": ["Числитель умножился на 0,8, знаменатель - на 1,6.", "Вся дробь умножилась на 0,8 : 1,6.", "0,8 : 1,6 = 0,5."], "sol": "<span class=\"frac\"><span>0,8a</span><span>1,6b</span></span> = 0,5 · <span class=\"frac\"><span>a</span><span>b</span></span>, то есть осталось 50 %. Дробь уменьшилась на <b>50</b> %, ответ −50."}];
+var TR_ITEMS = {"pconv":[{"q": "Какой обыкновенной дробью записывается 25 %?", "opts": ["1/4", "4/1", "100/4", "1/400"], "ans": "1/4", "why": "25 % = <span class=\"frac\"><span>25</span><span>100</span></span> = <span class=\"frac\"><span>1</span><span>4</span></span>. Процент - это сотая часть, поэтому знаменатель 100, а дальше сокращаем."}, {"q": "Какой обыкновенной дробью записывается 20 %?", "opts": ["1/5", "5/1", "100/5", "1/500"], "ans": "1/5", "why": "20 % = <span class=\"frac\"><span>20</span><span>100</span></span> = <span class=\"frac\"><span>1</span><span>5</span></span>. Процент - это сотая часть, поэтому знаменатель 100, а дальше сокращаем."}, {"q": "Какой обыкновенной дробью записывается 12,5 %?", "opts": ["1/8", "8/1", "100/8", "1/800"], "ans": "1/8", "why": "12,5 % = <span class=\"frac\"><span>12,5</span><span>100</span></span> = <span class=\"frac\"><span>1</span><span>8</span></span>. Процент - это сотая часть, поэтому знаменатель 100, а дальше сокращаем."}, {"q": "Какой обыкновенной дробью записывается 75 %?", "opts": ["3/4", "4/3", "300/4", "3/400"], "ans": "3/4", "why": "75 % = <span class=\"frac\"><span>75</span><span>100</span></span> = <span class=\"frac\"><span>3</span><span>4</span></span>. Процент - это сотая часть, поэтому знаменатель 100, а дальше сокращаем."}, {"q": "Какой обыкновенной дробью записывается 5 %?", "opts": ["1/20", "20/1", "100/20", "1/2000"], "ans": "1/20", "why": "5 % = <span class=\"frac\"><span>5</span><span>100</span></span> = <span class=\"frac\"><span>1</span><span>20</span></span>. Процент - это сотая часть, поэтому знаменатель 100, а дальше сокращаем."}, {"q": "Какой обыкновенной дробью записывается 4 %?", "opts": ["1/25", "25/1", "100/25", "1/2500"], "ans": "1/25", "why": "4 % = <span class=\"frac\"><span>4</span><span>100</span></span> = <span class=\"frac\"><span>1</span><span>25</span></span>. Процент - это сотая часть, поэтому знаменатель 100, а дальше сокращаем."}, {"q": "Сколько это в процентах: 0,07? Ответ числом, без знака %.", "ans": ["7"], "why": "0,07 = <span class=\"frac\"><span>7</span><span>100</span></span> = 7 %. Чтобы перевести десятичную в проценты, умножь на 100."}, {"q": "Сколько это в процентах: <span class=\"frac\"><span>3</span><span>5</span></span>? Ответ числом, без знака %.", "ans": ["60"], "why": "<span class=\"frac\"><span>3</span><span>5</span></span> = 0,6 = 60 %."}, {"q": "Сколько это в процентах: 1,25? Ответ числом, без знака %.", "ans": ["125"], "why": "1,25 = 125 %. Проценты бывают больше 100 - это просто значит «больше целого»."}, {"q": "Чему равно 140 % в виде десятичной дроби? Ответ числом, без знака %.", "ans": ["1,4", "7/5"], "why": "140 % = <span class=\"frac\"><span>140</span><span>100</span></span> = 1,4."}],"pof":[{"q": "Как найти 7 % от числа 300?", "opts": ["300 · 0,07", "300 : 0,07", "300 · 7", "300 : 7"], "ans": "300 · 0,07", "why": "«Процент от числа» - это всегда умножение на дробь, выражающую процент: 300 · <span class=\"frac\"><span>7</span><span>100</span></span> = 21."}, {"q": "Сколько составляет 50 % от числа?", "opts": ["половину", "пятую часть", "два числа", "сотую часть"], "ans": "половину", "why": "50 % = <span class=\"frac\"><span>50</span><span>100</span></span> = <span class=\"frac\"><span>1</span><span>2</span></span>. Полезно помнить так же: 25 % - четверть, 20 % - пятая часть, 10 % - десятая."}, {"q": "Чему равны 100 % от числа 46?", "opts": ["46", "4600", "0,46", "100"], "ans": "46", "why": "100 % - это всё число целиком: 46 · <span class=\"frac\"><span>100</span><span>100</span></span> = 46."}, {"q": "Вычисли 1 % от 4500.", "ans": ["45"], "why": "4500 · 0,01 = 45. Сначала находим один процент (4500 : 100 = 45), потом умножаем на 1."}, {"q": "Вычисли 4 % от 75.", "ans": ["3"], "why": "75 · 0,04 = 3. Сначала находим один процент (75 : 100 = 0,75), потом умножаем на 4."}, {"q": "Вычисли 25 % от 340.", "ans": ["85"], "why": "340 · 0,25 = 85. Сначала находим один процент (340 : 100 = 3,4), потом умножаем на 25."}, {"q": "Вычисли 12 % от 250.", "ans": ["30"], "why": "250 · 0,12 = 30. Сначала находим один процент (250 : 100 = 2,5), потом умножаем на 12."}, {"q": "Вычисли 150 % от 18.", "ans": ["27"], "why": "18 · 1,5 = 27. Сначала находим один процент (18 : 100 = 0,18), потом умножаем на 150."}, {"q": "Вычисли 7 % от 1200.", "ans": ["84"], "why": "1200 · 0,07 = 84. Сначала находим один процент (1200 : 100 = 12), потом умножаем на 7."}],"pfrom":[{"q": "Известно, что 25 % числа равны 34. Что ищем?", "opts": ["само число, оно больше 34", "25 % от 34", "34 % от 25", "разность 34 и 25"], "ans": "само число, оно больше 34", "why": "25 % - это четверть, значит всё число в 4 раза больше: 34 · 4 = 136. Путать с «25 % от 34» - главная ошибка в этой теме."}, {"q": "Как найти число, если 8 % его равны 24?", "opts": ["24 : 0,08", "24 · 0,08", "24 : 8", "24 · 8"], "ans": "24 : 0,08", "why": "Если x · 0,08 = 24, то x = 24 : 0,08 = 300. Проверка: 300 · 0,08 = 24."}, {"q": "5 % числа равны 4. Чему равно число?", "opts": ["80", "20", "0,2", "125"], "ans": "80", "why": "5 % - это <span class=\"frac\"><span>1</span><span>20</span></span> часть, значит число в 20 раз больше: 4 · 20 = 80."}, {"q": "Найди число, если 3 % его равны 1,5.", "ans": ["50"], "why": "Пропорция: 3 % — 1,5, 100 % — x. Отсюда x = 1,5 : 0,03 = 50."}, {"q": "Найди число, если 8 % его равны 24.", "ans": ["300"], "why": "Пропорция: 8 % — 24, 100 % — x. Отсюда x = 24 : 0,08 = 300."}, {"q": "Найди число, если 140 % его равны 182.", "ans": ["130"], "why": "Пропорция: 140 % — 182, 100 % — x. Отсюда x = 182 : 1,4 = 130."}, {"q": "Найди число, если 25 % его равны 9.", "ans": ["36"], "why": "Пропорция: 25 % — 9, 100 % — x. Отсюда x = 9 : 0,25 = 36."}, {"q": "Найди число, если 4 % его равны 13.", "ans": ["325"], "why": "Пропорция: 4 % — 13, 100 % — x. Отсюда x = 13 : 0,04 = 325."}, {"q": "Найди число, если 120 % его равны 66.", "ans": ["55"], "why": "Пропорция: 120 % — 66, 100 % — x. Отсюда x = 66 : 1,2 = 55."}],"pshare":[{"q": "Сколько процентов составляет число 5 от числа 20?", "opts": ["25 %", "400 %", "15 %", "4 %"], "ans": "25 %", "why": "За 100 % берём то число, <b>от</b> которого считаем, то есть 20. 5 : 20 = 0,25 = 25 %."}, {"q": "Сколько процентов составляет число 12 от числа 6?", "opts": ["200 %", "50 %", "20 %", "6 %"], "ans": "200 %", "why": "12 : 6 = 2 = 200 %. Проценты больше 100 - нормально, число просто больше эталона."}, {"q": "Какое число берём за 100 % в вопросе «сколько процентов a составляет от b»?", "opts": ["b", "a", "a + b", "меньшее из двух"], "ans": "b", "why": "За 100 % всегда берётся то, что стоит после слова «от». Именно на него делим."}, {"q": "Сколько процентов составляет 5 от 20? Ответ числом, без знака %.", "ans": ["25"], "why": "5 : 20 = 0,25, умножаем на 100 и получаем 25 %."}, {"q": "Сколько процентов составляет 34 от 25? Ответ числом, без знака %.", "ans": ["136"], "why": "34 : 25 = 1,36, умножаем на 100 и получаем 136 %."}, {"q": "Сколько процентов составляет 39 от 52? Ответ числом, без знака %.", "ans": ["75"], "why": "39 : 52 = 0,75, умножаем на 100 и получаем 75 %."}, {"q": "Сколько процентов составляет 18 от 24? Ответ числом, без знака %.", "ans": ["75"], "why": "18 : 24 = 0,75, умножаем на 100 и получаем 75 %."}, {"q": "Сколько процентов составляет 7 от 28? Ответ числом, без знака %.", "ans": ["25"], "why": "7 : 28 = 0,25, умножаем на 100 и получаем 25 %."}, {"q": "Сколько процентов составляет 33 от 20? Ответ числом, без знака %.", "ans": ["165"], "why": "33 : 20 = 1,65, умножаем на 100 и получаем 165 %."}],"pchange":[{"q": "Величину увеличили на 30 %. На какой множитель это равносильно?", "opts": ["· 1,3", "· 0,3", "· 0,7", "· 30"], "ans": "· 1,3", "why": "x + 0,3x = 1,3x. Увеличение на p % - это умножение на (1 + p/100)."}, {"q": "Величину уменьшили на 30 %. На какой множитель это равносильно?", "opts": ["· 0,7", "· 0,3", "· 1,3", "· −0,3"], "ans": "· 0,7", "why": "x − 0,3x = 0,7x. Осталось 70 % от исходного."}, {"q": "Увеличение на 100 % - это во сколько раз?", "opts": ["в 2 раза", "в 100 раз", "в 1,5 раза", "в 10 раз"], "ans": "в 2 раза", "why": "x + x = 2x. А увеличение на 300 % - это уже в 4 раза: x + 3x = 4x."}, {"q": "Число 80 увеличили на 35 %. Что получилось?", "ans": ["108"], "why": "Множитель изменения: 1,35. Значит 80 · 1,35 = 108."}, {"q": "Число 250 уменьшили на 12 %. Что получилось?", "ans": ["220"], "why": "Множитель изменения: 0,88. Значит 250 · 0,88 = 220."}, {"q": "Число 60 увеличили на 150 %. Что получилось?", "ans": ["150"], "why": "Множитель изменения: 2,5. Значит 60 · 2,5 = 150."}, {"q": "Число 500 уменьшили на 4 %. Что получилось?", "ans": ["480"], "why": "Множитель изменения: 0,96. Значит 500 · 0,96 = 480."}, {"q": "Число 36 увеличили на 25 %. Что получилось?", "ans": ["45"], "why": "Множитель изменения: 1,25. Значит 36 · 1,25 = 45."}, {"q": "Число 90 уменьшили на 40 %. Что получилось?", "ans": ["54"], "why": "Множитель изменения: 0,6. Значит 90 · 0,6 = 54."}],"pprod":[{"q": "Одно из двух чисел увеличили на 40 %, другое уменьшили на 10 %. На сколько процентов изменится их произведение? Ответ числом, уменьшение - со знаком минус.", "ans": ["26"], "why": "Произведение умножается на 1,4 · 0,9 = 1,26, то есть увеличится на 26 %."}, {"q": "Одно из двух чисел уменьшили на 25 %, другое уменьшили на 50 %. На сколько процентов изменится их произведение? Ответ числом, уменьшение - со знаком минус.", "ans": ["-62,5", "-125/2"], "why": "Произведение умножается на 0,75 · 0,5 = 0,375, то есть уменьшится на 62,5 %."}, {"q": "Одно из двух чисел увеличили на 20 %, другое увеличили на 20 %. На сколько процентов изменится их произведение? Ответ числом, уменьшение - со знаком минус.", "ans": ["44"], "why": "Произведение умножается на 1,2 · 1,2 = 1,44, то есть увеличится на 44 %."}, {"q": "Числитель дроби уменьшили на 20 %, а знаменатель увеличили на 60 %. На сколько процентов изменится дробь? Ответ числом, уменьшение - со знаком минус.", "ans": ["-50"], "why": "Числитель стал 0,8 от прежнего, знаменатель 1,6. Дробь умножилась на 0,8 : 1,6 = 0,5, то есть уменьшится на 50 %."}, {"q": "Одно из двух чисел увеличили на 50 %, другое уменьшили на 20 %. На сколько процентов изменится их произведение? Ответ числом, уменьшение - со знаком минус.", "ans": ["20"], "why": "Произведение умножается на 1,5 · 0,8 = 1,2, то есть увеличится на 20 %."}, {"q": "Одно из двух чисел увеличили на 10 %, другое уменьшили на 10 %. На сколько процентов изменится их произведение? Ответ числом, уменьшение - со знаком минус.", "ans": ["-1"], "why": "Произведение умножается на 1,1 · 0,9 = 0,99, то есть уменьшится на 1 %."}, {"q": "Одно из двух чисел уменьшили на 40 %, другое уменьшили на 40 %. На сколько процентов изменится их произведение? Ответ числом, уменьшение - со знаком минус.", "ans": ["-64"], "why": "Произведение умножается на 0,6 · 0,6 = 0,36, то есть уменьшится на 64 %."}, {"q": "Одно из двух чисел увеличили на 25 %, другое уменьшили на 20 %. На сколько процентов изменится их произведение? Ответ числом, уменьшение - со знаком минус.", "ans": ["0"], "why": "Произведение умножается на 1,25 · 0,8 = 1, то есть не изменится на 0 %."}]};
+var GAP_DATA = {"g1":{"title": "Заполни пропуски: три основные задачи", "html": "<p class=\"meta\">Все три задачи решаются одной пропорцией. Числа пиши без знака %.</p><div class=\"gline\">1) 6 % от 250 равны <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">2) Один процент от 250 равен <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">3) Число, 6 % которого равны 30, равно <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">4) Число 6 составляет от числа 250 ровно <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\"> %.</div><div class=\"gline\">5) Число 250 составляет от числа 200 ровно <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\"> %.</div>", "ans": ["15", "2,5", "500", "2,4", "125"]},"g2":{"title": "Заполни пропуски: число по его проценту", "html": "<p class=\"meta\">Найди число, если 5 % его составляют 23 % от 15,5.</p><div class=\"gline\">1) 23 % от 15,5 равны <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">2) Значит 5 % искомого числа равны <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">3) Один процент искомого числа равен <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">4) Всё число равно <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">5) Проверка: 5 % от ответа равны <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div>", "ans": ["3,565", "3,565", "0,713", "71,3", "3,565"]},"g3":{"title": "Заполни пропуски: множитель изменения", "html": "<p class=\"meta\">Число 400 сначала увеличили на 25 %, потом результат уменьшили на 20 %.</p><div class=\"gline\">1) Множитель первого изменения равен <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">2) После первого изменения получилось <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">3) Множитель второго изменения равен <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">4) Итоговое число равно <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">5) По сравнению с началом число изменилось на <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\"> %.</div>", "ans": ["1,25", "500", "0,8", "400", "0"]},"g4":{"title": "Заполни пропуски: дробь и проценты", "html": "<p class=\"meta\">Числитель дроби уменьшили на 20 %, а знаменатель увеличили на 60 %.</p><div class=\"gline\">1) Числитель умножился на <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">2) Знаменатель умножился на <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">3) Вся дробь умножилась на <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\"> (десятичной дробью).</div><div class=\"gline\">4) Это составляет от прежней дроби <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\"> %.</div><div class=\"gline\">5) Значит дробь уменьшилась на <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\"> %.</div>", "ans": ["0,8", "1,6", "0,5", "50", "50"]}};
+var GAP_ANS = {"g1":["15", "2,5", "500", "2,4", "125"],"g2":["3,565", "3,565", "0,713", "71,3", "3,565"],"g3":["1,25", "500", "0,8", "400", "0"],"g4":["0,8", "1,6", "0,5", "50", "50"]};
+
+window.TRAPI = {};
+function makeTrainer(id, items){
+  var host = document.getElementById("tr_"+id);
+  if(!host) return;
+  var st = {order: shuffle(items.map(function(_,i){return i;})), cur:0, right:0, answered:false, done:false};
+  function render(){
+    if(st.cur >= items.length){
+      st.done = true;
+      host.innerHTML = '<div class="trhead"><b>Тренажёр пройден</b>'+
+        '<span class="trbar">'+host.dataset.title+'</span></div>'+
+        '<p class="trdone">Готово: верно '+st.right+' из '+items.length+'.</p>'+
+        '<button class="sm again" type="button">Пройти заново</button>';
+      host.querySelector(".again").addEventListener("click", function(){
+        st.order = shuffle(items.map(function(_,i){return i;}));
+        st.cur = 0; st.right = 0; st.answered = false; st.done = false;
+        render(); SAVE.touch(true);
+      });
+      progress();
+      return;
+    }
+    var it = items[st.order[st.cur]];
+    var h = '<div class="trhead"><b>Вопрос '+(st.cur+1)+' из '+items.length+'</b>'+
+            '<span class="trbar">верно '+st.right+'</span></div>'+
+            '<div class="trq">'+it.q+'</div>';
+    if(it.fig){ h += '<div class="fig">'+it.fig+'</div>'; }
+    if(it.opts){
+      var opts = shuffle(it.opts);
+      h += '<div class="tropts">'+opts.map(function(o){
+        return '<label data-k="'+e(o)+'">'+o+'</label>';}).join("")+'</div>';
+    } else {
+      h += '<div class="keys">'+KEYPAD.map(function(k){
+             return '<button class="key" data-k="'+k+'" type="button">'+k+'</button>';}).join("")+'</div>'+
+           '<input type="text" class="tri" inputmode="text" autocapitalize="off" autocorrect="off" '+
+           'autocomplete="off" spellcheck="false" placeholder="ответ">';
+    }
+    h += '<div class="row" style="margin-top:10px"><button class="pri sm go" type="button">Ответить</button></div>'+
+         '<div class="whybox"></div>';
+    host.innerHTML = h;
+    var picked = null;
+    host.querySelectorAll(".tropts label").forEach(function(l){
+      l.addEventListener("click", function(){
+        if(st.answered) return;
+        host.querySelectorAll(".tropts label").forEach(function(x){x.classList.remove("sel");});
+        l.classList.add("sel"); picked = d(l.dataset.k);
+      });
+    });
+    host.querySelectorAll(".key").forEach(function(b){
+      b.addEventListener("click", function(){
+        var inp = host.querySelector(".tri");
+        var k = b.dataset.k === "\u2212" ? "-" : b.dataset.k;
+        var s = inp.selectionStart; if(s===null||s===undefined) s = inp.value.length;
+        var f = inp.selectionEnd; if(f===null||f===undefined) f = s;
+        inp.value = inp.value.slice(0,s)+k+inp.value.slice(f);
+        inp.focus(); inp.setSelectionRange(s+k.length, s+k.length);
+      });
+    });
+    var inpEl = host.querySelector(".tri");
+    if(inpEl){
+      inpEl.addEventListener("keydown", function(ev){
+        if(ev.key === "Enter"){ ev.preventDefault(); host.querySelector(".go").click(); }
+      });
+    }
+    host.querySelector(".go").addEventListener("click", function(){
+      var btn = host.querySelector(".go");
+      if(st.answered){ st.cur++; st.answered = false; render(); SAVE.touch(true); return; }
+      var given = it.opts ? picked : (host.querySelector(".tri").value || "");
+      if(!given || !String(given).trim()) return;
+      var ok = it.opts ? (norm(given) === norm(it.ans))
+                       : it.ans.some(function(a){ return same(given, a, it.tol); });
+      st.answered = true;
+      if(ok) st.right++;
+      if(it.opts){
+        host.querySelectorAll(".tropts label").forEach(function(x){
+          var val = d(x.dataset.k);
+          if(norm(val) === norm(it.ans)) x.classList.add("good");
+          else if(x.classList.contains("sel")) x.classList.add("miss");
+        });
+      } else {
+        host.querySelector(".tri").classList.add(ok ? "ok" : "bad");
+      }
+      host.querySelector(".whybox").innerHTML =
+        '<div class="trwhy"><b>'+(ok?"Верно.":"Неверно, правильный ответ: "+esc(it.opts?it.ans:it.ans[0])+".")+
+        '</b> '+it.why+'</div>';
+      btn.textContent = (st.cur+1 >= items.length) ? "Завершить" : "Дальше";
+      SAVE.touch(true);
+    });
+  }
+  window.TRAPI[id] = {
+    get: function(){ return {order:st.order, cur:st.cur, right:st.right, done:st.done}; },
+    apply: function(s){
+      if(!s || !s.order || s.order.length !== items.length) return;
+      st.order = s.order; st.cur = s.cur||0; st.right = s.right||0;
+      st.done = !!s.done; st.answered = false;
+      render();
+    },
+    isDone: function(){ return st.done; }
+  };
+  render();
+}
+function trDoneCount(){
+  return REQ_TR.filter(function(id){ return window.TRAPI[id] && window.TRAPI[id].isDone(); }).length;
+}
+
+
+window.GAPST = {};
+function makeGap(id, data){
+  var host = document.getElementById("gap_"+id);
+  if(!host) return;
+  var st = {vals: data.ans.map(function(){return "";}), checked:false};
+  window.GAPST[id] = st;
+  var html = '<div class="trhead"><b>'+data.title+'</b></div>' + data.html +
+             '<div class="row" style="margin-top:10px">'+
+             '<button class="pri sm gchk" type="button">Проверить</button></div><div class="gv"></div>';
+  host.innerHTML = html;
+  var inputs = host.querySelectorAll("input.gi");
+  inputs.forEach(function(inp, i){
+    inp.addEventListener("input", function(){ st.vals[i] = inp.value; SAVE.touch(); });
+    inp.addEventListener("keydown", function(ev){
+      if(ev.key === "Enter"){ ev.preventDefault(); host.querySelector(".gchk").click(); }
+    });
+  });
+  host.querySelector(".gchk").addEventListener("click", function(){
+    st.checked = true;
+    paint();
+    SAVE.touch(true);
+  });
+  function paint(){
+    var bad = 0;
+    inputs.forEach(function(inp, i){
+      inp.classList.remove("ok","bad");
+      if(!st.checked) return;
+      var ok = same(inp.value, data.ans[i], data.tol);
+      inp.classList.add(ok ? "ok" : "bad");
+      if(!ok) bad++;
+    });
+    var v = host.querySelector(".gv");
+    if(!st.checked){ v.textContent = ""; v.className = "gv"; return; }
+    v.className = "gv " + (bad ? "bad-note" : "");
+    v.style.color = bad ? "" : "var(--ok)";
+    v.textContent = bad ? ("Красным отмечены "+bad+" неверных ответа - поправь и проверь ещё раз.")
+                        : "Всё верно, шаги сходятся.";
+  }
+  window.GAPST[id].apply = function(s){
+    if(!s || !s.vals) return;
+    st.vals = s.vals.slice(0, inputs.length);
+    st.checked = !!s.checked;
+    inputs.forEach(function(inp,i){ inp.value = st.vals[i] || ""; });
+    paint();
+  };
+  window.GAPST[id].get = function(){ return {vals: st.vals, checked: st.checked}; };
+}
+window.GAPFLUSH = function(){
+  Object.keys(window.GAPST).forEach(function(id){
+    var host = document.getElementById("gap_"+id);
+    if(!host) return;
+    var st = window.GAPST[id];
+    host.querySelectorAll("input.gi").forEach(function(inp,i){ st.vals[i] = inp.value; });
+  });
+};
+
+
+var state = {};
+TASKS.forEach(function(t){
+  state[t.id] = {tries:0, hints:0, done:false, ok:false, given:"", sel:null};
+  var box = document.getElementById("tasks"+(t.blk||"1")) || document.getElementById("tasks1");
+  var el = document.createElement("div");
+  el.className = "task"; el.id = "t"+t.id;
+  var body = '<div><span class="tnum">'+t.id+'.</span>'+t.text+
+             '<span class="lvl">'+t.lvl+'</span></div>';
+  if(t.img){ body += '<div class="fig">'+t.img+'</div>'; }
+  if(t.type === "choice"){
+    body += '<div class="opts">'+t.options.map(function(o){
+      return '<label class="opt" data-v="'+esc(o)+'"><input type="radio" name="q'+t.id+'"> '+o+'</label>';
+    }).join("")+'</div>';
+  } else {
+    body += '<div class="keys">'+
+      KEYPAD.map(function(k){
+        return '<button class="key" data-k="'+k+'" type="button">'+k+'</button>';}).join("")+
+      '</div><input type="text" id="in'+t.id+'" inputmode="text" autocapitalize="off" '+
+      'autocorrect="off" autocomplete="off" spellcheck="false" placeholder="ответ">';
+  }
+  body += '<div class="row" style="margin-top:10px">'+
+          '<button class="pri sm chk" type="button">Проверить</button>'+
+          '<button class="sm hnt" type="button">Подсказка</button></div>'+
+          '<div class="hints"></div><div class="verdict"></div><div class="sol"></div>';
+  el.innerHTML = body;
+  box.appendChild(el);
+
+  el.querySelectorAll(".key").forEach(function(b){
+    b.addEventListener("click", function(){
+      var inp = document.getElementById("in"+t.id);
+      var k = b.dataset.k === "\u2212" ? "-" : b.dataset.k;
+      var s = inp.selectionStart; if(s===null||s===undefined) s = inp.value.length;
+      var f = inp.selectionEnd; if(f===null||f===undefined) f = s;
+      inp.value = inp.value.slice(0,s) + k + inp.value.slice(f);
+      inp.focus(); inp.setSelectionRange(s+k.length, s+k.length);
+      SAVE.touch();
+    });
+  });
+  if(t.type === "choice"){
+    el.querySelectorAll(".opt").forEach(function(l){
+      l.addEventListener("click", function(){
+        el.querySelectorAll(".opt").forEach(function(x){x.classList.remove("sel");});
+        l.classList.add("sel"); state[t.id].sel = l.dataset.v; SAVE.touch();
+      });
+    });
+  } else {
+    var inp = el.querySelector("#in"+t.id);
+    inp.addEventListener("keydown", function(ev){
+      if(ev.key === "Enter"){ ev.preventDefault(); check(t.id); }
+    });
+    inp.addEventListener("input", function(){ SAVE.touch(); });
+  }
+  el.querySelector(".chk").addEventListener("click", function(){ check(t.id); });
+  el.querySelector(".hnt").addEventListener("click", function(){ hint(t.id); });
+});
+
+function hint(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var host = document.querySelector("#t"+id+" .hints");
+  if(s.hints >= t.hints.length){
+    if(!host.querySelector(".last")){
+      var w = document.createElement("div");
+      w.className = "hint last";
+      w.textContent = "Подсказки закончились - нажми «Проверить», решение откроется после второй попытки.";
+      host.appendChild(w);
+    }
+    return;
+  }
+  drawHint(host, t, s.hints);
+  s.hints++;
+  SAVE.touch();
+}
+function drawHint(host, t, i){
+  var h = document.createElement("div");
+  h.className = "hint";
+  h.innerHTML = "<b>Подсказка "+(i+1)+".</b> " + t.hints[i];
+  host.appendChild(h);
+}
+function check(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var el = document.getElementById("t"+id);
+  var v = el.querySelector(".verdict");
+  var given = (t.type === "choice") ? (s.sel || "") :
+              (document.getElementById("in"+id).value || "");
+  if(!String(given).trim()){ v.className = "verdict bad"; v.textContent = "Введи ответ."; return; }
+  s.given = given; s.tries++;
+  var ok = t.ans.some(function(a){ return same(given, d(a), t.tol); });
+  s.ok = ok; s.done = ok || s.tries >= 2;
+  paintTask(t, s);
+  progress();
+  SAVE.touch(true);
+}
+function paintTask(t, s){
+  var el = document.getElementById("t"+t.id);
+  var v = el.querySelector(".verdict");
+  el.classList.remove("ok","bad");
+  if(!s.tries) return;
+  el.classList.add(s.ok ? "ok" : "bad");
+  v.className = "verdict " + (s.ok ? "ok" : "bad");
+  if(s.ok){
+    v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    showSol(el, t);
+  } else if(s.tries === 1){
+    v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+  } else {
+    v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    showSol(el, t);
+  }
+}
+function showSol(el, t){
+  var host = el.querySelector(".sol");
+  if(host.dataset.on) return;
+  host.dataset.on = "1";
+  var det = document.createElement("details");
+  det.open = true;
+  det.innerHTML = "<summary>Решение</summary><div>"+t.sol+"</div>";
+  host.appendChild(det);
+}
+function progress(){
+  var done = TASKS.filter(function(t){return state[t.id].done;}).length;
+  var ok = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  var el = document.getElementById("progress");
+  if(el) el.textContent = "задачи: " + done + " из " + TASKS.length + " · верно " + ok +
+      " · тренажёры: " + trDoneCount() + " из " + REQ_TR.length;
+}
+document.getElementById("checkall").addEventListener("click", function(){
+  TASKS.forEach(function(t){
+    var s = state[t.id];
+    var given = (t.type === "choice") ? (s.sel || "") : ((document.getElementById("in"+t.id)||{}).value || "");
+    if(String(given).trim() && !s.done) check(t.id);
+  });
+  var first = TASKS.find(function(t){ return !state[t.id].done; });
+  var el = document.getElementById("progress");
+  el.textContent += first ? " · осталась задача " + first.id : " · все задачи закрыты";
+});
+
+
+var SAVE_V = 1;
+var KEY_BASE = "arttich:procenty11:";
+var KEY_MAIN = KEY_BASE + "work";
+var SAVE = (function(){
+  var timer = null, on = true;
+  function collect(){
+    window.GAPFLUSH();
+    var tasks = {};
+    TASKS.forEach(function(t){
+      var s = state[t.id];
+      var live = (t.type === "choice") ? (s.sel||"") : ((document.getElementById("in"+t.id)||{}).value || "");
+      tasks[t.id] = {given:s.given, live:live, sel:s.sel, tries:s.tries, hints:s.hints, done:s.done, ok:s.ok};
+    });
+    var trs = {};
+    Object.keys(window.TRAPI).forEach(function(k){ trs[k] = window.TRAPI[k].get(); });
+    var gaps = {};
+    Object.keys(window.GAPST).forEach(function(k){ gaps[k] = window.GAPST[k].get(); });
+    return {v:SAVE_V, ts:Date.now(), name:(document.getElementById("name")||{}).value || "",
+            tasks:tasks, trs:trs, gaps:gaps, started:started};
+  }
+  function write(){
+    if(!on) return;
+    try{ localStorage.setItem(KEY_MAIN, JSON.stringify(collect())); }catch(err){}
+  }
+  function touch(now){
+    if(now){ if(timer){clearTimeout(timer); timer=null;} write(); return; }
+    if(timer) clearTimeout(timer);
+    timer = setTimeout(function(){ timer = null; write(); }, 400);
+  }
+  function best(){
+    var res = null;
+    try{
+      for(var i=0;i<localStorage.length;i++){
+        var k = localStorage.key(i);
+        if(k && k.indexOf(KEY_BASE) === 0){
+          try{
+            var o = JSON.parse(localStorage.getItem(k));
+            if(o && o.v === SAVE_V && (!res || (o.ts||0) > (res.ts||0))) res = o;
+          }catch(err){}
+        }
+      }
+    }catch(err){}
+    return res;
+  }
+  function clearAll(){
+    try{
+      var kill = [];
+      for(var i=0;i<localStorage.length;i++){
+        var k = localStorage.key(i);
+        if(k && k.indexOf(KEY_BASE) === 0) kill.push(k);
+      }
+      kill.forEach(function(k){ localStorage.removeItem(k); });
+    }catch(err){}
+  }
+  return {touch:touch, write:write, best:best, clearAll:clearAll,
+          off:function(){on=false;}, on:function(){on=true;}};
+})();
+
+function restore(){
+  var s = SAVE.best();
+  if(!s) return false;
+  try{
+    if(s.name && document.getElementById("name")) document.getElementById("name").value = s.name;
+    if(s.started) started = s.started;
+    TASKS.forEach(function(t){
+      var saved = s.tasks && s.tasks[t.id];
+      if(!saved) return;
+      var st = state[t.id];
+      st.given = saved.given||""; st.tries = saved.tries||0; st.hints = saved.hints||0;
+      st.done = !!saved.done; st.ok = !!saved.ok; st.sel = saved.sel||null;
+      var el = document.getElementById("t"+t.id);
+      if(t.type === "choice"){
+        if(st.sel){
+          el.querySelectorAll(".opt").forEach(function(l){
+            if(l.dataset.v === st.sel){ l.classList.add("sel"); var r=l.querySelector("input"); if(r) r.checked=true; }
+          });
+        }
+      } else {
+        var inp = document.getElementById("in"+t.id);
+        if(inp) inp.value = saved.live || saved.given || "";
+      }
+      var hb = el.querySelector(".hints");
+      for(var i=0;i<st.hints && i<t.hints.length;i++) drawHint(hb, t, i);
+      paintTask(t, st);
+    });
+    if(s.trs) Object.keys(s.trs).forEach(function(k){
+      if(window.TRAPI[k]) window.TRAPI[k].apply(s.trs[k]);
+    });
+    if(s.gaps) Object.keys(s.gaps).forEach(function(k){
+      if(window.GAPST[k] && window.GAPST[k].apply) window.GAPST[k].apply(s.gaps[k]);
+    });
+  }catch(err){}
+  return true;
+}
+
+function bindSave(){
+  var nm = document.getElementById("name");
+  if(nm) nm.addEventListener("input", function(){ SAVE.touch(); });
+  document.addEventListener("visibilitychange", function(){
+    if(document.visibilityState === "hidden") SAVE.touch(true);
+  });
+  window.addEventListener("pagehide", function(){ SAVE.touch(true); });
+  window.addEventListener("blur", function(){ SAVE.touch(true); });
+  window.addEventListener("beforeunload", function(){ SAVE.touch(true); });
+  var btn = document.getElementById("reset");
+  if(btn) btn.addEventListener("click", function(){
+    if(!window.confirm("Стереть все ответы и начать заново?")) return;
+    SAVE.off(); SAVE.clearAll(); location.reload();
+  });
+}
+
+
+var photos = [];
+document.getElementById("photos").addEventListener("change", function(ev){
+  var files = Array.prototype.slice.call(ev.target.files || []);
+  files.forEach(function(f){
+    var r = new FileReader();
+    r.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var m = 1400, w = img.width, h = img.height;
+        if(Math.max(w,h) > m){ var k = m/Math.max(w,h); w = Math.round(w*k); h = Math.round(h*k); }
+        var c = document.createElement("canvas"); c.width = w; c.height = h;
+        c.getContext("2d").drawImage(img, 0, 0, w, h);
+        photos.push({url: c.toDataURL("image/jpeg", 0.7), task: ""});
+        drawThumbs();
+      };
+      img.src = r.result;
+    };
+    r.readAsDataURL(f);
+  });
+  ev.target.value = "";
+});
+function drawThumbs(){
+  var host = document.getElementById("thumbs");
+  host.innerHTML = "";
+  var total = 0;
+  photos.forEach(function(p, i){
+    total += p.url.length * 0.75;
+    var d0 = document.createElement("div"); d0.className = "thumb";
+    var opts = '<option value="">задача…</option>' + TASKS.map(function(t){
+      return '<option value="'+t.id+'"'+(p.task==String(t.id)?" selected":"")+'>№'+t.id+'</option>';
+    }).join("");
+    d0.innerHTML = '<img src="'+p.url+'" alt="фото решения"><button type="button">×</button>'+
+                   '<select>'+opts+'</select>';
+    d0.querySelector("button").addEventListener("click", function(){ photos.splice(i,1); drawThumbs(); });
+    d0.querySelector("select").addEventListener("change", function(ev){ p.task = ev.target.value; });
+    host.appendChild(d0);
+  });
+  var note = document.getElementById("repnote");
+  if(total > 15e6){ note.textContent = "Фото уже больше 15 МБ - отчёт может отправляться долго, лишние лучше удалить."; }
+  else if(photos.length){ note.textContent = "Фото в отчёте: " + photos.length + "."; }
+  else { note.textContent = ""; }
+}
+
+var ENDPOINT = "https://script.google.com/macros/s/AKfycbztH9c-wQuKC7pSfD8AcFfnOcGpSHxoeqovulmvLMp9W23SgFx9dDQ2JTlWcIJDMN6W/exec";
+var SECRET = "artteach2026";
+
+function gateCheck(){
+  var miss = [];
+  var who = ((document.getElementById("name")||{}).value || "").trim();
+  if(!who) miss.push("впиши имя вверху страницы");
+  var left = TASKS.filter(function(t){ return !state[t.id].done; });
+  if(left.length) miss.push("ответь на задачи: " + left.map(function(t){return t.id;}).join(", "));
+  var trLeft = REQ_TR.filter(function(id){ return !(window.TRAPI[id] && window.TRAPI[id].isDone()); });
+  if(trLeft.length) miss.push("пройди тренажёры до конца: " + trLeft.map(function(id){return TR_NAMES[id];}).join(", "));
+  return miss;
+}
+
+function buildReport(){
+  var name = ((document.getElementById("name")||{}).value || "").trim() || "без имени";
+  var now = new Date();
+  var mins = Math.max(1, Math.round((Date.now()-started)/60000));
+  var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  var trs = REQ_TR.concat(EXTRA_TR).map(function(id){
+    var a = window.TRAPI[id] ? window.TRAPI[id].get() : {right:0, done:false};
+    return {тренажёр:TR_NAMES[id], верно:a.right, пройден:!!a.done};
+  });
+  var data = {тип:"дз", предмет:"математика", тема:TOPIC,
+    ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
+    верно:okN, всего:TASKS.length, задачи:[], тренажёры:trs};
+  var rows = TASKS.map(function(t){
+    var s = state[t.id];
+    data.задачи.push({n:t.id, условие:t.text.replace(/<[^>]+>/g," "), ответ_ученика:s.given,
+      верный_ответ:t.ans.map(d).join(" или "), верно:s.ok, попыток:s.tries, подсказок:s.hints,
+      уровень:t.lvl});
+    return "<tr><td>"+t.id+"</td><td style='text-align:left'>"+esc(t.text.replace(/<[^>]+>/g," "))+
+      "</td><td>"+esc(s.given||"—")+"</td><td>"+esc(t.ans.map(d).join(" / "))+"</td><td>"+
+      (s.ok?"верно":(s.given?"неверно":"не решал"))+"</td><td>"+s.tries+"</td><td>"+s.hints+"</td></tr>";
+  }).join("");
+  var trRows = trs.map(function(a){
+    return "<tr><td style='text-align:left'>"+esc(a.тренажёр)+"</td><td>"+a.верно+
+           "</td><td>"+(a.пройден?"пройден":"не закончен")+"</td></tr>";
+  }).join("");
+  var pics = photos.map(function(p,i){
+    return "<figure><img src='"+p.url+"'><figcaption>Фото "+(i+1)+
+      (p.task?" — к задаче №"+p.task:"")+"</figcaption></figure>";
+  }).join("");
+  var html = "<!doctype html><html lang='ru'><head><meta charset='utf-8'>"+
+    "<meta name='viewport' content='width=device-width,initial-scale=1'>"+
+    "<title>Отчёт — "+esc(name)+" — "+esc(TOPIC)+"</title><style>"+
+    "body{font:16px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;padding:20px;color:#16181d;background:#fff}"+
+    "h1{font-size:22px;margin:0 0 4px}.m{color:#5b6270;font-size:15px}"+
+    "table{border-collapse:collapse;width:100%;margin-top:14px;font-size:15px}"+
+    "th,td{border:1px solid #dfe3ea;padding:6px 8px;text-align:center}th{background:#eef3fb}"+
+    "figure{margin:14px 0}img{max-width:100%;border:1px solid #dfe3ea;border-radius:8px}"+
+    "figcaption{color:#5b6270;font-size:14px;margin-top:4px}</style></head><body>"+
+    "<h1>Отчёт по домашнему заданию</h1>"+
+    "<div class='m'>Тема: "+esc(TOPIC)+" · подготовка к ЦТ/ЦЭ, 11 класс</div>"+
+    "<div class='m'>Ученик: <b>"+esc(name)+"</b> · сдано: "+esc(now.toLocaleString("ru-RU"))+
+    " · время работы: около "+mins+" мин</div>"+
+    "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)</h2>"+
+    "<table><tr><th>№</th><th>Задача</th><th>Ответ ученика</th><th>Верный ответ</th>"+
+    "<th>Итог</th><th>Попыток</th><th>Подсказок</th></tr>"+rows+"</table>"+
+    "<h2>Тренажёры</h2><table><tr><th>Тренажёр</th><th>Верных</th><th>Статус</th></tr>"+trRows+"</table>"+
+    (pics ? "<h2>Фото решений</h2>"+pics : "<p class='m'>Фото решений не прикреплены.</p>")+
+    "<script type='application/json' id='result-data'>"+
+    JSON.stringify(data).replace(/</g,"\\u003c")+"<\/script></body></html>";
+  var stamp = now.getDate()+"-"+(now.getMonth()+1);
+  return {
+    html: html, name: name,
+    file: "Отчёт_"+FILEKEY+"_"+name.replace(/\s+/g,"_")+"_"+stamp+".html",
+    caption: name+" · "+TOPIC+" · "+okN+" из "+TASKS.length+
+             " ("+Math.round(okN/TASKS.length*100)+"%)"
+  };
+}
+
+document.getElementById("send").addEventListener("click", function(){
+  var note = document.getElementById("repnote");
+  var miss = gateCheck();
+  if(miss.length){
+    note.className = "meta bad-note";
+    note.innerHTML = "Перед отправкой: " + miss.join("; ") + ".";
+    return;
+  }
+  note.className = "meta";
+  var r = buildReport();
+  note.textContent = "Отправляю…";
+  var payload = {secret: SECRET, name: r.file, caption: r.caption,
+                 file: btoa(unescape(encodeURIComponent(r.html)))};
+  fetch(ENDPOINT, {method:"POST", mode:"no-cors", body: JSON.stringify(payload)})
+    .then(function(){
+      note.textContent = "Отправлено преподавателю." +
+        (photos.length ? "" : " Фото решений не приложены - если решал в тетради, приложи их и отправь ещё раз.");
+    })
+    .catch(function(){
+      note.textContent = "Не получилось отправить. Скачай файл кнопкой ниже и пришли его вручную.";
+    });
+});
+
+document.getElementById("report").addEventListener("click", function(){
+  var r = buildReport();
+  var blob = new Blob([r.html], {type:"text/html;charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = r.file;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  document.getElementById("repnote").textContent = "Файл скачан - он в папке загрузок.";
+});
+
+function BUILD_TRAINERS(){
+makeTrainer("pconv", TR_ITEMS["pconv"]);
+makeTrainer("pof", TR_ITEMS["pof"]);
+makeTrainer("pfrom", TR_ITEMS["pfrom"]);
+makeTrainer("pshare", TR_ITEMS["pshare"]);
+makeTrainer("pchange", TR_ITEMS["pchange"]);
+makeTrainer("pprod", TR_ITEMS["pprod"]);
+}
+function BUILD_GAPS(){
+makeGap("g1", GAP_DATA["g1"]);
+makeGap("g2", GAP_DATA["g2"]);
+makeGap("g3", GAP_DATA["g3"]);
+makeGap("g4", GAP_DATA["g4"]);
+}
+
+BUILD_TRAINERS();
+BUILD_GAPS();
+restore();
+bindSave();
+progress();
+SAVE.write();
+
+</script>
+</body>
+</html>

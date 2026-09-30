@@ -1,0 +1,897 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Периодические дроби — подготовка к ЦТ/ЦЭ</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0; --warn-line:#e8c86a;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415; --warn-line:#5c4a1c;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%;overflow-x:hidden}
+.wrap{max-width:820px;margin:0 auto;padding:16px 14px 90px}
+h1{font-size:25px;line-height:1.25;margin:0 0 6px;overflow-wrap:break-word}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+h4{font-size:16px;margin:14px 0 4px}
+p{margin:8px 0;overflow-wrap:break-word}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+button[disabled]{opacity:.5;cursor:default}
+
+/* формулы */
+.f-formula{font-size:19px}
+.fx{background:var(--acc-soft);border-radius:10px;padding:10px 12px;margin:9px 0;
+  font-size:18px;text-align:center;overflow-x:auto}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px;white-space:nowrap}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+.rt{white-space:nowrap}
+.rt>span{border-top:1.4px solid currentColor;padding:0 3px 0 2px;margin-left:-2px}
+
+/* памятка */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:10px 0}
+.fbox{border:1px solid var(--line);border-radius:12px;padding:11px 13px;background:var(--bg)}
+.fbox>b{display:block;margin-bottom:4px;color:var(--acc)}
+.fbox .s b{color:inherit}
+.fbox .s{font-size:16px}
+
+/* теория */
+.def{border-left:4px solid var(--acc);background:var(--acc-soft);border-radius:0 10px 10px 0;
+  padding:10px 12px;margin:10px 0}
+.rule2{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+.warn{background:var(--warn-soft);border:1px solid var(--warn-line);border-radius:10px;
+  padding:10px 12px;margin:10px 0;font-size:16px}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.ex{border:1px dashed var(--line);border-radius:12px;padding:12px 13px;margin:12px 0}
+.ex>b.t{display:block;color:var(--acc);margin-bottom:6px}
+.step{margin:6px 0}
+.step.mini{font-size:15px;color:var(--muted);border-top:1px dashed var(--line);padding-top:7px;margin-top:9px}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+table.wrap-t th,table.wrap-t td{white-space:normal}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.fig{margin:12px 0;text-align:center}
+.fig svg{width:100%;max-width:330px;height:auto}
+.figrow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.figrow .fig{flex:1 1 210px;margin:6px 0}
+
+/* задачи */
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px;white-space:nowrap}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+
+/* тренажёры */
+.tr{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--bg)}
+.tr .trhead{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline;justify-content:space-between}
+.tr .trhead b{font-size:16px}
+.tr .trq{margin:10px 0;font-size:17px}
+.tr .tropts label{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);
+  border-radius:10px;cursor:pointer;background:var(--card)}
+.tr .tropts label.sel{border-color:var(--acc);background:var(--acc-soft)}
+.tr .tropts label.good{border-color:var(--ok);background:var(--ok-soft)}
+.tr .tropts label.miss{border-color:var(--bad);background:var(--bad-soft)}
+.tr .trwhy{margin-top:10px;font-size:16px;background:var(--acc-soft);border-radius:10px;padding:9px 12px}
+.tr .trdone{font-weight:600;color:var(--ok)}
+.tr input[type=text]{max-width:260px}
+.trbar{font-size:14px;color:var(--muted)}
+
+/* пропуски */
+.gap{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--bg)}
+.gap .gline{margin:9px 0;font-size:17px;overflow-x:auto}
+.gap input.gi{font:inherit;width:88px;padding:6px 8px;border:1.5px solid var(--line);
+  border-radius:8px;background:var(--card);color:var(--ink);text-align:center}
+.gap input.gi.ok{border-color:var(--ok);background:var(--ok-soft)}
+.gap input.gi.bad{border-color:var(--bad);background:var(--bad-soft)}
+.gap .gv{margin-top:10px;font-weight:600}
+
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:9px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+.sheet .fgrid{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+@media print{
+  body{background:#fff}
+  .wrap>*{display:none !important}
+  .wrap>.sheet{display:block !important;border:none;margin:0;padding:0}
+  .bar{display:none !important}
+  .sheet{font-size:10.5px;line-height:1.3}
+  .sheet h2{font-size:15px;margin:0 0 4px}
+  .sheet h4{font-size:11.5px;margin:6px 0 2px}
+  .sheet p{margin:3px 0}
+  .sheet .fgrid{gap:5px;grid-template-columns:repeat(3,1fr)}
+  .sheet .fbox{padding:5px 6px;border-radius:6px}
+  .sheet .fbox .s{font-size:10.5px}
+  .sheet .fx{font-size:11px;padding:4px 6px;margin:4px 0}
+  .sheet th,.sheet td{padding:2px 3px;font-size:10px}
+  @page{size:A4;margin:9mm}
+}
+@media (max-width:400px){
+  body{font-size:16px}
+  .wrap{padding:12px 12px 90px}
+  h1{font-size:22px}
+  .card{padding:14px 12px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="card top">
+<h1>Периодическая дробь в обыкновенную</h1>
+<div class="meta">Математика · подготовка к ЦТ/ЦЭ · 11 класс · день 3 · тема 4.03</div>
+<label class="f" for="name">Имя и фамилия</label>
+<input type="text" id="name" placeholder="напиши, как в журнале" autocapitalize="words" spellcheck="false">
+<div class="note" style="margin-top:14px"><b>Как работать.</b> Тема короткая, и она вся держится на одном правиле. Выучить его мало - надо научиться не путать «число до первого периода» и «число до второго».<br>- сначала прочитай запись: где период, сколько в нём цифр, сколько цифр до него;<br>- потом собери дробь по правилу;<br>- в конце обязательно сократи - на ЦТ в ответе несократимая дробь.<br><b>Формат ответа:</b> обыкновенная дробь через «/», например <b>17/33</b>. Если ответ целый - пиши число: <b>3</b>. Смешанные числа записывай неправильной дробью: не «4 13/30», а <b>133/30</b>.</div>
+<div class="row" style="margin-top:12px"><button class="sm" id="reset" type="button">Начать заново</button><span class="meta">работа сохраняется сама - можно закрыть страницу и вернуться</span></div>
+</div>
+<div class="card"><h2>Памятка</h2>
+<p class="meta">Сюда возвращайся, когда застрял.</p><div class="fgrid">
+<div class="fbox"><b>Что такое период</b><div class="s">Бесконечная десятичная дробь, у которой одна и та же группа цифр повторяется. 1,333… = 1,(3), 51,232323… = 51,(23).</div></div>
+<div class="fbox"><b>Правило перевода</b><div class="s"><b>Числитель:</b> число до второго периода минус число до первого.<br><b>Знаменатель:</b> столько девяток, сколько цифр в периоде, и столько нулей, сколько цифр между запятой и периодом.</div></div>
+<div class="fbox"><b>Чистый период</b><div class="s">0,(7) = <span class="frac"><span>7</span><span>9</span></span> · 0,(27) = <span class="frac"><span>27</span><span>99</span></span> = <span class="frac"><span>3</span><span>11</span></span> · 0,(123) = <span class="frac"><span>123</span><span>999</span></span> = <span class="frac"><span>41</span><span>333</span></span></div></div>
+<div class="fbox"><b>Смешанный период</b><div class="s">0,1(6) = <span class="frac"><span>16 − 1</span><span>90</span></span> = <span class="frac"><span>1</span><span>6</span></span> · 0,2(54) = <span class="frac"><span>254 − 2</span><span>990</span></span> = <span class="frac"><span>14</span><span>55</span></span></div></div>
+<div class="fbox"><b>Наизусть</b><div class="s">0,(1) = <span class="frac"><span>1</span><span>9</span></span> · 0,(3) = <span class="frac"><span>1</span><span>3</span></span> · 0,(6) = <span class="frac"><span>2</span><span>3</span></span> · 0,(9) = 1<br>0,(01) = <span class="frac"><span>1</span><span>99</span></span> · 0,(001) = <span class="frac"><span>1</span><span>999</span></span></div></div>
+<div class="fbox"><b>Целая часть</b><div class="s">Её проще отложить и вернуть в конце: 4,4(3) = 4 + 0,4(3) = 4 + <span class="frac"><span>13</span><span>30</span></span> = <span class="frac"><span>133</span><span>30</span></span>.</div></div>
+<div class="fbox"><b>Когда дробь конечная</b><div class="s">Несократимая дробь даёт конечную десятичную, только если знаменатель раскладывается на одни двойки и пятёрки: <span class="frac"><span>7</span><span>40</span></span> - да, <span class="frac"><span>5</span><span>12</span></span> - нет.</div></div>
+<div class="fbox"><b>Иррациональные</b><div class="s">Если число нельзя записать обыкновенной дробью - оно иррациональное. У него нет периода: 0,1010010001… или √2.</div></div>
+</div></div>
+<div class="card">
+<h2>1. Что такое периодическая дробь</h2>
+<div class="def">Бесконечная десятичная дробь, в которой одна или несколько цифр повторяются в одной и той же последовательности, называется <b>периодической</b>. Повторяющаяся группа - это <b>период</b>, её пишут в скобках.</div><div class="fx">1,333… = 1,(3) &nbsp;·&nbsp; 51,232323… = 51,(23) &nbsp;·&nbsp; 0,2545454… = 0,2(54)</div><div class="rule2">Период бывает <b>чистый</b> - начинается сразу после запятой: 0,(7), 0,(27). И <b>смешанный</b> - между запятой и периодом стоят «лишние» цифры: 0,1(6), 0,55(3). От этого зависит, появятся ли нули в знаменателе.</div><div class="warn">0,(3) и 0,3 - <b>разные</b> числа. Первое равно <span class="frac"><span>1</span><span>3</span></span>, второе <span class="frac"><span>3</span><span>10</span></span>. Скобки в записи обязательны.</div><div class="ex"><b class="t">Пример 1. Где здесь период</b><div class="step">2,(273) = 2,273273273273… Первый период - первая группа 273, второй период - следующая такая же группа.</div><div class="step">Число до первого периода - это 2. Число до второго периода - это 2273 (целая часть и первый период подряд, без запятой).</div><div class="step mini">Именно эти два числа и нужны в правиле. Если их перепутать, разность выйдет отрицательной - хороший признак, что где-то ошибка.</div></div><div class="def">Число, которое <b>нельзя</b> записать обыкновенной дробью, называется иррациональным. У такого числа десятичная запись бесконечна и непериодична: √2 = 1,41421356… или 0,1010010001…</div>
+<h3>Тренажёр: читаем запись периода</h3>
+<div class="tr" id="tr_pread" data-title="читаем запись периода"></div>
+<h3>Задачи к этому блоку</h3>
+<div id="tasks1"></div>
+</div>
+<div class="card">
+<h2>2. Правило перевода: чистый период</h2>
+<div class="rule2"><b>Правило.</b><br>- в <b>числитель</b> запиши разность числа, стоящего до второго периода, и числа, стоящего до первого периода;<br>- в <b>знаменатель</b> запиши столько девяток, сколько цифр в периоде, и допиши столько нулей, сколько цифр между запятой и периодом.</div><p>Для чистого периода нулей нет вообще - знаменатель состоит из одних девяток.</p><div class="fx">0,(7) = <span class="frac"><span>7</span><span>9</span></span> &nbsp;·&nbsp; 0,(27) = <span class="frac"><span>27</span><span>99</span></span> = <span class="frac"><span>3</span><span>11</span></span> &nbsp;·&nbsp; 0,(123) = <span class="frac"><span>123</span><span>999</span></span> = <span class="frac"><span>41</span><span>333</span></span></div><div class="ex"><b class="t">Пример 2. 2,(273)</b><div class="step">1. Число до второго периода: 2273. До первого: 2.</div><div class="step">2. Числитель 2273 − 2 = 2271.</div><div class="step">3. В периоде 3 цифры - три девятки. Между запятой и периодом цифр нет - нулей не будет. Знаменатель 999.</div><div class="fx"><span class="frac"><span>2271</span><span>999</span></span> = <span class="frac"><span>757</span><span>333</span></span></div><div class="step mini">Сокращение обязательно: 2271 и 999 делятся на 3. На ЦТ в вариантах ответа стоит именно несократимая дробь.</div></div><div class="warn">Полезные значения, которые стоит помнить: 0,(1) = <span class="frac"><span>1</span><span>9</span></span>, 0,(01) = <span class="frac"><span>1</span><span>99</span></span>, 0,(001) = <span class="frac"><span>1</span><span>999</span></span>. Через них любая чистая периодическая дробь считается в уме: 0,(4) = 4·<span class="frac"><span>1</span><span>9</span></span> = <span class="frac"><span>4</span><span>9</span></span>.</div>
+<h3>Тренажёр: чистый период</h3>
+<div class="tr" id="tr_ppure" data-title="чистый период"></div>
+<div class="gap" id="gap_g1"></div>
+<h3>Задачи к этому блоку</h3>
+<div id="tasks2"></div>
+</div>
+<div class="card">
+<h2>3. Смешанный период: откуда берутся нули</h2>
+<p>Если между запятой и периодом стоят цифры, они в период не входят - но в знаменателе за каждой такой цифрой появляется ноль.</p><div class="ex"><b class="t">Пример 3. 0,2(54)</b><div class="step">1. Число до второго периода: 254. До первого: 2.</div><div class="step">2. Числитель 254 − 2 = 252.</div><div class="step">3. В периоде 2 цифры - две девятки. Между запятой и периодом одна цифра (двойка) - один ноль. Знаменатель 990.</div><div class="fx"><span class="frac"><span>252</span><span>990</span></span> = <span class="frac"><span>14</span><span>55</span></span></div><div class="step mini">Проверка прикидкой: 0,2(54) чуть больше 0,25, а <span class="frac"><span>14</span><span>55</span></span> ≈ 0,2545. Сходится.</div></div><div class="ex"><b class="t">Пример 4. 0,55(3)</b><div class="step">До второго периода 553, до первого 55, числитель 498.</div><div class="step">Одна цифра в периоде - одна девятка; две цифры до периода - два нуля. Знаменатель 900.</div><div class="fx"><span class="frac"><span>498</span><span>900</span></span> = <span class="frac"><span>83</span><span>150</span></span></div><div class="step mini">Частая ошибка - посчитать «число до первого периода» равным 5 вместо 55. Смотри на запись 0,553333…: перед первой тройкой стоит 55.</div></div>
+<h3>Тренажёр: смешанный период</h3>
+<div class="tr" id="tr_pmix" data-title="смешанный период"></div>
+<div class="gap" id="gap_g2"></div>
+<h3>Задачи к этому блоку</h3>
+<div id="tasks3"></div>
+</div>
+<div class="card">
+<h2>4. Что делать с целой частью</h2>
+<div class="rule2">Целую часть удобно <b>временно отложить</b>: перевести только дробную часть, а потом вернуть целое обратно. Тогда числа в правиле получаются маленькими.</div><div class="ex"><b class="t">Пример 5. 4,1(312)</b><div class="step">1. Забываем про 4 и работаем с 0,1(312).</div><div class="step">2. До второго периода 1312, до первого 1, числитель 1311.</div><div class="step">3. Три цифры в периоде - три девятки; одна цифра до периода - один ноль. Знаменатель 9990.</div><div class="fx">4,1(312) = 4<span class="frac"><span>1311</span><span>9990</span></span></div><div class="step mini">Если бы целую часть не откладывали, в числителе стояло бы 41312 − 41 - те же действия, но с пятизначными числами.</div></div><div class="warn">Если в ответе нужна одна дробь, целую часть возвращаем в конце: 4,4(3) = 4 + <span class="frac"><span>13</span><span>30</span></span> = <span class="frac"><span>4 · 30 + 13</span><span>30</span></span> = <span class="frac"><span>133</span><span>30</span></span>.</div>
+<h3>Тренажёр: с целой частью</h3>
+<div class="tr" id="tr_pint" data-title="с целой частью"></div>
+<div class="gap" id="gap_g4"></div>
+<h3>Задачи к этому блоку</h3>
+<div id="tasks4"></div>
+</div>
+<div class="card">
+<h2>5. Почему правило работает и как считать с периодическими дробями</h2>
+<p>Правило не магия - оно выводится за три строчки, и этот вывод полезен: если правило вылетело из головы, его можно восстановить прямо на экзамене.</p><div class="ex"><b class="t">Пример 6. Вывод для 0,(27)</b><div class="step">1. Пусть x = 0,272727…</div><div class="step">2. В периоде две цифры, поэтому умножаем на 100: 100x = 27,272727…</div><div class="step">3. Вычитаем: 100x − x = 27,2727… − 0,2727… = 27. Хвосты одинаковые и уничтожаются.</div><div class="fx">99x = 27 ⇒ x = <span class="frac"><span>27</span><span>99</span></span> = <span class="frac"><span>3</span><span>11</span></span></div><div class="step mini">Отсюда и девятки: 100 − 1 = 99. Для трёхзначного периода было бы 1000 − 1 = 999.</div></div><div class="rule2"><b>Любые действия с периодическими дробями</b> делаются так: сначала переводим всё в обыкновенные дроби, потом считаем как обычно. Складывать «по разрядам» бесконечные дроби нельзя.</div><div class="ex"><b class="t">Пример 7. 0,(45) : 0,(5)</b><div class="step">0,(45) = <span class="frac"><span>45</span><span>99</span></span> = <span class="frac"><span>5</span><span>11</span></span>, 0,(5) = <span class="frac"><span>5</span><span>9</span></span>.</div><div class="fx"><span class="frac"><span>5</span><span>11</span></span> · <span class="frac"><span>9</span><span>5</span></span> = <span class="frac"><span>9</span><span>11</span></span></div><div class="step mini">Пятёрки сокращаются - это обычная работа с дробями, ничего «периодического» в вычислении уже нет.</div></div><div class="warn">0,(9) = 1. Проверь по правилу: (9 − 0)/9 = 1. Это не приближение и не округление - это одно и то же число, записанное двумя способами.</div>
+<h3>Тренажёр: действия с периодическими</h3>
+<div class="tr" id="tr_pops" data-title="действия с периодическими"></div>
+<div class="gap" id="gap_g3"></div>
+<h3>Задачи к этому блоку</h3>
+<div id="tasks5"></div>
+</div>
+<div class="card">
+<h2>6. Обратный ход: обыкновенная дробь в десятичную</h2>
+<div class="def">Несократимая дробь записывается <b>конечной</b> десятичной тогда и только тогда, когда её знаменатель раскладывается только на двойки и пятёрки. Во всех остальных случаях дробь периодическая.</div><div class="fx"><span class="frac"><span>7</span><span>40</span></span>: 40 = 2³·5 ⇒ 0,175 &nbsp;·&nbsp; <span class="frac"><span>5</span><span>12</span></span>: 12 = 2²·3 ⇒ 0,41(6)</div><div class="ex"><b class="t">Пример 8. <span class="frac"><span>7</span><span>11</span></span> в десятичную</b><div class="step">Делим уголком: 7 : 11 = 0,6363…</div><div class="step">Остатки при делении начинают повторяться - с этого места и идёт период.</div><div class="fx"><span class="frac"><span>7</span><span>11</span></span> = 0,(63)</div><div class="step mini">Проверка обратным ходом обязательна и занимает секунду: <span class="frac"><span>63</span><span>99</span></span> = <span class="frac"><span>7</span><span>11</span></span>. Сошлось.</div></div><div class="rule2">Длина периода никогда не превышает знаменатель минус один: остатков при делении на q бывает не больше q − 1 штук. Поэтому у <span class="frac"><span>1</span><span>7</span></span> период не длиннее шести цифр - и он ровно шестизначный: 0,(142857).</div>
+<h3>Тренажёр: дробь в десятичную (дополнительный)</h3>
+<p class="meta">Дополнительный - для отправки работы он не нужен.</p>
+<div class="tr" id="tr_pback" data-title="дробь в десятичную (дополнительный)"></div>
+<h3>Задачи к этому блоку</h3>
+<div id="tasks6"></div>
+</div>
+<div class="card sheet"><h2>Шпаргалка</h2>
+<p class="meta" style="font-size:14px">Печатается отдельно на один лист A4: Ctrl+P (⌘+P) → печать.</p>
+<h4>Правило</h4><p><b>Числитель</b> = (число до второго периода) − (число до первого периода).<br><b>Знаменатель</b> = девяток по числу цифр периода + нулей по числу цифр между запятой и периодом.</p><div class="fgrid"><div class="fbox"><b>Чистый период</b><div class="s">0,(7) = <span class="frac"><span>7</span><span>9</span></span><br>0,(27) = <span class="frac"><span>27</span><span>99</span></span> = <span class="frac"><span>3</span><span>11</span></span><br>0,(123) = <span class="frac"><span>123</span><span>999</span></span> = <span class="frac"><span>41</span><span>333</span></span></div></div><div class="fbox"><b>Смешанный</b><div class="s">0,1(6) = <span class="frac"><span>16 − 1</span><span>90</span></span> = <span class="frac"><span>1</span><span>6</span></span><br>0,2(54) = <span class="frac"><span>254 − 2</span><span>990</span></span> = <span class="frac"><span>14</span><span>55</span></span></div></div><div class="fbox"><b>С целой частью</b><div class="s">Отложи целое, переведи дробную часть, верни обратно: 4,4(3) = 4 + <span class="frac"><span>13</span><span>30</span></span> = <span class="frac"><span>133</span><span>30</span></span></div></div><div class="fbox"><b>Наизусть</b><div class="s">0,(1) = <span class="frac"><span>1</span><span>9</span></span> · 0,(3) = <span class="frac"><span>1</span><span>3</span></span> · 0,(6) = <span class="frac"><span>2</span><span>3</span></span> · 0,(9) = 1<br>0,(01) = <span class="frac"><span>1</span><span>99</span></span> · 0,(001) = <span class="frac"><span>1</span><span>999</span></span></div></div><div class="fbox"><b>Вывод правила</b><div class="s">x = 0,(27); 100x = 27,(27);<br>99x = 27 ⇒ x = <span class="frac"><span>27</span><span>99</span></span></div></div><div class="fbox"><b>Конечная или нет</b><div class="s">Знаменатель только из 2 и 5 → конечная. Иначе периодическая. Ни то ни другое → число иррационально.</div></div></div><h4>Порядок действий</h4><p>1) найди период и посчитай цифры; 2) выпиши два числа - до второго и до первого периода; 3) собери дробь; 4) сократи; 5) прикинь значение и сверь.</p><h4>Где теряют баллы</h4><p>0,(3) ≠ 0,3 · в 0,55(3) число до первого периода 55, а не 5 · забыли нули за девятками · забыли сократить · пытались складывать периодические дроби «в столбик».</p>
+</div>
+<div class="card"><h2>Фото решений - по желанию</h2>
+<p class="meta">В полях виден только ответ, а преподаватель смотрит ещё и ход решения. Фото тетради прикладывать не обязательно, но с ними разбор будет точнее.</p>
+<ol class="steps-list"><li>Решай в тетради с полной записью, как на ЦТ.</li><li>Сфотографируй страницы при дневном свете, чтобы текст читался.</li><li>Нажми кнопку ниже: с телефона - «Камера» или «Фото», с компьютера - файл из папки.</li><li>Фото можно приложить несколько и отметить у каждого номер задачи.</li></ol>
+<input type="file" id="photos" accept="image/*" multiple style="margin-top:12px">
+<div class="thumbs" id="thumbs"></div></div>
+<div class="card"><h2>Отправь работу</h2>
+<p class="meta">Отправка откроется, когда будет вписано имя, отвечены все 18 задач и пройдены до конца обязательные тренажёры. Дополнительный тренажёр не требуется.</p>
+<div class="row"><button class="pri" id="send" type="button">Отправить на проверку</button><button id="report" type="button">Скачать копию себе</button></div>
+<div id="repnote" class="meta" style="margin-top:8px"></div></div>
+</div>
+<div class="bar"><button class="pri" id="checkall" type="button">Проверить все задачи</button><span id="progress" class="meta"></span></div>
+<script>
+
+"use strict";
+var started = Date.now();
+function e(s){return btoa(unescape(encodeURIComponent(s)));}
+function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return s;}}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function norm(s){
+  return String(s).toLowerCase().replace(/\s+/g,"")
+    .replace(/[\u2013\u2014\u2212]/g,"-")
+    .replace(/[\u00d7\u00b7]/g,"*")
+    .replace(/,/g,".")
+    .replace(/^(ответ:?|x=|y=|a=|n=)/,"");
+}
+function toNum(str){
+  var t = norm(str);
+  if(!t) return NaN;
+  t = t.replace(/\u221b/g,"cbrt").replace(/\u221a/g,"sqrt").replace(/\u03c0/g,"pi")
+       .replace(/\u00b2/g,"^2").replace(/\u00b3/g,"^3");
+  t = t.replace(/sqrt(\d+(?:\.\d+)?)/g,"sqrt($1)");
+  t = t.replace(/cbrt(\d+(?:\.\d+)?)/g,"cbrt($1)");
+  t = t.replace(/(\d)sqrt/g,"$1*sqrt").replace(/(\d)cbrt/g,"$1*cbrt");
+  t = t.replace(/(\))sqrt/g,"$1*sqrt").replace(/(\))cbrt/g,"$1*cbrt");
+  t = t.replace(/(\d)pi/g,"$1*pi");
+  t = t.replace(/(\d)\(/g,"$1*(").replace(/\)(\d)/g,")*$1").replace(/\)\(/g,")*(");
+  t = t.replace(/\^/g,"**");
+  if(!/^[-+*/().0-9a-z]+$/.test(t)) return NaN;
+  if(t.replace(/sqrt|cbrt|pi/g,"").match(/[a-z]/)) return NaN;
+  try{
+    var v = new Function("sqrt","cbrt","pi","return ("+t+");")(Math.sqrt, Math.cbrt, Math.PI);
+    return (typeof v === "number" && isFinite(v)) ? v : NaN;
+  }catch(err){ return NaN; }
+}
+function same(given, right, tol){
+  var a = toNum(given), b = toNum(right);
+  if(!isNaN(a) && !isNaN(b)){
+    var t = tol || 1e-4;
+    return Math.abs(a-b) <= Math.max(t, Math.abs(b)*t);
+  }
+  return norm(given) === norm(right);
+}
+function shuffle(arr){
+  var a = arr.slice();
+  for(var i=a.length-1;i>0;i--){ var j = Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+
+var TOPIC = "Периодические дроби";
+var FILEKEY = "периодические11";
+var KEYPAD = ["/", ",", "−", "(", ")"];
+var REQ_TR = ["pread", "ppure", "pmix", "pint", "pops"];
+var EXTRA_TR = ["pback"];
+var TR_NAMES = {"pread": "читаем запись периода", "ppure": "чистый период", "pmix": "смешанный период", "pint": "с целой частью", "pops": "действия с периодическими", "pback": "дробь в десятичную (дополнительный)"};
+var TASKS = [{"id": 1, "blk": "1", "lvl": "база", "type": "num", "text": "Запиши 0,(7) обыкновенной дробью.", "ans": ["Ny85"], "hints": ["Период состоит из одной цифры, значит в знаменателе одна девятка.", "Числитель - это само число периода: 7.", "Между запятой и периодом цифр нет, нулей в знаменателе не будет."], "sol": "0,(7) = <span class=\"frac\"><span>7</span><span>9</span></span>. Проверка делением: 7 : 9 = 0,777… = <b>7/9</b>."}, {"id": 2, "blk": "1", "lvl": "база", "type": "num", "text": "Запиши 0,(3) обыкновенной несократимой дробью.", "ans": ["MS8z"], "hints": ["Одна цифра в периоде - одна девятка в знаменателе.", "Получается <span class=\"frac\"><span>3</span><span>9</span></span>.", "Осталось сократить на 3."], "sol": "0,(3) = <span class=\"frac\"><span>3</span><span>9</span></span> = <b>1/3</b>. Эту дробь стоит помнить наизусть, как и 0,(6) = <span class=\"frac\"><span>2</span><span>3</span></span>."}, {"id": 3, "blk": "1", "lvl": "средний", "type": "num", "text": "Запиши 0,(51) обыкновенной несократимой дробью.", "ans": ["MTcvMzM="], "hints": ["В периоде две цифры, значит в знаменателе две девятки: 99.", "Получается <span class=\"frac\"><span>51</span><span>99</span></span>.", "51 и 99 делятся на 3."], "sol": "0,(51) = <span class=\"frac\"><span>51</span><span>99</span></span> = <b>17/33</b>."}, {"id": 4, "blk": "2", "lvl": "база", "type": "num", "text": "Запиши 0,(6) обыкновенной несократимой дробью.", "ans": ["Mi8z"], "hints": ["Одна девятка в знаменателе.", "<span class=\"frac\"><span>6</span><span>9</span></span> - можно сократить.", "Общий делитель 6 и 9 равен 3."], "sol": "0,(6) = <span class=\"frac\"><span>6</span><span>9</span></span> = <b>2/3</b>."}, {"id": 5, "blk": "2", "lvl": "база", "type": "num", "text": "Запиши 0,(27) обыкновенной несократимой дробью.", "ans": ["My8xMQ=="], "hints": ["Две цифры в периоде - две девятки.", "<span class=\"frac\"><span>27</span><span>99</span></span>.", "27 и 99 делятся на 9."], "sol": "0,(27) = <span class=\"frac\"><span>27</span><span>99</span></span> = <b>3/11</b>."}, {"id": 6, "blk": "2", "lvl": "средний", "type": "num", "text": "Запиши 0,(123) обыкновенной несократимой дробью.", "ans": ["NDEvMzMz"], "hints": ["Три цифры в периоде - три девятки: 999.", "<span class=\"frac\"><span>123</span><span>999</span></span>.", "123 = 3·41, а 999 = 3·333."], "sol": "0,(123) = <span class=\"frac\"><span>123</span><span>999</span></span> = <b>41/333</b>."}, {"id": 7, "blk": "3", "lvl": "база", "type": "num", "text": "Запиши 0,1(6) обыкновенной несократимой дробью.", "ans": ["MS82"], "hints": ["Число до второго периода - 16, до первого - 1.", "Числитель 16 − 1 = 15.", "В знаменателе одна девятка и один ноль: 90."], "sol": "Число до второго периода 16, до первого 1, разность 15. В знаменателе 1 девятка и 1 ноль: 90. Получаем <span class=\"frac\"><span>15</span><span>90</span></span> = <b>1/6</b>."}, {"id": 8, "blk": "3", "lvl": "средний", "type": "num", "text": "Запиши 0,2(54) обыкновенной несократимой дробью.", "ans": ["MTQvNTU="], "hints": ["Число до второго периода - 254, до первого - 2.", "Числитель 254 − 2 = 252.", "Две цифры в периоде и одна между запятой и периодом: знаменатель 990."], "sol": "Число до второго периода 254, до первого 2, разность 252. В знаменателе 2 девятки и 1 ноль: 990. Получаем <span class=\"frac\"><span>252</span><span>990</span></span> = <b>14/55</b>."}, {"id": 9, "blk": "3", "lvl": "средний", "type": "num", "text": "Запиши 0,55(3) обыкновенной несократимой дробью.", "ans": ["ODMvMTUw"], "hints": ["Число до второго периода - 553, до первого - 55.", "Числитель 553 − 55 = 498.", "Одна цифра в периоде и две между запятой и периодом: знаменатель 900."], "sol": "Число до второго периода 553, до первого 55, разность 498. В знаменателе 1 девятка и 2 нолей: 900. Получаем <span class=\"frac\"><span>498</span><span>900</span></span> = <b>83/150</b>."}, {"id": 10, "blk": "4", "lvl": "база", "type": "num", "text": "Запиши 1,(3) одной обыкновенной дробью.", "ans": ["NC8z"], "hints": ["Целую часть можно отложить и перевести только 0,(3).", "0,(3) = <span class=\"frac\"><span>1</span><span>3</span></span>.", "Остаётся сложить 1 + <span class=\"frac\"><span>1</span><span>3</span></span>."], "sol": "1,(3) = 1 + <span class=\"frac\"><span>1</span><span>3</span></span> = <b>4/3</b>. По общему правилу то же самое: (13 − 1)/9 = <span class=\"frac\"><span>12</span><span>9</span></span> = <span class=\"frac\"><span>4</span><span>3</span></span>."}, {"id": 11, "blk": "4", "lvl": "средний", "type": "num", "text": "Запиши 4,4(3) одной обыкновенной несократимой дробью.", "ans": ["MTMzLzMw"], "hints": ["Отложи целую часть 4 и переведи 0,4(3).", "Числитель 43 − 4 = 39, знаменатель 90.", "<span class=\"frac\"><span>39</span><span>90</span></span> = <span class=\"frac\"><span>13</span><span>30</span></span>, осталось прибавить 4."], "sol": "0,4(3) = <span class=\"frac\"><span>39</span><span>90</span></span> = <span class=\"frac\"><span>13</span><span>30</span></span>; 4 + <span class=\"frac\"><span>13</span><span>30</span></span> = <b>133/30</b>."}, {"id": 12, "blk": "4", "lvl": "сложный", "type": "num", "text": "Запиши 14,14(15) одной обыкновенной несократимой дробью.", "ans": ["NDY2NjcvMzMwMA=="], "hints": ["Целую часть 14 отложи, работай с 0,14(15).", "Число до второго периода 1415, до первого 14; знаменатель - две девятки и два нуля: 9900.", "<span class=\"frac\"><span>1401</span><span>9900</span></span> сокращается на 3, получается <span class=\"frac\"><span>467</span><span>3300</span></span>."], "sol": "0,14(15) = <span class=\"frac\"><span>1401</span><span>9900</span></span> = <span class=\"frac\"><span>467</span><span>3300</span></span>; 14 + <span class=\"frac\"><span>467</span><span>3300</span></span> = <span class=\"frac\"><span>14 · 3300 + 467</span><span>3300</span></span> = <b>46667/3300</b>."}, {"id": 13, "blk": "5", "lvl": "средний", "type": "num", "text": "Вычисли 0,(3) + 0,(6).", "ans": ["MQ=="], "hints": ["Переведи каждое слагаемое в обыкновенную дробь.", "0,(3) = <span class=\"frac\"><span>1</span><span>3</span></span>, 0,(6) = <span class=\"frac\"><span>2</span><span>3</span></span>.", "Знаменатели одинаковые - просто сложи числители."], "sol": "<span class=\"frac\"><span>1</span><span>3</span></span> + <span class=\"frac\"><span>2</span><span>3</span></span> = <b>1</b>. Заодно это объясняет странную на вид запись 0,(9) = 1: она ровно единица, а не «чуть меньше»."}, {"id": 14, "blk": "5", "lvl": "средний", "type": "num", "text": "Вычисли 0,(45) : 0,(5).", "ans": ["OS8xMQ=="], "hints": ["0,(45) = <span class=\"frac\"><span>45</span><span>99</span></span>, и это сокращается.", "<span class=\"frac\"><span>45</span><span>99</span></span> = <span class=\"frac\"><span>5</span><span>11</span></span>, а 0,(5) = <span class=\"frac\"><span>5</span><span>9</span></span>.", "Деление на дробь - умножение на перевёрнутую."], "sol": "<span class=\"frac\"><span>5</span><span>11</span></span> : <span class=\"frac\"><span>5</span><span>9</span></span> = <span class=\"frac\"><span>5</span><span>11</span></span> · <span class=\"frac\"><span>9</span><span>5</span></span> = <b>9/11</b>. Пятёрки сокращаются."}, {"id": 15, "blk": "5", "lvl": "сложный", "type": "num", "text": "Вычисли 0,(6) · 0,(45) + 0,1(6).", "ans": ["MzEvNjY="], "hints": ["Переведи все три числа: 0,(6) = <span class=\"frac\"><span>2</span><span>3</span></span>, 0,(45) = <span class=\"frac\"><span>5</span><span>11</span></span>, 0,1(6) = <span class=\"frac\"><span>1</span><span>6</span></span>.", "<span class=\"frac\"><span>2</span><span>3</span></span> · <span class=\"frac\"><span>5</span><span>11</span></span> = <span class=\"frac\"><span>10</span><span>33</span></span>.", "Общий знаменатель для <span class=\"frac\"><span>10</span><span>33</span></span> и <span class=\"frac\"><span>1</span><span>6</span></span> равен 66."], "sol": "<span class=\"frac\"><span>2</span><span>3</span></span> · <span class=\"frac\"><span>5</span><span>11</span></span> = <span class=\"frac\"><span>10</span><span>33</span></span> = <span class=\"frac\"><span>20</span><span>66</span></span>; <span class=\"frac\"><span>1</span><span>6</span></span> = <span class=\"frac\"><span>11</span><span>66</span></span>. Сумма = <b>31/66</b>."}, {"id": 16, "blk": "6", "lvl": "средний", "type": "num", "text": "Какой период у десятичной записи дроби <span class=\"frac\"><span>7</span><span>11</span></span>? Ответ - число.", "ans": ["NjM="], "hints": ["Дели уголком: 7 : 11.", "Остатки начнут повторяться, и с этого места пойдёт период.", "7 : 11 = 0,636363…"], "sol": "<span class=\"frac\"><span>7</span><span>11</span></span> = 0,(63), период равен <b>63</b>. Проверка обратным ходом: <span class=\"frac\"><span>63</span><span>99</span></span> = <span class=\"frac\"><span>7</span><span>11</span></span>."}, {"id": 17, "blk": "6", "lvl": "сложный", "type": "num", "text": "Чему равно 2,(9)?", "ans": ["Mw=="], "hints": ["Не спеши отвечать «чуть меньше трёх» - примени правило.", "Число до второго периода 29, до первого 2, знаменатель 9.", "(29 − 2) : 9 = 27 : 9."], "sol": "(29 − 2)/9 = <span class=\"frac\"><span>27</span><span>9</span></span> = <b>3</b>. Запись 2,(9) и запись 3 - это одно и то же число. Другой способ увидеть это: 2,(9) = 2 + 3·0,(3) = 2 + 1."}, {"id": 18, "blk": "6", "lvl": "сложный", "type": "num", "text": "Вычисли 1,(3) · 0,(45) − 0,(2).", "ans": ["MzgvOTk="], "hints": ["1,(3) = <span class=\"frac\"><span>4</span><span>3</span></span>, 0,(45) = <span class=\"frac\"><span>5</span><span>11</span></span>, 0,(2) = <span class=\"frac\"><span>2</span><span>9</span></span>.", "<span class=\"frac\"><span>4</span><span>3</span></span> · <span class=\"frac\"><span>5</span><span>11</span></span> = <span class=\"frac\"><span>20</span><span>33</span></span>.", "Общий знаменатель <span class=\"frac\"><span>20</span><span>33</span></span> и <span class=\"frac\"><span>2</span><span>9</span></span> равен 99."], "sol": "<span class=\"frac\"><span>20</span><span>33</span></span> = <span class=\"frac\"><span>60</span><span>99</span></span>, <span class=\"frac\"><span>2</span><span>9</span></span> = <span class=\"frac\"><span>22</span><span>99</span></span>. Разность = <span class=\"frac\"><span>38</span><span>99</span></span> = <b>38/99</b>. Заодно видно, что ответ - это 0,(38)."}];
+var TR_ITEMS = {"pread":[{"q": "Как записывают дробь 1,3333… ?", "opts": ["1,(3)", "1,3(0)", "(1,3)", "1,3"], "ans": "1,(3)", "why": "В скобки берут то, что повторяется бесконечно. Запись 1,3 означала бы ровно одну тройку и дальше нули."}, {"q": "Чему равен период дроби 51,232323… ?", "opts": ["23", "2", "32", "51"], "ans": "23", "why": "Повторяется группа «23», значит 51,232323… = 51,(23). Период - это повторяющаяся группа цифр, а не одна цифра."}, {"q": "Сколько цифр стоит между запятой и периодом в дроби 0,2(54)?", "opts": ["одна", "ни одной", "две", "три"], "ans": "одна", "why": "Это двойка. Она в период не входит, и именно из-за неё в знаменателе появится один ноль после девяток."}, {"q": "Какая из дробей имеет чистый период (период сразу после запятой)?", "opts": ["0,(27)", "0,1(6)", "0,55(3)", "4,4(3)"], "ans": "0,(27)", "why": "Чистый период - когда между запятой и скобкой нет ни одной цифры. Тогда знаменатель состоит из одних девяток."}, {"q": "Число 0,101001000100001… (нулей каждый раз на один больше) - какое оно?", "opts": ["иррациональное", "периодическое с периодом 10", "периодическое с периодом 100", "конечная десятичная дробь"], "ans": "иррациональное", "why": "Повторяющейся группы здесь нет: закономерность есть, а периода нет. Число, которое нельзя записать обыкновенной дробью, называется иррациональным."}, {"q": "Сколько девяток и сколько нулей будет в знаменателе у дроби 0,(7)?", "opts": ["1 девятка и 0 нолей", "0 девяток и 1 нолей", "2 девятки и 0 нолей", "только нули, девяток нет"], "ans": "1 девятка и 0 нолей", "why": "У 0,(7) период 7, между запятой и периодом цифр нет. Девяток - по числу цифр периода, нулей - по числу цифр между запятой и периодом."}, {"q": "Сколько девяток и сколько нулей будет в знаменателе у дроби 0,2(54)?", "opts": ["2 девятки и 1 ноль", "1 девяток и 2 нолей", "3 девятки и 0 нолей", "только нули, девяток нет"], "ans": "2 девятки и 1 ноль", "why": "У 0,2(54) период 54, между запятой и периодом одна цифра. Девяток - по числу цифр периода, нулей - по числу цифр между запятой и периодом."}, {"q": "Сколько девяток и сколько нулей будет в знаменателе у дроби 4,4(3)?", "opts": ["1 девятка и 1 ноль", "1 девяток и 1 нолей", "2 девятки и 0 нолей", "только нули, девяток нет"], "ans": "1 девятка и 1 ноль", "why": "У 4,4(3) период 3, между запятой и периодом одна цифра. Девяток - по числу цифр периода, нулей - по числу цифр между запятой и периодом."}, {"q": "Сколько девяток и сколько нулей будет в знаменателе у дроби 14,14(15)?", "opts": ["2 девятки и 2 ноля", "2 девяток и 2 нолей", "3 девятки и 0 нолей", "только нули, девяток нет"], "ans": "2 девятки и 2 ноля", "why": "У 14,14(15) период 15, между запятой и периодом две цифры. Девяток - по числу цифр периода, нулей - по числу цифр между запятой и периодом."}],"ppure":[{"q": "Запиши 0,(7) обыкновенной несократимой дробью.", "ans": ["7/9"], "why": "Числитель - число до второго периода минус число до первого: 7 − 0 = 7. Знаменатель - 1 девятка: 9. После сокращения: 7/9."}, {"q": "Запиши 0,(3) обыкновенной несократимой дробью.", "ans": ["1/3"], "why": "Числитель - число до второго периода минус число до первого: 3 − 0 = 3. Знаменатель - 1 девятка: 9. После сокращения: 1/3."}, {"q": "Запиши 0,(6) обыкновенной несократимой дробью.", "ans": ["2/3"], "why": "Числитель - число до второго периода минус число до первого: 6 − 0 = 6. Знаменатель - 1 девятка: 9. После сокращения: 2/3."}, {"q": "Запиши 0,(27) обыкновенной несократимой дробью.", "ans": ["3/11"], "why": "Числитель - число до второго периода минус число до первого: 27 − 0 = 27. Знаменатель - 2 девятки: 99. После сокращения: 3/11."}, {"q": "Запиши 0,(51) обыкновенной несократимой дробью.", "ans": ["17/33"], "why": "Числитель - число до второго периода минус число до первого: 51 − 0 = 51. Знаменатель - 2 девятки: 99. После сокращения: 17/33."}, {"q": "Запиши 0,(123) обыкновенной несократимой дробью.", "ans": ["41/333"], "why": "Числитель - число до второго периода минус число до первого: 123 − 0 = 123. Знаменатель - 3 девятки: 999. После сокращения: 41/333."}, {"q": "Запиши 0,(1) обыкновенной несократимой дробью.", "ans": ["1/9"], "why": "Числитель - число до второго периода минус число до первого: 1 − 0 = 1. Знаменатель - 1 девятка: 9. После сокращения: 1/9."}, {"q": "Запиши 0,(45) обыкновенной несократимой дробью.", "ans": ["5/11"], "why": "Числитель - число до второго периода минус число до первого: 45 − 0 = 45. Знаменатель - 2 девятки: 99. После сокращения: 5/11."}, {"q": "Запиши 0,(9) обыкновенной несократимой дробью.", "ans": ["1"], "why": "Числитель - число до второго периода минус число до первого: 9 − 0 = 9. Знаменатель - 1 девятка: 9. После сокращения: 1/1."}, {"q": "Запиши 0,(18) обыкновенной несократимой дробью.", "ans": ["2/11"], "why": "Числитель - число до второго периода минус число до первого: 18 − 0 = 18. Знаменатель - 2 девятки: 99. После сокращения: 2/11."}],"pmix":[{"q": "Запиши 0,1(6) обыкновенной несократимой дробью.", "ans": ["1/6"], "why": "Числитель: 16 − 1 = 15. Знаменатель: 1 девятка и 1 ноль, то есть 90. Получаем <span class=\"frac\"><span>15</span><span>90</span></span>, после сокращения 1/6."}, {"q": "Запиши 0,2(54) обыкновенной несократимой дробью.", "ans": ["14/55"], "why": "Числитель: 254 − 2 = 252. Знаменатель: 2 девятки и 1 ноль, то есть 990. Получаем <span class=\"frac\"><span>252</span><span>990</span></span>, после сокращения 14/55."}, {"q": "Запиши 0,5(3) обыкновенной несократимой дробью.", "ans": ["8/15"], "why": "Числитель: 53 − 5 = 48. Знаменатель: 1 девятка и 1 ноль, то есть 90. Получаем <span class=\"frac\"><span>48</span><span>90</span></span>, после сокращения 8/15."}, {"q": "Запиши 0,55(3) обыкновенной несократимой дробью.", "ans": ["83/150"], "why": "Числитель: 553 − 55 = 498. Знаменатель: 1 девятка и 2 ноля, то есть 900. Получаем <span class=\"frac\"><span>498</span><span>900</span></span>, после сокращения 83/150."}, {"q": "Запиши 0,0(3) обыкновенной несократимой дробью.", "ans": ["1/30"], "why": "Числитель: 3 − 0 = 3. Знаменатель: 1 девятка и 1 ноль, то есть 90. Получаем <span class=\"frac\"><span>3</span><span>90</span></span>, после сокращения 1/30."}, {"q": "Запиши 0,1(23) обыкновенной несократимой дробью.", "ans": ["61/495"], "why": "Числитель: 123 − 1 = 122. Знаменатель: 2 девятки и 1 ноль, то есть 990. Получаем <span class=\"frac\"><span>122</span><span>990</span></span>, после сокращения 61/495."}, {"q": "Запиши 0,3(7) обыкновенной несократимой дробью.", "ans": ["17/45"], "why": "Числитель: 37 − 3 = 34. Знаменатель: 1 девятка и 1 ноль, то есть 90. Получаем <span class=\"frac\"><span>34</span><span>90</span></span>, после сокращения 17/45."}, {"q": "Запиши 0,12(5) обыкновенной несократимой дробью.", "ans": ["113/900"], "why": "Числитель: 125 − 12 = 113. Знаменатель: 1 девятка и 2 ноля, то есть 900. Получаем <span class=\"frac\"><span>113</span><span>900</span></span>, после сокращения 113/900."}, {"q": "Запиши 0,8(1) обыкновенной несократимой дробью.", "ans": ["73/90"], "why": "Числитель: 81 − 8 = 73. Знаменатель: 1 девятка и 1 ноль, то есть 90. Получаем <span class=\"frac\"><span>73</span><span>90</span></span>, после сокращения 73/90."}],"pint":[{"q": "Запиши 1,(3) одной обыкновенной несократимой дробью.", "ans": ["4/3"], "why": "Целую часть 1 временно откладываем и переводим только дробную: она равна 1/3. Дальше 1 + 1/3 = 4/3."}, {"q": "Запиши 2,(7) одной обыкновенной несократимой дробью.", "ans": ["25/9"], "why": "Целую часть 2 временно откладываем и переводим только дробную: она равна 7/9. Дальше 2 + 7/9 = 25/9."}, {"q": "Запиши 4,4(3) одной обыкновенной несократимой дробью.", "ans": ["133/30"], "why": "Целую часть 4 временно откладываем и переводим только дробную: она равна 13/30. Дальше 4 + 13/30 = 133/30."}, {"q": "Запиши 3,(18) одной обыкновенной несократимой дробью.", "ans": ["35/11"], "why": "Целую часть 3 временно откладываем и переводим только дробную: она равна 2/11. Дальше 3 + 2/11 = 35/11."}, {"q": "Запиши 1,2(6) одной обыкновенной несократимой дробью.", "ans": ["19/15"], "why": "Целую часть 1 временно откладываем и переводим только дробную: она равна 4/15. Дальше 1 + 4/15 = 19/15."}, {"q": "Запиши 5,0(9) одной обыкновенной несократимой дробью.", "ans": ["5,1", "51/10"], "why": "Целую часть 5 временно откладываем и переводим только дробную: она равна 1/10. Дальше 5 + 1/10 = 51/10."}, {"q": "Запиши 2,(45) одной обыкновенной несократимой дробью.", "ans": ["27/11"], "why": "Целую часть 2 временно откладываем и переводим только дробную: она равна 5/11. Дальше 2 + 5/11 = 27/11."}, {"q": "Запиши 7,1(2) одной обыкновенной несократимой дробью.", "ans": ["641/90"], "why": "Целую часть 7 временно откладываем и переводим только дробную: она равна 11/90. Дальше 7 + 11/90 = 641/90."}, {"q": "Запиши 10,(3) одной обыкновенной несократимой дробью.", "ans": ["31/3"], "why": "Целую часть 10 временно откладываем и переводим только дробную: она равна 1/3. Дальше 10 + 1/3 = 31/3."}],"pops":[{"q": "Вычисли 0,(3) + 0,(6).", "ans": ["1"], "why": "0,(3) = 1/3, 0,(6) = 2/3, в сумме ровно 1. Это и есть смысл записи 0,(9) = 1."}, {"q": "Вычисли 0,(1) · 9.", "ans": ["1"], "why": "0,(1) = 1/9, умножаем на 9 и получаем 1."}, {"q": "Вычисли 0,(45) : 0,(5).", "ans": ["9/11"], "why": "0,(45) = 45/99 = 5/11, 0,(5) = 5/9. Делим: 5/11 · 9/5 = 9/11."}, {"q": "Вычисли 0,(6) − 0,(3).", "ans": ["1/3"], "why": "2/3 − 1/3 = 1/3."}, {"q": "Вычисли 0,(2) · 4,5.", "ans": ["1"], "why": "0,(2) = 2/9, 4,5 = 9/2. Произведение 2/9 · 9/2 = 1."}, {"q": "Вычисли 0,1(6) + 0,(3).", "ans": ["0,5", "1/2"], "why": "0,1(6) = 15/90 = 1/6, 0,(3) = 1/3 = 2/6. Сумма 3/6 = 1/2."}, {"q": "Вычисли 0,(12) : 0,(4).", "ans": ["3/11"], "why": "0,(12) = 12/99 = 4/33, 0,(4) = 4/9. Делим: 4/33 · 9/4 = 3/11."}, {"q": "Вычисли 1,(3) · 0,75.", "ans": ["1"], "why": "1,(3) = 4/3, 0,75 = 3/4. Произведение равно 1."}, {"q": "Вычисли 2,(9).", "ans": ["3"], "why": "По правилу: (29 − 2)/9 = 27/9 = 3. Да, 2,(9) - это ровно 3, а не «чуть меньше трёх»."}],"pback":[{"q": "Какая из дробей записывается конечной десятичной?", "opts": ["<span class=\"frac\"><span>7</span><span>40</span></span>", "<span class=\"frac\"><span>5</span><span>12</span></span>", "<span class=\"frac\"><span>2</span><span>7</span></span>", "<span class=\"frac\"><span>1</span><span>6</span></span>"], "ans": "<span class=\"frac\"><span>7</span><span>40</span></span>", "why": "Конечной десятичной становится только та несократимая дробь, у которой знаменатель раскладывается лишь на двойки и пятёрки. 40 = 2³·5, а 12, 7 и 6 содержат другие множители."}, {"q": "Почему <span class=\"frac\"><span>1</span><span>3</span></span> не записывается конечной десятичной дробью?", "opts": ["в знаменателе есть множитель 3", "числитель меньше знаменателя", "дробь несократима", "потому что 3 - нечётное число"], "ans": "в знаменателе есть множитель 3", "why": "Конечная десятичная - это дробь со знаменателем 10ⁿ = 2ⁿ·5ⁿ. Тройка в такой знаменатель не вписывается, поэтому деление не заканчивается."}, {"q": "Какой период у десятичной записи дроби <span class=\"frac\"><span>1</span><span>3</span></span>? Ответ - число.", "ans": ["3"], "why": "Делим уголком: <span class=\"frac\"><span>1</span><span>3</span></span> = 0,(3). Период равен 3. Остатки при делении начинают повторяться - с этого места и идёт период."}, {"q": "Какой период у десятичной записи дроби <span class=\"frac\"><span>1</span><span>9</span></span>? Ответ - число.", "ans": ["1"], "why": "Делим уголком: <span class=\"frac\"><span>1</span><span>9</span></span> = 0,(1). Период равен 1. Остатки при делении начинают повторяться - с этого места и идёт период."}, {"q": "Какой период у десятичной записи дроби <span class=\"frac\"><span>7</span><span>11</span></span>? Ответ - число.", "ans": ["63"], "why": "Делим уголком: <span class=\"frac\"><span>7</span><span>11</span></span> = 0,(63). Период равен 63. Остатки при делении начинают повторяться - с этого места и идёт период."}, {"q": "Какой период у десятичной записи дроби <span class=\"frac\"><span>1</span><span>6</span></span>? Ответ - число.", "ans": ["6"], "why": "Делим уголком: <span class=\"frac\"><span>1</span><span>6</span></span> = 0,(6). Период равен 6. Остатки при делении начинают повторяться - с этого места и идёт период."}, {"q": "Какой период у десятичной записи дроби <span class=\"frac\"><span>5</span><span>12</span></span>? Ответ - число.", "ans": ["6"], "why": "Делим уголком: <span class=\"frac\"><span>5</span><span>12</span></span> = 0,(6). Период равен 6. Остатки при делении начинают повторяться - с этого места и идёт период."}, {"q": "Какой период у десятичной записи дроби <span class=\"frac\"><span>1</span><span>7</span></span>? Ответ - число.", "ans": ["142857"], "why": "Делим уголком: <span class=\"frac\"><span>1</span><span>7</span></span> = 0,(142857). Период равен 142857. Остатки при делении начинают повторяться - с этого места и идёт период."}]};
+var GAP_DATA = {"g1":{"title": "Заполни пропуски: чистый период", "html": "<p class=\"meta\">Переводим 0,(51) в обыкновенную дробь.</p><div class=\"gline\">1) Цифр в периоде: <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">2) Значит в знаменателе будет девяток: <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">3) Цифр между запятой и периодом: <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">4) Знаменатель равен <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">5) Несократимый ответ: <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div>", "ans": ["2", "2", "0", "99", "17/33"]},"g2":{"title": "Заполни пропуски: смешанный период", "html": "<p class=\"meta\">Переводим 0,2(54) в обыкновенную дробь.</p><div class=\"gline\">1) Число до второго периода: <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">2) Число до первого периода: <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">3) Числитель = разность: <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">4) Знаменатель (две девятки и один ноль): <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">5) Несократимый ответ: <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div>", "ans": ["254", "2", "252", "990", "14/55"]},"g4":{"title": "Заполни пропуски: с целой частью", "html": "<p class=\"meta\">Переводим 4,4(3) в неправильную дробь.</p><div class=\"gline\">1) Целую часть 4 откладываем, работаем с 0,4(3).</div><div class=\"gline\">2) Число до второго периода: <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">, до первого: <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">3) Знаменатель (одна девятка и один ноль): <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">4) Дробная часть после сокращения: <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">5) Возвращаем целую часть, итог одной дробью: <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div>", "ans": ["43", "4", "90", "13/30", "133/30"]},"g3":{"title": "Заполни пропуски: вывод правила через уравнение", "html": "<p class=\"meta\">Пусть x = 0,(27). Проверим правило честным уравнением.</p><div class=\"gline\">1) В периоде 2 цифры, поэтому умножаем на <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">2) Тогда 100x = <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">,(27) - впиши целую часть.</div><div class=\"gline\">3) Вычитаем: 100x − x = <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">4) Слева 99x, значит x = <span class=\"frac\"><span>?</span><span>99</span></span>, вместо «?» стоит <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">5) Сокращаем и получаем <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div>", "ans": ["100", "27", "27", "27", "3/11"]}};
+var GAP_ANS = {"g1":["2", "2", "0", "99", "17/33"],"g2":["254", "2", "252", "990", "14/55"],"g4":["43", "4", "90", "13/30", "133/30"],"g3":["100", "27", "27", "27", "3/11"]};
+
+window.TRAPI = {};
+function makeTrainer(id, items){
+  var host = document.getElementById("tr_"+id);
+  if(!host) return;
+  var st = {order: shuffle(items.map(function(_,i){return i;})), cur:0, right:0, answered:false, done:false};
+  function render(){
+    if(st.cur >= items.length){
+      st.done = true;
+      host.innerHTML = '<div class="trhead"><b>Тренажёр пройден</b>'+
+        '<span class="trbar">'+host.dataset.title+'</span></div>'+
+        '<p class="trdone">Готово: верно '+st.right+' из '+items.length+'.</p>'+
+        '<button class="sm again" type="button">Пройти заново</button>';
+      host.querySelector(".again").addEventListener("click", function(){
+        st.order = shuffle(items.map(function(_,i){return i;}));
+        st.cur = 0; st.right = 0; st.answered = false; st.done = false;
+        render(); SAVE.touch(true);
+      });
+      progress();
+      return;
+    }
+    var it = items[st.order[st.cur]];
+    var h = '<div class="trhead"><b>Вопрос '+(st.cur+1)+' из '+items.length+'</b>'+
+            '<span class="trbar">верно '+st.right+'</span></div>'+
+            '<div class="trq">'+it.q+'</div>';
+    if(it.fig){ h += '<div class="fig">'+it.fig+'</div>'; }
+    if(it.opts){
+      var opts = shuffle(it.opts);
+      h += '<div class="tropts">'+opts.map(function(o){
+        return '<label data-k="'+e(o)+'">'+o+'</label>';}).join("")+'</div>';
+    } else {
+      h += '<div class="keys">'+KEYPAD.map(function(k){
+             return '<button class="key" data-k="'+k+'" type="button">'+k+'</button>';}).join("")+'</div>'+
+           '<input type="text" class="tri" inputmode="text" autocapitalize="off" autocorrect="off" '+
+           'autocomplete="off" spellcheck="false" placeholder="ответ">';
+    }
+    h += '<div class="row" style="margin-top:10px"><button class="pri sm go" type="button">Ответить</button></div>'+
+         '<div class="whybox"></div>';
+    host.innerHTML = h;
+    var picked = null;
+    host.querySelectorAll(".tropts label").forEach(function(l){
+      l.addEventListener("click", function(){
+        if(st.answered) return;
+        host.querySelectorAll(".tropts label").forEach(function(x){x.classList.remove("sel");});
+        l.classList.add("sel"); picked = d(l.dataset.k);
+      });
+    });
+    host.querySelectorAll(".key").forEach(function(b){
+      b.addEventListener("click", function(){
+        var inp = host.querySelector(".tri");
+        var k = b.dataset.k === "\u2212" ? "-" : b.dataset.k;
+        var s = inp.selectionStart; if(s===null||s===undefined) s = inp.value.length;
+        var f = inp.selectionEnd; if(f===null||f===undefined) f = s;
+        inp.value = inp.value.slice(0,s)+k+inp.value.slice(f);
+        inp.focus(); inp.setSelectionRange(s+k.length, s+k.length);
+      });
+    });
+    var inpEl = host.querySelector(".tri");
+    if(inpEl){
+      inpEl.addEventListener("keydown", function(ev){
+        if(ev.key === "Enter"){ ev.preventDefault(); host.querySelector(".go").click(); }
+      });
+    }
+    host.querySelector(".go").addEventListener("click", function(){
+      var btn = host.querySelector(".go");
+      if(st.answered){ st.cur++; st.answered = false; render(); SAVE.touch(true); return; }
+      var given = it.opts ? picked : (host.querySelector(".tri").value || "");
+      if(!given || !String(given).trim()) return;
+      var ok = it.opts ? (norm(given) === norm(it.ans))
+                       : it.ans.some(function(a){ return same(given, a, it.tol); });
+      st.answered = true;
+      if(ok) st.right++;
+      if(it.opts){
+        host.querySelectorAll(".tropts label").forEach(function(x){
+          var val = d(x.dataset.k);
+          if(norm(val) === norm(it.ans)) x.classList.add("good");
+          else if(x.classList.contains("sel")) x.classList.add("miss");
+        });
+      } else {
+        host.querySelector(".tri").classList.add(ok ? "ok" : "bad");
+      }
+      host.querySelector(".whybox").innerHTML =
+        '<div class="trwhy"><b>'+(ok?"Верно.":"Неверно, правильный ответ: "+esc(it.opts?it.ans:it.ans[0])+".")+
+        '</b> '+it.why+'</div>';
+      btn.textContent = (st.cur+1 >= items.length) ? "Завершить" : "Дальше";
+      SAVE.touch(true);
+    });
+  }
+  window.TRAPI[id] = {
+    get: function(){ return {order:st.order, cur:st.cur, right:st.right, done:st.done}; },
+    apply: function(s){
+      if(!s || !s.order || s.order.length !== items.length) return;
+      st.order = s.order; st.cur = s.cur||0; st.right = s.right||0;
+      st.done = !!s.done; st.answered = false;
+      render();
+    },
+    isDone: function(){ return st.done; }
+  };
+  render();
+}
+function trDoneCount(){
+  return REQ_TR.filter(function(id){ return window.TRAPI[id] && window.TRAPI[id].isDone(); }).length;
+}
+
+
+window.GAPST = {};
+function makeGap(id, data){
+  var host = document.getElementById("gap_"+id);
+  if(!host) return;
+  var st = {vals: data.ans.map(function(){return "";}), checked:false};
+  window.GAPST[id] = st;
+  var html = '<div class="trhead"><b>'+data.title+'</b></div>' + data.html +
+             '<div class="row" style="margin-top:10px">'+
+             '<button class="pri sm gchk" type="button">Проверить</button></div><div class="gv"></div>';
+  host.innerHTML = html;
+  var inputs = host.querySelectorAll("input.gi");
+  inputs.forEach(function(inp, i){
+    inp.addEventListener("input", function(){ st.vals[i] = inp.value; SAVE.touch(); });
+    inp.addEventListener("keydown", function(ev){
+      if(ev.key === "Enter"){ ev.preventDefault(); host.querySelector(".gchk").click(); }
+    });
+  });
+  host.querySelector(".gchk").addEventListener("click", function(){
+    st.checked = true;
+    paint();
+    SAVE.touch(true);
+  });
+  function paint(){
+    var bad = 0;
+    inputs.forEach(function(inp, i){
+      inp.classList.remove("ok","bad");
+      if(!st.checked) return;
+      var ok = same(inp.value, data.ans[i], data.tol);
+      inp.classList.add(ok ? "ok" : "bad");
+      if(!ok) bad++;
+    });
+    var v = host.querySelector(".gv");
+    if(!st.checked){ v.textContent = ""; v.className = "gv"; return; }
+    v.className = "gv " + (bad ? "bad-note" : "");
+    v.style.color = bad ? "" : "var(--ok)";
+    v.textContent = bad ? ("Красным отмечены "+bad+" неверных ответа - поправь и проверь ещё раз.")
+                        : "Всё верно, шаги сходятся.";
+  }
+  window.GAPST[id].apply = function(s){
+    if(!s || !s.vals) return;
+    st.vals = s.vals.slice(0, inputs.length);
+    st.checked = !!s.checked;
+    inputs.forEach(function(inp,i){ inp.value = st.vals[i] || ""; });
+    paint();
+  };
+  window.GAPST[id].get = function(){ return {vals: st.vals, checked: st.checked}; };
+}
+window.GAPFLUSH = function(){
+  Object.keys(window.GAPST).forEach(function(id){
+    var host = document.getElementById("gap_"+id);
+    if(!host) return;
+    var st = window.GAPST[id];
+    host.querySelectorAll("input.gi").forEach(function(inp,i){ st.vals[i] = inp.value; });
+  });
+};
+
+
+var state = {};
+TASKS.forEach(function(t){
+  state[t.id] = {tries:0, hints:0, done:false, ok:false, given:"", sel:null};
+  var box = document.getElementById("tasks"+(t.blk||"1")) || document.getElementById("tasks1");
+  var el = document.createElement("div");
+  el.className = "task"; el.id = "t"+t.id;
+  var body = '<div><span class="tnum">'+t.id+'.</span>'+t.text+
+             '<span class="lvl">'+t.lvl+'</span></div>';
+  if(t.img){ body += '<div class="fig">'+t.img+'</div>'; }
+  if(t.type === "choice"){
+    body += '<div class="opts">'+t.options.map(function(o){
+      return '<label class="opt" data-v="'+esc(o)+'"><input type="radio" name="q'+t.id+'"> '+o+'</label>';
+    }).join("")+'</div>';
+  } else {
+    body += '<div class="keys">'+
+      KEYPAD.map(function(k){
+        return '<button class="key" data-k="'+k+'" type="button">'+k+'</button>';}).join("")+
+      '</div><input type="text" id="in'+t.id+'" inputmode="text" autocapitalize="off" '+
+      'autocorrect="off" autocomplete="off" spellcheck="false" placeholder="ответ">';
+  }
+  body += '<div class="row" style="margin-top:10px">'+
+          '<button class="pri sm chk" type="button">Проверить</button>'+
+          '<button class="sm hnt" type="button">Подсказка</button></div>'+
+          '<div class="hints"></div><div class="verdict"></div><div class="sol"></div>';
+  el.innerHTML = body;
+  box.appendChild(el);
+
+  el.querySelectorAll(".key").forEach(function(b){
+    b.addEventListener("click", function(){
+      var inp = document.getElementById("in"+t.id);
+      var k = b.dataset.k === "\u2212" ? "-" : b.dataset.k;
+      var s = inp.selectionStart; if(s===null||s===undefined) s = inp.value.length;
+      var f = inp.selectionEnd; if(f===null||f===undefined) f = s;
+      inp.value = inp.value.slice(0,s) + k + inp.value.slice(f);
+      inp.focus(); inp.setSelectionRange(s+k.length, s+k.length);
+      SAVE.touch();
+    });
+  });
+  if(t.type === "choice"){
+    el.querySelectorAll(".opt").forEach(function(l){
+      l.addEventListener("click", function(){
+        el.querySelectorAll(".opt").forEach(function(x){x.classList.remove("sel");});
+        l.classList.add("sel"); state[t.id].sel = l.dataset.v; SAVE.touch();
+      });
+    });
+  } else {
+    var inp = el.querySelector("#in"+t.id);
+    inp.addEventListener("keydown", function(ev){
+      if(ev.key === "Enter"){ ev.preventDefault(); check(t.id); }
+    });
+    inp.addEventListener("input", function(){ SAVE.touch(); });
+  }
+  el.querySelector(".chk").addEventListener("click", function(){ check(t.id); });
+  el.querySelector(".hnt").addEventListener("click", function(){ hint(t.id); });
+});
+
+function hint(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var host = document.querySelector("#t"+id+" .hints");
+  if(s.hints >= t.hints.length){
+    if(!host.querySelector(".last")){
+      var w = document.createElement("div");
+      w.className = "hint last";
+      w.textContent = "Подсказки закончились - нажми «Проверить», решение откроется после второй попытки.";
+      host.appendChild(w);
+    }
+    return;
+  }
+  drawHint(host, t, s.hints);
+  s.hints++;
+  SAVE.touch();
+}
+function drawHint(host, t, i){
+  var h = document.createElement("div");
+  h.className = "hint";
+  h.innerHTML = "<b>Подсказка "+(i+1)+".</b> " + t.hints[i];
+  host.appendChild(h);
+}
+function check(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var el = document.getElementById("t"+id);
+  var v = el.querySelector(".verdict");
+  var given = (t.type === "choice") ? (s.sel || "") :
+              (document.getElementById("in"+id).value || "");
+  if(!String(given).trim()){ v.className = "verdict bad"; v.textContent = "Введи ответ."; return; }
+  s.given = given; s.tries++;
+  var ok = t.ans.some(function(a){ return same(given, d(a), t.tol); });
+  s.ok = ok; s.done = ok || s.tries >= 2;
+  paintTask(t, s);
+  progress();
+  SAVE.touch(true);
+}
+function paintTask(t, s){
+  var el = document.getElementById("t"+t.id);
+  var v = el.querySelector(".verdict");
+  el.classList.remove("ok","bad");
+  if(!s.tries) return;
+  el.classList.add(s.ok ? "ok" : "bad");
+  v.className = "verdict " + (s.ok ? "ok" : "bad");
+  if(s.ok){
+    v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    showSol(el, t);
+  } else if(s.tries === 1){
+    v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+  } else {
+    v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    showSol(el, t);
+  }
+}
+function showSol(el, t){
+  var host = el.querySelector(".sol");
+  if(host.dataset.on) return;
+  host.dataset.on = "1";
+  var det = document.createElement("details");
+  det.open = true;
+  det.innerHTML = "<summary>Решение</summary><div>"+t.sol+"</div>";
+  host.appendChild(det);
+}
+function progress(){
+  var done = TASKS.filter(function(t){return state[t.id].done;}).length;
+  var ok = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  var el = document.getElementById("progress");
+  if(el) el.textContent = "задачи: " + done + " из " + TASKS.length + " · верно " + ok +
+      " · тренажёры: " + trDoneCount() + " из " + REQ_TR.length;
+}
+document.getElementById("checkall").addEventListener("click", function(){
+  TASKS.forEach(function(t){
+    var s = state[t.id];
+    var given = (t.type === "choice") ? (s.sel || "") : ((document.getElementById("in"+t.id)||{}).value || "");
+    if(String(given).trim() && !s.done) check(t.id);
+  });
+  var first = TASKS.find(function(t){ return !state[t.id].done; });
+  var el = document.getElementById("progress");
+  el.textContent += first ? " · осталась задача " + first.id : " · все задачи закрыты";
+});
+
+
+var SAVE_V = 1;
+var KEY_BASE = "arttich:period11:";
+var KEY_MAIN = KEY_BASE + "work";
+var SAVE = (function(){
+  var timer = null, on = true;
+  function collect(){
+    window.GAPFLUSH();
+    var tasks = {};
+    TASKS.forEach(function(t){
+      var s = state[t.id];
+      var live = (t.type === "choice") ? (s.sel||"") : ((document.getElementById("in"+t.id)||{}).value || "");
+      tasks[t.id] = {given:s.given, live:live, sel:s.sel, tries:s.tries, hints:s.hints, done:s.done, ok:s.ok};
+    });
+    var trs = {};
+    Object.keys(window.TRAPI).forEach(function(k){ trs[k] = window.TRAPI[k].get(); });
+    var gaps = {};
+    Object.keys(window.GAPST).forEach(function(k){ gaps[k] = window.GAPST[k].get(); });
+    return {v:SAVE_V, ts:Date.now(), name:(document.getElementById("name")||{}).value || "",
+            tasks:tasks, trs:trs, gaps:gaps, started:started};
+  }
+  function write(){
+    if(!on) return;
+    try{ localStorage.setItem(KEY_MAIN, JSON.stringify(collect())); }catch(err){}
+  }
+  function touch(now){
+    if(now){ if(timer){clearTimeout(timer); timer=null;} write(); return; }
+    if(timer) clearTimeout(timer);
+    timer = setTimeout(function(){ timer = null; write(); }, 400);
+  }
+  function best(){
+    var res = null;
+    try{
+      for(var i=0;i<localStorage.length;i++){
+        var k = localStorage.key(i);
+        if(k && k.indexOf(KEY_BASE) === 0){
+          try{
+            var o = JSON.parse(localStorage.getItem(k));
+            if(o && o.v === SAVE_V && (!res || (o.ts||0) > (res.ts||0))) res = o;
+          }catch(err){}
+        }
+      }
+    }catch(err){}
+    return res;
+  }
+  function clearAll(){
+    try{
+      var kill = [];
+      for(var i=0;i<localStorage.length;i++){
+        var k = localStorage.key(i);
+        if(k && k.indexOf(KEY_BASE) === 0) kill.push(k);
+      }
+      kill.forEach(function(k){ localStorage.removeItem(k); });
+    }catch(err){}
+  }
+  return {touch:touch, write:write, best:best, clearAll:clearAll,
+          off:function(){on=false;}, on:function(){on=true;}};
+})();
+
+function restore(){
+  var s = SAVE.best();
+  if(!s) return false;
+  try{
+    if(s.name && document.getElementById("name")) document.getElementById("name").value = s.name;
+    if(s.started) started = s.started;
+    TASKS.forEach(function(t){
+      var saved = s.tasks && s.tasks[t.id];
+      if(!saved) return;
+      var st = state[t.id];
+      st.given = saved.given||""; st.tries = saved.tries||0; st.hints = saved.hints||0;
+      st.done = !!saved.done; st.ok = !!saved.ok; st.sel = saved.sel||null;
+      var el = document.getElementById("t"+t.id);
+      if(t.type === "choice"){
+        if(st.sel){
+          el.querySelectorAll(".opt").forEach(function(l){
+            if(l.dataset.v === st.sel){ l.classList.add("sel"); var r=l.querySelector("input"); if(r) r.checked=true; }
+          });
+        }
+      } else {
+        var inp = document.getElementById("in"+t.id);
+        if(inp) inp.value = saved.live || saved.given || "";
+      }
+      var hb = el.querySelector(".hints");
+      for(var i=0;i<st.hints && i<t.hints.length;i++) drawHint(hb, t, i);
+      paintTask(t, st);
+    });
+    if(s.trs) Object.keys(s.trs).forEach(function(k){
+      if(window.TRAPI[k]) window.TRAPI[k].apply(s.trs[k]);
+    });
+    if(s.gaps) Object.keys(s.gaps).forEach(function(k){
+      if(window.GAPST[k] && window.GAPST[k].apply) window.GAPST[k].apply(s.gaps[k]);
+    });
+  }catch(err){}
+  return true;
+}
+
+function bindSave(){
+  var nm = document.getElementById("name");
+  if(nm) nm.addEventListener("input", function(){ SAVE.touch(); });
+  document.addEventListener("visibilitychange", function(){
+    if(document.visibilityState === "hidden") SAVE.touch(true);
+  });
+  window.addEventListener("pagehide", function(){ SAVE.touch(true); });
+  window.addEventListener("blur", function(){ SAVE.touch(true); });
+  window.addEventListener("beforeunload", function(){ SAVE.touch(true); });
+  var btn = document.getElementById("reset");
+  if(btn) btn.addEventListener("click", function(){
+    if(!window.confirm("Стереть все ответы и начать заново?")) return;
+    SAVE.off(); SAVE.clearAll(); location.reload();
+  });
+}
+
+
+var photos = [];
+document.getElementById("photos").addEventListener("change", function(ev){
+  var files = Array.prototype.slice.call(ev.target.files || []);
+  files.forEach(function(f){
+    var r = new FileReader();
+    r.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var m = 1400, w = img.width, h = img.height;
+        if(Math.max(w,h) > m){ var k = m/Math.max(w,h); w = Math.round(w*k); h = Math.round(h*k); }
+        var c = document.createElement("canvas"); c.width = w; c.height = h;
+        c.getContext("2d").drawImage(img, 0, 0, w, h);
+        photos.push({url: c.toDataURL("image/jpeg", 0.7), task: ""});
+        drawThumbs();
+      };
+      img.src = r.result;
+    };
+    r.readAsDataURL(f);
+  });
+  ev.target.value = "";
+});
+function drawThumbs(){
+  var host = document.getElementById("thumbs");
+  host.innerHTML = "";
+  var total = 0;
+  photos.forEach(function(p, i){
+    total += p.url.length * 0.75;
+    var d0 = document.createElement("div"); d0.className = "thumb";
+    var opts = '<option value="">задача…</option>' + TASKS.map(function(t){
+      return '<option value="'+t.id+'"'+(p.task==String(t.id)?" selected":"")+'>№'+t.id+'</option>';
+    }).join("");
+    d0.innerHTML = '<img src="'+p.url+'" alt="фото решения"><button type="button">×</button>'+
+                   '<select>'+opts+'</select>';
+    d0.querySelector("button").addEventListener("click", function(){ photos.splice(i,1); drawThumbs(); });
+    d0.querySelector("select").addEventListener("change", function(ev){ p.task = ev.target.value; });
+    host.appendChild(d0);
+  });
+  var note = document.getElementById("repnote");
+  if(total > 15e6){ note.textContent = "Фото уже больше 15 МБ - отчёт может отправляться долго, лишние лучше удалить."; }
+  else if(photos.length){ note.textContent = "Фото в отчёте: " + photos.length + "."; }
+  else { note.textContent = ""; }
+}
+
+var ENDPOINT = "https://script.google.com/macros/s/AKfycbztH9c-wQuKC7pSfD8AcFfnOcGpSHxoeqovulmvLMp9W23SgFx9dDQ2JTlWcIJDMN6W/exec";
+var SECRET = "artteach2026";
+
+function gateCheck(){
+  var miss = [];
+  var who = ((document.getElementById("name")||{}).value || "").trim();
+  if(!who) miss.push("впиши имя вверху страницы");
+  var left = TASKS.filter(function(t){ return !state[t.id].done; });
+  if(left.length) miss.push("ответь на задачи: " + left.map(function(t){return t.id;}).join(", "));
+  var trLeft = REQ_TR.filter(function(id){ return !(window.TRAPI[id] && window.TRAPI[id].isDone()); });
+  if(trLeft.length) miss.push("пройди тренажёры до конца: " + trLeft.map(function(id){return TR_NAMES[id];}).join(", "));
+  return miss;
+}
+
+function buildReport(){
+  var name = ((document.getElementById("name")||{}).value || "").trim() || "без имени";
+  var now = new Date();
+  var mins = Math.max(1, Math.round((Date.now()-started)/60000));
+  var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  var trs = REQ_TR.concat(EXTRA_TR).map(function(id){
+    var a = window.TRAPI[id] ? window.TRAPI[id].get() : {right:0, done:false};
+    return {тренажёр:TR_NAMES[id], верно:a.right, пройден:!!a.done};
+  });
+  var data = {тип:"дз", предмет:"математика", тема:TOPIC,
+    ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
+    верно:okN, всего:TASKS.length, задачи:[], тренажёры:trs};
+  var rows = TASKS.map(function(t){
+    var s = state[t.id];
+    data.задачи.push({n:t.id, условие:t.text.replace(/<[^>]+>/g," "), ответ_ученика:s.given,
+      верный_ответ:t.ans.map(d).join(" или "), верно:s.ok, попыток:s.tries, подсказок:s.hints,
+      уровень:t.lvl});
+    return "<tr><td>"+t.id+"</td><td style='text-align:left'>"+esc(t.text.replace(/<[^>]+>/g," "))+
+      "</td><td>"+esc(s.given||"—")+"</td><td>"+esc(t.ans.map(d).join(" / "))+"</td><td>"+
+      (s.ok?"верно":(s.given?"неверно":"не решал"))+"</td><td>"+s.tries+"</td><td>"+s.hints+"</td></tr>";
+  }).join("");
+  var trRows = trs.map(function(a){
+    return "<tr><td style='text-align:left'>"+esc(a.тренажёр)+"</td><td>"+a.верно+
+           "</td><td>"+(a.пройден?"пройден":"не закончен")+"</td></tr>";
+  }).join("");
+  var pics = photos.map(function(p,i){
+    return "<figure><img src='"+p.url+"'><figcaption>Фото "+(i+1)+
+      (p.task?" — к задаче №"+p.task:"")+"</figcaption></figure>";
+  }).join("");
+  var html = "<!doctype html><html lang='ru'><head><meta charset='utf-8'>"+
+    "<meta name='viewport' content='width=device-width,initial-scale=1'>"+
+    "<title>Отчёт — "+esc(name)+" — "+esc(TOPIC)+"</title><style>"+
+    "body{font:16px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;padding:20px;color:#16181d;background:#fff}"+
+    "h1{font-size:22px;margin:0 0 4px}.m{color:#5b6270;font-size:15px}"+
+    "table{border-collapse:collapse;width:100%;margin-top:14px;font-size:15px}"+
+    "th,td{border:1px solid #dfe3ea;padding:6px 8px;text-align:center}th{background:#eef3fb}"+
+    "figure{margin:14px 0}img{max-width:100%;border:1px solid #dfe3ea;border-radius:8px}"+
+    "figcaption{color:#5b6270;font-size:14px;margin-top:4px}</style></head><body>"+
+    "<h1>Отчёт по домашнему заданию</h1>"+
+    "<div class='m'>Тема: "+esc(TOPIC)+" · подготовка к ЦТ/ЦЭ, 11 класс</div>"+
+    "<div class='m'>Ученик: <b>"+esc(name)+"</b> · сдано: "+esc(now.toLocaleString("ru-RU"))+
+    " · время работы: около "+mins+" мин</div>"+
+    "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)</h2>"+
+    "<table><tr><th>№</th><th>Задача</th><th>Ответ ученика</th><th>Верный ответ</th>"+
+    "<th>Итог</th><th>Попыток</th><th>Подсказок</th></tr>"+rows+"</table>"+
+    "<h2>Тренажёры</h2><table><tr><th>Тренажёр</th><th>Верных</th><th>Статус</th></tr>"+trRows+"</table>"+
+    (pics ? "<h2>Фото решений</h2>"+pics : "<p class='m'>Фото решений не прикреплены.</p>")+
+    "<script type='application/json' id='result-data'>"+
+    JSON.stringify(data).replace(/</g,"\\u003c")+"<\/script></body></html>";
+  var stamp = now.getDate()+"-"+(now.getMonth()+1);
+  return {
+    html: html, name: name,
+    file: "Отчёт_"+FILEKEY+"_"+name.replace(/\s+/g,"_")+"_"+stamp+".html",
+    caption: name+" · "+TOPIC+" · "+okN+" из "+TASKS.length+
+             " ("+Math.round(okN/TASKS.length*100)+"%)"
+  };
+}
+
+document.getElementById("send").addEventListener("click", function(){
+  var note = document.getElementById("repnote");
+  var miss = gateCheck();
+  if(miss.length){
+    note.className = "meta bad-note";
+    note.innerHTML = "Перед отправкой: " + miss.join("; ") + ".";
+    return;
+  }
+  note.className = "meta";
+  var r = buildReport();
+  note.textContent = "Отправляю…";
+  var payload = {secret: SECRET, name: r.file, caption: r.caption,
+                 file: btoa(unescape(encodeURIComponent(r.html)))};
+  fetch(ENDPOINT, {method:"POST", mode:"no-cors", body: JSON.stringify(payload)})
+    .then(function(){
+      note.textContent = "Отправлено преподавателю." +
+        (photos.length ? "" : " Фото решений не приложены - если решал в тетради, приложи их и отправь ещё раз.");
+    })
+    .catch(function(){
+      note.textContent = "Не получилось отправить. Скачай файл кнопкой ниже и пришли его вручную.";
+    });
+});
+
+document.getElementById("report").addEventListener("click", function(){
+  var r = buildReport();
+  var blob = new Blob([r.html], {type:"text/html;charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = r.file;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  document.getElementById("repnote").textContent = "Файл скачан - он в папке загрузок.";
+});
+
+function BUILD_TRAINERS(){
+makeTrainer("pread", TR_ITEMS["pread"]);
+makeTrainer("ppure", TR_ITEMS["ppure"]);
+makeTrainer("pmix", TR_ITEMS["pmix"]);
+makeTrainer("pint", TR_ITEMS["pint"]);
+makeTrainer("pops", TR_ITEMS["pops"]);
+makeTrainer("pback", TR_ITEMS["pback"]);
+}
+function BUILD_GAPS(){
+makeGap("g1", GAP_DATA["g1"]);
+makeGap("g2", GAP_DATA["g2"]);
+makeGap("g4", GAP_DATA["g4"]);
+makeGap("g3", GAP_DATA["g3"]);
+}
+
+BUILD_TRAINERS();
+BUILD_GAPS();
+restore();
+bindSave();
+progress();
+SAVE.write();
+
+</script>
+</body>
+</html>

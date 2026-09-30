@@ -1,0 +1,897 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Элементарные вычисления — подготовка к ЦТ/ЦЭ</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0; --warn-line:#e8c86a;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415; --warn-line:#5c4a1c;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%;overflow-x:hidden}
+.wrap{max-width:820px;margin:0 auto;padding:16px 14px 90px}
+h1{font-size:25px;line-height:1.25;margin:0 0 6px;overflow-wrap:break-word}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+h4{font-size:16px;margin:14px 0 4px}
+p{margin:8px 0;overflow-wrap:break-word}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+button[disabled]{opacity:.5;cursor:default}
+
+/* формулы */
+.f-formula{font-size:19px}
+.fx{background:var(--acc-soft);border-radius:10px;padding:10px 12px;margin:9px 0;
+  font-size:18px;text-align:center;overflow-x:auto}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px;white-space:nowrap}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+.rt{white-space:nowrap}
+.rt>span{border-top:1.4px solid currentColor;padding:0 3px 0 2px;margin-left:-2px}
+
+/* памятка */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:10px 0}
+.fbox{border:1px solid var(--line);border-radius:12px;padding:11px 13px;background:var(--bg)}
+.fbox>b{display:block;margin-bottom:4px;color:var(--acc)}
+.fbox .s b{color:inherit}
+.fbox .s{font-size:16px}
+
+/* теория */
+.def{border-left:4px solid var(--acc);background:var(--acc-soft);border-radius:0 10px 10px 0;
+  padding:10px 12px;margin:10px 0}
+.rule2{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+.warn{background:var(--warn-soft);border:1px solid var(--warn-line);border-radius:10px;
+  padding:10px 12px;margin:10px 0;font-size:16px}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.ex{border:1px dashed var(--line);border-radius:12px;padding:12px 13px;margin:12px 0}
+.ex>b.t{display:block;color:var(--acc);margin-bottom:6px}
+.step{margin:6px 0}
+.step.mini{font-size:15px;color:var(--muted);border-top:1px dashed var(--line);padding-top:7px;margin-top:9px}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+table.wrap-t th,table.wrap-t td{white-space:normal}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.fig{margin:12px 0;text-align:center}
+.fig svg{width:100%;max-width:330px;height:auto}
+.figrow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.figrow .fig{flex:1 1 210px;margin:6px 0}
+
+/* задачи */
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px;white-space:nowrap}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+
+/* тренажёры */
+.tr{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--bg)}
+.tr .trhead{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline;justify-content:space-between}
+.tr .trhead b{font-size:16px}
+.tr .trq{margin:10px 0;font-size:17px}
+.tr .tropts label{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);
+  border-radius:10px;cursor:pointer;background:var(--card)}
+.tr .tropts label.sel{border-color:var(--acc);background:var(--acc-soft)}
+.tr .tropts label.good{border-color:var(--ok);background:var(--ok-soft)}
+.tr .tropts label.miss{border-color:var(--bad);background:var(--bad-soft)}
+.tr .trwhy{margin-top:10px;font-size:16px;background:var(--acc-soft);border-radius:10px;padding:9px 12px}
+.tr .trdone{font-weight:600;color:var(--ok)}
+.tr input[type=text]{max-width:260px}
+.trbar{font-size:14px;color:var(--muted)}
+
+/* пропуски */
+.gap{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--bg)}
+.gap .gline{margin:9px 0;font-size:17px;overflow-x:auto}
+.gap input.gi{font:inherit;width:88px;padding:6px 8px;border:1.5px solid var(--line);
+  border-radius:8px;background:var(--card);color:var(--ink);text-align:center}
+.gap input.gi.ok{border-color:var(--ok);background:var(--ok-soft)}
+.gap input.gi.bad{border-color:var(--bad);background:var(--bad-soft)}
+.gap .gv{margin-top:10px;font-weight:600}
+
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:9px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+.sheet .fgrid{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+@media print{
+  body{background:#fff}
+  .wrap>*{display:none !important}
+  .wrap>.sheet{display:block !important;border:none;margin:0;padding:0}
+  .bar{display:none !important}
+  .sheet{font-size:10.5px;line-height:1.3}
+  .sheet h2{font-size:15px;margin:0 0 4px}
+  .sheet h4{font-size:11.5px;margin:6px 0 2px}
+  .sheet p{margin:3px 0}
+  .sheet .fgrid{gap:5px;grid-template-columns:repeat(3,1fr)}
+  .sheet .fbox{padding:5px 6px;border-radius:6px}
+  .sheet .fbox .s{font-size:10.5px}
+  .sheet .fx{font-size:11px;padding:4px 6px;margin:4px 0}
+  .sheet th,.sheet td{padding:2px 3px;font-size:10px}
+  @page{size:A4;margin:9mm}
+}
+@media (max-width:400px){
+  body{font-size:16px}
+  .wrap{padding:12px 12px 90px}
+  h1{font-size:22px}
+  .card{padding:14px 12px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="card top">
+<h1>Элементарные вычисления</h1>
+<div class="meta">Математика · подготовка к ЦТ/ЦЭ · 11 класс · день 1 · тема 4.01</div>
+<label class="f" for="name">Имя и фамилия</label>
+<input type="text" id="name" placeholder="напиши, как в журнале" autocapitalize="words" spellcheck="false">
+<div class="note" style="margin-top:14px"><b>Как работать.</b> Всё считаем <b>без калькулятора</b> - на ЦТ его не будет, и счёт на бумаге надо натренировать до автоматизма.<br>- десятичную дробь почти всегда выгоднее превратить в обыкновенную;<br>- действия выполняй по одному, не пытайся посчитать всё выражение сразу;<br>- страшные произведения вроде 273·113 не считай - скорее всего, они сократятся.<br><b>Формат ответа:</b> число или дробь через «/» - например <b>0,03</b>, <b>3/22</b>, <b>-2,6</b>. Смешанные числа пиши неправильной дробью или десятичной: не «2 1/3», а <b>7/3</b> или <b>2,333</b>. Запятая и точка равнозначны.</div>
+<div class="row" style="margin-top:12px"><button class="sm" id="reset" type="button">Начать заново</button><span class="meta">работа сохраняется сама - можно закрыть страницу и вернуться</span></div>
+</div>
+<div class="card"><h2>Памятка</h2>
+<p class="meta">Сюда возвращайся, когда застрял.</p><div class="fgrid">
+<div class="fbox"><b>Наизусть</b><div class="s"><span class="frac"><span>1</span><span>2</span></span> = 0,5 · <span class="frac"><span>1</span><span>4</span></span> = 0,25 · <span class="frac"><span>3</span><span>4</span></span> = 0,75<br><span class="frac"><span>1</span><span>8</span></span> = 0,125 · <span class="frac"><span>3</span><span>8</span></span> = 0,375 · <span class="frac"><span>5</span><span>8</span></span> = 0,625<br><span class="frac"><span>1</span><span>5</span></span> = 0,2 · <span class="frac"><span>1</span><span>20</span></span> = 0,05 · <span class="frac"><span>1</span><span>25</span></span> = 0,04 · <span class="frac"><span>1</span><span>16</span></span> = 0,0625</div></div>
+<div class="fbox"><b>Десятичная → обыкновенная</b><div class="s">Числитель - число без запятой, знаменатель - единица со столькими нулями, сколько знаков после запятой. 0,375 = <span class="frac"><span>375</span><span>1000</span></span> = <span class="frac"><span>3</span><span>8</span></span>.</div></div>
+<div class="fbox"><b>Смешанное число</b><div class="s">Сложение и вычитание - <b>не трогаем</b>: 17<span class="frac"><span>5</span><span>13</span></span> = 17 + <span class="frac"><span>5</span><span>13</span></span>.<br>Умножение и деление - <b>обязательно</b> в неправильную: 17<span class="frac"><span>5</span><span>13</span></span> = <span class="frac"><span>226</span><span>13</span></span>.</div></div>
+<div class="fbox"><b>Порядок действий</b><div class="s">Скобки → степени → умножение и деление слева направо → сложение и вычитание. Черта дроби делит <b>весь</b> числитель на <b>весь</b> знаменатель, поэтому это деление - последнее.</div></div>
+<div class="fbox"><b>Не умножай страшное</b><div class="s">273·113 оставляй как есть: почти всегда дальше сократится. Числа полезно разложить на простые множители - тогда видно, что уходит.</div></div>
+<div class="fbox"><b>Вынесение и ФСУ</b><div class="s">ab + ac = a(b + c) · a² − b² = (a − b)(a + b)<br>(a ± b)² = a² ± 2ab + b²</div></div>
+<div class="fbox"><b>Сумма <span class="frac"><span>1</span><span>a·b</span></span></b><div class="s">Если знаменатели идут с шагом k, то <span class="frac"><span>1</span><span>a(a+k)</span></span> = <span class="frac"><span>1</span><span>k</span></span>(<span class="frac"><span>1</span><span>a</span></span> − <span class="frac"><span>1</span><span>a+k</span></span>). В сумме середина гасится.</div></div>
+<div class="fbox"><b>Частые потери</b><div class="s">−(a − b) = −a + b, а не −a − b.<br>24 : 4 · 2 = 12, а не 3.<br>Делить на дробь = умножать на перевёрнутую.</div></div>
+</div></div>
+<div class="card">
+<h2>1. Десятичные и обыкновенные дроби</h2>
+<div class="def">Дробь со знаменателем 10, 100, 1000 или вообще 10<sup>n</sup> можно записать десятичной. <span class="frac"><span>4</span><span>10</span></span> = 0,4, <span class="frac"><span>35</span><span>100</span></span> = 0,35, <span class="frac"><span>314</span><span>100</span></span> = 3,14. По сути десятичное число - просто удобная форма записи обыкновенной дроби с такими знаменателями.</div><p>Обратный перевод: в числитель пишем число без запятой, в знаменатель - единицу со столькими нулями, сколько знаков после запятой, и сокращаем.</p><div class="fx">0,225 = <span class="frac"><span>225</span><span>1000</span></span> = <span class="frac"><span>9</span><span>40</span></span> &nbsp;·&nbsp; 0,04 = <span class="frac"><span>4</span><span>100</span></span> = <span class="frac"><span>1</span><span>25</span></span></div><div class="rule2"><b>Умножение десятичных без калькулятора.</b> Забудь про запятые и перемножь целые числа. Потом посчитай, сколько знаков после запятой было у обоих множителей вместе, и отдели столько же знаков справа в результате.</div><div class="ex"><b class="t">Пример 1. 0,225 · 0,04</b><div class="step">1. Через дроби: <span class="frac"><span>225</span><span>1000</span></span> · <span class="frac"><span>4</span><span>100</span></span> = <span class="frac"><span>225 · 4</span><span>1000 · 100</span></span> = <span class="frac"><span>900</span><span>100000</span></span> = <span class="frac"><span>9</span><span>1000</span></span> = 0,009.</div><div class="step">2. Быстрее: 225 · 4 = 900. Знаков после запятой 3 + 2 = 5. Дописываем нули слева: 00900, отделяем пять знаков справа.</div><div class="fx">0,225 · 0,04 = 0,009</div><div class="step mini">Проверь себя: если бы отделили 4 знака, получилось бы 0,09 - в десять раз больше. Считать знаки надо у обоих множителей, а не у одного.</div></div><div class="ex"><b class="t">Пример 2. 2,4 : 0,06</b><div class="step">Умножаем делимое и делитель на 100 - частное не меняется.</div><div class="fx">2,4 : 0,06 = 240 : 6 = 40</div><div class="step mini">Типичная ловушка: перенести запятую только у делителя. Тогда получится 2,4 : 6 = 0,4 - ответ в сто раз меньше.</div></div><div class="warn">Переводы, которые надо знать наизусть, а не выводить каждый раз: <span class="frac"><span>1</span><span>2</span></span> = 0,5, <span class="frac"><span>1</span><span>4</span></span> = 0,25, <span class="frac"><span>3</span><span>4</span></span> = 0,75, <span class="frac"><span>1</span><span>8</span></span> = 0,125, <span class="frac"><span>3</span><span>8</span></span> = 0,375, <span class="frac"><span>1</span><span>5</span></span> = 0,2, <span class="frac"><span>1</span><span>20</span></span> = 0,05, <span class="frac"><span>1</span><span>25</span></span> = 0,04. На ЦТ это экономит минуты.</div>
+<h3>Тренажёр: десятичные и обыкновенные</h3>
+<div class="tr" id="tr_conv" data-title="десятичные и обыкновенные"></div>
+<h3>Задачи к этому блоку</h3>
+<div id="tasks1"></div>
+</div>
+<div class="card">
+<h2>2. Смешанные числа: когда переводить, а когда нет</h2>
+<div class="rule2"><b>Правило, которое решает половину ошибок.</b><br>- При <b>сложении и вычитании</b> неправильную дробь получать <b>не надо</b>: 17<span class="frac"><span>5</span><span>13</span></span> = 17 + <span class="frac"><span>5</span><span>13</span></span>. Целые складываем с целыми, дробные с дробными.<br>- При <b>умножении и делении</b> - <b>наоборот</b>, обязательно переводим: 17<span class="frac"><span>5</span><span>13</span></span> = <span class="frac"><span>226</span><span>13</span></span>.</div><p>Перевод в неправильную дробь: целую часть умножаем на знаменатель и прибавляем числитель.</p><div class="fx">4<span class="frac"><span>2</span><span>5</span></span> = <span class="frac"><span>4 · 5 + 2</span><span>5</span></span> = <span class="frac"><span>22</span><span>5</span></span></div><div class="ex"><b class="t">Пример 3. (2<span class="frac"><span>1</span><span>4</span></span> + 1<span class="frac"><span>5</span><span>12</span></span>) · 2<span class="frac"><span>2</span><span>11</span></span></b><div class="step">1. В скобках сложение - смешанные не разбираем: 2 + 1 = 3, <span class="frac"><span>1</span><span>4</span></span> + <span class="frac"><span>5</span><span>12</span></span> = <span class="frac"><span>3</span><span>12</span></span> + <span class="frac"><span>5</span><span>12</span></span> = <span class="frac"><span>8</span><span>12</span></span> = <span class="frac"><span>2</span><span>3</span></span>. Получили 3<span class="frac"><span>2</span><span>3</span></span>.</div><div class="step">2. Дальше умножение - теперь переводим: 3<span class="frac"><span>2</span><span>3</span></span> = <span class="frac"><span>11</span><span>3</span></span>, 2<span class="frac"><span>2</span><span>11</span></span> = <span class="frac"><span>24</span><span>11</span></span>.</div><div class="step">3. <span class="frac"><span>11</span><span>3</span></span> · <span class="frac"><span>24</span><span>11</span></span>: одиннадцать сокращается, 24 : 3 = 8.</div><div class="fx">Ответ: 8</div><div class="step mini">Ловушка: перемножить отдельно целые и отдельно дробные части. 3·2 = 6 и <span class="frac"><span>2</span><span>3</span></span>·<span class="frac"><span>2</span><span>11</span></span> - это не 8 и вообще не ответ.</div></div><div class="ex"><b class="t">Пример 4. 3<span class="frac"><span>1</span><span>5</span></span> : 1<span class="frac"><span>3</span><span>5</span></span></b><div class="step"><span class="frac"><span>16</span><span>5</span></span> : <span class="frac"><span>8</span><span>5</span></span> = <span class="frac"><span>16</span><span>5</span></span> · <span class="frac"><span>5</span><span>8</span></span> = 2.</div><div class="step mini">Делить на дробь - значит умножать на перевёрнутую. Пятёрки уходят сразу, поэтому в десятичные (3,2 : 1,6) переводить не стоит.</div></div>
+<h3>Тренажёр: смешанные числа</h3>
+<div class="tr" id="tr_mixed" data-title="смешанные числа"></div>
+<div class="gap" id="gap_g2"></div>
+<h3>Задачи к этому блоку</h3>
+<div id="tasks2"></div>
+</div>
+<div class="card">
+<h2>3. Порядок действий и многоэтажные дроби</h2>
+<div class="def">Порядок действий: <b>скобки → степени и корни → умножение и деление слева направо → сложение и вычитание слева направо</b>.</div><div class="warn">Умножение и деление равноправны. 24 : 4 · 2 = 6 · 2 = <b>12</b>, а не 3. Точно так же 100 : 5 : 2 = 20 : 2 = 10, а не 100 : 10.</div><div class="rule2"><b>Черта дроби - это знак деления</b>, причём числитель и знаменатель считаются так, будто вокруг них стоят скобки. Значит, это деление выполняется <b>последним</b>: сначала целиком считаем верх, потом целиком низ, и только потом делим.</div><div class="ex"><b class="t">Пример 5. Многоэтажная дробь</b><div class="step">Вычислить <span class="frac"><span>(0,6 + <span class="frac"><span>1</span><span>4</span></span> + <span class="frac"><span>1</span><span>15</span></span> + 0,125) · 24</span><span><span class="frac"><span>1</span><span>3</span></span> + 0,4 + <span class="frac"><span>4</span><span>15</span></span></span></span>.</div><div class="step">1. Числитель, скобка. Общий знаменатель 120: 0,6 = <span class="frac"><span>72</span><span>120</span></span>, <span class="frac"><span>1</span><span>4</span></span> = <span class="frac"><span>30</span><span>120</span></span>, <span class="frac"><span>1</span><span>15</span></span> = <span class="frac"><span>8</span><span>120</span></span>, 0,125 = <span class="frac"><span>15</span><span>120</span></span>.</div><div class="step">2. 72 + 30 + 8 + 15 = 125, то есть <span class="frac"><span>125</span><span>120</span></span> = <span class="frac"><span>25</span><span>24</span></span>.</div><div class="step">3. Умножаем на 24: <span class="frac"><span>25</span><span>24</span></span> · 24 = 25.</div><div class="step">4. Знаменатель. Общий знаменатель 15: <span class="frac"><span>5</span><span>15</span></span> + <span class="frac"><span>6</span><span>15</span></span> + <span class="frac"><span>4</span><span>15</span></span> = <span class="frac"><span>15</span><span>15</span></span> = 1.</div><div class="fx">25 : 1 = 25</div><div class="step mini">Красивый знаменатель (ровно 1) - не случайность, а знак, что всё посчитано правильно. Если внизу получилась страшная дробь, стоит перепроверить.</div></div><div class="ex"><b class="t">Пример 6. Минус перед скобкой</b><div class="step">−(7 − 10) = −7 + 10 = 3, а не −7 − 10 = −17.</div><div class="step mini">Минус меняет знак у <b>каждого</b> слагаемого в скобке. На длинных вычислениях здесь теряют больше всего баллов.</div></div>
+<h3>Тренажёр: порядок действий</h3>
+<div class="tr" id="tr_order" data-title="порядок действий"></div>
+<div class="gap" id="gap_g1"></div>
+<h3>Задачи к этому блоку</h3>
+<div id="tasks3"></div>
+</div>
+<div class="card">
+<h2>4. Не умножай страшные числа</h2>
+<div class="rule2"><b>Главный приём темы.</b> Если в выражении встретилось произведение вроде 273 · 113, <b>не считай его</b>. Оставь как есть: почти всегда в следующем действии что-то сократится. А чтобы увидеть, что именно, числа раскладывают на простые множители.</div><div class="fx">273 = 3 · 7 · 13 &nbsp;·&nbsp; 91 = 7 · 13 &nbsp;⇒&nbsp; <span class="frac"><span>273</span><span>91</span></span> = 3</div><div class="ex"><b class="t">Пример 7. <span class="frac"><span>273 · 113 − 273 · 13</span><span>91 · 150</span></span></b><div class="step">1. В числителе общий множитель 273: 273·(113 − 13) = 273·100.</div><div class="step">2. Дробь стала <span class="frac"><span>273 · 100</span><span>91 · 150</span></span>.</div><div class="step">3. <span class="frac"><span>273</span><span>91</span></span> = 3 и <span class="frac"><span>100</span><span>150</span></span> = <span class="frac"><span>2</span><span>3</span></span>.</div><div class="fx">3 · <span class="frac"><span>2</span><span>3</span></span> = 2</div><div class="step mini">Если бы посчитали 273·113 = 30849, дальше пришлось бы делить пятизначное число столбиком - и почти наверняка ошибиться.</div></div><div class="ex"><b class="t">Пример 8. <span class="frac"><span>48 · 75</span><span>36 · 25</span></span></b><div class="step">Сокращаем по частям, а не перемножаем: <span class="frac"><span>75</span><span>25</span></span> = 3, <span class="frac"><span>48</span><span>36</span></span> = <span class="frac"><span>4</span><span>3</span></span>.</div><div class="fx"><span class="frac"><span>4</span><span>3</span></span> · 3 = 4</div><div class="step mini">Сокращать можно любой множитель числителя с любым множителем знаменателя - они все связаны умножением.</div></div>
+<h3>Тренажёр: сокращай, не умножай</h3>
+<div class="tr" id="tr_cancel" data-title="сокращай, не умножай"></div>
+<div class="gap" id="gap_g3"></div>
+<h3>Задачи к этому блоку</h3>
+<div id="tasks4"></div>
+</div>
+<div class="card">
+<h2>5. Общий множитель и формулы сокращённого умножения</h2>
+<div class="rule2"><b>Вынесение общего множителя</b> превращает два умножения в одно: ab + ac = a(b + c). Если в выражении одно и то же число умножается на разные - даже не начинай считать произведения.</div><div class="ex"><b class="t">Пример 9. (35 · 1,2 + 35 · 1,8) : 7</b><div class="step">35·1,2 и 35·1,8 считать не нужно: выносим 35.</div><div class="fx">35·(1,2 + 1,8) : 7 = 35 · 3 : 7 = 5 · 3 = 15</div><div class="step mini">Сначала сокращаем 35 : 7 = 5 и только потом умножаем. Так вообще не появляется двузначных произведений.</div></div><div class="def">Формулы, которые в вычислениях работают как калькулятор:<br>a² − b² = (a − b)(a + b) · (a + b)² = a² + 2ab + b² · (a − b)² = a² − 2ab + b²</div><div class="ex"><b class="t">Пример 10. 127² − 27²</b><div class="step">Возводить в квадрат столбиком не надо - это разность квадратов.</div><div class="fx">(127 − 27)(127 + 27) = 100 · 154 = 15400</div><div class="step mini">Проверка на здравый смысл: 127² ≈ 16000, 27² ≈ 700, разность около 15300. Сходится.</div></div><div class="ex"><b class="t">Пример 11. <span class="frac"><span>2,35² − 0,35²</span><span>2,7 · 0,5</span></span></b><div class="step">1. Числитель: (2,35 − 0,35)(2,35 + 0,35) = 2 · 2,7.</div><div class="step">2. Дробь: <span class="frac"><span>2 · 2,7</span><span>2,7 · 0,5</span></span>, скобка 2,7 сокращается.</div><div class="fx"><span class="frac"><span>2</span><span>0,5</span></span> = 4</div><div class="step mini">Десятичные тут удобнее не переводить: разность и сумма считаются в уме, а дальше всё сокращается.</div></div><div class="warn">Никакой формулы для a² + b² нет. 101² + 99² придётся считать честно, а вот 101² − 99² = 2·200 = 400 - устно.</div>
+<h3>Тренажёр: общий множитель и ФСУ</h3>
+<div class="tr" id="tr_factor" data-title="общий множитель и ФСУ"></div>
+<h3>Задачи к этому блоку</h3>
+<div id="tasks5"></div>
+</div>
+<div class="card">
+<h2>6. Суммы дробей вида <span class="frac"><span>1</span><span>a · b</span></span></h2>
+<p>На ЦТ встречаются суммы из многих дробей, у которых знаменатели идут цепочкой: 2·5, 5·8, 8·11 - каждое следующее число повторяется. Приводить всё к общему знаменателю здесь - долгий и ошибочный путь.</p><div class="rule2"><b>Приём.</b> Если знаменатели идут с шагом k, то <span class="frac"><span>1</span><span>a(a + k)</span></span> = <span class="frac"><span>1</span><span>k</span></span>(<span class="frac"><span>1</span><span>a</span></span> − <span class="frac"><span>1</span><span>a + k</span></span>). В сумме соседние куски гасят друг друга, и остаются только самые края.</div><div class="ex"><b class="t">Пример 12. <span class="frac"><span>1</span><span>2 · 5</span></span> + <span class="frac"><span>1</span><span>5 · 8</span></span> + <span class="frac"><span>1</span><span>8 · 11</span></span></b><div class="step">1. Шаг равен 3, значит каждое слагаемое = <span class="frac"><span>1</span><span>3</span></span>(<span class="frac"><span>1</span><span>первый</span></span> − <span class="frac"><span>1</span><span>второй</span></span>).</div><div class="step">2. Сумма = <span class="frac"><span>1</span><span>3</span></span>(<span class="frac"><span>1</span><span>2</span></span> − <span class="frac"><span>1</span><span>5</span></span> + <span class="frac"><span>1</span><span>5</span></span> − <span class="frac"><span>1</span><span>8</span></span> + <span class="frac"><span>1</span><span>8</span></span> − <span class="frac"><span>1</span><span>11</span></span>).</div><div class="step">3. Всё внутри сокращается, кроме краёв: <span class="frac"><span>1</span><span>3</span></span>(<span class="frac"><span>1</span><span>2</span></span> − <span class="frac"><span>1</span><span>11</span></span>) = <span class="frac"><span>1</span><span>3</span></span> · <span class="frac"><span>9</span><span>22</span></span>.</div><div class="fx">Ответ: <span class="frac"><span>3</span><span>22</span></span></div><div class="step mini">Проверка: сумма трёх положительных дробей, каждая меньше 0,1 - ответ обязан быть около 0,13. <span class="frac"><span>3</span><span>22</span></span> ≈ 0,136, сходится.</div></div><div class="rule2">Ещё один способ увидеть то же самое: складывай дроби по две, не перемножая знаменатели. <span class="frac"><span>1</span><span>2 · 5</span></span> + <span class="frac"><span>1</span><span>5 · 8</span></span> = <span class="frac"><span>8 + 2</span><span>2 · 5 · 8</span></span> = <span class="frac"><span>10</span><span>2 · 5 · 8</span></span> = <span class="frac"><span>1</span><span>8</span></span>. Если бы знаменатель перемножили, сокращение не было бы видно.</div>
+<h3>Тренажёр: суммы дробей (дополнительный)</h3>
+<p class="meta">Дополнительный - для отправки работы он не нужен.</p>
+<div class="tr" id="tr_tele" data-title="суммы дробей (дополнительный)"></div>
+<div class="gap" id="gap_g4"></div>
+<h3>Задачи к этому блоку</h3>
+<div id="tasks6"></div>
+</div>
+<div class="card sheet"><h2>Шпаргалка</h2>
+<p class="meta" style="font-size:14px">Печатается отдельно на один лист A4: Ctrl+P (⌘+P) → печать.</p>
+<h4>Наизусть</h4><div class="fgrid"><div class="fbox"><b>Дроби</b><div class="s"><span class="frac"><span>1</span><span>2</span></span> = 0,5 · <span class="frac"><span>1</span><span>4</span></span> = 0,25 · <span class="frac"><span>3</span><span>4</span></span> = 0,75 · <span class="frac"><span>1</span><span>8</span></span> = 0,125 · <span class="frac"><span>3</span><span>8</span></span> = 0,375 · <span class="frac"><span>5</span><span>8</span></span> = 0,625 · <span class="frac"><span>1</span><span>5</span></span> = 0,2 · <span class="frac"><span>1</span><span>20</span></span> = 0,05 · <span class="frac"><span>1</span><span>25</span></span> = 0,04</div></div><div class="fbox"><b>Перевод</b><div class="s">0,375 = <span class="frac"><span>375</span><span>1000</span></span> = <span class="frac"><span>3</span><span>8</span></span>. Знаменатель - 1 со столькими нулями, сколько знаков после запятой.</div></div><div class="fbox"><b>Смешанное</b><div class="s">± : не трогаем (17 + <span class="frac"><span>5</span><span>13</span></span>)<br>× ÷ : в неправильную (<span class="frac"><span>226</span><span>13</span></span>)</div></div><div class="fbox"><b>Порядок</b><div class="s">скобки → степени → × ÷ слева направо → + − слева направо. Черта дроби = деление, оно последнее.</div></div><div class="fbox"><b>ФСУ</b><div class="s">a² − b² = (a − b)(a + b)<br>(a ± b)² = a² ± 2ab + b²<br>ab + ac = a(b + c)</div></div><div class="fbox"><b>Цепочка дробей</b><div class="s"><span class="frac"><span>1</span><span>a(a+k)</span></span> = <span class="frac"><span>1</span><span>k</span></span>(<span class="frac"><span>1</span><span>a</span></span> − <span class="frac"><span>1</span><span>a+k</span></span>)</div></div></div><h4>Порядок работы с громоздким примером</h4><p>1) десятичные → обыкновенные; 2) скобки по одному действию; 3) страшные произведения не считаем, ищем общий множитель; 4) числа раскладываем на простые и сокращаем; 5) черту дроби делим последней.</p><h4>Где теряют баллы</h4><p>−(a − b) = −a + b · 24 : 4 · 2 = 12 · перенос запятой только у делителя · умножение целых и дробных частей по отдельности · попытка посчитать 273·113.</p>
+</div>
+<div class="card"><h2>Фото решений - по желанию</h2>
+<p class="meta">В полях виден только ответ, а преподаватель смотрит ещё и ход решения. Фото тетради прикладывать не обязательно, но с ними разбор будет точнее.</p>
+<ol class="steps-list"><li>Решай в тетради с полной записью, как на ЦТ.</li><li>Сфотографируй страницы при дневном свете, чтобы текст читался.</li><li>Нажми кнопку ниже: с телефона - «Камера» или «Фото», с компьютера - файл из папки.</li><li>Фото можно приложить несколько и отметить у каждого номер задачи.</li></ol>
+<input type="file" id="photos" accept="image/*" multiple style="margin-top:12px">
+<div class="thumbs" id="thumbs"></div></div>
+<div class="card"><h2>Отправь работу</h2>
+<p class="meta">Отправка откроется, когда будет вписано имя, отвечены все 18 задач и пройдены до конца обязательные тренажёры. Дополнительный тренажёр не требуется.</p>
+<div class="row"><button class="pri" id="send" type="button">Отправить на проверку</button><button id="report" type="button">Скачать копию себе</button></div>
+<div id="repnote" class="meta" style="margin-top:8px"></div></div>
+</div>
+<div class="bar"><button class="pri" id="checkall" type="button">Проверить все задачи</button><span id="progress" class="meta"></span></div>
+<script>
+
+"use strict";
+var started = Date.now();
+function e(s){return btoa(unescape(encodeURIComponent(s)));}
+function d(s){try{return decodeURIComponent(escape(atob(s)));}catch(err){return s;}}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function norm(s){
+  return String(s).toLowerCase().replace(/\s+/g,"")
+    .replace(/[\u2013\u2014\u2212]/g,"-")
+    .replace(/[\u00d7\u00b7]/g,"*")
+    .replace(/,/g,".")
+    .replace(/^(ответ:?|x=|y=|a=|n=)/,"");
+}
+function toNum(str){
+  var t = norm(str);
+  if(!t) return NaN;
+  t = t.replace(/\u221b/g,"cbrt").replace(/\u221a/g,"sqrt").replace(/\u03c0/g,"pi")
+       .replace(/\u00b2/g,"^2").replace(/\u00b3/g,"^3");
+  t = t.replace(/sqrt(\d+(?:\.\d+)?)/g,"sqrt($1)");
+  t = t.replace(/cbrt(\d+(?:\.\d+)?)/g,"cbrt($1)");
+  t = t.replace(/(\d)sqrt/g,"$1*sqrt").replace(/(\d)cbrt/g,"$1*cbrt");
+  t = t.replace(/(\))sqrt/g,"$1*sqrt").replace(/(\))cbrt/g,"$1*cbrt");
+  t = t.replace(/(\d)pi/g,"$1*pi");
+  t = t.replace(/(\d)\(/g,"$1*(").replace(/\)(\d)/g,")*$1").replace(/\)\(/g,")*(");
+  t = t.replace(/\^/g,"**");
+  if(!/^[-+*/().0-9a-z]+$/.test(t)) return NaN;
+  if(t.replace(/sqrt|cbrt|pi/g,"").match(/[a-z]/)) return NaN;
+  try{
+    var v = new Function("sqrt","cbrt","pi","return ("+t+");")(Math.sqrt, Math.cbrt, Math.PI);
+    return (typeof v === "number" && isFinite(v)) ? v : NaN;
+  }catch(err){ return NaN; }
+}
+function same(given, right, tol){
+  var a = toNum(given), b = toNum(right);
+  if(!isNaN(a) && !isNaN(b)){
+    var t = tol || 1e-4;
+    return Math.abs(a-b) <= Math.max(t, Math.abs(b)*t);
+  }
+  return norm(given) === norm(right);
+}
+function shuffle(arr){
+  var a = arr.slice();
+  for(var i=a.length-1;i>0;i--){ var j = Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+
+var TOPIC = "Элементарные вычисления";
+var FILEKEY = "вычисления11";
+var KEYPAD = [",", "−", "/", "²"];
+var REQ_TR = ["conv", "mixed", "order", "cancel", "factor"];
+var EXTRA_TR = ["tele"];
+var TR_NAMES = {"conv": "десятичные и обыкновенные", "mixed": "смешанные числа", "order": "порядок действий", "cancel": "сокращай, не умножай", "factor": "общий множитель и ФСУ", "tele": "суммы дробей (дополнительный)"};
+var TASKS = [{"id": 1, "blk": "1", "lvl": "база", "type": "num", "text": "Вычисли 0,375 · 0,08.", "ans": ["MCwwMw==", "My8xMDA="], "hints": ["Забудь про запятые и перемножь целые числа: 375 · 8.", "375 · 8 = 3000. Теперь считаем знаки после запятой: 3 + 2 = 5.", "Отделяем справа пять знаков у числа 3000, дописав нули слева: 0,03000."], "sol": "375·8 = 3000; знаков после запятой 3 + 2 = 5, значит 0,03000 = <b>0,03</b>. Через дроби то же самое: <span class=\"frac\"><span>3</span><span>8</span></span> · <span class=\"frac\"><span>2</span><span>25</span></span> = <span class=\"frac\"><span>6</span><span>200</span></span> = 0,03."}, {"id": 2, "blk": "1", "lvl": "база", "type": "num", "text": "Вычисли 2,4 : 0,06.", "ans": ["NDA="], "hints": ["Умножь делимое и делитель на 100 - значение частного не изменится.", "2,4 : 0,06 = 240 : 6.", "240 : 6 = 40."], "sol": "2,4 : 0,06 = 240 : 6 = <b>40</b>. Переносить запятую на одинаковое число знаков у обоих чисел можно всегда - это умножение на 100 сверху и снизу."}, {"id": 3, "blk": "1", "lvl": "средний", "type": "num", "text": "Вычисли (0,8 − <span class=\"frac\"><span>3</span><span>8</span></span>) · 40.", "ans": ["MTc="], "hints": ["Переведи 3/8 в десятичную: это 0,375.", "0,8 − 0,375 = 0,425.", "0,425 · 40 - это 425 · 4 с учётом запятых."], "sol": "0,8 − <span class=\"frac\"><span>3</span><span>8</span></span> = 0,8 − 0,375 = 0,425; 0,425·40 = <b>17</b>. Через дроби: (<span class=\"frac\"><span>4</span><span>5</span></span> − <span class=\"frac\"><span>3</span><span>8</span></span>)·40 = <span class=\"frac\"><span>17</span><span>40</span></span>·40 = 17."}, {"id": 4, "blk": "2", "lvl": "база", "type": "num", "text": "Вычисли (2<span class=\"frac\"><span>1</span><span>4</span></span> + 1<span class=\"frac\"><span>5</span><span>12</span></span>) · 2<span class=\"frac\"><span>2</span><span>11</span></span>.", "ans": ["OA=="], "hints": ["В скобках сложение - смешанные числа не разбирай, складывай целые с целыми, дробные с дробными.", "1/4 + 5/12 = 3/12 + 5/12 = 8/12 = 2/3, значит в скобках 3<span class=\"frac\"><span>2</span><span>3</span></span>.", "Перед умножением переведи: 3<span class=\"frac\"><span>2</span><span>3</span></span> = 11/3, а 2<span class=\"frac\"><span>2</span><span>11</span></span> = 24/11."], "sol": "В скобках: 2 + 1 = 3 и <span class=\"frac\"><span>1</span><span>4</span></span> + <span class=\"frac\"><span>5</span><span>12</span></span> = <span class=\"frac\"><span>2</span><span>3</span></span>, итого 3<span class=\"frac\"><span>2</span><span>3</span></span> = <span class=\"frac\"><span>11</span><span>3</span></span>. Дальше <span class=\"frac\"><span>11</span><span>3</span></span> · <span class=\"frac\"><span>24</span><span>11</span></span> = <b>8</b>: одиннадцать сокращается, 24 : 3 = 8."}, {"id": 5, "blk": "2", "lvl": "база", "type": "num", "text": "Вычисли 3<span class=\"frac\"><span>1</span><span>5</span></span> : 1<span class=\"frac\"><span>3</span><span>5</span></span>.", "ans": ["Mg=="], "hints": ["Деление - переводим оба числа в неправильные дроби.", "3<span class=\"frac\"><span>1</span><span>5</span></span> = 16/5, а 1<span class=\"frac\"><span>3</span><span>5</span></span> = 8/5.", "Деление на дробь = умножение на перевёрнутую: 16/5 · 5/8."], "sol": "<span class=\"frac\"><span>16</span><span>5</span></span> : <span class=\"frac\"><span>8</span><span>5</span></span> = <span class=\"frac\"><span>16</span><span>5</span></span> · <span class=\"frac\"><span>5</span><span>8</span></span> = <b>2</b>. Пятёрки сокращаются сразу, считать десятичные 3,2 : 1,6 не нужно."}, {"id": 6, "blk": "2", "lvl": "средний", "type": "num", "text": "Вычисли (7<span class=\"frac\"><span>1</span><span>3</span></span> − 4<span class=\"frac\"><span>5</span><span>6</span></span>) · 1<span class=\"frac\"><span>1</span><span>5</span></span>.", "ans": ["Mw=="], "hints": ["В скобках вычитание: 1/3 меньше 5/6, поэтому занимай единицу у целой части.", "Проще через неправильные дроби: 22/3 − 29/6 = 44/6 − 29/6.", "Получится 15/6 = 5/2, а 1<span class=\"frac\"><span>1</span><span>5</span></span> = 6/5."], "sol": "<span class=\"frac\"><span>22</span><span>3</span></span> − <span class=\"frac\"><span>29</span><span>6</span></span> = <span class=\"frac\"><span>15</span><span>6</span></span> = <span class=\"frac\"><span>5</span><span>2</span></span>; <span class=\"frac\"><span>5</span><span>2</span></span> · <span class=\"frac\"><span>6</span><span>5</span></span> = <b>3</b>."}, {"id": 7, "blk": "3", "lvl": "база", "type": "num", "text": "Вычисли <span class=\"frac\"><span>(0,6 + <span class=\"frac\"><span>1</span><span>4</span></span> + <span class=\"frac\"><span>1</span><span>15</span></span> + 0,125) · 24</span><span><span class=\"frac\"><span>1</span><span>3</span></span> + 0,4 + <span class=\"frac\"><span>4</span><span>15</span></span></span></span>.", "ans": ["MjU="], "hints": ["Числитель и знаменатель считай по отдельности, черта дроби - это деление.", "В числителе общий знаменатель 120: 72 + 30 + 8 + 15 = 125, то есть 125/120 = 25/24.", "В знаменателе общий знаменатель 15: 5 + 6 + 4 = 15, то есть ровно 1."], "sol": "Числитель: <span class=\"frac\"><span>125</span><span>120</span></span> = <span class=\"frac\"><span>25</span><span>24</span></span>, умножаем на 24 - получаем 25. Знаменатель: <span class=\"frac\"><span>5</span><span>15</span></span> + <span class=\"frac\"><span>6</span><span>15</span></span> + <span class=\"frac\"><span>4</span><span>15</span></span> = 1. Итого 25 : 1 = <b>25</b>."}, {"id": 8, "blk": "3", "lvl": "средний", "type": "num", "text": "Вычисли <span class=\"frac\"><span><span class=\"frac\"><span>1</span><span>2</span></span> + <span class=\"frac\"><span>1</span><span>3</span></span> + <span class=\"frac\"><span>1</span><span>4</span></span></span><span>1 − <span class=\"frac\"><span>1</span><span>3</span></span> − <span class=\"frac\"><span>1</span><span>4</span></span></span></span>.", "ans": ["Miw2", "MTMvNQ=="], "hints": ["Общий знаменатель и сверху, и снизу равен 12.", "Числитель: 6/12 + 4/12 + 3/12 = 13/12.", "Знаменатель: 12/12 − 4/12 − 3/12 = 5/12. Двенадцатые сократятся."], "sol": "Числитель <span class=\"frac\"><span>13</span><span>12</span></span>, знаменатель <span class=\"frac\"><span>5</span><span>12</span></span>. Делим: <span class=\"frac\"><span>13</span><span>12</span></span> · <span class=\"frac\"><span>12</span><span>5</span></span> = <span class=\"frac\"><span>13</span><span>5</span></span> = <b>2,6</b>."}, {"id": 9, "blk": "3", "lvl": "сложный", "type": "num", "text": "Вычисли (8<span class=\"frac\"><span>1</span><span>3</span></span> · 0,24 − 1,2) : (0,75 − <span class=\"frac\"><span>1</span><span>2</span></span>).", "ans": ["Mywy", "MTYvNQ=="], "hints": ["8<span class=\"frac\"><span>1</span><span>3</span></span> = 25/3, а 0,24 = 6/25. Двадцать пятые сократятся.", "25/3 · 6/25 = 2, значит в первой скобке 2 − 1,2 = 0,8.", "Вторая скобка: 0,75 − 0,5 = 0,25, а делить на 0,25 - то же самое, что умножать на 4."], "sol": "<span class=\"frac\"><span>25</span><span>3</span></span> · <span class=\"frac\"><span>6</span><span>25</span></span> = 2; 2 − 1,2 = 0,8. Вторая скобка 0,25. 0,8 : 0,25 = 0,8 · 4 = <b>3,2</b>."}, {"id": 10, "blk": "4", "lvl": "средний", "type": "num", "text": "Вычисли <span class=\"frac\"><span>273 · 113 − 273 · 13</span><span>91 · 150</span></span>.", "ans": ["Mg=="], "hints": ["Не перемножай 273 · 113 - вынеси общий множитель в числителе.", "273·(113 − 13) = 273·100.", "273 : 91 = 3, потому что 273 = 3·91."], "sol": "273·(113 − 13) = 273·100. Дробь: <span class=\"frac\"><span>273 · 100</span><span>91 · 150</span></span> = 3 · <span class=\"frac\"><span>100</span><span>150</span></span> = 3 · <span class=\"frac\"><span>2</span><span>3</span></span> = <b>2</b>."}, {"id": 11, "blk": "4", "lvl": "средний", "type": "num", "text": "Вычисли <span class=\"frac\"><span>48 · 75</span><span>36 · 25</span></span>.", "ans": ["NA=="], "hints": ["Сокращай по частям: отдельно 75 с 25, отдельно 48 с 36.", "75 : 25 = 3.", "48/36 = 4/3."], "sol": "<span class=\"frac\"><span>75</span><span>25</span></span> = 3, <span class=\"frac\"><span>48</span><span>36</span></span> = <span class=\"frac\"><span>4</span><span>3</span></span>. Итого <span class=\"frac\"><span>4</span><span>3</span></span> · 3 = <b>4</b>."}, {"id": 12, "blk": "4", "lvl": "сложный", "type": "num", "text": "Вычисли <span class=\"frac\"><span>125 · 48 + 125 · 52</span><span>2 · 5⁵</span></span>.", "ans": ["Mg=="], "hints": ["В числителе общий множитель 125.", "48 + 52 = 100, значит числитель равен 125·100 = 12500.", "5⁵ = 3125, поэтому знаменатель 2·3125 = 6250."], "sol": "Числитель 125·100 = 12500, знаменатель 2·5⁵ = 6250. Итого <b>2</b>. Короче через степени: <span class=\"frac\"><span>5³ · 2² · 5²</span><span>2 · 5⁵</span></span> = <span class=\"frac\"><span>2²</span><span>2</span></span> = 2."}, {"id": 13, "blk": "5", "lvl": "база", "type": "num", "text": "Вычисли (35 · 1,2 + 35 · 1,8) : 7.", "ans": ["MTU="], "hints": ["В обоих слагаемых есть множитель 35 - вынеси его за скобки.", "35·(1,2 + 1,8) = 35·3.", "35·3 : 7 = 5·3."], "sol": "35·(1,2 + 1,8) : 7 = 35·3 : 7 = 5·3 = <b>15</b>. Умножать 35·1,2 и 35·1,8 по отдельности не нужно."}, {"id": 14, "blk": "5", "lvl": "средний", "type": "num", "text": "Вычисли 127² − 27².", "ans": ["MTU0MDA="], "hints": ["Это разность квадратов: a² − b² = (a − b)(a + b).", "127 − 27 = 100, 127 + 27 = 154.", "Осталось умножить 100 на 154."], "sol": "(127 − 27)(127 + 27) = 100 · 154 = <b>15400</b>. Возводить 127 в квадрат столбиком не нужно."}, {"id": 15, "blk": "5", "lvl": "сложный", "type": "num", "text": "Вычисли <span class=\"frac\"><span>2,35² − 0,35²</span><span>2,7 · 0,5</span></span>.", "ans": ["NA=="], "hints": ["Числитель - разность квадратов.", "2,35 − 0,35 = 2 и 2,35 + 0,35 = 2,7, значит числитель равен 2·2,7.", "Знаменатель 2,7·0,5 = 1,35, и двойки с 2,7 сократятся."], "sol": "Числитель: (2,35 − 0,35)(2,35 + 0,35) = 2·2,7. Дробь: <span class=\"frac\"><span>2 · 2,7</span><span>2,7 · 0,5</span></span> = <span class=\"frac\"><span>2</span><span>0,5</span></span> = <b>4</b>."}, {"id": 16, "blk": "6", "lvl": "средний", "type": "num", "text": "Вычисли <span class=\"frac\"><span>1</span><span>2 · 5</span></span> + <span class=\"frac\"><span>1</span><span>5 · 8</span></span> + <span class=\"frac\"><span>1</span><span>8 · 11</span></span>.", "ans": ["My8yMg=="], "hints": ["Знаменатели идут с шагом 3: 2, 5, 8, 11.", "<span class=\"frac\"><span>1</span><span>2 · 5</span></span> = <span class=\"frac\"><span>1</span><span>3</span></span>(<span class=\"frac\"><span>1</span><span>2</span></span> − <span class=\"frac\"><span>1</span><span>5</span></span>) - проверь это.", "После сложения все средние куски гасятся, остаётся <span class=\"frac\"><span>1</span><span>3</span></span>(<span class=\"frac\"><span>1</span><span>2</span></span> − <span class=\"frac\"><span>1</span><span>11</span></span>)."], "sol": "Каждое слагаемое раскладывается: <span class=\"frac\"><span>1</span><span>3</span></span>(<span class=\"frac\"><span>1</span><span>2</span></span> − <span class=\"frac\"><span>1</span><span>5</span></span> + <span class=\"frac\"><span>1</span><span>5</span></span> − <span class=\"frac\"><span>1</span><span>8</span></span> + <span class=\"frac\"><span>1</span><span>8</span></span> − <span class=\"frac\"><span>1</span><span>11</span></span>) = <span class=\"frac\"><span>1</span><span>3</span></span>(<span class=\"frac\"><span>1</span><span>2</span></span> − <span class=\"frac\"><span>1</span><span>11</span></span>) = <span class=\"frac\"><span>1</span><span>3</span></span> · <span class=\"frac\"><span>9</span><span>22</span></span> = <b><span class=\"frac\"><span>3</span><span>22</span></span></b> ≈ 0,136."}, {"id": 17, "blk": "6", "lvl": "средний", "type": "num", "text": "Вычисли <span class=\"frac\"><span>1</span><span>1 · 3</span></span> + <span class=\"frac\"><span>1</span><span>3 · 5</span></span> + <span class=\"frac\"><span>1</span><span>5 · 7</span></span> + <span class=\"frac\"><span>1</span><span>7 · 9</span></span>.", "ans": ["NC85"], "hints": ["Шаг между знаменателями равен 2.", "<span class=\"frac\"><span>1</span><span>1 · 3</span></span> = <span class=\"frac\"><span>1</span><span>2</span></span>(1 − <span class=\"frac\"><span>1</span><span>3</span></span>).", "Остаются только крайние: <span class=\"frac\"><span>1</span><span>2</span></span>(1 − <span class=\"frac\"><span>1</span><span>9</span></span>)."], "sol": "<span class=\"frac\"><span>1</span><span>2</span></span>(1 − <span class=\"frac\"><span>1</span><span>9</span></span>) = <span class=\"frac\"><span>1</span><span>2</span></span> · <span class=\"frac\"><span>8</span><span>9</span></span> = <b><span class=\"frac\"><span>4</span><span>9</span></span></b> ≈ 0,444."}, {"id": 18, "blk": "6", "lvl": "сложный", "type": "num", "text": "Вычисли <span class=\"frac\"><span>1</span><span>2 · 5</span></span> + <span class=\"frac\"><span>1</span><span>5 · 8</span></span> + <span class=\"frac\"><span>1</span><span>8 · 11</span></span> + <span class=\"frac\"><span>1</span><span>11 · 14</span></span> + <span class=\"frac\"><span>1</span><span>14 · 17</span></span>.", "ans": ["NS8zNA=="], "hints": ["Тот же шаг 3, только слагаемых пять.", "Сумма равна <span class=\"frac\"><span>1</span><span>3</span></span>(<span class=\"frac\"><span>1</span><span>2</span></span> − <span class=\"frac\"><span>1</span><span>17</span></span>).", "<span class=\"frac\"><span>1</span><span>2</span></span> − <span class=\"frac\"><span>1</span><span>17</span></span> = <span class=\"frac\"><span>15</span><span>34</span></span>."], "sol": "<span class=\"frac\"><span>1</span><span>3</span></span>(<span class=\"frac\"><span>1</span><span>2</span></span> − <span class=\"frac\"><span>1</span><span>17</span></span>) = <span class=\"frac\"><span>1</span><span>3</span></span> · <span class=\"frac\"><span>15</span><span>34</span></span> = <b><span class=\"frac\"><span>5</span><span>34</span></span></b> ≈ 0,147."}];
+var TR_ITEMS = {"conv":[{"q": "Запиши 0,375 обыкновенной несократимой дробью.", "opts": ["3/8", "375/1000", "8/3", "3/80"], "ans": "3/8", "why": "0,375 = 375/1000, дальше сокращаем на 125 и получаем 3/8. Несокращённая запись 375/1000 тоже верна по значению, но в ответе ЦТ нужна несократимая."}, {"q": "Запиши 0,16 обыкновенной несократимой дробью.", "opts": ["4/25", "16/100", "25/4", "4/250"], "ans": "4/25", "why": "0,16 = 16/100, дальше сокращаем на 4 и получаем 4/25. Несокращённая запись 16/100 тоже верна по значению, но в ответе ЦТ нужна несократимая."}, {"q": "Запиши 0,24 обыкновенной несократимой дробью.", "opts": ["6/25", "24/100", "25/6", "6/250"], "ans": "6/25", "why": "0,24 = 24/100, дальше сокращаем на 4 и получаем 6/25. Несокращённая запись 24/100 тоже верна по значению, но в ответе ЦТ нужна несократимая."}, {"q": "Запиши 0,625 обыкновенной несократимой дробью.", "opts": ["5/8", "625/1000", "8/5", "5/80"], "ans": "5/8", "why": "0,625 = 625/1000, дальше сокращаем на 125 и получаем 5/8. Несокращённая запись 625/1000 тоже верна по значению, но в ответе ЦТ нужна несократимая."}, {"q": "Запиши 0,35 обыкновенной несократимой дробью.", "opts": ["7/20", "35/100", "20/7", "7/200"], "ans": "7/20", "why": "0,35 = 35/100, дальше сокращаем на 5 и получаем 7/20. Несокращённая запись 35/100 тоже верна по значению, но в ответе ЦТ нужна несократимая."}, {"q": "Запиши 0,04 обыкновенной несократимой дробью.", "opts": ["1/25", "4/100", "25/1", "1/250"], "ans": "1/25", "why": "0,04 = 4/100, дальше сокращаем на 4 и получаем 1/25. Несокращённая запись 4/100 тоже верна по значению, но в ответе ЦТ нужна несократимая."}, {"q": "Вычисли 0,225 · 0,04.", "ans": ["0,009", "9/1000"], "why": "Считай без калькулятора: перемножь или раздели целые числа, а запятую поставь по количеству знаков. Ответ: 0,009."}, {"q": "Вычисли 0,36 : 0,009.", "ans": ["40"], "why": "Считай без калькулятора: перемножь или раздели целые числа, а запятую поставь по количеству знаков. Ответ: 40."}, {"q": "Вычисли 1,2 · 0,35.", "ans": ["0,42", "21/50"], "why": "Считай без калькулятора: перемножь или раздели целые числа, а запятую поставь по количеству знаков. Ответ: 0,42."}, {"q": "Вычисли 0,84 : 1,4.", "ans": ["0,6", "3/5"], "why": "Считай без калькулятора: перемножь или раздели целые числа, а запятую поставь по количеству знаков. Ответ: 0,6."}],"mixed":[{"q": "В выражении 3 <span class=\"frac\"><span>1</span><span>6</span></span> + 2 <span class=\"frac\"><span>3</span><span>4</span></span> что делать со смешанными числами?", "opts": ["оставить смешанными и складывать целые с целыми, дробные с дробными", "обязательно превратить в неправильные дроби", "перевести в десятичные и сложить", "округлить до целых"], "ans": "оставить смешанными и складывать целые с целыми, дробные с дробными", "why": "При сложении и вычитании неправильную дробь получать не нужно: 3<span class=\"frac\"><span>1</span><span>6</span></span> = 3 + <span class=\"frac\"><span>1</span><span>6</span></span>. Работать с числом 19/6 дольше и легче ошибиться."}, {"q": "В выражении 3 <span class=\"frac\"><span>1</span><span>6</span></span> · 2 <span class=\"frac\"><span>3</span><span>4</span></span> что делать со смешанными числами?", "opts": ["обязательно превратить в неправильные дроби", "перемножить целые части, потом дробные", "оставить смешанными", "округлить до целых"], "ans": "обязательно превратить в неправильные дроби", "why": "При умножении и делении смешанное число всегда переводим в неправильную дробь: 19/6 · 11/4. Перемножать отдельно целые и отдельно дробные части нельзя."}, {"q": "Чему равно 4 <span class=\"frac\"><span>2</span><span>5</span></span> в виде неправильной дроби?", "opts": ["22/5", "8/5", "42/5", "20/5"], "ans": "22/5", "why": "4 <span class=\"frac\"><span>2</span><span>5</span></span> = (4·5 + 2)/5 = 22/5. Целую часть умножаем на знаменатель и прибавляем числитель."}, {"q": "Чему равно <span class=\"frac\"><span>37</span><span>12</span></span> в виде смешанного числа?", "opts": ["3 и 1/12", "3 и 7/12", "2 и 13/12", "12 и 1/37"], "ans": "3 и 1/12", "why": "37 = 12·3 + 1, значит 37/12 = 3 + 1/12. Проверка: 3·12 + 1 = 37."}, {"q": "Вычисли (2<span class=\"frac\"><span>1</span><span>4</span></span> + 1<span class=\"frac\"><span>5</span><span>12</span></span>) · 2<span class=\"frac\"><span>2</span><span>11</span></span>.", "ans": ["8"], "why": "В скобках сложение: 2 + 1 = 3 и 1/4 + 5/12 = 3/12 + 5/12 = 8/12 = 2/3, итого 3 <span class=\"frac\"><span>2</span><span>3</span></span> = 11/3. Умножение - переводим в неправильную: 11/3 · 24/11 = 8."}, {"q": "Вычисли 3<span class=\"frac\"><span>1</span><span>5</span></span> : 1<span class=\"frac\"><span>3</span><span>5</span></span>.", "ans": ["2"], "why": "16/5 : 8/5 = 16/5 · 5/8 = 2. Пятёрки сокращаются - именно поэтому переводим в неправильные дроби, а не считаем в десятичных."}, {"q": "Вычисли (7<span class=\"frac\"><span>1</span><span>3</span></span> − 4<span class=\"frac\"><span>5</span><span>6</span></span>) · 1<span class=\"frac\"><span>1</span><span>5</span></span>.", "ans": ["3"], "why": "7 <span class=\"frac\"><span>1</span><span>3</span></span> − 4 <span class=\"frac\"><span>5</span><span>6</span></span> = 22/3 − 29/6 = (44 − 29)/6 = 15/6 = 5/2. Дальше 5/2 · 6/5 = 3."}, {"q": "Вычисли 5<span class=\"frac\"><span>3</span><span>8</span></span> − 2<span class=\"frac\"><span>3</span><span>8</span></span>.", "ans": ["3"], "why": "Дробные части одинаковые, они уходят: 5 − 2 = 3."}, {"q": "Вычисли 1<span class=\"frac\"><span>1</span><span>2</span></span> : <span class=\"frac\"><span>3</span><span>8</span></span>.", "ans": ["4"], "why": "3/2 : 3/8 = 3/2 · 8/3 = 4. Делить на дробь - значит умножать на перевёрнутую."}],"order":[{"q": "Какое действие выполняется первым в выражении 12 − 3 · (5 − 2)² ?", "opts": ["вычитание в скобках", "возведение в квадрат", "умножение на 3", "вычитание 12 − 3"], "ans": "вычитание в скобках", "why": "Порядок такой: скобки → степени → умножение и деление → сложение и вычитание. Здесь 5 − 2 = 3, потом 3² = 9, потом 3·9 = 27, и в конце 12 − 27 = −15."}, {"q": "Что означает длинная черта дроби в многоэтажном выражении?", "opts": ["деление всего числителя на весь знаменатель", "умножение числителя на знаменатель", "вычитание знаменателя из числителя", "ничего, это просто оформление"], "ans": "деление всего числителя на весь знаменатель", "why": "Черта дроби - это знак деления, причём числитель и знаменатель считаются целиком, как будто они в скобках. Поэтому деление по этой черте выполняется последним."}, {"q": "Верно ли, что 24 : 4 · 2 = 3 ?", "opts": ["нет, будет 12", "да, будет 3", "нет, будет 48", "нет, выражение не имеет смысла"], "ans": "нет, будет 12", "why": "Умножение и деление равноправны и идут слева направо: сначала 24 : 4 = 6, потом 6·2 = 12. Ответ 3 получается, если сначала умножить 4·2 - так нельзя."}, {"q": "Чему равно −(7 − 10) ?", "opts": ["3", "−3", "−17", "17"], "ans": "3", "why": "Минус перед скобкой меняет знак у каждого слагаемого: −(7 − 10) = −7 + 10 = 3. Потеря второго знака - самая частая ошибка в длинных вычислениях."}, {"q": "В выражении <span class=\"frac\"><span>a + b</span><span>c − d</span></span> что делается последним?", "opts": ["деление", "сложение", "вычитание", "умножение"], "ans": "деление", "why": "Сначала отдельно считается числитель a + b, отдельно знаменатель c − d, и только потом одно делится на другое."}, {"q": "Вычисли (0,6 + <span class=\"frac\"><span>1</span><span>4</span></span> + <span class=\"frac\"><span>1</span><span>15</span></span> + 0,125) · 24.", "ans": ["25"], "why": "Общий знаменатель 120: 72/120 + 30/120 + 8/120 + 15/120 = 125/120 = 25/24. Умножаем на 24 и получаем 25."}, {"q": "Вычисли <span class=\"frac\"><span>1</span><span>3</span></span> + 0,4 + <span class=\"frac\"><span>4</span><span>15</span></span>.", "ans": ["1"], "why": "Общий знаменатель 15: 5/15 + 6/15 + 4/15 = 15/15 = 1."}, {"q": "Вычисли (<span class=\"frac\"><span>1</span><span>2</span></span> + <span class=\"frac\"><span>1</span><span>3</span></span> + <span class=\"frac\"><span>1</span><span>4</span></span>) : (1 − <span class=\"frac\"><span>1</span><span>3</span></span> − <span class=\"frac\"><span>1</span><span>4</span></span>).", "ans": ["2,6", "13/5"], "why": "Числитель: 6/12 + 4/12 + 3/12 = 13/12. Знаменатель: 12/12 − 4/12 − 3/12 = 5/12. Делим: 13/12 : 5/12 = 13/5 = 2,6."}, {"q": "Вычисли 8<span class=\"frac\"><span>1</span><span>3</span></span> · 0,24 − 1,2.", "ans": ["0,8", "4/5"], "why": "25/3 · 6/25 = 2, дальше 2 − 1,2 = 0,8. Двадцать пятые сокращаются, если не спешить перемножать."}],"cancel":[{"q": "Выражение <span class=\"frac\"><span>273 · 113</span><span>91 · 113</span></span>. С чего начать?", "opts": ["сократить на 113", "перемножить числитель", "перемножить знаменатель", "разделить 273 на 113"], "ans": "сократить на 113", "why": "Одинаковый множитель есть и сверху, и снизу - он уходит сразу. Останется 273/91 = 3. Перемножать 273·113 не надо вообще."}, {"q": "Зачем раскладывать числа на простые множители в громоздкой дроби?", "opts": ["чтобы увидеть, что сокращается", "чтобы получить ответ в виде произведения", "чтобы числа стали больше", "этого делать не нужно"], "ans": "чтобы увидеть, что сокращается", "why": "После разложения 48 = 2⁴·3 и 36 = 2²·3² сразу видно общие множители. В перемноженном виде они прячутся."}, {"q": "Чему равно <span class=\"frac\"><span>2⁵ · 3³</span><span>2³ · 3⁴</span></span>?", "opts": ["4/3", "3/4", "2/3", "12"], "ans": "4/3", "why": "2⁵ : 2³ = 2² = 4, а 3³ : 3⁴ = 1/3. Итого 4/3."}, {"q": "Вычисли <span class=\"frac\"><span>273 · 113 − 273 · 13</span><span>91 · 150</span></span>.", "ans": ["2"], "why": "Сверху общий множитель 273: 273·(113 − 13) = 273·100. Снизу 91·150. Сокращаем 273/91 = 3 и 100/150 = 2/3: 3 · 2/3 = 2."}, {"q": "Вычисли <span class=\"frac\"><span>48 · 75</span><span>36 · 25</span></span>.", "ans": ["4"], "why": "75/25 = 3, 48/36 = 4/3. Остаётся 4/3 · 3 = 4."}, {"q": "Вычисли <span class=\"frac\"><span>125 · 48 + 125 · 52</span><span>2 · 5⁵</span></span>.", "ans": ["2"], "why": "Сверху 125·(48 + 52) = 125·100 = 12500, снизу 2·3125 = 6250. Итого 2."}, {"q": "Вычисли <span class=\"frac\"><span>14 · 35</span><span>49 · 10</span></span>.", "ans": ["1"], "why": "14 = 2·7, 35 = 5·7, 49 = 7·7, 10 = 2·5. Всё сокращается, остаётся 1."}, {"q": "Вычисли <span class=\"frac\"><span>36 · 121</span><span>44 · 27</span></span>.", "ans": ["11/3"], "why": "121/44 = 11/4, 36/27 = 4/3. Итого 11/4 · 4/3 = 11/3."}, {"q": "Вычисли <span class=\"frac\"><span>0,64 · 125</span><span>0,8 · 25</span></span>.", "ans": ["4"], "why": "0,64/0,8 = 0,8 и 125/25 = 5, значит 0,8·5 = 4."}],"factor":[{"q": "Как быстрее всего посчитать 35·1,2 + 35·1,8 ?", "opts": ["вынести 35 за скобки", "посчитать оба произведения столбиком", "округлить 1,2 и 1,8", "перевести всё в обыкновенные дроби"], "ans": "вынести 35 за скобки", "why": "35·(1,2 + 1,8) = 35·3 = 105. Два умножения превращаются в одно сложение."}, {"q": "Чему равно a² − b² ?", "opts": ["(a − b)(a + b)", "(a − b)²", "a² + b²", "(a + b)²"], "ans": "(a − b)(a + b)", "why": "Разность квадратов. В вычислениях она превращает 127² − 27² в 100·154 - устно."}, {"q": "Почему 99² удобно считать как (100 − 1)² ?", "opts": ["получается 10000 − 200 + 1 - всё устно", "потому что 99² = 100² − 1²", "потому что квадрат суммы равен сумме квадратов", "так считать нельзя"], "ans": "получается 10000 − 200 + 1 - всё устно", "why": "(a − b)² = a² − 2ab + b², то есть 10000 − 200 + 1 = 9801. А вот 100² − 1² = 9999 - это уже другая, неверная запись."}, {"q": "Вычисли (35 · 1,2 + 35 · 1,8) : 7.", "ans": ["15"], "why": "35·(1,2 + 1,8) : 7 = 35·3 : 7 = 105 : 7 = 15."}, {"q": "Вычисли 127² − 27².", "ans": ["15400"], "why": "(127 − 27)(127 + 27) = 100·154 = 15400."}, {"q": "Вычисли <span class=\"frac\"><span>2,35² − 0,35²</span><span>2,7 · 0,5</span></span>.", "ans": ["4"], "why": "Сверху (2,35 − 0,35)(2,35 + 0,35) = 2·2,7 = 5,4. Снизу 1,35. Итого 4."}, {"q": "Вычисли 48 · 2,5 − 48 · 1,5.", "ans": ["48"], "why": "48·(2,5 − 1,5) = 48·1 = 48."}, {"q": "Вычисли 101² − 99².", "ans": ["400"], "why": "(101 − 99)(101 + 99) = 2·200 = 400."}, {"q": "Вычисли <span class=\"frac\"><span>8,4² − 1,6²</span><span>8,4 + 1,6</span></span>.", "ans": ["6,8", "34/5"], "why": "Числитель раскладывается на (8,4 − 1,6)(8,4 + 1,6), и скобка (8,4 + 1,6) сокращается со знаменателем. Остаётся 6,8."}],"tele":[{"q": "Вычисли <span class=\"frac\"><span>1</span><span>2 · 5</span></span> + <span class=\"frac\"><span>1</span><span>5 · 8</span></span>.", "ans": ["0,125", "1/8"], "why": "Знаменатели идут через 3, поэтому <span class=\"frac\"><span>1</span><span>2 · 5</span></span> = <span class=\"frac\"><span>1</span><span>3</span></span>(<span class=\"frac\"><span>1</span><span>2</span></span> − <span class=\"frac\"><span>1</span><span>5</span></span>). Соседние куски гасятся, остаётся <span class=\"frac\"><span>1</span><span>3</span></span>(<span class=\"frac\"><span>1</span><span>2</span></span> − <span class=\"frac\"><span>1</span><span>8</span></span>) = 0,125."}, {"q": "Вычисли <span class=\"frac\"><span>1</span><span>1 · 3</span></span> + <span class=\"frac\"><span>1</span><span>3 · 5</span></span>.", "ans": ["0,4", "2/5"], "why": "Знаменатели идут через 2, поэтому <span class=\"frac\"><span>1</span><span>1 · 3</span></span> = <span class=\"frac\"><span>1</span><span>2</span></span>(<span class=\"frac\"><span>1</span><span>1</span></span> − <span class=\"frac\"><span>1</span><span>3</span></span>). Соседние куски гасятся, остаётся <span class=\"frac\"><span>1</span><span>2</span></span>(<span class=\"frac\"><span>1</span><span>1</span></span> − <span class=\"frac\"><span>1</span><span>5</span></span>) = 0,4."}, {"q": "Вычисли <span class=\"frac\"><span>1</span><span>3 · 7</span></span> + <span class=\"frac\"><span>1</span><span>7 · 11</span></span>.", "ans": ["2/33"], "why": "Знаменатели идут через 4, поэтому <span class=\"frac\"><span>1</span><span>3 · 7</span></span> = <span class=\"frac\"><span>1</span><span>4</span></span>(<span class=\"frac\"><span>1</span><span>3</span></span> − <span class=\"frac\"><span>1</span><span>7</span></span>). Соседние куски гасятся, остаётся <span class=\"frac\"><span>1</span><span>4</span></span>(<span class=\"frac\"><span>1</span><span>3</span></span> − <span class=\"frac\"><span>1</span><span>11</span></span>) = 2/33."}, {"q": "Вычисли <span class=\"frac\"><span>1</span><span>5 · 9</span></span> + <span class=\"frac\"><span>1</span><span>9 · 13</span></span>.", "ans": ["2/65"], "why": "Знаменатели идут через 4, поэтому <span class=\"frac\"><span>1</span><span>5 · 9</span></span> = <span class=\"frac\"><span>1</span><span>4</span></span>(<span class=\"frac\"><span>1</span><span>5</span></span> − <span class=\"frac\"><span>1</span><span>9</span></span>). Соседние куски гасятся, остаётся <span class=\"frac\"><span>1</span><span>4</span></span>(<span class=\"frac\"><span>1</span><span>5</span></span> − <span class=\"frac\"><span>1</span><span>13</span></span>) = 2/65."}, {"q": "Вычисли <span class=\"frac\"><span>1</span><span>2 · 6</span></span> + <span class=\"frac\"><span>1</span><span>6 · 10</span></span> + <span class=\"frac\"><span>1</span><span>10 · 14</span></span>.", "ans": ["3/28"], "why": "Каждое слагаемое = <span class=\"frac\"><span>1</span><span>4</span></span>(<span class=\"frac\"><span>1</span><span>первый</span></span> − <span class=\"frac\"><span>1</span><span>второй</span></span>). Всё внутри сокращается, кроме краёв: <span class=\"frac\"><span>1</span><span>4</span></span>(<span class=\"frac\"><span>1</span><span>2</span></span> − <span class=\"frac\"><span>1</span><span>14</span></span>) = 3/28."}, {"q": "Вычисли <span class=\"frac\"><span>1</span><span>1 · 5</span></span> + <span class=\"frac\"><span>1</span><span>5 · 9</span></span>.", "ans": ["2/9"], "why": "Каждое слагаемое = <span class=\"frac\"><span>1</span><span>4</span></span>(<span class=\"frac\"><span>1</span><span>первый</span></span> − <span class=\"frac\"><span>1</span><span>второй</span></span>). Всё внутри сокращается, кроме краёв: <span class=\"frac\"><span>1</span><span>4</span></span>(<span class=\"frac\"><span>1</span><span>1</span></span> − <span class=\"frac\"><span>1</span><span>9</span></span>) = 2/9."}, {"q": "Вычисли <span class=\"frac\"><span>1</span><span>3 · 6</span></span> + <span class=\"frac\"><span>1</span><span>6 · 9</span></span> + <span class=\"frac\"><span>1</span><span>9 · 12</span></span> + <span class=\"frac\"><span>1</span><span>12 · 15</span></span>.", "ans": ["4/45"], "why": "Каждое слагаемое = <span class=\"frac\"><span>1</span><span>3</span></span>(<span class=\"frac\"><span>1</span><span>первый</span></span> − <span class=\"frac\"><span>1</span><span>второй</span></span>). Всё внутри сокращается, кроме краёв: <span class=\"frac\"><span>1</span><span>3</span></span>(<span class=\"frac\"><span>1</span><span>3</span></span> − <span class=\"frac\"><span>1</span><span>15</span></span>) = 4/45."}, {"q": "Вычисли <span class=\"frac\"><span>1</span><span>5 · 7</span></span> + <span class=\"frac\"><span>1</span><span>7 · 9</span></span> + <span class=\"frac\"><span>1</span><span>9 · 11</span></span> + <span class=\"frac\"><span>1</span><span>11 · 13</span></span> + <span class=\"frac\"><span>1</span><span>13 · 15</span></span> + <span class=\"frac\"><span>1</span><span>15 · 17</span></span>.", "ans": ["6/85"], "why": "Каждое слагаемое = <span class=\"frac\"><span>1</span><span>2</span></span>(<span class=\"frac\"><span>1</span><span>первый</span></span> − <span class=\"frac\"><span>1</span><span>второй</span></span>). Всё внутри сокращается, кроме краёв: <span class=\"frac\"><span>1</span><span>2</span></span>(<span class=\"frac\"><span>1</span><span>5</span></span> − <span class=\"frac\"><span>1</span><span>17</span></span>) = 6/85."}]};
+var GAP_DATA = {"g2":{"title": "Заполни пропуски: смешанные числа", "html": "<p class=\"meta\">Вычисляем (7<span class=\"frac\"><span>1</span><span>3</span></span> − 4<span class=\"frac\"><span>5</span><span>6</span></span>) · 1<span class=\"frac\"><span>1</span><span>5</span></span>.</p><div class=\"gline\">1) 7<span class=\"frac\"><span>1</span><span>3</span></span> в виде неправильной дроби: <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">2) 4<span class=\"frac\"><span>5</span><span>6</span></span> в виде неправильной дроби: <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">3) Разность в скобках: <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">4) 1<span class=\"frac\"><span>1</span><span>5</span></span> в виде неправильной дроби: <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">5) Произведение: <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div>", "ans": ["22/3", "29/6", "5/2", "6/5", "3"]},"g1":{"title": "Заполни пропуски: многоэтажная дробь", "html": "<p class=\"meta\">Вычисляем <span class=\"frac\"><span>(0,6 + <span class=\"frac\"><span>1</span><span>4</span></span> + <span class=\"frac\"><span>1</span><span>15</span></span> + 0,125) · 24</span><span><span class=\"frac\"><span>1</span><span>3</span></span> + 0,4 + <span class=\"frac\"><span>4</span><span>15</span></span></span></span>. Вписывай числа, дроби пиши через «/».</p><div class=\"gline\">1) Общий знаменатель числителя в скобках равен <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">2) Сумма в скобках равна <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\"> (дробью).</div><div class=\"gline\">3) Умножаем на 24: получаем <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">4) Знаменатель <span class=\"frac\"><span>1</span><span>3</span></span> + 0,4 + <span class=\"frac\"><span>4</span><span>15</span></span> равен <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">5) Значение всей дроби равно <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div>", "ans": ["120", "25/24", "25", "1", "25"]},"g3":{"title": "Заполни пропуски: не умножай страшные числа", "html": "<p class=\"meta\">Вычисляем <span class=\"frac\"><span>273 · 113 − 273 · 13</span><span>91 · 150</span></span>.</p><div class=\"gline\">1) Общий множитель в числителе: <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">2) Скобка, которая остаётся после вынесения: 113 − 13 = <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">3) Дробь <span class=\"frac\"><span>273</span><span>91</span></span> равна <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">4) Дробь <span class=\"frac\"><span>100</span><span>150</span></span> равна <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\"> (обыкновенной дробью).</div><div class=\"gline\">5) Ответ: <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div>", "ans": ["273", "100", "3", "2/3", "2"]},"g4":{"title": "Заполни пропуски: сумма дробей с общими множителями", "html": "<p class=\"meta\">Вычисляем <span class=\"frac\"><span>1</span><span>2 · 5</span></span> + <span class=\"frac\"><span>1</span><span>5 · 8</span></span> + <span class=\"frac\"><span>1</span><span>8 · 11</span></span>.</p><div class=\"gline\">1) Шаг между знаменателями равен <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">2) <span class=\"frac\"><span>1</span><span>2 · 5</span></span> = <span class=\"frac\"><span>1</span><span>?</span></span>(<span class=\"frac\"><span>1</span><span>2</span></span> − <span class=\"frac\"><span>1</span><span>5</span></span>), вместо «?» стоит <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">3) После сокращения внутри остаётся <span class=\"frac\"><span>1</span><span>3</span></span>(<span class=\"frac\"><span>1</span><span>2</span></span> − <span class=\"frac\"><span>1</span><span>?</span></span>), вместо «?» стоит <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">4) Разность в скобках равна <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div><div class=\"gline\">5) Ответ: <input class=\"gi\" inputmode=\"text\" autocapitalize=\"off\" autocorrect=\"off\" spellcheck=\"false\">.</div>", "ans": ["3", "3", "11", "9/22", "3/22"]}};
+var GAP_ANS = {"g2":["22/3", "29/6", "5/2", "6/5", "3"],"g1":["120", "25/24", "25", "1", "25"],"g3":["273", "100", "3", "2/3", "2"],"g4":["3", "3", "11", "9/22", "3/22"]};
+
+window.TRAPI = {};
+function makeTrainer(id, items){
+  var host = document.getElementById("tr_"+id);
+  if(!host) return;
+  var st = {order: shuffle(items.map(function(_,i){return i;})), cur:0, right:0, answered:false, done:false};
+  function render(){
+    if(st.cur >= items.length){
+      st.done = true;
+      host.innerHTML = '<div class="trhead"><b>Тренажёр пройден</b>'+
+        '<span class="trbar">'+host.dataset.title+'</span></div>'+
+        '<p class="trdone">Готово: верно '+st.right+' из '+items.length+'.</p>'+
+        '<button class="sm again" type="button">Пройти заново</button>';
+      host.querySelector(".again").addEventListener("click", function(){
+        st.order = shuffle(items.map(function(_,i){return i;}));
+        st.cur = 0; st.right = 0; st.answered = false; st.done = false;
+        render(); SAVE.touch(true);
+      });
+      progress();
+      return;
+    }
+    var it = items[st.order[st.cur]];
+    var h = '<div class="trhead"><b>Вопрос '+(st.cur+1)+' из '+items.length+'</b>'+
+            '<span class="trbar">верно '+st.right+'</span></div>'+
+            '<div class="trq">'+it.q+'</div>';
+    if(it.fig){ h += '<div class="fig">'+it.fig+'</div>'; }
+    if(it.opts){
+      var opts = shuffle(it.opts);
+      h += '<div class="tropts">'+opts.map(function(o){
+        return '<label data-k="'+e(o)+'">'+o+'</label>';}).join("")+'</div>';
+    } else {
+      h += '<div class="keys">'+KEYPAD.map(function(k){
+             return '<button class="key" data-k="'+k+'" type="button">'+k+'</button>';}).join("")+'</div>'+
+           '<input type="text" class="tri" inputmode="text" autocapitalize="off" autocorrect="off" '+
+           'autocomplete="off" spellcheck="false" placeholder="ответ">';
+    }
+    h += '<div class="row" style="margin-top:10px"><button class="pri sm go" type="button">Ответить</button></div>'+
+         '<div class="whybox"></div>';
+    host.innerHTML = h;
+    var picked = null;
+    host.querySelectorAll(".tropts label").forEach(function(l){
+      l.addEventListener("click", function(){
+        if(st.answered) return;
+        host.querySelectorAll(".tropts label").forEach(function(x){x.classList.remove("sel");});
+        l.classList.add("sel"); picked = d(l.dataset.k);
+      });
+    });
+    host.querySelectorAll(".key").forEach(function(b){
+      b.addEventListener("click", function(){
+        var inp = host.querySelector(".tri");
+        var k = b.dataset.k === "\u2212" ? "-" : b.dataset.k;
+        var s = inp.selectionStart; if(s===null||s===undefined) s = inp.value.length;
+        var f = inp.selectionEnd; if(f===null||f===undefined) f = s;
+        inp.value = inp.value.slice(0,s)+k+inp.value.slice(f);
+        inp.focus(); inp.setSelectionRange(s+k.length, s+k.length);
+      });
+    });
+    var inpEl = host.querySelector(".tri");
+    if(inpEl){
+      inpEl.addEventListener("keydown", function(ev){
+        if(ev.key === "Enter"){ ev.preventDefault(); host.querySelector(".go").click(); }
+      });
+    }
+    host.querySelector(".go").addEventListener("click", function(){
+      var btn = host.querySelector(".go");
+      if(st.answered){ st.cur++; st.answered = false; render(); SAVE.touch(true); return; }
+      var given = it.opts ? picked : (host.querySelector(".tri").value || "");
+      if(!given || !String(given).trim()) return;
+      var ok = it.opts ? (norm(given) === norm(it.ans))
+                       : it.ans.some(function(a){ return same(given, a, it.tol); });
+      st.answered = true;
+      if(ok) st.right++;
+      if(it.opts){
+        host.querySelectorAll(".tropts label").forEach(function(x){
+          var val = d(x.dataset.k);
+          if(norm(val) === norm(it.ans)) x.classList.add("good");
+          else if(x.classList.contains("sel")) x.classList.add("miss");
+        });
+      } else {
+        host.querySelector(".tri").classList.add(ok ? "ok" : "bad");
+      }
+      host.querySelector(".whybox").innerHTML =
+        '<div class="trwhy"><b>'+(ok?"Верно.":"Неверно, правильный ответ: "+esc(it.opts?it.ans:it.ans[0])+".")+
+        '</b> '+it.why+'</div>';
+      btn.textContent = (st.cur+1 >= items.length) ? "Завершить" : "Дальше";
+      SAVE.touch(true);
+    });
+  }
+  window.TRAPI[id] = {
+    get: function(){ return {order:st.order, cur:st.cur, right:st.right, done:st.done}; },
+    apply: function(s){
+      if(!s || !s.order || s.order.length !== items.length) return;
+      st.order = s.order; st.cur = s.cur||0; st.right = s.right||0;
+      st.done = !!s.done; st.answered = false;
+      render();
+    },
+    isDone: function(){ return st.done; }
+  };
+  render();
+}
+function trDoneCount(){
+  return REQ_TR.filter(function(id){ return window.TRAPI[id] && window.TRAPI[id].isDone(); }).length;
+}
+
+
+window.GAPST = {};
+function makeGap(id, data){
+  var host = document.getElementById("gap_"+id);
+  if(!host) return;
+  var st = {vals: data.ans.map(function(){return "";}), checked:false};
+  window.GAPST[id] = st;
+  var html = '<div class="trhead"><b>'+data.title+'</b></div>' + data.html +
+             '<div class="row" style="margin-top:10px">'+
+             '<button class="pri sm gchk" type="button">Проверить</button></div><div class="gv"></div>';
+  host.innerHTML = html;
+  var inputs = host.querySelectorAll("input.gi");
+  inputs.forEach(function(inp, i){
+    inp.addEventListener("input", function(){ st.vals[i] = inp.value; SAVE.touch(); });
+    inp.addEventListener("keydown", function(ev){
+      if(ev.key === "Enter"){ ev.preventDefault(); host.querySelector(".gchk").click(); }
+    });
+  });
+  host.querySelector(".gchk").addEventListener("click", function(){
+    st.checked = true;
+    paint();
+    SAVE.touch(true);
+  });
+  function paint(){
+    var bad = 0;
+    inputs.forEach(function(inp, i){
+      inp.classList.remove("ok","bad");
+      if(!st.checked) return;
+      var ok = same(inp.value, data.ans[i], data.tol);
+      inp.classList.add(ok ? "ok" : "bad");
+      if(!ok) bad++;
+    });
+    var v = host.querySelector(".gv");
+    if(!st.checked){ v.textContent = ""; v.className = "gv"; return; }
+    v.className = "gv " + (bad ? "bad-note" : "");
+    v.style.color = bad ? "" : "var(--ok)";
+    v.textContent = bad ? ("Красным отмечены "+bad+" неверных ответа - поправь и проверь ещё раз.")
+                        : "Всё верно, шаги сходятся.";
+  }
+  window.GAPST[id].apply = function(s){
+    if(!s || !s.vals) return;
+    st.vals = s.vals.slice(0, inputs.length);
+    st.checked = !!s.checked;
+    inputs.forEach(function(inp,i){ inp.value = st.vals[i] || ""; });
+    paint();
+  };
+  window.GAPST[id].get = function(){ return {vals: st.vals, checked: st.checked}; };
+}
+window.GAPFLUSH = function(){
+  Object.keys(window.GAPST).forEach(function(id){
+    var host = document.getElementById("gap_"+id);
+    if(!host) return;
+    var st = window.GAPST[id];
+    host.querySelectorAll("input.gi").forEach(function(inp,i){ st.vals[i] = inp.value; });
+  });
+};
+
+
+var state = {};
+TASKS.forEach(function(t){
+  state[t.id] = {tries:0, hints:0, done:false, ok:false, given:"", sel:null};
+  var box = document.getElementById("tasks"+(t.blk||"1")) || document.getElementById("tasks1");
+  var el = document.createElement("div");
+  el.className = "task"; el.id = "t"+t.id;
+  var body = '<div><span class="tnum">'+t.id+'.</span>'+t.text+
+             '<span class="lvl">'+t.lvl+'</span></div>';
+  if(t.img){ body += '<div class="fig">'+t.img+'</div>'; }
+  if(t.type === "choice"){
+    body += '<div class="opts">'+t.options.map(function(o){
+      return '<label class="opt" data-v="'+esc(o)+'"><input type="radio" name="q'+t.id+'"> '+o+'</label>';
+    }).join("")+'</div>';
+  } else {
+    body += '<div class="keys">'+
+      KEYPAD.map(function(k){
+        return '<button class="key" data-k="'+k+'" type="button">'+k+'</button>';}).join("")+
+      '</div><input type="text" id="in'+t.id+'" inputmode="text" autocapitalize="off" '+
+      'autocorrect="off" autocomplete="off" spellcheck="false" placeholder="ответ">';
+  }
+  body += '<div class="row" style="margin-top:10px">'+
+          '<button class="pri sm chk" type="button">Проверить</button>'+
+          '<button class="sm hnt" type="button">Подсказка</button></div>'+
+          '<div class="hints"></div><div class="verdict"></div><div class="sol"></div>';
+  el.innerHTML = body;
+  box.appendChild(el);
+
+  el.querySelectorAll(".key").forEach(function(b){
+    b.addEventListener("click", function(){
+      var inp = document.getElementById("in"+t.id);
+      var k = b.dataset.k === "\u2212" ? "-" : b.dataset.k;
+      var s = inp.selectionStart; if(s===null||s===undefined) s = inp.value.length;
+      var f = inp.selectionEnd; if(f===null||f===undefined) f = s;
+      inp.value = inp.value.slice(0,s) + k + inp.value.slice(f);
+      inp.focus(); inp.setSelectionRange(s+k.length, s+k.length);
+      SAVE.touch();
+    });
+  });
+  if(t.type === "choice"){
+    el.querySelectorAll(".opt").forEach(function(l){
+      l.addEventListener("click", function(){
+        el.querySelectorAll(".opt").forEach(function(x){x.classList.remove("sel");});
+        l.classList.add("sel"); state[t.id].sel = l.dataset.v; SAVE.touch();
+      });
+    });
+  } else {
+    var inp = el.querySelector("#in"+t.id);
+    inp.addEventListener("keydown", function(ev){
+      if(ev.key === "Enter"){ ev.preventDefault(); check(t.id); }
+    });
+    inp.addEventListener("input", function(){ SAVE.touch(); });
+  }
+  el.querySelector(".chk").addEventListener("click", function(){ check(t.id); });
+  el.querySelector(".hnt").addEventListener("click", function(){ hint(t.id); });
+});
+
+function hint(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var host = document.querySelector("#t"+id+" .hints");
+  if(s.hints >= t.hints.length){
+    if(!host.querySelector(".last")){
+      var w = document.createElement("div");
+      w.className = "hint last";
+      w.textContent = "Подсказки закончились - нажми «Проверить», решение откроется после второй попытки.";
+      host.appendChild(w);
+    }
+    return;
+  }
+  drawHint(host, t, s.hints);
+  s.hints++;
+  SAVE.touch();
+}
+function drawHint(host, t, i){
+  var h = document.createElement("div");
+  h.className = "hint";
+  h.innerHTML = "<b>Подсказка "+(i+1)+".</b> " + t.hints[i];
+  host.appendChild(h);
+}
+function check(id){
+  var t = TASKS.find(function(x){return x.id===id;}), s = state[id];
+  var el = document.getElementById("t"+id);
+  var v = el.querySelector(".verdict");
+  var given = (t.type === "choice") ? (s.sel || "") :
+              (document.getElementById("in"+id).value || "");
+  if(!String(given).trim()){ v.className = "verdict bad"; v.textContent = "Введи ответ."; return; }
+  s.given = given; s.tries++;
+  var ok = t.ans.some(function(a){ return same(given, d(a), t.tol); });
+  s.ok = ok; s.done = ok || s.tries >= 2;
+  paintTask(t, s);
+  progress();
+  SAVE.touch(true);
+}
+function paintTask(t, s){
+  var el = document.getElementById("t"+t.id);
+  var v = el.querySelector(".verdict");
+  el.classList.remove("ok","bad");
+  if(!s.tries) return;
+  el.classList.add(s.ok ? "ok" : "bad");
+  v.className = "verdict " + (s.ok ? "ok" : "bad");
+  if(s.ok){
+    v.textContent = "Верно" + (s.tries > 1 ? " (со второй попытки)" : "") + ".";
+    showSol(el, t);
+  } else if(s.tries === 1){
+    v.textContent = "Пока неверно. Открой подсказку и попробуй ещё раз.";
+  } else {
+    v.textContent = "Неверно. Смотри решение и разберись, где разошлось.";
+    showSol(el, t);
+  }
+}
+function showSol(el, t){
+  var host = el.querySelector(".sol");
+  if(host.dataset.on) return;
+  host.dataset.on = "1";
+  var det = document.createElement("details");
+  det.open = true;
+  det.innerHTML = "<summary>Решение</summary><div>"+t.sol+"</div>";
+  host.appendChild(det);
+}
+function progress(){
+  var done = TASKS.filter(function(t){return state[t.id].done;}).length;
+  var ok = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  var el = document.getElementById("progress");
+  if(el) el.textContent = "задачи: " + done + " из " + TASKS.length + " · верно " + ok +
+      " · тренажёры: " + trDoneCount() + " из " + REQ_TR.length;
+}
+document.getElementById("checkall").addEventListener("click", function(){
+  TASKS.forEach(function(t){
+    var s = state[t.id];
+    var given = (t.type === "choice") ? (s.sel || "") : ((document.getElementById("in"+t.id)||{}).value || "");
+    if(String(given).trim() && !s.done) check(t.id);
+  });
+  var first = TASKS.find(function(t){ return !state[t.id].done; });
+  var el = document.getElementById("progress");
+  el.textContent += first ? " · осталась задача " + first.id : " · все задачи закрыты";
+});
+
+
+var SAVE_V = 1;
+var KEY_BASE = "arttich:vychisl11:";
+var KEY_MAIN = KEY_BASE + "work";
+var SAVE = (function(){
+  var timer = null, on = true;
+  function collect(){
+    window.GAPFLUSH();
+    var tasks = {};
+    TASKS.forEach(function(t){
+      var s = state[t.id];
+      var live = (t.type === "choice") ? (s.sel||"") : ((document.getElementById("in"+t.id)||{}).value || "");
+      tasks[t.id] = {given:s.given, live:live, sel:s.sel, tries:s.tries, hints:s.hints, done:s.done, ok:s.ok};
+    });
+    var trs = {};
+    Object.keys(window.TRAPI).forEach(function(k){ trs[k] = window.TRAPI[k].get(); });
+    var gaps = {};
+    Object.keys(window.GAPST).forEach(function(k){ gaps[k] = window.GAPST[k].get(); });
+    return {v:SAVE_V, ts:Date.now(), name:(document.getElementById("name")||{}).value || "",
+            tasks:tasks, trs:trs, gaps:gaps, started:started};
+  }
+  function write(){
+    if(!on) return;
+    try{ localStorage.setItem(KEY_MAIN, JSON.stringify(collect())); }catch(err){}
+  }
+  function touch(now){
+    if(now){ if(timer){clearTimeout(timer); timer=null;} write(); return; }
+    if(timer) clearTimeout(timer);
+    timer = setTimeout(function(){ timer = null; write(); }, 400);
+  }
+  function best(){
+    var res = null;
+    try{
+      for(var i=0;i<localStorage.length;i++){
+        var k = localStorage.key(i);
+        if(k && k.indexOf(KEY_BASE) === 0){
+          try{
+            var o = JSON.parse(localStorage.getItem(k));
+            if(o && o.v === SAVE_V && (!res || (o.ts||0) > (res.ts||0))) res = o;
+          }catch(err){}
+        }
+      }
+    }catch(err){}
+    return res;
+  }
+  function clearAll(){
+    try{
+      var kill = [];
+      for(var i=0;i<localStorage.length;i++){
+        var k = localStorage.key(i);
+        if(k && k.indexOf(KEY_BASE) === 0) kill.push(k);
+      }
+      kill.forEach(function(k){ localStorage.removeItem(k); });
+    }catch(err){}
+  }
+  return {touch:touch, write:write, best:best, clearAll:clearAll,
+          off:function(){on=false;}, on:function(){on=true;}};
+})();
+
+function restore(){
+  var s = SAVE.best();
+  if(!s) return false;
+  try{
+    if(s.name && document.getElementById("name")) document.getElementById("name").value = s.name;
+    if(s.started) started = s.started;
+    TASKS.forEach(function(t){
+      var saved = s.tasks && s.tasks[t.id];
+      if(!saved) return;
+      var st = state[t.id];
+      st.given = saved.given||""; st.tries = saved.tries||0; st.hints = saved.hints||0;
+      st.done = !!saved.done; st.ok = !!saved.ok; st.sel = saved.sel||null;
+      var el = document.getElementById("t"+t.id);
+      if(t.type === "choice"){
+        if(st.sel){
+          el.querySelectorAll(".opt").forEach(function(l){
+            if(l.dataset.v === st.sel){ l.classList.add("sel"); var r=l.querySelector("input"); if(r) r.checked=true; }
+          });
+        }
+      } else {
+        var inp = document.getElementById("in"+t.id);
+        if(inp) inp.value = saved.live || saved.given || "";
+      }
+      var hb = el.querySelector(".hints");
+      for(var i=0;i<st.hints && i<t.hints.length;i++) drawHint(hb, t, i);
+      paintTask(t, st);
+    });
+    if(s.trs) Object.keys(s.trs).forEach(function(k){
+      if(window.TRAPI[k]) window.TRAPI[k].apply(s.trs[k]);
+    });
+    if(s.gaps) Object.keys(s.gaps).forEach(function(k){
+      if(window.GAPST[k] && window.GAPST[k].apply) window.GAPST[k].apply(s.gaps[k]);
+    });
+  }catch(err){}
+  return true;
+}
+
+function bindSave(){
+  var nm = document.getElementById("name");
+  if(nm) nm.addEventListener("input", function(){ SAVE.touch(); });
+  document.addEventListener("visibilitychange", function(){
+    if(document.visibilityState === "hidden") SAVE.touch(true);
+  });
+  window.addEventListener("pagehide", function(){ SAVE.touch(true); });
+  window.addEventListener("blur", function(){ SAVE.touch(true); });
+  window.addEventListener("beforeunload", function(){ SAVE.touch(true); });
+  var btn = document.getElementById("reset");
+  if(btn) btn.addEventListener("click", function(){
+    if(!window.confirm("Стереть все ответы и начать заново?")) return;
+    SAVE.off(); SAVE.clearAll(); location.reload();
+  });
+}
+
+
+var photos = [];
+document.getElementById("photos").addEventListener("change", function(ev){
+  var files = Array.prototype.slice.call(ev.target.files || []);
+  files.forEach(function(f){
+    var r = new FileReader();
+    r.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var m = 1400, w = img.width, h = img.height;
+        if(Math.max(w,h) > m){ var k = m/Math.max(w,h); w = Math.round(w*k); h = Math.round(h*k); }
+        var c = document.createElement("canvas"); c.width = w; c.height = h;
+        c.getContext("2d").drawImage(img, 0, 0, w, h);
+        photos.push({url: c.toDataURL("image/jpeg", 0.7), task: ""});
+        drawThumbs();
+      };
+      img.src = r.result;
+    };
+    r.readAsDataURL(f);
+  });
+  ev.target.value = "";
+});
+function drawThumbs(){
+  var host = document.getElementById("thumbs");
+  host.innerHTML = "";
+  var total = 0;
+  photos.forEach(function(p, i){
+    total += p.url.length * 0.75;
+    var d0 = document.createElement("div"); d0.className = "thumb";
+    var opts = '<option value="">задача…</option>' + TASKS.map(function(t){
+      return '<option value="'+t.id+'"'+(p.task==String(t.id)?" selected":"")+'>№'+t.id+'</option>';
+    }).join("");
+    d0.innerHTML = '<img src="'+p.url+'" alt="фото решения"><button type="button">×</button>'+
+                   '<select>'+opts+'</select>';
+    d0.querySelector("button").addEventListener("click", function(){ photos.splice(i,1); drawThumbs(); });
+    d0.querySelector("select").addEventListener("change", function(ev){ p.task = ev.target.value; });
+    host.appendChild(d0);
+  });
+  var note = document.getElementById("repnote");
+  if(total > 15e6){ note.textContent = "Фото уже больше 15 МБ - отчёт может отправляться долго, лишние лучше удалить."; }
+  else if(photos.length){ note.textContent = "Фото в отчёте: " + photos.length + "."; }
+  else { note.textContent = ""; }
+}
+
+var ENDPOINT = "https://script.google.com/macros/s/AKfycbztH9c-wQuKC7pSfD8AcFfnOcGpSHxoeqovulmvLMp9W23SgFx9dDQ2JTlWcIJDMN6W/exec";
+var SECRET = "artteach2026";
+
+function gateCheck(){
+  var miss = [];
+  var who = ((document.getElementById("name")||{}).value || "").trim();
+  if(!who) miss.push("впиши имя вверху страницы");
+  var left = TASKS.filter(function(t){ return !state[t.id].done; });
+  if(left.length) miss.push("ответь на задачи: " + left.map(function(t){return t.id;}).join(", "));
+  var trLeft = REQ_TR.filter(function(id){ return !(window.TRAPI[id] && window.TRAPI[id].isDone()); });
+  if(trLeft.length) miss.push("пройди тренажёры до конца: " + trLeft.map(function(id){return TR_NAMES[id];}).join(", "));
+  return miss;
+}
+
+function buildReport(){
+  var name = ((document.getElementById("name")||{}).value || "").trim() || "без имени";
+  var now = new Date();
+  var mins = Math.max(1, Math.round((Date.now()-started)/60000));
+  var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
+  var trs = REQ_TR.concat(EXTRA_TR).map(function(id){
+    var a = window.TRAPI[id] ? window.TRAPI[id].get() : {right:0, done:false};
+    return {тренажёр:TR_NAMES[id], верно:a.right, пройден:!!a.done};
+  });
+  var data = {тип:"дз", предмет:"математика", тема:TOPIC,
+    ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
+    верно:okN, всего:TASKS.length, задачи:[], тренажёры:trs};
+  var rows = TASKS.map(function(t){
+    var s = state[t.id];
+    data.задачи.push({n:t.id, условие:t.text.replace(/<[^>]+>/g," "), ответ_ученика:s.given,
+      верный_ответ:t.ans.map(d).join(" или "), верно:s.ok, попыток:s.tries, подсказок:s.hints,
+      уровень:t.lvl});
+    return "<tr><td>"+t.id+"</td><td style='text-align:left'>"+esc(t.text.replace(/<[^>]+>/g," "))+
+      "</td><td>"+esc(s.given||"—")+"</td><td>"+esc(t.ans.map(d).join(" / "))+"</td><td>"+
+      (s.ok?"верно":(s.given?"неверно":"не решал"))+"</td><td>"+s.tries+"</td><td>"+s.hints+"</td></tr>";
+  }).join("");
+  var trRows = trs.map(function(a){
+    return "<tr><td style='text-align:left'>"+esc(a.тренажёр)+"</td><td>"+a.верно+
+           "</td><td>"+(a.пройден?"пройден":"не закончен")+"</td></tr>";
+  }).join("");
+  var pics = photos.map(function(p,i){
+    return "<figure><img src='"+p.url+"'><figcaption>Фото "+(i+1)+
+      (p.task?" — к задаче №"+p.task:"")+"</figcaption></figure>";
+  }).join("");
+  var html = "<!doctype html><html lang='ru'><head><meta charset='utf-8'>"+
+    "<meta name='viewport' content='width=device-width,initial-scale=1'>"+
+    "<title>Отчёт — "+esc(name)+" — "+esc(TOPIC)+"</title><style>"+
+    "body{font:16px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;padding:20px;color:#16181d;background:#fff}"+
+    "h1{font-size:22px;margin:0 0 4px}.m{color:#5b6270;font-size:15px}"+
+    "table{border-collapse:collapse;width:100%;margin-top:14px;font-size:15px}"+
+    "th,td{border:1px solid #dfe3ea;padding:6px 8px;text-align:center}th{background:#eef3fb}"+
+    "figure{margin:14px 0}img{max-width:100%;border:1px solid #dfe3ea;border-radius:8px}"+
+    "figcaption{color:#5b6270;font-size:14px;margin-top:4px}</style></head><body>"+
+    "<h1>Отчёт по домашнему заданию</h1>"+
+    "<div class='m'>Тема: "+esc(TOPIC)+" · подготовка к ЦТ/ЦЭ, 11 класс</div>"+
+    "<div class='m'>Ученик: <b>"+esc(name)+"</b> · сдано: "+esc(now.toLocaleString("ru-RU"))+
+    " · время работы: около "+mins+" мин</div>"+
+    "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)</h2>"+
+    "<table><tr><th>№</th><th>Задача</th><th>Ответ ученика</th><th>Верный ответ</th>"+
+    "<th>Итог</th><th>Попыток</th><th>Подсказок</th></tr>"+rows+"</table>"+
+    "<h2>Тренажёры</h2><table><tr><th>Тренажёр</th><th>Верных</th><th>Статус</th></tr>"+trRows+"</table>"+
+    (pics ? "<h2>Фото решений</h2>"+pics : "<p class='m'>Фото решений не прикреплены.</p>")+
+    "<script type='application/json' id='result-data'>"+
+    JSON.stringify(data).replace(/</g,"\\u003c")+"<\/script></body></html>";
+  var stamp = now.getDate()+"-"+(now.getMonth()+1);
+  return {
+    html: html, name: name,
+    file: "Отчёт_"+FILEKEY+"_"+name.replace(/\s+/g,"_")+"_"+stamp+".html",
+    caption: name+" · "+TOPIC+" · "+okN+" из "+TASKS.length+
+             " ("+Math.round(okN/TASKS.length*100)+"%)"
+  };
+}
+
+document.getElementById("send").addEventListener("click", function(){
+  var note = document.getElementById("repnote");
+  var miss = gateCheck();
+  if(miss.length){
+    note.className = "meta bad-note";
+    note.innerHTML = "Перед отправкой: " + miss.join("; ") + ".";
+    return;
+  }
+  note.className = "meta";
+  var r = buildReport();
+  note.textContent = "Отправляю…";
+  var payload = {secret: SECRET, name: r.file, caption: r.caption,
+                 file: btoa(unescape(encodeURIComponent(r.html)))};
+  fetch(ENDPOINT, {method:"POST", mode:"no-cors", body: JSON.stringify(payload)})
+    .then(function(){
+      note.textContent = "Отправлено преподавателю." +
+        (photos.length ? "" : " Фото решений не приложены - если решал в тетради, приложи их и отправь ещё раз.");
+    })
+    .catch(function(){
+      note.textContent = "Не получилось отправить. Скачай файл кнопкой ниже и пришли его вручную.";
+    });
+});
+
+document.getElementById("report").addEventListener("click", function(){
+  var r = buildReport();
+  var blob = new Blob([r.html], {type:"text/html;charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = r.file;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  document.getElementById("repnote").textContent = "Файл скачан - он в папке загрузок.";
+});
+
+function BUILD_TRAINERS(){
+makeTrainer("conv", TR_ITEMS["conv"]);
+makeTrainer("mixed", TR_ITEMS["mixed"]);
+makeTrainer("order", TR_ITEMS["order"]);
+makeTrainer("cancel", TR_ITEMS["cancel"]);
+makeTrainer("factor", TR_ITEMS["factor"]);
+makeTrainer("tele", TR_ITEMS["tele"]);
+}
+function BUILD_GAPS(){
+makeGap("g2", GAP_DATA["g2"]);
+makeGap("g1", GAP_DATA["g1"]);
+makeGap("g3", GAP_DATA["g3"]);
+makeGap("g4", GAP_DATA["g4"]);
+}
+
+BUILD_TRAINERS();
+BUILD_GAPS();
+restore();
+bindSave();
+progress();
+SAVE.write();
+
+</script>
+</body>
+</html>
