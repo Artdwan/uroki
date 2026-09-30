@@ -1564,6 +1564,10 @@ SAVE.write();
     var d = {v:1, first:0, visits:0, sessions:[], totalMs:0, aways:0, awayMs:0,
              awayMax:0, long:0, blurs:0, quick:[], sent:null};
     if(!o || typeof o !== "object"){ d.first = Date.now(); return d; }
+    /* lost = чистка действительно выбросила число. Нужен, чтобы отличить
+       «времени не накопилось» от «время потеряно»: ноль в подписи должен
+       называться своим именем, а не чужим. Не переживает перезагрузку. */
+    d.lost = false;
     d.first = stamp(o.first) || Date.now();
     d.sent = stamp(o.sent) || null;
     d.visits = Math.round(pos(o.visits, 1e4));
@@ -1573,6 +1577,7 @@ SAVE.write();
     d.awayMax = pos(o.awayMax, DAY);
     d.long = Math.round(pos(o.long, 1e4));
     d.blurs = Math.round(pos(o.blurs, 1e5));
+    if((+o.totalMs && !d.totalMs) || (+o.awayMs && !d.awayMs)) d.lost = true;
     if(d.awayMax > d.awayMs) d.awayMax = d.awayMs;
     if(!d.aways){ d.awayMs = 0; d.awayMax = 0; }
     d.quick = Array.isArray(o.quick) ? o.quick.slice(0, 40).map(String) : [];
@@ -1688,15 +1693,16 @@ SAVE.write();
       M.sent = Date.now(); save();
       var p = [];
       p.push(dev());
+      var none = M.lost ? "время не сохранилось" : "меньше минуты";
       var tot = dur(M.totalMs), ses = dur(sessionMs);
-      p.push("заходов " + M.visits + ", всего " + (tot || "время не сохранилось") +
+      p.push("заходов " + M.visits + ", всего " + (tot || none) +
              (ses ? " (этот заход " + ses + ")" : ""));
       p.push("открыл " + hhmm(M.first) + ", сдал " + hhmm(M.sent));
       var aw = "отлучек " + M.aways;
       if(M.aways){
         var t = dur(M.awayMs);
         aw += t ? " (" + t + ", дольше всего " + (dur(M.awayMax) || t) + ")"
-                : " (время отлучек не сохранилось)";
+                : (M.lost ? " (время отлучек не сохранилось)" : " (совсем короткие)");
       }
       if(M.long) aw += ", плюс " + M.long + " " +
         plural(M.long, "долгий перерыв", "долгих перерыва", "долгих перерывов");
