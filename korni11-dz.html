@@ -212,20 +212,171 @@ details[open] summary{margin-bottom:8px}
   .card{padding:14px 12px}
   .fx{font-size:18px;line-height:1.8}
 }
+
+/* ---------- золотая тема 10-11 ---------- */
+:root{
+  --bg:#100a06; --card:#1b120b; --nest:#241710; --field:#140d08;
+  --ink:#fbf1e2; --muted:#b09a7d; --line:#40291a;
+  --acc:#ffa51f; --acc-soft:#241710; --terra:#f0693c;
+  --ok:#5fd98a; --ok-soft:#14241a; --bad:#ff6b52; --bad-soft:#2a1511;
+  --warn-soft:#241710;
+}
+@media (prefers-color-scheme: light){
+  :root{
+    --bg:#100a06; --card:#1b120b; --nest:#241710; --field:#140d08;
+    --ink:#fbf1e2; --muted:#b09a7d; --line:#40291a;
+    --acc:#ffa51f; --acc-soft:#241710; --terra:#f0693c;
+    --ok:#5fd98a; --ok-soft:#14241a; --bad:#ff6b52; --bad-soft:#2a1511;
+    --warn-soft:#241710;
+  }
+}
+body{
+  background:var(--bg); color:var(--ink);
+  font:18px/1.6 "Iowan Old Style","Palatino Linotype","Book Antiqua",Georgia,
+       "Noto Serif","Times New Roman",serif;
+}
+.wrap{max-width:820px;padding:0 16px 72px}
+h1,h2,h3,h4{font-weight:600;letter-spacing:.2px}
+.card{background:var(--card);border-color:var(--line);border-radius:4px;padding:22px 20px}
+.top{border-top:none}
+input[type=text],.gap input.gi,.trnum input{background:var(--field);border-color:var(--line);color:var(--ink)}
+input[type=text]:focus{border-color:var(--acc)}
+button{background:var(--nest);border-color:var(--line);color:var(--ink);border-radius:3px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#1a1008;font-weight:700}
+button:hover{border-color:var(--acc)}
+th{background:var(--nest);color:var(--acc)}
+summary{color:var(--acc)}
+details{background:var(--nest);border-color:var(--line)}
+
+/* шапка */
+.gphead{padding:26px 0 18px;border-bottom:1px solid var(--line);margin-bottom:6px}
+.gphead .kick{font-size:13px;letter-spacing:2.4px;text-transform:uppercase;color:var(--terra);
+  margin-bottom:10px}
+.gphead h1{font-size:34px;line-height:1.15;margin:0}
+.gphead .l2{display:block;font-size:20px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--acc);margin-top:8px;font-weight:600}
+.gphead .sub{color:var(--muted);font-size:16px;margin-top:12px}
+
+/* полоса прогресса */
+.gpbar{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;
+  border:1px solid var(--line);border-left:3px solid var(--acc);background:var(--card);
+  padding:10px 14px;margin:14px 0;font-size:15px;color:var(--muted)}
+.gpbar b{color:var(--acc);font-weight:700;letter-spacing:1.4px;text-transform:uppercase;font-size:13px}
+.gpbar .pc{color:var(--ink);font-weight:700}
+
+/* части и разделы */
+.part{display:flex;align-items:center;gap:14px;margin:34px 0 10px}
+.part .rn{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--terra);
+  white-space:nowrap}
+.part .tt{font-size:22px;color:var(--acc);letter-spacing:1px;white-space:nowrap}
+.part .ln{flex:1;height:1px;background:var(--line)}
+.sech{display:flex;align-items:baseline;gap:12px;margin:0 0 12px}
+.sech h2{margin:0;font-size:22px}
+.sech .ln{flex:1;height:1px;background:var(--line);transform:translateY(-4px)}
+.sech .nt{color:var(--muted);font-size:14px;text-align:right;max-width:46%}
+
+/* блоки теории */
+.def{background:var(--nest);border-color:var(--line);border-left:3px solid var(--acc);border-radius:3px}
+.def .n{color:var(--acc);letter-spacing:2px;text-transform:uppercase;font-size:12px}
+.rule{background:var(--nest);border-color:var(--line);border-left:3px solid var(--terra);border-radius:3px}
+.rule .n{color:var(--terra);letter-spacing:2px;text-transform:uppercase;font-size:12px}
+.note{background:var(--nest);border:1px solid var(--line);border-left:3px solid var(--terra);
+  border-radius:3px;color:var(--ink)}
+.ex{background:var(--nest);border-color:var(--line);border-radius:3px}
+.fx{background:var(--field);border-color:var(--line);border-radius:3px;color:var(--acc);
+  font-weight:600;font-size:22px}
+.sol .fx,.ex .fx,.err .fx{color:var(--ink);font-weight:500}
+.fbox{background:var(--nest);border-color:var(--line);border-radius:3px}
+.fbox>b{color:var(--acc);letter-spacing:1.2px;font-size:15px}
+.good{color:var(--ok)} .bad{color:var(--bad)}
+.tohw{font-size:17px;color:var(--acc);letter-spacing:1px}
+.tohw span{color:var(--muted);letter-spacing:0}
+
+/* задачи */
+.task{background:var(--card);border-color:var(--line);border-radius:3px}
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{color:var(--acc);font-variant-numeric:tabular-nums;letter-spacing:1px}
+.lvl{border-color:var(--line);color:var(--muted);border-radius:2px}
+.inrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0 2px}
+.inrow .keys{margin:0}
+.inrow input[type=text]{flex:1 1 150px;max-width:320px;margin:0}
+.hint{background:var(--nest);border:1px solid var(--line);border-radius:3px}
+.opt{background:var(--nest);border-color:var(--line);border-radius:3px}
+.opt.sel{border-color:var(--acc);background:var(--field)}
+.aim{color:var(--muted)}
+.steps-list li::before{background:var(--acc);color:#1a1008}
+
+/* тренажёры, пропуски, поиск ошибки */
+.tr{background:var(--card);border-color:var(--line);border-radius:3px}
+.trhead b{color:var(--acc);letter-spacing:1px}
+.tropt{background:var(--nest);border-color:var(--line);color:var(--ink);border-radius:3px;
+  font-family:inherit}
+.tropt.sel{border-color:var(--acc);background:var(--field)}
+.tropt.right{border-color:var(--ok);background:var(--ok-soft)}
+.tropt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.trmsg .why{color:var(--muted)}
+.trdone{background:var(--field);border:1px solid var(--line);color:var(--acc)}
+.gap{background:var(--card);border-color:var(--line);border-radius:3px}
+.err{background:var(--card);border-color:var(--line);border-left:3px solid var(--terra);border-radius:3px}
+.err .n{color:var(--terra);letter-spacing:2px;text-transform:uppercase;font-size:12px}
+.err ol li{background:var(--nest);border-color:var(--line);border-radius:3px}
+.err ol li.sel{border-color:var(--acc);background:var(--field)}
+.err ol li.right{border-color:var(--ok);background:var(--ok-soft)}
+.err ol li.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.err ol li::before{color:var(--muted);letter-spacing:1.4px;text-transform:uppercase}
+
+/* чертежи остаются листом бумаги */
+.fig svg,.trfig svg,.pk svg{background:#fff;border:1px solid var(--line);border-radius:3px}
+
+.bar{background:var(--card);border-top:1px solid var(--line)}
+.thumb select{background:var(--field);border-color:var(--line);color:var(--ink)}
+.sheet{background:var(--card)}
+
+@media (max-width:420px){
+  body{font-size:17px}
+  .gphead h1{font-size:27px}
+  .gphead .l2{font-size:16px;letter-spacing:2px}
+  .part .tt{font-size:19px}
+  .sech h2{font-size:19px}
+  .sech .nt{display:none}
+  .fx{font-size:19px}
+}
+@media (max-width:340px){
+  .gphead h1{font-size:24px}
+  .part{gap:8px}
+  .part .rn{letter-spacing:1.6px}
+}
+
+@media print{
+  :root{
+    --bg:#ffffff; --card:#ffffff; --nest:#ffffff; --field:#ffffff;
+    --ink:#16181d; --muted:#4a4a4a; --line:#c9c9c9;
+    --acc:#8a5a10; --acc-soft:#ffffff; --terra:#8a3a20;
+    --ok:#137a45; --bad:#b3261e; --warn-soft:#ffffff;
+  }
+  body{background:#fff;color:#16181d}
+  .sheet{background:#fff}
+  .sheet .fbox{background:#fff;border:1px solid #c9c9c9}
+  .sheet .fx{background:#fff;border:1px solid #c9c9c9;color:#16181d}
+  .gphead,.gpbar,.part,.sech{display:none !important}
+}
 </style>
 </head>
 <body>
 <div class="wrap">
+<div class="gphead"><div class="kick">День 4 · тема 4.04</div><h1>Корни<span class="l2">квадратный корень</span></h1><div class="sub">Математика · подготовка к ЦТ и ЦЭ · 11 класс</div></div>
+<div class="gpbar" id="gpbar"><b>Выполнено</b><span class="pc" id="gpbar-pc">0 %</span><span id="gpbar-txt">задачи 0 из 0</span></div>
 <div class="card top">
-<h1>Корни. Квадратный корень</h1>
-<div class="meta">Математика · подготовка к ЦТ/ЦЭ · 11 класс · день 4 · тема 4.04</div>
 <label class="f" for="name">Имя и фамилия</label>
 <input type="text" id="name" placeholder="напиши, как в журнале" autocapitalize="words" spellcheck="false">
 <div class="note" style="margin-top:14px"><b>Как работать.</b> Почти всё в этой теме сводится к двум мыслям: <b>корень n-й степени делит показатель на n</b> и <b>корень произведения - это произведение корней</b>. Остальное - следствия.<br>- под корнем сначала раскладывай на множители, и только потом считай;<br>- большие квадраты не возводи: почти всегда там разность квадратов;<br>- следи за чётностью корня: из отрицательного числа квадратный корень не берут.<br><b>Формат ответа:</b> число - <b>15</b>, <b>-3</b>, <b>0,5</b>. Если в ответе остаётся корень, пиши его знаком с клавиатуры под полем: <b>2√3</b>. Приближённые значения (1,73 вместо √3) не принимаются.</div>
 <div class="row" style="margin-top:12px"><button class="sm" id="reset" type="button">Начать заново</button><span class="meta">работа сохраняется сама - можно закрыть страницу и вернуться</span></div>
 </div>
-<div class="card"><h2>Памятка</h2>
-<p class="meta">Сюда возвращайся, когда застрял.</p><div class="fgrid">
+<div class="part"><span class="rn">Часть I</span><span class="tt">Памятка</span><span class="ln"></span></div>
+<div class="card">
+<div class="sech"><h2>Что держать под рукой</h2><span class="ln"></span><span class="nt">сюда возвращайся, когда застрял</span></div>
+<div class="fgrid">
 <div class="fbox"><b>Определение</b><div class="s"><span class="rt">√<span>a</span></span> = b, если b² = a и b ≥ 0. Подкоренное выражение тоже неотрицательно: <span class="rt">√<span>−4</span></span> не существует.</div></div>
 <div class="fbox"><b>Корень из квадрата</b><div class="s"><span class="rt">√<span>a²</span></span> = |a|. Поэтому <span class="rt">√<span>(−5)²</span></span> = 5, а не −5.</div></div>
 <div class="fbox"><b>Степень под корнем</b><div class="s"><sup>n</sup><span class="rt">√<span>a<sup>mn</sup></span></span> = a<sup>m</sup>: корень n-й степени делит показатель на n. <span class="rt">√<span>10⁶</span></span> = 10³, <sup>5</sup><span class="rt">√<span>10¹⁰</span></span> = 10².</div></div>
@@ -235,8 +386,9 @@ details[open] summary{margin-bottom:8px}
 <div class="fbox"><b>Вынести и внести</b><div class="s"><span class="rt">√<span>8</span></span> = <span class="rt">√<span>4·2</span></span> = 2<span class="rt">√<span>2</span></span><br>5<span class="rt">√<span>2</span></span> = <span class="rt">√<span>5²·2</span></span> = <span class="rt">√<span>50</span></span></div></div>
 <div class="fbox"><b>Дробная степень</b><div class="s"><sup>n</sup><span class="rt">√<span>a<sup>m</sup></span></span> = a<sup>m/n</sup>. 16<sup>3/4</sup> = 2³ = 8, 8<sup>2/3</sup> = 2² = 4.</div></div>
 </div></div>
+<div class="part"><span class="rn">Часть II</span><span class="tt">Теория, разборы и задачи</span><span class="ln"></span></div>
 <div class="card">
-<h2>1. Квадратный корень: определение и степени</h2>
+<div class="sech"><h2>1. Квадратный корень: определение и степени</h2><span class="ln"></span><span class="nt"></span></div>
 <div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>Квадратным корнем из числа a называется такое число b, что b² = a, причём a ≥ 0 и b ≥ 0. Квадратный корень извлекают <b>только из неотрицательных</b> чисел, и сам он <b>неотрицателен</b>.</div><div class="fx"><span class="rt">√<span>9</span></span> = 3, т.к. 3² = 9 &nbsp;·&nbsp; <span class="rt">√<span>100</span></span> = 10 &nbsp;·&nbsp; <span class="rt">√<span>0,25</span></span> = 0,5</div><div class="rule"><div class="n">ГЛАВНАЯ ЛОВУШКА</div><b><span class="rt">√<span>a²</span></span> = |a|, а не a.</b> <span class="rt">√<span>(−5)²</span></span> = <span class="rt">√<span>25</span></span> = 5. Под корнем сначала считаем, и знак минус там исчезает.</div><div class="rule"><div class="n">ПРАВИЛО</div><b>Главное наблюдение.</b> При извлечении квадратного корня показатель степени <b>уменьшается в два раза</b>.</div><div class="fx"><span class="rt">√<span>10⁶</span></span> = 10³ &nbsp;·&nbsp; <span class="rt">√<span>10⁴</span></span> = 10² &nbsp;·&nbsp; <span class="rt">√<span>x⁸</span></span> = x⁴ (x ≥ 0)</div><div class="ex"><h3>Пример 1. <span class="rt">√<span>121 · 10⁴</span></span></h3><div class="step">Корень произведения = произведение корней.</div><div class="step"><span class="rt">√<span>121</span></span> = 11, <span class="rt">√<span>10⁴</span></span> = 100.</div><div class="fx">11 · 100 = 1100</div><div class="step mini">Перемножать 121·10000 = 1210000 и потом искать корень из семизначного числа - лишняя работа и лишний шанс ошибиться.</div></div>
 <div class="tohw">Тренажёр: квадратный корень<span>Отвечай до конца - результат уходит в отчёт.</span></div>
 <div class="tr" id="tr_rsq" data-title="квадратный корень"></div>
@@ -244,7 +396,7 @@ details[open] summary{margin-bottom:8px}
 <div id="tasks1"></div>
 </div>
 <div class="card">
-<h2>2. Корни n-й степени и знаки</h2>
+<div class="sech"><h2>2. Корни n-й степени и знаки</h2><span class="ln"></span><span class="nt"></span></div>
 <div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>Корнем n-й степени из числа a называется такое число b, что bⁿ = a. Обозначение: <sup>n</sup><span class="rt">√<span>a</span></span>. Для квадратного корня показатель 2 не пишут.</div><div class="rule"><div class="n">ПРАВИЛО</div><b>Чётная степень:</b> и подкоренное выражение, и результат <b>неотрицательны</b>. <sup>4</sup><span class="rt">√<span>16</span></span> = 2, а <sup>4</sup><span class="rt">√<span>−16</span></span> не существует.<br><b>Нечётная степень:</b> подкоренное может быть любого знака, и знак корня <b>совпадает</b> со знаком подкоренного. <sup>3</sup><span class="rt">√<span>−27</span></span> = −3.</div><div class="fx"><sup>3</sup><span class="rt">√<span>8</span></span> = 2 &nbsp;·&nbsp; <sup>3</sup><span class="rt">√<span>1000</span></span> = 10 &nbsp;·&nbsp; <sup>5</sup><span class="rt">√<span>243</span></span> = 3 &nbsp;·&nbsp; <sup>7</sup><span class="rt">√<span>10²¹</span></span> = 10³</div><div class="ex"><h3>Пример 2. Степень делится на показатель корня</h3><div class="step"><sup>3</sup><span class="rt">√<span>10⁶</span></span> = 10², потому что 6 : 3 = 2.</div><div class="step"><sup>3</sup><span class="rt">√<span>x³⁰</span></span> = x¹⁰, <sup>4</sup><span class="rt">√<span>x¹⁶</span></span> = x⁴.</div><div class="step mini">Проверка: возведи ответ в степень корня и сравни с подкоренным. (10²)³ = 10⁶ - сходится.</div></div><div class="rule"><div class="n">ГЛАВНАЯ ЛОВУШКА</div><span class="rt">√<span>−4</span></span> не существует, но <sup>3</sup><span class="rt">√<span>−4</span></span> существует. Перед тем как извлекать корень, всегда смотри на его чётность.</div>
 <div class="tohw">Тренажёр: корни n-й степени<span>Отвечай до конца - результат уходит в отчёт.</span></div>
 <div class="tr" id="tr_rnth" data-title="корни n-й степени"></div>
@@ -252,7 +404,7 @@ details[open] summary{margin-bottom:8px}
 <div id="tasks2"></div>
 </div>
 <div class="card">
-<h2>3. Несколько корней подряд</h2>
+<div class="sech"><h2>3. Несколько корней подряд</h2><span class="ln"></span><span class="nt"></span></div>
 <p>Если из числа последовательно извлекают два корня, это всегда можно заменить одним корнем.</p><div class="ex"><h3>Пример 3. Как это увидеть</h3><div class="step"><span class="rt">√<span><span class="rt">√<span>x⁴</span></span></span></span> = <span class="rt">√<span>x²</span></span> = x (при x ≥ 0).</div><div class="step">С другой стороны <sup>4</sup><span class="rt">√<span>x⁴</span></span> = x. Значит два квадратных корня подряд - это корень четвёртой степени.</div><div class="fx"><sup>n</sup><span class="rt">√<span><sup>m</sup><span class="rt">√<span>a</span></span></span></span> = <sup>mn</sup><span class="rt">√<span>a</span></span></div><div class="step mini">Показатели <b>перемножаются</b>, а не складываются. Три квадратных корня подряд дают корень восьмой степени, а не шестой.</div></div><div class="ex"><h3>Пример 4. <sup>4</sup><span class="rt">√<span><sup>5</sup><span class="rt">√<span>x⁶⁰</span></span></span></span></h3><div class="step">1. Общий показатель корня: 4 · 5 = 20.</div><div class="step">2. Значит это <sup>20</sup><span class="rt">√<span>x⁶⁰</span></span>.</div><div class="step">3. Показатель степени делим на показатель корня: 60 : 20 = 3.</div><div class="fx">Ответ: x³</div><div class="step mini">Удобный способ проверки - сократить дробь 60/20 = 3. Степень и показатель корня всегда сокращаются как обычная дробь.</div></div>
 <div class="tohw">Тренажёр: корни подряд<span>Отвечай до конца - результат уходит в отчёт.</span></div>
 <div class="tr" id="tr_rseq" data-title="корни подряд"></div>
@@ -261,7 +413,7 @@ details[open] summary{margin-bottom:8px}
 <div id="tasks3"></div>
 </div>
 <div class="card">
-<h2>4. Произведение, частное и вынесение множителя</h2>
+<div class="sech"><h2>4. Произведение, частное и вынесение множителя</h2><span class="ln"></span><span class="nt"></span></div>
 <div class="fx"><sup>n</sup><span class="rt">√<span>ab</span></span> = <sup>n</sup><span class="rt">√<span>a</span></span> · <sup>n</sup><span class="rt">√<span>b</span></span> &nbsp;&nbsp;·&nbsp;&nbsp; <sup>n</sup><span class="rt">√<span><span class="frac"><span>a</span><span>b</span></span></span></span> = <span class="frac"><span><sup>n</sup><span class="rt">√<span>a</span></span></span><span><sup>n</sup><span class="rt">√<span>b</span></span></span></span></div><div class="rule"><div class="n">ГЛАВНАЯ ЛОВУШКА</div>Для <b>суммы</b> корней формулы не существует. <span class="rt">√<span>9</span></span> + <span class="rt">√<span>16</span></span> = 3 + 4 = 7, а <span class="rt">√<span>9 + 16</span></span> = <span class="rt">√<span>25</span></span> = 5. Это разные числа, и путать их - типовая ошибка.</div><div class="rule"><div class="n">ПРАВИЛО</div><b>Вынесение множителя.</b> Если корень не извлекается, разложи подкоренное на множители так, чтобы из одного из них корень извлекался.</div><div class="fx"><span class="rt">√<span>8</span></span> = <span class="rt">√<span>4 · 2</span></span> = 2<span class="rt">√<span>2</span></span> &nbsp;·&nbsp; <span class="rt">√<span>1000</span></span> = <span class="rt">√<span>100 · 10</span></span> = 10<span class="rt">√<span>10</span></span> &nbsp;·&nbsp; <span class="rt">√<span>0,27</span></span> = <span class="rt">√<span>0,09 · 3</span></span> = 0,3<span class="rt">√<span>3</span></span></div><div class="ex"><h3>Пример 5. <span class="rt">√<span>500</span></span> · <span class="rt">√<span>5</span></span></h3><div class="step">Способ 1: объединяем под один корень. 500 · 5 = 2500, <span class="rt">√<span>2500</span></span> = 50.</div><div class="step">Способ 2: выносим множитель. <span class="rt">√<span>500</span></span> = 10<span class="rt">√<span>5</span></span>, тогда 10<span class="rt">√<span>5</span></span>·<span class="rt">√<span>5</span></span> = 10·5 = 50.</div><div class="step mini">Оба пути законны. Первый короче, когда произведение даёт полный квадрат; второй - когда надо привести ответ к виду k<span class="rt">√<span>m</span></span>.</div></div>
 <div class="tohw">Тренажёр: произведение и вынесение<span>Отвечай до конца - результат уходит в отчёт.</span></div>
 <div class="tr" id="tr_rmul" data-title="произведение и вынесение"></div>
@@ -270,7 +422,7 @@ details[open] summary{margin-bottom:8px}
 <div id="tasks4"></div>
 </div>
 <div class="card">
-<h2>5. Внесение множителя и дробные степени</h2>
+<div class="sech"><h2>5. Внесение множителя и дробные степени</h2><span class="ln"></span><span class="nt"></span></div>
 <div class="rule"><div class="n">ПРАВИЛО</div><b>Внесение под корень.</b> Множитель возводят в степень, равную показателю корня.</div><div class="fx">5<span class="rt">√<span>2</span></span> = <span class="rt">√<span>5² · 2</span></span> = <span class="rt">√<span>50</span></span> &nbsp;·&nbsp; 2<sup>3</sup><span class="rt">√<span>2</span></span> = <sup>3</sup><span class="rt">√<span>2³ · 2</span></span> = <sup>3</sup><span class="rt">√<span>16</span></span> &nbsp;·&nbsp; x<span class="rt">√<span>x</span></span> = <span class="rt">√<span>x³</span></span></div><div class="def"><div class="n">ОПРЕДЕЛЕНИЕ</div>Корень удобно записывать дробной степенью: <sup>n</sup><span class="rt">√<span>a<sup>m</sup></span></span> = a<sup>m/n</sup>. Показатель степени идёт в числитель, показатель корня - в знаменатель.</div><div class="fx"><sup>4</sup><span class="rt">√<span>5³</span></span> = 5<sup>3/4</sup> &nbsp;·&nbsp; <sup>3</sup><span class="rt">√<span>5</span></span> = 5<sup>1/3</sup> &nbsp;·&nbsp; <span class="rt">√<span>5</span></span> = 5<sup>1/2</sup></div><p>После такой записи работают все обычные свойства степеней: при умножении показатели складываются, при делении вычитаются, при возведении в степень перемножаются.</p><div class="ex"><h3>Пример 6. 16<sup>3/4</sup></h3><div class="step">1. Приводим основание к двойке: 16 = 2⁴.</div><div class="step">2. (2⁴)<sup>3/4</sup> = 2<sup>4 · 3/4</sup> = 2³.</div><div class="fx">Ответ: 8</div><div class="step mini">Через корень было бы <sup>4</sup><span class="rt">√<span>16³</span></span> = <sup>4</sup><span class="rt">√<span>4096</span></span> - тот же ответ, но с четырёхзначным числом под корнем. Приведение к общему основанию почти всегда короче.</div></div><div class="ex"><h3>Пример 7. <sup>3</sup><span class="rt">√<span>9</span></span> · <sup>3</sup><span class="rt">√<span>24</span></span></h3><div class="step">Корни одной степени объединяем: <sup>3</sup><span class="rt">√<span>9 · 24</span></span> = <sup>3</sup><span class="rt">√<span>216</span></span>.</div><div class="fx">216 = 6³, значит ответ 6</div><div class="step mini">По отдельности ни <sup>3</sup><span class="rt">√<span>9</span></span>, ни <sup>3</sup><span class="rt">√<span>24</span></span> не извлекаются. Это подсказка: их и задумано объединить.</div></div>
 <div class="tohw">Тренажёр: внесение и дробные степени<span>Отвечай до конца - результат уходит в отчёт.</span></div>
 <div class="tr" id="tr_rpow" data-title="внесение и дробные степени"></div>
@@ -279,7 +431,7 @@ details[open] summary{margin-bottom:8px}
 <div id="tasks5"></div>
 </div>
 <div class="card">
-<h2>6. Приёмы вычислений под корнем</h2>
+<div class="sech"><h2>6. Приёмы вычислений под корнем</h2><span class="ln"></span><span class="nt"></span></div>
 <div class="rule"><div class="n">ПРАВИЛО</div>Главное правило: <b>под корнем сначала раскладываем, потом считаем</b>. Большие квадраты в задачах почти никогда не нужно возводить - там прячется разность квадратов.</div><div class="ex"><h3>Пример 8. <span class="rt">√<span>37² − 12²</span></span></h3><div class="step">1. Под корнем разность квадратов: (37 − 12)(37 + 12).</div><div class="step">2. Это 25 · 49 - оба множителя полные квадраты.</div><div class="fx"><span class="rt">√<span>25</span></span> · <span class="rt">√<span>49</span></span> = 5 · 7 = 35</div><div class="step mini">Если бы посчитали 1369 − 144 = 1225, пришлось бы искать корень из 1225 вручную. Разложение экономит и время, и нервы.</div></div><div class="ex"><h3>Пример 9. Корень внутри корня</h3><div class="step">Вычислить <sup>3</sup><span class="rt">√<span>29 + <span class="rt">√<span>(27 + 22) · 25</span></span></span></span>.</div><div class="step">1. Внутри: 27 + 22 = 49, значит <span class="rt">√<span>49 · 25</span></span> = <span class="rt">√<span>49</span></span>·<span class="rt">√<span>25</span></span> = 35.</div><div class="step">2. Под кубическим корнем 29 + 35 = 64.</div><div class="fx"><sup>3</sup><span class="rt">√<span>64</span></span> = 4</div><div class="step mini">Красивое число под внешним корнем (64) - признак, что всё посчитано верно. Если там получилось что-то вроде 63, ищи ошибку внутри.</div></div><div class="rule"><div class="n">ГЛАВНАЯ ЛОВУШКА</div>Ещё один рабочий приём: полезно помнить квадраты до 25 и степени двойки до 2¹⁰ = 1024. Тогда корни «узнаются» сразу, а не подбираются.</div>
 <div class="tohw">Тренажёр: приёмы вычислений (дополнительный)<span>Дополнительный: для отправки работы он не нужен.</span></div>
 <div class="tr" id="tr_rtr" data-title="приёмы вычислений (дополнительный)"></div>
@@ -287,6 +439,7 @@ details[open] summary{margin-bottom:8px}
 <div class="tohw">Задание 6<span>Приёмы счёта: раскладываем, а не возводим в квадрат.</span></div>
 <div id="tasks6"></div>
 </div>
+<div class="part"><span class="rn">Часть III</span><span class="tt">Шпаргалка и сдача</span><span class="ln"></span></div>
 <div class="card sheet"><h2>Шпаргалка</h2>
 <p class="meta" style="font-size:14px">Печатается отдельно на один лист A4: Ctrl+P (⌘+P) → печать.</p>
 <h4>Определения и знаки</h4><div class="fgrid"><div class="fbox"><b>Квадратный</b><div class="s"><span class="rt">√<span>a</span></span> = b ⟺ b² = a, a ≥ 0, b ≥ 0<br><span class="rt">√<span>a²</span></span> = |a|</div></div><div class="fbox"><b>n-я степень</b><div class="s">чётный n: всё ≥ 0<br>нечётный n: знак любой, совпадает с подкоренным<br><sup>3</sup><span class="rt">√<span>−27</span></span> = −3</div></div><div class="fbox"><b>Степень под корнем</b><div class="s"><sup>n</sup><span class="rt">√<span>a<sup>mn</sup></span></span> = a<sup>m</sup><br><span class="rt">√<span>10⁶</span></span> = 10³ · <sup>5</sup><span class="rt">√<span>10¹⁰</span></span> = 10²</div></div><div class="fbox"><b>Корни подряд</b><div class="s"><sup>n</sup><span class="rt">√<span><sup>m</sup><span class="rt">√<span>a</span></span></span></span> = <sup>mn</sup><span class="rt">√<span>a</span></span><br>показатели перемножаются</div></div><div class="fbox"><b>Произведение</b><div class="s"><sup>n</sup><span class="rt">√<span>ab</span></span> = <sup>n</sup><span class="rt">√<span>a</span></span>·<sup>n</sup><span class="rt">√<span>b</span></span><br><sup>n</sup><span class="rt">√<span><span class="frac"><span>a</span><span>b</span></span></span></span> = <span class="frac"><span><sup>n</sup><span class="rt">√<span>a</span></span></span><span><sup>n</sup><span class="rt">√<span>b</span></span></span></span><br>для суммы формулы нет</div></div><div class="fbox"><b>Вынести / внести</b><div class="s"><span class="rt">√<span>8</span></span> = 2<span class="rt">√<span>2</span></span> · <span class="rt">√<span>0,27</span></span> = 0,3<span class="rt">√<span>3</span></span><br>5<span class="rt">√<span>2</span></span> = <span class="rt">√<span>50</span></span> · x<span class="rt">√<span>x</span></span> = <span class="rt">√<span>x³</span></span></div></div><div class="fbox"><b>Дробная степень</b><div class="s"><sup>n</sup><span class="rt">√<span>a<sup>m</sup></span></span> = a<sup>m/n</sup><br>16<sup>3/4</sup> = 2³ = 8 · 8<sup>2/3</sup> = 4</div></div><div class="fbox"><b>Помнить</b><div class="s">квадраты до 25² = 625<br>2¹⁰ = 1024 · 3⁵ = 243 · 5⁴ = 625</div></div></div><h4>Порядок работы</h4><p>1) проверь чётность корня и знак подкоренного; 2) разложи подкоренное на множители; 3) сократи показатель степени с показателем корня; 4) вынеси, что извлекается; 5) большие квадраты не возводи - ищи разность квадратов.</p><h4>Где теряют баллы</h4><p><span class="rt">√<span>a²</span></span> = a вместо |a| · <span class="rt">√<span>a + b</span></span> = <span class="rt">√<span>a</span></span> + <span class="rt">√<span>b</span></span> · сложение показателей корней вместо умножения · извлечение чётного корня из отрицательного числа · приближённые значения вместо точных.</p>
@@ -579,7 +732,7 @@ function makeErr(id, data){
 var state = {};
 TASKS.forEach(function(t){
   state[t.id] = {tries:0, hints:0, done:false, ok:false, given:"", sel:null,
-                 t0:0, secs:0, ai:false};
+                 t0:0, secs:0, qn:false};
   var box = document.getElementById("tasks"+(t.blk||"1")) || document.getElementById("tasks1");
   var el = document.createElement("div");
   el.className = "task"; el.id = "t"+t.id;
@@ -600,8 +753,8 @@ TASKS.forEach(function(t){
   body += '<div class="row" style="margin-top:10px">'+
           '<button class="pri sm chk" type="button">Проверить</button>'+
           '<button class="sm hnt" type="button">Подсказка</button></div>'+
-          '<div class="aim"><input type="checkbox" id="ai'+t.id+'">'+
-          '<label for="ai'+t.id+'">решал с ИИ, калькулятором или подсмотрел готовое</label></div>'+
+          '<div class="aim"><input type="checkbox" id="qn'+t.id+'">'+
+          '<label for="qn'+t.id+'">по этой задаче остались вопросы - разобрать на занятии</label></div>'+
           '<div class="hints"></div><div class="verdict"></div><div class="sol"></div>';
   el.innerHTML = body;
   box.appendChild(el);
@@ -634,8 +787,8 @@ TASKS.forEach(function(t){
     inp.addEventListener("focus", touchTask);
     inp.addEventListener("input", function(){ touchTask(); SAVE.touch(); });
   }
-  el.querySelector("#ai"+t.id).addEventListener("change", function(ev){
-    state[t.id].ai = ev.target.checked; SAVE.touch(true);
+  el.querySelector("#qn"+t.id).addEventListener("change", function(ev){
+    state[t.id].qn = ev.target.checked; SAVE.touch(true);
   });
   el.querySelector(".chk").addEventListener("click", function(){ check(t.id); });
   el.querySelector(".hnt").addEventListener("click", function(){ hint(t.id); });
@@ -736,7 +889,7 @@ var SAVE = (function(){
       var s = state[t.id];
       var live = (t.type === "choice") ? (s.sel||"") : ((document.getElementById("in"+t.id)||{}).value || "");
       tasks[t.id] = {given:s.given, live:live, sel:s.sel, tries:s.tries, hints:s.hints,
-                     done:s.done, ok:s.ok, secs:s.secs, ai:s.ai};
+                     done:s.done, ok:s.ok, secs:s.secs, qn:s.qn};
     });
     var trs = {};
     Object.keys(window.TRAPI).forEach(function(k){ trs[k] = window.TRAPI[k].get(); });
@@ -797,7 +950,7 @@ function restore(){
       var st = state[t.id];
       st.given = saved.given||""; st.tries = saved.tries||0; st.hints = saved.hints||0;
       st.done = !!saved.done; st.ok = !!saved.ok; st.sel = saved.sel||null;
-      st.secs = saved.secs||0; st.ai = !!saved.ai;
+      st.secs = saved.secs||0; st.qn = !!saved.qn;
       var el = document.getElementById("t"+t.id);
       if(t.type === "choice"){
         if(st.sel){
@@ -809,8 +962,8 @@ function restore(){
         var inp = document.getElementById("in"+t.id);
         if(inp) inp.value = saved.live || saved.given || "";
       }
-      var aib = document.getElementById("ai"+t.id);
-      if(aib) aib.checked = st.ai;
+      var qb = document.getElementById("qn"+t.id);
+      if(qb) qb.checked = st.qn;
       var hb = el.querySelector(".hints");
       for(var i=0;i<st.hints && i<t.hints.length;i++) drawHint(hb, t, i);
       paintTask(t, st);
@@ -907,7 +1060,7 @@ function buildReport(){
   var now = new Date();
   var mins = Math.max(1, Math.round((Date.now()-started)/60000));
   var okN = TASKS.filter(function(t){return state[t.id].ok;}).length;
-  var aiN = TASKS.filter(function(t){return state[t.id].ai;}).length;
+  var qN = TASKS.filter(function(t){return state[t.id].qn;}).length;
   var trs = REQ_TR.concat(EXTRA_TR).map(function(id){
     var a = window.TRAPI[id] ? window.TRAPI[id].get() : {right:0, done:false};
     return {тренажёр:TR_NAMES[id], верно:a.right, всего:TR_SIZE[id], пройден:!!a.done,
@@ -919,17 +1072,17 @@ function buildReport(){
   });
   var data = {тип:"дз", предмет:"математика", тема:TOPIC,
     ученик:name, дата:now.toLocaleString("ru-RU"), минут:mins,
-    верно:okN, всего:TASKS.length, отмечено_ии:aiN,
+    верно:okN, всего:TASKS.length, с_вопросами:qN,
     задачи:[], тренажёры:trs, поиск_ошибки:errs};
   var rows = TASKS.map(function(t){
     var s = state[t.id];
     data.задачи.push({n:t.id, условие:t.text.replace(/<[^>]+>/g," "), ответ_ученика:s.given,
       верный_ответ:t.ans.map(d).join(" или "), верно:s.ok, попыток:s.tries, подсказок:s.hints,
-      секунд:s.secs, ии:s.ai, уровень:t.lvl, блок:t.blk});
+      секунд:s.secs, вопросы:s.qn, уровень:t.lvl, блок:t.blk});
     return "<tr><td>"+t.id+"</td><td style='text-align:left'>"+esc(t.text.replace(/<[^>]+>/g," "))+
       "</td><td>"+esc(s.given||"—")+"</td><td>"+esc(t.ans.map(d).join(" / "))+"</td><td>"+
       (s.ok?"верно":(s.given?"неверно":"не решал"))+"</td><td>"+s.tries+"</td><td>"+s.hints+
-      "</td><td>"+(s.secs||"—")+"</td><td>"+(s.ai?"да":"")+"</td></tr>";
+      "</td><td>"+(s.secs||"—")+"</td><td>"+(s.qn?"да":"")+"</td></tr>";
   }).join("");
   var trRows = trs.map(function(a){
     return "<tr><td style='text-align:left'>"+esc(a.тренажёр)+(a.обязательный?"":" (доп.)")+
@@ -943,10 +1096,10 @@ function buildReport(){
     return "<figure><img src='"+p.url+"'><figcaption>Фото "+(i+1)+
       (p.task?" — к задаче №"+p.task:"")+"</figcaption></figure>";
   }).join("");
-  var machine = "№\tверно\tпопыток\tподсказок\tсекунд\tИИ\tуровень\tблок\n" +
+  var machine = "№\tверно\tпопыток\tподсказок\tсекунд\tвопросы\tуровень\tблок\n" +
     TASKS.map(function(t){
       var s = state[t.id];
-      return [t.id, s.ok?1:0, s.tries, s.hints, s.secs||0, s.ai?1:0, t.lvl, t.blk].join("\t");
+      return [t.id, s.ok?1:0, s.tries, s.hints, s.secs||0, s.qn?1:0, t.lvl, t.blk].join("\t");
     }).join("\n");
   var html = "<!doctype html><html lang='ru'><head><meta charset='utf-8'>"+
     "<meta name='viewport' content='width=device-width,initial-scale=1'>"+
@@ -964,9 +1117,9 @@ function buildReport(){
     "<div class='m'>Ученик: <b>"+esc(name)+"</b> · сдано: "+esc(now.toLocaleString("ru-RU"))+
     " · время работы: около "+mins+" мин</div>"+
     "<h2>Итог: "+okN+" из "+TASKS.length+" ("+Math.round(okN/TASKS.length*100)+"%)"+
-    (aiN ? " · с ИИ или калькулятором отмечено задач: "+aiN : "")+"</h2>"+
+    (qN ? " · отмечено задач с вопросами: "+qN : "")+"</h2>"+
     "<table><tr><th>№</th><th>Задача</th><th>Ответ ученика</th><th>Верный ответ</th>"+
-    "<th>Итог</th><th>Попыток</th><th>Подсказок</th><th>Секунд</th><th>ИИ</th></tr>"+rows+"</table>"+
+    "<th>Итог</th><th>Попыток</th><th>Подсказок</th><th>Секунд</th><th>Вопросы</th></tr>"+rows+"</table>"+
     "<h2>Тренажёры</h2><table><tr><th>Тренажёр</th><th>Верных</th><th>Статус</th></tr>"+trRows+"</table>"+
     (errRows ? "<h2>Поиск ошибки</h2><table><tr><th>Блок</th><th>Выбран шаг</th><th>Верный шаг</th>"+
       "<th>Итог</th></tr>"+errRows+"</table>" : "")+
@@ -1041,6 +1194,41 @@ restore();
 bindSave();
 progress();
 SAVE.write();
+
+
+/* ---------- золотая тема: косметика ---------- */
+(function(){
+  function pad(n){ return (n < 10 ? "0" : "") + n; }
+  document.querySelectorAll(".task .tnum").forEach(function(el){
+    var m = String(el.textContent).match(/(\d+)/);
+    if(m) el.textContent = pad(parseInt(m[1], 10));
+  });
+  document.querySelectorAll(".task").forEach(function(t){
+    var keys = t.querySelector(":scope > .keys");
+    var inp = t.querySelector(":scope > input[type=text]");
+    if(!keys || !inp) return;
+    var row = document.createElement("div");
+    row.className = "inrow";
+    keys.parentNode.insertBefore(row, keys);
+    row.appendChild(keys); row.appendChild(inp);
+  });
+  var src = document.getElementById("progress");
+  var pc = document.getElementById("gpbar-pc");
+  var tx = document.getElementById("gpbar-txt");
+  if(src && pc && tx){
+    var sync = function(){
+      var m = String(src.textContent).match(/задачи:\s*(\d+)\s*из\s*(\d+)/);
+      if(!m) return;
+      var a = +m[1], b = +m[2];
+      pc.textContent = (b ? Math.round(a / b * 100) : 0) + " %";
+      tx.textContent = "задачи " + a + " из " + b +
+        (String(src.textContent).match(/тренажёры:\s*\d+\s*из\s*\d+/) || [""])[0]
+          .replace("тренажёры:", " · тренажёры ");
+    };
+    new MutationObserver(sync).observe(src, {childList:true, characterData:true, subtree:true});
+    sync();
+  }
+})();
 
 </script>
 </body>
