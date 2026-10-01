@@ -472,11 +472,33 @@ input[type=file]{color:var(--muted)}
   .sheet th,.sheet td{padding:4px 5px;font-size:12px}
   @page{size:A4;margin:12mm}
 }
+
+.jumphl{outline:2px solid #c99a2e;outline-offset:3px;border-radius:12px}
+a.jump{color:var(--acc,#c99a2e);text-decoration:underline;cursor:pointer}
+.dnote.warn{color:#b4541f}
+
+/* ---------- ворота имени ---------- */
+.gate2{position:fixed;inset:0;z-index:300;background:var(--bg);display:flex;
+  align-items:center;justify-content:center;padding:22px}
+.gate2.off{display:none}
+.gate2 .box{width:100%;max-width:440px;background:var(--card);
+  border:1px solid var(--line);border-radius:16px;padding:24px 22px}
+.gate2 .kick{color:var(--muted);font-size:13px;letter-spacing:.12em;
+  text-transform:uppercase}
+.gate2 h2{margin:10px 0 8px}
+.gate2 p{color:var(--muted);line-height:1.55;margin:0 0 16px}
+.gate2 label{display:block;font-size:14px;color:var(--muted);margin-bottom:6px}
+.gate2 input[type=text]{width:100%;max-width:none;margin:0 0 12px}
+.gate2 button{width:100%;min-height:50px;font-size:17px}
+.gate2 .err{color:var(--bad);font-size:15px;margin-top:10px;min-height:20px}
+body.gated{overflow:hidden}
+.rename2{background:none;border:none;color:var(--acc);font-size:14px;padding:0;
+  min-height:0;text-decoration:underline;cursor:pointer;margin-left:8px}
 </style>
 </head>
 <body>
 
-<div class="gate" id="gate"><div class="box"><div class="kicker">вход</div><h2>Как тебя записать?</h2><p>Имя нужно, чтобы работа пришла преподавателю подписанной. Пиши так, как записан в журнале.</p><label for="name">Имя и фамилия</label><input type="text" id="name" placeholder="например, Рома Ковалёв" autocapitalize="words" autocomplete="name" spellcheck="false"><button type="button" class="pri" id="gatego">Начать</button><div class="err" id="gateerr"></div></div></div>
+<div class="gate" id="gate"><div class="box"><div class="kicker">вход</div><h2>Как тебя записать?</h2><p>Имя нужно, чтобы работа пришла преподавателю подписанной. Пиши так, как записан в журнале.</p><label for="name">Имя и фамилия</label><input type="text" id="name" placeholder="Имя и фамилия" autocapitalize="words" autocomplete="name" spellcheck="false"><button type="button" class="pri" id="gatego">Начать</button><div class="err" id="gateerr"></div></div></div>
 <div class="wrap">
 <div class="gpanel"><div class="pts" id="gpts">0 XP</div><div class="chip mul one" id="gmul">×1</div><div class="who" id="gwho"></div><button type="button" class="rename" id="grename">сменить</button></div>
 <div class="card top">
@@ -789,6 +811,328 @@ function drawThumbs(){
 var ENDPOINT = "https://script.google.com/macros/s/AKfycbwqIhgBtFnoUik3N1Lh_YRhNeEFAjmXWSxBNoX1a_Yxu-2dEKHFwo4Dd5Ch9UTOHH-X/exec";
 var SECRET = "artteach2026";
 function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+/* ---------- чем сдают: телефон, планшет или компьютер ---------- */
+function devTag(){
+  try{
+    var ua = navigator.userAgent || "";
+    var uad = navigator.userAgentData || null;
+    var touch = (navigator.maxTouchPoints || 0) > 1;
+    var sw = (window.screen && screen.width) || 0;
+    var sh = (window.screen && screen.height) || 0;
+    var small = Math.min(sw || 9999, sh || 9999) <= 500;
+    var coarse = !!(window.matchMedia && matchMedia("(pointer: coarse)").matches);
+
+    var kind;
+    if(/iPhone|iPod|Windows Phone/i.test(ua)) kind = "телефон";
+    else if(/Android/i.test(ua)) kind = /Mobile/i.test(ua) ? "телефон" : "планшет";
+    else if(/iPad/i.test(ua) || (/Macintosh/i.test(ua) && touch)) kind = "планшет";
+    else if(uad && uad.mobile === true) kind = "телефон";
+    else if(small && coarse) kind = "телефон (режим ПК)";
+    else if(touch && coarse) kind = "планшет (режим ПК)";
+    else kind = "компьютер";
+
+    var os = /Android/i.test(ua) ? "Android"
+           : /iPhone|iPad|iPod/i.test(ua) ? "iOS"
+           : /Windows/i.test(ua) ? "Windows"
+           : /Macintosh|Mac OS X/i.test(ua) ? "macOS"
+           : /CrOS/i.test(ua) ? "ChromeOS"
+           : /Linux/i.test(ua) ? "Linux" : "ОС неизвестна";
+
+    var br = /YaBrowser/i.test(ua) ? "Яндекс"
+           : /Edg\//i.test(ua) ? "Edge"
+           : /OPR\/|Opera/i.test(ua) ? "Opera"
+           : /SamsungBrowser/i.test(ua) ? "Samsung"
+           : /Firefox\//i.test(ua) ? "Firefox"
+           : /Chrome\//i.test(ua) ? "Chrome"
+           : /Safari\//i.test(ua) ? "Safari" : "браузер неизвестен";
+
+    return "сдал с: " + kind + " · " + os + " · " + br +
+           " · экран " + sw + "×" + sh +
+           ", окно " + window.innerWidth + "×" + window.innerHeight;
+  }catch(e){ return "сдал с: устройство не определилось"; }
+}
+function devLine(){ return "\n" + devTag(); }
+
+
+/* ================= заходы, отлучки и ворота имени ================= */
+var VISITS = (function(){
+  var KEY = "arttich:meta:" + ((location.pathname.split("/").pop() || "dz")
+                               .replace(/\.html?$/i, ""));
+  var DAY = 864e5;          /* потолок для любой длительности */
+  var GONE_MAX = 216e5;     /* 6 часов: дольше - это перерыв, а не отлучка */
+  var T0 = 16e11;           /* раньше 2020 года метки быть не может */
+
+  function fresh(){
+    return {opens:0, first:0, last:0, act:0, list:[], away:0, awayMs:0,
+            awayMax:0, blur:0, long:0, back:[]};
+  }
+  /* коробку мог записать старый код или чужая вкладка: всё, что пришло
+     из хранилища, проверяем на вменяемость, иначе одна кривая запись
+     живёт в отчётах вечно */
+  function span(x){
+    return (typeof x === "number" && isFinite(x) && x > 0 && x <= DAY) ? x : 0;
+  }
+  function cnt(x){
+    return (typeof x === "number" && isFinite(x) && x > 0 && x <= 9999)
+           ? Math.round(x) : 0;
+  }
+  function stamp(x){
+    var now = Date.now();
+    return (typeof x === "number" && isFinite(x) && x > T0 && x < now + DAY)
+           ? x : 0;
+  }
+  function sane(o){
+    var b = fresh();
+    if(!o || typeof o !== "object") return b;
+    b.opens = cnt(o.opens); b.blur = cnt(o.blur);
+    b.away = cnt(o.away);   b.long = cnt(o.long);
+    b.first = stamp(o.first); b.last = stamp(o.last);
+    b.act = span(o.act);
+    b.awayMs = span(o.awayMs);
+    b.awayMax = Math.min(span(o.awayMax), b.awayMs);
+    if(!b.away){ b.awayMs = 0; b.awayMax = 0; }
+    b.list = (o.list instanceof Array ? o.list : []).slice(-12).map(span);
+    b.back = (o.back instanceof Array ? o.back : []).slice(0, 8)
+               .map(function(x){ return String(x).replace(/\D+/g, ""); })
+               .filter(function(x){ return x; });
+    return b;
+  }
+
+  var d = fresh(), dirty = false;
+  try{
+    var raw = localStorage.getItem(KEY);
+    if(raw){
+      var o = JSON.parse(raw);
+      if(o && o.v === 1 && o.d){
+        d = sane(o.d);
+        dirty = JSON.stringify(d) !== JSON.stringify(o.d);
+      }
+    }
+  }catch(e){}
+
+  var mark = Date.now(), hidAt = 0, backAt = 0, cur = 0, lastVis = 0;
+  var opened = false;
+  /* свой флаг видимости: событие visibilitychange приходит уже ПОСЛЕ смены
+     состояния, и время, которое ученик реально смотрел, иначе теряется */
+  var vis = document.visibilityState !== "hidden";
+
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify({v:1, d:d})); }catch(e){}
+  }
+  if(dirty) save();   /* кривые числа не должны дожить до следующего отчёта */
+  function tick(){
+    var now = Date.now();
+    if(vis){
+      var dt = now - mark;
+      if(dt > 0 && dt < 36e5){ d.act += dt; cur += dt; }
+    }
+    mark = now;
+  }
+  function open(){
+    if(opened) return;
+    opened = true;
+    var now = Date.now();
+    d.opens++;
+    if(!d.first) d.first = now;
+    d.last = now;
+    d.list.push(0);
+    if(d.list.length > 12) d.list.shift();
+    mark = now; cur = 0;
+    save();
+  }
+  function close(){
+    tick();
+    if(opened && d.list.length) d.list[d.list.length - 1] = cur;
+    d.last = Date.now();
+    save();
+  }
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", open);
+  } else { open(); }
+
+  /* отлучку засчитываем при ВОЗВРАЩЕНИИ: уход, из которого не вернулись,
+     это просто конец работы, а не отлучка */
+  document.addEventListener("visibilitychange", function(){
+    var now = Date.now();
+    lastVis = now;
+    if(document.visibilityState === "hidden"){
+      close();
+      vis = false; hidAt = now; save();
+    } else {
+      vis = true; mark = now;
+      if(hidAt > T0){            /* только настоящая метка ухода, не 0 */
+        var gone = now - hidAt;
+        if(gone > GONE_MAX){
+          d.long++;              /* закрыл ноутбук и вернулся в другой день */
+        } else if(gone > 1500){
+          d.away++;
+          d.awayMs = Math.min(d.awayMs + gone, DAY);
+          if(gone > d.awayMax) d.awayMax = gone;
+          backAt = now;
+        }
+        hidAt = 0;
+      }
+      save();
+    }
+  });
+  window.addEventListener("blur", function(){
+    if(Date.now() - lastVis < 600) return;   /* это то же сворачивание вкладки */
+    d.blur++; close();
+  });
+  window.addEventListener("pagehide", close);
+  window.addEventListener("beforeunload", close);
+  setInterval(close, 30000);
+
+  /* задача, закрытая сразу после возвращения на страницу */
+  document.addEventListener("click", function(ev){
+    var b = ev.target;
+    if(!b || !b.classList || !b.classList.contains("chk")) return;
+    if(!backAt || Date.now() - backAt > 90000) return;
+    var box = b.closest ? b.closest(".task") : null;
+    if(!box) return;
+    setTimeout(function(){
+      if(!box.classList.contains("ok")) return;
+      var n = box.querySelector(".tnum");
+      var num = n ? (n.textContent || "").replace(/\D+/g, "") : "";
+      if(num && d.back.indexOf(num) < 0 && d.back.length < 8){
+        d.back.push(num); save();
+      }
+      backAt = 0;
+    }, 60);
+  }, true);
+
+  return {open: open, close: close, data: d};
+})();
+
+function visitLine(){
+  try{
+    VISITS.close();
+    var d = VISITS.data;
+    /* последняя защита: в минуты попадает только вменяемое число,
+       иначе в подпись уедет голый Date.now() в минутах */
+    var mm = function(ms){
+      if(typeof ms !== "number" || !isFinite(ms) || ms <= 0) return 0;
+      return Math.min(1440, Math.round(ms / 60000));
+    };
+    var two = function(x){ return (x < 10 ? "0" : "") + x; };
+    var plural = function(n, a, b, c){
+      var x = Math.abs(n) % 100, y = x % 10;
+      if(x > 10 && x < 20) return c;
+      if(y > 1 && y < 5) return b;
+      if(y === 1) return a;
+      return c;
+    };
+    var when = function(ts){
+      if(!ts) return "-";
+      var t = new Date(ts);
+      return two(t.getDate()) + "." + two(t.getMonth() + 1) + " " +
+             two(t.getHours()) + ":" + two(t.getMinutes());
+    };
+    var mins = mm(d.act);
+    var each = mins >= 1 ? d.list.slice(-6).map(mm).join(", ") : "";
+    var s = "\n" + d.opens + " " + plural(d.opens, "заход", "захода", "заходов") +
+            (each ? " · по " + each + " мин" : "") +
+            " · всего " + mins + " мин" +
+            " · открыл " + when(d.first) + ", сдал " + when(Date.now());
+    s += "\nуходил со страницы и возвращался " + d.away + " " +
+         plural(d.away, "раз", "раза", "раз");
+    /* «всего 0 мин» - такая же бессмыслица, как миллион минут:
+       короткие отлучки печатаем в секундах, а потерянное время не выдумываем */
+    var dur = function(ms){
+      if(typeof ms !== "number" || !isFinite(ms) || ms <= 0) return "";
+      if(ms < 9e4) return Math.round(ms / 1000) + " с";
+      return mm(ms) + " мин";
+    };
+    if(d.away && d.awayMs){
+      s += ", всего " + dur(d.awayMs) + ", дольше всего " + dur(d.awayMax);
+    } else if(d.away){
+      s += ", время отлучек не сохранилось";
+    }
+    if(d.long) s += " · плюс " + d.long + " " +
+                    plural(d.long, "долгий перерыв", "долгих перерыва",
+                           "долгих перерывов") + " (больше 6 часов)";
+    s += " · окно теряло фокус " + d.blur + " " +
+         plural(d.blur, "раз", "раза", "раз");
+    if(d.back.length) s += "\nсразу после возвращения закрыты верно: " +
+                           d.back.join(", ");
+    return s;
+  }catch(e){ return ""; }
+}
+
+/* ---------- ворота имени: пока не введено, заданий не видно ---------- */
+(function(){
+  var NKEY = "arttich:name";
+  var g = document.getElementById("gate2");
+  if(!g) return;
+  var fld = document.getElementById("name");
+  var inp = document.getElementById("gname");
+  var err = document.getElementById("gerr");
+
+  function ok(v){ return (v || "").trim().replace(/\s+/g, " ").length >= 2; }
+  function put(v){
+    v = (v || "").trim().replace(/\s+/g, " ");
+    if(fld){
+      fld.value = v;
+      try{ fld.dispatchEvent(new Event("input", {bubbles:true})); }catch(e){}
+      try{ fld.dispatchEvent(new Event("change", {bubbles:true})); }catch(e){}
+    }
+    try{ localStorage.setItem(NKEY, v); }catch(e){}
+  }
+  function unlock(){
+    g.classList.add("off");
+    document.body.classList.remove("gated");
+  }
+  function show(){
+    g.classList.remove("off");
+    document.body.classList.add("gated");
+    setTimeout(function(){ try{ inp.focus(); }catch(e){} }, 60);
+  }
+  function go(){
+    if(!ok(inp.value)){
+      err.textContent = "Напиши имя и фамилию - хотя бы две буквы.";
+      return;
+    }
+    err.textContent = "";
+    put(inp.value);
+    unlock();
+  }
+  inp.addEventListener("keydown", function(e){ if(e.key === "Enter") go(); });
+  document.getElementById("ggo").addEventListener("click", go);
+
+  /* решаем сразу, чтобы задания не мелькали до проверки */
+  var saved = "";
+  try{ saved = localStorage.getItem(NKEY) || ""; }catch(e){}
+  if(ok(saved)){
+    put(saved);
+    unlock();
+  } else {
+    show();
+    /* память работы могла восстановить имя позже — тогда открываем без вопроса */
+    document.addEventListener("DOMContentLoaded", function(){
+      if(g.classList.contains("off")) return;
+      if(fld && ok(fld.value)){ put(fld.value); unlock(); }
+    });
+  }
+
+  /* «сменить» рядом с полем имени */
+  if(fld && fld.parentNode){
+    var lab = document.querySelector('label[for="name"]');
+    if(lab && !document.getElementById("rename2")){
+      var b = document.createElement("button");
+      b.type = "button"; b.id = "rename2"; b.className = "rename2";
+      b.textContent = "сменить";
+      b.addEventListener("click", function(){
+        try{ localStorage.removeItem(NKEY); }catch(e){}
+        if(fld) fld.value = "";
+        inp.value = ""; err.textContent = "";
+        show();
+      });
+      lab.appendChild(b);
+    }
+  }
+})();
+
 function buildReport(){
   var name = (document.getElementById("name").value || "").trim() || "без имени";
   var now = new Date();
@@ -856,7 +1200,7 @@ document.getElementById("send").addEventListener("click", function(){
     ok: r.ok,
     total: r.total,
     name: r.file,
-    caption: r.caption,
+    caption: r.caption + devLine() + visitLine(),
     file: btoa(unescape(encodeURIComponent(r.html)))
   };
   fetch(ENDPOINT, {method:"POST", mode:"no-cors", body: JSON.stringify(payload)})
@@ -1144,6 +1488,72 @@ var GDAYS = [{"n": 1, "title": "Перенос запятой", "tasks": [1, 2, 
 var GTOPIC = "пятидневка §5-§6 · 5 класс";
 var GKEY = "week5";
 
+
+/* ---------- ворота отправки как навигация ---------- */
+var JUMPT = null;
+window.trJump = function(id){
+  var el = document.getElementById(id);
+  if(!el) return;
+  try{ el.scrollIntoView({behavior: "smooth", block: "center"}); }
+  catch(e){ el.scrollIntoView(); }
+  el.classList.add("jumphl");
+  if(JUMPT) clearTimeout(JUMPT);
+  JUMPT = setTimeout(function(){ el.classList.remove("jumphl"); }, 2600);
+};
+function topOf(id){
+  var e = document.getElementById(id);
+  if(!e) return 1e9;
+  var r = e.getBoundingClientRect();
+  return r.top + (window.pageYOffset || document.documentElement.scrollTop || 0);
+}
+/* сколько верных нужно блоку, чтобы ворота его засчитали */
+window.trNeed = function(total){ return Math.ceil(total * 0.6); };
+/* список незакрытого в порядке страницы: задачи и блоки вперемешку */
+window.needItems = function(d, r){
+  var out = [], i, s;
+  for(i = 0; i < d.tasks.length; i++){
+    s = state[d.tasks[i]];
+    if(!s || !s.done) out.push({id: "t" + d.tasks[i], label: "задача " + d.tasks[i]});
+  }
+  for(i = 0; i < d.req.length; i++){
+    if(r.blocks.indexOf(d.req[i][1]) < 0) continue;
+    var id = d.req[i][0], lab = d.req[i][1], done = TRDONE[id];
+    if(done && done.total && done.ok < window.trNeed(done.total))
+      lab += " (верно " + done.ok + " из " + done.total +
+             ", нужно " + window.trNeed(done.total) + ")";
+    out.push({id: id, label: lab});
+  }
+  out.sort(function(a, b){ return topOf(a.id) - topOf(b.id); });
+  return out;
+};
+window.needLinks = function(list){
+  return list.map(function(x){
+    return '<a class="jump" data-jump="' + x.id + '">' + x.label + "</a>";
+  }).join(", ");
+};
+window.needJumpFirst = function(d, r, note){
+  var list = window.needItems(d, r);
+  if(!list.length) return false;
+  if(note){
+    note.className = "dnote warn";
+    note.innerHTML = "Уровень не сдаётся: не закрыто " + window.needLinks([list[0]]) +
+      " — страница уже перенесла туда." +
+      (list.length > 1 ? " Остальное перечислено выше." : "");
+  }
+  window.trJump(list[0].id);
+  return true;
+};
+document.addEventListener("click", function(ev){
+  var t = ev.target, a = null;
+  while(t && t !== document){
+    if(t.getAttribute && t.getAttribute("data-jump")){ a = t; break; }
+    t = t.parentNode;
+  }
+  if(!a) return;
+  ev.preventDefault();
+  window.trJump(a.getAttribute("data-jump"));
+}, true);
+
 /* ============ пятидневка: вход, XP, серия, уровни ============ */
 (function(){
 var PTS_FIRST = 10, PTS_SECOND = 6, PTS_MIN = 3, PTS_HINT = 2;
@@ -1334,14 +1744,12 @@ function paint(){
         need.innerHTML = '<b class="ok">Всё готово.</b> Жми кнопку: за сдачу ещё ' +
           (BONUS_DAY + (clean(d) ? BONUS_CLEAN : 0)) + " XP.";
       } else {
-        var parts = [];
-        if(r.left) parts.push("осталось задач: <b>" + r.left + "</b>");
-        if(r.blocks.length) parts.push("не пройдено: <b>" + r.blocks.join(", ") + "</b>");
-        need.innerHTML = parts.join("; ") + ".";
+        var list = window.needItems(d, r);
+        need.innerHTML = "Осталось закрыть: " + window.needLinks(list) + ".";
       }
     }
     if(btn){
-      btn.disabled = !(r.ok && !isDone(d.n) && op);
+      btn.disabled = isDone(d.n) || !op;
       btn.textContent = isDone(d.n) ? ("LV" + d.n + " сдан") : ("Сдать LV" + d.n);
     }
   }
@@ -1448,7 +1856,7 @@ function submitDay(n){
   note.textContent = "Отправляю…";
   var payload = {secret: SECRET, code: STUDENT_CODE, student: r.name,
                  topic: GTOPIC + " · LV" + n, ok: r.okN, total: d.tasks.length,
-                 name: r.file, caption: r.caption,
+                 name: r.file, caption: r.caption + devLine() + visitLine(),
                  file: btoa(unescape(encodeURIComponent(r.html)))};
   var finish = function(sentOk){
     if(G.done.indexOf(n) < 0) G.done.push(n);
@@ -1537,9 +1945,19 @@ function dressTrainers(){
     if(line2) line2.style.width = Math.round(answered / total * 100) + "%";
     if(st2){
       st2.className = "trstate" + (fin ? " done" : "");
-      st2.textContent = fin ? "пройден — можно перепройти для XP"
-        : (answered ? "осталось вопросов: " + (total - answered)
-                    : "нужно пройти до конца — это часть уровня");
+      var dn = TRDONE[id], need_ = window.trNeed(total);
+      var zach = !!(dn && dn.total && dn.ok >= window.trNeed(dn.total));
+      if(fin && !zach && dn){
+        st2.className = "trstate";
+        st2.textContent = "верно " + dn.ok + " из " + dn.total + " — для зачёта нужно " +
+          window.trNeed(dn.total) + ". Нажми «Пройти заново»: уровень без этого не сдать.";
+      } else {
+        st2.textContent = fin ? "пройден — можно перепройти для XP"
+          : (answered ? "осталось вопросов: " + (total - answered) +
+                        " · для зачёта нужно верных: " + need_
+                      : "нужно пройти до конца — это часть уровня. Для зачёта нужно верных: " +
+                        need_);
+      }
     }
     /* кнопка «Дальше» появилась — подведём к ней, если её не видно */
     var nb = tr.querySelector(".trbar button[data-next]");
@@ -1619,7 +2037,14 @@ window.trFinished = function(id, ok, tot){
   for(i = 0; i < GDAYS.length; i++){
     (function(n){
       var b = document.getElementById("send" + n);
-      if(b) b.addEventListener("click", function(){ submitDay(n); });
+      if(b) b.addEventListener("click", function(){
+        var dd = dayOf(n), rr = ready(dd);
+        if(!rr.ok){
+          window.needJumpFirst(dd, rr, document.getElementById("note" + n));
+          return;
+        }
+        submitDay(n);
+      });
     })(GDAYS[i].n);
   }
   var go = document.getElementById("gatego");
