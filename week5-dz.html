@@ -496,6 +496,10 @@ body.gated{overflow:hidden}
   min-height:0;text-decoration:underline;cursor:pointer;margin-left:8px}
 
 input.gp.shown{border-color:#8a8fa3;color:#cdd3e1;background:rgba(138,143,163,.12)}
+
+.day.part>.dhead>b::after{content:" · сдан неполным";font-weight:400;font-size:14px;
+  color:#b4541f;letter-spacing:0}
+button.pri.force{background:#b4541f;color:#fff;border-color:#b4541f}
 </style>
 </head>
 <body>
@@ -509,11 +513,14 @@ input.gp.shown{border-color:#8a8fa3;color:#cdd3e1;background:rgba(138,143,163,.1
   <div class="sub">пять уровней, 40 задач, 7 тренажёров, 3 блока с пропусками</div>
 <div class="lvbar" id="glv"><button type="button" data-lv="1">LV1</button><button type="button" data-lv="2">LV2</button><button type="button" data-lv="3">LV3</button><button type="button" data-lv="4">LV4</button><button type="button" data-lv="5">LV5</button></div><div class="lvline"><i id="glvline" style="width:0%"></i></div><div class="grank" id="grank"></div>
   <div class="note" style="margin-top:16px">
-    <b>Как это работает.</b> Работа разбита на пять уровней. Открыт только один —
-    следующий появится, когда сдашь текущий.
+    <b>Как это работает.</b> Работа разбита на пять уровней — по одному на день.
+    Открыты все сразу: отстал или хочешь вперёд — иди куда нужно.
     <div style="margin-top:8px">В каждом уровне: короткое напоминание правила, два
-    блока на отработку и восемь задач. Когда всё сделано, кнопка внизу оживает —
-    жмёшь её, и уровень уходит преподавателю.</div>
+    блока на отработку и восемь задач. Внизу уровня кнопка — по ней уровень уходит
+    преподавателю. Если что-то не доделано, первое нажатие покажет, что именно,
+    и перенесёт туда; нажмёшь ещё раз — уровень уйдёт как есть. Это не запрещено,
+    но за неполный уровень не будет +20 XP за сдачу. Доделаешь позже — они
+    начислятся.</div>
     <div style="margin-top:8px"><b>XP.</b> Задача с первой попытки — 10, со второй —
     6. Подсказка стоит 2. Тренажёр даёт по 2 за верный ответ, блок с пропусками 15.
     За сданный уровень +20, а если весь уровень без ошибок и без подсказок —
@@ -1638,7 +1645,8 @@ function dayOf(n){
   return null;
 }
 function isDone(n){ return G.done.indexOf(n) >= 0; }
-function open_(n){ return n <= 1 || isDone(n - 1); }
+function open_(n){ return true; }   /* замков нет: уровни открыты сразу */
+window.FORCE = {};                  /* уровни, где ученик подтвердил сдачу */
 function mul(){ return Math.min(MUL_MAX, 1 + Math.floor(G.streak / STREAK_STEP)); }
 
 /* ---------- XP ---------- */
@@ -1661,7 +1669,9 @@ function dayXP(d){
   var p = 0, i;
   for(i = 0; i < d.tasks.length; i++) p += (G.xp[d.tasks[i]] || 0);
   for(i = 0; i < d.req.length; i++) p += blockPts(d.req[i][0]);
-  if(isDone(d.n)) p += BONUS_DAY + (clean(d) ? BONUS_CLEAN : 0);
+  /* бонус за сдачу — только если уровень действительно закрыт;
+     доделает позже — бонус появится сам */
+  if(isDone(d.n) && ready(d).ok) p += BONUS_DAY + (clean(d) ? BONUS_CLEAN : 0);
   return p;
 }
 function totalXP(){
@@ -1778,8 +1788,7 @@ function paint(){
     var bs = bar.querySelectorAll("button"), cur = curLevel();
     for(i = 0; i < bs.length; i++){
       d = GDAYS[i];
-      bs[i].className = isDone(d.n) ? "ok"
-        : (open_(d.n) && d.n === cur ? "now" : (open_(d.n) ? "" : "lock"));
+      bs[i].className = isDone(d.n) ? "ok" : (d.n === cur ? "now" : "");
     }
   }
   var line = document.getElementById("glvline");
@@ -1798,11 +1807,10 @@ function paint(){
     el = document.getElementById("day" + d.n);
     if(!el) continue;
     var op = open_(d.n);
-    el.classList.toggle("lock", !op);
+    el.classList.toggle("lock", false);
     el.classList.toggle("done", isDone(d.n));
-    el.classList.toggle("now", op && !isDone(d.n));
-    var lk = document.getElementById("lock" + d.n);
-    if(lk && !op) lk.textContent = "Откроется, когда будет сдан LV" + (d.n - 1) + ".";
+    el.classList.toggle("now", !isDone(d.n) && d.n === curLevel());
+    el.classList.toggle("part", isDone(d.n) && !ready(d).ok);
     r = ready(d);
     var need = document.getElementById("need" + d.n);
     var btn = document.getElementById("send" + d.n);
@@ -1814,12 +1822,16 @@ function paint(){
           (BONUS_DAY + (clean(d) ? BONUS_CLEAN : 0)) + " XP.";
       } else {
         var list = window.needItems(d, r);
-        need.innerHTML = "Осталось закрыть: " + window.needLinks(list) + ".";
+        need.innerHTML = "Осталось закрыть: " + window.needLinks(list) +
+          ". Сдать можно и так, но за неполный уровень не будет +" + BONUS_DAY + " XP.";
       }
     }
     if(btn){
-      btn.disabled = isDone(d.n) || !op;
-      btn.textContent = isDone(d.n) ? ("LV" + d.n + " сдан") : ("Сдать LV" + d.n);
+      btn.disabled = isDone(d.n);
+      var frc = !r.ok && window.FORCE[d.n];
+      btn.className = "pri" + (frc ? " force" : "");
+      btn.textContent = isDone(d.n) ? ("LV" + d.n + " сдан")
+        : (frc ? ("Всё равно сдать LV" + d.n) : ("Сдать LV" + d.n));
     }
   }
   dressTrainers();
@@ -1850,11 +1862,21 @@ function zadach(n){
   else { w = "задач"; v = "ушли"; }
   return n + " " + w + " " + v + " со второй попытки";
 }
+function leftText(r){
+  var p = [];
+  if(r.left) p.push("не решено задач " + r.left);
+  if(r.blocks.length) p.push("не пройдено: " + r.blocks.join(", "));
+  return p.join(", ") || "всё закрыто";
+}
 function praise(d){
   var i, s, late = 0, hints = 0;
+  var rr = ready(d);
+  if(!rr.ok)
+    return ["warn", "Уровень отправлен не целиком: " + leftText(rr) +
+            ". Бонус за сдачу не начислен — доделаешь, и он появится."];
   for(i = 0; i < d.tasks.length; i++){
     s = state[d.tasks[i]];
-    if(!s) continue;
+    if(!s){ late++; continue; }
     if(!s.ok || s.tries > 1) late++;
     hints += s.hints || 0;
   }
@@ -1876,7 +1898,7 @@ function dayReport(d){
   for(i = 0; i < d.tasks.length; i++){
     id = d.tasks[i];
     t = TASKS.find(function(x){ return x.id === id; });
-    s = state[id];
+    s = state[id] || {ok: false, given: "", tries: 0, hints: 0};
     if(s.ok) okN++;
     rows += "<tr><td>" + id + "</td><td style='text-align:left'>" +
       esc2(t.text.replace(/<[^>]+>/g, "")) + "</td><td>" + esc2(s.given || "—") +
@@ -1899,7 +1921,8 @@ function dayReport(d){
     blocks += "<tr><td colspan='2' style='text-align:left'>" + esc2(bn) +
       "</td><td colspan='6'>" + esc2(info) + "</td></tr>";
   }
-  var xp = dayXP(d) + BONUS_DAY + (clean(d) ? BONUS_CLEAN : 0);
+  var rdy = ready(d);
+  var xp = dayXP(d) + (rdy.ok ? BONUS_DAY + (clean(d) ? BONUS_CLEAN : 0) : 0);
   var now = new Date();
   var html = "<!doctype html><html lang='ru'><head><meta charset='utf-8'>" +
     "<title>LV" + d.n + " — " + esc2(name) + "</title><style>" +
@@ -1916,7 +1939,8 @@ function dayReport(d){
   return {html: html, okN: okN, xp: xp, name: name,
           file: "LV" + d.n + "_" + name.replace(/\s+/g, "_") + ".html",
           caption: name + " · " + GTOPIC + " · LV" + d.n + " из " + GDAYS.length +
-            " · " + okN + " из " + d.tasks.length + " верно · " + xp + " XP"};
+            " · " + okN + " из " + d.tasks.length + " верно · " + xp + " XP" +
+            (rdy.ok ? "" : "\nсдан неполным: " + leftText(rdy))};
 }
 function submitDay(n){
   var d = dayOf(n), note = document.getElementById("note" + n);
@@ -1934,12 +1958,13 @@ function submitDay(n){
     G.sent[n] = sentOk ? Date.now() : 0;
     var pr = praise(d);
     note.className = "dnote " + pr[0];
+    var rr2 = ready(d);
     note.innerHTML = pr[1] + '<span class="dpts">+' +
-      (BONUS_DAY + (clean(d) ? BONUS_CLEAN : 0)) + " XP</span>" +
+      (rr2.ok ? BONUS_DAY + (clean(d) ? BONUS_CLEAN : 0) : 0) + " XP</span>" +
       (sentOk ? "" : "<br>Отправить не получилось — покажи страницу преподавателю " +
        "или отправь отчёт в конце недели.") +
-      (n < GDAYS.length ? "<br>LV" + (n + 1) + " открыт." :
-       "<br>Все пять уровней пройдены. Осталось отправить итоговый отчёт.");
+      (n < GDAYS.length ? "<br>Дальше LV" + (n + 1) + "." :
+       "<br>Все уровни сданы. Осталось отправить итоговый отчёт.");
     paint();
     try{ saveWork(); }catch(e){}
     var nx = document.getElementById("day" + (n + 1));
@@ -2114,8 +2139,20 @@ window.trFinished = function(id, ok, tot){
       var b = document.getElementById("send" + n);
       if(b) b.addEventListener("click", function(){
         var dd = dayOf(n), rr = ready(dd);
-        if(!rr.ok){
-          window.needJumpFirst(dd, rr, document.getElementById("note" + n));
+        if(!rr.ok && !window.FORCE[n]){
+          /* первый клик: показываем, что не закрыто, и переносим туда.
+             Отправка не запрещена — она уходит со второго клика. */
+          window.FORCE[n] = true;
+          window.needJumpFirst(dd, rr, null);
+          var nt = document.getElementById("note" + n);
+          if(nt){
+            nt.className = "dnote warn";
+            nt.innerHTML = "Не закрыто: " +
+              window.needLinks(window.needItems(dd, rr)) +
+              ". Перенёс к первому. Если доделывать не будешь — нажми кнопку ещё раз: " +
+              "уровень уйдёт как есть, без +" + BONUS_DAY + " XP за сдачу.";
+          }
+          paint();
           return;
         }
         submitDay(n);
