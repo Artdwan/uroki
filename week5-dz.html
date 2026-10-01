@@ -500,6 +500,11 @@ input.gp.shown{border-color:#8a8fa3;color:#cdd3e1;background:rgba(138,143,163,.1
 .day.part>.dhead>b::after{content:" · сдан неполным";font-weight:400;font-size:14px;
   color:#b4541f;letter-spacing:0}
 button.pri.force{background:#b4541f;color:#fff;border-color:#b4541f}
+/* раньше тусклая плитка значила «заперто»; замков больше нет,
+   поэтому обычная плитка должна выглядеть доступной */
+.lvbar button{color:var(--ink);border:1px solid var(--line);background:#1b2439}
+.lvbar button.ok.part{background:#2a1c10;color:#e8a44f;border-color:#b4541f}
+.lvbar button.lock{opacity:.55;color:var(--muted);border-color:transparent}
 </style>
 </head>
 <body>
@@ -1788,7 +1793,8 @@ function paint(){
     var bs = bar.querySelectorAll("button"), cur = curLevel();
     for(i = 0; i < bs.length; i++){
       d = GDAYS[i];
-      bs[i].className = isDone(d.n) ? "ok" : (d.n === cur ? "now" : "");
+      bs[i].className = isDone(d.n) ? (ready(d).ok ? "ok" : "ok part")
+        : (d.n === cur ? "now" : "");
     }
   }
   var line = document.getElementById("glvline");
@@ -2174,7 +2180,9 @@ window.trFinished = function(id, ok, tot){
     if(!el || el === lv) return;
     var n = parseInt(el.getAttribute("data-lv"), 10);
     var host = document.getElementById("day" + n);
-    if(host) host.scrollIntoView({behavior: "smooth", block: "start"});
+    if(!host) return;
+    host.scrollIntoView({behavior: "smooth", block: "start"});
+    if(window.trJump) window.trJump("day" + n);
   });
   dressTasks();
   dressTrainers();
