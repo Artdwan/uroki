@@ -579,7 +579,7 @@ body.homeview .card.top .lvbar{display:none}
 </head>
 <body>
 
-<div class="gate" id="gate"><div class="box"><div class="kicker">вход</div><h2>Как тебя записать?</h2><p>Имя нужно, чтобы работа пришла преподавателю подписанной. Пиши так, как записан в журнале.</p><label for="name">Имя и фамилия</label><input type="text" id="name" placeholder="например, Рома Ковалёв" autocapitalize="words" autocomplete="name" spellcheck="false"><button type="button" class="pri" id="gatego">Начать</button><div class="err" id="gateerr"></div></div></div>
+<div class="gate" id="gate"><div class="box"><div class="kicker">вход</div><h2>Как тебя записать?</h2><p>Имя нужно, чтобы работа пришла преподавателю подписанной.</p><label for="name">Имя и фамилия</label><input type="text" id="name" placeholder="например, Рома Ковалёв" autocapitalize="words" autocomplete="name" spellcheck="false"><label for="scode" class="sclab">Код из кабинета <span>— если есть: тогда работа будет видна на всех твоих устройствах</span></label><input type="text" id="scode" placeholder="можно не заполнять" autocapitalize="off" autocomplete="off" spellcheck="false"><div class="sccode" id="sccode"></div><div class="syncmsg" id="syncmsg"></div><button type="button" class="pri" id="gatego">Начать</button><div class="err" id="gateerr"></div></div></div>
 <div class="wrap">
 <div class="gpanel"><div class="pts" id="gpts">0 XP</div><div class="chip mul one" id="gmul">×1</div><div class="who" id="gwho"></div><button type="button" class="rename" id="grename">сменить</button><button type="button" class="gback" id="gback">← к уровням</button></div>
 <div class="card ghome" id="ghome"></div>
@@ -633,7 +633,7 @@ body.homeview .card.top .lvbar{display:none}
 <div class="card gfinal" id="gfinal"><h2>Итог недели</h2><div class="meta">Появится, когда будут сданы все четыре уровня.</div><div id="gsum"></div><div class="row" style="margin-top:14px"><button class="pri" id="send" disabled>Отправить всю неделю</button><button id="report">Скачать копию себе</button></div><div id="repnote" class="meta" style="margin-top:8px"></div></div>
 
 <div class="card">
-  <div class="savenote" id="savenote"></div>
+  <div class="savenote" id="savenote"></div><div id="syncnote"></div>
 </div>
 
 <div class="card">
@@ -655,7 +655,8 @@ body.homeview .card.top .lvbar{display:none}
 var CF = {};
 var STUDENT_CODE = (function(){
   try{ var m = /[#&?]code=([^&]+)/.exec(location.hash + location.search);
-       return m ? decodeURIComponent(m[1]) : ""; }catch(e){ return ""; }
+       if(m){ var c = decodeURIComponent(m[1]); try{ localStorage.setItem("arttich:code", c); }catch(e2){} return c; }
+       return localStorage.getItem("arttich:code") || ""; }catch(e){ return ""; }
 })();
 var TOPIC = "4 дня, § 7-§ 8: деление десятичных дробей (математика, 6 класс)";
 
@@ -1989,12 +1990,20 @@ function tryEnter(){
     return;
   }
   err.textContent = "";
+  try{ localStorage.setItem("arttich:name", (document.getElementById("name").value || "").trim()); }catch(e){}
+  var sc = document.getElementById("scode");
+  if(sc && sc.value.trim() && sc.value.trim() !== STUDENT_CODE){
+    try{ localStorage.setItem("arttich:code", sc.value.trim()); }catch(e){}
+    try{ saveWork(); }catch(e){}
+    location.reload(); return;
+  }
   hideGate();
   paint(); showHome();
   try{ saveWork(); }catch(e){}
 }
 function checkGate(){
   var nm = document.getElementById("name");
+  if(nm && !(nm.value || "").trim()){ try{ var cn = localStorage.getItem("arttich:name"); if(cn) nm.value = cn; }catch(e){} }
   if(nm && (nm.value || "").trim().length >= 2) hideGate();
   else showGate();
   paint(); showHome();
@@ -2333,6 +2342,88 @@ function saveWork(){
     saveNote(box.at);
   }catch(e){}
 }
+
+
+/* ---------- работа на всех устройствах: Google-скрипт кабинета, лист «Прогресс» ---------- */
+(function(){
+  var PAGE = "delweek6", META = SKEY_BASE + "~sync", RL = "arttich:delweek6:~rl";
+  var gm = document.getElementById("syncmsg"), cc = document.getElementById("sccode"), sc = document.getElementById("scode");
+  if(STUDENT_CODE){
+    if(sc){ sc.value = STUDENT_CODE; sc.style.display = "none"; var lb = document.querySelector(".sclab"); if(lb) lb.style.display = "none"; }
+    if(cc) cc.textContent = "Код ученика: " + STUDENT_CODE + " — работа сохраняется и на другие устройства.";
+  }
+  if(!STUDENT_CODE || !CAN_STORE || typeof fetch !== "function") return;
+  function rd(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+  var meta = {}; try{ meta = JSON.parse(rd(META) || "{}") || {}; }catch(e){ meta = {}; }
+  function wmeta(){ try{ localStorage.setItem(META, JSON.stringify(meta)); }catch(e){} }
+  function snap(){
+    var o = {}, i, k;
+    for(i = 0; i < localStorage.length; i++){
+      k = localStorage.key(i);
+      if(k && k.indexOf(SKEY_BASE) === 0 && k.indexOf("~") < 0) o[k] = localStorage.getItem(k);
+    }
+    return JSON.stringify(o);
+  }
+  function hash(s){ var h = 0, i; for(i = 0; i < s.length; i++){ h = (h * 31 + s.charCodeAt(i)) | 0; } return s.length + ":" + h; }
+  function note(t){ if(gm) gm.textContent = t; var n = document.getElementById("syncnote"); if(n) n.textContent = t; }
+  function call(body, keep){
+    body.action = "sync"; body.code = STUDENT_CODE; body.page = PAGE;
+    return fetch(ENDPOINT, {method: "POST", body: JSON.stringify(body), keepalive: !!keep})
+      .then(function(r){ return r.text(); })
+      .then(function(t){ var j = JSON.parse(t); if(!j || !j.ok) throw new Error((j && j.error) || "нет ответа"); return j; });
+  }
+  var cur = snap(), fresh = !meta.h && !meta.at, pulled = false;   /* fresh - на этом устройстве ещё не синхронизировали */
+  if(fresh){ meta.h = hash(cur); meta.mod = 0; wmeta(); }
+  else if(meta.h !== hash(cur)){ meta.mod = Date.now(); meta.h = hash(cur); wmeta(); }
+  var busy = false, lastTry = 0;
+  function push(keep){
+    if(busy && !keep) return;
+    if((meta.at || 0) >= (meta.mod || 0)) return;
+    busy = true; lastTry = Date.now();
+    var at = meta.mod, data = snap();
+    call({op: "save", at: at, data: data}, keep).then(function(j){
+      busy = false;
+      if(j.stale) return pull();            /* на сервере новее: другое устройство успело раньше */
+      meta.at = at; wmeta();
+      var d = new Date(); note("Сохранено и для других устройств: " + (d.getHours() < 10 ? "0" : "") + d.getHours() + ":" + (d.getMinutes() < 10 ? "0" : "") + d.getMinutes() + ".");
+    }).catch(function(){ busy = false; note("Нет связи с сервером — пока сохранено только на этом устройстве."); });
+  }
+  function apply(j){
+    var o = {}; try{ o = JSON.parse(j.data); }catch(e){ return false; }
+    var kill = [], i, k;
+    for(i = 0; i < localStorage.length; i++){ k = localStorage.key(i); if(k && k.indexOf(SKEY_BASE) === 0 && k.indexOf("~") < 0 && !(k in o)) kill.push(k); }
+    try{
+      kill.forEach(function(x){ localStorage.removeItem(x); });
+      for(k in o) localStorage.setItem(k, o[k]);
+    }catch(e){ return false; }
+    meta = {at: j.at, mod: j.at, h: hash(snap())}; wmeta();
+    return true;
+  }
+  function pull(){
+    note("Ищу твою работу на сервере…");
+    return call({op: "load"}).then(function(j){
+      pulled = true;
+      if(j.at && j.data && (fresh || j.at > (meta.mod || 0)) && hash(j.data) !== meta.h){
+        if(rd(RL) === String(j.at)){ note(""); return; }            /* защита от перезагрузки по кругу */
+        try{ localStorage.setItem(RL, String(j.at)); }catch(e){}
+        if(apply(j)){ note("Нашёл работу с другого устройства — открываю…"); wiping = true; location.reload(); }
+        return;
+      }
+      if(j.at && j.at >= (meta.mod || 0)){ meta.at = j.at; wmeta(); }
+      note(""); push();
+    }).catch(function(){ pulled = true; note("Нет связи с сервером — работа сохраняется только на этом устройстве."); });
+  }
+  pull();
+  setInterval(function(){
+    var c = snap(), h = hash(c);
+    if(h !== meta.h){ meta.h = h; meta.mod = Date.now(); wmeta(); }
+    if(pulled && (meta.mod || 0) > (meta.at || 0) && Date.now() - lastTry > 8000) push();
+  }, 3000);
+  function flush(){ if(!pulled) return; var c = snap(), h = hash(c); if(h !== meta.h){ meta.h = h; meta.mod = Date.now(); wmeta(); } push(true); }
+  document.addEventListener("visibilitychange", function(){ if(document.visibilityState === "hidden") flush(); });
+  window.addEventListener("pagehide", flush);
+  window.SYNCNOW = function(){ return flush(); };
+})();
 
 /* работу могли начать по другой ссылке: с кодом ученика или без него */
 function loadWork(){
