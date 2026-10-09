@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Построение сечений многогранников — урок, § 3, геометрия 10 класс</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --ink:#16181d; --muted:#5b6270;
+  --line:#dfe3ea; --acc:#2f6bd8; --acc-soft:#e8f0ff;
+  --ok:#137a45; --ok-soft:#e4f6ec; --bad:#b3261e; --bad-soft:#fdeceb;
+  --warn-soft:#fff6e0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#a3abb8;
+    --line:#2c313a; --acc:#7aa5f5; --acc-soft:#1e2838;
+    --ok:#5fd39a; --ok-soft:#162a20; --bad:#ff8a80; --bad-soft:#2c1b1a;
+    --warn-soft:#2a2415;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:800px;margin:0 auto;padding:16px 14px 60px}
+h1{font-size:26px;line-height:1.25;margin:0 0 6px}
+h2{font-size:21px;margin:0 0 12px}
+h3{font-size:17px;margin:18px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0}
+.top{border-top:4px solid var(--acc)}
+.meta{color:var(--muted);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+label.f{display:block;margin:10px 0 4px;color:var(--muted);font-size:14px}
+input[type=text]{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--card);color:var(--ink);width:100%;max-width:340px}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.sm{padding:7px 11px;min-height:38px;font-size:15px}
+button:active{transform:translateY(1px)}
+.f-formula{font-size:19px}
+.frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.15;margin:0 4px}
+.frac>span{display:block;padding:0 5px}
+.frac>span:first-child{border-bottom:1.5px solid currentColor}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:center;white-space:nowrap}
+th{background:var(--acc-soft);font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;color:var(--acc)}
+details[open] summary{margin-bottom:8px}
+.step{margin:6px 0}
+.note{background:var(--warn-soft);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:16px}
+.task{border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--card)}
+.fig{margin:12px 0;text-align:center}
+
+.nw{white-space:nowrap}
+.fig{text-align:center;margin:12px 0}
+.fig svg{width:100%;max-width:330px;height:auto;background:#fff;border-radius:10px;
+  border:1px solid var(--line)}
+.figrow{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  margin:12px 0}
+.figrow .fig{margin:0}
+.figrow .fig svg{max-width:100%}
+.fx{display:block;background:var(--acc-soft,var(--acc2,#e8f0ff));border:1px solid var(--line);
+  border-radius:10px;padding:11px 13px;margin:12px 0;text-align:center;font-size:20px;
+  line-height:2.1;font-weight:600;white-space:normal;overflow-wrap:break-word}
+.ex .fx,.zsol .fx{font-size:18px;margin:9px 0}
+.def{border:1px solid var(--line);border-left:4px solid #2f6bd8;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#eef3fb}
+.def .n{font-size:14px;color:#2f6bd8;font-weight:700;letter-spacing:.4px}
+.def>div+div{margin-top:4px}
+.rule2{border:1px solid var(--line);border-left:4px solid #c0397a;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdf0f6}
+.rule2 .n{font-size:14px;color:#a02a62;font-weight:700;letter-spacing:.4px}
+.hard{border:1px solid var(--line);border-left:4px solid #7a3fbf;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#f4efff}
+.hard .n{font-size:14px;color:#5f2ea0;font-weight:700;letter-spacing:.4px}
+.warn{border:1px solid var(--line);border-left:4px solid #b3261e;border-radius:10px;
+  padding:11px 13px;margin:11px 0;background:#fdecea}
+.warn .n{font-size:14px;color:#b3261e;font-weight:700;letter-spacing:.4px}
+@media (prefers-color-scheme:dark){.rule2{background:#2a1b23}.def{background:#18212f}
+  .hard{background:#221a33}.warn{background:#2a1618}}
+.ex{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;
+  background:var(--bg)}
+.ex h3{margin-top:0}
+.zad{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0;
+  background:var(--bg)}
+.zad .zh{font-weight:700;font-size:17px;margin-bottom:6px;color:var(--acc)}
+.zad .zh span{color:var(--muted);font-weight:400;font-size:15px}
+.zad .zt{font-size:17px;line-height:1.75}
+.zad ol,.zad ul{margin:7px 0 0;padding-left:22px}
+.zad li{margin:5px 0}
+.zs{margin-top:10px;border-top:1px dashed var(--line);padding-top:7px}
+.zs summary{cursor:pointer;color:var(--acc);font-weight:600;font-size:16px;
+  padding:5px 0;list-style:none}
+.zs summary::-webkit-details-marker{display:none}
+.zs summary::before{content:"▸ "}
+.zs[open] summary::before{content:"▾ "}
+.zsol{font-size:16px;line-height:1.7;padding-top:4px}
+.step{margin:7px 0}
+.step.mini,.mini,.small{color:var(--muted);font-size:15px}
+.tools{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.tools button{font-size:15px;padding:8px 13px;min-height:42px}
+.fr{display:inline-block;vertical-align:middle;text-align:center;margin:0 3px}
+.fr b{display:block;border-bottom:1.7px solid currentColor;padding:0 6px;font-weight:400;
+  white-space:nowrap}
+.fr i{display:block;font-style:normal;padding:0 6px;white-space:nowrap}
+.stol{width:100%;border-collapse:collapse;font-size:17px;margin:10px 0}
+.stol td{border:1px solid var(--line);padding:7px 9px}
+.stol td.r{text-align:right;font-variant-numeric:tabular-nums}
+@media (max-width:620px){
+  .stol,.stol tbody,.stol tr,.stol td{display:block;width:100%}
+  .stol{border-collapse:separate}
+  .stol tr{border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:5px 10px}
+  .stol td{border:none;padding:2px 0}
+  .stol td.r{text-align:left;color:var(--acc);font-weight:600}
+}
+.fgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));
+  margin:9px 0}
+.fbox{border:1px solid var(--line);border-radius:12px;padding:9px 12px 11px;
+  background:var(--bg)}
+.fbox h4{margin:0 0 3px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--acc);font-weight:700}
+.fbox p{margin:6px 0 0;line-height:1.6;font-size:16px}
+.fbox p.small{font-size:15px}
+.pam h3{font-size:18px;margin:18px 0 2px}
+.pam h3:first-of-type{margin-top:10px}
+.qq{margin:10px 0 0;padding-left:22px}
+.qq li{margin:6px 0}
+@media print{
+  .tools{display:none !important}
+  .zad{break-inside:avoid}
+}
+
+.task.ok{border-color:var(--ok);background:var(--ok-soft)}
+.task.bad{border-color:var(--bad);background:var(--bad-soft)}
+.tnum{font-weight:700;margin-right:6px}
+.lvl{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px;margin-left:6px}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+.keys button{padding:6px 10px;min-height:38px;font-size:16px;min-width:42px}
+.verdict{margin-top:10px;font-weight:600}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.hint{background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:16px}
+.bad-note{color:var(--bad);font-weight:600}
+.steps-list{margin:10px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.steps-list li{counter-increment:s;margin:8px 0;padding-left:34px;position:relative;font-size:16px}
+.steps-list li::before{content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;
+  border-radius:50%;background:var(--acc);color:#fff;font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.opt{display:block;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer}
+.opt.sel{border-color:var(--acc);background:var(--acc-soft)}
+.bar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.thumb{position:relative;width:110px}
+.thumb img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.thumb button{position:absolute;top:4px;right:4px;min-height:28px;padding:2px 8px;font-size:13px;
+  background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px}
+.thumb select{width:100%;margin-top:4px;font:inherit;font-size:13px;padding:4px;border-radius:6px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.sheet{background:var(--card)}
+@media print{
+  body{background:#fff}
+  .tools{display:none !important}
+  .card{border:none;box-shadow:none;padding:0;margin:0 0 12px}
+  .zad{break-inside:avoid;background:#fff}
+  .sheet{font-size:13px}
+  .sheet h2{font-size:18px}
+  .sheet th,.sheet td{padding:4px 5px;font-size:12px}
+  @page{size:A4;margin:12mm}
+}
+
+.s3d{margin:8px 0 6px;max-width:520px;margin-left:auto;margin-right:auto}
+.s3w{border:1px solid #2a3550;border-radius:12px;overflow:hidden;background:#0b1220}
+.s3c{display:block;touch-action:none;cursor:grab;margin:0 auto}
+.s3bar{display:flex;flex-wrap:wrap;gap:6px;padding:6px 8px;border-top:1px solid #1f2a40;justify-content:center}
+.s3b{min-width:44px;min-height:36px;border:1.5px solid #2a3550;background:#131b2c;color:#e7eefc;border-radius:999px;padding:4px 12px;font-size:15px;font-weight:600;cursor:pointer}
+.s3b:hover{border-color:#3fd2ff}
+.s3l::before{content:"⟲"}.s3r::before{content:"⟳"}.s3home::before{content:"как в книге"}
+.s3prev::before{content:"◀"}.s3next::before{content:"шаг ▶"}.s3reset::before{content:"сначала"}
+.s3next{border-color:#ffd23f;color:#ffd23f}
+.s3msg{padding:8px 10px 10px;font-size:15px;line-height:1.55;color:#cfd8ea;min-height:2.6em}
+.s3msg:empty{display:none}
+.s3ok{color:#5fd39a;font-weight:700}.s3bad{color:#ff8fa3;font-weight:700}
+.tcond:has(.s3d){position:static}
+.trq .s3d{margin-top:6px}
+@media print{.s3d{display:none}}
+
+.wrap{max-width:860px}
+.s3d{max-width:620px}
+.zad.dop{border-left:4px solid #7a3fbf}
+.zad.dop .zh{color:#5f2ea0}
+.tag{display:inline-block;font-size:13px;border-radius:20px;padding:1px 9px;margin-left:6px;
+  border:1px solid var(--line);color:var(--muted);font-weight:600;vertical-align:middle}
+.tag.dop{border-color:#7a3fbf;color:#5f2ea0}
+.tag.prof{border-color:#c0397a;color:#a02a62}
+.secpart{font-size:13px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);font-weight:700;margin:16px 0 4px}
+.algo{margin:8px 0 4px;padding-left:22px}.algo li{margin:6px 0}
+.sym{white-space:nowrap}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="card top">
+  <h1>Построение сечений многогранников</h1>
+  <div class="meta">Геометрия · 10 класс · § 3 · урок: сечение, след, метод следов в пирамиде и призме, сечение и вычисления</div>
+  <div class="note" style="margin-top:14px">
+    <b>Как работать.</b> Читаем порцию теории, разбираем пример на 3D-модели (кнопка «шаг ▶» ведёт построение по шагам),
+    потом решаем задания блока <b>в тетради, с рисунком</b> — и только после этого открываем решение.
+    <div style="margin-top:8px">Главная мысль: <b>для построения сечения достаточно построить общие точки граней многогранника
+    и секущей плоскости</b>. Соединяем отрезком только две точки одной грани; недостающую точку даёт <b>след</b> — продолжаем
+    прямую из секущей плоскости до пересечения с прямой ребра в той же плоскости.</div>
+    <div style="margin-top:8px">Запись решения: «Решение.», дальше строки «факты, поэтому вывод» со знаками ∈, ⊂, ∩.
+    В задачах на построение строки «Ответ» нет — построение заканчивается фразой «… — искомое сечение».</div>
+    <div style="margin-top:8px">Модель крутится пальцем или мышью и кнопками ⟲ ⟳, «как в книге» возвращает вид. В моделях заданий
+    на вычисление — режим «построй сам»: касайся двух вершин одной грани, проведётся сторона сечения.</div>
+    <div style="margin-top:8px">Задания с пометкой <b>«Дополнительно»</b> — после основной части. Тренажёров и отправки здесь нет: это урок.</div>
+  </div>
+  <div class="tools">
+    <button type="button" id="openall">Раскрыть все решения</button>
+    <button type="button" id="closeall">Свернуть все</button>
+  </div>
+</div>
+
+<div class='card'>
+<h2>1. Сечение многогранника. Главное правило</h2>
+<div class='def'><div class='n'>СЕЧЕНИЕ</div><div>Если одна из фигур — многогранник, а вторая — плоскость, то их взаимное расположение характеризует та часть многогранника, которая принадлежит рассматриваемой плоскости, или, иными словами, <b>сечение многогранника плоскостью</b>. Плоскость при этом называют <b>секущей плоскостью</b>.</div><div>Секущая плоскость пересекает поверхность многогранника по отрезкам, а сечением многогранника плоскостью является один или несколько многоугольников.</div></div>
+<div class='rule2'><div class='n'>ГЛАВНОЕ ПРАВИЛО</div><div><b>Для построения сечения многогранника достаточно построить общие точки его граней и секущей плоскости.</b></div><div>Две точки секущей плоскости, лежащие в одной грани, соединяем: по аксиоме 2 отрезок лежит и в секущей плоскости, и в грани — это сторона сечения. Точки разных граней не соединяем: такой отрезок идёт внутри многогранника.</div></div>
+<div class='ex'><h3>Пример 1</h3>Построим сечение треугольной пирамиды SABC плоскостью, проходящей через точки M, N и K на рёбрах SA, SB и SC.<div class='s3d ' data-s3d='ex1'></div><div class='step'>Секущая плоскость MNK имеет с плоскостью SAB две общие точки M и N, поэтому прямая MN принадлежит как секущей плоскости, так и плоскости SAB. Значит, отрезок MN — линия пересечения грани SAB с плоскостью MNK.</div><div class='step'>Рассуждая аналогично, получаем, что плоскость MNK пересекает грани SAC и SBC по отрезкам MK и NK соответственно.</div><div class='step'>Треугольник MNK — искомое сечение.</div></div>
+<div class='secpart'>Вопросы — устно</div>
+<div class='zad' id='z1'><div class='zh'>Задание 1<span> · сечение</span></div><div class='zt'>Какая фигура называется сечением многогранника? Какой фигурой может быть это сечение?</div><details class='zs'><summary>Показать решение</summary><div class='zsol'><div class='step'>Сечение многогранника плоскостью — та часть многогранника, которая принадлежит секущей плоскости.</div><div class='step'>Секущая плоскость пересекает поверхность многогранника по отрезкам, а сечением является один или несколько многоугольников.</div></div></details></div>
+<div class='zad' id='z2'><div class='zh'>Задание 2<span> · призма</span></div><div class='zt'>Каким может быть сечение плоскостью четырёхугольной призмы?</div><details class='zs'><summary>Показать решение</summary><div class='zsol'><div class='step'>У четырёхугольной призмы 6 граней: 2 основания и 4 боковые. Каждая сторона сечения лежит в своей грани, и в одной грани — не больше одной стороны.</div><div class='step'>Поэтому у сечения от 3 до 6 сторон: треугольник, четырёхугольник, пятиугольник, шестиугольник (примеры 4, 5, 6 ниже).</div></div></details></div>
+<div class='zad' id='z3'><div class='zh'>Задание 3<span> · пирамида</span></div><div class='zt'>Правда ли, что сечением пятиугольной пирамиды может быть: а) точка; б) отрезок; в) четырёхугольник; г) шестиугольник; д) семиугольник?</div><details class='zs'><summary>Показать решение</summary><div class='zsol'><div class='step'>а) Да, если плоскость имеет с пирамидой единственную общую точку — вершину. б) Да, если общая часть — ребро. Такая плоскость не проходит внутри пирамиды; сечение секущей плоскостью — многоугольник.</div><div class='step'>У пятиугольной пирамиды 6 граней (основание и 5 боковых), поэтому у сечения не больше 6 сторон.</div><div class='step'>в) Да. г) Да — плоскость пересекает все 6 граней. д) Нет: семи граней у пирамиды нет.</div></div></details></div>
+<div class='zad' id='z4'><div class='zh'>Задание 4<span> · призма</span></div><div class='zt'>Правда ли, что сечением пятиугольной призмы может быть: а) отрезок; б) четырёхугольник; в) шестиугольник; г) семиугольник; д) восьмиугольник?</div><details class='zs'><summary>Показать решение</summary><div class='zsol'><div class='step'>У пятиугольной призмы 7 граней (2 основания и 5 боковых), поэтому у сечения не больше 7 сторон.</div><div class='step'>а) Да, если общая часть плоскости и призмы — ребро. б) Да. в) Да. г) Да — плоскость пересекает все 7 граней. д) Нет.</div></div></details></div>
+<div class='zad' id='z5'><div class='zh'>Задание 5<span> · диагональное сечение</span></div><div class='zt'>Количество диагональных сечений четырёхугольной пирамиды равно: а) 1; б) 2; в) 3; г) 4.</div><details class='zs'><summary>Показать решение</summary><div class='zsol'><div class='step'>Диагональное сечение проходит через вершину пирамиды и диагональ основания (как в задаче 2 ниже: сечение QAC).</div><div class='step'>У четырёхугольника две диагонали, поэтому диагональных сечений два.</div><div class='fx'>Ответ: б) 2</div></div></details></div>
+</div>
+
+<div class='card'>
+<h2>2. Точка пересечения прямой и плоскости. Линия пересечения плоскостей</h2>
+<div class='def'><div class='n'>АКСИОМЫ</div><div><b>Аксиома 1.</b> Если три точки не лежат на одной прямой, то через них проходит единственная плоскость.</div><div><b>Аксиома 2.</b> Если две точки прямой лежат в плоскости, то каждая точка этой прямой принадлежит плоскости.</div><div><b>Аксиома 3.</b> Если две плоскости имеют общую точку, то они имеют и общую прямую, проходящую через эту точку.</div></div>
+<div class='rule2'><div class='n'>КАК НАЙТИ ТОЧКУ ПЕРЕСЕЧЕНИЯ ПРЯМОЙ С ПЛОСКОСТЬЮ</div><div>Ищем прямую, которая лежит в данной плоскости и <b>в одной плоскости с данной прямой</b>. Их точка пересечения и есть искомая: она лежит на прямой и в плоскости.</div><div>Две плоскости пересекаются по прямой, проходящей через две их общие точки (аксиома 3).</div></div>
+<div class='ex'><h3>Задача 3 из § 2</h3>Точки A и B — середины рёбер TZ и YZ пирамиды RTXYZ. Постройте: а) точку пересечения прямой AB и плоскости RXY; б) прямую, по которой пересекаются плоскости RAB и RXY.<div class='s3d ' data-s3d='z23'></div><div class='step'>Решение. а) A ∈ TZ, TZ ⊂ (TXY), поэтому A ∈ (TXY); B ∈ YZ, YZ ⊂ (TXY), поэтому B ∈ (TXY).</div><div class='step'>AB ⊂ (TXY) (аксиома 2).</div><div class='step'>XY ⊂ (TXY), поэтому AB ∩ XY = K, K ∈ XY и K ∈ AB.</div><div class='step'>XY ⊂ (RXY), поэтому K ∈ (RXY) и K = AB ∩ (RXY).</div><div class='step'>б) K ∈ (RXY) и R ∈ (RXY), поэтому KR ⊂ (RXY). K ∈ AB и AB ⊂ (RAB), поэтому K ∈ (RAB). K ∈ (RAB) и R ∈ (RAB), поэтому KR ⊂ (RAB).</div><div class='step'>KR ⊂ (RAB) и KR ⊂ (RXY), поэтому KR = (RAB) ∩ (RXY).</div></div>
+<div class='ex'><h3>Задача 4 из § 2</h3>Точки P, Q и R принадлежат соответственно рёбрам SA, SC и BC пирамиды SABCD. Постройте прямую, по которой плоскость PQR пересекает плоскость ABC.<div class='s3d ' data-s3d='z24'></div><div class='step'>Решение. Q ∈ SC и SC ⊂ (SBC), поэтому Q ∈ (SBC). R ∈ BC и BC ⊂ (SBC), поэтому R ∈ (SBC). По аксиоме 2 QR ⊂ (SBC).</div><div class='step'>QR ⊂ (SBC) и SB ⊂ (SBC), поэтому QR ∩ SB = K, K ∈ SB, SB ⊂ (SAB) и K ∈ (SAB).</div><div class='step'>P ∈ SA и SA ⊂ (SAB), поэтому P ∈ (SAB). K ∈ (SAB) и P ∈ (SAB), поэтому KP ⊂ (SAB).</div><div class='step'>KP ⊂ (SAB) и AB ⊂ (SAB), поэтому KP ∩ AB = M ∈ AB.</div><div class='step'>R ∈ BC и BC ⊂ (ABC), поэтому R ∈ (ABC); R ∈ (PQR); тогда R ∈ (ABC) ∩ (PQR).</div><div class='step'>M ∈ AB и AB ⊂ (ABC), поэтому M ∈ (ABC); M ∈ KP и KP ⊂ (PQR), поэтому M ∈ (PQR); тогда M ∈ (ABC) ∩ (PQR).</div><div class='step'>По аксиоме 3 (PQR) ∩ (ABC) = MR.</div></div>
+<div class='secpart'>Задания</div>
+<div class='zad' id='z6'><div class='zh'>Задание 6<span> · точка и прямая пересечения</span></div><div class='zt'>Точка M — внутренняя точка ребра AJ треугольной пирамиды AIJK, точка N лежит на луче AK за точкой K. Постройте: а) точку пересечения прямой MN с плоскостью IJK; б) прямую, по которой пересекаются плоскости IMN и IJK.<div class='s3d ' data-s3d='u44'></div></div><details class='zs'><summary>Показать решение</summary><div class='zsol'><div class='step'>Решение. а) M ∈ AJ и N ∈ AK, AJ ⊂ (AJK) и AK ⊂ (AJK), поэтому MN ⊂ (AJK) (аксиома 2).</div><div class='step'>JK ⊂ (AJK), поэтому MN ∩ JK = X.</div><div class='step'>JK ⊂ (IJK), поэтому X ∈ (IJK) и X = MN ∩ (IJK).</div><div class='step'>б) X ∈ MN и MN ⊂ (IMN), поэтому X ∈ (IMN); I ∈ (IMN). X ∈ (IJK) и I ∈ (IJK). Поэтому IX = (IMN) ∩ (IJK).</div></div></details></div>
+<div class='zad' id='z7'><div class='zh'>Задание 7<span> · призма</span></div><div class='zt'>Точки A и B — внутренние точки рёбер KM и KQ призмы KMOQK₁M₁O₁Q₁. Постройте: а) точку, в которой прямая AB пересекает плоскость M₁MO; б) прямую, по которой плоскость ABO₁ пересекает плоскость MOO₁.<div class='s3d ' data-s3d='u46'></div></div><details class='zs'><summary>Показать решение</summary><div class='zsol'><div class='step'>Решение. а) A ∈ KM и B ∈ KQ, KM ⊂ (KMO) и KQ ⊂ (KMO), поэтому AB ⊂ (KMO) (аксиома 2).</div><div class='step'>MO ⊂ (KMO), поэтому AB ∩ MO = X.</div><div class='step'>MO ⊂ (M₁MO), поэтому X ∈ (M₁MO) и X = AB ∩ (M₁MO).</div><div class='step'>б) X ∈ AB и AB ⊂ (ABO₁), поэтому X ∈ (ABO₁); X ∈ MO и MO ⊂ (MOO₁), поэтому X ∈ (MOO₁).</div><div class='step'>O₁ ∈ (ABO₁) и O₁ ∈ (MOO₁), поэтому XO₁ = (ABO₁) ∩ (MOO₁).</div></div></details></div>
+<div class='zad' id='z8'><div class='zh'>Задание 8<span> · параллелепипед</span></div><div class='zt'>Точки A, B, C являются серединами рёбер T₁U₁, U₁V₁, V₁V параллелепипеда TUVWT₁U₁V₁W₁. Постройте: а) точку, в которой прямая AB пересекает плоскость WW₁V₁; б) прямую, по которой плоскость ABC пересекает плоскость WW₁V₁.<div class='s3d ' data-s3d='u47'></div></div><details class='zs'><summary>Показать решение</summary><div class='zsol'><div class='step'>Решение. а) A ∈ T₁U₁ и B ∈ U₁V₁, поэтому AB ⊂ (T₁U₁V₁) (аксиома 2).</div><div class='step'>W₁V₁ ⊂ (T₁U₁V₁), поэтому AB ∩ W₁V₁ = X (продолжаем отрезки AB и W₁V₁ за точки B и V₁).</div><div class='step'>W₁V₁ ⊂ (WW₁V₁), поэтому X ∈ (WW₁V₁) и X = AB ∩ (WW₁V₁).</div><div class='step'>б) X ∈ AB, поэтому X ∈ (ABC); C ∈ (ABC). C ∈ VV₁ и VV₁ ⊂ (WW₁V₁), поэтому C ∈ (WW₁V₁).</div><div class='step'>X ∈ (WW₁V₁) и C ∈ (WW₁V₁), поэтому XC = (ABC) ∩ (WW₁V₁).</div></div></details></div>
+<div class='zad' id='z9'><div class='zh'>Задание 9<span> · пирамида</span></div><div class='zt'>Диагонали KM и LN основания KLMN пирамиды AKLMN пересекаются в точке O, точка B — внутренняя точка отрезка KO, а точка C лежит на луче LN за точкой N. Постройте: а) точку, в которой прямая BC пересекает плоскость ALM; б) прямую, по которой пересекаются плоскости ABC и ALM.<div class='s3d ' data-s3d='u48'></div></div><details class='zs'><summary>Показать решение</summary><div class='zsol'><div class='step'>Решение. а) B ∈ KO и KO ⊂ (KLM), поэтому B ∈ (KLM); C ∈ LN и LN ⊂ (KLM), поэтому C ∈ (KLM). BC ⊂ (KLM) (аксиома 2).</div><div class='step'>LM ⊂ (KLM), поэтому BC ∩ LM = X.</div><div class='step'>LM ⊂ (ALM), поэтому X ∈ (ALM) и X = BC ∩ (ALM).</div><div class='step'>б) X ∈ BC и BC ⊂ (ABC), поэтому X ∈ (ABC); A ∈ (ABC). X ∈ (ALM) и A ∈ (ALM). Поэтому AX = (ABC) ∩ (ALM).</div></div></details></div>
+</div>
+
+<div class='card'>
+<h2>3. След секущей плоскости. Сечение пирамиды</h2>
+<div class='ex'><h3>Пример 2</h3>Построим сечение треугольной пирамиды QABC плоскостью α, проходящей через точки K, L, M рёбер AB, AQ, CQ.<div class='s3d ' data-s3d='ex2'></div><div class='step'>Секущая плоскость α имеет с гранью AQB две общие точки K и L, поэтому она пересекает эту грань по отрезку KL.</div><div class='step'>Поскольку точки L и M — общие точки секущей плоскости и грани AQC, то LM — линия пересечения этих плоскостей.</div><div class='step'>Грань ABC имеет с секущей плоскостью общую точку K. Найдём точку, в которой плоскость α пересекает ребро BC. Обратим внимание на то, что точка X пересечения прямых LM и AC принадлежит плоскости α, плоскости AQC и плоскости ABC. А поскольку точки K и X — общие точки плоскостей α и ABC, то KX — прямая, по которой плоскость α пересекает плоскость ABC. Точка N пересечения прямой KX с ребром BC принадлежит плоскости α. Значит, плоскость α пересекает грань ABC по отрезку KN, а грань BQC — по отрезку MN.</div><div class='step'>Четырёхугольник KLMN — искомое сечение пирамиды плоскостью α.</div></div>
+<div class='def'><div class='n'>СЛЕД</div><div>Прямые KL и KN называют <b>следами</b> плоскости α на плоскостях ABQ и ABC соответственно.</div><div>След секущей плоскости на плоскости грани — прямая, по которой они пересекаются. Чтобы его провести, нужны две общие точки этих плоскостей; вторую точку даёт пересечение прямой из секущей плоскости с прямой ребра, лежащей в той же плоскости.</div></div>
+<div class='ex'><h3>Пример 3</h3>Построим сечение пирамиды OKLMN плоскостью β, проходящей через точку A на ребре OL и прямую k в плоскости основания KLMN.<div class='s3d ' data-s3d='ex3'></div><div class='step'>Найдём точку X, в которой пересекаются прямые LM и k. Эта точка принадлежит и секущей плоскости β как точка прямой k, и плоскости грани LOM как точка прямой LM. Точка A также принадлежит этим обеим плоскостям. Поэтому плоскость β пересекает плоскость LOM по прямой AX, а грань LOM — по отрезку AB, где B — точка пересечения прямых AX и OM.</div><div class='step'>Аналогично найдём точки Y и D и отрезок AD, по которому плоскость β пересекает грань OLK, а затем точки Z и C и отрезки DC и BC.</div><div class='step'>Четырёхугольник ABCD — искомое сечение.</div></div>
+<div class='secpart'>Задания</div>
+<div class='zad' id='z10'><div class='zh'>Задание 10<span> · след на основании</span></div><div class='zt'>Выберите точки A и B соответственно на рёбрах MX и MY четырёхугольной пирамиды MXYZV, а точку C — на луче YZ за точкой Z. Постройте прямую, по которой пересекаются плоскости ABC и XYZ.<div class='s3d ' data-s3d='u56'></div></div><details class='zs'><summary>Показать решение</summary><div class='zsol'><div class='step'>Решение. A ∈ MX и B ∈ MY, MX ⊂ (MXY) и MY ⊂ (MXY), поэтому AB ⊂ (MXY) (аксиома 2).</div><div class='step'>XY ⊂ (MXY), поэтому AB ∩ XY = P.</div><div class='step'>P ∈ XY и XY ⊂ (XYZ), поэтому P ∈ (XYZ); P ∈ AB, поэтому P ∈ (ABC).</div><div class='step'>C ∈ YZ и YZ ⊂ (XYZ), поэтому C ∈ (XYZ); C ∈ (ABC).</div><div class='step'>По аксиоме 3 (ABC) ∩ (XYZ) = PC — след плоскости ABC на плоскости основания.</div></div></details></div>
+<div class='zad' id='z11'><div class='zh'>Задание 11<span> · точки в гранях</span></div><div class='zt'>Точки A и B лежат в гранях PQS и PRS треугольной пирамиды PQRS. Сделайте такой рисунок в тетради и постройте точку, в которой прямая AB пересекает: а) плоскость QRS; б) плоскость PQR.<div class='s3d ' data-s3d='u50'></div></div><details class='zs'><summary>Показать решение</summary><div class='zsol'><div class='step'>Решение. Проведём прямые PA и PB. PA ⊂ (PQS), PA ∩ QS = A₁; PB ⊂ (PRS), PB ∩ RS = B₁.</div><div class='step'>Прямые PA и PB пересекаются, поэтому через них проходит плоскость PAB; AB ⊂ (PAB) и A₁B₁ ⊂ (PAB).</div><div class='step'>A₁ ∈ QS и B₁ ∈ RS, поэтому A₁B₁ ⊂ (QRS), A₁B₁ = (PAB) ∩ (QRS).</div><div class='step'>а) AB и A₁B₁ лежат в плоскости PAB: AB ∩ A₁B₁ = X. X ∈ A₁B₁ и A₁B₁ ⊂ (QRS), поэтому X = AB ∩ (QRS).</div><div class='step'>б) A₁B₁ ∩ QR = Z. Z ∈ (PAB) и Z ∈ (PQR); P ∈ (PAB) и P ∈ (PQR), поэтому PZ = (PAB) ∩ (PQR).</div><div class='step'>AB и PZ лежат в плоскости PAB: AB ∩ PZ = Y. Y ∈ PZ и PZ ⊂ (PQR), поэтому Y = AB ∩ (PQR).</div><div class='step mini'>Приём: прямую AB «опускаем» на основание через вершину P — получаем прямую A₁B₁ в плоскости основания.</div></div></details></div>
+<div class='zad dop' id='z12'><div class='zh'>Задание 12<span> · медианы грани</span><span class='tag dop'>Дополнительно</span></div><div class='zt'>Медианы BB₁ и NN₁ грани BKN четырёхугольной пирамиды BKLMN пересекаются в точке G. Сделайте такой рисунок в тетради и постройте точку, в которой прямая MG пересекает плоскость BLN.<div class='s3d ' data-s3d='u54'></div></div><details class='zs'><summary>Показать решение</summary><div class='zsol'><div class='step'>Решение. Прямые MG и BB₁ пересекаются в точке G, поэтому лежат в одной плоскости BMB₁.</div><div class='step'>M ∈ (KLM) и B₁ ∈ KN ⊂ (KLM), поэтому MB₁ ⊂ (KLM); MB₁ = (BMB₁) ∩ (KLM).</div><div class='step'>MB₁ и LN лежат в плоскости основания: MB₁ ∩ LN = Z. Z ∈ (BMB₁) и Z ∈ (BLN); B ∈ (BMB₁) и B ∈ (BLN), поэтому BZ = (BMB₁) ∩ (BLN).</div><div class='step'>MG и BZ лежат в плоскости BMB₁: MG ∩ BZ = T. T ∈ BZ и BZ ⊂ (BLN), поэтому T = MG ∩ (BLN).</div></div></details></div>
+</div>
+
+<div class='card'>
+<h2>4. Сечение призмы: след на плоскости основания</h2>
+<div class='rule2'><div class='n'>ПРОЩЕ ВСЕГО</div><div>Построение искомого сечения зависит от того, на каких рёбрах призмы лежат точки A, B, C. Наиболее просто строить сечение в том случае, когда точки A, B, C лежат на рёбрах, выходящих из одной вершины. Искомое сечение в этом случае — треугольник ABC.</div></div>
+<div class='ex'><h3>Пример 4</h3>A, B, C — точки на рёбрах RR₁, VV₁, UU₁ четырёхугольной призмы. Построим сечение призмы плоскостью ABC.<div class='s3d ' data-s3d='ex4'></div><div class='step'>Вначале построим след секущей плоскости ABC на плоскости нижнего основания. Для этого найдём точки M и N пересечения прямых AB и BC, которые лежат в секущей плоскости, с плоскостью RSUV: M — точка пересечения прямых AB и RV, N — прямых BC и UV. Прямая MN — общая прямая секущей плоскости и плоскости нижнего основания.</div><div class='step'>Точка P пересечения прямой RS со следом MN принадлежит и секущей плоскости, и плоскости грани RR₁S₁S. Учитывая, что этим двум плоскостям принадлежит и точка A, получаем, что прямая PA — след секущей плоскости на плоскости RR₁S₁S. Значит, плоскость ABC пересекает грань RR₁S₁S по отрезку AD, а грань UU₁S₁S — по отрезку CD.</div><div class='step'>Искомым сечением является четырёхугольник ABCD.</div><div class='step mini'>Новое здесь — построение следа секущей плоскости на плоскости основания.</div></div>
+<div class='ex'><h3>Пример 5</h3>Точки A, B, C — на рёбрах RR₁, VV₁ и V₁U₁. Построим сечение призмы плоскостью ABC.<div class='s3d ' data-s3d='ex5'></div><div class='step'>Как в примере 4, строим след MN на плоскости нижнего основания и след PA на плоскости RR₁S₁S; плоскость ABC пересекает грань RR₁S₁S по отрезку AD.</div><div class='step'>Найдём точку C₁ пересечения прямой BC и плоскости грани S₁SUU₁. Прямая BC лежит с прямой UU₁ в плоскости UU₁V₁V. Точка C₁ пересечения этих прямых как точка прямой BC лежит в секущей плоскости, а как точка прямой UU₁ — в плоскости S₁SUU₁. Учитывая, что этим двум плоскостям принадлежит точка D, получаем, что прямая DC₁ — след секущей плоскости на плоскости S₁SUU₁. Значит, плоскость ABC пересекает грань S₁SUU₁ по отрезку ED.</div><div class='step'>Искомым сечением является пятиугольник ABCED.</div><div class='step mini'>Здесь C₁ — новая точка на прямой UU₁, а не вершина призмы.</div></div>
+<div class='ex'><h3>Пример 6</h3>Точки A, B — на рёбрах нижнего основания, C — на ребре UU₁. Построим сечение призмы плоскостью ABC.<div class='s3d ' data-s3d='ex6'></div><div class='step'>След AB секущей плоскости на плоскости основания позволяет последовательно найти точки X и Y его пересечения с плоскостями граней SUU₁S₁ и RSS₁R₁, след XC секущей плоскости — на плоскости SUU₁S₁. Значит, плоскость ABC пересекает грань SUU₁S₁ по отрезку CD.</div><div class='step'>Пусть точка Z — точка пересечения прямой XC и плоскости грани RSS₁R₁. Тогда Z — точка пересечения прямой SS₁ с секущей плоскостью и ZY — след секущей плоскости на плоскости RSS₁R₁. Поэтому плоскость ABC пересекает грань RSS₁R₁ по отрезку EF.</div><div class='step'>Искомым сечением является шестиугольник ABCDEF.</div></div>
+<div class='warn'><div class='n'>СЛЕДИ</div>Точка Z в примере 6 лежит на <b>продолжении</b> ребра SS₁ (за точкой S₁), а не на самом ребре: вспомогательные точки следов часто выходят за пределы многогранника. Вершины сечения — только точки на рёбрах.</div>
+<div class='secpart'>Задания: точка, где ребро DD₁ пересекает секущую плоскость</div>
+<div class='zad' id='z13'><div class='zh'>Задание 13<span> · точки на рёбрах</span></div><div class='zt'>На рёбрах AA₁, BB₁, CC₁ призмы ABCDA₁B₁C₁D₁ отмечены точки M, N, K. Сделайте такой рисунок в тетради и постройте точку пересечения ребра DD₁ с плоскостью MNK.<div class='s3d ' data-s3d='s31'></div></div><details class='zs'><summary>Показать решение</summary><div class='zsol'><div class='step'>Решение. M ∈ AA₁ и N ∈ BB₁, поэтому MN ⊂ (ABB₁). AB ⊂ (ABB₁), поэтому MN ∩ AB = X; X ∈ (ABC) и X ∈ (MNK).</div><div class='step'>N ∈ BB₁ и K ∈ CC₁, поэтому NK ⊂ (BCC₁). BC ⊂ (BCC₁), поэтому NK ∩ BC = Y; Y ∈ (ABC) и Y ∈ (MNK).</div><div class='step'>По аксиоме 3 (MNK) ∩ (ABC) = XY — след секущей плоскости на плоскости основания.</div><div class='step'>XY ∩ CD = Z. Z ∈ (CDD₁) и Z ∈ (MNK); K ∈ (CDD₁) и K ∈ (MNK), поэтому ZK — след на плоскости CDD₁.</div><div class='step'>ZK ∩ DD₁ = F — искомая точка. Четырёхугольник MNKF — сечение призмы плоскостью MNK.</div></div></details></div>
+<div class='zad' id='z14'><div class='zh'>Задание 14<span> · точка в грани</span></div><div class='zt'>В грани ABA₁ и на рёбрах BB₁ и CC₁ призмы ABCDA₁B₁C₁D₁ отмечены точки X, Y, Z соответственно. Сделайте такой рисунок в тетради и постройте точку пересечения ребра DD₁ с плоскостью XYZ.<div class='s3d ' data-s3d='s32'></div></div><details class='zs'><summary>Показать решение</summary><div class='zsol'><div class='step'>Решение. Y ∈ BB₁ и Z ∈ CC₁, поэтому YZ ⊂ (BCC₁). BC ⊂ (BCC₁), поэтому YZ ∩ BC = P; P ∈ (ABC) и P ∈ (XYZ).</div><div class='step'>X ∈ (ABB₁) и Y ∈ BB₁ ⊂ (ABB₁), поэтому XY ⊂ (ABB₁). AB ⊂ (ABB₁), поэтому XY ∩ AB = Q; Q ∈ (ABC) и Q ∈ (XYZ). Прямая XY пересекает ребро AA₁ в точке W.</div><div class='step'>По аксиоме 3 (XYZ) ∩ (ABC) = PQ — след секущей плоскости на плоскости основания.</div><div class='step'>PQ ∩ CD = R. R ∈ (CDD₁) и Z ∈ (CDD₁), R и Z лежат в плоскости XYZ, поэтому RZ — след на плоскости CDD₁.</div><div class='step'>RZ ∩ DD₁ = F — искомая точка. Четырёхугольник WYZF — сечение призмы плоскостью XYZ.</div></div></details></div>
+<div class='zad' id='z15'><div class='zh'>Задание 15<span> · две точки в гранях</span></div><div class='zt'>В гранях ABA₁, BCB₁ и на ребре CC₁ призмы ABCDA₁B₁C₁D₁ отмечены точки M, N, K соответственно. Сделайте такой рисунок в тетради и постройте точку пересечения ребра DD₁ с плоскостью MNK.<div class='s3d ' data-s3d='s33'></div></div><details class='zs'><summary>Показать решение</summary><div class='zsol'><div class='step'>Решение. N ∈ (BCC₁) и K ∈ CC₁ ⊂ (BCC₁), поэтому NK ⊂ (BCC₁). NK ∩ BB₁ = Y — точка сечения на ребре BB₁; NK ∩ BC = P, P ∈ (ABC).</div><div class='step'>Y ∈ BB₁ ⊂ (ABB₁) и M ∈ (ABB₁), поэтому YM ⊂ (ABB₁). YM ∩ AA₁ = W; YM ∩ AB = Q, Q ∈ (ABC).</div><div class='step'>По аксиоме 3 (MNK) ∩ (ABC) = PQ — след секущей плоскости на плоскости основания.</div><div class='step'>PQ ∩ CD = R; R ∈ (CDD₁) и K ∈ (CDD₁), поэтому RK — след на плоскости CDD₁.</div><div class='step'>RK ∩ DD₁ = F — искомая точка. Четырёхугольник WYKF — сечение призмы плоскостью MNK.</div><div class='step mini'>Порядок: сначала грань, где две точки секущей плоскости (здесь BCC₁B₁: N и K), — она даёт точку на ребре и точку следа.</div></div></details></div>
+<div class='zad dop' id='z16'><div class='zh'>Задание 16<span> · треугольная призма</span><span class='tag dop'>Дополнительно</span></div><div class='zt'>Точку M выберите на диагонали DC₁ грани треугольной призмы CDEC₁D₁E₁, точку N — на отрезке E₁F, где F — внутренняя точка ребра DE, точку L — на луче DD₁ за точкой D₁. Постройте прямую, по которой плоскость MNL пересекает плоскость ECC₁.<div class='s3d ' data-s3d='u55'></div></div><details class='zs'><summary>Показать решение</summary><div class='zsol'><div class='step'>Решение. L ∈ DD₁ и M ∈ DC₁, DD₁ ⊂ (CDD₁) и DC₁ ⊂ (CDD₁), поэтому LM ⊂ (CDD₁). CC₁ ⊂ (CDD₁), поэтому LM ∩ CC₁ = P; P ∈ (MNL) и P ∈ (ECC₁).</div><div class='step'>L ∈ DD₁ и N ∈ E₁F, DD₁ ⊂ (DEE₁) и E₁F ⊂ (DEE₁), поэтому LN ⊂ (DEE₁). EE₁ ⊂ (DEE₁), поэтому LN ∩ EE₁ = Q; Q ∈ (MNL) и Q ∈ (ECC₁).</div><div class='step'>По аксиоме 3 (MNL) ∩ (ECC₁) = PQ.</div></div></details></div>
+</div>
+
+<div class='card'>
+<h2>5. Сечение и вычисления</h2>
+<div class='ex'><h3>Задача 1</h3>Постройте сечение куба IJKLI₁J₁K₁L₁ плоскостью IKJ₁. Найдите ребро куба, учитывая, что площадь этого сечения равна S.<div class='s3d ' data-s3d='z1'></div><div class='step'>Решение. Плоскость IKJ₁ пересекает грани IJKL, IJJ₁I₁, JKK₁J₁ по отрезкам IK, IJ₁, J₁K соответственно. Следовательно, треугольник IKJ₁ — искомое сечение.</div><div class='step'>△ IKJ₁ — правильный, значит, S<sub>IKJ₁</sub> = <span class='fr'><b>√3 · IK²</b><i>4</i></span>, или S = <span class='fr'><b>√3 · IK²</b><i>4</i></span>. Следовательно, IK² = <span class='fr'><b>4S</b><i>√3</i></span>.</div><div class='step'>△ IJK — равнобедренный прямоугольный с прямым углом J, следовательно, 2IJ² = IK², или IJ² = <span class='fr'><b>IK²</b><i>2</i></span>, или IJ² = <span class='fr'><b>2S</b><i>√3</i></span>, или IJ = √(<span class='fr'><b>2S</b><i>√3</i></span>).</div><div class='fx'>Ответ: √(<span class='fr'><b>2S</b><i>√3</i></span>).</div></div>
+<div class='ex'><h3>Задача 2</h3>Постройте сечение правильной пирамиды QABCD плоскостью, проходящей через боковое ребро и противоположную ему вершину основания. Найдите площадь этого сечения, учитывая, что все рёбра этой пирамиды равны a.<div class='s3d ' data-s3d='z2'></div><div class='step'>Решение. Пусть QABCD — правильная пирамида; AB = BC = CD = DA = QA = QB = QC = QD = a.</div><div class='step'>Q, A, C — вершины пирамиды, следовательно, QAC — искомое сечение.</div><div class='step'>AC = AB√2 = a√2, так как ABCD — квадрат.</div><div class='step'>В △ AQC AQ = QC = a, AC = a√2. Следовательно, ∠AQC = 90° и S<sub>сеч</sub> = S<sub>AQC</sub> = <span class='fr'><b>a²</b><i>2</i></span>.</div><div class='fx'>Ответ: <span class='fr'><b>a²</b><i>2</i></span>.</div></div>
+<div class='secpart'>Задания</div>
+<div class='zad' id='z17'><div class='zh'>Задание 17<span> · призма, отношение поверхностей</span></div><div class='zt'>В правильной треугольной призме плоскость, проходящая через сторону её основания и противоположную вершину другого основания, делит полную поверхность призмы в отношении 2 : 3. Найдите эту поверхность, учитывая, что ребро основания равно a.<div class='s3d ' data-s3d='u84'></div></div><details class='zs'><summary>Показать решение</summary><div class='zsol'><div class='step'>Решение. Пусть ABCA₁B₁C₁ — правильная призма, AB = a, AA₁ = h. Плоскость ABC₁ пересекает грани ABC, ACC₁A₁, BCC₁B₁ по отрезкам AB, AC₁, BC₁; треугольник ABC₁ — сечение.</div><div class='step'>Сечение делит поверхность призмы на две части. Первая: △ ABC, △ ACC₁, △ BCC₁; её площадь S₁ = <span class='fr'><b>a²√3</b><i>4</i></span> + 2 · <span class='fr'><b>1</b><i>2</i></span>ah = <span class='fr'><b>a²√3</b><i>4</i></span> + ah.</div><div class='step'>Вторая: △ A₁B₁C₁, грань ABB₁A₁, △ AA₁C₁, △ BB₁C₁; S₂ = <span class='fr'><b>a²√3</b><i>4</i></span> + ah + 2 · <span class='fr'><b>1</b><i>2</i></span>ah = <span class='fr'><b>a²√3</b><i>4</i></span> + 2ah.</div><div class='step'>S₁ : S₂ = 2 : 3, поэтому 3(<span class='fr'><b>a²√3</b><i>4</i></span> + ah) = 2(<span class='fr'><b>a²√3</b><i>4</i></span> + 2ah), откуда ah = <span class='fr'><b>a²√3</b><i>4</i></span>.</div><div class='step'>S<sub>полн</sub> = 2 · <span class='fr'><b>a²√3</b><i>4</i></span> + 3ah = <span class='fr'><b>a²√3</b><i>2</i></span> + <span class='fr'><b>3a²√3</b><i>4</i></span> = <span class='fr'><b>5a²√3</b><i>4</i></span>.</div><div class='fx'>Ответ: 1,25a²√3.</div></div></details></div>
+<div class='zad' id='z18'><div class='zh'>Задание 18<span> · параллелепипед, радиус</span><span class='tag prof'>*</span></div><div class='zt'>Постройте сечение прямоугольного параллелепипеда ABTVA₁B₁T₁V₁ плоскостью AB₁T. Найдите радиус окружности, описанной около боковой грани параллелепипеда, учитывая, что его основанием является квадрат со стороной a, а площадь построенного сечения равна S.<div class='s3d ' data-s3d='u93'></div></div><details class='zs'><summary>Показать решение</summary><div class='zsol'><div class='step'>Решение. Пусть ABTV — квадрат, AB = a, AA₁ = h. Плоскость AB₁T пересекает грани ABB₁A₁, BTT₁B₁, ABTV по отрезкам AB₁, B₁T, AT; треугольник AB₁T — искомое сечение.</div><div class='step'>AB₁ = B₁T = √<span style='text-decoration:overline'>a² + h²</span> (диагонали равных прямоугольников), AT = a√2, так как ABTV — квадрат.</div><div class='step'>△ AB₁T — равнобедренный; его высота B₁O, где O — середина AT: B₁O = √(a² + h² − <span class='fr'><b>a²</b><i>2</i></span>) = √(<span class='fr'><b>a²</b><i>2</i></span> + h²).</div><div class='step'>S = <span class='fr'><b>1</b><i>2</i></span> · a√2 · √(<span class='fr'><b>a²</b><i>2</i></span> + h²), поэтому S² = <span class='fr'><b>a²</b><i>2</i></span>(<span class='fr'><b>a²</b><i>2</i></span> + h²) и h² = <span class='fr'><b>2S²</b><i>a²</i></span> − <span class='fr'><b>a²</b><i>2</i></span>.</div><div class='step'>Боковая грань — прямоугольник со сторонами a и h; центр описанной окружности — точка пересечения диагоналей, R = <span class='fr'><b>√<span style='text-decoration:overline'>a² + h²</span></b><i>2</i></span> = <span class='fr'><b>√(<span class='fr'><b>a²</b><i>2</i></span> + <span class='fr'><b>2S²</b><i>a²</i></span>)</b><i>2</i></span> = <span class='fr'><b>√<span style='text-decoration:overline'>a⁴ + 4S²</span></b><i>2a√2</i></span>.</div><div class='fx'>Ответ: <span class='fr'><b>√<span style='text-decoration:overline'>a⁴ + 4S²</span></b><i>2a√2</i></span>.</div></div></details></div>
+<div class='zad' id='z19'><div class='zh'>Задание 19<span> · призма, боковая поверхность</span><span class='tag prof'>*</span></div><div class='zt'>Ребро основания правильной четырёхугольной призмы равно a, а площадь сечения призмы плоскостью, которая проходит через концы рёбер, выходящих из одной вершины, равна Q. Найдите боковую поверхность призмы.<div class='s3d ' data-s3d='u98'></div></div><details class='zs'><summary>Показать решение</summary><div class='zsol'><div class='step'>Решение. Пусть ABCDA₁B₁C₁D₁ — правильная призма, AB = a, AA₁ = h. Из вершины A выходят рёбра AB, AD, AA₁; плоскость A₁BD пересекает грани по отрезкам A₁B, BD, A₁D; △ A₁BD — сечение, S<sub>A₁BD</sub> = Q.</div><div class='step'>A₁B = A₁D = √<span style='text-decoration:overline'>a² + h²</span>, BD = a√2, так как ABCD — квадрат. Высота A₁O (O — середина BD): A₁O = √(<span class='fr'><b>a²</b><i>2</i></span> + h²).</div><div class='step'>Q = <span class='fr'><b>1</b><i>2</i></span> · a√2 · √(<span class='fr'><b>a²</b><i>2</i></span> + h²), поэтому Q² = <span class='fr'><b>a²</b><i>2</i></span>(<span class='fr'><b>a²</b><i>2</i></span> + h²), h² = <span class='fr'><b>4Q² − a⁴</b><i>2a²</i></span>, h = <span class='fr'><b>√<span style='text-decoration:overline'>4Q² − a⁴</span></b><i>a√2</i></span>.</div><div class='step'>S<sub>бок</sub> = 4ah = <span class='fr'><b>4√<span style='text-decoration:overline'>4Q² − a⁴</span></b><i>√2</i></span> = 2√<span style='text-decoration:overline'>2(4Q² − a⁴)</span>.</div><div class='fx'>Ответ: 2√<span style='text-decoration:overline'>2(4Q² − a⁴)</span>.</div></div></details></div>
+<div class='zad dop' id='z20'><div class='zh'>Задание 20<span> · пирамида, две окружности</span><span class='tag dop'>Дополнительно</span><span class='tag prof'>*</span></div><div class='zt'>Точка C — середина ребра JL длиной a правильной треугольной пирамиды IJKL, боковая грань которой равна грани основания. Постройте сечение пирамиды плоскостью IKC и найдите радиусы окружностей, одна из которых вписана в это сечение, а вторая описана около него.<div class='s3d ' data-s3d='u75'></div></div><details class='zs'><summary>Показать решение</summary><div class='zsol'><div class='step'>Решение. Боковая грань равна грани основания, поэтому все грани — равные правильные треугольники, все рёбра равны a.</div><div class='step'>Плоскость IKC пересекает грани IJL и KJL по отрезкам IC и KC и проходит через ребро IK; треугольник IKC — искомое сечение.</div><div class='step'>IC = KC = <span class='fr'><b>a√3</b><i>2</i></span> — медианы правильных треугольников IJL и KJL, IK = a.</div><div class='step'>Высота CO треугольника IKC (O — середина IK): CO = √(<span class='fr'><b>3a²</b><i>4</i></span> − <span class='fr'><b>a²</b><i>4</i></span>) = <span class='fr'><b>a√2</b><i>2</i></span>; S<sub>IKC</sub> = <span class='fr'><b>1</b><i>2</i></span> · a · <span class='fr'><b>a√2</b><i>2</i></span> = <span class='fr'><b>a²√2</b><i>4</i></span>.</div><div class='step'>p = <span class='fr'><b>a + a√3</b><i>2</i></span>; r = <span class='fr'><b>S</b><i>p</i></span> = <span class='fr'><b>a√2</b><i>2(1 + √3)</i></span> = <span class='fr'><b>a(√6 − √2)</b><i>4</i></span>.</div><div class='step'>R = <span class='fr'><b>IC · KC · IK</b><i>4S</i></span> = <span class='fr'><b><span class='fr'><b>3a²</b><i>4</i></span> · a</b><i>a²√2</i></span> = <span class='fr'><b>3a√2</b><i>8</i></span>.</div><div class='fx'>Ответ: <span class='fr'><b>a(√6 − √2)</b><i>4</i></span>; <span class='fr'><b>3a√2</b><i>8</i></span>.</div></div></details></div>
+<div class='zad dop' id='z21'><div class='zh'>Задание 21<span> · параллелепипед, угол γ</span><span class='tag dop'>Дополнительно</span><span class='tag prof'>*</span></div><div class='zt'>Постройте сечение прямоугольного параллелепипеда IJKLI₁J₁K₁L₁ плоскостью, проходящей через вершину I и прямую J₁L₁. Найдите полную поверхность параллелепипеда, учитывая, что его основанием является квадрат со стороной a, а угол J₁IL₁ равен γ.<div class='s3d ' data-s3d='u94'></div></div><details class='zs'><summary>Показать решение</summary><div class='zsol'><div class='step'>Решение. Пусть IJKL — квадрат, IJ = a, II₁ = h. Плоскость IJ₁L₁ пересекает грани IJJ₁I₁, ILL₁I₁ и верхнее основание по отрезкам IJ₁, IL₁, J₁L₁; треугольник IJ₁L₁ — искомое сечение.</div><div class='step'>IJ₁ = IL₁ = √<span style='text-decoration:overline'>a² + h²</span>, J₁L₁ = a√2, так как I₁J₁K₁L₁ — квадрат.</div><div class='step'>По теореме косинусов J₁L₁² = IJ₁² + IL₁² − 2 · IJ₁ · IL₁ · cos γ: 2a² = 2(a² + h²)(1 − cos γ), a² + h² = <span class='fr'><b>a²</b><i>1 − cos γ</i></span>, h² = <span class='fr'><b>a² cos γ</b><i>1 − cos γ</i></span>, h = a√(<span class='fr'><b>cos γ</b><i>1 − cos γ</i></span>).</div><div class='step'>S<sub>полн</sub> = 2a² + 4ah = 2a²(2√(<span class='fr'><b>cos γ</b><i>1 − cos γ</i></span>) + 1).</div><div class='fx'>Ответ: 2a²(2√(<span class='fr'><b>cos γ</b><i>1 − cos γ</i></span>) + 1).</div></div></details></div>
+</div>
+
+<div class="card pam">
+<h2>Что забрать с урока</h2>
+<div class="fgrid">
+<div class="fbox"><h4>Сечение</h4><p>Часть многогранника, которая принадлежит секущей плоскости.</p>
+<p>Строим общие точки граней и секущей плоскости.</p></div>
+<div class="fbox"><h4>Одна грань</h4><p>Соединяем только две точки одной грани — получаем сторону сечения.</p>
+<p class="small">В одной грани — не больше одной стороны.</p></div>
+<div class="fbox"><h4>Точка ∩ плоскость</h4><p>Ищем прямую данной плоскости, которая лежит в одной плоскости с данной прямой; их точка пересечения — искомая.</p></div>
+<div class="fbox"><h4>След</h4><p>Прямую из секущей плоскости продолжаем до пересечения с прямой ребра той же плоскости — получаем точку следа.</p>
+<p>Две точки следа → прямая (аксиома 3).</p></div>
+<div class="fbox"><h4>Призма</h4><p>Сначала след на плоскости основания, потом следы на плоскостях боковых граней.</p></div>
+<div class="fbox"><h4>Запись</h4><p>«Решение.», строки «факты, поэтому вывод».</p><p>Построение заканчивается фразой «… — искомое сечение».</p></div>
+</div>
+<h3>Алгоритм метода следов</h3>
+<ol class="algo">
+<li>Соединяем точки секущей плоскости, которые лежат в одной грани.</li>
+<li>Прямую сечения в боковой грани продолжаем до пересечения с прямой ребра основания (они в одной плоскости) — точка следа.</li>
+<li>Две точки следа дают след секущей плоскости на плоскости основания.</li>
+<li>След пересекаем с прямыми рёбер основания — получаем точки на плоскостях соседних граней; соединяем их с точками сечения в этих гранях.</li>
+<li>Обходим все грани; многоугольник с вершинами на рёбрах — искомое сечение.</li>
+</ol>
+</div>
+
+</div>
+<script>
+window.S3DSPECS = Object.assign(window.S3DSPECS || {}, {"ex1": {"id": "ex1", "V": {"S": [1.7, 0.4, 3.3], "A": [0.0, 0.0, 0.0], "B": [2.3, -0.7, 0.0], "C": [3.0, 1.3, 0.0]}, "F": [["A", "B", "C"], ["A", "B", "S"], ["B", "C", "S"], ["C", "A", "S"]], "E": [["A", "B"], ["A", "C"], ["A", "S"], ["B", "C"], ["B", "S"], ["C", "S"]], "P": {"M": {"c": [0.765, 0.18, 1.485], "f": [1, 3], "pf": [1, 3]}, "N": {"c": [2.06, -0.26, 1.32], "f": [1, 2], "pf": [1, 2]}, "K": {"c": [2.285, 0.805, 1.815], "f": [2, 3], "pf": [2, 3]}}, "sec": ["M", "N", "K"], "given": ["M", "N", "K"], "steps": [{"t": "Секущая плоскость MNK имеет с плоскостью SAB две общие точки M и N, поэтому прямая MN принадлежит как секущей плоскости, так и плоскости SAB. Значит, отрезок MN — линия пересечения грани SAB с плоскостью MNK.", "l": [["M", "N", "sec"]], "p": []}, {"t": "Рассуждая аналогично, получаем, что плоскость MNK пересекает грани SAC и SBC по отрезкам MK и NK соответственно.", "l": [["M", "K", "sec"], ["N", "K", "sec"]], "p": []}, {"t": "Треугольник MNK — искомое сечение.", "l": [], "p": [], "poly": true}], "mode": "demo", "view": [-18, 12], "h": 270, "note": "Пример 1. Сечение пирамиды SABC плоскостью через точки M, N, K на рёбрах SA, SB, SC. Жми «шаг ▶»."}, "ex2": {"id": "ex2", "V": {"Q": [1.3, 0.4, 3.0], "A": [0.0, 0.0, 0.0], "B": [2.2, -0.6, 0.0], "C": [3.0, 1.4, 0.0]}, "F": [["A", "B", "C"], ["A", "B", "Q"], ["B", "C", "Q"], ["C", "A", "Q"]], "E": [["A", "B"], ["A", "C"], ["A", "Q"], ["B", "C"], ["B", "Q"], ["C", "Q"]], "P": {"K": {"c": [1.364, -0.372, 0.0], "f": [0, 1], "pf": [0, 1]}, "L": {"c": [0.715, 0.22, 1.65], "f": [1, 3], "pf": [1, 3]}, "M": {"c": [2.405, 1.05, 1.05], "f": [2, 3], "pf": [2, 3]}, "X": {"c": [5.3625, 2.5025, -0.0], "f": [], "pf": [0, 3]}, "N": {"c": [2.665439, 0.563597, 0.0], "f": [0, 2], "pf": [0, 2]}}, "sec": ["K", "L", "M", "N"], "given": ["K", "L", "M"], "steps": [{"t": "Секущая плоскость α имеет с гранью AQB две общие точки K и L, поэтому она пересекает эту грань по отрезку KL.", "l": [["K", "L", "sec"]], "p": []}, {"t": "Поскольку точки L и M — общие точки секущей плоскости и грани AQC, то LM — линия пересечения этих плоскостей.", "l": [["L", "M", "sec"]], "p": []}, {"t": "Точка X пересечения прямых LM и AC принадлежит плоскости α, плоскости AQC и плоскости ABC.", "l": [["M", "X", "aux"], ["C", "X", "aux"]], "p": ["X"]}, {"t": "Поскольку точки K и X — общие точки плоскостей α и ABC, то KX — прямая, по которой плоскость α пересекает плоскость ABC. Точка N пересечения прямой KX с ребром BC принадлежит плоскости α.", "l": [["K", "X", "aux"]], "p": ["N"]}, {"t": "Значит, плоскость α пересекает грань ABC по отрезку KN, а грань BQC — по отрезку MN. Четырёхугольник KLMN — искомое сечение пирамиды плоскостью α. Прямые KL и KN называют следами плоскости α на плоскостях ABQ и ABC.", "l": [["K", "N", "sec"], ["M", "N", "sec"]], "p": [], "poly": true}], "mode": "demo", "view": [-18, 12], "h": 270, "note": "Пример 2. Сечение пирамиды QABC плоскостью α через точки K, L, M рёбер AB, AQ, CQ. Жми «шаг ▶»."}, "ex4": {"id": "ex4", "V": {"R": [0.0, 0.0, 0.0], "R1": [0.0, 0.0, 2.6], "S": [0.7, 1.7, 0.0], "S1": [0.7, 1.7, 2.6], "U": [2.7, 1.8, 0.0], "U1": [2.7, 1.8, 2.6], "V": [2.3, -0.1, 0.0], "V1": [2.3, -0.1, 2.6]}, "F": [["R", "S", "U", "V"], ["R1", "S1", "U1", "V1"], ["R", "S", "S1", "R1"], ["S", "U", "U1", "S1"], ["U", "V", "V1", "U1"], ["V", "R", "R1", "V1"]], "E": [["R", "R1"], ["R", "S"], ["R", "V"], ["R1", "S1"], ["R1", "V1"], ["S", "S1"], ["S", "U"], ["S1", "U1"], ["U", "U1"], ["U", "V"], ["U1", "V1"], ["V", "V1"]], "P": {"A": {"c": [0.0, 0.0, 0.988], "f": [2, 5], "pf": [2, 5]}, "B": {"c": [2.3, -0.1, 0.728], "f": [4, 5], "pf": [4, 5]}, "C": {"c": [2.7, 1.8, 1.612], "f": [3, 4], "pf": [3, 4]}, "M": {"c": [8.74, -0.38, 0.0], "f": [], "pf": [0, 5]}, "N": {"c": [1.970588, -1.664706, -0.0], "f": [], "pf": [0, 4]}, "P": {"c": [-0.910619, -2.211504, -0.0], "f": [], "pf": [0, 2]}, "D": {"c": [0.7, 1.7, 1.747483], "f": [2, 3], "pf": [2, 3]}}, "sec": ["A", "B", "C", "D"], "given": ["A", "B", "C"], "steps": [{"t": "Отрезки AB и BC лежат в гранях RR₁V₁V и VV₁U₁U — это стороны сечения.", "l": [["A", "B", "sec"], ["B", "C", "sec"]], "p": []}, {"t": "Вначале построим след секущей плоскости ABC на плоскости нижнего основания. Для этого найдём точки M и N пересечения прямых AB и BC, которые лежат в секущей плоскости, с плоскостью RSUV: M — точка пересечения прямых AB и RV, N — прямых BC и UV.", "l": [["A", "M", "aux"], ["R", "M", "aux"], ["B", "N", "aux"], ["U", "N", "aux"]], "p": ["M", "N"]}, {"t": "Прямая MN — общая прямая секущей плоскости и плоскости нижнего основания.", "l": [["M", "N", "aux"]], "p": []}, {"t": "Точка P пересечения прямой RS со следом MN принадлежит и секущей плоскости, и плоскости грани RR₁S₁S. Учитывая, что этим двум плоскостям принадлежит и точка A, получаем, что прямая PA — след секущей плоскости на плоскости RR₁S₁S.", "l": [["S", "P", "aux"], ["P", "A", "aux"]], "p": ["P", "D"]}, {"t": "Значит, плоскость ABC пересекает грань RR₁S₁S по отрезку AD, а грань UU₁S₁S — по отрезку CD. Искомым сечением является четырёхугольник ABCD.", "l": [["A", "D", "sec"], ["C", "D", "sec"]], "p": [], "poly": true}], "mode": "demo", "view": [-28, 18], "h": 270, "note": "Пример 4. Сечение призмы плоскостью ABC: A, B, C — на рёбрах RR₁, VV₁, UU₁. Жми «шаг ▶»."}, "ex5": {"id": "ex5", "V": {"R": [0.0, 0.0, 0.0], "R1": [0.0, 0.0, 2.6], "S": [0.7, 1.7, 0.0], "S1": [0.7, 1.7, 2.6], "U": [2.7, 1.8, 0.0], "U1": [2.7, 1.8, 2.6], "V": [2.3, -0.1, 0.0], "V1": [2.3, -0.1, 2.6]}, "F": [["R", "S", "U", "V"], ["R1", "S1", "U1", "V1"], ["R", "S", "S1", "R1"], ["S", "U", "U1", "S1"], ["U", "V", "V1", "U1"], ["V", "R", "R1", "V1"]], "E": [["R", "R1"], ["R", "S"], ["R", "V"], ["R1", "S1"], ["R1", "V1"], ["S", "S1"], ["S", "U"], ["S1", "U1"], ["U", "U1"], ["U", "V"], ["U1", "V1"], ["V", "V1"]], "P": {"A": {"c": [0.0, 0.0, 0.39], "f": [2, 5], "pf": [2, 5]}, "B": {"c": [2.3, -0.1, 1.56], "f": [4, 5], "pf": [4, 5]}, "C": {"c": [2.58, 1.23, 2.6], "f": [1, 4], "pf": [1, 4]}, "M": {"c": [-0.766667, 0.033333, 0.0], "f": [], "pf": [0, 5]}, "N": {"c": [1.88, -2.095, -0.0], "f": [], "pf": [0, 4]}, "P": {"c": [-0.180401, -0.438116, -0.0], "f": [], "pf": [0, 2]}, "C1": {"c": [2.7, 1.8, 3.045714], "f": [], "pf": [3, 4]}, "E": {"c": [1.919699, 1.760985, 2.6], "f": [1, 3], "pf": [1, 3]}, "D": {"c": [0.7, 1.7, 1.903298], "f": [2, 3], "pf": [2, 3]}}, "sec": ["A", "B", "C", "E", "D"], "given": ["A", "B", "C"], "steps": [{"t": "Отрезки AB и BC лежат в гранях RR₁V₁V и VV₁U₁U.", "l": [["A", "B", "sec"], ["B", "C", "sec"]], "p": []}, {"t": "Вначале построим след секущей плоскости ABC на плоскости нижнего основания: M — точка пересечения прямых AB и RV, N — прямых BC и UV. Прямая MN — общая прямая секущей плоскости и плоскости нижнего основания.", "l": [["A", "M", "aux"], ["R", "M", "aux"], ["B", "N", "aux"], ["U", "N", "aux"], ["M", "N", "aux"]], "p": ["M", "N"]}, {"t": "Точка P пересечения прямой RS со следом MN принадлежит и секущей плоскости, и плоскости грани RR₁S₁S; этим плоскостям принадлежит и точка A, поэтому PA — след на плоскости RR₁S₁S. Плоскость ABC пересекает грань RR₁S₁S по отрезку AD.", "l": [["S", "P", "aux"], ["P", "D", "aux"], ["A", "D", "sec"]], "p": ["P", "D"]}, {"t": "Найдём точку C₁ пересечения прямой BC и плоскости грани S₁SUU₁: прямая BC лежит с прямой UU₁ в плоскости UU₁V₁V. Учитывая, что точке D и точке C₁ принадлежат обе плоскости, получаем: прямая DC₁ — след секущей плоскости на плоскости S₁SUU₁.", "l": [["C", "C1", "aux"], ["U1", "C1", "aux"], ["D", "C1", "aux"]], "p": ["C1", "E"]}, {"t": "Значит, плоскость ABC пересекает грань S₁SUU₁ по отрезку ED, а верхнее основание — по отрезку CE. Искомым сечением является пятиугольник ABCED.", "l": [["E", "D", "sec"], ["C", "E", "sec"]], "p": [], "poly": true}], "mode": "demo", "view": [-28, 18], "h": 270, "note": "Пример 5. Сечение призмы плоскостью ABC: A — на RR₁, B — на VV₁, C — на V₁U₁. Жми «шаг ▶»."}, "z1": {"id": "z1", "V": {"K": [0.0, 0.0, 0.0], "J": [0.0, 1.0, 0.0], "I": [1.0, 1.0, 0.0], "L": [1.0, 0.0, 0.0], "K1": [0.0, 0.0, 1.0], "J1": [0.0, 1.0, 1.0], "I1": [1.0, 1.0, 1.0], "L1": [1.0, 0.0, 1.0]}, "F": [["K", "J", "I", "L"], ["K1", "J1", "I1", "L1"], ["K", "J", "J1", "K1"], ["J", "I", "I1", "J1"], ["I", "L", "L1", "I1"], ["L", "K", "K1", "L1"]], "E": [["I", "I1"], ["I", "J"], ["I", "L"], ["I1", "J1"], ["I1", "L1"], ["J", "J1"], ["J", "K"], ["J1", "K1"], ["K", "K1"], ["K", "L"], ["K1", "L1"], ["L", "L1"]], "P": {"I": {"c": [1.0, 1.0, 0.0], "f": [0, 3, 4], "pf": [0, 3, 4], "v": 1}, "K": {"c": [0.0, 0.0, 0.0], "f": [0, 2, 5], "pf": [0, 2, 5], "v": 1}, "J1": {"c": [0.0, 1.0, 1.0], "f": [1, 2, 3], "pf": [1, 2, 3], "v": 1}}, "sec": ["I", "K", "J1"], "given": [], "steps": [], "mode": "build", "view": [-28, 18], "h": 270, "note": "Задача 1. Построй сечение куба IJKLI₁J₁K₁L₁ плоскостью IKJ₁: касайся двух вершин одной грани."}, "z2": {"id": "z2", "V": {"Q": [1.0, 1.0, 1.414214], "A": [0.0, 0.0, 0.0], "B": [0.0, 2.0, 0.0], "C": [2.0, 2.0, 0.0], "D": [2.0, 0.0, 0.0]}, "F": [["A", "B", "C", "D"], ["A", "B", "Q"], ["B", "C", "Q"], ["C", "D", "Q"], ["D", "A", "Q"]], "E": [["A", "B"], ["A", "D"], ["A", "Q"], ["B", "C"], ["B", "Q"], ["C", "D"], ["C", "Q"], ["D", "Q"]], "P": {"Q": {"c": [1.0, 1.0, 1.414214], "f": [1, 2, 3, 4], "pf": [1, 2, 3, 4], "v": 1}, "A": {"c": [0.0, 0.0, 0.0], "f": [0, 1, 4], "pf": [0, 1, 4], "v": 1}, "C": {"c": [2.0, 2.0, 0.0], "f": [0, 2, 3], "pf": [0, 2, 3], "v": 1}}, "sec": ["Q", "A", "C"], "given": [], "steps": [], "mode": "build", "view": [-30, 14], "h": 270, "note": "Задача 2. Построй сечение пирамиды QABCD плоскостью, проходящей через боковое ребро QA и противоположную вершину C."}, "ex6": {"id": "ex6", "V": {"R": [0.0, 0.0, 0.0], "R1": [0.0, 0.0, 2.6], "S": [0.7, 1.7, 0.0], "S1": [0.7, 1.7, 2.6], "U": [2.7, 1.8, 0.0], "U1": [2.7, 1.8, 2.6], "V": [2.3, -0.1, 0.0], "V1": [2.3, -0.1, 2.6]}, "F": [["R", "S", "U", "V"], ["R1", "S1", "U1", "V1"], ["R", "S", "S1", "R1"], ["S", "U", "U1", "S1"], ["U", "V", "V1", "U1"], ["V", "R", "R1", "V1"]], "E": [["R", "R1"], ["R", "S"], ["R", "V"], ["R1", "S1"], ["R1", "V1"], ["S", "S1"], ["S", "U"], ["S1", "U1"], ["U", "U1"], ["U", "V"], ["U1", "V1"], ["V", "V1"]], "P": {"A": {"c": [1.38, -0.06, 0.0], "f": [0, 5], "pf": [0, 5]}, "B": {"c": [2.46, 0.66, 0.0], "f": [0, 4], "pf": [0, 4]}, "C": {"c": [2.7, 1.8, 1.95], "f": [3, 4], "pf": [3, 4]}, "X": {"c": [4.289189, 1.879459, 0.0], "f": [], "pf": [0, 3]}, "Y": {"c": [-0.556216, -1.350811, 0.0], "f": [], "pf": [0, 2]}, "Z": {"c": [0.7, 1.7, 4.404082], "f": [], "pf": [2, 3]}, "D": {"c": [2.17027, 1.773514, 2.6], "f": [1, 3], "pf": [1, 3]}, "E": {"c": [0.185405, 0.45027, 2.6], "f": [1, 2], "pf": [1, 2]}, "F": {"c": [0.0, 0.0, 1.95], "f": [2, 5], "pf": [2, 5]}}, "sec": ["A", "B", "C", "D", "E", "F"], "given": ["A", "B", "C"], "steps": [{"t": "AB — след секущей плоскости на плоскости основания. Продлим его до пересечения с прямыми SU и RS: точки X и Y.", "l": [["A", "B", "sec"], ["B", "X", "aux"], ["U", "X", "aux"], ["A", "Y", "aux"], ["R", "Y", "aux"]], "p": ["X", "Y"]}, {"t": "XC — след секущей плоскости на плоскости SUU₁S₁. Значит, плоскость ABC пересекает грань SUU₁S₁ по отрезку CD.", "l": [["X", "D", "aux"], ["B", "C", "sec"], ["C", "D", "sec"]], "p": ["D"]}, {"t": "Пусть точка Z — точка пересечения прямой XC и плоскости грани RSS₁R₁ (на прямой SS₁). Тогда ZY — след секущей плоскости на грани RSS₁R₁. Поэтому плоскость ABC пересекает грань RSS₁R₁ по отрезку EF.", "l": [["D", "Z", "aux"], ["S1", "Z", "aux"], ["Z", "Y", "aux"], ["E", "F", "sec"]], "p": ["Z", "E", "F"]}, {"t": "DE лежит в верхнем основании, FA — в грани RVV₁R₁. Искомым сечением является шестиугольник ABCDEF.", "l": [["D", "E", "sec"], ["F", "A", "sec"]], "p": [], "poly": true}], "mode": "demo", "view": [-28, 18], "h": 270, "note": "Пример 6. Сечение призмы плоскостью ABC — шестиугольник. Жми «шаг ▶»."}, "z24": {"id": "z24", "V": {"S": [1.6, 0.7, 3.2], "A": [0.0, 0.0, 0.0], "B": [0.9, 1.5, 0.0], "C": [3.1, 1.4, 0.0], "D": [2.5, -0.2, 0.0]}, "F": [["A", "B", "C", "D"], ["A", "B", "S"], ["B", "C", "S"], ["C", "D", "S"], ["D", "A", "S"]], "E": [["A", "B"], ["A", "D"], ["A", "S"], ["B", "C"], ["B", "S"], ["C", "D"], ["C", "S"], ["D", "S"]], "P": {"P": {"c": [0.88, 0.385, 1.76], "f": [1, 4], "pf": [1, 4]}, "Q": {"c": [2.425, 1.085, 1.44], "f": [2, 3], "pf": [2, 3]}, "R": {"c": [1.67, 1.465, 0.0], "f": [0, 2], "pf": [0, 2]}, "K": {"c": [0.34875, 2.13, -2.52], "f": [], "pf": [1, 2]}, "M": {"c": [0.661542, 1.10257, 0.0], "f": [0, 1], "pf": [0, 1]}}, "sec": [], "given": ["P", "Q", "R"], "steps": [{"t": "Q ∈ SC и R ∈ BC, поэтому Q, R ∈ (SBC). По аксиоме 2 QR ⊂ (SBC). QR ∩ SB = K, K ∈ SB.", "l": [["Q", "K", "aux"], ["B", "K", "aux"]], "p": ["K"]}, {"t": "SB ⊂ (SAB), поэтому K ∈ (SAB). P ∈ SA, поэтому P ∈ (SAB). Значит, KP ⊂ (SAB). KP ∩ AB = M ∈ AB.", "l": [["K", "P", "aux"]], "p": ["M"]}, {"t": "R ∈ (ABC) и R ∈ (PQR); M ∈ (ABC) и M ∈ (PQR). По аксиоме 3 (PQR) ∩ (ABC) = MR.", "l": [["M", "R", "sec"]], "p": []}], "mode": "demo", "view": [-18, 12], "h": 250, "note": "Задача 4 (§ 2). Жми «шаг ▶»: строим прямую, по которой плоскость PQR пересекает плоскость ABC.", "always": []}, "ex3": {"id": "ex3", "V": {"O": [1.7, 0.8, 3.2], "K": [0.0, 0.7, 0.0], "L": [1.6, 1.8, 0.0], "M": [3.0, 0.8, 0.0], "N": [1.4, -0.3, 0.0]}, "F": [["K", "L", "M", "N"], ["K", "L", "O"], ["L", "M", "O"], ["M", "N", "O"], ["N", "K", "O"]], "E": [["K", "L"], ["K", "N"], ["K", "O"], ["L", "M"], ["L", "O"], ["M", "N"], ["M", "O"], ["N", "O"]], "P": {"A": {"c": [1.675, 1.05, 2.4], "f": [1, 2], "pf": [1, 2]}, "X": {"c": [4.68, -0.4, 0.0], "f": [], "pf": [0, 2]}, "Y": {"c": [-1.76, -0.51, 0.0], "f": [], "pf": [0, 1]}, "Z": {"c": [1.613333, -0.452381, 0.0], "f": [], "pf": [0, 4]}, "C": {"c": [1.451613, -0.110753, 0.550538], "f": [3, 4], "pf": [3, 4]}, "D": {"c": [1.038889, 0.761111, 1.955556], "f": [1, 4], "pf": [1, 4]}, "B": {"c": [2.193103, 0.8, 1.986207], "f": [2, 3], "pf": [2, 3]}}, "sec": ["A", "B", "C", "D"], "given": ["A"], "steps": [{"t": "Прямая k лежит в плоскости основания KLMN.", "l": [["Y", "X", "aux"]], "p": []}, {"t": "Найдём точку X, в которой пересекаются прямые LM и k. Эта точка принадлежит и секущей плоскости β как точка прямой k, и плоскости грани LOM как точка прямой LM.", "l": [["M", "X", "aux"]], "p": ["X"]}, {"t": "Точка A также принадлежит этим обеим плоскостям. Поэтому плоскость β пересекает плоскость LOM по прямой AX, а грань LOM — по отрезку AB, где B — точка пересечения прямых AX и OM.", "l": [["A", "X", "aux"], ["A", "B", "sec"]], "p": ["B"]}, {"t": "Аналогично найдём точки Y и D и отрезок AD, по которому плоскость β пересекает грань OLK.", "l": [["K", "Y", "aux"], ["A", "Y", "aux"], ["A", "D", "sec"]], "p": ["Y", "D"]}, {"t": "А затем точки Z и C и отрезки DC и BC. Четырёхугольник ABCD — искомое сечение.", "l": [["N", "Z", "aux"], ["D", "Z", "aux"], ["D", "C", "sec"], ["B", "C", "sec"]], "p": ["Z", "C"], "poly": true}], "mode": "demo", "view": [-16, 12], "h": 270, "note": "Пример 3. Сечение пирамиды OKLMN плоскостью β через точку A на ребре OL и прямую k в плоскости основания. Жми «шаг ▶»."}, "z23": {"id": "z23", "V": {"R": [1.5, 0.7, 3.2], "T": [0.0, 0.0, 0.0], "X": [0.9, 1.5, 0.0], "Y": [3.0, 1.0, 0.0], "Z": [1.9, -0.4, 0.0]}, "F": [["T", "X", "Y", "Z"], ["T", "X", "R"], ["X", "Y", "R"], ["Y", "Z", "R"], ["Z", "T", "R"]], "E": [["R", "T"], ["R", "X"], ["R", "Y"], ["R", "Z"], ["T", "X"], ["T", "Z"], ["X", "Y"], ["Y", "Z"]], "P": {"A": {"c": [0.95, -0.2, 0.0], "f": [0, 4], "pf": [0, 4]}, "B": {"c": [2.45, 0.3, 0.0], "f": [0, 3], "pf": [0, 3]}, "K": {"c": [3.904167, 0.784722, 0.0], "f": [], "pf": [0, 2]}}, "sec": [], "given": ["A", "B"], "steps": [{"t": "A ∈ TZ и B ∈ YZ, TZ, YZ ⊂ (TXY), поэтому AB ⊂ (TXY) (аксиома 2).", "l": [["A", "B", "aux"]], "p": []}, {"t": "XY ⊂ (TXY), поэтому AB ∩ XY = K. XY ⊂ (RXY), поэтому K ∈ (RXY) и K = AB ∩ (RXY).", "l": [["B", "K", "aux"], ["Y", "K", "aux"]], "p": ["K"]}, {"t": "K ∈ (RAB) и R ∈ (RAB); K ∈ (RXY) и R ∈ (RXY). Поэтому KR = (RAB) ∩ (RXY).", "l": [["R", "K", "sec"]], "p": []}], "mode": "demo", "view": [-16, 12], "h": 250, "note": "Задача 3 (§ 2). Жми «шаг ▶».", "always": []}, "u44": {"id": "u44", "V": {"A": [1.5, 0.4, 3.1], "I": [0.0, 0.3, 0.0], "J": [1.9, -0.6, 0.0], "K": [2.9, 1.2, 0.0]}, "F": [["I", "J", "K"], ["I", "J", "A"], ["J", "K", "A"], ["K", "I", "A"]], "E": [["A", "I"], ["A", "J"], ["A", "K"], ["I", "J"], ["I", "K"], ["J", "K"]], "P": {"M": {"c": [1.7, -0.1, 1.55], "f": [1, 2], "pf": [1, 2]}, "N": {"c": [3.39, 1.48, -1.085], "f": [], "pf": [2, 3]}, "X": {"c": [2.694118, 0.829412, -0.0], "f": [0, 2], "pf": [0, 2]}}, "sec": [], "given": ["M", "N"], "steps": [{"t": "M ∈ AJ и N ∈ AK, AJ ⊂ (AJK) и AK ⊂ (AJK), поэтому MN ⊂ (AJK) (аксиома 2).", "l": [["M", "N", "aux"], ["K", "N", "aux"]], "p": []}, {"t": "JK ⊂ (AJK), поэтому MN ∩ JK = X. JK ⊂ (IJK), поэтому X ∈ (IJK) и X = MN ∩ (IJK).", "l": [["N", "X", "aux"], ["K", "X", "aux"]], "p": ["X"]}, {"t": "б) X ∈ MN, MN ⊂ (IMN), поэтому X ∈ (IMN); I ∈ (IMN). X ∈ (IJK) и I ∈ (IJK). Поэтому IX = (IMN) ∩ (IJK).", "l": [["I", "X", "sec"]], "p": []}], "mode": "demo", "view": [-18, 12], "h": 270, "note": "M — на ребре AJ, N — на луче AK за точкой K. Жми «шаг ▶».", "always": []}, "u46": {"id": "u46", "V": {"K": [0.3, -0.2, 0.0], "K1": [0.3, -0.2, 2.4], "M": [0.0, 1.6, 0.0], "M1": [0.0, 1.6, 2.4], "O": [2.8, 2.0, 0.0], "O1": [2.8, 2.0, 2.4], "Q": [2.6, 0.2, 0.0], "Q1": [2.6, 0.2, 2.4]}, "F": [["K", "M", "O", "Q"], ["K1", "M1", "O1", "Q1"], ["K", "M", "M1", "K1"], ["M", "O", "O1", "M1"], ["O", "Q", "Q1", "O1"], ["Q", "K", "K1", "Q1"]], "E": [["K", "K1"], ["K", "M"], ["K", "Q"], ["K1", "M1"], ["K1", "Q1"], ["M", "M1"], ["M", "O"], ["M1", "O1"], ["O", "O1"], ["O", "Q"], ["O1", "Q1"], ["Q", "Q1"]], "P": {"A": {"c": [0.15, 0.7, 0.0], "f": [0, 2], "pf": [0, 2]}, "B": {"c": [1.22, -0.04, 0.0], "f": [0, 5], "pf": [0, 5]}, "X": {"c": [-0.95424, 1.46368, 0.0], "f": [], "pf": [0, 3]}}, "sec": [], "given": ["A", "B"], "steps": [{"t": "A ∈ KM и B ∈ KQ, KM ⊂ (KMO) и KQ ⊂ (KMO), поэтому AB ⊂ (KMO) (аксиома 2). MO ⊂ (KMO), поэтому AB ∩ MO = X.", "l": [["A", "B", "aux"], ["A", "X", "aux"], ["M", "X", "aux"]], "p": ["X"]}, {"t": "MO ⊂ (M₁MO), поэтому X ∈ (M₁MO) и X = AB ∩ (M₁MO).", "l": [], "p": []}, {"t": "б) X ∈ AB, AB ⊂ (ABO₁), поэтому X ∈ (ABO₁); O₁ ∈ (ABO₁). X ∈ MO, MO ⊂ (MOO₁), поэтому X ∈ (MOO₁); O₁ ∈ (MOO₁). Поэтому XO₁ = (ABO₁) ∩ (MOO₁).", "l": [["X", "O1", "sec"]], "p": []}], "mode": "demo", "view": [20, 24], "h": 270, "note": "A — на ребре KM, B — на ребре KQ. Жми «шаг ▶».", "always": []}, "u47": {"id": "u47", "V": {"T": [0.0, 0.0, 0.0], "T1": [-0.3, 0.2, 2.3], "U": [0.4, 1.6, 0.0], "U1": [0.1, 1.8, 2.3], "V": [2.9, 1.6, 0.0], "V1": [2.6, 1.8, 2.3], "W": [2.5, 0.0, 0.0], "W1": [2.2, 0.2, 2.3]}, "F": [["T", "U", "V", "W"], ["T1", "U1", "V1", "W1"], ["T", "U", "U1", "T1"], ["U", "V", "V1", "U1"], ["V", "W", "W1", "V1"], ["W", "T", "T1", "W1"]], "E": [["T", "T1"], ["T", "U"], ["T", "W"], ["T1", "U1"], ["T1", "W1"], ["U", "U1"], ["U", "V"], ["U1", "V1"], ["V", "V1"], ["V", "W"], ["V1", "W1"], ["W", "W1"]], "P": {"A": {"c": [-0.1, 1.0, 2.3], "f": [1, 2], "pf": [1, 2]}, "B": {"c": [1.35, 1.8, 2.3], "f": [1, 3], "pf": [1, 3]}, "C": {"c": [2.75, 1.7, 1.15], "f": [3, 4], "pf": [3, 4]}, "X": {"c": [2.8, 2.6, 2.3], "f": [], "pf": [1, 4]}}, "sec": [], "given": ["A", "B", "C"], "steps": [{"t": "A ∈ T₁U₁ и B ∈ U₁V₁, поэтому AB ⊂ (T₁U₁V₁) (аксиома 2). W₁V₁ ⊂ (T₁U₁V₁), поэтому AB ∩ W₁V₁ = X.", "l": [["A", "B", "aux"], ["B", "X", "aux"], ["V1", "X", "aux"]], "p": ["X"]}, {"t": "W₁V₁ ⊂ (WW₁V₁), поэтому X ∈ (WW₁V₁) и X = AB ∩ (WW₁V₁).", "l": [], "p": []}, {"t": "б) X ∈ (ABC) и C ∈ (ABC); X ∈ (WW₁V₁) и C ∈ VV₁ ⊂ (WW₁V₁). Поэтому XC = (ABC) ∩ (WW₁V₁).", "l": [["X", "C", "sec"]], "p": []}], "mode": "demo", "view": [-24, 16], "h": 270, "note": "A, B, C — середины рёбер T₁U₁, U₁V₁, V₁V. Жми «шаг ▶».", "always": []}, "u48": {"id": "u48", "V": {"A": [1.6, 0.8, 2.6], "K": [0.0, 0.5, 0.0], "L": [1.1, 2.3, 0.0], "M": [3.3, 1.3, 0.0], "N": [1.9, -0.6, 0.0]}, "F": [["K", "L", "M", "N"], ["K", "L", "A"], ["L", "M", "A"], ["M", "N", "A"], ["N", "K", "A"]], "E": [["A", "K"], ["A", "L"], ["A", "M"], ["A", "N"], ["K", "L"], ["K", "N"], ["L", "M"], ["M", "N"]], "P": {"O": {"c": [1.496474, 0.862782, 0.0], "f": [0], "pf": [0]}, "B": {"c": [0.748237, 0.681391, 0.0], "f": [0], "pf": [0]}, "C": {"c": [2.18, -1.615, 0.0], "f": [], "pf": [0]}, "X": {"c": [-0.799168, 3.163258, 0.0], "f": [], "pf": [0, 2]}}, "sec": [], "given": ["O", "B", "C"], "steps": [{"t": "Диагонали KM и LN основания пересекаются в точке O.", "l": [["K", "M", "aux"], ["L", "C", "aux"]], "p": []}, {"t": "B ∈ KO и C ∈ LN, поэтому B ∈ (KLM) и C ∈ (KLM), BC ⊂ (KLM) (аксиома 2). LM ⊂ (KLM), поэтому BC ∩ LM = X.", "l": [["B", "C", "aux"], ["B", "X", "aux"], ["M", "X", "aux"], ["L", "X", "aux"]], "p": ["X"]}, {"t": "LM ⊂ (ALM), поэтому X ∈ (ALM) и X = BC ∩ (ALM).", "l": [], "p": []}, {"t": "б) X ∈ BC, BC ⊂ (ABC), поэтому X ∈ (ABC); A ∈ (ABC). X ∈ (ALM) и A ∈ (ALM). Поэтому AX = (ABC) ∩ (ALM).", "l": [["A", "X", "sec"]], "p": []}], "mode": "demo", "view": [10, 38], "h": 270, "note": "O — точка пересечения диагоналей основания, B — на отрезке KO, C — на луче LN за точкой N. Жми «шаг ▶».", "always": []}, "u56": {"id": "u56", "V": {"M": [1.5, 0.7, 3.2], "X": [0.0, 0.4, 0.0], "Y": [1.5, 1.9, 0.0], "Z": [3.1, 1.0, 0.0], "V": [1.6, -0.4, 0.0]}, "F": [["X", "Y", "Z", "V"], ["X", "Y", "M"], ["Y", "Z", "M"], ["Z", "V", "M"], ["V", "X", "M"]], "E": [["M", "V"], ["M", "X"], ["M", "Y"], ["M", "Z"], ["V", "X"], ["V", "Z"], ["X", "Y"], ["Y", "Z"]], "P": {"A": {"c": [0.675, 0.535, 1.44], "f": [1, 4], "pf": [1, 4]}, "B": {"c": [1.5, 1.12, 2.08], "f": [1, 2], "pf": [1, 2]}, "C": {"c": [3.74, 0.64, 0.0], "f": [], "pf": [0, 2]}, "P": {"c": [-1.18125, -0.78125, -0.0], "f": [], "pf": [0, 1]}}, "sec": [], "given": ["A", "B", "C"], "steps": [{"t": "A ∈ MX и B ∈ MY, поэтому AB ⊂ (MXY) (аксиома 2). XY ⊂ (MXY), поэтому AB ∩ XY = P.", "l": [["A", "B", "aux"], ["A", "P", "aux"], ["X", "P", "aux"], ["Z", "C", "aux"]], "p": ["P"]}, {"t": "P ∈ XY, XY ⊂ (XYZ), поэтому P ∈ (XYZ); P ∈ AB, поэтому P ∈ (ABC). C ∈ YZ, поэтому C ∈ (XYZ); C ∈ (ABC). По аксиоме 3 (ABC) ∩ (XYZ) = PC.", "l": [["P", "C", "sec"]], "p": []}], "mode": "demo", "view": [10, 26], "h": 270, "note": "A — на ребре MX, B — на ребре MY, C — на луче YZ за точкой Z. Жми «шаг ▶».", "always": []}, "u50": {"id": "u50", "V": {"P": [1.4, 0.7, 3.3], "Q": [0.0, 0.9, 0.0], "S": [1.5, -0.4, 0.0], "R": [3.2, 1.3, 0.0]}, "F": [["Q", "S", "R"], ["Q", "S", "P"], ["S", "R", "P"], ["R", "Q", "P"]], "E": [["P", "Q"], ["P", "R"], ["P", "S"], ["Q", "R"], ["Q", "S"], ["R", "S"]], "P": {"A": {"c": [1.0, 0.54, 1.65], "f": [1], "pf": [1]}, "B": {"c": [1.907, 0.427, 1.155], "f": [2], "pf": [2]}, "A1": {"c": [0.6, 0.38, 0.0], "f": [0, 1], "pf": [0, 1]}, "B1": {"c": [2.18, 0.28, 0.0], "f": [0, 2], "pf": [0, 2]}, "X": {"c": [4.023333, 0.163333, -0.0], "f": [], "pf": [0]}, "Z": {"c": [-2.56, 0.58, 0.0], "f": [], "pf": [0, 3]}, "Y": {"c": [0.045263, 0.658947, 2.171053], "f": [], "pf": [3]}}, "sec": [], "given": ["A", "B"], "steps": [{"t": "Проведём прямые PA и PB. PA лежит в плоскости PQS и пересекает QS в точке A₁; PB лежит в плоскости PRS и пересекает RS в точке B₁.", "l": [["P", "A1", "aux"], ["P", "B1", "aux"]], "p": ["A1", "B1"]}, {"t": "Прямые PA и PB пересекаются в точке P, поэтому через них проходит плоскость PAB; AB ⊂ (PAB), A₁B₁ ⊂ (PAB). A₁ ∈ QS и B₁ ∈ RS, поэтому A₁B₁ ⊂ (QRS): A₁B₁ = (PAB) ∩ (QRS).", "l": [["A1", "B1", "aux"]], "p": []}, {"t": "а) Прямые AB и A₁B₁ лежат в плоскости PAB: AB ∩ A₁B₁ = X. X ∈ A₁B₁ ⊂ (QRS), поэтому X = AB ∩ (QRS).", "l": [["A", "B", "aux"], ["B", "X", "aux"], ["B1", "X", "aux"]], "p": ["X"]}, {"t": "б) A₁B₁ ∩ QR = Z. Z ∈ (PAB) и Z ∈ (PQR); P ∈ (PAB) и P ∈ (PQR), поэтому PZ = (PAB) ∩ (PQR).", "l": [["A1", "Z", "aux"], ["Q", "Z", "aux"], ["P", "Z", "aux"]], "p": ["Z"]}, {"t": "Прямые AB и PZ лежат в плоскости PAB: AB ∩ PZ = Y. Y ∈ PZ ⊂ (PQR), поэтому Y = AB ∩ (PQR).", "l": [["A", "Y", "aux"]], "p": ["Y"]}], "mode": "demo", "view": [-14, 12], "h": 270, "note": "A — в грани PQS, B — в грани PRS. Жми «шаг ▶».", "always": []}, "u54": {"id": "u54", "V": {"B": [1.3, 0.7, 3.3], "K": [0.0, 0.6, 0.0], "N": [1.4, -0.4, 0.0], "M": [3.1, 0.7, 0.0], "L": [1.8, 1.9, 0.0]}, "F": [["K", "N", "M", "L"], ["K", "N", "B"], ["N", "M", "B"], ["M", "L", "B"], ["L", "K", "B"]], "E": [["B", "K"], ["B", "L"], ["B", "M"], ["B", "N"], ["K", "L"], ["K", "N"], ["L", "M"], ["M", "N"]], "P": {"B1": {"c": [0.7, 0.1, 0.0], "f": [0, 1], "pf": [0, 1]}, "N1": {"c": [0.65, 0.65, 1.65], "f": [1, 4], "pf": [1, 4]}, "G": {"c": [0.9, 0.3, 1.1], "f": [1], "pf": [1]}, "Z": {"c": [1.522727, 0.305682, 0.0], "f": [0], "pf": [0]}, "T": {"c": [1.467641, 0.403207, 0.81618], "f": [], "pf": []}}, "sec": [], "given": ["B1", "N1", "G"], "steps": [{"t": "Медианы BB₁ и NN₁ грани BKN пересекаются в точке G.", "l": [["B", "B1", "aux"], ["N", "N1", "aux"]], "p": []}, {"t": "Прямые MG и BB₁ пересекаются в точке G, поэтому лежат в одной плоскости BMB₁. M ∈ (KLM) и B₁ ∈ KN ⊂ (KLM), поэтому MB₁ = (BMB₁) ∩ (KLM).", "l": [["M", "B1", "aux"]], "p": []}, {"t": "MB₁ и LN лежат в плоскости основания: MB₁ ∩ LN = Z. Z ∈ (BMB₁) и Z ∈ (BLN); B ∈ (BMB₁) и B ∈ (BLN), поэтому BZ = (BMB₁) ∩ (BLN).", "l": [["L", "N", "aux"], ["B", "Z", "aux"]], "p": ["Z"]}, {"t": "MG и BZ лежат в плоскости BMB₁: MG ∩ BZ = T. T ∈ BZ ⊂ (BLN), поэтому T = MG ∩ (BLN).", "l": [["M", "T", "aux"]], "p": ["T"]}], "mode": "demo", "view": [-14, 12], "h": 270, "note": "G — точка пересечения медиан BB₁ и NN₁ грани BKN. Жми «шаг ▶».", "always": []}, "s31": {"id": "s31", "V": {"A": [1.0, -0.3, 0.0], "A1": [0.3, 0.2, 3.8], "B": [0.0, 1.1, 0.0], "B1": [-0.7, 1.6, 3.8], "C": [1.9, 2.2, 0.0], "C1": [1.2, 2.7, 3.8], "D": [3.1, 0.8, 0.0], "D1": [2.4, 1.3, 3.8]}, "F": [["A", "B", "C", "D"], ["A1", "B1", "C1", "D1"], ["A", "B", "B1", "A1"], ["B", "C", "C1", "B1"], ["C", "D", "D1", "C1"], ["D", "A", "A1", "D1"]], "E": [["A", "A1"], ["A", "B"], ["A", "D"], ["A1", "B1"], ["A1", "D1"], ["B", "B1"], ["B", "C"], ["B1", "C1"], ["C", "C1"], ["C", "D"], ["C1", "D1"], ["D", "D1"]], "P": {"M": {"c": [0.93, -0.25, 0.38], "f": [2, 5], "pf": [2, 5]}, "N": {"c": [-0.315, 1.325, 1.71], "f": [2, 3], "pf": [2, 3]}, "K": {"c": [1.375, 2.575, 2.85], "f": [3, 4], "pf": [3, 4]}, "X": {"c": [1.285714, -0.7, -0.0], "f": [], "pf": [0, 2]}, "Y": {"c": [-2.85, -0.55, 0.0], "f": [], "pf": [0, 3]}, "Z": {"c": [4.48518, -0.816043, -0.0], "f": [], "pf": [0, 4]}, "F": {"c": [2.818697, 1.000931, 1.527074], "f": [4, 5], "pf": [4, 5]}}, "sec": [], "given": ["M", "N", "K"], "steps": [{"t": "M ∈ AA₁ и N ∈ BB₁, поэтому MN ⊂ (ABB₁). AB ⊂ (ABB₁), поэтому MN ∩ AB = X; X ∈ (ABC) и X ∈ (MNK).", "l": [["M", "N", "sec"], ["M", "X", "aux"], ["A", "X", "aux"]], "p": ["X"]}, {"t": "N ∈ BB₁ и K ∈ CC₁, поэтому NK ⊂ (BCC₁). BC ⊂ (BCC₁), поэтому NK ∩ BC = Y; Y ∈ (ABC) и Y ∈ (MNK).", "l": [["N", "K", "sec"], ["K", "Y", "aux"], ["C", "Y", "aux"], ["B", "Y", "aux"]], "p": ["Y"]}, {"t": "По аксиоме 3 (MNK) ∩ (ABC) = XY — след секущей плоскости на плоскости основания.", "l": [["X", "Y", "aux"]], "p": []}, {"t": "XY ∩ CD = Z, Z ∈ (CDD₁) и Z ∈ (MNK); K ∈ (CDD₁) и K ∈ (MNK), поэтому ZK — след на плоскости CDD₁.", "l": [["D", "Z", "aux"], ["Z", "K", "aux"]], "p": ["Z"]}, {"t": "ZK ∩ DD₁ = F — искомая точка пересечения ребра DD₁ с плоскостью MNK. MNKF — сечение призмы этой плоскостью.", "l": [["K", "F", "sec"], ["F", "M", "sec"]], "p": ["F"]}], "mode": "demo", "view": [10, 32], "h": 300, "note": "M, N, K — на рёбрах AA₁, BB₁, CC₁. Жми «шаг ▶».", "always": []}, "s32": {"id": "s32", "V": {"A": [1.0, -0.3, 0.0], "A1": [0.3, 0.2, 3.8], "B": [0.0, 1.1, 0.0], "B1": [-0.7, 1.6, 3.8], "C": [1.9, 2.2, 0.0], "C1": [1.2, 2.7, 3.8], "D": [3.1, 0.8, 0.0], "D1": [2.4, 1.3, 3.8]}, "F": [["A", "B", "C", "D"], ["A1", "B1", "C1", "D1"], ["A", "B", "B1", "A1"], ["B", "C", "C1", "B1"], ["C", "D", "D1", "C1"], ["D", "A", "A1", "D1"]], "E": [["A", "A1"], ["A", "B"], ["A", "D"], ["A1", "B1"], ["A1", "D1"], ["B", "B1"], ["B", "C"], ["B1", "C1"], ["C", "C1"], ["C", "D"], ["C1", "D1"], ["D", "D1"]], "P": {"X": {"c": [0.29, 0.55, 1.14], "f": [2], "pf": [2]}, "Y": {"c": [-0.35, 1.35, 1.9], "f": [2, 3], "pf": [2, 3]}, "Z": {"c": [1.305, 2.625, 3.23], "f": [3, 4], "pf": [3, 4]}, "P": {"c": [-2.714286, -0.471429, -0.0], "f": [], "pf": [0, 3]}, "Q": {"c": [1.25, -0.65, 0.0], "f": [], "pf": [0, 2]}, "R": {"c": [4.467068, -0.794913, 0.0], "f": [], "pf": [0, 4]}, "F": {"c": [2.783138, 1.02633, 1.720106], "f": [4, 5], "pf": [4, 5]}, "W": {"c": [0.93, -0.25, 0.38], "f": [2, 5], "pf": [2, 5]}}, "sec": [], "given": ["X", "Y", "Z"], "steps": [{"t": "Y ∈ BB₁ и Z ∈ CC₁, поэтому YZ ⊂ (BCC₁). BC ⊂ (BCC₁), поэтому YZ ∩ BC = P; P ∈ (ABC) и P ∈ (XYZ).", "l": [["Y", "Z", "sec"], ["Y", "P", "aux"], ["B", "P", "aux"]], "p": ["P"]}, {"t": "X ∈ (ABB₁) и Y ∈ BB₁ ⊂ (ABB₁), поэтому XY ⊂ (ABB₁). AB ⊂ (ABB₁), поэтому XY ∩ AB = Q; Q ∈ (ABC) и Q ∈ (XYZ). Прямая XY пересекает ребро AA₁ в точке W.", "l": [["Y", "W", "sec"], ["W", "Q", "aux"], ["B", "Q", "aux"]], "p": ["W", "Q"]}, {"t": "По аксиоме 3 (XYZ) ∩ (ABC) = PQ — след секущей плоскости на плоскости основания.", "l": [["P", "Q", "aux"]], "p": []}, {"t": "PQ ∩ CD = R, R ∈ (CDD₁) и R ∈ (XYZ); Z ∈ (CDD₁) и Z ∈ (XYZ), поэтому RZ — след на плоскости CDD₁.", "l": [["C", "R", "aux"], ["D", "R", "aux"], ["R", "Z", "aux"]], "p": ["R"]}, {"t": "RZ ∩ DD₁ = F — искомая точка. WYZF — сечение призмы плоскостью XYZ.", "l": [["Z", "F", "sec"], ["F", "W", "sec"]], "p": ["F"]}], "mode": "demo", "view": [10, 32], "h": 300, "note": "X — в грани ABB₁A₁, Y — на ребре BB₁, Z — на ребре CC₁. Жми «шаг ▶».", "always": []}, "s33": {"id": "s33", "V": {"A": [1.0, -0.3, 0.0], "A1": [0.3, 0.2, 3.8], "B": [0.0, 1.1, 0.0], "B1": [-0.7, 1.6, 3.8], "C": [1.9, 2.2, 0.0], "C1": [1.2, 2.7, 3.8], "D": [3.1, 0.8, 0.0], "D1": [2.4, 1.3, 3.8]}, "F": [["A", "B", "C", "D"], ["A1", "B1", "C1", "D1"], ["A", "B", "B1", "A1"], ["B", "C", "C1", "B1"], ["C", "D", "D1", "C1"], ["D", "A", "A1", "D1"]], "E": [["A", "A1"], ["A", "B"], ["A", "D"], ["A1", "B1"], ["A1", "D1"], ["B", "B1"], ["B", "C"], ["B1", "C1"], ["C", "C1"], ["C", "D"], ["C1", "D1"], ["D", "D1"]], "P": {"M": {"c": [0.245, 0.445, 2.47], "f": [2], "pf": [2]}, "N": {"c": [0.01, 1.83, 3.04], "f": [3], "pf": [3]}, "K": {"c": [1.515, 2.475, 2.09], "f": [3, 4], "pf": [3, 4]}, "Y": {"c": [-0.635, 1.553571, 3.447143], "f": [2, 3], "pf": [2, 3]}, "P": {"c": [4.826, 3.894, 0.0], "f": [], "pf": [0, 3]}, "Q": {"c": [2.469444, -2.357222, -0.0], "f": [], "pf": [0, 2]}, "W": {"c": [0.622143, -0.030102, 2.051224], "f": [2, 5], "pf": [2, 5]}, "R": {"c": [3.488691, 0.346527, -0.0], "f": [], "pf": [0, 4]}, "F": {"c": [3.005805, 0.867282, 0.511342], "f": [4, 5], "pf": [4, 5]}}, "sec": [], "given": ["M", "N", "K"], "steps": [{"t": "N ∈ (BCC₁) и K ∈ CC₁ ⊂ (BCC₁), поэтому NK ⊂ (BCC₁). NK ∩ BB₁ = Y — точка сечения на ребре BB₁; NK ∩ BC = P, P ∈ (ABC).", "l": [["K", "Y", "sec"], ["K", "P", "aux"], ["B", "P", "aux"]], "p": ["Y", "P"]}, {"t": "Y ∈ BB₁ ⊂ (ABB₁) и M ∈ (ABB₁), поэтому YM ⊂ (ABB₁). YM ∩ AA₁ = W, YM ∩ AB = Q, Q ∈ (ABC).", "l": [["Y", "W", "sec"], ["W", "Q", "aux"], ["A", "Q", "aux"], ["B", "Q", "aux"]], "p": ["W", "Q"]}, {"t": "По аксиоме 3 (MNK) ∩ (ABC) = PQ — след секущей плоскости на плоскости основания.", "l": [["P", "Q", "aux"]], "p": []}, {"t": "PQ ∩ CD = R, R ∈ (CDD₁); K ∈ (CDD₁), поэтому RK — след на плоскости CDD₁.", "l": [["C", "R", "aux"], ["D", "R", "aux"], ["R", "K", "aux"]], "p": ["R"]}, {"t": "RK ∩ DD₁ = F — искомая точка. WYKF — сечение призмы плоскостью MNK.", "l": [["K", "F", "sec"], ["F", "W", "sec"]], "p": ["F"]}], "mode": "demo", "view": [-20, 30], "h": 300, "note": "M — в грани ABB₁A₁, N — в грани BCC₁B₁, K — на ребре CC₁. Жми «шаг ▶».", "always": []}, "u55": {"id": "u55", "V": {"C": [0.0, 0.4, 0.0], "C1": [0.0, 0.4, 2.6], "D": [1.3, 1.8, 0.0], "D1": [1.3, 1.8, 2.6], "E": [2.7, 0.2, 0.0], "E1": [2.7, 0.2, 2.6]}, "F": [["C", "D", "E"], ["C1", "D1", "E1"], ["C", "D", "D1", "C1"], ["D", "E", "E1", "D1"], ["E", "C", "C1", "E1"]], "E": [["C", "C1"], ["C", "D"], ["C", "E"], ["C1", "D1"], ["C1", "E1"], ["D", "D1"], ["D", "E"], ["D1", "E1"], ["E", "E1"]], "P": {"M": {"c": [0.65, 1.1, 1.3], "f": [2], "pf": [2]}, "F": {"c": [2.0, 1.0, 0.0], "f": [0, 3], "pf": [0, 3]}, "N": {"c": [2.35, 0.6, 1.3], "f": [3], "pf": [3]}, "L": {"c": [1.3, 1.8, 3.38], "f": [], "pf": [2, 3]}, "P": {"c": [0.0, 0.4, -0.78], "f": [], "pf": [2, 4]}, "Q": {"c": [2.7, 0.2, 0.606667], "f": [3, 4], "pf": [3, 4]}}, "sec": [], "given": ["M", "F", "N", "L"], "steps": [{"t": "L ∈ DD₁ и M ∈ DC₁, поэтому LM ⊂ (CDD₁). CC₁ ⊂ (CDD₁), поэтому LM ∩ CC₁ = P; P ∈ (MNL) и P ∈ (ECC₁).", "l": [["D1", "L", "aux"], ["D", "C1", "aux"], ["L", "P", "aux"]], "p": ["P"]}, {"t": "L ∈ DD₁ и N ∈ E₁F, DD₁ ⊂ (DEE₁) и E₁F ⊂ (DEE₁), поэтому LN ⊂ (DEE₁). EE₁ ⊂ (DEE₁), поэтому LN ∩ EE₁ = Q; Q ∈ (MNL) и Q ∈ (ECC₁).", "l": [["E1", "F", "aux"], ["L", "Q", "aux"]], "p": ["Q"]}, {"t": "По аксиоме 3 (MNL) ∩ (ECC₁) = PQ.", "l": [["P", "Q", "sec"]], "p": []}], "mode": "demo", "view": [-24, 14], "h": 290, "note": "M — на диагонали DC₁, N — на отрезке E₁F, L — на луче DD₁ за точкой D₁. Жми «шаг ▶».", "always": []}, "u84": {"id": "u84", "V": {"A": [0.0, 0.0, 0.0], "A1": [0.0, 0.0, 1.732051], "B": [3.276608, -2.294306, 0.0], "B1": [3.276608, -2.294306, 1.732051], "C": [3.625231, 1.690473, 0.0], "C1": [3.625231, 1.690473, 1.732051]}, "F": [["A", "B", "C"], ["A1", "B1", "C1"], ["A", "B", "B1", "A1"], ["B", "C", "C1", "B1"], ["C", "A", "A1", "C1"]], "E": [["A", "A1"], ["A", "B"], ["A", "C"], ["A1", "B1"], ["A1", "C1"], ["B", "B1"], ["B", "C"], ["B1", "C1"], ["C", "C1"]], "P": {"A": {"c": [0.0, 0.0, 0.0], "f": [0, 2, 4], "pf": [0, 2, 4], "v": 1}, "B": {"c": [3.276608, -2.294306, 0.0], "f": [0, 2, 3], "pf": [0, 2, 3], "v": 1}, "C1": {"c": [3.625231, 1.690473, 1.732051], "f": [1, 3, 4], "pf": [1, 3, 4], "v": 1}}, "sec": ["A", "B", "C1"], "given": [], "steps": [], "mode": "build", "view": [-24, 16], "h": 270, "note": "Построй сечение плоскостью ABC₁: касайся двух вершин одной грани."}, "u93": {"id": "u93", "V": {"A": [0.0, 0.0, 0.0], "B": [0.0, 3.0, 0.0], "T": [3.0, 3.0, 0.0], "V": [3.0, 0.0, 0.0], "A1": [0.0, 0.0, 4.0], "B1": [0.0, 3.0, 4.0], "T1": [3.0, 3.0, 4.0], "V1": [3.0, 0.0, 4.0]}, "F": [["A", "B", "T", "V"], ["A1", "B1", "T1", "V1"], ["A", "B", "B1", "A1"], ["B", "T", "T1", "B1"], ["T", "V", "V1", "T1"], ["V", "A", "A1", "V1"]], "E": [["A", "A1"], ["A", "B"], ["A", "V"], ["A1", "B1"], ["A1", "V1"], ["B", "B1"], ["B", "T"], ["B1", "T1"], ["T", "T1"], ["T", "V"], ["T1", "V1"], ["V", "V1"]], "P": {"A": {"c": [0.0, 0.0, 0.0], "f": [0, 2, 5], "pf": [0, 2, 5], "v": 1}, "B1": {"c": [0.0, 3.0, 4.0], "f": [1, 2, 3], "pf": [1, 2, 3], "v": 1}, "T": {"c": [3.0, 3.0, 0.0], "f": [0, 3, 4], "pf": [0, 3, 4], "v": 1}}, "sec": ["A", "B1", "T"], "given": [], "steps": [], "mode": "build", "view": [-28, 16], "h": 270, "note": "Построй сечение плоскостью AB₁T."}, "u98": {"id": "u98", "V": {"A": [0.0, 0.0, 0.0], "B": [0.0, 3.0, 0.0], "C": [3.0, 3.0, 0.0], "D": [3.0, 0.0, 0.0], "A1": [0.0, 0.0, 4.5], "B1": [0.0, 3.0, 4.5], "C1": [3.0, 3.0, 4.5], "D1": [3.0, 0.0, 4.5]}, "F": [["A", "B", "C", "D"], ["A1", "B1", "C1", "D1"], ["A", "B", "B1", "A1"], ["B", "C", "C1", "B1"], ["C", "D", "D1", "C1"], ["D", "A", "A1", "D1"]], "E": [["A", "A1"], ["A", "B"], ["A", "D"], ["A1", "B1"], ["A1", "D1"], ["B", "B1"], ["B", "C"], ["B1", "C1"], ["C", "C1"], ["C", "D"], ["C1", "D1"], ["D", "D1"]], "P": {"A1": {"c": [0.0, 0.0, 4.5], "f": [1, 2, 5], "pf": [1, 2, 5], "v": 1}, "B": {"c": [0.0, 3.0, 0.0], "f": [0, 2, 3], "pf": [0, 2, 3], "v": 1}, "D": {"c": [3.0, 0.0, 0.0], "f": [0, 4, 5], "pf": [0, 4, 5], "v": 1}}, "sec": ["A1", "B", "D"], "given": [], "steps": [], "mode": "build", "view": [-28, 16], "h": 270, "note": "Из вершины A выходят рёбра AB, AD, AA₁. Построй сечение через их концы B, D, A₁."}, "u75": {"id": "u75", "V": {"I": [2.300613, -0.201278, 3.265986], "J": [0.0, 0.0, 0.0], "K": [3.276608, -2.294306, 0.0], "L": [3.625231, 1.690473, 0.0]}, "F": [["J", "K", "L"], ["J", "K", "I"], ["K", "L", "I"], ["L", "J", "I"]], "E": [["I", "J"], ["I", "K"], ["I", "L"], ["J", "K"], ["J", "L"], ["K", "L"]], "P": {"C": {"c": [1.812616, 0.845237, 0.0], "f": [0, 3], "pf": [0, 3]}, "I": {"c": [2.300613, -0.201278, 3.265986], "f": [1, 2, 3], "pf": [1, 2, 3], "v": 1}, "K": {"c": [3.276608, -2.294306, 0.0], "f": [0, 1, 2], "pf": [0, 1, 2], "v": 1}}, "sec": ["I", "K", "C"], "given": ["C"], "steps": [], "mode": "build", "view": [100, 16], "h": 270, "note": "C — середина ребра JL. Построй сечение плоскостью IKC."}, "u94": {"id": "u94", "V": {"I": [0.0, 0.0, 0.0], "J": [0.0, 3.0, 0.0], "K": [3.0, 3.0, 0.0], "L": [3.0, 0.0, 0.0], "I1": [0.0, 0.0, 4.0], "J1": [0.0, 3.0, 4.0], "K1": [3.0, 3.0, 4.0], "L1": [3.0, 0.0, 4.0]}, "F": [["I", "J", "K", "L"], ["I1", "J1", "K1", "L1"], ["I", "J", "J1", "I1"], ["J", "K", "K1", "J1"], ["K", "L", "L1", "K1"], ["L", "I", "I1", "L1"]], "E": [["I", "I1"], ["I", "J"], ["I", "L"], ["I1", "J1"], ["I1", "L1"], ["J", "J1"], ["J", "K"], ["J1", "K1"], ["K", "K1"], ["K", "L"], ["K1", "L1"], ["L", "L1"]], "P": {"I": {"c": [0.0, 0.0, 0.0], "f": [0, 2, 5], "pf": [0, 2, 5], "v": 1}, "J1": {"c": [0.0, 3.0, 4.0], "f": [1, 2, 3], "pf": [1, 2, 3], "v": 1}, "L1": {"c": [3.0, 0.0, 4.0], "f": [1, 4, 5], "pf": [1, 4, 5], "v": 1}}, "sec": ["I", "J1", "L1"], "given": [], "steps": [], "mode": "build", "view": [-28, 16], "h": 270, "note": "Построй сечение плоскостью, проходящей через вершину I и прямую J₁L₁."}});
+
+/* ---------- 3D-модели сечений (s3d.py) ---------- */
+(function(){
+  var SUBS = {"0":"₀","1":"₁","2":"₂","3":"₃","4":"₄","5":"₅","6":"₆","7":"₇","8":"₈","9":"₉"};
+  function lab(n){ return String(n).replace(/(\D)(\d)$/, function(m, a, d){ return a + SUBS[d]; }); }
+  function rot(yaw, pitch){
+    var cy = Math.cos(yaw), sy = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+    return function(p){
+      var x = p[0] * cy - p[1] * sy, y = p[0] * sy + p[1] * cy, z = p[2];
+      return [x, y * cp - z * sp, y * sp + z * cp];   /* [экран x, глубина, экран вверх] */
+    };
+  }
+  function sub(a, b){ return [a[0] - b[0], a[1] - b[1], a[2] - b[2]]; }
+  function cross(a, b){ return [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]]; }
+  function dot(a, b){ return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]; }
+  var COL = {edge: "#d6e4ff", hid: "#7f8fae", given: "#5fd39a", sec: "#ffd23f", fill: "rgba(255,210,63,.30)", aux: "#ff9a3c",
+             vtx: "#9fb0cf", sel: "#3fd2ff", bad: "#ff6b7d", hl: "rgba(63,210,255,.16)"};
+
+  function Model(el, S){
+    var me = this;
+    this.el = el; this.S = S;
+    this.yaw = S.view[0] * Math.PI / 180; this.pitch = S.view[1] * Math.PI / 180;
+    this.step = 0; this.drawn = {}; this.sel = null; this.done = false; this.msgT = "";
+    var lo = [1e9, 1e9, 1e9], hi = [-1e9, -1e9, -1e9], k;
+    function box(p){ for(var q = 0; q < 3; q++){ lo[q] = Math.min(lo[q], p[q]); hi[q] = Math.max(hi[q], p[q]); } }
+    for(k in S.V) box(S.V[k]);
+    for(k in S.P) box(S.P[k].c);
+    this.c = [(lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2, (lo[2] + hi[2]) / 2];
+    var r = 0;
+    function grow(p){ var d = sub(p, me.c); r = Math.max(r, Math.sqrt(dot(d, d))); }
+    for(k in S.V) grow(S.V[k]);
+    for(k in S.P) grow(S.P[k].c);
+    this.r = r || 1;
+    el.innerHTML = '<div class="s3w"><canvas class="s3c"></canvas>' +
+      '<div class="s3bar"><button type="button" class="s3b s3l" aria-label="повернуть влево"></button>' +
+      '<button type="button" class="s3b s3r" aria-label="повернуть вправо"></button>' +
+      '<button type="button" class="s3b s3home" aria-label="как в учебнике"></button>' +
+      (S.steps.length ? '<button type="button" class="s3b s3prev" aria-label="шаг назад"></button><button type="button" class="s3b s3next" aria-label="следующий шаг"></button>' : '') +
+      (S.mode === "build" ? '<button type="button" class="s3b s3reset" aria-label="сначала"></button>' : '') +
+      '</div><div class="s3msg"></div></div>';
+    this.cv = el.querySelector("canvas");
+    this.msg = el.querySelector(".s3msg");
+    var drag = null;
+    this.cv.addEventListener("pointerdown", function(e){
+      drag = {x: e.clientX, y: e.clientY, yaw: me.yaw, pitch: me.pitch, moved: false};
+      try{ me.cv.setPointerCapture(e.pointerId); }catch(er){}
+    });
+    this.cv.addEventListener("pointermove", function(e){
+      if(!drag) return;
+      var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+      if(Math.abs(dx) + Math.abs(dy) > 6) drag.moved = true;
+      if(!drag.moved) return;
+      me.yaw = drag.yaw - dx * 0.012;
+      me.pitch = Math.max(-1.2, Math.min(1.35, drag.pitch + dy * 0.01));
+      me.draw();
+    });
+    this.cv.addEventListener("pointerup", function(e){
+      var d = drag; drag = null;
+      if(d && !d.moved) me.tap(e);
+    });
+    el.querySelector(".s3l").addEventListener("click", function(){ me.yaw += 0.35; me.draw(); });
+    el.querySelector(".s3r").addEventListener("click", function(){ me.yaw -= 0.35; me.draw(); });
+    el.querySelector(".s3home").addEventListener("click", function(){ me.yaw = S.view[0] * Math.PI / 180; me.pitch = S.view[1] * Math.PI / 180; me.draw(); });
+    var nx = el.querySelector(".s3next"), pv = el.querySelector(".s3prev"), rs = el.querySelector(".s3reset");
+    if(nx) nx.addEventListener("click", function(){ if(me.step < S.steps.length){ me.step++; me.say(); me.draw(); } });
+    if(pv) pv.addEventListener("click", function(){ if(me.step > 0){ me.step--; me.say(); me.draw(); } });
+    if(rs) rs.addEventListener("click", function(){ me.drawn = {}; me.sel = null; me.done = false; me.step = 0; me.say(); me.draw(); });
+    this.resize = function(){
+      var w = Math.min(el.clientWidth || 320, 520), h = S.h || 270, dpr = window.devicePixelRatio || 1;
+      me.cv.style.width = w + "px"; me.cv.style.height = h + "px";
+      me.cv.width = Math.round(w * dpr); me.cv.height = Math.round(h * dpr);
+      me.W = w; me.H = h; me.dpr = dpr; me.draw();
+    };
+    window.addEventListener("resize", this.resize);
+    this.say(); this.resize();
+  }
+  Model.prototype.known = function(){
+    var S = this.S, k = {}, i, j;
+    S.given.forEach(function(n){ k[n] = 1; });
+    for(i = 0; i < this.step; i++) (S.steps[i].p || []).forEach(function(n){ k[n] = 1; });
+    if(this.S.mode === "build") S.sec.forEach(function(n){ if(S.P[n] && S.P[n].v) k[n] = 1; });
+    return k;
+  };
+  Model.prototype.say = function(){
+    var S = this.S, t = "";
+    if(S.mode === "build"){
+      if(this.done) t = this.msgT;
+      else t = this.msgT || ("Касайся двух точек одной грани — проведётся сторона сечения." +
+        (S.steps.length ? " Не хватает точек — жми «шаг ▶»: откроется следующий шаг построения." : ""));
+      if(this.step && S.steps[this.step - 1]) t = '<b>Шаг ' + this.step + '.</b> ' + S.steps[this.step - 1].t + (this.msgT ? '<br>' + this.msgT : '');
+    } else {
+      t = this.step ? '<b>Шаг ' + this.step + ' из ' + S.steps.length + '.</b> ' + S.steps[this.step - 1].t
+                    : (S.note || "Крути модель пальцем. Жми «шаг ▶» — построение пойдёт по шагам.");
+    }
+    this.msg.innerHTML = t;
+  };
+  Model.prototype.proj = function(p){
+    var R = rot(this.yaw, this.pitch), q = R(sub(p, this.c)), s = Math.min(this.W, this.H) * 0.42 / this.r;
+    return [this.W / 2 + q[0] * s, this.H / 2 - q[2] * s, q[1]];
+  };
+  Model.prototype.faceFront = function(f){
+    var S = this.S, R = rot(this.yaw, this.pitch);
+    var a = R(sub(S.V[f[0]], this.c)), b = R(sub(S.V[f[1]], this.c)), c = R(sub(S.V[f[2]], this.c));
+    var n = cross(sub(b, a), sub(c, a)), m = [0, 0, 0], i;
+    for(i = 0; i < f.length; i++){ var q = R(sub(S.V[f[i]], this.c)); m = [m[0] + q[0] / f.length, m[1] + q[1] / f.length, m[2] + q[2] / f.length]; }
+    if(dot(n, m) < 0) n = [-n[0], -n[1], -n[2]];          /* наружу от центра */
+    return n[1] < 0;                                      /* смотрит на нас (глубина растёт от нас) */
+  };
+  Model.prototype.lines = function(){
+    var S = this.S, out = (S.always || []).slice(), i, j;
+    for(i = 0; i < this.step; i++) (S.steps[i].l || []).forEach(function(l){ out.push(l); });
+    if(S.mode === "build"){ for(var k in this.drawn) out.push([k.split("|")[0], k.split("|")[1], "sec"]); }
+    return out;
+  };
+  Model.prototype.showPoly = function(){
+    if(this.done) return true;
+    if(this.S.mode === "build") return false;
+    for(var i = 0; i < this.step; i++) if(this.S.steps[i].poly) return true;
+    return false;
+  };
+  Model.prototype.pt = function(n){ return this.S.P[n] ? this.S.P[n].c : this.S.V[n]; };
+  Model.prototype.draw = function(){
+    if(!this.W) return;
+    var S = this.S, me = this, g = this.cv.getContext("2d"), i, k;
+    g.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+    g.clearRect(0, 0, this.W, this.H);
+    g.fillStyle = "#0b1220"; g.fillRect(0, 0, this.W, this.H);
+    var front = S.F.map(function(f){ return me.faceFront(f); });
+    if(this.showPoly()){
+      g.beginPath();
+      S.sec.forEach(function(n, j){ var q = me.proj(me.pt(n)); if(j) g.lineTo(q[0], q[1]); else g.moveTo(q[0], q[1]); });
+      g.closePath(); g.fillStyle = COL.fill; g.fill();
+    }
+    /* рёбра */
+    S.E.forEach(function(e){
+      var vis = false;
+      S.F.forEach(function(f, j){ if(front[j] && f.indexOf(e[0]) >= 0 && f.indexOf(e[1]) >= 0) vis = true; });
+      var a = me.proj(S.V[e[0]]), b = me.proj(S.V[e[1]]);
+      g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]);
+      g.setLineDash(vis ? [] : [5, 4]); g.strokeStyle = vis ? COL.edge : COL.hid; g.lineWidth = vis ? 1.8 : 1.2; g.stroke();
+    });
+    g.setLineDash([]);
+    /* линии построения */
+    this.lines().forEach(function(l){
+      var a = me.proj(me.pt(l[0])), b = me.proj(me.pt(l[1])), kind = l[2] || "sec";
+      var vis = true;
+      if(kind === "sec"){         /* сторона сечения видна, если лежит в видимой грани */
+        vis = false;
+        var fa = (S.P[l[0]] || {}).f || [], fb = (S.P[l[1]] || {}).f || [];
+        fa.forEach(function(j){ if(fb.indexOf(j) >= 0 && front[j]) vis = true; });
+      }
+      g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]);
+      g.setLineDash(kind === "sec" ? (vis ? [] : [6, 4]) : [4, 4]);
+      g.strokeStyle = kind === "sec" ? COL.sec : COL.aux; g.lineWidth = kind === "sec" ? 2.6 : 1.5; g.stroke();
+    });
+    g.setLineDash([]);
+    /* подписи вершин */
+    g.font = "italic 600 14px Segoe UI, Roboto, Arial, sans-serif"; g.textAlign = "center"; g.textBaseline = "middle";
+    var cc = this.proj(this.c);
+    for(k in S.V){
+      var q = this.proj(S.V[k]), dx = q[0] - cc[0], dy = q[1] - cc[1], L = Math.sqrt(dx * dx + dy * dy) || 1;
+      g.fillStyle = COL.vtx; g.fillText(lab(k), q[0] + dx / L * 13, q[1] + dy / L * 13);
+    }
+    /* точки */
+    var kn = this.known();
+    for(k in kn){
+      if(!S.P[k] || S.P[k].v) continue;
+      var p = this.proj(S.P[k].c), isGiven = S.given.indexOf(k) >= 0;
+      g.beginPath(); g.arc(p[0], p[1], this.sel === k ? 7 : 5, 0, 7);
+      g.fillStyle = this.sel === k ? COL.sel : (isGiven ? COL.given : (S.sec.indexOf(k) >= 0 ? COL.sec : COL.aux)); g.fill();
+      g.font = "700 15px Segoe UI, Roboto, Arial, sans-serif";
+      g.fillStyle = isGiven ? COL.given : (S.sec.indexOf(k) >= 0 ? COL.sec : COL.aux);
+      g.fillText(lab(k), p[0] + 11, p[1] - 11);
+    }
+    if(this.sel && S.P[this.sel] && S.P[this.sel].v){
+      var v = this.proj(this.pt(this.sel)); g.beginPath(); g.arc(v[0], v[1], 7, 0, 7); g.strokeStyle = COL.sel; g.lineWidth = 2.5; g.stroke();
+    }
+  };
+  Model.prototype.tap = function(e){
+    if(this.S.mode !== "build" || this.done) return;
+    var r = this.cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top, S = this.S, me = this;
+    var best = null, bd = 24, kn = this.known(), k;
+    var cand = Object.keys(kn);
+    S.sec.forEach(function(n){ if(S.P[n] && S.P[n].v) cand.push(n); });
+    cand.forEach(function(n){
+      if(!S.P[n] && !S.V[n]) return;
+      var p = me.proj(me.pt(n)), d = Math.sqrt((p[0] - x) * (p[0] - x) + (p[1] - y) * (p[1] - y));
+      if(d < bd){ bd = d; best = n; }
+    });
+    if(!best){ return; }
+    this.pick(best);
+  };
+  Model.prototype.pick = function(n){
+    var S = this.S;
+    if(!this.sel || this.sel === n){ this.sel = this.sel === n ? null : n; this.msgT = this.sel ? "Выбрана точка " + lab(n) + ". Теперь вторую точку той же грани." : ""; this.say(); this.draw(); return; }
+    var a = this.sel, b = n; this.sel = null;
+    var fa = (S.P[a] || {}).f || [], fb = (S.P[b] || {}).f || [], common = fa.filter(function(j){ return fb.indexOf(j) >= 0; });
+    var ia = S.sec.indexOf(a), ib = S.sec.indexOf(b), m = S.sec.length;
+    if(!common.length){
+      this.msgT = '<span class="s3bad">' + lab(a) + ' и ' + lab(b) + ' не лежат в одной грани — так соединять нельзя.</span> Соединяем только точки одной грани.';
+    } else if(ia < 0 || ib < 0 || !((ia + 1) % m === ib || (ib + 1) % m === ia)){
+      this.msgT = '<span class="s3bad">Отрезок ' + lab(a) + lab(b) + ' не сторона сечения.</span> Найди точку, где секущая плоскость пересекает ребро этой грани.';
+    } else {
+      var key = ia < ib ? a + "|" + b : b + "|" + a;
+      this.drawn[key] = 1;
+      this.msgT = 'Сторона ' + lab(a) + lab(b) + ' — по ней секущая плоскость пересекает грань ' + S.F[common[0]].map(lab).join("") + '.';
+      if(Object.keys(this.drawn).length === m){
+        this.done = true;
+        var nm = S.sec.map(lab).join(""), w = ["", "", "", "треугольник", "четырёхугольник", "пятиугольник", "шестиугольник"][m] || (m + "-угольник");
+        this.msgT = '<span class="s3ok">Сечение построено: ' + w + ' ' + nm + '.</span>';
+        window.S3DDONE = window.S3DDONE || {}; window.S3DDONE[S.id] = 1;
+        try{ this.el.dispatchEvent(new CustomEvent("s3ddone", {bubbles: true, detail: S.id})); }catch(er){}
+      }
+    }
+    this.say(); this.draw();
+  };
+  function init(el){
+    if(el._s3d) return;
+    var id = el.getAttribute("data-s3d"), S = (window.S3DSPECS || {})[id];
+    if(!S) return;
+    el._s3d = new Model(el, S);
+  }
+  function scan(root){ Array.prototype.forEach.call((root || document).querySelectorAll(".s3d"), init); }
+  window.S3D = {scan: scan, init: init};
+  new MutationObserver(function(ms){
+    ms.forEach(function(m){ Array.prototype.forEach.call(m.addedNodes, function(nd){
+      if(nd.nodeType !== 1) return;
+      if(nd.classList && nd.classList.contains("s3d")) init(nd);
+      if(nd.querySelectorAll) scan(nd);
+    }); });
+  }).observe(document.documentElement, {childList: true, subtree: true});
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", function(){ scan(); });
+  else scan();
+  /* модель в скрытом уровне: размер считается при показе */
+  setInterval(function(){
+    Array.prototype.forEach.call(document.querySelectorAll(".s3d"), function(el){
+      var m = el._s3d; if(!m) return; var w = Math.min(el.clientWidth, 520);
+      if(w && Math.abs(w - m.W) > 2) m.resize();
+    });
+  }, 700);
+})();
+
+function allSol(open){
+  var ds = document.querySelectorAll("details.zs"), k;
+  for(k = 0; k < ds.length; k++) ds[k].open = open;
+}
+document.getElementById("openall").addEventListener("click", function(){ allSol(true); });
+document.getElementById("closeall").addEventListener("click", function(){ allSol(false); });
+</script>
+</body>
+</html>
