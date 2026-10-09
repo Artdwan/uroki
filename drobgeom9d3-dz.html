@@ -862,8 +862,49 @@ button.pri.wait{opacity:.5;filter:saturate(.6)}
 </div>
 
 <script>
+/* режим просмотра для преподавателя: #view=код - показывает работу ученика и ничего не пишет ни в браузер, ни в кабинет */
+(function(){
+  var m = /[#&?]view=([^&]+)/.exec(location.hash + location.search);
+  if(!m) return;
+  var code = ""; try{ code = decodeURIComponent(m[1]); }catch(e){ code = m[1]; }
+  window.ARTVIEW = code;
+  var mem = {};
+  var shim = {
+    getItem: function(k){ return Object.prototype.hasOwnProperty.call(mem, k) ? mem[k] : null; },
+    setItem: function(k, v){ mem[k] = String(v); },
+    removeItem: function(k){ delete mem[k]; },
+    key: function(i){ var ks = Object.keys(mem); return i < ks.length ? ks[i] : null; },
+    clear: function(){ mem = {}; }
+  };
+  Object.defineProperty(shim, "length", {get: function(){ return Object.keys(mem).length; }});
+  try{ Object.defineProperty(window, "localStorage", {configurable: true, get: function(){ return shim; }}); }catch(e){}
+  window.ARTVIEWMSG = "нет связи с кабинетом";
+  try{
+    var x = new XMLHttpRequest();
+    x.open("POST", "https://script.google.com/macros/s/AKfycbwqIhgBtFnoUik3N1Lh_YRhNeEFAjmXWSxBNoX1a_Yxu-2dEKHFwo4Dd5Ch9UTOHH-X/exec", false);
+    x.send(JSON.stringify({action: "sync", op: "load", code: code, page: "drobgeom9d3"}));
+    var j = JSON.parse(x.responseText);
+    if(j && j.ok && j.data){
+      var o = JSON.parse(j.data), k, n = 0;
+      for(k in o){ if(k.indexOf("arttich:drobgeom9d3:") === 0 && k.indexOf("~") < 0){ mem[k] = o[k]; n++; } }
+      var d = new Date(j.at);
+      window.ARTVIEWMSG = "Последнее сохранение работы: " + d.toLocaleString("ru-RU") + ".";
+    } else if(j && j.ok){ window.ARTVIEWMSG = "по этому коду на этой странице работы ещё нет"; }
+    else { window.ARTVIEWMSG = "кода «" + code + "» нет в кабинете"; }
+  }catch(e){}
+  document.addEventListener("DOMContentLoaded", function(){
+    var b = document.createElement("div");
+    b.id = "viewbar";
+    b.style.cssText = "position:fixed;left:0;right:0;bottom:0;z-index:99999;background:#7a1f4d;color:#fff;font:600 14px/1.3 system-ui,sans-serif;padding:8px 12px;text-align:center";
+    b.textContent = "РЕЖИМ ПРОСМОТРА: " + code + ". " + window.ARTVIEWMSG + " Ничего не сохраняется и не отправляется.";
+    document.body.appendChild(b);
+    var g = document.getElementById("gate"); if(g) g.style.display = "none";
+    document.body.classList.remove("gating");
+  });
+})();
+
 var CF = {};
-var STUDENT_CODE = (function(){
+var STUDENT_CODE = window.ARTVIEW || (function(){
   try{ var m = /[#&?]code=([^&]+)/.exec(location.hash + location.search);
        if(m){ var c = decodeURIComponent(m[1]); try{ localStorage.setItem("arttich:code", c); }catch(e2){} return c; }
        return localStorage.getItem("arttich:code") || ""; }catch(e){ return ""; }
@@ -3588,27 +3629,48 @@ function saveWork(){
 }
 
 
-/* ---------- работа на всех устройствах: Google-скрипт кабинета, лист «Прогресс» ---------- */
+/* ---------- работа на всех устройствах: Google-скрипт кабинета, лист «Прогресс» ----------
+   Правило 2026-10-09 (после случая с Дианой): синхронизируется только запись СВОЕГО кода; счётчик времени
+   не считается изменением; на сервере и на устройстве побеждает запись, где сделано больше, а не новее. */
 (function(){
   var PAGE = "drobgeom9d3", META = SKEY_BASE + "~sync", RL = "arttich:drobgeom9d3:~rl";
+  META += ":" + STUDENT_CODE; RL += ":" + STUDENT_CODE;      /* отметки синхронизации - у каждого кода свои (в одном браузере бывает несколько кодов) */
   var gm = document.getElementById("syncmsg"), cc = document.getElementById("sccode"), sc = document.getElementById("scode");
+  if(window.ARTVIEW) return;                       /* режим просмотра: ничего не читаем и не отправляем */
   if(STUDENT_CODE){
     if(sc){ sc.value = STUDENT_CODE; sc.style.display = "none"; var lb = document.querySelector(".sclab"); if(lb) lb.style.display = "none"; }
     if(cc) cc.textContent = "Код ученика: " + STUDENT_CODE + " — работа сохраняется и на другие устройства.";
   }
   if(!STUDENT_CODE || !CAN_STORE || typeof fetch !== "function") return;
   function rd(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+  function own(k){ return k === SKEY || k === SKEY_BASE + "plan" || k === SKEY_BASE + "home"; }
   var meta = {}; try{ meta = JSON.parse(rd(META) || "{}") || {}; }catch(e){ meta = {}; }
   function wmeta(){ try{ localStorage.setItem(META, JSON.stringify(meta)); }catch(e){} }
-  function snap(){
+  function snapObj(){
     var o = {}, i, k;
-    for(i = 0; i < localStorage.length; i++){
-      k = localStorage.key(i);
-      if(k && k.indexOf(SKEY_BASE) === 0 && k.indexOf("~") < 0) o[k] = localStorage.getItem(k);
-    }
-    return JSON.stringify(o);
+    for(i = 0; i < localStorage.length; i++){ k = localStorage.key(i); if(k && own(k)) o[k] = localStorage.getItem(k); }
+    return o;
+  }
+  function onlyOwn(o){ var r = {}, k; for(k in o) if(own(k)) r[k] = o[k]; return r; }
+  function norm(o){                                /* без полей at и spent: они меняются от одного присутствия на странице */
+    var c = {}, k, r; for(k in o) c[k] = o[k];
+    try{ r = JSON.parse(o[SKEY]); delete r.at; delete r.spent; c[SKEY] = JSON.stringify(r); }catch(e){}
+    return JSON.stringify(c);
   }
   function hash(s){ var h = 0, i; for(i = 0; i < s.length; i++){ h = (h * 31 + s.charCodeAt(i)) | 0; } return s.length + ":" + h; }
+  function hs(o){ return hash(norm(o)); }
+  function score(o){                               /* сколько сделано: число заполненных значений в записи ученика */
+    var n = 0;
+    function w(x, d){
+      if(x == null || x === "" || x === false || x === 0) return;
+      if(typeof x === "object"){ for(var k in x){ if(d === 0 && (k === "at" || k === "spent" || k === "name" || k === "v")) continue; w(x[k], d + 1); } }
+      else n++;
+    }
+    try{ w(JSON.parse(o[SKEY] || "null"), 0); }catch(e){}
+    try{ w(JSON.parse(o[SKEY_BASE + "plan"] || "null"), 1); }catch(e){}
+    return n;
+  }
+  function parse(j){ try{ return onlyOwn(JSON.parse(j.data) || {}); }catch(e){ return null; } }
   function note(t){ if(gm) gm.textContent = t; var n = document.getElementById("syncnote"); if(n) n.textContent = t; }
   function call(body, keep){
     body.action = "sync"; body.code = STUDENT_CODE; body.page = PAGE;
@@ -3616,60 +3678,82 @@ function saveWork(){
       .then(function(r){ return r.text(); })
       .then(function(t){ var j = JSON.parse(t); if(!j || !j.ok) throw new Error((j && j.error) || "нет ответа"); return j; });
   }
-  var cur = snap(), fresh = !meta.h && !meta.at, pulled = false;   /* fresh - на этом устройстве ещё не синхронизировали */
-  if(fresh){ meta.h = hash(cur); meta.mod = 0; wmeta(); }
-  else if(meta.h !== hash(cur)){ meta.mod = Date.now(); meta.h = hash(cur); wmeta(); }
+  var cur = snapObj(), fresh = !meta.h && !meta.at, pulled = false;   /* fresh - на этом устройстве ещё не синхронизировали */
+  if(fresh){ meta.h = hs(cur); meta.mod = 0; wmeta(); }
+  else if(meta.h !== hs(cur)){ meta.mod = Date.now(); meta.h = hs(cur); wmeta(); }
   var busy = false, lastTry = 0;
+  function done(){ var d = new Date(); note("Сохранено и для других устройств: " + (d.getHours() < 10 ? "0" : "") + d.getHours() + ":" + (d.getMinutes() < 10 ? "0" : "") + d.getMinutes() + "."); }
+  function save(keep){
+    var at = meta.mod, o = snapObj();
+    call({op: "save", at: at, data: JSON.stringify(o)}, keep).then(function(j){
+      busy = false;
+      if(j.stale) return pull();                   /* на сервере новее: другое устройство успело раньше */
+      meta.at = at; meta.ss = score(o); wmeta(); done();
+    }).catch(function(){ busy = false; note("Нет связи с сервером — пока сохранено только на этом устройстве."); });
+  }
   function push(keep){
     if(busy && !keep) return;
     if((meta.at || 0) >= (meta.mod || 0)) return;
+    if(score(snapObj()) < (meta.ss || 0)) return;  /* у нас меньше, чем уже лежит на сервере: не затираем */
     busy = true; lastTry = Date.now();
-    var at = meta.mod, data = snap();
-    call({op: "save", at: at, data: data}, keep).then(function(j){
-      busy = false;
-      if(j.stale) return pull();            /* на сервере новее: другое устройство успело раньше */
-      meta.at = at; wmeta();
-      var d = new Date(); note("Сохранено и для других устройств: " + (d.getHours() < 10 ? "0" : "") + d.getHours() + ":" + (d.getMinutes() < 10 ? "0" : "") + d.getMinutes() + ".");
+    if(keep){ if(meta.ss == null){ busy = false; return; } save(true); return; }   /* при закрытии страницы проверять некогда: вслепую отправляем, только если состояние сервера уже известно */
+    call({op: "load"}).then(function(j){           /* перед отправкой смотрим, что на сервере сейчас */
+      var r = j.at && j.data ? parse(j) : null;
+      if(r && score(r) > score(snapObj())){ busy = false; meta.ss = score(r); return take(j, r); }
+      if(r) meta.ss = score(r);
+      save(false);
     }).catch(function(){ busy = false; note("Нет связи с сервером — пока сохранено только на этом устройстве."); });
   }
-  function apply(j){
-    var o = {}; try{ o = JSON.parse(j.data); }catch(e){ return false; }
+  function take(j, r){                             /* взять запись с сервера: только свои ключи */
+    if(rd(RL) === String(j.at)){ note(""); return; }            /* защита от перезагрузки по кругу */
+    try{ localStorage.setItem(RL, String(j.at)); }catch(e){}
     var kill = [], i, k;
-    for(i = 0; i < localStorage.length; i++){ k = localStorage.key(i); if(k && k.indexOf(SKEY_BASE) === 0 && k.indexOf("~") < 0 && !(k in o)) kill.push(k); }
+    for(i = 0; i < localStorage.length; i++){ k = localStorage.key(i); if(k && own(k) && !(k in r)) kill.push(k); }
     try{
       kill.forEach(function(x){ localStorage.removeItem(x); });
-      for(k in o) localStorage.setItem(k, o[k]);
-    }catch(e){ return false; }
-    meta = {at: j.at, mod: j.at, h: hash(snap())}; wmeta();
-    return true;
+      for(k in r) localStorage.setItem(k, r[k]);
+    }catch(e){ return; }
+    meta = {at: j.at, mod: j.at, h: hs(snapObj()), ss: score(r)}; wmeta();
+    note("Нашёл работу с другого устройства — открываю…"); wiping = true; location.reload();
   }
   function pull(){
     note("Ищу твою работу на сервере…");
     return call({op: "load"}).then(function(j){
       pulled = true;
-      if(j.at && j.data && (fresh || j.at > (meta.mod || 0)) && hash(j.data) !== meta.h){
-        if(rd(RL) === String(j.at)){ note(""); return; }            /* защита от перезагрузки по кругу */
-        try{ localStorage.setItem(RL, String(j.at)); }catch(e){}
-        if(apply(j)){ note("Нашёл работу с другого устройства — открываю…"); wiping = true; location.reload(); }
-        return;
+      var r = j.at && j.data ? parse(j) : null;
+      if(!r && meta.ss == null) meta.ss = 0;                   /* на сервере пусто - состояние известно */
+      if(r){
+        var rs = score(r), ls = score(snapObj());
+        meta.ss = rs;
+        if(rs > ls || (rs === ls && hs(r) !== meta.h && (fresh || j.at > (meta.mod || 0)))){ take(j, r); return; }
+        if(rs < ls){ meta.mod = Math.max(Date.now(), (j.at || 0) + 1); wmeta(); note(""); push(); return; }   /* у нас больше - отправим */
+        if(j.at >= (meta.mod || 0)){ meta.at = j.at; wmeta(); }
       }
-      if(j.at && j.at >= (meta.mod || 0)){ meta.at = j.at; wmeta(); }
       note(""); push();
     }).catch(function(){ pulled = true; note("Нет связи с сервером — работа сохраняется только на этом устройстве."); });
   }
   pull();
   setInterval(function(){
-    var c = snap(), h = hash(c);
+    var h = hs(snapObj());
     if(h !== meta.h){ meta.h = h; meta.mod = Date.now(); wmeta(); }
     if(pulled && (meta.mod || 0) > (meta.at || 0) && Date.now() - lastTry > 8000) push();
   }, 3000);
-  function flush(){ if(!pulled) return; var c = snap(), h = hash(c); if(h !== meta.h){ meta.h = h; meta.mod = Date.now(); wmeta(); } push(true); }
+  function flush(){ if(!pulled) return; var h = hs(snapObj()); if(h !== meta.h){ meta.h = h; meta.mod = Date.now(); wmeta(); } push(true); }
   document.addEventListener("visibilitychange", function(){ if(document.visibilityState === "hidden") flush(); });
   window.addEventListener("pagehide", flush);
   window.SYNCNOW = function(){ return flush(); };
 })();
 
 /* работу могли начать по другой ссылке: с кодом ученика или без него */
+function wscore(b){
+  var n = 0;
+  (function w(x, d){
+    if(x == null || x === "" || x === false || x === 0) return;
+    if(typeof x === "object"){ for(var k in x){ if(d === 0 && (k === "at" || k === "spent" || k === "name" || k === "v")) continue; w(x[k], d + 1); } }
+    else n++;
+  })(b, 0);
+  return n;
+}
 function loadWork(){
   var best = null;
   try{
@@ -3678,12 +3762,10 @@ function loadWork(){
       var own = JSON.parse(raw);
       if(own && own.v === SAVE_V) best = own;
     }
-    var i, k, b;
-    for(i = 0; i < localStorage.length; i++){
-      k = localStorage.key(i);
-      if(!k || k.indexOf(SKEY_BASE) !== 0 || k === SKEY) continue;
-      try{ b = JSON.parse(localStorage.getItem(k)); }catch(e2){ continue; }
-      if(b && b.v === SAVE_V && (!best || (b.at || 0) > (best.at || 0))) best = b;
+    var b;                                            /* работа без кода (начата до ссылки с кодом) - только она, чужие коды не берём */
+    if(SKEY !== SKEY_BASE + "-"){
+      try{ b = JSON.parse(localStorage.getItem(SKEY_BASE + "-")); }catch(e2){ b = null; }
+      if(b && b.v === SAVE_V && (!best || wscore(b) > wscore(best))) best = b;
     }
   }catch(e){ return null; }
   return best;
