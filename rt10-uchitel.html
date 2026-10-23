@@ -1,0 +1,84 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Экран учителя — вариант в формате ЦТ</title>
+<style>
+body{margin:0;padding:10px;font:15px/1.35 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#1a1a1a;background:#fff}
+h1{margin:0 0 4px;font-size:22px}.sub{color:#6b4a2e;margin-bottom:10px;font-size:14px}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0 12px}
+.bar button,.bar input{font:600 14px system-ui,sans-serif;padding:7px 12px;border-radius:9px;border:2px solid #1a1a1a;background:#fff;cursor:pointer}
+.bar button.on{background:#e07b45;border-color:#e07b45;color:#fff}.bar input{cursor:text;width:16em}
+.wrapt{overflow-x:auto;border:2px solid #1a1a1a;border-radius:12px}
+table{border-collapse:collapse;min-width:100%;font-variant-numeric:tabular-nums}
+th,td{border:1px solid #d9d9d9;padding:5px 3px;text-align:center;white-space:nowrap;font-size:13px}
+th{background:#fcf2ec;font-size:13px;position:sticky;top:0}
+td.nm{text-align:left;font-weight:800;position:sticky;left:0;background:#fff;z-index:1}
+td.c{min-width:24px;font-weight:700;transition:background .4s}
+td.c.e{color:#bbb}td.fresh{outline:3px solid #ffb020;outline-offset:-3px}
+.mark td.c.ok{background:#dff3e6;color:#17663a}.mark td.c.part{background:#fff1c9}.mark td.c.bad{background:#fbe0e0;color:#9b1c1c}
+td.st{font-size:11px;color:#666;text-align:left;white-space:normal;min-width:58px}td.st.ok{color:#17663a}td.st.old{color:#9b1c1c}
+td.sc{font-weight:800}.key td{background:#f6f6f6;color:#555;font-weight:600}
+.small{font-size:12px;color:#666;margin-top:8px}
+</style></head><body>
+<h1>Экран учителя</h1><div class="sub">Вариант в формате ЦТ, 30 заданий · ответы обновляются каждые 4 секунды</div>
+<div class="bar"><button type="button" id="bmark">Показать верно / неверно</button><button type="button" id="bkey">Показать ключ</button>
+<input id="codes" placeholder="коды через запятую"><button type="button" id="bset">Применить</button></div>
+<div class="wrapt"><table id="t"></table></div>
+<div class="small">Ссылка ученику: <code>rt10-live.html#code=КОД</code>. Отвечено — сколько заданий заполнено; баллы и тестовый балл по схеме 2026 года.
+«✓» — ученик нажал «Проверить вариант»; «Ввод» — когда он последний раз менял ответы. Жёлтая рамка — ответ только что изменился.</div>
+<script>
+(function(){
+var EP="https://script.google.com/macros/s/AKfycbwqIhgBtFnoUik3N1Lh_YRhNeEFAjmXWSxBNoX1a_Yxu-2dEKHFwo4Dd5Ch9UTOHH-X/exec",PG="rt10live",N=["А1", "А2", "А3", "А4", "А5", "А6", "А7", "А8", "А9", "А10", "В1", "В2", "В3", "В4", "В5", "В6", "В7", "В8", "В9", "В10", "В11", "В12", "В13", "В14", "В15", "В16", "В17", "В18", "В19", "В20"];
+var K=JSON.parse(atob("d1FM3wiIuJmIbxSXxEDLi4mYisFLdVTNsIibiJyWs0FN4MDLi4mYisFLdZjMsIibiJyWs0VOywiIuJmIbxSX2UDLi4mYisFLdZTMsIibiJyWs0VMy0CLi4mYisFLdZTMx0CLi4mYisFLdhDNsIibiJyWs0FMywiIuJmIbxSXyIDLi4mYisFLdhTMtwiIuJmIbxSXwADNsIibiJyWs0lNycDLi4mYisFLdhzMsIibiJyWs0VNzwiIuJmIbxSXiYzMxICLiIjYisFLdJSMzUjIsISMiJyWs0VX0wiMbxiItFmIbxSXzwiIhJyWs0VMsISYisFLdRDLiEmIbxSXdVDLzwSMbxiItFmIbxSXxwiIhJyWs0VNsISYisFLdJDLiEmIbxSX1wiIhJyWs0FNsISYis1W".split("").reverse().join(""))),TS=[0, 2, 10, 15, 21, 25, 29, 32, 35, 38, 41, 43, 45, 48, 50, 52, 53, 55, 57, 58, 60, 61, 63, 64, 65, 66, 68, 69, 70, 71, 73, 74, 75, 76, 78, 79, 80, 82, 83, 85, 87, 88, 90, 93, 94, 95, 96, 97, 98, 99, 100];
+function scoreB1(s,key){var m=/^А(\d)Б(\d)В(\d)$/.exec(s||"");if(!m)return 0;var d=0;for(var j=0;j<3;j++){if(m[j+1]!==key.charAt(j))d++;}return d===0?2:(d===1?1:0);}
+function scoreB2(s,key){s=(s||"").replace(/\D/g,"");if(!s)return 0;var u={},j,miss=0,extra=0;for(j=0;j<s.length;j++)u[s.charAt(j)]=1;
+  for(j=0;j<key.length;j++){if(!u[key.charAt(j)])miss++;}for(var c in u){if(key.indexOf(c)<0)extra++;}
+  if(!miss&&!extra)return 2;if((miss===0&&extra===1)||(miss===1&&extra===0))return 1;return 0;}
+function scoreN(s,key){s=(s||"").trim();if(!/^-?\d+$/.test(s))return 0;return parseInt(s,10)===key?2:0;}
+function scoreA(sel,key,multi){sel=(sel||[]).slice().sort();if(!multi)return(sel.length===1&&sel[0]===key)?1:0;var kk=key.slice().sort();
+  return(sel.length===kk.length&&sel.every(function(v,j){return v===kk[j];}))?1:0;}
+function maxOf(i){return(K[i][0]==="a"||K[i][0]==="am")?1:2;}
+function given(v){if(v==null)return false;if(Array.isArray(v))return v.length>0;return String(v).length>0;}
+function score(i,v){var k=K[i];if(k[0]==="a"||k[0]==="am")return scoreA(v,k[1],k[0]==="am");if(k[0]==="b1")return scoreB1(v,k[1]);if(k[0]==="b2")return scoreB2(v,k[1]);return scoreN(v,k[1]);}
+function show(i,v){if(!given(v))return"·";if(Array.isArray(v))return v.join(",");return String(v).replace(/^-/,"−");}
+function keyText(i){var k=K[i];if(k[0]==="a")return String(k[1]);if(k[0]==="am")return k[1].join(",");if(k[0]==="b1")return"А"+k[1][0]+"Б"+k[1][1]+"В"+k[1][2];if(k[0]==="b2")return k[1];return String(k[1]).replace(/^-/,"−");}
+var codes=(function(){var m=/codes=([a-z0-9,-]+)/i.exec(location.hash||"");return m?m[1].toLowerCase().split(",").filter(Boolean):[];})();
+document.getElementById("codes").value=codes.join(",");
+var D={},PREV={},SEEN={},mark=false,key=false,tbl=document.getElementById("t");
+function build(){
+  var h="<thead><tr><th>Ученик</th>";N.forEach(function(n){h+="<th>"+n+"</th>";});h+="<th>Отв.</th><th class='scc'>Балл</th><th class='scc'>Тест</th><th>Ввод</th></tr></thead><tbody>";
+  codes.forEach(function(c){h+="<tr data-c='"+c+"'><td class='nm'>"+c+"</td>";for(var i=0;i<N.length;i++)h+="<td class='c e' data-i='"+i+"'>·</td>";
+    h+="<td class='an'>0</td><td class='sc'>—</td><td class='sc ts'>—</td><td class='st'>жду…</td></tr>";});
+  h+="<tr class='key' id='keyrow' style='display:none'><td class='nm'>ключ</td>";for(var i=0;i<N.length;i++)h+="<td>"+keyText(i)+"</td>";h+="<td></td><td></td><td></td><td></td></tr></tbody>";
+  tbl.innerHTML=h;paintMode();}
+function paintMode(){tbl.parentNode.classList.toggle("mark",mark);document.body.classList.toggle("mark",mark);
+  [].forEach.call(document.querySelectorAll(".scc,td.sc"),function(x){x.style.visibility=mark?"visible":"hidden";});
+  var kr=document.getElementById("keyrow");if(kr)kr.style.display=key?"":"none";
+  document.getElementById("bmark").classList.toggle("on",mark);document.getElementById("bkey").classList.toggle("on",key);}
+function render(c){
+  var tr=tbl.querySelector("tr[data-c='"+c+"']");if(!tr)return;var d=D[c]||{},S=(d.S)||{},p=PREV[c]||{},tot=0,an=0;
+  for(var i=0;i<N.length;i++){var td=tr.children[i+1],v=S[i],g=given(v);var txt=show(i,v);
+    if(g){an++;var s=score(i,v),mx=maxOf(i);tot+=s;td.className="c "+(s===mx?"ok":(s>0?"part":"bad"));}else td.className="c e";
+    if(td.textContent!==txt){td.textContent=txt;if(SEEN[c]){td.classList.add("fresh");(function(x){setTimeout(function(){x.classList.remove("fresh");},5000);})(td);}}}
+  tr.children[N.length+1].textContent=an+"/30"+(d.res?" ✓":"");
+  tr.children[N.length+2].textContent=tot+"/50";tr.children[N.length+3].textContent=TS[tot];
+  SEEN[c]=true;}
+function age(c){var tr=tbl.querySelector("tr[data-c='"+c+"']");if(!tr)return;var st=tr.children[N.length+4],d=D[c];
+  if(d&&d.bad){st.textContent=d.bad;st.className="st old";return;}
+  if(!d||!d.t){st.textContent=d&&d.none?"ещё не открыл":"жду…";st.className="st";return;}
+  var sec=Math.round((Date.now()-d.t)/1000);st.textContent=sec<60?(sec+" с назад"):(Math.round(sec/60)+" мин назад");st.className="st "+(sec<120?"ok":"old");}
+function poll(c){
+  fetch(EP,{method:"POST",body:JSON.stringify({action:"sync",op:"load",code:c,page:PG})}).then(function(r){return r.text();}).then(function(t){
+    var j=JSON.parse(t);if(!j||!j.ok){D[c]={bad:(j&&j.error==="nocode")?"нет такого кода":"ошибка связи"};age(c);return;}
+    if(!j.data){D[c]={none:true};age(c);return;}
+    try{D[c]=JSON.parse(j.data)||{};}catch(e){D[c]={};}render(c);age(c);}).catch(function(){});}
+var timer=null;
+function start(){build();if(timer)clearInterval(timer);var k=0;
+  codes.forEach(function(c,i){setTimeout(function(){poll(c);},i*300);});
+  timer=setInterval(function(){codes.forEach(function(c,i){setTimeout(function(){poll(c);},i*300);});},4000);
+  setInterval(function(){codes.forEach(age);},1000);}
+document.getElementById("bmark").onclick=function(){mark=!mark;paintMode();};
+document.getElementById("bkey").onclick=function(){key=!key;paintMode();};
+document.getElementById("bset").onclick=function(){var v=document.getElementById("codes").value.toLowerCase().replace(/[^a-z0-9,-]/g,"");
+  location.hash="codes="+v;location.reload();};
+if(codes.length)start();else tbl.innerHTML="<tr><td style='padding:14px'>Впиши коды учеников через запятую и нажми «Применить».</td></tr>";
+})();
+</script></body></html>
