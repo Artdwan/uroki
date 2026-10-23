@@ -17,13 +17,15 @@ td.c.e{color:#bbb}td.fresh{outline:3px solid #ffb020;outline-offset:-3px}
 td.st{font-size:11px;color:#666;text-align:left;white-space:normal;min-width:58px}td.st.ok{color:#17663a}td.st.old{color:#9b1c1c}
 td.sc{font-weight:800}.key td{background:#f6f6f6;color:#555;font-weight:600}
 .small{font-size:12px;color:#666;margin-top:8px}
+.here{display:inline-block;margin-left:6px;padding:0 6px;border-radius:7px;background:#2457c5;color:#fff;font-size:12px;font-weight:700}
+td.c.at{box-shadow:inset 0 0 0 3px #2457c5}
 </style></head><body>
 <h1>Экран учителя</h1><div class="sub">Вариант в формате ЦТ, 30 заданий · ответы обновляются каждые 4 секунды</div>
 <div class="bar"><button type="button" id="bmark">Показать верно / неверно</button><button type="button" id="bkey">Показать ключ</button>
 <input id="codes" placeholder="коды через запятую"><button type="button" id="bset">Применить</button></div>
 <div class="wrapt"><table id="t"></table></div>
 <div class="small">Ссылка ученику: <code>rt10-live.html#code=КОД</code>. Отвечено — сколько заданий заполнено; баллы и тестовый балл по схеме 2026 года.
-«✓» — ученик нажал «Проверить вариант»; «Ввод» — когда он последний раз менял ответы. Жёлтая рамка — ответ только что изменился.</div>
+«✓» — ученик нажал «Проверить вариант»; «Ввод» — когда он последний раз менял ответы. Жёлтая рамка — ответ только что изменился. Синяя метка у кода и синяя рамка — задание, открытое у ученика сейчас (режим доски).</div>
 <script>
 (function(){
 var EP="https://script.google.com/macros/s/AKfycbwqIhgBtFnoUik3N1Lh_YRhNeEFAjmXWSxBNoX1a_Yxu-2dEKHFwo4Dd5Ch9UTOHH-X/exec",PG="rt10live",N=["А1", "А2", "А3", "А4", "А5", "А6", "А7", "А8", "А9", "А10", "В1", "В2", "В3", "В4", "В5", "В6", "В7", "В8", "В9", "В10", "В11", "В12", "В13", "В14", "В15", "В16", "В17", "В18", "В19", "В20"];
@@ -58,6 +60,8 @@ function render(c){
   for(var i=0;i<N.length;i++){var td=tr.children[i+1],v=S[i],g=given(v);var txt=show(i,v);
     if(g){an++;var s=score(i,v),mx=maxOf(i);tot+=s;td.className="c "+(s===mx?"ok":(s>0?"part":"bad"));}else td.className="c e";
     if(td.textContent!==txt){td.textContent=txt;if(SEEN[c]){td.classList.add("fresh");(function(x){setTimeout(function(){x.classList.remove("fresh");},5000);})(td);}}}
+  var cu=(typeof d.cur==="number")?d.cur:null;tr.children[0].innerHTML=c+(cu==null?"":"<span class='here'>"+(cu>=N.length?"проверка":N[cu])+"</span>");
+  for(var i2=0;i2<N.length;i2++)tr.children[i2+1].classList.toggle("at",i2===cu);
   tr.children[N.length+1].textContent=an+"/30"+(d.res?" ✓":"");
   tr.children[N.length+2].textContent=tot+"/50";tr.children[N.length+3].textContent=TS[tot];
   SEEN[c]=true;}

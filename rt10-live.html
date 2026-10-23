@@ -198,17 +198,57 @@ var LS="rt10-live:"+(CODE||"-");
 var Q=[].slice.call(document.querySelectorAll(".q"));
 var S={};
 try{var t=localStorage.getItem(LS);if(t){S=JSON.parse(t)||{};}}catch(e){S={};}
-var RES=null,busy=false,again=false,tm=null,lastOk=0,live=document.getElementById("livebar");
+var RES=null,busy=false,again=false,tm=null,live=document.getElementById("livebar"),APPLY=false;
+// Общее окно (слово Артура 2026-10-23): все копии страницы с одним кодом связаны - ответы, проверка и открытое задание (режим доски)
+// повторяются во всех копиях. Слияние по каждому ответу отдельно: у каждого ответа своя метка времени (T), у проверки - rt,
+// у открытого задания - ct; побеждает более поздняя метка. Метки только растут (MAXT), поэтому разница часов устройств не мешает.
+var SEEN=0,T={},RTS=0,CUR=null,CTS=0,MAXT=0,LASTS="{}",LASTRES="null";
+try{var mt=JSON.parse(localStorage.getItem(LS+":m")||"{}");T=mt.T||{};RTS=mt.rt||0;CTS=mt.ct||0;MAXT=mt.mx||0;RES=mt.res||null;}catch(e){}
 function lv(t,c){if(live){live.textContent=t;live.className="livebar "+(c||"");}}
 function hh(){var d=new Date(),z=function(n){return(n<10?"0":"")+n;};return z(d.getHours())+":"+z(d.getMinutes())+":"+z(d.getSeconds());}
-function push(){if(!CODE)return;if(busy){again=true;return;}busy=true;again=false;
-  var body={action:"sync",op:"save",code:CODE,page:PG,at:Date.now(),data:JSON.stringify({S:S,res:RES,t:Date.now()})};
-  fetch(EP,{method:"POST",body:JSON.stringify(body)}).then(function(r){return r.text();}).then(function(t){var j=JSON.parse(t);
+function curNow(){return window.DOSKA?DOSKA.cur():null;}
+function nowT(){MAXT=Math.max(Date.now(),MAXT+1);return MAXT;}
+function js(x){return JSON.stringify(x===undefined?null:x);}
+function keep(){try{localStorage.setItem(LS,JSON.stringify(S));localStorage.setItem(LS+":m",JSON.stringify({T:T,rt:RTS,ct:CTS,mx:MAXT,res:RES}));}catch(e){}}
+// что изменилось здесь с прошлого раза - получает новую метку
+function detect(){var o=JSON.parse(LASTS),k,ch=false;
+  for(k in S){if(js(S[k])!==js(o[k])){T[k]=nowT();ch=true;}}
+  for(k in o){if(!(k in S)){T[k]=nowT();ch=true;}}
+  LASTS=JSON.stringify(S);
+  if(js(RES)!==LASTRES){RTS=nowT();LASTRES=js(RES);ch=true;}
+  var c=curNow();if(c!=null&&c!==CUR){CUR=c;CTS=nowT();ch=true;}
+  keep();return ch;}
+function payload(){return JSON.stringify({S:S,T:T,res:RES,rt:RTS,cur:CUR,ct:CTS,t:Date.now()});}
+// слить чужое состояние со своим; вернуть, есть ли у нас что-то новее (тогда надо отправить)
+function merge(d){var rT=d.T||{},legacy=!d.T,ahead=false,got=false,k,keys={},rS=d.S||{};
+  for(k in S)keys[k]=1;for(k in T)keys[k]=1;for(k in rS)keys[k]=1;for(k in rT)keys[k]=1;
+  for(k in keys){var lt=T[k]||0,rt=rT[k]||(legacy&&(k in rS)?1:0);if(rt>MAXT)MAXT=rt;
+    if(rt>lt){if(k in rS)S[k]=rS[k];else delete S[k];T[k]=rt;got=true;}else if(lt>rt)ahead=true;}
+  var rr=d.rt||(legacy&&d.res?1:0);if(rr>MAXT)MAXT=rr;
+  if(rr>RTS){RES=d.res||null;RTS=rr;got=true;}else if(RTS>rr)ahead=true;
+  var rc=d.ct||0;if(rc>MAXT)MAXT=rc;
+  if(rc>CTS&&d.cur!=null){CUR=d.cur;CTS=rc;got=true;}else if(CTS>rc)ahead=true;
+  if(got)show();
+  LASTS=JSON.stringify(S);LASTRES=js(RES);keep();return ahead;}
+// своё состояние -> на экран (после слияния)
+function show(){APPLY=true;try{repaint();var sm=document.getElementById("sum");
+  if(RES){check();}else{sm.hidden=true;sm.innerHTML="";Q.forEach(function(q,i){clearRes(i);});}
+  if(CUR!=null&&window.DOSKA&&CUR!==DOSKA.cur())DOSKA.go(CUR,true);}finally{APPLY=false;}}
+function load(cb){fetch(EP,{method:"POST",body:JSON.stringify({action:"sync",op:"load",code:CODE,page:PG})}).then(function(r){return r.text();})
+  .then(function(t){var j=JSON.parse(t);cb(j&&j.ok?j:null,j);}).catch(function(){cb(null,null);});}
+function push(){if(!CODE)return;if(busy){again=true;return;}busy=true;again=false;var at=Math.max(Date.now(),SEEN+1);
+  fetch(EP,{method:"POST",body:JSON.stringify({action:"sync",op:"save",code:CODE,page:PG,at:at,data:payload()})}).then(function(r){return r.text();}).then(function(t){var j=JSON.parse(t);
     busy=false;if(!j||!j.ok){lv(j&&j.error==="nocode"?"Код «"+CODE+"» не найден — спроси учителя":"Не отправилось — пробую ещё раз","bad");setTimeout(push,3000);return;}
-    lastOk=Date.now();lv("Учитель видит ответы · отправлено "+hh(),"ok");if(again)push();})
+    if(j.stale){SEEN=Math.max(SEEN,+j.at||0);poll(true);return;}
+    SEEN=Math.max(SEEN,at);lv("Учитель видит ответы · отправлено "+hh(),"ok");if(again)push();})
   .catch(function(){busy=false;lv("Нет связи — ответы сохранены здесь, пробую ещё раз","bad");setTimeout(push,4000);});}
-function queue(){if(tm)clearTimeout(tm);tm=setTimeout(push,900);}
-function save(){try{localStorage.setItem(LS,JSON.stringify(S));}catch(e){}queue();}
+function queue(){if(APPLY)return;if(!detect())return;if(tm)clearTimeout(tm);tm=setTimeout(function(){tm=null;push();},700);}
+function save(){queue();}
+function poll(force){if(!CODE||busy||(tm&&!force))return;busy=true;
+  load(function(j){busy=false;if(!j)return;var at=+j.at||0;
+    if(at!==SEEN||force){SEEN=Math.max(SEEN,at);var ahead=true;if(j.data){try{ahead=merge(JSON.parse(j.data));}catch(e){}}
+      if(ahead)push();else lv("Учитель видит ответы · "+hh(),"ok");}});}
+
 var LET=["А","Б","В"];
 function fmtNum(n){return n<0?"−"+(-n):String(n);}
 function keyText(i){var k=K[i];
@@ -269,6 +309,9 @@ Q.forEach(function(q,i){
     if(pm)pm.addEventListener("click",function(){var v=inp.value;inp.value=v.charAt(0)==="-"?v.slice(1):"-"+v;fix();inp.focus();});
   }
 });
+function repaint(){Q.forEach(function(q,i){var v=S[i];
+  [].forEach.call(q.querySelectorAll(".ab"),function(b){b.setAttribute("aria-pressed",(v||[]).indexOf(+b.getAttribute("data-v"))>=0?"true":"false");});
+  var inp=q.querySelector(".bin");if(inp){var t=v==null?"":String(v);if(inp.value!==t)inp.value=t;}});cnt();}
 function check(){
   var pa=0,pb=0,html="";
   Q.forEach(function(q,i){
@@ -290,7 +333,7 @@ function check(){
     +"<div class='tb'><div class='tl'>Часть В</div><div class='tv' id='pb'>"+pb+" <span style='font-size:16px'>из 40</span></div></div></div>"
     +"<div class='grid30'>"+html+"</div><div class='small'>Нажми на задание, чтобы перейти к нему. Ответ можно исправить и проверить ещё раз.</div>";
   sm.hidden=false;
-  RES={prim:tot,test:ts,a:pa,b:pb,t:Date.now()};queue();
+  if(!APPLY){RES={prim:tot,test:ts,a:pa,b:pb,t:Date.now()};queue();}
   return {prim:tot,test:ts,a:pa,b:pb};
 }
 document.getElementById("check").addEventListener("click",function(){check();document.getElementById("sum").scrollIntoView({block:"nearest"});});
@@ -307,13 +350,14 @@ function allSol(o){var d=document.querySelectorAll("details.zs"),k;for(k=0;k<d.l
 function boot(){
   if(!CODE){var g=document.getElementById("codegate");if(g)g.hidden=false;lv("Введи код от учителя, иначе он не увидит ответы","bad");return;}
   var cc=document.getElementById("codeshow");if(cc)cc.textContent="Код: "+CODE;
+  LASTS=JSON.stringify(S);LASTRES=js(RES);CUR=curNow();if(RES)show();
   lv("Подключаюсь…","");
-  fetch(EP,{method:"POST",body:JSON.stringify({action:"sync",op:"load",code:CODE,page:PG})}).then(function(r){return r.text();}).then(function(t){
-    var j=JSON.parse(t);if(!j||!j.ok){lv(j&&j.error==="nocode"?"Код «"+CODE+"» не найден — спроси учителя":"Нет связи с учителем — пробую ещё раз","bad");setTimeout(boot,4000);return;}
-    var here=false;for(var k in S){if(S[k]!=null&&String(S[k]).length){here=true;break;}}
-    if(!here&&j.data){try{var d=JSON.parse(j.data);if(d&&d.S){var nonempty=false;for(var k2 in d.S){if(d.S[k2]!=null&&String(d.S[k2]).length){nonempty=true;break;}}
-      if(nonempty&&sessionStorage.getItem("rt10-live-rl")!==String(j.at)){sessionStorage.setItem("rt10-live-rl",String(j.at));localStorage.setItem(LS,JSON.stringify(d.S));location.reload();return;}}}catch(e){}}
-    lv("Учитель видит ответы","ok");push();}).catch(function(){lv("Нет связи с учителем — пробую ещё раз","bad");setTimeout(boot,4000);});
+  load(function(j,raw){
+    if(!j){lv(raw&&raw.error==="nocode"?"Код «"+CODE+"» не найден — спроси учителя":"Нет связи с учителем — пробую ещё раз","bad");setTimeout(boot,4000);return;}
+    SEEN=+j.at||0;var ahead=!j.data;
+    if(j.data){try{ahead=merge(JSON.parse(j.data));}catch(e){ahead=true;}}
+    lv("Учитель видит ответы","ok");if(ahead&&(Object.keys(T).length||CTS))push();
+    setInterval(function(){poll(false);},2500);});
 }
 var cg=document.getElementById("cgo");
 if(cg)cg.addEventListener("click",function(){var v=(document.getElementById("cin").value||"").trim().toLowerCase().replace(/[^a-z0-9-]/g,"");
@@ -347,7 +391,8 @@ document.getElementById("sum").addEventListener("click",function(e){var a=e.targ
   function fit(){var el=cur===N?fin:Q[cur],lo=0.6,hi=1.7,k;el.style.zoom=hi;
     if(!fits()){for(k=0;k<9;k++){var m=(lo+hi)/2;el.style.zoom=m;if(fits())lo=m;else hi=m;}el.style.zoom=lo;}
     st.scrollTop=0;st.scrollLeft=0;}
-  function go(i){if(i<0||i>N)return;cur=i;try{localStorage.setItem(IK,String(i));}catch(e){}
+  function go(i,silent){if(i<0||i>N)return;var moved=i!==cur;cur=i;try{localStorage.setItem(IK,String(i));}catch(e){}
+    if(!silent&&moved)queue();
     Q.forEach(function(q,j){q.classList.toggle("dcur",j===i);});fin.classList.toggle("dcur",i===N);
     pos.textContent=i===N?"Проверка варианта":("Задание "+(i+1)+" из "+N);
     document.getElementById("dprev").disabled=i===0;var nx=document.getElementById("dnext");nx.disabled=i===N;nx.textContent=i===N-1?"К проверке →":"Дальше →";
@@ -359,7 +404,7 @@ document.getElementById("sum").addEventListener("click",function(e){var a=e.targ
   ["click","input","change"].forEach(function(ev){document.addEventListener(ev,function(){setTimeout(function(){paint();if(cur===N)fit();},30);},true);});
   window.addEventListener("resize",function(){land();fit();});
   window.DOSKA={go:go,cur:function(){return cur;}};
-  go(cur);
+  go(cur,true);
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);window.addEventListener("load",fit);
 })();
 boot();
